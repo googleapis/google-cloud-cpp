@@ -91,6 +91,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Inserts a rule into a security policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/addRule
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to update.
@@ -115,7 +116,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L178}
+  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -127,6 +128,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Inserts a rule into a security policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/addRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -154,7 +156,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L178}
+  /// [google.cloud.cpp.compute.security_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -166,6 +168,7 @@ class SecurityPoliciesClient {
   ///
   /// Retrieves the list of all SecurityPolicy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -182,7 +185,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L197}
+  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L209}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L31}
   ///
   // clang-format on
@@ -193,6 +196,7 @@ class SecurityPoliciesClient {
   ///
   /// Retrieves the list of all SecurityPolicy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,7 +218,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L197}
+  /// [google.cloud.cpp.compute.security_policies.v1.AggregatedListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L209}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L31}
   ///
   // clang-format on
@@ -227,6 +231,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to delete.
@@ -250,7 +255,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L271}
+  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -260,6 +265,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -287,7 +293,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L271}
+  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -298,6 +304,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// List all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to get.
@@ -315,7 +322,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -326,6 +333,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// List all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -347,7 +355,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -359,6 +367,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Gets a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/getRule
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to which the queried rule belongs.
@@ -376,7 +385,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L295}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L289}
   ///
   // clang-format on
@@ -387,6 +396,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Gets a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/getRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -408,7 +418,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L295}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L289}
   ///
   // clang-format on
@@ -421,6 +431,7 @@ class SecurityPoliciesClient {
   ///
   /// Creates a new policy in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy_resource  The SecurityPolicy for this request.
@@ -444,7 +455,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L316}
+  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -457,6 +468,7 @@ class SecurityPoliciesClient {
   ///
   /// Creates a new policy in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -484,7 +496,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L316}
+  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -495,6 +507,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// List all the policies that have been configured for the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -520,7 +533,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L409}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L421}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -530,6 +543,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// List all the policies that have been configured for the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -560,7 +574,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L409}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L421}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -573,6 +587,7 @@ class SecurityPoliciesClient {
   ///
   /// Gets the current list of preconfigured Web Application Firewall (WAF)
   /// expressions.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/listPreconfiguredExpressionSets
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -589,7 +604,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L344}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L356}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L142}
   ///
   // clang-format on
@@ -602,6 +617,7 @@ class SecurityPoliciesClient {
   ///
   /// Gets the current list of preconfigured Web Application Firewall (WAF)
   /// expressions.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/listPreconfiguredExpressionSets
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -623,7 +639,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L344}
+  /// [google.cloud.cpp.compute.security_policies.v1.ListPreconfiguredExpressionSetsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L356}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_086.proto#L142}
   ///
   // clang-format on
@@ -641,6 +657,7 @@ class SecurityPoliciesClient {
   /// updateMask. This cannot be used to be update the rules in the policy.
   /// Please use the per rule methods like addRule, patchRule, and removeRule
   /// instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to update.
@@ -665,7 +682,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L496}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -682,6 +699,7 @@ class SecurityPoliciesClient {
   /// updateMask. This cannot be used to be update the rules in the policy.
   /// Please use the per rule methods like addRule, patchRule, and removeRule
   /// instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -709,7 +727,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L496}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -721,6 +739,7 @@ class SecurityPoliciesClient {
   ///
   /// Patches a rule at the specified priority. To clear fields in the rule,
   /// leave the fields empty and specify them in the updateMask.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/patchRule
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to update.
@@ -745,7 +764,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L474}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L486}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -758,6 +777,7 @@ class SecurityPoliciesClient {
   ///
   /// Patches a rule at the specified priority. To clear fields in the rule,
   /// leave the fields empty and specify them in the updateMask.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/patchRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -785,7 +805,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L474}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L486}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -796,6 +816,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Deletes a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/removeRule
   ///
   /// @param project  Project ID for this request.
   /// @param security_policy  Name of the security policy to update.
@@ -819,7 +840,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L524}
+  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L536}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -829,6 +850,7 @@ class SecurityPoliciesClient {
   // clang-format off
   ///
   /// Deletes a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/removeRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -856,7 +878,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L524}
+  /// [google.cloud.cpp.compute.security_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L536}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -868,6 +890,7 @@ class SecurityPoliciesClient {
   ///
   /// Sets the labels on a security policy. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -892,7 +915,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L539}
+  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L551}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -905,6 +928,7 @@ class SecurityPoliciesClient {
   ///
   /// Sets the labels on a security policy. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -932,7 +956,7 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L539}
+  /// [google.cloud.cpp.compute.security_policies.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L551}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

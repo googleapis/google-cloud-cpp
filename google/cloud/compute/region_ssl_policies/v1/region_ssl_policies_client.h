@@ -92,6 +92,7 @@ class RegionSslPoliciesClient {
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
   /// only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   /// resources.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -117,7 +118,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L107}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -129,6 +130,7 @@ class RegionSslPoliciesClient {
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
   /// only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   /// resources.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -156,7 +158,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L107}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L113}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -167,6 +169,7 @@ class RegionSslPoliciesClient {
   // clang-format off
   ///
   /// Lists all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -186,7 +189,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L138}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L144}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -197,6 +200,7 @@ class RegionSslPoliciesClient {
   // clang-format off
   ///
   /// Lists all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +222,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L138}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L144}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -231,6 +235,7 @@ class RegionSslPoliciesClient {
   ///
   /// Creates a new policy in the specified project and region using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -255,7 +260,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L151}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L157}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -268,6 +273,7 @@ class RegionSslPoliciesClient {
   ///
   /// Creates a new policy in the specified project and region using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -295,7 +301,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L151}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L157}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -307,6 +313,7 @@ class RegionSslPoliciesClient {
   ///
   /// Lists all the SSL policies that have been configured for the specified
   /// project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -333,7 +340,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L250}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L256}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -344,6 +351,7 @@ class RegionSslPoliciesClient {
   ///
   /// Lists all the SSL policies that have been configured for the specified
   /// project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -374,7 +382,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L250}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L256}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -387,6 +395,7 @@ class RegionSslPoliciesClient {
   ///
   /// Lists all features that can be specified in the SSL policy when using
   /// custom profile.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/listAvailableFeatures
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -404,7 +413,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L182}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L188}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L130}
   ///
   // clang-format on
@@ -417,6 +426,7 @@ class RegionSslPoliciesClient {
   ///
   /// Lists all features that can be specified in the SSL policy when using
   /// custom profile.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/listAvailableFeatures
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -438,7 +448,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L182}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L188}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L130}
   ///
   // clang-format on
@@ -451,6 +461,7 @@ class RegionSslPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified SSL policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -477,7 +488,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L318}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L324}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -490,6 +501,7 @@ class RegionSslPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified SSL policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslPolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -517,7 +529,7 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L318}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L324}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

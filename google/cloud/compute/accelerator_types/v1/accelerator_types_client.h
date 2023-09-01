@@ -91,6 +91,7 @@ class AcceleratorTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of accelerator types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L68}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L71}
   /// [google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_001.proto#L63}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class AcceleratorTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of accelerator types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L68}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L71}
   /// [google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_001.proto#L63}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class AcceleratorTypesClient {
   // clang-format off
   ///
   /// Returns the specified accelerator type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -169,7 +172,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L142}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
   ///
   // clang-format on
@@ -180,6 +183,7 @@ class AcceleratorTypesClient {
   // clang-format off
   ///
   /// Returns the specified accelerator type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -201,7 +205,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L142}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
   ///
   // clang-format on
@@ -214,6 +218,7 @@ class AcceleratorTypesClient {
   ///
   /// Retrieves a list of accelerator types that are available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -240,7 +245,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L154}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L157}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class AcceleratorTypesClient {
   ///
   /// Retrieves a list of accelerator types that are available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -282,7 +288,7 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L154}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L157}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
   ///
   // clang-format on

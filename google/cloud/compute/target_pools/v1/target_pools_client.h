@@ -91,6 +91,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Adds health check URLs to a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/addHealthCheck
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -116,7 +117,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AddHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L167}
+  /// [google.cloud.cpp.compute.target_pools.v1.AddHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L178}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
@@ -129,6 +130,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Adds health check URLs to a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/addHealthCheck
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -156,7 +158,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AddHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L167}
+  /// [google.cloud.cpp.compute.target_pools.v1.AddHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L178}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
@@ -167,6 +169,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Adds an instance to a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/addInstance
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -192,7 +195,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L202}
+  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L213}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
@@ -205,6 +208,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Adds an instance to a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/addInstance
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -232,7 +236,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L202}
+  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L213}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
@@ -243,6 +247,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of target pools.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -259,7 +264,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L237}
+  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L248}
   /// [google.cloud.cpp.compute.v1.TargetPoolAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L133}
   ///
   // clang-format on
@@ -269,6 +274,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of target pools.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -290,7 +296,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L237}
+  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L248}
   /// [google.cloud.cpp.compute.v1.TargetPoolAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L133}
   ///
   // clang-format on
@@ -302,6 +308,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Deletes the specified target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -326,7 +333,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L311}
+  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L322}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -336,6 +343,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Deletes the specified target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -363,7 +371,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L311}
+  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L322}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -374,6 +382,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Returns the specified target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -392,7 +401,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L357}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L368}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L32}
   ///
   // clang-format on
@@ -403,6 +412,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Returns the specified target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -424,7 +434,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L357}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L368}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L32}
   ///
   // clang-format on
@@ -437,6 +447,7 @@ class TargetPoolsClient {
   ///
   /// Gets the most recent health check results for each IP for the instance that
   /// is referenced by the given target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/getHealth
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -456,7 +467,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L341}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L352}
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L242}
   ///
   // clang-format on
@@ -471,6 +482,7 @@ class TargetPoolsClient {
   ///
   /// Gets the most recent health check results for each IP for the instance that
   /// is referenced by the given target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/getHealth
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -492,7 +504,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L341}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L352}
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L242}
   ///
   // clang-format on
@@ -505,6 +517,7 @@ class TargetPoolsClient {
   ///
   /// Creates a target pool in the specified project and region using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -529,7 +542,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L369}
+  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -542,6 +555,7 @@ class TargetPoolsClient {
   ///
   /// Creates a target pool in the specified project and region using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -569,7 +583,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L369}
+  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -581,6 +595,7 @@ class TargetPoolsClient {
   ///
   /// Retrieves a list of target pools available to the specified project and
   /// region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -607,7 +622,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L400}
+  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L411}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L32}
   ///
   // clang-format on
@@ -618,6 +633,7 @@ class TargetPoolsClient {
   ///
   /// Retrieves a list of target pools available to the specified project and
   /// region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -648,7 +664,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L400}
+  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L411}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_124.proto#L32}
   ///
   // clang-format on
@@ -660,6 +676,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Removes health check URL from a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/removeHealthCheck
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -685,7 +702,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L468}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L479}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -699,6 +716,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Removes health check URL from a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/removeHealthCheck
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -726,7 +744,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L468}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L479}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -737,6 +755,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Removes instance URL from a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/removeInstance
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -762,7 +781,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L503}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
@@ -775,6 +794,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Removes instance URL from a target pool.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/removeInstance
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -802,7 +822,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L503}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
@@ -813,6 +833,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Changes a backup target pool's configurations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/setBackup
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -838,7 +859,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L538}
+  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L549}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
@@ -851,6 +872,7 @@ class TargetPoolsClient {
   // clang-format off
   ///
   /// Changes a backup target pool's configurations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetPools/setBackup
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -878,7 +900,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L538}
+  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L549}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(

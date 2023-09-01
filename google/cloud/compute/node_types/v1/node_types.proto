@@ -36,6 +36,7 @@ service NodeTypes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of node types.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/aggregatedList
   rpc AggregatedListNodeTypes(AggregatedListNodeTypesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTypeAggregatedList) {
     option (google.api.http) = {
@@ -45,6 +46,7 @@ service NodeTypes {
   }
 
   // Returns the specified node type.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/get
   rpc GetNodeTypes(GetNodeTypesRequest)
       returns (google.cloud.cpp.compute.v1.NodeType) {
     option (google.api.http) = {
@@ -54,6 +56,7 @@ service NodeTypes {
   }
 
   // Retrieves a list of node types available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/list
   rpc ListNodeTypes(ListNodeTypesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTypeList) {
     option (google.api.http) = {

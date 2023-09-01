@@ -91,6 +91,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of reservations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L153}
+  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L163}
   /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_102.proto#L27}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of reservations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L153}
+  /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L163}
   /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_102.proto#L27}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Deletes the specified reservation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -175,7 +178,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L227}
+  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L237}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,6 +188,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Deletes the specified reservation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +216,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L227}
+  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L237}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,6 +227,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Retrieves information about the specified reservation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -241,7 +246,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L272}
+  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L282}
   /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L106}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Retrieves information about the specified reservation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -273,7 +279,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L272}
+  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L282}
   /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L106}
   ///
   // clang-format on
@@ -286,6 +292,7 @@ class ReservationsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -304,7 +311,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L257}
+  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L267}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -316,6 +323,7 @@ class ReservationsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -337,7 +345,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L257}
+  /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L267}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -350,6 +358,7 @@ class ReservationsClient {
   ///
   /// Creates a new reservation. For more information, read Reserving zonal
   /// resources.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -374,7 +383,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L284}
+  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -387,6 +396,7 @@ class ReservationsClient {
   ///
   /// Creates a new reservation. For more information, read Reserving zonal
   /// resources.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -414,7 +424,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L284}
+  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -426,6 +436,7 @@ class ReservationsClient {
   ///
   /// A list of all the reservations that have been configured for the specified
   /// project in specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -452,7 +463,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L315}
+  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L325}
   /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L106}
   ///
   // clang-format on
@@ -463,6 +474,7 @@ class ReservationsClient {
   ///
   /// A list of all the reservations that have been configured for the specified
   /// project in specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -493,7 +505,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L315}
+  /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L325}
   /// [google.cloud.cpp.compute.v1.Reservation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_005.proto#L106}
   ///
   // clang-format on
@@ -506,6 +518,7 @@ class ReservationsClient {
   ///
   /// Resizes the reservation (applicable to standalone reservations only). For
   /// more information, read Modifying reservations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/resize
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -531,7 +544,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L383}
+  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L393}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -545,6 +558,7 @@ class ReservationsClient {
   ///
   /// Resizes the reservation (applicable to standalone reservations only). For
   /// more information, read Modifying reservations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/resize
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -572,7 +586,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L383}
+  /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L393}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -584,6 +598,7 @@ class ReservationsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -603,7 +618,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L418}
+  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L428}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -618,6 +633,7 @@ class ReservationsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -639,7 +655,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L418}
+  /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L428}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -651,6 +667,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -670,7 +687,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L434}
+  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L444}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -685,6 +702,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -706,7 +724,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L434}
+  /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L444}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -718,6 +736,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Update share settings of the reservation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/update
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -743,7 +762,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L450}
+  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L460}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -756,6 +775,7 @@ class ReservationsClient {
   // clang-format off
   ///
   /// Update share settings of the reservation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/reservations/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -783,7 +803,7 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L450}
+  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L460}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

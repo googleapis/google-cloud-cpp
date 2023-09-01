@@ -40,6 +40,7 @@ service PublicDelegatedPrefixes {
 
   // Lists all PublicDelegatedPrefix resources owned by the specific project
   // across all scopes.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicDelegatedPrefixes/aggregatedList
   rpc AggregatedListPublicDelegatedPrefixes(
       AggregatedListPublicDelegatedPrefixesRequest)
       returns (
@@ -51,6 +52,7 @@ service PublicDelegatedPrefixes {
   }
 
   // Deletes the specified PublicDelegatedPrefix in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicDelegatedPrefixes/delete
   rpc DeletePublicDelegatedPrefixes(DeletePublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -62,6 +64,7 @@ service PublicDelegatedPrefixes {
   }
 
   // Returns the specified PublicDelegatedPrefix resource in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicDelegatedPrefixes/get
   rpc GetPublicDelegatedPrefixes(GetPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
@@ -73,6 +76,7 @@ service PublicDelegatedPrefixes {
 
   // Creates a PublicDelegatedPrefix in the specified project in the given
   // region using the parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicDelegatedPrefixes/insert
   rpc InsertPublicDelegatedPrefixes(InsertPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -85,6 +89,7 @@ service PublicDelegatedPrefixes {
   }
 
   // Lists the PublicDelegatedPrefixes for a project in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicDelegatedPrefixes/list
   rpc ListPublicDelegatedPrefixes(ListPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
     option (google.api.http) = {
@@ -96,6 +101,7 @@ service PublicDelegatedPrefixes {
   // Patches the specified PublicDelegatedPrefix resource with the data included
   // in the request. This method supports PATCH semantics and uses JSON merge
   // patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicDelegatedPrefixes/patch
   rpc PatchPublicDelegatedPrefixes(PatchPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

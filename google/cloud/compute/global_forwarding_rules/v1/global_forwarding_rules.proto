@@ -40,6 +40,7 @@ service GlobalForwardingRules {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified GlobalForwardingRule resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/delete
   rpc DeleteGlobalForwardingRules(DeleteGlobalForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -51,6 +52,7 @@ service GlobalForwardingRules {
 
   // Returns the specified GlobalForwardingRule resource. Gets a list of
   // available forwarding rules by making a list() request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/get
   rpc GetGlobalForwardingRules(GetGlobalForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRule) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service GlobalForwardingRules {
 
   // Creates a GlobalForwardingRule resource in the specified project using the
   // data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/insert
   rpc InsertGlobalForwardingRules(InsertGlobalForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -73,6 +76,7 @@ service GlobalForwardingRules {
 
   // Retrieves a list of GlobalForwardingRule resources available to the
   // specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/list
   rpc ListGlobalForwardingRules(ListGlobalForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRuleList) {
     option (google.api.http) = {
@@ -85,6 +89,7 @@ service GlobalForwardingRules {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules. Currently, you can only patch the network_tier
   // field.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/patch
   rpc PatchGlobalForwardingRules(PatchGlobalForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -98,6 +103,7 @@ service GlobalForwardingRules {
 
   // Sets the labels on the specified resource. To learn more about labels, read
   // the Labeling resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -111,6 +117,7 @@ service GlobalForwardingRules {
 
   // Changes target URL for the GlobalForwardingRule resource. The new target
   // should be of the same type as the old target.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/setTarget
   rpc SetTarget(SetTargetRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

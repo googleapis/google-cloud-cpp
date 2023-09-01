@@ -38,6 +38,7 @@ service RegionCommitments {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of commitments by region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/aggregatedList
   rpc AggregatedListRegionCommitments(AggregatedListRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.CommitmentAggregatedList) {
     option (google.api.http) = {
@@ -47,6 +48,7 @@ service RegionCommitments {
   }
 
   // Returns the specified commitment resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/get
   rpc GetRegionCommitments(GetRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.Commitment) {
     option (google.api.http) = {
@@ -57,6 +59,7 @@ service RegionCommitments {
 
   // Creates a commitment in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/insert
   rpc InsertRegionCommitments(InsertRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service RegionCommitments {
   }
 
   // Retrieves a list of commitments contained within the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/list
   rpc ListRegionCommitments(ListRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.CommitmentList) {
     option (google.api.http) = {
@@ -79,6 +83,7 @@ service RegionCommitments {
   // Updates the specified commitment with the data included in the request.
   // Update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be modified: auto_renew.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/update
   rpc UpdateRegionCommitments(UpdateRegionCommitmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

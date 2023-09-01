@@ -92,6 +92,7 @@ class SslPoliciesClient {
   ///
   /// Retrieves the list of all SslPolicy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -108,7 +109,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.AggregatedListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L117}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.AggregatedListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L124}
   /// [google.cloud.cpp.compute.v1.SslPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_114.proto#L26}
   ///
   // clang-format on
@@ -119,6 +120,7 @@ class SslPoliciesClient {
   ///
   /// Retrieves the list of all SslPolicy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -140,7 +142,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.AggregatedListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L117}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.AggregatedListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L124}
   /// [google.cloud.cpp.compute.v1.SslPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_114.proto#L26}
   ///
   // clang-format on
@@ -154,6 +156,7 @@ class SslPoliciesClient {
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
   /// only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   /// resources.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_policy  Name of the SSL policy to delete. The name must be 1-63 characters long,
@@ -178,7 +181,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.DeleteSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L191}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.DeleteSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -190,6 +193,7 @@ class SslPoliciesClient {
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
   /// only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   /// resources.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,7 +221,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.DeleteSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L191}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.DeleteSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -228,6 +232,7 @@ class SslPoliciesClient {
   // clang-format off
   ///
   /// Lists all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_policy  Name of the SSL policy to update. The name must be 1-63 characters long,
@@ -246,7 +251,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.GetSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L216}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.GetSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L223}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -257,6 +262,7 @@ class SslPoliciesClient {
   // clang-format off
   ///
   /// Lists all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -278,7 +284,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.GetSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L216}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.GetSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L223}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -290,6 +296,7 @@ class SslPoliciesClient {
   // clang-format off
   ///
   /// Returns the specified SSL policy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_policy_resource  The SslPolicy for this request.
@@ -313,7 +320,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.InsertSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L226}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.InsertSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -325,6 +332,7 @@ class SslPoliciesClient {
   // clang-format off
   ///
   /// Returns the specified SSL policy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -352,7 +360,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.InsertSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L226}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.InsertSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -364,6 +372,7 @@ class SslPoliciesClient {
   ///
   /// Lists all the SSL policies that have been configured for the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -389,7 +398,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.ListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L316}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.ListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L323}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -400,6 +409,7 @@ class SslPoliciesClient {
   ///
   /// Lists all the SSL policies that have been configured for the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -430,7 +440,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.ListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L316}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.ListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L323}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
@@ -443,6 +453,7 @@ class SslPoliciesClient {
   ///
   /// Lists all features that can be specified in the SSL policy when using
   /// custom profile.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/listAvailableFeatures
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -459,7 +470,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L251}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L258}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L130}
   ///
   // clang-format on
@@ -471,6 +482,7 @@ class SslPoliciesClient {
   ///
   /// Lists all features that can be specified in the SSL policy when using
   /// custom profile.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/listAvailableFeatures
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -492,7 +504,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L251}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L258}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_115.proto#L130}
   ///
   // clang-format on
@@ -505,6 +517,7 @@ class SslPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified SSL policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_policy  Name of the SSL policy to update. The name must be 1-63 characters long,
@@ -530,7 +543,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.PatchSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L381}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.PatchSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L388}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicies(
@@ -541,6 +554,7 @@ class SslPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified SSL policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -568,7 +582,7 @@ class SslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_policies.v1.PatchSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L381}
+  /// [google.cloud.cpp.compute.ssl_policies.v1.PatchSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L388}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicies(

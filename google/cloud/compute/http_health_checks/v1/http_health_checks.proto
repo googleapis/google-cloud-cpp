@@ -38,6 +38,7 @@ service HttpHealthChecks {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified HttpHealthCheck resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/httpHealthChecks/delete
   rpc DeleteHttpHealthChecks(DeleteHttpHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service HttpHealthChecks {
   }
 
   // Returns the specified HttpHealthCheck resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/httpHealthChecks/get
   rpc GetHttpHealthChecks(GetHttpHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.HttpHealthCheck) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service HttpHealthChecks {
 
   // Creates a HttpHealthCheck resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/httpHealthChecks/insert
   rpc InsertHttpHealthChecks(InsertHttpHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service HttpHealthChecks {
 
   // Retrieves the list of HttpHealthCheck resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/httpHealthChecks/list
   rpc ListHttpHealthChecks(ListHttpHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.HttpHealthCheckList) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service HttpHealthChecks {
   // Updates a HttpHealthCheck resource in the specified project using the data
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/httpHealthChecks/patch
   rpc PatchHttpHealthChecks(PatchHttpHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -94,6 +99,7 @@ service HttpHealthChecks {
 
   // Updates a HttpHealthCheck resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/httpHealthChecks/update
   rpc UpdateHttpHealthChecks(UpdateHttpHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

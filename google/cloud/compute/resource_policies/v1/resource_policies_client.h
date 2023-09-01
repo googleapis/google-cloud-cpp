@@ -91,6 +91,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of resource policies.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L140}
+  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L149}
   /// [google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_103.proto#L171}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of resource policies.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L140}
+  /// [google.cloud.cpp.compute.resource_policies.v1.AggregatedListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L149}
   /// [google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_103.proto#L171}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -175,7 +178,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L214}
+  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,6 +188,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +216,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L214}
+  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,6 +227,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Retrieves all information of the specified resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -241,7 +246,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L259}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L268}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_103.proto#L117}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Retrieves all information of the specified resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -273,7 +279,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L259}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L268}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_103.proto#L117}
   ///
   // clang-format on
@@ -286,6 +292,7 @@ class ResourcePoliciesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -304,7 +311,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L244}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L253}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -316,6 +323,7 @@ class ResourcePoliciesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -337,7 +345,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L244}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L253}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -349,6 +357,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Creates a new resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -373,7 +382,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L271}
+  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L280}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -385,6 +394,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Creates a new resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -412,7 +422,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L271}
+  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L280}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -424,6 +434,7 @@ class ResourcePoliciesClient {
   ///
   /// A list all the resource policies that have been configured for the
   /// specified project in specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -450,7 +461,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L302}
+  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L311}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_103.proto#L117}
   ///
   // clang-format on
@@ -462,6 +473,7 @@ class ResourcePoliciesClient {
   ///
   /// A list all the resource policies that have been configured for the
   /// specified project in specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -492,7 +504,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L302}
+  /// [google.cloud.cpp.compute.resource_policies.v1.ListResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L311}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_103.proto#L117}
   ///
   // clang-format on
@@ -504,6 +516,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Modify the specified resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -529,7 +542,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L370}
+  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -542,6 +555,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Modify the specified resource policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -569,7 +583,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L370}
+  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -581,6 +595,7 @@ class ResourcePoliciesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -600,7 +615,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L407}
+  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L416}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -615,6 +630,7 @@ class ResourcePoliciesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -636,7 +652,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L407}
+  /// [google.cloud.cpp.compute.resource_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L416}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -648,6 +664,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -667,7 +684,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L424}
+  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L433}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -682,6 +699,7 @@ class ResourcePoliciesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -703,7 +721,7 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L424}
+  /// [google.cloud.cpp.compute.resource_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L433}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

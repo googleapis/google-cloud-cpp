@@ -90,6 +90,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetSslProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource to delete.
@@ -113,7 +114,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L147}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L156}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,6 +125,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetSslProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -151,7 +153,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L147}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.DeleteTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L156}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,6 +164,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetSslProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/get
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource to return.
@@ -179,7 +182,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L180}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_126.proto#L55}
   ///
   // clang-format on
@@ -190,6 +193,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetSslProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -211,7 +215,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L171}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.GetTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L180}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_126.proto#L55}
   ///
   // clang-format on
@@ -224,6 +228,7 @@ class TargetSslProxiesClient {
   ///
   /// Creates a TargetSslProxy resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy_resource  The TargetSslProxy for this request.
@@ -247,7 +252,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L180}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L189}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -260,6 +265,7 @@ class TargetSslProxiesClient {
   ///
   /// Creates a TargetSslProxy resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -287,7 +293,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L180}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.InsertTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L189}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -299,6 +305,7 @@ class TargetSslProxiesClient {
   ///
   /// Retrieves the list of TargetSslProxy resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -324,7 +331,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L205}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L214}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_126.proto#L55}
   ///
   // clang-format on
@@ -335,6 +342,7 @@ class TargetSslProxiesClient {
   ///
   /// Retrieves the list of TargetSslProxy resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -365,7 +373,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L205}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.ListTargetSslProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L214}
   /// [google.cloud.cpp.compute.v1.TargetSslProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_126.proto#L55}
   ///
   // clang-format on
@@ -377,6 +385,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes the BackendService for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setBackendService
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource whose BackendService resource is to be
@@ -402,7 +411,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L270}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L279}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -416,6 +425,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes the BackendService for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setBackendService
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -443,7 +453,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L270}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L279}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -454,6 +464,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes the Certificate Map for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setCertificateMap
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource whose CertificateMap is to be set. The
@@ -479,7 +490,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L300}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L309}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -493,6 +504,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes the Certificate Map for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setCertificateMap
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -520,7 +532,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L300}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L309}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -531,6 +543,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes the ProxyHeaderType for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setProxyHeader
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource whose ProxyHeader is to be set.
@@ -555,7 +568,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L330}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
@@ -568,6 +581,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes the ProxyHeaderType for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setProxyHeader
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -595,7 +609,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L330}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
@@ -606,6 +620,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes SslCertificates for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslCertificates
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource whose SslCertificate resource is to be
@@ -631,7 +646,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L359}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -645,6 +660,7 @@ class TargetSslProxiesClient {
   // clang-format off
   ///
   /// Changes SslCertificates for TargetSslProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslCertificates
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -672,7 +688,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L359}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L368}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -686,6 +702,7 @@ class TargetSslProxiesClient {
   /// server-side support for SSL features. This affects connections between
   /// clients and the SSL proxy load balancer. They do not affect the connection
   /// between the load balancer and the backends.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param target_ssl_proxy  Name of the TargetSslProxy resource whose SSL policy is to be set. The name
@@ -711,7 +728,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L389}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L398}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
@@ -726,6 +743,7 @@ class TargetSslProxiesClient {
   /// server-side support for SSL features. This affects connections between
   /// clients and the SSL proxy load balancer. They do not affect the connection
   /// between the load balancer and the backends.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -753,7 +771,7 @@ class TargetSslProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L389}
+  /// [google.cloud.cpp.compute.target_ssl_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto#L398}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(

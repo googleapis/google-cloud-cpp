@@ -96,6 +96,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts an association for the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/addAssociation
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -121,7 +122,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L233}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
@@ -134,6 +135,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts an association for the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/addAssociation
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -161,7 +163,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L233}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L250}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
@@ -172,6 +174,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts a rule into a network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/addRule
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -197,7 +200,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L273}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L290}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -210,6 +213,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts a rule into a network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/addRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -237,7 +241,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L273}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L290}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -248,6 +252,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Copies rules to the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/cloneRules
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -272,7 +277,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L315}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L332}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -282,6 +287,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Copies rules to the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/cloneRules
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -309,7 +315,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L315}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L332}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -320,6 +326,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -344,7 +351,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.DeleteRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L348}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.DeleteRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -356,6 +363,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -383,7 +391,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.DeleteRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L348}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.DeleteRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -395,6 +403,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -413,7 +422,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L420}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L437}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -426,6 +435,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -447,7 +457,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L420}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L437}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -460,6 +470,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets an association with the specified name.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getAssociation
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -478,7 +489,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L378}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L395}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L110}
   ///
   // clang-format on
@@ -489,6 +500,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets an association with the specified name.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getAssociation
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -510,7 +522,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L378}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L395}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L110}
   ///
   // clang-format on
@@ -522,6 +534,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns the effective firewalls on a given network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getEffectiveFirewalls
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -540,7 +553,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L393}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L410}
   /// [google.cloud.cpp.compute.v1.RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_097.proto#L27}
   ///
   // clang-format on
@@ -552,6 +565,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns the effective firewalls on a given network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getEffectiveFirewalls
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -573,7 +587,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L393}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L410}
   /// [google.cloud.cpp.compute.v1.RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_097.proto#L27}
   ///
   // clang-format on
@@ -588,6 +602,7 @@ class RegionNetworkFirewallPoliciesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -606,7 +621,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L405}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L422}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -618,6 +633,7 @@ class RegionNetworkFirewallPoliciesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -639,7 +655,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L405}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L422}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -651,6 +667,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getRule
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -669,7 +686,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L432}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L449}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_038.proto#L26}
   ///
   // clang-format on
@@ -680,6 +697,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/getRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -701,7 +719,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L432}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L449}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_038.proto#L26}
   ///
   // clang-format on
@@ -713,6 +731,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Creates a new network firewall policy in the specified project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -737,7 +756,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.InsertRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L447}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.InsertRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L464}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -750,6 +769,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Creates a new network firewall policy in the specified project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -777,7 +797,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.InsertRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L447}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.InsertRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L464}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -790,6 +810,7 @@ class RegionNetworkFirewallPoliciesClient {
   ///
   /// Lists all the network firewall policies that have been configured for the
   /// specified project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -816,7 +837,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.ListRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L478}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.ListRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L495}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -829,6 +850,7 @@ class RegionNetworkFirewallPoliciesClient {
   ///
   /// Lists all the network firewall policies that have been configured for the
   /// specified project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -859,7 +881,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.ListRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L478}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.ListRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L495}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -872,6 +894,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -897,7 +920,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L546}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L563}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -911,6 +934,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -938,7 +962,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L546}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRegionNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L563}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -950,6 +974,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/patchRule
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -975,7 +1000,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L580}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L597}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -988,6 +1013,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/patchRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1015,7 +1041,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L580}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L597}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -1026,6 +1052,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Removes an association for the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/removeAssociation
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -1050,7 +1077,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L617}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L634}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1060,6 +1087,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Removes an association for the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/removeAssociation
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1087,7 +1115,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L617}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L634}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1099,6 +1127,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/removeRule
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -1123,7 +1152,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L650}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L667}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1133,6 +1162,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/removeRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1160,7 +1190,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L650}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L667}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1172,6 +1202,7 @@ class RegionNetworkFirewallPoliciesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -1191,7 +1222,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L683}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L700}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -1206,6 +1237,7 @@ class RegionNetworkFirewallPoliciesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1227,7 +1259,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L683}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L700}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -1239,6 +1271,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -1258,7 +1291,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L700}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L717}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -1273,6 +1306,7 @@ class RegionNetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1294,7 +1328,7 @@ class RegionNetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L700}
+  /// [google.cloud.cpp.compute.region_network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto#L717}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

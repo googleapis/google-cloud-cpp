@@ -39,6 +39,7 @@ service PacketMirrorings {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of packetMirrorings.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/aggregatedList
   rpc AggregatedListPacketMirrorings(AggregatedListPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.PacketMirroringAggregatedList) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service PacketMirrorings {
   }
 
   // Deletes the specified PacketMirroring resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/delete
   rpc DeletePacketMirrorings(DeletePacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service PacketMirrorings {
   }
 
   // Returns the specified PacketMirroring resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/get
   rpc GetPacketMirrorings(GetPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.PacketMirroring) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service PacketMirrorings {
 
   // Creates a PacketMirroring resource in the specified project and region
   // using the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/insert
   rpc InsertPacketMirrorings(InsertPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service PacketMirrorings {
 
   // Retrieves a list of PacketMirroring resources available to the specified
   // project and region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/list
   rpc ListPacketMirrorings(ListPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.PacketMirroringList) {
     option (google.api.http) = {
@@ -92,6 +97,7 @@ service PacketMirrorings {
   // Patches the specified PacketMirroring resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/patch
   rpc PatchPacketMirrorings(PatchPacketMirroringsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -104,6 +110,7 @@ service PacketMirrorings {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

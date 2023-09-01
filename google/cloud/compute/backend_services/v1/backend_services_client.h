@@ -92,6 +92,7 @@ class BackendServicesClient {
   ///
   /// Adds a key for validating requests with signed URLs for this backend
   /// service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/addSignedUrlKey
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to which the Signed URL Key should be
@@ -117,7 +118,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L211}
+  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
@@ -130,6 +131,7 @@ class BackendServicesClient {
   ///
   /// Adds a key for validating requests with signed URLs for this backend
   /// service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/addSignedUrlKey
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,7 +159,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L211}
+  /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
@@ -169,6 +171,7 @@ class BackendServicesClient {
   ///
   /// Retrieves the list of all BackendService resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -185,7 +188,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L240}
+  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L254}
   /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_011.proto#L27}
   ///
   // clang-format on
@@ -196,6 +199,7 @@ class BackendServicesClient {
   ///
   /// Retrieves the list of all BackendService resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,7 +221,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L240}
+  /// [google.cloud.cpp.compute.backend_services.v1.AggregatedListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L254}
   /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_011.proto#L27}
   ///
   // clang-format on
@@ -230,6 +234,7 @@ class BackendServicesClient {
   // clang-format off
   ///
   /// Deletes the specified BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/delete
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to delete.
@@ -253,7 +258,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L314}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -263,6 +268,7 @@ class BackendServicesClient {
   // clang-format off
   ///
   /// Deletes the specified BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -290,7 +296,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L314}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -302,6 +308,7 @@ class BackendServicesClient {
   ///
   /// Deletes a key for validating requests with signed URLs for this backend
   /// service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/deleteSignedUrlKey
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to which the Signed URL Key should be
@@ -327,7 +334,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L338}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -339,6 +346,7 @@ class BackendServicesClient {
   ///
   /// Deletes a key for validating requests with signed URLs for this backend
   /// service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/deleteSignedUrlKey
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -366,7 +374,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L338}
+  /// [google.cloud.cpp.compute.backend_services.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -377,6 +385,7 @@ class BackendServicesClient {
   // clang-format off
   ///
   /// Returns the specified BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/get
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to return.
@@ -394,7 +403,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L366}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L380}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -405,6 +414,7 @@ class BackendServicesClient {
   // clang-format off
   ///
   /// Returns the specified BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -426,7 +436,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L366}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L380}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -440,6 +450,7 @@ class BackendServicesClient {
   /// Gets the most recent health check results for this BackendService. Example
   /// request body: { "group":
   /// "/zones/us-east1-b/instanceGroups/lb-backend-example" }
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getHealth
   ///
   /// @param project
   /// @param backend_service  Name of the BackendService resource to which the queried instance belongs.
@@ -458,7 +469,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L375}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L389}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L702}
   ///
   // clang-format on
@@ -473,6 +484,7 @@ class BackendServicesClient {
   /// Gets the most recent health check results for this BackendService. Example
   /// request body: { "group":
   /// "/zones/us-east1-b/instanceGroups/lb-backend-example" }
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getHealth
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -494,7 +506,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L375}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L389}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L702}
   ///
   // clang-format on
@@ -508,6 +520,7 @@ class BackendServicesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -525,7 +538,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L387}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L401}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -537,6 +550,7 @@ class BackendServicesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -558,7 +572,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L387}
+  /// [google.cloud.cpp.compute.backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L401}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -572,6 +586,7 @@ class BackendServicesClient {
   /// Creates a BackendService resource in the specified project using the data
   /// included in the request. For more information, see Backend services
   /// overview .
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/insert
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service_resource  The BackendService for this request.
@@ -595,7 +610,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L399}
+  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L413}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -609,6 +624,7 @@ class BackendServicesClient {
   /// Creates a BackendService resource in the specified project using the data
   /// included in the request. For more information, see Backend services
   /// overview .
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -636,7 +652,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L399}
+  /// [google.cloud.cpp.compute.backend_services.v1.InsertBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L413}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -648,6 +664,7 @@ class BackendServicesClient {
   ///
   /// Retrieves the list of BackendService resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -673,7 +690,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L424}
+  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L438}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -684,6 +701,7 @@ class BackendServicesClient {
   ///
   /// Retrieves the list of BackendService resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -714,7 +732,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L424}
+  /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L438}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -729,6 +747,7 @@ class BackendServicesClient {
   /// request. For more information, see Backend services overview. This method
   /// supports PATCH semantics and uses the JSON merge patch format and
   /// processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/patch
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to patch.
@@ -753,7 +772,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L489}
+  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L503}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -769,6 +788,7 @@ class BackendServicesClient {
   /// request. For more information, see Backend services overview. This method
   /// supports PATCH semantics and uses the JSON merge patch format and
   /// processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -796,7 +816,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L489}
+  /// [google.cloud.cpp.compute.backend_services.v1.PatchBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L503}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -807,6 +827,7 @@ class BackendServicesClient {
   // clang-format off
   ///
   /// Sets the edge security policy for the specified backend service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setEdgeSecurityPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to which the edge security policy
@@ -832,7 +853,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L517}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L531}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -845,6 +866,7 @@ class BackendServicesClient {
   // clang-format off
   ///
   /// Sets the edge security policy for the specified backend service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setEdgeSecurityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -872,7 +894,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L517}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L531}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -884,6 +906,7 @@ class BackendServicesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -902,7 +925,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L547}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L561}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -916,6 +939,7 @@ class BackendServicesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -937,7 +961,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L547}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L561}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -950,6 +974,7 @@ class BackendServicesClient {
   ///
   /// Sets the Google Cloud Armor security policy for the specified backend
   /// service. For more information, see Google Cloud Armor Overview
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setSecurityPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to which the security policy should be
@@ -975,7 +1000,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L561}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -989,6 +1014,7 @@ class BackendServicesClient {
   ///
   /// Sets the Google Cloud Armor security policy for the specified backend
   /// service. For more information, see Google Cloud Armor Overview
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setSecurityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1016,7 +1042,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L561}
+  /// [google.cloud.cpp.compute.backend_services.v1.SetSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1028,6 +1054,7 @@ class BackendServicesClient {
   ///
   /// Updates the specified BackendService resource with the data included in the
   /// request. For more information, see Backend services overview.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/update
   ///
   /// @param project  Project ID for this request.
   /// @param backend_service  Name of the BackendService resource to update.
@@ -1052,7 +1079,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L591}
+  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L605}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1066,6 +1093,7 @@ class BackendServicesClient {
   ///
   /// Updates the specified BackendService resource with the data included in the
   /// request. For more information, see Backend services overview.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1093,7 +1121,7 @@ class BackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L591}
+  /// [google.cloud.cpp.compute.backend_services.v1.UpdateBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L605}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

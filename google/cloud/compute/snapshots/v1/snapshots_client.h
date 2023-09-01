@@ -93,6 +93,7 @@ class SnapshotsClient {
   /// If any data on the snapshot that is marked for deletion is needed for
   /// subsequent snapshots, the data will be moved to the next corresponding
   /// snapshot. For more information, see Deleting snapshots.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/delete
   ///
   /// @param project  Project ID for this request.
   /// @param snapshot  Name of the Snapshot resource to delete.
@@ -116,7 +117,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L140}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
@@ -130,6 +131,7 @@ class SnapshotsClient {
   /// If any data on the snapshot that is marked for deletion is needed for
   /// subsequent snapshots, the data will be moved to the next corresponding
   /// snapshot. For more information, see Deleting snapshots.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,7 +159,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L140}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
@@ -168,6 +170,7 @@ class SnapshotsClient {
   // clang-format off
   ///
   /// Returns the specified Snapshot resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/get
   ///
   /// @param project  Project ID for this request.
   /// @param snapshot  Name of the Snapshot resource to return.
@@ -185,7 +188,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L176}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
@@ -196,6 +199,7 @@ class SnapshotsClient {
   // clang-format off
   ///
   /// Returns the specified Snapshot resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,7 +221,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L176}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
@@ -230,6 +234,7 @@ class SnapshotsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -247,7 +252,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L164}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L172}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -259,6 +264,7 @@ class SnapshotsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -280,7 +286,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L164}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L172}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -295,6 +301,7 @@ class SnapshotsClient {
   /// request. For regular snapshot creation, consider using this method instead
   /// of disks.createSnapshot, as this method supports more features, such as
   /// creating snapshots in a project different from the source disk project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/insert
   ///
   /// @param project  Project ID for this request.
   /// @param snapshot_resource  The Snapshot for this request.
@@ -318,7 +325,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L185}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
@@ -332,6 +339,7 @@ class SnapshotsClient {
   /// request. For regular snapshot creation, consider using this method instead
   /// of disks.createSnapshot, as this method supports more features, such as
   /// creating snapshots in a project different from the source disk project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -359,7 +367,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L185}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
@@ -371,6 +379,7 @@ class SnapshotsClient {
   ///
   /// Retrieves the list of Snapshot resources contained within the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -396,7 +405,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L210}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L218}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
@@ -407,6 +416,7 @@ class SnapshotsClient {
   ///
   /// Retrieves the list of Snapshot resources contained within the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -437,7 +447,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L210}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L218}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
@@ -449,6 +459,7 @@ class SnapshotsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -467,7 +478,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L275}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L283}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -481,6 +492,7 @@ class SnapshotsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -502,7 +514,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L275}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L283}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -515,6 +527,7 @@ class SnapshotsClient {
   ///
   /// Sets the labels on a snapshot. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -539,7 +552,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L289}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -552,6 +565,7 @@ class SnapshotsClient {
   ///
   /// Sets the labels on a snapshot. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -579,7 +593,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L289}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L297}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -590,6 +604,7 @@ class SnapshotsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -608,7 +623,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L306}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L314}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -622,6 +637,7 @@ class SnapshotsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -643,7 +659,7 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L306}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L314}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

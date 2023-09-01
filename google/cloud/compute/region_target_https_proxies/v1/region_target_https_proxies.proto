@@ -40,6 +40,7 @@ service RegionTargetHttpsProxies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetHttpsProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/delete
   rpc DeleteRegionTargetHttpsProxies(DeleteRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service RegionTargetHttpsProxies {
   }
 
   // Returns the specified TargetHttpsProxy resource in the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/get
   rpc GetRegionTargetHttpsProxies(GetRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxy) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service RegionTargetHttpsProxies {
 
   // Creates a TargetHttpsProxy resource in the specified project and region
   // using the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/insert
   rpc InsertRegionTargetHttpsProxies(InsertRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -73,6 +76,7 @@ service RegionTargetHttpsProxies {
 
   // Retrieves the list of TargetHttpsProxy resources available to the specified
   // project in the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/list
   rpc ListRegionTargetHttpsProxies(ListRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxyList) {
     option (google.api.http) = {
@@ -84,6 +88,7 @@ service RegionTargetHttpsProxies {
   // Patches the specified regional TargetHttpsProxy resource with the data
   // included in the request. This method supports PATCH semantics and uses JSON
   // merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/patch
   rpc PatchRegionTargetHttpsProxies(PatchRegionTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -96,6 +101,7 @@ service RegionTargetHttpsProxies {
   }
 
   // Replaces SslCertificates for TargetHttpsProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/setSslCertificates
   rpc SetSslCertificates(SetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -108,6 +114,7 @@ service RegionTargetHttpsProxies {
   }
 
   // Changes the URL map for TargetHttpsProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/setUrlMap
   rpc SetUrlMap(SetUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

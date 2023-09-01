@@ -40,6 +40,7 @@ service BackendBuckets {
 
   // Adds a key for validating requests with signed URLs for this backend
   // bucket.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/addSignedUrlKey
   rpc AddSignedUrlKey(AddSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -52,6 +53,7 @@ service BackendBuckets {
   }
 
   // Deletes the specified BackendBucket resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/delete
   rpc DeleteBackendBuckets(DeleteBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -63,6 +65,7 @@ service BackendBuckets {
 
   // Deletes a key for validating requests with signed URLs for this backend
   // bucket.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/deleteSignedUrlKey
   rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -74,6 +77,7 @@ service BackendBuckets {
   }
 
   // Returns the specified BackendBucket resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/get
   rpc GetBackendBuckets(GetBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.BackendBucket) {
     option (google.api.http) = {
@@ -84,6 +88,7 @@ service BackendBuckets {
 
   // Creates a BackendBucket resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/insert
   rpc InsertBackendBuckets(InsertBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -96,6 +101,7 @@ service BackendBuckets {
 
   // Retrieves the list of BackendBucket resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/list
   rpc ListBackendBuckets(ListBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.BackendBucketList) {
     option (google.api.http) = {
@@ -107,6 +113,7 @@ service BackendBuckets {
   // Updates the specified BackendBucket resource with the data included in the
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/patch
   rpc PatchBackendBuckets(PatchBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -119,6 +126,7 @@ service BackendBuckets {
   }
 
   // Sets the edge security policy for the specified backend bucket.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/setEdgeSecurityPolicy
   rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -132,6 +140,7 @@ service BackendBuckets {
 
   // Updates the specified BackendBucket resource with the data included in the
   // request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/update
   rpc UpdateBackendBuckets(UpdateBackendBucketsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

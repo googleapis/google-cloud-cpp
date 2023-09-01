@@ -45,6 +45,7 @@ service Instances {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds an access config to an instance's network interface.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/addAccessConfig
   rpc AddAccessConfig(AddAccessConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -59,6 +60,7 @@ service Instances {
   // Adds existing resource policies to an instance. You can only add one policy
   // right now which will be applied to this instance for scheduling live
   // migrations.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/addResourcePolicies
   rpc AddResourcePolicies(AddResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -73,6 +75,7 @@ service Instances {
   // Retrieves an aggregated list of all of the instances in your project across
   // all regions and zones. The performance of this method degrades when a
   // filter is specified on a project that has a very large number of instances.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/aggregatedList
   rpc AggregatedListInstances(AggregatedListInstancesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceAggregatedList) {
     option (google.api.http) = {
@@ -85,6 +88,7 @@ service Instances {
   // the disk before you can attach it. It is not possible to create and attach
   // a disk at the same time. For more information, read Adding a persistent
   // disk to your instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/attachDisk
   rpc AttachDisk(AttachDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -98,6 +102,7 @@ service Instances {
 
   // Creates multiple instances. Count specifies the number of instances to
   // create. For more information, see About bulk creation of VMs.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/bulkInsert
   rpc BulkInsert(BulkInsertRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -111,6 +116,7 @@ service Instances {
 
   // Deletes the specified Instance resource. For more information, see Deleting
   // an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/delete
   rpc DeleteInstances(DeleteInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -121,6 +127,7 @@ service Instances {
   }
 
   // Deletes an access config from an instance's network interface.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/deleteAccessConfig
   rpc DeleteAccessConfig(DeleteAccessConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -133,6 +140,7 @@ service Instances {
   }
 
   // Detaches a disk from an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/detachDisk
   rpc DetachDisk(DetachDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -144,6 +152,7 @@ service Instances {
   }
 
   // Returns the specified Instance resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/get
   rpc GetInstances(GetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Instance) {
     option (google.api.http) = {
@@ -153,6 +162,7 @@ service Instances {
   }
 
   // Returns effective firewalls applied to an interface of the instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/getEffectiveFirewalls
   rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
       google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
@@ -163,6 +173,7 @@ service Instances {
   }
 
   // Returns the specified guest attributes entry.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/getGuestAttributes
   rpc GetGuestAttributes(GetGuestAttributesRequest)
       returns (google.cloud.cpp.compute.v1.GuestAttributes) {
     option (google.api.http) = {
@@ -173,6 +184,7 @@ service Instances {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -182,6 +194,7 @@ service Instances {
   }
 
   // Returns the screenshot from the specified instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/getScreenshot
   rpc GetScreenshot(GetScreenshotRequest)
       returns (google.cloud.cpp.compute.v1.Screenshot) {
     option (google.api.http) = {
@@ -191,6 +204,7 @@ service Instances {
   }
 
   // Returns the last 1 MB of serial port output from the specified instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/getSerialPortOutput
   rpc GetSerialPortOutput(GetSerialPortOutputRequest)
       returns (google.cloud.cpp.compute.v1.SerialPortOutput) {
     option (google.api.http) = {
@@ -200,6 +214,7 @@ service Instances {
   }
 
   // Returns the Shielded Instance Identity of an instance
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/getShieldedInstanceIdentity
   rpc GetShieldedInstanceIdentity(GetShieldedInstanceIdentityRequest)
       returns (google.cloud.cpp.compute.v1.ShieldedInstanceIdentity) {
     option (google.api.http) = {
@@ -210,6 +225,7 @@ service Instances {
 
   // Creates an instance resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/insert
   rpc InsertInstances(InsertInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -221,6 +237,7 @@ service Instances {
   }
 
   // Retrieves the list of instances contained within the specified zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/list
   rpc ListInstances(ListInstancesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceList) {
     option (google.api.http) = {
@@ -233,6 +250,7 @@ service Instances {
   // the request. For example, if the VM instance is part of a managed or
   // unmanaged instance group, the referrers list includes the instance group.
   // For more information, read Viewing referrers to VM instances.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/listReferrers
   rpc ListReferrers(ListReferrersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceListReferrers) {
     option (google.api.http) = {
@@ -242,6 +260,7 @@ service Instances {
   }
 
   // Removes resource policies from an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/removeResourcePolicies
   rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -255,6 +274,7 @@ service Instances {
 
   // Performs a reset on the instance. This is a hard reset. The VM does not do
   // a graceful shutdown. For more information, see Resetting an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/reset
   rpc Reset(ResetRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/reset"
@@ -266,6 +286,7 @@ service Instances {
 
   // Resumes an instance that was suspended using the instances().suspend
   // method.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/resume
   rpc Resume(ResumeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/resume"
@@ -276,6 +297,7 @@ service Instances {
   }
 
   // Sends diagnostic interrupt to the instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/sendDiagnosticInterrupt
   rpc SendDiagnosticInterrupt(SendDiagnosticInterruptRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -286,6 +308,7 @@ service Instances {
   }
 
   // Sets deletion protection on the instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setDeletionProtection
   rpc SetDeletionProtection(SetDeletionProtectionRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -297,6 +320,7 @@ service Instances {
   }
 
   // Sets the auto-delete flag for a disk attached to an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setDiskAutoDelete
   rpc SetDiskAutoDelete(SetDiskAutoDeleteRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -310,6 +334,7 @@ service Instances {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -322,6 +347,7 @@ service Instances {
 
   // Sets labels on an instance. To learn more about labels, read the Labeling
   // Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -335,6 +361,7 @@ service Instances {
 
   // Changes the number and/or type of accelerator for a stopped instance to the
   // values specified in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineResources
   rpc SetMachineResources(SetMachineResourcesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -348,6 +375,7 @@ service Instances {
 
   // Changes the machine type for a stopped instance to the machine type
   // specified in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineType
   rpc SetMachineType(SetMachineTypeRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -361,6 +389,7 @@ service Instances {
 
   // Sets metadata for the specified instance to the data included in the
   // request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMetadata
   rpc SetMetadata(SetMetadataRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -375,6 +404,7 @@ service Instances {
   // Changes the minimum CPU platform that this instance should use. This method
   // can only be called on a stopped instance. For more information, read
   // Specifying a Minimum CPU Platform.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMinCpuPlatform
   rpc SetMinCpuPlatform(SetMinCpuPlatformRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -387,6 +417,7 @@ service Instances {
   }
 
   // Sets name of an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setName
   rpc SetName(SetNameRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setName"
@@ -402,6 +433,7 @@ service Instances {
   // See Instance Life Cycle for more information on the possible instance
   // states. For more information about setting scheduling options for a VM, see
   // Set VM host maintenance policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
   rpc SetScheduling(SetSchedulingRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -415,6 +447,7 @@ service Instances {
 
   // Sets the service account on the instance. For more information, read
   // Changing the service account and access scopes for an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setServiceAccount
   rpc SetServiceAccount(SetServiceAccountRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -429,6 +462,7 @@ service Instances {
   // Sets the Shielded Instance integrity policy for an instance. You can only
   // use this method on a running instance. This method supports PATCH semantics
   // and uses the JSON merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setShieldedInstanceIntegrityPolicy
   rpc SetShieldedInstanceIntegrityPolicy(
       SetShieldedInstanceIntegrityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -443,6 +477,7 @@ service Instances {
 
   // Sets network tags for the specified instance to the data included in the
   // request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/setTags
   rpc SetTags(SetTagsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setTags"
@@ -455,6 +490,7 @@ service Instances {
 
   // Simulates a host maintenance event on a VM. For more information, see
   // Simulate a host maintenance event.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/simulateMaintenanceEvent
   rpc SimulateMaintenanceEvent(SimulateMaintenanceEventRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -467,6 +503,7 @@ service Instances {
 
   // Starts an instance that was stopped using the instances().stop method. For
   // more information, see Restart an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/start
   rpc Start(StartRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/start"
@@ -478,6 +515,7 @@ service Instances {
 
   // Starts an instance that was stopped using the instances().stop method. For
   // more information, see Restart an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/startWithEncryptionKey
   rpc StartWithEncryptionKey(StartWithEncryptionKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -495,6 +533,7 @@ service Instances {
   // using, such as persistent disks and static IP addresses, will continue to
   // be charged until they are deleted. For more information, see Stopping an
   // instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/stop
   rpc Stop(StopRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/stop"
@@ -511,6 +550,7 @@ service Instances {
   // the virtual machine was using, such as persistent disks and static IP
   // addresses, will continue to be charged while the instance is suspended. For
   // more information, see Suspending and resuming an instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/suspend
   rpc Suspend(SuspendRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/suspend"
@@ -521,6 +561,7 @@ service Instances {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
@@ -534,6 +575,7 @@ service Instances {
   // Updates an instance only if the necessary resources are available. This
   // method can update only a specific set of instance properties. See Updating
   // a running instance for a list of updatable instance properties.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/update
   rpc UpdateInstances(UpdateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -548,6 +590,7 @@ service Instances {
   // Updates the specified access config from an instance's network interface
   // with the data included in the request. This method supports PATCH semantics
   // and uses the JSON merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateAccessConfig
   rpc UpdateAccessConfig(UpdateAccessConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -562,6 +605,7 @@ service Instances {
   // Updates the Display config for a VM instance. You can only use this method
   // on a stopped VM instance. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateDisplayDevice
   rpc UpdateDisplayDevice(UpdateDisplayDeviceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -578,6 +622,7 @@ service Instances {
   // ranges for an existing instance for instructions on changing alias IP
   // ranges. See Migrating a VM between networks for instructions on migrating
   // an interface. This method follows PATCH semantics.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateNetworkInterface
   rpc UpdateNetworkInterface(UpdateNetworkInterfaceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -592,6 +637,7 @@ service Instances {
   // Updates the Shielded Instance config for an instance. You can only use this
   // method on a stopped instance. This method supports PATCH semantics and uses
   // the JSON merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateShieldedInstanceConfig
   rpc UpdateShieldedInstanceConfig(UpdateShieldedInstanceConfigRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -1783,10 +1829,10 @@ message SimulateMaintenanceEventRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 3 [
+  string zone = 4 [
     (google.api.field_behavior) = REQUIRED,
     (google.cloud.operation_request_field) = "zone"
   ];

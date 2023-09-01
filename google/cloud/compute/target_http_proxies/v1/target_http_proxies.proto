@@ -41,6 +41,7 @@ service TargetHttpProxies {
 
   // Retrieves the list of all TargetHttpProxy resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/aggregatedList
   rpc AggregatedListTargetHttpProxies(AggregatedListTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxyAggregatedList) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service TargetHttpProxies {
   }
 
   // Deletes the specified TargetHttpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/delete
   rpc DeleteTargetHttpProxies(DeleteTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service TargetHttpProxies {
   }
 
   // Returns the specified TargetHttpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/get
   rpc GetTargetHttpProxies(GetTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service TargetHttpProxies {
 
   // Creates a TargetHttpProxy resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/insert
   rpc InsertTargetHttpProxies(InsertTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service TargetHttpProxies {
 
   // Retrieves the list of TargetHttpProxy resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/list
   rpc ListTargetHttpProxies(ListTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxyList) {
     option (google.api.http) = {
@@ -93,6 +98,7 @@ service TargetHttpProxies {
   // Patches the specified TargetHttpProxy resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/patch
   rpc PatchTargetHttpProxies(PatchTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -105,6 +111,7 @@ service TargetHttpProxies {
   }
 
   // Changes the URL map for TargetHttpProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/setUrlMap
   rpc SetUrlMap(SetUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

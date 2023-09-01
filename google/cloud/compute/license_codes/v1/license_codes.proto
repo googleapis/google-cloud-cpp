@@ -40,6 +40,7 @@ service LicenseCodes {
   // projects that have permissions to read the License Code. *Caution* This
   // resource is intended for use only by third-party partners who are creating
   // Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/get
   rpc GetLicenseCodes(GetLicenseCodesRequest)
       returns (google.cloud.cpp.compute.v1.LicenseCode) {
     option (google.api.http) = {
@@ -51,6 +52,7 @@ service LicenseCodes {
   // Returns permissions that a caller has on the specified resource. *Caution*
   // This resource is intended for use only by third-party partners who are
   // creating Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

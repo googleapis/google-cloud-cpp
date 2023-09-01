@@ -90,6 +90,7 @@ class ZoneOperationsClient {
   // clang-format off
   ///
   /// Deletes the specified zone-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -106,7 +107,7 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L89}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L93}
   ///
   // clang-format on
   Status DeleteZoneOperations(std::string const& project,
@@ -116,6 +117,7 @@ class ZoneOperationsClient {
   // clang-format off
   ///
   /// Deletes the specified zone-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -135,7 +137,7 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L89}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L93}
   ///
   // clang-format on
   Status DeleteZoneOperations(google::cloud::cpp::compute::zone_operations::v1::
@@ -145,6 +147,7 @@ class ZoneOperationsClient {
   // clang-format off
   ///
   /// Retrieves the specified zone-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -164,7 +167,7 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L101}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L105}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
@@ -174,6 +177,7 @@ class ZoneOperationsClient {
   // clang-format off
   ///
   /// Retrieves the specified zone-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -196,7 +200,7 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L101}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L105}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
@@ -208,6 +212,7 @@ class ZoneOperationsClient {
   ///
   /// Retrieves a list of Operation resources contained within the specified
   /// zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for request.
@@ -235,7 +240,7 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L119}
+  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L123}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
@@ -245,6 +250,7 @@ class ZoneOperationsClient {
   ///
   /// Retrieves a list of Operation resources contained within the specified
   /// zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -276,7 +282,7 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L119}
+  /// [google.cloud.cpp.compute.zone_operations.v1.ListZoneOperationsRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L123}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
@@ -296,6 +302,7 @@ class ZoneOperationsClient {
   /// return after zero seconds. - If the default deadline is reached, there is
   /// no guarantee that the operation is actually done when the method returns.
   /// Be prepared to retry if the operation is not `DONE`.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/wait
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -315,7 +322,7 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L187}
+  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -334,6 +341,7 @@ class ZoneOperationsClient {
   /// return after zero seconds. - If the default deadline is reached, there is
   /// no guarantee that the operation is actually done when the method returns.
   /// Be prepared to retry if the operation is not `DONE`.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/wait
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -356,7 +364,7 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L187}
+  /// [google.cloud.cpp.compute.zone_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(

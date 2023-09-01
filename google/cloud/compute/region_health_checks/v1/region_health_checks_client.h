@@ -92,6 +92,7 @@ class RegionHealthChecksClient {
   // clang-format off
   ///
   /// Deletes the specified HealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -116,7 +117,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L111}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -127,6 +128,7 @@ class RegionHealthChecksClient {
   // clang-format off
   ///
   /// Deletes the specified HealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -154,7 +156,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L111}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.DeleteRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -166,6 +168,7 @@ class RegionHealthChecksClient {
   // clang-format off
   ///
   /// Returns the specified HealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -184,7 +187,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.GetRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L141}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.GetRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L147}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_042.proto#L271}
   ///
   // clang-format on
@@ -195,6 +198,7 @@ class RegionHealthChecksClient {
   // clang-format off
   ///
   /// Returns the specified HealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -216,7 +220,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.GetRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L141}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.GetRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L147}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_042.proto#L271}
   ///
   // clang-format on
@@ -229,6 +233,7 @@ class RegionHealthChecksClient {
   ///
   /// Creates a HealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -253,7 +258,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L153}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L159}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -266,6 +271,7 @@ class RegionHealthChecksClient {
   ///
   /// Creates a HealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -293,7 +299,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L153}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.InsertRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L159}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -306,6 +312,7 @@ class RegionHealthChecksClient {
   ///
   /// Retrieves the list of HealthCheck resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -332,7 +339,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L184}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L190}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_042.proto#L271}
   ///
   // clang-format on
@@ -344,6 +351,7 @@ class RegionHealthChecksClient {
   ///
   /// Retrieves the list of HealthCheck resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -374,7 +382,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L184}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.ListRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L190}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_042.proto#L271}
   ///
   // clang-format on
@@ -388,6 +396,7 @@ class RegionHealthChecksClient {
   /// Updates a HealthCheck resource in the specified project using the data
   /// included in the request. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -413,7 +422,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L252}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -428,6 +437,7 @@ class RegionHealthChecksClient {
   /// Updates a HealthCheck resource in the specified project using the data
   /// included in the request. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -455,7 +465,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L252}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.PatchRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -467,6 +477,7 @@ class RegionHealthChecksClient {
   ///
   /// Updates a HealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/update
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -492,7 +503,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L286}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -506,6 +517,7 @@ class RegionHealthChecksClient {
   ///
   /// Updates a HealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -533,7 +545,7 @@ class RegionHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L286}
+  /// [google.cloud.cpp.compute.region_health_checks.v1.UpdateRegionHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

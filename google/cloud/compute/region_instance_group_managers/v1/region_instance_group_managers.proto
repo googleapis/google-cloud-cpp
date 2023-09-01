@@ -50,6 +50,7 @@ service RegionInstanceGroupManagers {
   // take up to 60 seconds after the connection draining duration has elapsed
   // before the VM instance is removed or deleted. You can specify a maximum of
   // 1000 instances with this method per request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/abandonInstances
   rpc AbandonInstances(AbandonInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -62,6 +63,7 @@ service RegionInstanceGroupManagers {
   }
 
   // Apply updates to selected instances the managed instance group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/applyUpdatesToInstances
   rpc ApplyUpdatesToInstances(ApplyUpdatesToInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -79,6 +81,7 @@ service RegionInstanceGroupManagers {
   // request is successful. The underlying actions take additional time. You
   // must separately verify the status of the creating or actions with the
   // listmanagedinstances method.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/createInstances
   rpc CreateInstances(CreateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -92,6 +95,7 @@ service RegionInstanceGroupManagers {
 
   // Deletes the specified managed instance group and all of the instances in
   // that group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/delete
   rpc DeleteRegionInstanceGroupManagers(
       DeleteRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -115,6 +119,7 @@ service RegionInstanceGroupManagers {
   // connection draining duration has elapsed before the VM instance is removed
   // or deleted. You can specify a maximum of 1000 instances with this method
   // per request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/deleteInstances
   rpc DeleteInstances(DeleteInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -128,6 +133,7 @@ service RegionInstanceGroupManagers {
 
   // Deletes selected per-instance configurations for the managed instance
   // group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/deletePerInstanceConfigs
   rpc DeletePerInstanceConfigs(DeletePerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -140,6 +146,7 @@ service RegionInstanceGroupManagers {
   }
 
   // Returns all of the details about the specified managed instance group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/get
   rpc GetRegionInstanceGroupManagers(GetRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
     option (google.api.http) = {
@@ -156,6 +163,7 @@ service RegionInstanceGroupManagers {
   // been created. You must separately verify the status of the individual
   // instances with the listmanagedinstances method. A regional managed instance
   // group can contain up to 2000 instances.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/insert
   rpc InsertRegionInstanceGroupManagers(
       InsertRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -170,6 +178,7 @@ service RegionInstanceGroupManagers {
 
   // Retrieves the list of managed instance groups that are contained within the
   // specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/list
   rpc ListRegionInstanceGroupManagers(ListRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.RegionInstanceGroupManagerList) {
     option (google.api.http) = {
@@ -181,6 +190,7 @@ service RegionInstanceGroupManagers {
   // Lists all errors thrown by actions on instances for a given regional
   // managed instance group. The filter and orderBy query parameters are not
   // supported.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/listErrors
   rpc ListErrors(ListErrorsRequest)
       returns (google.cloud.cpp.compute.v1
                    .RegionInstanceGroupManagersListErrorsResponse) {
@@ -197,6 +207,7 @@ service RegionInstanceGroupManagers {
   // supported. The `pageToken` query parameter is supported only in the alpha
   // and beta API and only if the group's `listManagedInstancesResults` field is
   // set to `PAGINATED`.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/listManagedInstances
   rpc ListManagedInstances(ListManagedInstancesRequest)
       returns (google.cloud.cpp.compute.v1
                    .RegionInstanceGroupManagersListInstancesResponse) {
@@ -210,6 +221,7 @@ service RegionInstanceGroupManagers {
 
   // Lists all of the per-instance configurations defined for the managed
   // instance group. The orderBy query parameter is not supported.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/listPerInstanceConfigs
   rpc ListPerInstanceConfigs(ListPerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1
                    .RegionInstanceGroupManagersListInstanceConfigsResp) {
@@ -231,6 +243,7 @@ service RegionInstanceGroupManagers {
   // possible that your intended specification for each VM in the group is
   // different from the current state of that VM. To learn how to apply an
   // updated configuration to the VMs in a MIG, see Updating instances in a MIG.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/patch
   rpc PatchRegionInstanceGroupManagers(PatchRegionInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -245,6 +258,7 @@ service RegionInstanceGroupManagers {
   // Inserts or patches per-instance configurations for the managed instance
   // group. perInstanceConfig.name serves as a key used to distinguish whether
   // to perform insert or patch.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/patchPerInstanceConfigs
   rpc PatchPerInstanceConfigs(PatchPerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -266,6 +280,7 @@ service RegionInstanceGroupManagers {
   // up to 60 seconds after the connection draining duration has elapsed before
   // the VM instance is removed or deleted. You can specify a maximum of 1000
   // instances with this method per request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/recreateInstances
   rpc RecreateInstances(RecreateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -287,6 +302,7 @@ service RegionInstanceGroupManagers {
   // has enabled connection draining, it can take up to 60 seconds after the
   // connection draining duration has elapsed before the VM instance is removed
   // or deleted.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/resize
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}/resize"
@@ -299,6 +315,7 @@ service RegionInstanceGroupManagers {
 
   // Sets the instance template to use when creating new instances or recreating
   // instances in this group. Existing instances are not affected.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/setInstanceTemplate
   rpc SetInstanceTemplate(SetInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -312,6 +329,7 @@ service RegionInstanceGroupManagers {
 
   // Modifies the target pools to which all new instances in this group are
   // assigned. Existing instances in the group are not affected.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/setTargetPools
   rpc SetTargetPools(SetTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -326,6 +344,7 @@ service RegionInstanceGroupManagers {
   // Inserts or updates per-instance configurations for the managed instance
   // group. perInstanceConfig.name serves as a key used to distinguish whether
   // to perform insert or patch.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/updatePerInstanceConfigs
   rpc UpdatePerInstanceConfigs(UpdatePerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

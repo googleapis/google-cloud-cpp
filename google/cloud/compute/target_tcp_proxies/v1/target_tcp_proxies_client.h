@@ -92,6 +92,7 @@ class TargetTcpProxiesClient {
   ///
   /// Retrieves the list of all TargetTcpProxy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -108,7 +109,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L118}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L125}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_127.proto#L129}
   ///
   // clang-format on
@@ -119,6 +120,7 @@ class TargetTcpProxiesClient {
   ///
   /// Retrieves the list of all TargetTcpProxy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -140,7 +142,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L118}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L125}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_127.proto#L129}
   ///
   // clang-format on
@@ -153,6 +155,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetTcpProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param target_tcp_proxy  Name of the TargetTcpProxy resource to delete.
@@ -176,7 +179,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L192}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -187,6 +190,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetTcpProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,7 +218,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L192}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -225,6 +229,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetTcpProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/get
   ///
   /// @param project  Project ID for this request.
   /// @param target_tcp_proxy  Name of the TargetTcpProxy resource to return.
@@ -242,7 +247,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L216}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L223}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
@@ -253,6 +258,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetTcpProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -274,7 +280,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L216}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L223}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
@@ -287,6 +293,7 @@ class TargetTcpProxiesClient {
   ///
   /// Creates a TargetTcpProxy resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param target_tcp_proxy_resource  The TargetTcpProxy for this request.
@@ -310,7 +317,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L225}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L232}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -323,6 +330,7 @@ class TargetTcpProxiesClient {
   ///
   /// Creates a TargetTcpProxy resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -350,7 +358,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L225}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L232}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -362,6 +370,7 @@ class TargetTcpProxiesClient {
   ///
   /// Retrieves the list of TargetTcpProxy resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -387,7 +396,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L250}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L257}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
@@ -398,6 +407,7 @@ class TargetTcpProxiesClient {
   ///
   /// Retrieves the list of TargetTcpProxy resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -428,7 +438,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L250}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L257}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
@@ -440,6 +450,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Changes the BackendService for TargetTcpProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/setBackendService
   ///
   /// @param project  Project ID for this request.
   /// @param target_tcp_proxy  Name of the TargetTcpProxy resource whose BackendService resource is to be
@@ -465,7 +476,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L315}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L322}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -479,6 +490,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Changes the BackendService for TargetTcpProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/setBackendService
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -506,7 +518,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L315}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L322}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -517,6 +529,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Changes the ProxyHeaderType for TargetTcpProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/setProxyHeader
   ///
   /// @param project  Project ID for this request.
   /// @param target_tcp_proxy  Name of the TargetTcpProxy resource whose ProxyHeader is to be set.
@@ -541,7 +554,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L345}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
@@ -554,6 +567,7 @@ class TargetTcpProxiesClient {
   // clang-format off
   ///
   /// Changes the ProxyHeaderType for TargetTcpProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/setProxyHeader
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -581,7 +595,7 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L345}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(

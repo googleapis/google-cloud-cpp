@@ -94,6 +94,7 @@ class TargetHttpsProxiesClient {
   ///
   /// Retrieves the list of all TargetHttpsProxy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -110,7 +111,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.AggregatedListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L174}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.AggregatedListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L185}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_121.proto#L139}
   ///
   // clang-format on
@@ -122,6 +123,7 @@ class TargetHttpsProxiesClient {
   ///
   /// Retrieves the list of all TargetHttpsProxy resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -143,7 +145,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.AggregatedListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L174}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.AggregatedListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L185}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_121.proto#L139}
   ///
   // clang-format on
@@ -156,6 +158,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetHttpsProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource to delete.
@@ -179,7 +182,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.DeleteTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L248}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.DeleteTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -190,6 +193,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetHttpsProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -217,7 +221,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.DeleteTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L248}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.DeleteTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -229,6 +233,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetHttpsProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/get
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource to return.
@@ -246,7 +251,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.GetTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L272}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.GetTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L283}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_122.proto#L33}
   ///
   // clang-format on
@@ -258,6 +263,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetHttpsProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -279,7 +285,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.GetTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L272}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.GetTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L283}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_122.proto#L33}
   ///
   // clang-format on
@@ -292,6 +298,7 @@ class TargetHttpsProxiesClient {
   ///
   /// Creates a TargetHttpsProxy resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy_resource  The TargetHttpsProxy for this request.
@@ -315,7 +322,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.InsertTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L281}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.InsertTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -329,6 +336,7 @@ class TargetHttpsProxiesClient {
   ///
   /// Creates a TargetHttpsProxy resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -356,7 +364,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.InsertTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L281}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.InsertTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -369,6 +377,7 @@ class TargetHttpsProxiesClient {
   ///
   /// Retrieves the list of TargetHttpsProxy resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -394,7 +403,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.ListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L306}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.ListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L317}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_122.proto#L33}
   ///
   // clang-format on
@@ -405,6 +414,7 @@ class TargetHttpsProxiesClient {
   ///
   /// Retrieves the list of TargetHttpsProxy resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -435,7 +445,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.ListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L306}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.ListTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L317}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_122.proto#L33}
   ///
   // clang-format on
@@ -449,6 +459,7 @@ class TargetHttpsProxiesClient {
   /// Patches the specified TargetHttpsProxy resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource to patch.
@@ -473,7 +484,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.PatchTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L371}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.PatchTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -488,6 +499,7 @@ class TargetHttpsProxiesClient {
   /// Patches the specified TargetHttpsProxy resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -515,7 +527,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.PatchTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L371}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.PatchTargetHttpsProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -526,6 +538,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Changes the Certificate Map for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setCertificateMap
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource whose CertificateMap is to be set.
@@ -551,7 +564,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L399}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L410}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -565,6 +578,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Changes the Certificate Map for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setCertificateMap
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -592,7 +606,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L399}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetCertificateMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L410}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -603,6 +617,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Sets the QUIC override policy for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setQuicOverride
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource to set the QUIC override policy for.
@@ -628,7 +643,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetQuicOverrideRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L430}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetQuicOverrideRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L441}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
@@ -641,6 +656,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Sets the QUIC override policy for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setQuicOverride
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -668,7 +684,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetQuicOverrideRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L430}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetQuicOverrideRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L441}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
@@ -679,6 +695,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Replaces SslCertificates for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setSslCertificates
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource to set an SslCertificates resource
@@ -704,7 +721,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L460}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -718,6 +735,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Replaces SslCertificates for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setSslCertificates
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -745,7 +763,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L460}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -759,6 +777,7 @@ class TargetHttpsProxiesClient {
   /// server-side support for SSL features. This affects connections between
   /// clients and the HTTPS proxy load balancer. They do not affect the
   /// connection between the load balancer and the backends.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setSslPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource whose SSL policy is to be set. The
@@ -784,7 +803,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L491}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L502}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
@@ -799,6 +818,7 @@ class TargetHttpsProxiesClient {
   /// server-side support for SSL features. This affects connections between
   /// clients and the HTTPS proxy load balancer. They do not affect the
   /// connection between the load balancer and the backends.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setSslPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -826,7 +846,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L491}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetSslPolicyRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L502}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
@@ -837,6 +857,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Changes the URL map for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setUrlMap
   ///
   /// @param project  Project ID for this request.
   /// @param target_https_proxy  Name of the TargetHttpsProxy resource whose URL map is to be set.
@@ -861,7 +882,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L520}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L531}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
@@ -873,6 +894,7 @@ class TargetHttpsProxiesClient {
   // clang-format off
   ///
   /// Changes the URL map for TargetHttpsProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setUrlMap
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -900,7 +922,7 @@ class TargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L520}
+  /// [google.cloud.cpp.compute.target_https_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto#L531}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(

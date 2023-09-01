@@ -93,6 +93,7 @@ class NetworkAttachmentsClient {
   ///
   /// Retrieves the list of all NetworkAttachment resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -109,7 +110,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L129}
+  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L137}
   /// [google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_076.proto#L97}
   ///
   // clang-format on
@@ -121,6 +122,7 @@ class NetworkAttachmentsClient {
   ///
   /// Retrieves the list of all NetworkAttachment resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -142,7 +144,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L129}
+  /// [google.cloud.cpp.compute.network_attachments.v1.AggregatedListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L137}
   /// [google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_076.proto#L97}
   ///
   // clang-format on
@@ -155,6 +157,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Deletes the specified NetworkAttachment in the given scope
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -179,7 +182,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L203}
+  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L211}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -191,6 +194,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Deletes the specified NetworkAttachment in the given scope
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +222,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L203}
+  /// [google.cloud.cpp.compute.network_attachments.v1.DeleteNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L211}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -230,6 +234,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Returns the specified NetworkAttachment resource in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -248,7 +253,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L249}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L257}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_076.proto#L25}
   ///
   // clang-format on
@@ -260,6 +265,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Returns the specified NetworkAttachment resource in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -281,7 +287,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L249}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L257}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_076.proto#L25}
   ///
   // clang-format on
@@ -294,6 +300,7 @@ class NetworkAttachmentsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -312,7 +319,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L234}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L242}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -324,6 +331,7 @@ class NetworkAttachmentsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -345,7 +353,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L234}
+  /// [google.cloud.cpp.compute.network_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L242}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -358,6 +366,7 @@ class NetworkAttachmentsClient {
   ///
   /// Creates a NetworkAttachment in the specified project in the given scope
   /// using the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -382,7 +391,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L261}
+  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L269}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -396,6 +405,7 @@ class NetworkAttachmentsClient {
   ///
   /// Creates a NetworkAttachment in the specified project in the given scope
   /// using the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -423,7 +433,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L261}
+  /// [google.cloud.cpp.compute.network_attachments.v1.InsertNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L269}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -435,6 +445,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Lists the NetworkAttachments for a project in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -461,7 +472,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L293}
+  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L301}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_076.proto#L25}
   ///
   // clang-format on
@@ -472,6 +483,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Lists the NetworkAttachments for a project in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -502,7 +514,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L293}
+  /// [google.cloud.cpp.compute.network_attachments.v1.ListNetworkAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L301}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_076.proto#L25}
   ///
   // clang-format on
@@ -515,6 +527,7 @@ class NetworkAttachmentsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -534,7 +547,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L361}
+  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L369}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -549,6 +562,7 @@ class NetworkAttachmentsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -570,7 +584,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L361}
+  /// [google.cloud.cpp.compute.network_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L369}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -582,6 +596,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -601,7 +616,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L378}
+  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L386}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -616,6 +631,7 @@ class NetworkAttachmentsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -637,7 +653,7 @@ class NetworkAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L378}
+  /// [google.cloud.cpp.compute.network_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L386}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

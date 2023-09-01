@@ -47,6 +47,7 @@ service Snapshots {
   // If any data on the snapshot that is marked for deletion is needed for
   // subsequent snapshots, the data will be moved to the next corresponding
   // snapshot. For more information, see Deleting snapshots.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/delete
   rpc DeleteSnapshots(DeleteSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -57,6 +58,7 @@ service Snapshots {
   }
 
   // Returns the specified Snapshot resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/get
   rpc GetSnapshots(GetSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.Snapshot) {
     option (google.api.http) = {
@@ -67,6 +69,7 @@ service Snapshots {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -79,6 +82,7 @@ service Snapshots {
   // request. For regular snapshot creation, consider using this method instead
   // of disks.createSnapshot, as this method supports more features, such as
   // creating snapshots in a project different from the source disk project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/insert
   rpc InsertSnapshots(InsertSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -91,6 +95,7 @@ service Snapshots {
 
   // Retrieves the list of Snapshot resources contained within the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/list
   rpc ListSnapshots(ListSnapshotsRequest)
       returns (google.cloud.cpp.compute.v1.SnapshotList) {
     option (google.api.http) = {
@@ -101,6 +106,7 @@ service Snapshots {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -113,6 +119,7 @@ service Snapshots {
 
   // Sets the labels on a snapshot. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -125,6 +132,7 @@ service Snapshots {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

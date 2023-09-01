@@ -88,6 +88,7 @@ class RoutesClient {
   // clang-format off
   ///
   /// Deletes the specified Route resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/delete
   ///
   /// @param project  Project ID for this request.
   /// @param route  Name of the Route resource to delete.
@@ -111,7 +112,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L82}
+  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L86}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoutes(
@@ -120,6 +121,7 @@ class RoutesClient {
   // clang-format off
   ///
   /// Deletes the specified Route resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -147,7 +149,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L82}
+  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L86}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoutes(
@@ -158,6 +160,7 @@ class RoutesClient {
   // clang-format off
   ///
   /// Returns the specified Route resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/get
   ///
   /// @param project  Project ID for this request.
   /// @param route  Name of the Route resource to return.
@@ -175,7 +178,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L106}
+  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L110}
   /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_104.proto#L27}
   ///
   // clang-format on
@@ -185,6 +188,7 @@ class RoutesClient {
   // clang-format off
   ///
   /// Returns the specified Route resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -206,7 +210,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L106}
+  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L110}
   /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_104.proto#L27}
   ///
   // clang-format on
@@ -218,6 +222,7 @@ class RoutesClient {
   ///
   /// Creates a Route resource in the specified project using the data included
   /// in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/insert
   ///
   /// @param project  Project ID for this request.
   /// @param route_resource  The Route for this request.
@@ -241,7 +246,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L115}
+  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoutes(
@@ -253,6 +258,7 @@ class RoutesClient {
   ///
   /// Creates a Route resource in the specified project using the data included
   /// in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -280,7 +286,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L115}
+  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoutes(
@@ -291,6 +297,7 @@ class RoutesClient {
   // clang-format off
   ///
   /// Retrieves the list of Route resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -316,7 +323,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L140}
+  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L144}
   /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_104.proto#L27}
   ///
   // clang-format on
@@ -326,6 +333,7 @@ class RoutesClient {
   // clang-format off
   ///
   /// Retrieves the list of Route resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -356,7 +364,7 @@ class RoutesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L140}
+  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L144}
   /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_104.proto#L27}
   ///
   // clang-format on

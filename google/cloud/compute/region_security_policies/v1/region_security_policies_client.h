@@ -95,6 +95,7 @@ class RegionSecurityPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -119,7 +120,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L100}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L105}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -131,6 +132,7 @@ class RegionSecurityPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -158,7 +160,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L100}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L105}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -170,6 +172,7 @@ class RegionSecurityPoliciesClient {
   // clang-format off
   ///
   /// List all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -188,7 +191,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L130}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L135}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -201,6 +204,7 @@ class RegionSecurityPoliciesClient {
   // clang-format off
   ///
   /// List all of the ordered rules present in a single specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -222,7 +226,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L130}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L135}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -236,6 +240,7 @@ class RegionSecurityPoliciesClient {
   ///
   /// Creates a new policy in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -260,7 +265,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L142}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -274,6 +279,7 @@ class RegionSecurityPoliciesClient {
   ///
   /// Creates a new policy in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -301,7 +307,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L142}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L147}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -314,6 +320,7 @@ class RegionSecurityPoliciesClient {
   ///
   /// List all the policies that have been configured for the specified project
   /// and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -340,7 +347,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L176}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L181}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -352,6 +359,7 @@ class RegionSecurityPoliciesClient {
   ///
   /// List all the policies that have been configured for the specified project
   /// and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -382,7 +390,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L176}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L181}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -399,6 +407,7 @@ class RegionSecurityPoliciesClient {
   /// updateMask. This cannot be used to be update the rules in the policy.
   /// Please use the per rule methods like addRule, patchRule, and removeRule
   /// instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -424,7 +433,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L244}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -442,6 +451,7 @@ class RegionSecurityPoliciesClient {
   /// updateMask. This cannot be used to be update the rules in the policy.
   /// Please use the per rule methods like addRule, patchRule, and removeRule
   /// instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -469,7 +479,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L244}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRegionSecurityPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

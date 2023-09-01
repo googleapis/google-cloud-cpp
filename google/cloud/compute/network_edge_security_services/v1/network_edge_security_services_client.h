@@ -98,6 +98,7 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// Retrieves the list of all NetworkEdgeSecurityService resources available to
   /// the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -114,7 +115,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L102}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
   ///
   // clang-format on
@@ -127,6 +128,7 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// Retrieves the list of all NetworkEdgeSecurityService resources available to
   /// the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -148,7 +150,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L102}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
   ///
   // clang-format on
@@ -162,6 +164,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format off
   ///
   /// Deletes the specified service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -186,7 +189,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L176}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -197,6 +200,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format off
   ///
   /// Deletes the specified service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -224,7 +228,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L176}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -236,6 +240,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format off
   ///
   /// Gets a specified NetworkEdgeSecurityService.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -254,7 +259,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L207}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
   ///
   // clang-format on
@@ -266,6 +271,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format off
   ///
   /// Gets a specified NetworkEdgeSecurityService.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -287,7 +293,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L207}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
   ///
   // clang-format on
@@ -301,6 +307,7 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// Creates a new service in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -325,7 +332,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L220}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -339,6 +346,7 @@ class NetworkEdgeSecurityServicesClient {
   ///
   /// Creates a new service in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -366,7 +374,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L220}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -378,6 +386,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -403,7 +412,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L255}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -417,6 +426,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -444,7 +454,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L255}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

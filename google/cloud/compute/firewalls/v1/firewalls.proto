@@ -39,6 +39,7 @@ service Firewalls {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified firewall.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/delete
   rpc DeleteFirewalls(DeleteFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service Firewalls {
   }
 
   // Returns the specified firewall.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/get
   rpc GetFirewalls(GetFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Firewall) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service Firewalls {
 
   // Creates a firewall rule in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/insert
   rpc InsertFirewalls(InsertFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service Firewalls {
   }
 
   // Retrieves the list of firewall rules available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/list
   rpc ListFirewalls(ListFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.FirewallList) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service Firewalls {
   // Updates the specified firewall rule with the data included in the request.
   // This method supports PATCH semantics and uses the JSON merge patch format
   // and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/patch
   rpc PatchFirewalls(PatchFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -94,6 +99,7 @@ service Firewalls {
   // Updates the specified firewall rule with the data included in the request.
   // Note that all fields will be updated if using PUT, even fields that are not
   // specified. To update individual fields, please use PATCH instead.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/update
   rpc UpdateFirewalls(UpdateFirewallsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

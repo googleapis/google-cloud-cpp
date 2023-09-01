@@ -90,6 +90,7 @@ class RegionDiskTypesClient {
   // clang-format off
   ///
   /// Returns the specified regional disk type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -108,7 +109,7 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L59}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L61}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
@@ -119,6 +120,7 @@ class RegionDiskTypesClient {
   // clang-format off
   ///
   /// Returns the specified regional disk type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -140,7 +142,7 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L59}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L61}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
@@ -152,6 +154,7 @@ class RegionDiskTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of regional disk types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -178,7 +181,7 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L71}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L73}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
@@ -188,6 +191,7 @@ class RegionDiskTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of regional disk types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +222,7 @@ class RegionDiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L71}
+  /// [google.cloud.cpp.compute.region_disk_types.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L73}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on

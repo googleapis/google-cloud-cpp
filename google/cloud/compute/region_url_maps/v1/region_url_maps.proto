@@ -39,6 +39,7 @@ service RegionUrlMaps {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified UrlMap resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/delete
   rpc DeleteRegionUrlMaps(DeleteRegionUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service RegionUrlMaps {
   }
 
   // Returns the specified UrlMap resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/get
   rpc GetRegionUrlMaps(GetRegionUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service RegionUrlMaps {
 
   // Creates a UrlMap resource in the specified project using the data included
   // in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/insert
   rpc InsertRegionUrlMaps(InsertRegionUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service RegionUrlMaps {
 
   // Retrieves the list of UrlMap resources available to the specified project
   // in the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/list
   rpc ListRegionUrlMaps(ListRegionUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapList) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service RegionUrlMaps {
   // Patches the specified UrlMap resource with the data included in the
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/patch
   rpc PatchRegionUrlMaps(PatchRegionUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -95,6 +100,7 @@ service RegionUrlMaps {
 
   // Updates the specified UrlMap resource with the data included in the
   // request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/update
   rpc UpdateRegionUrlMaps(UpdateRegionUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -109,6 +115,7 @@ service RegionUrlMaps {
   // Runs static validation for the UrlMap. In particular, the tests of the
   // provided UrlMap will be run. Calling this method does NOT create the
   // UrlMap.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/validate
   rpc Validate(ValidateRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
     option (google.api.http) = {

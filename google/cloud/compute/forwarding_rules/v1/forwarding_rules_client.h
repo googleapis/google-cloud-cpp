@@ -91,6 +91,7 @@ class ForwardingRulesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of forwarding rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L137}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L145}
   /// [google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_041.proto#L26}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class ForwardingRulesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of forwarding rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L137}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.AggregatedListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L145}
   /// [google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_041.proto#L26}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class ForwardingRulesClient {
   // clang-format off
   ///
   /// Deletes the specified ForwardingRule resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -175,7 +178,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L211}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,6 +188,7 @@ class ForwardingRulesClient {
   // clang-format off
   ///
   /// Deletes the specified ForwardingRule resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +216,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L211}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,6 +227,7 @@ class ForwardingRulesClient {
   // clang-format off
   ///
   /// Returns the specified ForwardingRule resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -241,7 +246,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L241}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L249}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class ForwardingRulesClient {
   // clang-format off
   ///
   /// Returns the specified ForwardingRule resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -273,7 +279,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L241}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L249}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -286,6 +292,7 @@ class ForwardingRulesClient {
   ///
   /// Creates a ForwardingRule resource in the specified project and region using
   /// the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -310,7 +317,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L253}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -323,6 +330,7 @@ class ForwardingRulesClient {
   ///
   /// Creates a ForwardingRule resource in the specified project and region using
   /// the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -350,7 +358,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L253}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -362,6 +370,7 @@ class ForwardingRulesClient {
   ///
   /// Retrieves a list of ForwardingRule resources available to the specified
   /// project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -388,7 +397,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L284}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L292}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -400,6 +409,7 @@ class ForwardingRulesClient {
   ///
   /// Retrieves a list of ForwardingRule resources available to the specified
   /// project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -430,7 +440,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L284}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.ListForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L292}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -445,6 +455,7 @@ class ForwardingRulesClient {
   /// request. This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules. Currently, you can only patch the network_tier
   /// field.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -470,7 +481,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L352}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L360}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -486,6 +497,7 @@ class ForwardingRulesClient {
   /// request. This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules. Currently, you can only patch the network_tier
   /// field.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -513,7 +525,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L352}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L360}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -525,6 +537,7 @@ class ForwardingRulesClient {
   ///
   /// Sets the labels on the specified resource. To learn more about labels, read
   /// the Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param region  The region for this request.
@@ -550,7 +563,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L386}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -564,6 +577,7 @@ class ForwardingRulesClient {
   ///
   /// Sets the labels on the specified resource. To learn more about labels, read
   /// the Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -591,7 +605,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L386}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L394}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -603,6 +617,7 @@ class ForwardingRulesClient {
   ///
   /// Changes target URL for forwarding rule. The new target should be of the
   /// same type as the old target.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/setTarget
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -628,7 +643,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L421}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L429}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
@@ -642,6 +657,7 @@ class ForwardingRulesClient {
   ///
   /// Changes target URL for forwarding rule. The new target should be of the
   /// same type as the old target.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/setTarget
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -669,7 +685,7 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L421}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.SetTargetRequest]: @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L429}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(

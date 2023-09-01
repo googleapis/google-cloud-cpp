@@ -95,6 +95,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format off
   ///
   /// Deletes the specified PublicAdvertisedPrefix
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/delete
   ///
   /// @param project  Project ID for this request.
   /// @param public_advertised_prefix  Name of the PublicAdvertisedPrefix resource to delete.
@@ -118,7 +119,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L97}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -129,6 +130,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format off
   ///
   /// Deletes the specified PublicAdvertisedPrefix
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -156,7 +158,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L97}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -168,6 +170,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format off
   ///
   /// Returns the specified PublicAdvertisedPrefix resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/get
   ///
   /// @param project  Project ID for this request.
   /// @param public_advertised_prefix  Name of the PublicAdvertisedPrefix resource to return.
@@ -185,7 +188,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L121}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L126}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_087.proto#L27}
   ///
   // clang-format on
@@ -197,6 +200,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format off
   ///
   /// Returns the specified PublicAdvertisedPrefix resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +222,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L121}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L126}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_087.proto#L27}
   ///
   // clang-format on
@@ -232,6 +236,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   /// Creates a PublicAdvertisedPrefix in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/insert
   ///
   /// @param project  Project ID for this request.
   /// @param public_advertised_prefix_resource  The PublicAdvertisedPrefix for this request.
@@ -255,7 +260,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L130}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -269,6 +274,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   /// Creates a PublicAdvertisedPrefix in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -296,7 +302,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L130}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -308,6 +314,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format off
   ///
   /// Lists the PublicAdvertisedPrefixes for a project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -333,7 +340,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L155}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L160}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_087.proto#L27}
   ///
   // clang-format on
@@ -343,6 +350,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format off
   ///
   /// Lists the PublicAdvertisedPrefixes for a project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -373,7 +381,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L155}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.ListPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L160}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_087.proto#L27}
   ///
   // clang-format on
@@ -388,6 +396,7 @@ class PublicAdvertisedPrefixesClient {
   /// Patches the specified Router resource with the data included in the
   /// request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/patch
   ///
   /// @param project  Project ID for this request.
   /// @param public_advertised_prefix  Name of the PublicAdvertisedPrefix resource to patch.
@@ -412,7 +421,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L220}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -427,6 +436,7 @@ class PublicAdvertisedPrefixesClient {
   /// Patches the specified Router resource with the data included in the
   /// request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -454,7 +464,7 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L220}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

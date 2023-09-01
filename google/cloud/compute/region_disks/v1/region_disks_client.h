@@ -92,6 +92,7 @@ class RegionDisksClient {
   ///
   /// Adds existing resource policies to a regional disk. You can only add one
   /// policy which will be applied to this disk for scheduling snapshot creation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/addResourcePolicies
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -117,7 +118,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L250}
+  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -133,6 +134,7 @@ class RegionDisksClient {
   ///
   /// Adds existing resource policies to a regional disk. You can only add one
   /// policy which will be applied to this disk for scheduling snapshot creation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/addResourcePolicies
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -160,7 +162,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L250}
+  /// [google.cloud.cpp.compute.region_disks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -171,6 +173,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Bulk create a set of disks.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/bulkInsert
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -195,7 +198,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L285}
+  /// [google.cloud.cpp.compute.region_disks.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -207,6 +210,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Bulk create a set of disks.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/bulkInsert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -234,7 +238,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L285}
+  /// [google.cloud.cpp.compute.region_disks.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -248,6 +252,7 @@ class RegionDisksClient {
   /// creation, consider using snapshots.insert instead, as that method supports
   /// more features, such as creating snapshots in a project different from the
   /// source disk project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/createSnapshot
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -273,7 +278,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L316}
+  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
@@ -288,6 +293,7 @@ class RegionDisksClient {
   /// creation, consider using snapshots.insert instead, as that method supports
   /// more features, such as creating snapshots in a project different from the
   /// source disk project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/createSnapshot
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -315,7 +321,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L316}
+  /// [google.cloud.cpp.compute.region_disks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L333}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
@@ -329,6 +335,7 @@ class RegionDisksClient {
   /// removes all the replicas of its data permanently and is irreversible.
   /// However, deleting a disk does not delete any snapshots previously made from
   /// the disk. You must separately delete snapshots.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -353,7 +360,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L350}
+  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L367}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -366,6 +373,7 @@ class RegionDisksClient {
   /// removes all the replicas of its data permanently and is irreversible.
   /// However, deleting a disk does not delete any snapshots previously made from
   /// the disk. You must separately delete snapshots.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -393,7 +401,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L350}
+  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L367}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -404,6 +412,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Returns a specified regional persistent disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -422,7 +431,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L395}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L412}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
   ///
   // clang-format on
@@ -433,6 +442,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Returns a specified regional persistent disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -454,7 +464,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L395}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L412}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
   ///
   // clang-format on
@@ -467,6 +477,7 @@ class RegionDisksClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -485,7 +496,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L380}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -497,6 +508,7 @@ class RegionDisksClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -518,7 +530,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L380}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -531,6 +543,7 @@ class RegionDisksClient {
   ///
   /// Creates a persistent regional disk in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -555,7 +568,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L407}
+  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -567,6 +580,7 @@ class RegionDisksClient {
   ///
   /// Creates a persistent regional disk in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -594,7 +608,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L407}
+  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -606,6 +620,7 @@ class RegionDisksClient {
   ///
   /// Retrieves the list of persistent disks contained within the specified
   /// region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -632,7 +647,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L441}
+  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L458}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
   ///
   // clang-format on
@@ -643,6 +658,7 @@ class RegionDisksClient {
   ///
   /// Retrieves the list of persistent disks contained within the specified
   /// region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -673,7 +689,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L441}
+  /// [google.cloud.cpp.compute.region_disks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L458}
   /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
   ///
   // clang-format on
@@ -685,6 +701,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Removes resource policies from a regional disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/removeResourcePolicies
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -710,7 +727,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L509}
+  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L526}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -725,6 +742,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Removes resource policies from a regional disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/removeResourcePolicies
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -752,7 +770,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L509}
+  /// [google.cloud.cpp.compute.region_disks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L526}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -763,6 +781,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Resizes the specified regional persistent disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/resize
   ///
   /// @param project  The project ID for this request.
   /// @param region  Name of the region for this request.
@@ -788,7 +807,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L544}
+  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -801,6 +820,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Resizes the specified regional persistent disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/resize
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -828,7 +848,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L544}
+  /// [google.cloud.cpp.compute.region_disks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L561}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -840,6 +860,7 @@ class RegionDisksClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -859,7 +880,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L579}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L596}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -874,6 +895,7 @@ class RegionDisksClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -895,7 +917,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L579}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L596}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -907,6 +929,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Sets the labels on the target regional disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param region  The region for this request.
@@ -932,7 +955,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L596}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -945,6 +968,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Sets the labels on the target regional disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -972,7 +996,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L596}
+  /// [google.cloud.cpp.compute.region_disks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -983,6 +1007,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Starts asynchronous replication. Must be invoked on the primary disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/startAsyncReplication
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -1008,7 +1033,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.StartAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L631}
+  /// [google.cloud.cpp.compute.region_disks.v1.StartAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L648}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1023,6 +1048,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Starts asynchronous replication. Must be invoked on the primary disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/startAsyncReplication
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1050,7 +1076,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.StartAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L631}
+  /// [google.cloud.cpp.compute.region_disks.v1.StartAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L648}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1062,6 +1088,7 @@ class RegionDisksClient {
   ///
   /// Stops asynchronous replication. Can be invoked either on the primary or on
   /// the secondary disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/stopAsyncReplication
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -1086,7 +1113,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.StopAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L666}
+  /// [google.cloud.cpp.compute.region_disks.v1.StopAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L683}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1097,6 +1124,7 @@ class RegionDisksClient {
   ///
   /// Stops asynchronous replication. Can be invoked either on the primary or on
   /// the secondary disk.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/stopAsyncReplication
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1124,7 +1152,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.StopAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L666}
+  /// [google.cloud.cpp.compute.region_disks.v1.StopAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L683}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1136,6 +1164,7 @@ class RegionDisksClient {
   ///
   /// Stops asynchronous replication for a consistency group of disks. Can be
   /// invoked either in the primary or secondary scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/stopGroupAsyncReplication
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request. This must be the region of the
@@ -1161,7 +1190,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.StopGroupAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L696}
+  /// [google.cloud.cpp.compute.region_disks.v1.StopGroupAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L713}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1176,6 +1205,7 @@ class RegionDisksClient {
   ///
   /// Stops asynchronous replication for a consistency group of disks. Can be
   /// invoked either in the primary or secondary scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/stopGroupAsyncReplication
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1203,7 +1233,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.StopGroupAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L696}
+  /// [google.cloud.cpp.compute.region_disks.v1.StopGroupAsyncReplicationRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L713}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1214,6 +1244,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -1233,7 +1264,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L729}
+  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L746}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -1248,6 +1279,7 @@ class RegionDisksClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1269,7 +1301,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L729}
+  /// [google.cloud.cpp.compute.region_disks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L746}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -1283,6 +1315,7 @@ class RegionDisksClient {
   /// Update the specified disk with the data included in the request. Update is
   /// performed only on selected fields included as part of update-mask. Only the
   /// following fields can be modified: user_license.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/update
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -1308,7 +1341,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L745}
+  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L762}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1322,6 +1355,7 @@ class RegionDisksClient {
   /// Update the specified disk with the data included in the request. Update is
   /// performed only on selected fields included as part of update-mask. Only the
   /// following fields can be modified: user_license.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1349,7 +1383,7 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L745}
+  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L762}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

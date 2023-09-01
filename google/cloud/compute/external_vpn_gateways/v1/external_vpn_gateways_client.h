@@ -94,6 +94,7 @@ class ExternalVpnGatewaysClient {
   // clang-format off
   ///
   /// Deletes the specified externalVpnGateway.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/delete
   ///
   /// @param project  Project ID for this request.
   /// @param external_vpn_gateway  Name of the externalVpnGateways to delete.
@@ -117,7 +118,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L111}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -128,6 +129,7 @@ class ExternalVpnGatewaysClient {
   // clang-format off
   ///
   /// Deletes the specified externalVpnGateway.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -155,7 +157,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L111}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -168,6 +170,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Returns the specified externalVpnGateway. Get a list of available
   /// externalVpnGateways by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/get
   ///
   /// @param project  Project ID for this request.
   /// @param external_vpn_gateway  Name of the externalVpnGateway to return.
@@ -185,7 +188,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L135}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L141}
   /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_032.proto#L31}
   ///
   // clang-format on
@@ -198,6 +201,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Returns the specified externalVpnGateway. Get a list of available
   /// externalVpnGateways by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -219,7 +223,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L135}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L141}
   /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_032.proto#L31}
   ///
   // clang-format on
@@ -232,6 +236,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Creates a ExternalVpnGateway in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/insert
   ///
   /// @param project  Project ID for this request.
   /// @param external_vpn_gateway_resource  The ExternalVpnGateway for this request.
@@ -255,7 +260,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L144}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -269,6 +274,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Creates a ExternalVpnGateway in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -296,7 +302,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L144}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -309,6 +315,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Retrieves the list of ExternalVpnGateway available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -334,7 +341,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.ListExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L169}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.ListExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L175}
   /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_032.proto#L31}
   ///
   // clang-format on
@@ -345,6 +352,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Retrieves the list of ExternalVpnGateway available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -375,7 +383,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.ListExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L169}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.ListExternalVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L175}
   /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_032.proto#L31}
   ///
   // clang-format on
@@ -388,6 +396,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Sets the labels on an ExternalVpnGateway. To learn more about labels, read
   /// the Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -412,7 +421,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L234}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -425,6 +434,7 @@ class ExternalVpnGatewaysClient {
   ///
   /// Sets the labels on an ExternalVpnGateway. To learn more about labels, read
   /// the Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -452,7 +462,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L234}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -463,6 +473,7 @@ class ExternalVpnGatewaysClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -481,7 +492,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L251}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L257}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -495,6 +506,7 @@ class ExternalVpnGatewaysClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -516,7 +528,7 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L251}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L257}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

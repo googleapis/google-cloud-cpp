@@ -89,6 +89,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Adds an access config to an instance's network interface.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addAccessConfig
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -115,7 +116,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L608}
+  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L654}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
@@ -128,6 +129,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Adds an access config to an instance's network interface.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addAccessConfig
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -155,7 +157,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L608}
+  /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L654}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
@@ -168,6 +170,7 @@ class InstancesClient {
   /// Adds existing resource policies to an instance. You can only add one policy
   /// right now which will be applied to this instance for scheduling live
   /// migrations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addResourcePolicies
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -193,7 +196,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L645}
+  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L691}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -209,6 +212,7 @@ class InstancesClient {
   /// Adds existing resource policies to an instance. You can only add one policy
   /// right now which will be applied to this instance for scheduling live
   /// migrations.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/addResourcePolicies
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -236,7 +240,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L645}
+  /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L691}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -249,6 +253,7 @@ class InstancesClient {
   /// Retrieves an aggregated list of all of the instances in your project across
   /// all regions and zones. The performance of this method degrades when a
   /// filter is specified on a project that has a very large number of instances.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -265,7 +270,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L680}
+  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L726}
   /// [google.cloud.cpp.compute.v1.InstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L320}
   ///
   // clang-format on
@@ -277,6 +282,7 @@ class InstancesClient {
   /// Retrieves an aggregated list of all of the instances in your project across
   /// all regions and zones. The performance of this method degrades when a
   /// filter is specified on a project that has a very large number of instances.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -298,7 +304,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L680}
+  /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L726}
   /// [google.cloud.cpp.compute.v1.InstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L320}
   ///
   // clang-format on
@@ -313,6 +319,7 @@ class InstancesClient {
   /// the disk before you can attach it. It is not possible to create and attach
   /// a disk at the same time. For more information, read Adding a persistent
   /// disk to your instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/attachDisk
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -338,7 +345,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L754}
+  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L800}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
@@ -354,6 +361,7 @@ class InstancesClient {
   /// the disk before you can attach it. It is not possible to create and attach
   /// a disk at the same time. For more information, read Adding a persistent
   /// disk to your instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/attachDisk
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -381,7 +389,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L754}
+  /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L800}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
@@ -393,6 +401,7 @@ class InstancesClient {
   ///
   /// Creates multiple instances. Count specifies the number of instances to
   /// create. For more information, see About bulk creation of VMs.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/bulkInsert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -417,7 +426,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L793}
+  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L839}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -430,6 +439,7 @@ class InstancesClient {
   ///
   /// Creates multiple instances. Count specifies the number of instances to
   /// create. For more information, see About bulk creation of VMs.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/bulkInsert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -457,7 +467,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L793}
+  /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L839}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -469,6 +479,7 @@ class InstancesClient {
   ///
   /// Deletes the specified Instance resource. For more information, see Deleting
   /// an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -493,7 +504,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L860}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L906}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -504,6 +515,7 @@ class InstancesClient {
   ///
   /// Deletes the specified Instance resource. For more information, see Deleting
   /// an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -531,7 +543,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L860}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L906}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -542,6 +554,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Deletes an access config from an instance's network interface.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/deleteAccessConfig
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -568,7 +581,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L824}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L870}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -580,6 +593,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Deletes an access config from an instance's network interface.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/deleteAccessConfig
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -607,7 +621,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L824}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L870}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -618,6 +632,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Detaches a disk from an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/detachDisk
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -644,7 +659,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L890}
+  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L936}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
@@ -655,6 +670,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Detaches a disk from an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/detachDisk
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -682,7 +698,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L890}
+  /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L936}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
@@ -693,6 +709,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the specified Instance resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -711,7 +728,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L972}
+  /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1018}
   /// [google.cloud.cpp.compute.v1.Instance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L91}
   ///
   // clang-format on
@@ -722,6 +739,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the specified Instance resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -743,7 +761,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L972}
+  /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1018}
   /// [google.cloud.cpp.compute.v1.Instance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L91}
   ///
   // clang-format on
@@ -755,6 +773,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns effective firewalls applied to an interface of the instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getEffectiveFirewalls
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -774,7 +793,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L924}
+  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L970}
   /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L657}
   ///
   // clang-format on
@@ -788,6 +807,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns effective firewalls applied to an interface of the instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getEffectiveFirewalls
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -809,7 +829,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L924}
+  /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L970}
   /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L657}
   ///
   // clang-format on
@@ -822,6 +842,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the specified guest attributes entry.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getGuestAttributes
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -840,7 +861,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L939}
+  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L985}
   /// [google.cloud.cpp.compute.v1.GuestAttributes]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L49}
   ///
   // clang-format on
@@ -851,6 +872,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the specified guest attributes entry.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getGuestAttributes
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -872,7 +894,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L939}
+  /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L985}
   /// [google.cloud.cpp.compute.v1.GuestAttributes]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L49}
   ///
   // clang-format on
@@ -885,6 +907,7 @@ class InstancesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -903,7 +926,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L957}
+  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1003}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -915,6 +938,7 @@ class InstancesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -936,7 +960,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L957}
+  /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1003}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -948,6 +972,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the screenshot from the specified instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getScreenshot
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -966,7 +991,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L984}
+  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1030}
   /// [google.cloud.cpp.compute.v1.Screenshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L862}
   ///
   // clang-format on
@@ -977,6 +1002,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the screenshot from the specified instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getScreenshot
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -998,7 +1024,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L984}
+  /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1030}
   /// [google.cloud.cpp.compute.v1.Screenshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L862}
   ///
   // clang-format on
@@ -1010,6 +1036,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the last 1 MB of serial port output from the specified instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getSerialPortOutput
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1028,7 +1055,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L996}
+  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1042}
   /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L872}
   ///
   // clang-format on
@@ -1039,6 +1066,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the last 1 MB of serial port output from the specified instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getSerialPortOutput
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1060,7 +1088,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L996}
+  /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1042}
   /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L872}
   ///
   // clang-format on
@@ -1072,6 +1100,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the Shielded Instance Identity of an instance
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getShieldedInstanceIdentity
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1090,7 +1119,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1025}
+  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1071}
   /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L898}
   ///
   // clang-format on
@@ -1102,6 +1131,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns the Shielded Instance Identity of an instance
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/getShieldedInstanceIdentity
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1123,7 +1153,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1025}
+  /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1071}
   /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L898}
   ///
   // clang-format on
@@ -1137,6 +1167,7 @@ class InstancesClient {
   ///
   /// Creates an instance resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1161,7 +1192,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1037}
+  /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstances(
@@ -1173,6 +1204,7 @@ class InstancesClient {
   ///
   /// Creates an instance resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1200,7 +1232,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1037}
+  /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstances(
@@ -1211,6 +1243,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Retrieves the list of instances contained within the specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1237,7 +1270,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1086}
+  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1132}
   /// [google.cloud.cpp.compute.v1.Instance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L91}
   ///
   // clang-format on
@@ -1247,6 +1280,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Retrieves the list of instances contained within the specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1277,7 +1311,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1086}
+  /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1132}
   /// [google.cloud.cpp.compute.v1.Instance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L91}
   ///
   // clang-format on
@@ -1291,6 +1325,7 @@ class InstancesClient {
   /// the request. For example, if the VM instance is part of a managed or
   /// unmanaged instance group, the referrers list includes the instance group.
   /// For more information, read Viewing referrers to VM instances.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/listReferrers
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1319,7 +1354,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1154}
+  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1200}
   /// [google.cloud.cpp.compute.v1.Reference]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L837}
   ///
   // clang-format on
@@ -1333,6 +1368,7 @@ class InstancesClient {
   /// the request. For example, if the VM instance is part of a managed or
   /// unmanaged instance group, the referrers list includes the instance group.
   /// For more information, read Viewing referrers to VM instances.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/listReferrers
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1363,7 +1399,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1154}
+  /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1200}
   /// [google.cloud.cpp.compute.v1.Reference]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_020.proto#L837}
   ///
   // clang-format on
@@ -1374,6 +1410,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Removes resource policies from an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/removeResourcePolicies
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1399,7 +1436,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1226}
+  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1414,6 +1451,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Removes resource policies from an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/removeResourcePolicies
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1441,7 +1479,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1226}
+  /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1453,6 +1491,7 @@ class InstancesClient {
   ///
   /// Performs a reset on the instance. This is a hard reset. The VM does not do
   /// a graceful shutdown. For more information, see Resetting an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/reset
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1477,7 +1516,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1261}
+  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1307}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
@@ -1488,6 +1527,7 @@ class InstancesClient {
   ///
   /// Performs a reset on the instance. This is a hard reset. The VM does not do
   /// a graceful shutdown. For more information, see Resetting an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/reset
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1515,7 +1555,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1261}
+  /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1307}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
@@ -1526,6 +1566,7 @@ class InstancesClient {
   ///
   /// Resumes an instance that was suspended using the instances().suspend
   /// method.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/resume
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1550,7 +1591,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1291}
+  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
@@ -1561,6 +1602,7 @@ class InstancesClient {
   ///
   /// Resumes an instance that was suspended using the instances().suspend
   /// method.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/resume
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1588,7 +1630,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1291}
+  /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
@@ -1598,6 +1640,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sends diagnostic interrupt to the instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/sendDiagnosticInterrupt
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1614,7 +1657,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1321}
+  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1367}
   ///
   // clang-format on
   Status SendDiagnosticInterrupt(std::string const& project,
@@ -1625,6 +1668,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sends diagnostic interrupt to the instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/sendDiagnosticInterrupt
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1644,7 +1688,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1321}
+  /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1367}
   ///
   // clang-format on
   Status SendDiagnosticInterrupt(
@@ -1655,6 +1699,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sets deletion protection on the instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setDeletionProtection
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1679,7 +1724,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1333}
+  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1689,6 +1734,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sets deletion protection on the instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setDeletionProtection
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1716,7 +1762,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1333}
+  /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1727,6 +1773,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sets the auto-delete flag for a disk attached to an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setDiskAutoDelete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1754,7 +1801,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1366}
+  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1412}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1765,6 +1812,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sets the auto-delete flag for a disk attached to an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setDiskAutoDelete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1792,7 +1840,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1366}
+  /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1412}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1804,6 +1852,7 @@ class InstancesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1823,7 +1872,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1403}
+  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1449}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -1838,6 +1887,7 @@ class InstancesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1859,7 +1909,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1403}
+  /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1449}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -1872,6 +1922,7 @@ class InstancesClient {
   ///
   /// Sets labels on an instance. To learn more about labels, read the Labeling
   /// Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1897,7 +1948,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1419}
+  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -1911,6 +1962,7 @@ class InstancesClient {
   ///
   /// Sets labels on an instance. To learn more about labels, read the Labeling
   /// Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1938,7 +1990,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1419}
+  /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -1950,6 +2002,7 @@ class InstancesClient {
   ///
   /// Changes the number and/or type of accelerator for a stopped instance to the
   /// values specified in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineResources
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1975,7 +2028,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1454}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1500}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1990,6 +2043,7 @@ class InstancesClient {
   ///
   /// Changes the number and/or type of accelerator for a stopped instance to the
   /// values specified in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineResources
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2017,7 +2071,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1454}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1500}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2029,6 +2083,7 @@ class InstancesClient {
   ///
   /// Changes the machine type for a stopped instance to the machine type
   /// specified in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineType
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2054,7 +2109,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1489}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1535}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
@@ -2068,6 +2123,7 @@ class InstancesClient {
   ///
   /// Changes the machine type for a stopped instance to the machine type
   /// specified in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMachineType
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2095,7 +2151,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1489}
+  /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1535}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
@@ -2107,6 +2163,7 @@ class InstancesClient {
   ///
   /// Sets metadata for the specified instance to the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMetadata
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2132,7 +2189,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1524}
+  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1570}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
@@ -2145,6 +2202,7 @@ class InstancesClient {
   ///
   /// Sets metadata for the specified instance to the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMetadata
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2172,7 +2230,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1524}
+  /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1570}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
@@ -2185,6 +2243,7 @@ class InstancesClient {
   /// Changes the minimum CPU platform that this instance should use. This method
   /// can only be called on a stopped instance. For more information, read
   /// Specifying a Minimum CPU Platform.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMinCpuPlatform
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2210,7 +2269,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1558}
+  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1604}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2226,6 +2285,7 @@ class InstancesClient {
   /// Changes the minimum CPU platform that this instance should use. This method
   /// can only be called on a stopped instance. For more information, read
   /// Specifying a Minimum CPU Platform.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setMinCpuPlatform
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2253,7 +2313,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1558}
+  /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1604}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2264,6 +2324,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sets name of an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setName
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2289,7 +2350,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1593}
+  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1639}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
@@ -2302,6 +2363,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Sets name of an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setName
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2329,7 +2391,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1593}
+  /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1639}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
@@ -2343,6 +2405,7 @@ class InstancesClient {
   /// See Instance Life Cycle for more information on the possible instance
   /// states. For more information about setting scheduling options for a VM, see
   /// Set VM host maintenance policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2368,7 +2431,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1628}
+  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1674}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
@@ -2384,6 +2447,7 @@ class InstancesClient {
   /// See Instance Life Cycle for more information on the possible instance
   /// states. For more information about setting scheduling options for a VM, see
   /// Set VM host maintenance policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2411,7 +2475,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1628}
+  /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1674}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
@@ -2423,6 +2487,7 @@ class InstancesClient {
   ///
   /// Sets the service account on the instance. For more information, read
   /// Changing the service account and access scopes for an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setServiceAccount
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2448,7 +2513,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1662}
+  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1708}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2463,6 +2528,7 @@ class InstancesClient {
   ///
   /// Sets the service account on the instance. For more information, read
   /// Changing the service account and access scopes for an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setServiceAccount
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2490,7 +2556,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1662}
+  /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1708}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2503,6 +2569,7 @@ class InstancesClient {
   /// Sets the Shielded Instance integrity policy for an instance. You can only
   /// use this method on a running instance. This method supports PATCH semantics
   /// and uses the JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setShieldedInstanceIntegrityPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2528,7 +2595,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1697}
+  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1743}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2544,6 +2611,7 @@ class InstancesClient {
   /// Sets the Shielded Instance integrity policy for an instance. You can only
   /// use this method on a running instance. This method supports PATCH semantics
   /// and uses the JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setShieldedInstanceIntegrityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2571,7 +2639,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1697}
+  /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1743}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2584,6 +2652,7 @@ class InstancesClient {
   ///
   /// Sets network tags for the specified instance to the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setTags
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2609,7 +2678,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1732}
+  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1778}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
@@ -2622,6 +2691,7 @@ class InstancesClient {
   ///
   /// Sets network tags for the specified instance to the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/setTags
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2649,7 +2719,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1732}
+  /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1778}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
@@ -2660,6 +2730,7 @@ class InstancesClient {
   ///
   /// Simulates a host maintenance event on a VM. For more information, see
   /// Simulate a host maintenance event.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/simulateMaintenanceEvent
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2684,7 +2755,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1766}
+  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1812}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2695,6 +2766,7 @@ class InstancesClient {
   ///
   /// Simulates a host maintenance event on a VM. For more information, see
   /// Simulate a host maintenance event.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/simulateMaintenanceEvent
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2722,7 +2794,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1766}
+  /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1812}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2734,6 +2806,7 @@ class InstancesClient {
   ///
   /// Starts an instance that was stopped using the instances().stop method. For
   /// more information, see Restart an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/start
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2758,7 +2831,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1796}
+  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1842}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
@@ -2769,6 +2842,7 @@ class InstancesClient {
   ///
   /// Starts an instance that was stopped using the instances().stop method. For
   /// more information, see Restart an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/start
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2796,7 +2870,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1796}
+  /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1842}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
@@ -2807,6 +2881,7 @@ class InstancesClient {
   ///
   /// Starts an instance that was stopped using the instances().stop method. For
   /// more information, see Restart an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/startWithEncryptionKey
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2832,7 +2907,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1826}
+  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1872}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2848,6 +2923,7 @@ class InstancesClient {
   ///
   /// Starts an instance that was stopped using the instances().stop method. For
   /// more information, see Restart an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/startWithEncryptionKey
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2875,7 +2951,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1826}
+  /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1872}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2891,6 +2967,7 @@ class InstancesClient {
   /// using, such as persistent disks and static IP addresses, will continue to
   /// be charged until they are deleted. For more information, see Stopping an
   /// instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/stop
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2915,7 +2992,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1861}
+  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1907}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
@@ -2930,6 +3007,7 @@ class InstancesClient {
   /// using, such as persistent disks and static IP addresses, will continue to
   /// be charged until they are deleted. For more information, see Stopping an
   /// instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/stop
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2957,7 +3035,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1861}
+  /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1907}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
@@ -2973,6 +3051,7 @@ class InstancesClient {
   /// the virtual machine was using, such as persistent disks and static IP
   /// addresses, will continue to be charged while the instance is suspended. For
   /// more information, see Suspending and resuming an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/suspend
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -2997,7 +3076,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1895}
+  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1941}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
@@ -3013,6 +3092,7 @@ class InstancesClient {
   /// the virtual machine was using, such as persistent disks and static IP
   /// addresses, will continue to be charged while the instance is suspended. For
   /// more information, see Suspending and resuming an instance.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/suspend
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3040,7 +3120,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1895}
+  /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1941}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
@@ -3050,6 +3130,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -3069,7 +3150,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1929}
+  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1975}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -3084,6 +3165,7 @@ class InstancesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3105,7 +3187,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1929}
+  /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1975}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -3119,6 +3201,7 @@ class InstancesClient {
   /// Updates an instance only if the necessary resources are available. This
   /// method can update only a specific set of instance properties. See Updating
   /// a running instance for a list of updatable instance properties.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/update
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -3144,7 +3227,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2016}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2062}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstances(
@@ -3158,6 +3241,7 @@ class InstancesClient {
   /// Updates an instance only if the necessary resources are available. This
   /// method can update only a specific set of instance properties. See Updating
   /// a running instance for a list of updatable instance properties.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3185,7 +3269,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2016}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2062}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstances(
@@ -3198,6 +3282,7 @@ class InstancesClient {
   /// Updates the specified access config from an instance's network interface
   /// with the data included in the request. This method supports PATCH semantics
   /// and uses the JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateAccessConfig
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -3224,7 +3309,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1945}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1991}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3240,6 +3325,7 @@ class InstancesClient {
   /// Updates the specified access config from an instance's network interface
   /// with the data included in the request. This method supports PATCH semantics
   /// and uses the JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateAccessConfig
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3267,7 +3353,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1945}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1991}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3280,6 +3366,7 @@ class InstancesClient {
   /// Updates the Display config for a VM instance. You can only use this method
   /// on a stopped VM instance. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateDisplayDevice
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -3305,7 +3392,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1982}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2028}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3320,6 +3407,7 @@ class InstancesClient {
   /// Updates the Display config for a VM instance. You can only use this method
   /// on a stopped VM instance. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateDisplayDevice
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3347,7 +3435,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1982}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2028}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3362,6 +3450,7 @@ class InstancesClient {
   /// ranges for an existing instance for instructions on changing alias IP
   /// ranges. See Migrating a VM between networks for instructions on migrating
   /// an interface. This method follows PATCH semantics.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateNetworkInterface
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -3388,7 +3477,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2069}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3406,6 +3495,7 @@ class InstancesClient {
   /// ranges for an existing instance for instructions on changing alias IP
   /// ranges. See Migrating a VM between networks for instructions on migrating
   /// an interface. This method follows PATCH semantics.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateNetworkInterface
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3433,7 +3523,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2069}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3446,6 +3536,7 @@ class InstancesClient {
   /// Updates the Shielded Instance config for an instance. You can only use this
   /// method on a stopped instance. This method supports PATCH semantics and uses
   /// the JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateShieldedInstanceConfig
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -3471,7 +3562,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2106}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -3487,6 +3578,7 @@ class InstancesClient {
   /// Updates the Shielded Instance config for an instance. You can only use this
   /// method on a stopped instance. This method supports PATCH semantics and uses
   /// the JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instances/updateShieldedInstanceConfig
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3514,7 +3606,7 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2106}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]: @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

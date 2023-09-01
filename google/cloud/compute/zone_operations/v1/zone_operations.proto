@@ -39,6 +39,7 @@ service ZoneOperations {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified zone-specific Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/delete
   rpc DeleteZoneOperations(DeleteZoneOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service ZoneOperations {
   }
 
   // Retrieves the specified zone-specific Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/get
   rpc GetZoneOperations(GetZoneOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service ZoneOperations {
 
   // Retrieves a list of Operation resources contained within the specified
   // zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/list
   rpc ListZoneOperations(ListZoneOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
@@ -76,6 +79,7 @@ service ZoneOperations {
   // return after zero seconds. - If the default deadline is reached, there is
   // no guarantee that the operation is actually done when the method returns.
   // Be prepared to retry if the operation is not `DONE`.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/wait
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}/wait"

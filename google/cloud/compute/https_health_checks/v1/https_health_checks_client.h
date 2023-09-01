@@ -90,6 +90,7 @@ class HttpsHealthChecksClient {
   // clang-format off
   ///
   /// Deletes the specified HttpsHealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/delete
   ///
   /// @param project  Project ID for this request.
   /// @param https_health_check  Name of the HttpsHealthCheck resource to delete.
@@ -113,7 +114,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.DeleteHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L111}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.DeleteHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,6 +125,7 @@ class HttpsHealthChecksClient {
   // clang-format off
   ///
   /// Deletes the specified HttpsHealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -151,7 +153,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.DeleteHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L111}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.DeleteHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,6 +164,7 @@ class HttpsHealthChecksClient {
   // clang-format off
   ///
   /// Returns the specified HttpsHealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/get
   ///
   /// @param project  Project ID for this request.
   /// @param https_health_check  Name of the HttpsHealthCheck resource to return.
@@ -179,7 +182,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.GetHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L135}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.GetHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L141}
   /// [google.cloud.cpp.compute.v1.HttpsHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_053.proto#L30}
   ///
   // clang-format on
@@ -191,6 +194,7 @@ class HttpsHealthChecksClient {
   // clang-format off
   ///
   /// Returns the specified HttpsHealthCheck resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +216,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.GetHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L135}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.GetHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L141}
   /// [google.cloud.cpp.compute.v1.HttpsHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_053.proto#L30}
   ///
   // clang-format on
@@ -225,6 +229,7 @@ class HttpsHealthChecksClient {
   ///
   /// Creates a HttpsHealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/insert
   ///
   /// @param project  Project ID for this request.
   /// @param https_health_check_resource  The HttpsHealthCheck for this request.
@@ -248,7 +253,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.InsertHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L144}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.InsertHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -262,6 +267,7 @@ class HttpsHealthChecksClient {
   ///
   /// Creates a HttpsHealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -289,7 +295,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.InsertHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L144}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.InsertHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,6 +307,7 @@ class HttpsHealthChecksClient {
   ///
   /// Retrieves the list of HttpsHealthCheck resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -326,7 +333,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.ListHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L169}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.ListHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L175}
   /// [google.cloud.cpp.compute.v1.HttpsHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_053.proto#L30}
   ///
   // clang-format on
@@ -337,6 +344,7 @@ class HttpsHealthChecksClient {
   ///
   /// Retrieves the list of HttpsHealthCheck resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -367,7 +375,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.ListHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L169}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.ListHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L175}
   /// [google.cloud.cpp.compute.v1.HttpsHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_053.proto#L30}
   ///
   // clang-format on
@@ -381,6 +389,7 @@ class HttpsHealthChecksClient {
   /// Updates a HttpsHealthCheck resource in the specified project using the data
   /// included in the request. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/patch
   ///
   /// @param project  Project ID for this request.
   /// @param https_health_check  Name of the HttpsHealthCheck resource to patch.
@@ -405,7 +414,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.PatchHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L234}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.PatchHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -420,6 +429,7 @@ class HttpsHealthChecksClient {
   /// Updates a HttpsHealthCheck resource in the specified project using the data
   /// included in the request. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -447,7 +457,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.PatchHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L234}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.PatchHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -459,6 +469,7 @@ class HttpsHealthChecksClient {
   ///
   /// Updates a HttpsHealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/update
   ///
   /// @param project  Project ID for this request.
   /// @param https_health_check  Name of the HttpsHealthCheck resource to update.
@@ -483,7 +494,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.UpdateHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L262}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.UpdateHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -497,6 +508,7 @@ class HttpsHealthChecksClient {
   ///
   /// Updates a HttpsHealthCheck resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/httpsHealthChecks/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -524,7 +536,7 @@ class HttpsHealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.https_health_checks.v1.UpdateHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L262}
+  /// [google.cloud.cpp.compute.https_health_checks.v1.UpdateHttpsHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/https_health_checks/v1/https_health_checks.proto#L268}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

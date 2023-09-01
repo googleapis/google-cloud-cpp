@@ -39,6 +39,7 @@ service Interconnects {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Interconnect.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/delete
   rpc DeleteInterconnects(DeleteInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service Interconnects {
 
   // Returns the specified Interconnect. Get a list of available Interconnects
   // by making a list() request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/get
   rpc GetInterconnects(GetInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Interconnect) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service Interconnects {
   }
 
   // Returns the interconnectDiagnostics for the specified Interconnect.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/getDiagnostics
   rpc GetDiagnostics(GetDiagnosticsRequest) returns (
       google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service Interconnects {
 
   // Creates an Interconnect in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/insert
   rpc InsertInterconnects(InsertInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service Interconnects {
   }
 
   // Retrieves the list of Interconnects available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/list
   rpc ListInterconnects(ListInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectList) {
     option (google.api.http) = {
@@ -91,6 +96,7 @@ service Interconnects {
   // Updates the specified Interconnect with the data included in the request.
   // This method supports PATCH semantics and uses the JSON merge patch format
   // and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/patch
   rpc PatchInterconnects(PatchInterconnectsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -104,6 +110,7 @@ service Interconnects {
 
   // Sets the labels on an Interconnect. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

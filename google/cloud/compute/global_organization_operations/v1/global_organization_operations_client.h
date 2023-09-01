@@ -96,6 +96,7 @@ class GlobalOrganizationOperationsClient {
   // clang-format off
   ///
   /// Deletes the specified Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/delete
   ///
   /// @param operation  Name of the Operations resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -110,7 +111,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L72}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L75}
   ///
   // clang-format on
   Status DeleteGlobalOrganizationOperations(std::string const& operation,
@@ -119,6 +120,7 @@ class GlobalOrganizationOperationsClient {
   // clang-format off
   ///
   /// Deletes the specified Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L72}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.DeleteGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L75}
   ///
   // clang-format on
   Status DeleteGlobalOrganizationOperations(
@@ -150,6 +152,7 @@ class GlobalOrganizationOperationsClient {
   ///
   /// Retrieves the specified Operations resource. Gets a list of operations by
   /// making a `list()` request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/get
   ///
   /// @param operation  Name of the Operations resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -166,7 +169,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L81}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -178,6 +181,7 @@ class GlobalOrganizationOperationsClient {
   ///
   /// Retrieves the specified Operations resource. Gets a list of operations by
   /// making a `list()` request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -199,7 +203,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L81}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.GetGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L84}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -213,6 +217,7 @@ class GlobalOrganizationOperationsClient {
   ///
   /// Retrieves a list of Operation resources contained within the specified
   /// organization.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -243,7 +248,7 @@ class GlobalOrganizationOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L90}
+  /// [google.cloud.cpp.compute.global_organization_operations.v1.ListGlobalOrganizationOperationsRequest]: @googleapis_reference_link{google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto#L93}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on

@@ -38,6 +38,7 @@ service RegionSecurityPolicies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/delete
   rpc DeleteRegionSecurityPolicies(DeleteRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service RegionSecurityPolicies {
   }
 
   // List all of the ordered rules present in a single specified policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/get
   rpc GetRegionSecurityPolicies(GetRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicy) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service RegionSecurityPolicies {
 
   // Creates a new policy in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/insert
   rpc InsertRegionSecurityPolicies(InsertRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service RegionSecurityPolicies {
 
   // List all the policies that have been configured for the specified project
   // and region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/list
   rpc ListRegionSecurityPolicies(ListRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicyList) {
     option (google.api.http) = {
@@ -84,6 +88,7 @@ service RegionSecurityPolicies {
   // updateMask. This cannot be used to be update the rules in the policy.
   // Please use the per rule methods like addRule, patchRule, and removeRule
   // instead.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/patch
   rpc PatchRegionSecurityPolicies(PatchRegionSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

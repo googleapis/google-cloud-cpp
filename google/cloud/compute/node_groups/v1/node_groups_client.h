@@ -89,6 +89,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Adds specified number of nodes to the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/addNodes
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -114,7 +115,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.AddNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L202}
+  /// [google.cloud.cpp.compute.node_groups.v1.AddNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L216}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
@@ -127,6 +128,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Adds specified number of nodes to the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/addNodes
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -154,7 +156,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.AddNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L202}
+  /// [google.cloud.cpp.compute.node_groups.v1.AddNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L216}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
@@ -166,6 +168,7 @@ class NodeGroupsClient {
   ///
   /// Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes
   /// for more details about each group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -182,7 +185,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L237}
+  /// [google.cloud.cpp.compute.node_groups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L251}
   /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L135}
   ///
   // clang-format on
@@ -193,6 +196,7 @@ class NodeGroupsClient {
   ///
   /// Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes
   /// for more details about each group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,7 +218,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L237}
+  /// [google.cloud.cpp.compute.node_groups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L251}
   /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L135}
   ///
   // clang-format on
@@ -226,6 +230,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Deletes the specified NodeGroup resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -250,7 +255,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L311}
+  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L325}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroups(
@@ -260,6 +265,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Deletes the specified NodeGroup resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -287,7 +293,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L311}
+  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L325}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroups(
@@ -298,6 +304,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Deletes specified nodes from the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/deleteNodes
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -323,7 +330,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L341}
+  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
@@ -336,6 +343,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Deletes specified nodes from the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/deleteNodes
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -363,7 +371,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L341}
+  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L355}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
@@ -376,6 +384,7 @@ class NodeGroupsClient {
   /// Returns the specified NodeGroup. Get a list of available NodeGroups by
   /// making a list() request. Note: the "nodes" field should not be used. Use
   /// nodeGroups.listNodes instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -394,7 +403,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L391}
+  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L405}
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
@@ -407,6 +416,7 @@ class NodeGroupsClient {
   /// Returns the specified NodeGroup. Get a list of available NodeGroups by
   /// making a list() request. Note: the "nodes" field should not be used. Use
   /// nodeGroups.listNodes instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -428,7 +438,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L391}
+  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L405}
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
@@ -441,6 +451,7 @@ class NodeGroupsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -459,7 +470,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L376}
+  /// [google.cloud.cpp.compute.node_groups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L390}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -471,6 +482,7 @@ class NodeGroupsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -492,7 +504,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L376}
+  /// [google.cloud.cpp.compute.node_groups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L390}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -505,6 +517,7 @@ class NodeGroupsClient {
   ///
   /// Creates a NodeGroup resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -530,7 +543,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L403}
+  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L417}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroups(
@@ -543,6 +556,7 @@ class NodeGroupsClient {
   ///
   /// Creates a NodeGroup resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -570,7 +584,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L403}
+  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L417}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroups(
@@ -582,6 +596,7 @@ class NodeGroupsClient {
   ///
   /// Retrieves a list of node groups available to the specified project. Note:
   /// use nodeGroups.listNodes for more details about each group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -608,7 +623,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L437}
+  /// [google.cloud.cpp.compute.node_groups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L451}
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
@@ -619,6 +634,7 @@ class NodeGroupsClient {
   ///
   /// Retrieves a list of node groups available to the specified project. Note:
   /// use nodeGroups.listNodes for more details about each group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -649,7 +665,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L437}
+  /// [google.cloud.cpp.compute.node_groups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L451}
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
@@ -661,6 +677,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Lists nodes in the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/listNodes
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -688,7 +705,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L505}
+  /// [google.cloud.cpp.compute.node_groups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L519}
   /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L381}
   ///
   // clang-format on
@@ -699,6 +716,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Lists nodes in the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/listNodes
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -729,7 +747,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L505}
+  /// [google.cloud.cpp.compute.node_groups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L519}
   /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_057.proto#L381}
   ///
   // clang-format on
@@ -740,6 +758,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Updates the specified node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/patch
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -765,7 +784,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L576}
+  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L590}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroups(
@@ -777,6 +796,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Updates the specified node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -804,7 +824,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L576}
+  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L590}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroups(
@@ -816,6 +836,7 @@ class NodeGroupsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -835,7 +856,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L610}
+  /// [google.cloud.cpp.compute.node_groups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L624}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -850,6 +871,7 @@ class NodeGroupsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -871,7 +893,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L610}
+  /// [google.cloud.cpp.compute.node_groups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L624}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -883,6 +905,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Updates the node template of the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/setNodeTemplate
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -908,7 +931,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.SetNodeTemplateRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L626}
+  /// [google.cloud.cpp.compute.node_groups.v1.SetNodeTemplateRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
@@ -921,6 +944,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Updates the node template of the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/setNodeTemplate
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -948,7 +972,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.SetNodeTemplateRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L626}
+  /// [google.cloud.cpp.compute.node_groups.v1.SetNodeTemplateRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L640}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
@@ -959,6 +983,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Simulates maintenance event on specified nodes from the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/simulateMaintenanceEvent
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -985,7 +1010,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L661}
+  /// [google.cloud.cpp.compute.node_groups.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L675}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1000,6 +1025,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Simulates maintenance event on specified nodes from the node group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/simulateMaintenanceEvent
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1027,7 +1053,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L661}
+  /// [google.cloud.cpp.compute.node_groups.v1.SimulateMaintenanceEventRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L675}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1038,6 +1064,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -1057,7 +1084,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L697}
+  /// [google.cloud.cpp.compute.node_groups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L711}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -1072,6 +1099,7 @@ class NodeGroupsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1093,7 +1121,7 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L697}
+  /// [google.cloud.cpp.compute.node_groups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L711}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

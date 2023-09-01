@@ -89,6 +89,7 @@ class LicensesClient {
   ///
   /// Deletes the specified license. *Caution* This resource is intended for use
   /// only by third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/delete
   ///
   /// @param project  Project ID for this request.
   /// @param license  Name of the license resource to delete.
@@ -112,7 +113,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L135}
+  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicenses(
@@ -123,6 +124,7 @@ class LicensesClient {
   ///
   /// Deletes the specified license. *Caution* This resource is intended for use
   /// only by third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -150,7 +152,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L135}
+  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L142}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicenses(
@@ -163,6 +165,7 @@ class LicensesClient {
   /// Returns the specified License resource. *Caution* This resource is intended
   /// for use only by third-party partners who are creating Cloud Marketplace
   /// images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/get
   ///
   /// @param project  Project ID for this request.
   /// @param license  Name of the License resource to return.
@@ -180,7 +183,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L171}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
   /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -193,6 +196,7 @@ class LicensesClient {
   /// Returns the specified License resource. *Caution* This resource is intended
   /// for use only by third-party partners who are creating Cloud Marketplace
   /// images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,7 +218,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L171}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
   /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -228,6 +232,7 @@ class LicensesClient {
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists. *Caution* This resource is intended for use only
   /// by third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -245,7 +250,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L159}
+  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L166}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -258,6 +263,7 @@ class LicensesClient {
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists. *Caution* This resource is intended for use only
   /// by third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -279,7 +285,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L159}
+  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L166}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -293,6 +299,7 @@ class LicensesClient {
   /// Create a License resource in the specified project. *Caution* This resource
   /// is intended for use only by third-party partners who are creating Cloud
   /// Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/insert
   ///
   /// @param project  Project ID for this request.
   /// @param license_resource  The License for this request.
@@ -316,7 +323,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L180}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicenses(
@@ -329,6 +336,7 @@ class LicensesClient {
   /// Create a License resource in the specified project. *Caution* This resource
   /// is intended for use only by third-party partners who are creating Cloud
   /// Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -356,7 +364,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L180}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicenses(
@@ -373,6 +381,7 @@ class LicensesClient {
   /// request to the respective image project, such as debian-cloud or
   /// windows-cloud. *Caution* This resource is intended for use only by
   /// third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -398,7 +407,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L205}
+  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L212}
   /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -414,6 +423,7 @@ class LicensesClient {
   /// request to the respective image project, such as debian-cloud or
   /// windows-cloud. *Caution* This resource is intended for use only by
   /// third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -444,7 +454,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L205}
+  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L212}
   /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -457,6 +467,7 @@ class LicensesClient {
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy. *Caution* This resource is intended for use only by
   /// third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -475,7 +486,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L270}
+  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L277}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -490,6 +501,7 @@ class LicensesClient {
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy. *Caution* This resource is intended for use only by
   /// third-party partners who are creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -511,7 +523,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L270}
+  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L277}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -525,6 +537,7 @@ class LicensesClient {
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
   /// creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -543,7 +556,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L284}
+  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L291}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -559,6 +572,7 @@ class LicensesClient {
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
   /// creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenses/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -580,7 +594,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L284}
+  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L291}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

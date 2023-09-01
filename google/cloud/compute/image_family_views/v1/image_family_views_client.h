@@ -91,6 +91,7 @@ class ImageFamilyViewsClient {
   ///
   /// Returns the latest image that is part of an image family, is not deprecated
   /// and is rolled out in the specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/imageFamilyViews/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -109,7 +110,7 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
   ///
   // clang-format on
@@ -121,6 +122,7 @@ class ImageFamilyViewsClient {
   ///
   /// Returns the latest image that is part of an image family, is not deprecated
   /// and is rolled out in the specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/imageFamilyViews/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -142,7 +144,7 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L50}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
   ///
   // clang-format on

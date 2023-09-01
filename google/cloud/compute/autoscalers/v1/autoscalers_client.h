@@ -91,6 +91,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of autoscalers.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L117}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L124}
   /// [google.cloud.cpp.compute.v1.AutoscalerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_008.proto#L26}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of autoscalers.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L117}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L124}
   /// [google.cloud.cpp.compute.v1.AutoscalerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_008.proto#L26}
   ///
   // clang-format on
@@ -150,6 +152,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Deletes the specified autoscaler.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -174,7 +177,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L191}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -184,6 +187,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Deletes the specified autoscaler.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -211,7 +215,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L191}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -222,6 +226,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Returns the specified autoscaler resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -240,7 +245,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L221}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L228}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
@@ -251,6 +256,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Returns the specified autoscaler resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -272,7 +278,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L221}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L228}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
@@ -285,6 +291,7 @@ class AutoscalersClient {
   ///
   /// Creates an autoscaler in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -309,7 +316,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L233}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -322,6 +329,7 @@ class AutoscalersClient {
   ///
   /// Creates an autoscaler in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -349,7 +357,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L233}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -360,6 +368,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Retrieves a list of autoscalers contained within the specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -386,7 +395,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L264}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L271}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
@@ -396,6 +405,7 @@ class AutoscalersClient {
   // clang-format off
   ///
   /// Retrieves a list of autoscalers contained within the specified zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -426,7 +436,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L264}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L271}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
@@ -440,6 +450,7 @@ class AutoscalersClient {
   /// Updates an autoscaler in the specified project using the data included in
   /// the request. This method supports PATCH semantics and uses the JSON merge
   /// patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/patch
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -464,7 +475,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscalers(
@@ -477,6 +488,7 @@ class AutoscalersClient {
   /// Updates an autoscaler in the specified project using the data included in
   /// the request. This method supports PATCH semantics and uses the JSON merge
   /// patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -504,7 +516,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscalers(
@@ -516,6 +528,7 @@ class AutoscalersClient {
   ///
   /// Updates an autoscaler in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/update
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
@@ -540,7 +553,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L366}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L373}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -553,6 +566,7 @@ class AutoscalersClient {
   ///
   /// Updates an autoscaler in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -580,7 +594,7 @@ class AutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L366}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L373}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

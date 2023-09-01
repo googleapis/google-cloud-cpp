@@ -40,6 +40,7 @@ service SslCertificates {
 
   // Retrieves the list of all SslCertificate resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/aggregatedList
   rpc AggregatedListSslCertificates(AggregatedListSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificateAggregatedList) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service SslCertificates {
   }
 
   // Deletes the specified SslCertificate resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/delete
   rpc DeleteSslCertificates(DeleteSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service SslCertificates {
   }
 
   // Returns the specified SslCertificate resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/get
   rpc GetSslCertificates(GetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificate) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service SslCertificates {
 
   // Creates a SslCertificate resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/insert
   rpc InsertSslCertificates(InsertSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service SslCertificates {
 
   // Retrieves the list of SslCertificate resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/list
   rpc ListSslCertificates(ListSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificateList) {
     option (google.api.http) = {

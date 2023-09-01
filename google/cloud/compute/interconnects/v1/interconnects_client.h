@@ -91,6 +91,7 @@ class InterconnectsClient {
   // clang-format off
   ///
   /// Deletes the specified Interconnect.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/delete
   ///
   /// @param project  Project ID for this request.
   /// @param interconnect  Name of the interconnect to delete.
@@ -114,7 +115,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L120}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,6 +125,7 @@ class InterconnectsClient {
   // clang-format off
   ///
   /// Deletes the specified Interconnect.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -151,7 +153,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L120}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -163,6 +165,7 @@ class InterconnectsClient {
   ///
   /// Returns the specified Interconnect. Get a list of available Interconnects
   /// by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/get
   ///
   /// @param project  Project ID for this request.
   /// @param interconnect  Name of the interconnect to return.
@@ -180,7 +183,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L153}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
@@ -192,6 +195,7 @@ class InterconnectsClient {
   ///
   /// Returns the specified Interconnect. Get a list of available Interconnects
   /// by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -213,7 +217,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L153}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
@@ -225,6 +229,7 @@ class InterconnectsClient {
   // clang-format off
   ///
   /// Returns the interconnectDiagnostics for the specified Interconnect.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/getDiagnostics
   ///
   /// @param project  Project ID for this request.
   /// @param interconnect  Name of the interconnect resource to query.
@@ -242,7 +247,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L144}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L151}
   /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L480}
   ///
   // clang-format on
@@ -253,6 +258,7 @@ class InterconnectsClient {
   // clang-format off
   ///
   /// Returns the interconnectDiagnostics for the specified Interconnect.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/getDiagnostics
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -274,7 +280,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L144}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L151}
   /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L480}
   ///
   // clang-format on
@@ -287,6 +293,7 @@ class InterconnectsClient {
   ///
   /// Creates an Interconnect in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/insert
   ///
   /// @param project  Project ID for this request.
   /// @param interconnect_resource  The Interconnect for this request.
@@ -310,7 +317,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L162}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -323,6 +330,7 @@ class InterconnectsClient {
   ///
   /// Creates an Interconnect in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -350,7 +358,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L162}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -361,6 +369,7 @@ class InterconnectsClient {
   // clang-format off
   ///
   /// Retrieves the list of Interconnects available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -386,7 +395,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L187}
+  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L194}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
@@ -396,6 +405,7 @@ class InterconnectsClient {
   // clang-format off
   ///
   /// Retrieves the list of Interconnects available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -426,7 +436,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L187}
+  /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L194}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
@@ -440,6 +450,7 @@ class InterconnectsClient {
   /// Updates the specified Interconnect with the data included in the request.
   /// This method supports PATCH semantics and uses the JSON merge patch format
   /// and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/patch
   ///
   /// @param project  Project ID for this request.
   /// @param interconnect  Name of the interconnect to update.
@@ -464,7 +475,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L252}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -479,6 +490,7 @@ class InterconnectsClient {
   /// Updates the specified Interconnect with the data included in the request.
   /// This method supports PATCH semantics and uses the JSON merge patch format
   /// and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -506,7 +518,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L252}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -518,6 +530,7 @@ class InterconnectsClient {
   ///
   /// Sets the labels on an Interconnect. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -542,7 +555,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L280}
+  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -555,6 +568,7 @@ class InterconnectsClient {
   ///
   /// Sets the labels on an Interconnect. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -582,7 +596,7 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L280}
+  /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

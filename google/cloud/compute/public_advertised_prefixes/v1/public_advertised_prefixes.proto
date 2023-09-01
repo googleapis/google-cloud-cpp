@@ -38,6 +38,7 @@ service PublicAdvertisedPrefixes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified PublicAdvertisedPrefix
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/delete
   rpc DeletePublicAdvertisedPrefixes(DeletePublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service PublicAdvertisedPrefixes {
   }
 
   // Returns the specified PublicAdvertisedPrefix resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/get
   rpc GetPublicAdvertisedPrefixes(GetPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefix) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service PublicAdvertisedPrefixes {
 
   // Creates a PublicAdvertisedPrefix in the specified project using the
   // parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/insert
   rpc InsertPublicAdvertisedPrefixes(InsertPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service PublicAdvertisedPrefixes {
   }
 
   // Lists the PublicAdvertisedPrefixes for a project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/list
   rpc ListPublicAdvertisedPrefixes(ListPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefixList) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service PublicAdvertisedPrefixes {
   // Patches the specified Router resource with the data included in the
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/publicAdvertisedPrefixes/patch
   rpc PatchPublicAdvertisedPrefixes(PatchPublicAdvertisedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

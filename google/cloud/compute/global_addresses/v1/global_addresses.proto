@@ -40,6 +40,7 @@ service GlobalAddresses {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified address resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/delete
   rpc DeleteGlobalAddresses(DeleteGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service GlobalAddresses {
   }
 
   // Returns the specified address resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/get
   rpc GetGlobalAddresses(GetGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service GlobalAddresses {
 
   // Creates an address resource in the specified project by using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/insert
   rpc InsertGlobalAddresses(InsertGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service GlobalAddresses {
   }
 
   // Retrieves a list of global addresses.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/list
   rpc ListGlobalAddresses(ListGlobalAddressesRequest)
       returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service GlobalAddresses {
   }
 
   // Moves the specified address resource from one project to another project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/move
   rpc Move(MoveRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/addresses/{address}/move"
@@ -92,6 +97,7 @@ service GlobalAddresses {
 
   // Sets the labels on a GlobalAddress. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

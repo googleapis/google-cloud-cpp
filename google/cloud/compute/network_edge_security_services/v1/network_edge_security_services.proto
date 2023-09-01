@@ -39,6 +39,7 @@ service NetworkEdgeSecurityServices {
 
   // Retrieves the list of all NetworkEdgeSecurityService resources available to
   // the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/aggregatedList
   rpc AggregatedListNetworkEdgeSecurityServices(
       AggregatedListNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1
@@ -50,6 +51,7 @@ service NetworkEdgeSecurityServices {
   }
 
   // Deletes the specified service.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/delete
   rpc DeleteNetworkEdgeSecurityServices(
       DeleteNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -62,6 +64,7 @@ service NetworkEdgeSecurityServices {
   }
 
   // Gets a specified NetworkEdgeSecurityService.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/get
   rpc GetNetworkEdgeSecurityServices(GetNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEdgeSecurityService) {
     option (google.api.http) = {
@@ -73,6 +76,7 @@ service NetworkEdgeSecurityServices {
 
   // Creates a new service in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/insert
   rpc InsertNetworkEdgeSecurityServices(
       InsertNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -86,6 +90,7 @@ service NetworkEdgeSecurityServices {
   }
 
   // Patches the specified policy with the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/patch
   rpc PatchNetworkEdgeSecurityServices(PatchNetworkEdgeSecurityServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

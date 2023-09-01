@@ -38,6 +38,7 @@ service TargetGrpcProxies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetGrpcProxy in the given scope
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/delete
   rpc DeleteTargetGrpcProxies(DeleteTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service TargetGrpcProxies {
   }
 
   // Returns the specified TargetGrpcProxy resource in the given scope.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/get
   rpc GetTargetGrpcProxies(GetTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetGrpcProxy) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service TargetGrpcProxies {
 
   // Creates a TargetGrpcProxy in the specified project in the given scope using
   // the parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/insert
   rpc InsertTargetGrpcProxies(InsertTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service TargetGrpcProxies {
   }
 
   // Lists the TargetGrpcProxies for a project in the given scope.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/list
   rpc ListTargetGrpcProxies(ListTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetGrpcProxyList) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service TargetGrpcProxies {
   // Patches the specified TargetGrpcProxy resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/patch
   rpc PatchTargetGrpcProxies(PatchTargetGrpcProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

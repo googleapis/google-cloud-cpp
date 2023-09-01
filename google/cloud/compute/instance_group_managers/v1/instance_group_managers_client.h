@@ -106,6 +106,7 @@ class InstanceGroupManagersClient {
   /// up to 60 seconds after the connection draining duration has elapsed before
   /// the VM instance is removed or deleted. You can specify a maximum of 1000
   /// instances with this method per request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/abandonInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -131,7 +132,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L363}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L383}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
@@ -156,6 +157,7 @@ class InstanceGroupManagersClient {
   /// up to 60 seconds after the connection draining duration has elapsed before
   /// the VM instance is removed or deleted. You can specify a maximum of 1000
   /// instances with this method per request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/abandonInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -183,7 +185,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L363}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AbandonInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L383}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
@@ -194,6 +196,7 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Retrieves the list of managed instance groups and groups them by zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -210,7 +213,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L399}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L419}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_060.proto#L26}
   ///
   // clang-format on
@@ -221,6 +224,7 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Retrieves the list of managed instance groups and groups them by zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -242,7 +246,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L399}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L419}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_060.proto#L26}
   ///
   // clang-format on
@@ -256,6 +260,7 @@ class InstanceGroupManagersClient {
   ///
   /// Applies changes to selected instances on the managed instance group. This
   /// method can be used to apply new overrides and/or new versions.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/applyUpdatesToInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. Should
@@ -282,7 +287,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L473}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L493}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -298,6 +303,7 @@ class InstanceGroupManagersClient {
   ///
   /// Applies changes to selected instances on the managed instance group. This
   /// method can be used to apply new overrides and/or new versions.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/applyUpdatesToInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -325,7 +331,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L473}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ApplyUpdatesToInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L493}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -341,6 +347,7 @@ class InstanceGroupManagersClient {
   /// successful. The underlying actions take additional time. You must
   /// separately verify the status of the creating or actions with the
   /// listmanagedinstances method.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/createInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. It should
@@ -367,7 +374,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L497}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L517}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
@@ -386,6 +393,7 @@ class InstanceGroupManagersClient {
   /// successful. The underlying actions take additional time. You must
   /// separately verify the status of the creating or actions with the
   /// listmanagedinstances method.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/createInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -413,7 +421,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L497}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.CreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L517}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
@@ -426,6 +434,7 @@ class InstanceGroupManagersClient {
   /// Deletes the specified managed instance group and all of the instances in
   /// that group. Note that the instance group must not belong to a backend
   /// service. Read Deleting an instance group for more information.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -450,7 +459,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L533}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L553}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -464,6 +473,7 @@ class InstanceGroupManagersClient {
   /// Deletes the specified managed instance group and all of the instances in
   /// that group. Note that the instance group must not belong to a backend
   /// service. Read Deleting an instance group for more information.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -491,7 +501,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L533}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L553}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -513,6 +523,7 @@ class InstanceGroupManagersClient {
   /// seconds after the connection draining duration has elapsed before the VM
   /// instance is removed or deleted. You can specify a maximum of 1000 instances
   /// with this method per request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deleteInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -538,7 +549,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L563}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L583}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -562,6 +573,7 @@ class InstanceGroupManagersClient {
   /// seconds after the connection draining duration has elapsed before the VM
   /// instance is removed or deleted. You can specify a maximum of 1000 instances
   /// with this method per request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deleteInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -589,7 +601,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L563}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeleteInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L583}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -601,6 +613,7 @@ class InstanceGroupManagersClient {
   ///
   /// Deletes selected per-instance configurations for the managed instance
   /// group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deletePerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. It should
@@ -627,7 +640,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L599}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L619}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -643,6 +656,7 @@ class InstanceGroupManagersClient {
   ///
   /// Deletes selected per-instance configurations for the managed instance
   /// group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deletePerInstanceConfigs
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -670,7 +684,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L599}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L619}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -682,6 +696,7 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Returns all of the details about the specified managed instance group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -700,7 +715,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L624}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L644}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L67}
   ///
   // clang-format on
@@ -712,6 +727,7 @@ class InstanceGroupManagersClient {
   // clang-format off
   ///
   /// Returns all of the details about the specified managed instance group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -733,7 +749,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L624}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L644}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L67}
   ///
   // clang-format on
@@ -753,6 +769,7 @@ class InstanceGroupManagersClient {
   /// instances with the listmanagedinstances method. A managed instance group
   /// can have up to 1000 VM instances per group. Please contact Cloud Support if
   /// you need an increase in this limit.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where you want to create the managed instance group.
@@ -777,7 +794,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L636}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L656}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -797,6 +814,7 @@ class InstanceGroupManagersClient {
   /// instances with the listmanagedinstances method. A managed instance group
   /// can have up to 1000 VM instances per group. Please contact Cloud Support if
   /// you need an increase in this limit.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -824,7 +842,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L636}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.InsertInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L656}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -837,6 +855,7 @@ class InstanceGroupManagersClient {
   ///
   /// Retrieves a list of managed instance groups that are contained within the
   /// specified project and zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -863,7 +882,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L741}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L761}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L67}
   ///
   // clang-format on
@@ -875,6 +894,7 @@ class InstanceGroupManagersClient {
   ///
   /// Retrieves a list of managed instance groups that are contained within the
   /// specified project and zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -905,7 +925,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L741}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L761}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L67}
   ///
   // clang-format on
@@ -919,6 +939,7 @@ class InstanceGroupManagersClient {
   ///
   /// Lists all errors thrown by actions on instances for a given managed
   /// instance group. The filter and orderBy query parameters are not supported.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listErrors
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. It should
@@ -949,7 +970,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L667}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L687}
   /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L431}
   ///
   // clang-format on
@@ -961,6 +982,7 @@ class InstanceGroupManagersClient {
   ///
   /// Lists all errors thrown by actions on instances for a given managed
   /// instance group. The filter and orderBy query parameters are not supported.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listErrors
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -991,7 +1013,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L667}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L687}
   /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L431}
   ///
   // clang-format on
@@ -1010,6 +1032,7 @@ class InstanceGroupManagersClient {
   /// orderBy query parameter is not supported. The `pageToken` query parameter
   /// is supported only in the alpha and beta API and only if the group's
   /// `listManagedInstancesResults` field is set to `PAGINATED`.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -1028,7 +1051,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L809}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L829}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_060.proto#L332}
   ///
   // clang-format on
@@ -1048,6 +1071,7 @@ class InstanceGroupManagersClient {
   /// orderBy query parameter is not supported. The `pageToken` query parameter
   /// is supported only in the alpha and beta API and only if the group's
   /// `listManagedInstancesResults` field is set to `PAGINATED`.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1069,7 +1093,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L809}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L829}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_060.proto#L332}
   ///
   // clang-format on
@@ -1083,6 +1107,7 @@ class InstanceGroupManagersClient {
   ///
   /// Lists all of the per-instance configurations defined for the managed
   /// instance group. The orderBy query parameter is not supported.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listPerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. It should
@@ -1111,7 +1136,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L880}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L900}
   /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L666}
   ///
   // clang-format on
@@ -1124,6 +1149,7 @@ class InstanceGroupManagersClient {
   ///
   /// Lists all of the per-instance configurations defined for the managed
   /// instance group. The orderBy query parameter is not supported.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listPerInstanceConfigs
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1154,7 +1180,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L880}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L900}
   /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_027.proto#L666}
   ///
   // clang-format on
@@ -1175,6 +1201,7 @@ class InstanceGroupManagersClient {
   /// possible that your intended specification for each VM in the group is
   /// different from the current state of that VM. To learn how to apply an
   /// updated configuration to the VMs in a MIG, see Updating instances in a MIG.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patch
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where you want to create the managed instance group.
@@ -1200,7 +1227,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L952}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L972}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1223,6 +1250,7 @@ class InstanceGroupManagersClient {
   /// possible that your intended specification for each VM in the group is
   /// different from the current state of that VM. To learn how to apply an
   /// updated configuration to the VMs in a MIG, see Updating instances in a MIG.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1250,7 +1278,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L952}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchInstanceGroupManagersRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L972}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1264,6 +1292,7 @@ class InstanceGroupManagersClient {
   /// Inserts or patches per-instance configurations for the managed instance
   /// group. perInstanceConfig.name serves as a key used to distinguish whether
   /// to perform insert or patch.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patchPerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. It should
@@ -1290,7 +1319,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L986}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1006}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1307,6 +1336,7 @@ class InstanceGroupManagersClient {
   /// Inserts or patches per-instance configurations for the managed instance
   /// group. perInstanceConfig.name serves as a key used to distinguish whether
   /// to perform insert or patch.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patchPerInstanceConfigs
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1334,7 +1364,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L986}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1006}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1354,6 +1384,7 @@ class InstanceGroupManagersClient {
   /// up to 60 seconds after the connection draining duration has elapsed before
   /// the VM instance is removed or deleted. You can specify a maximum of 1000
   /// instances with this method per request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/recreateInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -1379,7 +1410,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1023}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1043}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1403,6 +1434,7 @@ class InstanceGroupManagersClient {
   /// up to 60 seconds after the connection draining duration has elapsed before
   /// the VM instance is removed or deleted. You can specify a maximum of 1000
   /// instances with this method per request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/recreateInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1430,7 +1462,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1023}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.RecreateInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1043}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1455,6 +1487,7 @@ class InstanceGroupManagersClient {
   /// service that has enabled connection draining, it can take up to 60 seconds
   /// after the connection draining duration has elapsed before the VM instance
   /// is removed or deleted.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resize
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -1482,7 +1515,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1059}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1079}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -1507,6 +1540,7 @@ class InstanceGroupManagersClient {
   /// service that has enabled connection draining, it can take up to 60 seconds
   /// after the connection draining duration has elapsed before the VM instance
   /// is removed or deleted.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resize
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1534,7 +1568,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1059}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1079}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -1548,6 +1582,7 @@ class InstanceGroupManagersClient {
   /// group. The templates for existing instances in the group do not change
   /// unless you run recreateInstances, run applyUpdatesToInstances, or set the
   /// group's updatePolicy.type to PROACTIVE.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setInstanceTemplate
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -1573,7 +1608,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1094}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1591,6 +1626,7 @@ class InstanceGroupManagersClient {
   /// group. The templates for existing instances in the group do not change
   /// unless you run recreateInstances, run applyUpdatesToInstances, or set the
   /// group's updatePolicy.type to PROACTIVE.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setInstanceTemplate
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1618,7 +1654,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1094}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetInstanceTemplateRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1114}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1634,6 +1670,7 @@ class InstanceGroupManagersClient {
   /// you make the request even if the instances have not yet been added to their
   /// target pools. The change might take some time to apply to all of the
   /// instances in the group depending on the size of the group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setTargetPools
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located.
@@ -1659,7 +1696,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1130}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
@@ -1678,6 +1715,7 @@ class InstanceGroupManagersClient {
   /// you make the request even if the instances have not yet been added to their
   /// target pools. The change might take some time to apply to all of the
   /// instances in the group depending on the size of the group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setTargetPools
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1705,7 +1743,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1130}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.SetTargetPoolsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
@@ -1718,6 +1756,7 @@ class InstanceGroupManagersClient {
   /// Inserts or updates per-instance configurations for the managed instance
   /// group. perInstanceConfig.name serves as a key used to distinguish whether
   /// to perform insert or patch.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/updatePerInstanceConfigs
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the managed instance group is located. It should
@@ -1744,7 +1783,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1166}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1761,6 +1800,7 @@ class InstanceGroupManagersClient {
   /// Inserts or updates per-instance configurations for the managed instance
   /// group. perInstanceConfig.name serves as a key used to distinguish whether
   /// to perform insert or patch.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/updatePerInstanceConfigs
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1788,7 +1828,7 @@ class InstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1166}
+  /// [google.cloud.cpp.compute.instance_group_managers.v1.UpdatePerInstanceConfigsRequest]: @googleapis_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L1186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

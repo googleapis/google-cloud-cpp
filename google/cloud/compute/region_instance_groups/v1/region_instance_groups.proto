@@ -39,6 +39,7 @@ service RegionInstanceGroups {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified instance group resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/get
   rpc GetRegionInstanceGroups(GetRegionInstanceGroupsRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroup) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service RegionInstanceGroups {
 
   // Retrieves the list of instance group resources contained within the
   // specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/list
   rpc ListRegionInstanceGroups(ListRegionInstanceGroupsRequest)
       returns (google.cloud.cpp.compute.v1.RegionInstanceGroupList) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service RegionInstanceGroups {
   // information about the named ports. Depending on the specified options, this
   // method can list all instances or only the instances that are running. The
   // orderBy query parameter is not supported.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/listInstances
   rpc ListInstances(ListInstancesRequest)
       returns (google.cloud.cpp.compute.v1.RegionInstanceGroupsListInstances) {
     option (google.api.http) = {
@@ -72,6 +75,7 @@ service RegionInstanceGroups {
   }
 
   // Sets the named ports for the specified regional instance group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/setNamedPorts
   rpc SetNamedPorts(SetNamedPortsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

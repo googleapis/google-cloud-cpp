@@ -90,6 +90,7 @@ class RegionOperationsClient {
   // clang-format off
   ///
   /// Deletes the specified region-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -106,7 +107,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L90}
+  /// [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L94}
   ///
   // clang-format on
   Status DeleteRegionOperations(std::string const& project,
@@ -117,6 +118,7 @@ class RegionOperationsClient {
   // clang-format off
   ///
   /// Deletes the specified region-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -136,7 +138,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L90}
+  /// [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L94}
   ///
   // clang-format on
   Status DeleteRegionOperations(
@@ -147,6 +149,7 @@ class RegionOperationsClient {
   // clang-format off
   ///
   /// Retrieves the specified region-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -165,7 +168,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L102}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L106}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -176,6 +179,7 @@ class RegionOperationsClient {
   // clang-format off
   ///
   /// Retrieves the specified region-specific Operations resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -197,7 +201,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L102}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L106}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -210,6 +214,7 @@ class RegionOperationsClient {
   ///
   /// Retrieves a list of Operation resources contained within the specified
   /// region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -236,7 +241,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L120}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L124}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -247,6 +252,7 @@ class RegionOperationsClient {
   ///
   /// Retrieves a list of Operation resources contained within the specified
   /// region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -277,7 +283,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L120}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L124}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -299,6 +305,7 @@ class RegionOperationsClient {
   /// - If the default deadline is reached, there is no guarantee that the
   /// operation is actually done when the method returns. Be prepared to retry if
   /// the operation is not `DONE`.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/wait
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -317,7 +324,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L188}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L192}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -338,6 +345,7 @@ class RegionOperationsClient {
   /// - If the default deadline is reached, there is no guarantee that the
   /// operation is actually done when the method returns. Be prepared to retry if
   /// the operation is not `DONE`.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/wait
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -359,7 +367,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L188}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @googleapis_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L192}
   /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on

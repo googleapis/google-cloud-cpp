@@ -91,6 +91,7 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of target instances.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L93}
+  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L98}
   /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L82}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of target instances.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L93}
+  /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L98}
   /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L82}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetInstance resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone scoping this request.
@@ -175,7 +178,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L167}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,6 +188,7 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetInstance resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +216,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L167}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,6 +227,7 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Returns the specified TargetInstance resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone scoping this request.
@@ -241,7 +246,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L197}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L202}
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class TargetInstancesClient {
   // clang-format off
   ///
   /// Returns the specified TargetInstance resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -273,7 +279,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L197}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L202}
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
@@ -286,6 +292,7 @@ class TargetInstancesClient {
   ///
   /// Creates a TargetInstance resource in the specified project and zone using
   /// the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone scoping this request.
@@ -310,7 +317,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L209}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L214}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -323,6 +330,7 @@ class TargetInstancesClient {
   ///
   /// Creates a TargetInstance resource in the specified project and zone using
   /// the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -350,7 +358,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L209}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L214}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -362,6 +370,7 @@ class TargetInstancesClient {
   ///
   /// Retrieves a list of TargetInstance resources available to the specified
   /// project and zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone scoping this request.
@@ -388,7 +397,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L240}
+  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L245}
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
@@ -400,6 +409,7 @@ class TargetInstancesClient {
   ///
   /// Retrieves a list of TargetInstance resources available to the specified
   /// project and zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -430,7 +440,7 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L240}
+  /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L245}
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on

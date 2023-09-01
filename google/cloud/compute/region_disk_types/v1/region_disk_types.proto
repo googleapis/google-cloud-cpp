@@ -37,6 +37,7 @@ service RegionDiskTypes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified regional disk type.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/get
   rpc GetRegionDiskTypes(GetRegionDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
@@ -46,6 +47,7 @@ service RegionDiskTypes {
   }
 
   // Retrieves a list of regional disk types available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/list
   rpc ListRegionDiskTypes(ListRegionDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.RegionDiskTypeList) {
     option (google.api.http) = {

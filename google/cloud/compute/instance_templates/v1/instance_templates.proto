@@ -43,6 +43,7 @@ service InstanceTemplates {
 
   // Retrieves the list of all InstanceTemplates resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/aggregatedList
   rpc AggregatedListInstanceTemplates(AggregatedListInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList) {
     option (google.api.http) = {
@@ -54,6 +55,7 @@ service InstanceTemplates {
   // Deletes the specified instance template. Deleting an instance template is
   // permanent and cannot be undone. It is not possible to delete templates that
   // are already in use by a managed instance group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/delete
   rpc DeleteInstanceTemplates(DeleteInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -64,6 +66,7 @@ service InstanceTemplates {
   }
 
   // Returns the specified instance template.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/get
   rpc GetInstanceTemplates(GetInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
@@ -74,6 +77,7 @@ service InstanceTemplates {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -86,6 +90,7 @@ service InstanceTemplates {
   // is included in the request. If you are creating a new template to update an
   // existing instance group, your new instance template must use the same
   // network or, if applicable, the same subnetwork as the original template.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/insert
   rpc InsertInstanceTemplates(InsertInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -98,6 +103,7 @@ service InstanceTemplates {
 
   // Retrieves a list of instance templates that are contained within the
   // specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/list
   rpc ListInstanceTemplates(ListInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplateList) {
     option (google.api.http) = {
@@ -108,6 +114,7 @@ service InstanceTemplates {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -119,6 +126,7 @@ service InstanceTemplates {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

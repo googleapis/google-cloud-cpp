@@ -39,6 +39,7 @@ service Autoscalers {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of autoscalers.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/aggregatedList
   rpc AggregatedListAutoscalers(AggregatedListAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.AutoscalerAggregatedList) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service Autoscalers {
   }
 
   // Deletes the specified autoscaler.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/delete
   rpc DeleteAutoscalers(DeleteAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service Autoscalers {
   }
 
   // Returns the specified autoscaler resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/get
   rpc GetAutoscalers(GetAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service Autoscalers {
 
   // Creates an autoscaler in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/insert
   rpc InsertAutoscalers(InsertAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -79,6 +83,7 @@ service Autoscalers {
   }
 
   // Retrieves a list of autoscalers contained within the specified zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/list
   rpc ListAutoscalers(ListAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.AutoscalerList) {
     option (google.api.http) = {
@@ -90,6 +95,7 @@ service Autoscalers {
   // Updates an autoscaler in the specified project using the data included in
   // the request. This method supports PATCH semantics and uses the JSON merge
   // patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/patch
   rpc PatchAutoscalers(PatchAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -102,6 +108,7 @@ service Autoscalers {
 
   // Updates an autoscaler in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/update
   rpc UpdateAutoscalers(UpdateAutoscalersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

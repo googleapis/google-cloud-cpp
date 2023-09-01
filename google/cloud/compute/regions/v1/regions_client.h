@@ -94,6 +94,7 @@ class RegionsClient {
   /// request's `fields` query parameter to only include the fields you need. For
   /// example, to only include the `id` and `selfLink` fields, add the query
   /// parameter `?fields=id,selfLink` to your request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region resource to return.
@@ -111,7 +112,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L71}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on
@@ -127,6 +128,7 @@ class RegionsClient {
   /// request's `fields` query parameter to only include the fields you need. For
   /// example, to only include the `id` and `selfLink` fields, add the query
   /// parameter `?fields=id,selfLink` to your request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -148,7 +150,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L71}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on
@@ -167,6 +169,7 @@ class RegionsClient {
   /// parameter to only include the fields you need. For example, to only include
   /// the `id` and `selfLink` fields, add the query parameter
   /// `?fields=id,selfLink` to your request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -192,7 +195,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L80}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L82}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on
@@ -209,6 +212,7 @@ class RegionsClient {
   /// parameter to only include the fields you need. For example, to only include
   /// the `id` and `selfLink` fields, add the query parameter
   /// `?fields=id,selfLink` to your request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -239,7 +243,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L80}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L82}
   /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on

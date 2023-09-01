@@ -91,6 +91,7 @@ class TargetVpnGatewaysClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of target VPN gateways.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L107}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L113}
   /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L97}
   ///
   // clang-format on
@@ -118,6 +119,7 @@ class TargetVpnGatewaysClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of target VPN gateways.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -139,7 +141,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L107}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.AggregatedListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L113}
   /// [google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L97}
   ///
   // clang-format on
@@ -152,6 +154,7 @@ class TargetVpnGatewaysClient {
   // clang-format off
   ///
   /// Deletes the specified target VPN gateway.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -176,7 +179,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L181}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -187,6 +190,7 @@ class TargetVpnGatewaysClient {
   // clang-format off
   ///
   /// Deletes the specified target VPN gateway.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,7 +218,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L181}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.DeleteTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L187}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -225,6 +229,7 @@ class TargetVpnGatewaysClient {
   // clang-format off
   ///
   /// Returns the specified target VPN gateway.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -243,7 +248,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L211}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L217}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
@@ -255,6 +260,7 @@ class TargetVpnGatewaysClient {
   // clang-format off
   ///
   /// Returns the specified target VPN gateway.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -276,7 +282,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L211}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.GetTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L217}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
@@ -289,6 +295,7 @@ class TargetVpnGatewaysClient {
   ///
   /// Creates a target VPN gateway in the specified project and region using the
   /// data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -313,7 +320,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L223}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -327,6 +334,7 @@ class TargetVpnGatewaysClient {
   ///
   /// Creates a target VPN gateway in the specified project and region using the
   /// data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -354,7 +362,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L223}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.InsertTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -366,6 +374,7 @@ class TargetVpnGatewaysClient {
   ///
   /// Retrieves a list of target VPN gateways available to the specified project
   /// and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -392,7 +401,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L254}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L260}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
@@ -404,6 +413,7 @@ class TargetVpnGatewaysClient {
   ///
   /// Retrieves a list of target VPN gateways available to the specified project
   /// and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -434,7 +444,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L254}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.ListTargetVpnGatewaysRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L260}
   /// [google.cloud.cpp.compute.v1.TargetVpnGateway]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_129.proto#L27}
   ///
   // clang-format on
@@ -447,6 +457,7 @@ class TargetVpnGatewaysClient {
   ///
   /// Sets the labels on a TargetVpnGateway. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param region  The region for this request.
@@ -472,7 +483,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L322}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -486,6 +497,7 @@ class TargetVpnGatewaysClient {
   ///
   /// Sets the labels on a TargetVpnGateway. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -513,7 +525,7 @@ class TargetVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L322}
+  /// [google.cloud.cpp.compute.target_vpn_gateways.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

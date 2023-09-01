@@ -41,6 +41,7 @@ service Subnetworks {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of subnetworks.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/aggregatedList
   rpc AggregatedListSubnetworks(AggregatedListSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.SubnetworkAggregatedList) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service Subnetworks {
   }
 
   // Deletes the specified subnetwork.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/delete
   rpc DeleteSubnetworks(DeleteSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service Subnetworks {
   }
 
   // Expands the IP CIDR range of the subnetwork to a specified value.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/expandIpCidrRange
   rpc ExpandIpCidrRange(ExpandIpCidrRangeRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -72,6 +75,7 @@ service Subnetworks {
   }
 
   // Returns the specified subnetwork.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/get
   rpc GetSubnetworks(GetSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Subnetwork) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service Subnetworks {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -92,6 +97,7 @@ service Subnetworks {
 
   // Creates a subnetwork in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/insert
   rpc InsertSubnetworks(InsertSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -103,6 +109,7 @@ service Subnetworks {
   }
 
   // Retrieves a list of subnetworks available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/list
   rpc ListSubnetworks(ListSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.SubnetworkList) {
     option (google.api.http) = {
@@ -112,6 +119,7 @@ service Subnetworks {
   }
 
   // Retrieves an aggregated list of all usable subnetworks in the project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/listUsable
   rpc ListUsable(ListUsableRequest)
       returns (google.cloud.cpp.compute.v1.UsableSubnetworksAggregatedList) {
     option (google.api.http) = {
@@ -124,6 +132,7 @@ service Subnetworks {
   // Only certain fields can be updated with a patch request as indicated in the
   // field descriptions. You must specify the current fingerprint of the
   // subnetwork resource being patched.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/patch
   rpc PatchSubnetworks(PatchSubnetworksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -137,6 +146,7 @@ service Subnetworks {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -149,6 +159,7 @@ service Subnetworks {
 
   // Set whether VMs in this subnet can access Google services without assigning
   // external IP addresses through Private Google Access.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/setPrivateIpGoogleAccess
   rpc SetPrivateIpGoogleAccess(SetPrivateIpGoogleAccessRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -161,6 +172,7 @@ service Subnetworks {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

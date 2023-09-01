@@ -88,6 +88,7 @@ class FirewallsClient {
   // clang-format off
   ///
   /// Deletes the specified firewall.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/delete
   ///
   /// @param project  Project ID for this request.
   /// @param firewall  Name of the firewall rule to delete.
@@ -111,7 +112,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L109}
+  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
@@ -121,6 +122,7 @@ class FirewallsClient {
   // clang-format off
   ///
   /// Deletes the specified firewall.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -148,7 +150,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L109}
+  /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L115}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewalls(
@@ -159,6 +161,7 @@ class FirewallsClient {
   // clang-format off
   ///
   /// Returns the specified firewall.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/get
   ///
   /// @param project  Project ID for this request.
   /// @param firewall  Name of the firewall rule to return.
@@ -176,7 +179,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L133}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
   /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -187,6 +190,7 @@ class FirewallsClient {
   // clang-format off
   ///
   /// Returns the specified firewall.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -208,7 +212,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L133}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
   /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -221,6 +225,7 @@ class FirewallsClient {
   ///
   /// Creates a firewall rule in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/insert
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_resource  The Firewall for this request.
@@ -244,7 +249,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L142}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
@@ -256,6 +261,7 @@ class FirewallsClient {
   ///
   /// Creates a firewall rule in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -283,7 +289,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L142}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewalls(
@@ -294,6 +300,7 @@ class FirewallsClient {
   // clang-format off
   ///
   /// Retrieves the list of firewall rules available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -319,7 +326,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L167}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
   /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -329,6 +336,7 @@ class FirewallsClient {
   // clang-format off
   ///
   /// Retrieves the list of firewall rules available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -359,7 +367,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L167}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
   /// [google.cloud.cpp.compute.v1.Firewall]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -372,6 +380,7 @@ class FirewallsClient {
   /// Updates the specified firewall rule with the data included in the request.
   /// This method supports PATCH semantics and uses the JSON merge patch format
   /// and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/patch
   ///
   /// @param project  Project ID for this request.
   /// @param firewall  Name of the firewall rule to patch.
@@ -396,7 +405,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L232}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
@@ -409,6 +418,7 @@ class FirewallsClient {
   /// Updates the specified firewall rule with the data included in the request.
   /// This method supports PATCH semantics and uses the JSON merge patch format
   /// and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -436,7 +446,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L232}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewalls(
@@ -449,6 +459,7 @@ class FirewallsClient {
   /// Updates the specified firewall rule with the data included in the request.
   /// Note that all fields will be updated if using PUT, even fields that are not
   /// specified. To update individual fields, please use PATCH instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/update
   ///
   /// @param project  Project ID for this request.
   /// @param firewall  Name of the firewall rule to update.
@@ -473,7 +484,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L260}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(
@@ -486,6 +497,7 @@ class FirewallsClient {
   /// Updates the specified firewall rule with the data included in the request.
   /// Note that all fields will be updated if using PUT, even fields that are not
   /// specified. To update individual fields, please use PATCH instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -513,7 +525,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L260}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewalls(

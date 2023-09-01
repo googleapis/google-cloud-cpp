@@ -39,6 +39,7 @@ service GlobalOrganizationOperations {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/delete
   rpc DeleteGlobalOrganizationOperations(
       DeleteGlobalOrganizationOperationsRequest)
       returns (google.protobuf.Empty) {
@@ -50,6 +51,7 @@ service GlobalOrganizationOperations {
 
   // Retrieves the specified Operations resource. Gets a list of operations by
   // making a `list()` request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/get
   rpc GetGlobalOrganizationOperations(GetGlobalOrganizationOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service GlobalOrganizationOperations {
 
   // Retrieves a list of Operation resources contained within the specified
   // organization.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/list
   rpc ListGlobalOrganizationOperations(ListGlobalOrganizationOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {

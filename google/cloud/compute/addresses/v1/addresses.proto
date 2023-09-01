@@ -40,6 +40,7 @@ service Addresses {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of addresses.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/aggregatedList
   rpc AggregatedListAddresses(AggregatedListAddressesRequest)
       returns (google.cloud.cpp.compute.v1.AddressAggregatedList) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service Addresses {
   }
 
   // Deletes the specified address resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/delete
   rpc DeleteAddresses(DeleteAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service Addresses {
   }
 
   // Returns the specified address resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/get
   rpc GetAddresses(GetAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service Addresses {
 
   // Creates an address resource in the specified project by using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/insert
   rpc InsertAddresses(InsertAddressesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service Addresses {
   }
 
   // Retrieves a list of addresses contained within the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/list
   rpc ListAddresses(ListAddressesRequest)
       returns (google.cloud.cpp.compute.v1.AddressList) {
     option (google.api.http) = {
@@ -89,6 +94,7 @@ service Addresses {
   }
 
   // Moves the specified address resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/move
   rpc Move(MoveRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}/move"
@@ -101,6 +107,7 @@ service Addresses {
 
   // Sets the labels on an Address. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

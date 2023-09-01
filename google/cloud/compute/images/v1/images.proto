@@ -47,6 +47,7 @@ service Images {
       "https://www.googleapis.com/auth/devstorage.read_write";
 
   // Deletes the specified image.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/delete
   rpc DeleteImages(DeleteImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +59,7 @@ service Images {
 
   // Sets the deprecation status of an image. If an empty request body is given,
   // clears the deprecation status instead.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/deprecate
   rpc Deprecate(DeprecateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -70,6 +72,7 @@ service Images {
   }
 
   // Returns the specified image.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/get
   rpc GetImages(GetImagesRequest) returns (google.cloud.cpp.compute.v1.Image) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/images/{image}"
@@ -80,6 +83,7 @@ service Images {
   // Returns the latest image that is part of an image family and is not
   // deprecated. For more information on image families, see Public image
   // families documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/getFromFamily
   rpc GetFromFamily(GetFromFamilyRequest)
       returns (google.cloud.cpp.compute.v1.Image) {
     option (google.api.http) = {
@@ -90,6 +94,7 @@ service Images {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -100,6 +105,7 @@ service Images {
 
   // Creates an image in the specified project using the data included in the
   // request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/insert
   rpc InsertImages(InsertImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -116,6 +122,7 @@ service Images {
   // publicly-available images, like Debian 8. If you want to get a list of
   // publicly-available images, use this method to make a request to the
   // respective image project, such as debian-cloud or windows-cloud.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/list
   rpc ListImages(ListImagesRequest)
       returns (google.cloud.cpp.compute.v1.ImageList) {
     option (google.api.http) = {
@@ -126,6 +133,7 @@ service Images {
 
   // Patches the specified image with the data included in the request. Only the
   // following fields can be modified: family, description, deprecation status.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/patch
   rpc PatchImages(PatchImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -138,6 +146,7 @@ service Images {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -150,6 +159,7 @@ service Images {
 
   // Sets the labels on an image. To learn more about labels, read the Labeling
   // Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -162,6 +172,7 @@ service Images {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/images/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

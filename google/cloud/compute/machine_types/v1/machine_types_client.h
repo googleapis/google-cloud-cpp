@@ -91,6 +91,7 @@ class MachineTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of machine types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L67}
+  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L70}
   /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L101}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class MachineTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of machine types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L67}
+  /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L70}
   /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L101}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class MachineTypesClient {
   // clang-format off
   ///
   /// Returns the specified machine type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -169,7 +172,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L141}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
@@ -180,6 +183,7 @@ class MachineTypesClient {
   // clang-format off
   ///
   /// Returns the specified machine type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -201,7 +205,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L141}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
@@ -213,6 +217,7 @@ class MachineTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of machine types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -239,7 +244,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
+  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L156}
   /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
@@ -249,6 +254,7 @@ class MachineTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of machine types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -279,7 +285,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
+  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L156}
   /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on

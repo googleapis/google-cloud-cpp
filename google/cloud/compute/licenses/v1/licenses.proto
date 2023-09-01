@@ -45,6 +45,7 @@ service Licenses {
 
   // Deletes the specified license. *Caution* This resource is intended for use
   // only by third-party partners who are creating Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/delete
   rpc DeleteLicenses(DeleteLicensesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -57,6 +58,7 @@ service Licenses {
   // Returns the specified License resource. *Caution* This resource is intended
   // for use only by third-party partners who are creating Cloud Marketplace
   // images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/get
   rpc GetLicenses(GetLicensesRequest)
       returns (google.cloud.cpp.compute.v1.License) {
     option (google.api.http) = {
@@ -68,6 +70,7 @@ service Licenses {
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists. *Caution* This resource is intended for use only
   // by third-party partners who are creating Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -79,6 +82,7 @@ service Licenses {
   // Create a License resource in the specified project. *Caution* This resource
   // is intended for use only by third-party partners who are creating Cloud
   // Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/insert
   rpc InsertLicenses(InsertLicensesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -96,6 +100,7 @@ service Licenses {
   // request to the respective image project, such as debian-cloud or
   // windows-cloud. *Caution* This resource is intended for use only by
   // third-party partners who are creating Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/list
   rpc ListLicenses(ListLicensesRequest)
       returns (google.cloud.cpp.compute.v1.LicensesListResponse) {
     option (google.api.http) = {
@@ -107,6 +112,7 @@ service Licenses {
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy. *Caution* This resource is intended for use only by
   // third-party partners who are creating Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -120,6 +126,7 @@ service Licenses {
   // Returns permissions that a caller has on the specified resource. *Caution*
   // This resource is intended for use only by third-party partners who are
   // creating Cloud Marketplace images.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

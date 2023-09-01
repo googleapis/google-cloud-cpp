@@ -42,6 +42,7 @@ service Reservations {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of reservations.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/aggregatedList
   rpc AggregatedListReservations(AggregatedListReservationsRequest)
       returns (google.cloud.cpp.compute.v1.ReservationAggregatedList) {
     option (google.api.http) = {
@@ -51,6 +52,7 @@ service Reservations {
   }
 
   // Deletes the specified reservation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/delete
   rpc DeleteReservations(DeleteReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service Reservations {
   }
 
   // Retrieves information about the specified reservation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/get
   rpc GetReservations(GetReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Reservation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service Reservations {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service Reservations {
 
   // Creates a new reservation. For more information, read Reserving zonal
   // resources.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/insert
   rpc InsertReservations(InsertReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -93,6 +98,7 @@ service Reservations {
 
   // A list of all the reservations that have been configured for the specified
   // project in specified zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/list
   rpc ListReservations(ListReservationsRequest)
       returns (google.cloud.cpp.compute.v1.ReservationList) {
     option (google.api.http) = {
@@ -103,6 +109,7 @@ service Reservations {
 
   // Resizes the reservation (applicable to standalone reservations only). For
   // more information, read Modifying reservations.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/resize
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}/resize"
@@ -115,6 +122,7 @@ service Reservations {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -126,6 +134,7 @@ service Reservations {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
@@ -137,6 +146,7 @@ service Reservations {
   }
 
   // Update share settings of the reservation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/reservations/update
   rpc UpdateReservations(UpdateReservationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

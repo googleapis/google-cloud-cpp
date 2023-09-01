@@ -42,6 +42,7 @@ service Regions {
   // request's `fields` query parameter to only include the fields you need. For
   // example, to only include the `id` and `selfLink` fields, add the query
   // parameter `?fields=id,selfLink` to your request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regions/get
   rpc GetRegions(GetRegionsRequest)
       returns (google.cloud.cpp.compute.v1.Region) {
     option (google.api.http) = {
@@ -58,6 +59,7 @@ service Regions {
   // parameter to only include the fields you need. For example, to only include
   // the `id` and `selfLink` fields, add the query parameter
   // `?fields=id,selfLink` to your request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regions/list
   rpc ListRegions(ListRegionsRequest)
       returns (google.cloud.cpp.compute.v1.RegionList) {
     option (google.api.http) = {

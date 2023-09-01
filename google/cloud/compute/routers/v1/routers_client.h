@@ -89,6 +89,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of routers.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -105,7 +106,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L150}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L160}
   /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L285}
   ///
   // clang-format on
@@ -115,6 +116,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of routers.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -136,7 +138,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L150}
+  /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L160}
   /// [google.cloud.cpp.compute.v1.RouterAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L285}
   ///
   // clang-format on
@@ -148,6 +150,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Deletes the specified Router resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -172,7 +175,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L224}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
@@ -182,6 +185,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Deletes the specified Router resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -209,7 +213,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L224}
+  /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L234}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
@@ -220,6 +224,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Returns the specified Router resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -238,7 +243,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L343}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L353}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
@@ -249,6 +254,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Returns the specified Router resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -270,7 +276,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L343}
+  /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L353}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
@@ -282,6 +288,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves runtime Nat mapping information of VM endpoints.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/getNatMappingInfo
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -301,7 +308,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L254}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L264}
   /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1260}
   ///
   // clang-format on
@@ -312,6 +319,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves runtime Nat mapping information of VM endpoints.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/getNatMappingInfo
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -333,7 +341,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L254}
+  /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L264}
   /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1260}
   ///
   // clang-format on
@@ -346,6 +354,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves runtime information of the specified router.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/getRouterStatus
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -364,7 +373,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L331}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L341}
   /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1088}
   ///
   // clang-format on
@@ -375,6 +384,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves runtime information of the specified router.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/getRouterStatus
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -396,7 +406,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L331}
+  /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L341}
   /// [google.cloud.cpp.compute.v1.RouterStatusResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1088}
   ///
   // clang-format on
@@ -410,6 +420,7 @@ class RoutersClient {
   ///
   /// Creates a Router resource in the specified project and region using the
   /// data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -434,7 +445,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L355}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
@@ -446,6 +457,7 @@ class RoutersClient {
   ///
   /// Creates a Router resource in the specified project and region using the
   /// data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -473,7 +485,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L355}
+  /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
@@ -484,6 +496,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves a list of Router resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -510,7 +523,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L386}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L396}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
@@ -520,6 +533,7 @@ class RoutersClient {
   // clang-format off
   ///
   /// Retrieves a list of Router resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -550,7 +564,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L386}
+  /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L396}
   /// [google.cloud.cpp.compute.v1.Router]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L216}
   ///
   // clang-format on
@@ -563,6 +577,7 @@ class RoutersClient {
   /// Patches the specified Router resource with the data included in the
   /// request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -588,7 +603,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L454}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L464}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
@@ -602,6 +617,7 @@ class RoutersClient {
   /// Patches the specified Router resource with the data included in the
   /// request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -629,7 +645,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L454}
+  /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L464}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
@@ -641,6 +657,7 @@ class RoutersClient {
   ///
   /// Preview fields auto-generated during router create and update operations.
   /// Calling this method does NOT create or update the router.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/preview
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -660,7 +677,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L488}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L498}
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1095}
   ///
   // clang-format on
@@ -674,6 +691,7 @@ class RoutersClient {
   ///
   /// Preview fields auto-generated during router create and update operations.
   /// Calling this method does NOT create or update the router.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/preview
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -695,7 +713,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L488}
+  /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L498}
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1095}
   ///
   // clang-format on
@@ -709,6 +727,7 @@ class RoutersClient {
   /// request. This method conforms to PUT semantics, which requests that the
   /// state of the target resource be created or replaced with the state defined
   /// by the representation enclosed in the request message payload.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/update
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -734,7 +753,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L504}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(
@@ -749,6 +768,7 @@ class RoutersClient {
   /// request. This method conforms to PUT semantics, which requests that the
   /// state of the target resource be created or replaced with the state defined
   /// by the representation enclosed in the request message payload.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/routers/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -776,7 +796,7 @@ class RoutersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L504}
+  /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]: @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(

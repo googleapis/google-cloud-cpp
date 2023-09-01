@@ -41,6 +41,7 @@ service NodeTemplates {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of node templates.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/aggregatedList
   rpc AggregatedListNodeTemplates(AggregatedListNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplateAggregatedList) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service NodeTemplates {
   }
 
   // Deletes the specified NodeTemplate resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/delete
   rpc DeleteNodeTemplates(DeleteNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service NodeTemplates {
   }
 
   // Returns the specified node template.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/get
   rpc GetNodeTemplates(GetNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplate) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service NodeTemplates {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service NodeTemplates {
 
   // Creates a NodeTemplate resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/insert
   rpc InsertNodeTemplates(InsertNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -92,6 +97,7 @@ service NodeTemplates {
   }
 
   // Retrieves a list of node templates available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/list
   rpc ListNodeTemplates(ListNodeTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplateList) {
     option (google.api.http) = {
@@ -102,6 +108,7 @@ service NodeTemplates {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -113,6 +120,7 @@ service NodeTemplates {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

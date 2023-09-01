@@ -41,6 +41,7 @@ service ResourcePolicies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of resource policies.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/aggregatedList
   rpc AggregatedListResourcePolicies(AggregatedListResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service ResourcePolicies {
   }
 
   // Deletes the specified resource policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/delete
   rpc DeleteResourcePolicies(DeleteResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service ResourcePolicies {
   }
 
   // Retrieves all information of the specified resource policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/get
   rpc GetResourcePolicies(GetResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.ResourcePolicy) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service ResourcePolicies {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -79,6 +83,7 @@ service ResourcePolicies {
   }
 
   // Creates a new resource policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/insert
   rpc InsertResourcePolicies(InsertResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -92,6 +97,7 @@ service ResourcePolicies {
 
   // A list all the resource policies that have been configured for the
   // specified project in specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/list
   rpc ListResourcePolicies(ListResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.ResourcePolicyList) {
     option (google.api.http) = {
@@ -101,6 +107,7 @@ service ResourcePolicies {
   }
 
   // Modify the specified resource policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/patch
   rpc PatchResourcePolicies(PatchResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -114,6 +121,7 @@ service ResourcePolicies {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -125,6 +133,7 @@ service ResourcePolicies {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/resourcePolicies/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

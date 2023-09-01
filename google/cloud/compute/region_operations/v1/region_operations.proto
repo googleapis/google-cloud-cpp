@@ -39,6 +39,7 @@ service RegionOperations {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified region-specific Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/delete
   rpc DeleteRegionOperations(DeleteRegionOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service RegionOperations {
   }
 
   // Retrieves the specified region-specific Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/get
   rpc GetRegionOperations(GetRegionOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service RegionOperations {
 
   // Retrieves a list of Operation resources contained within the specified
   // region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/list
   rpc ListRegionOperations(ListRegionOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
@@ -77,6 +80,7 @@ service RegionOperations {
   // - If the default deadline is reached, there is no guarantee that the
   // operation is actually done when the method returns. Be prepared to retry if
   // the operation is not `DONE`.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/wait
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}/wait"

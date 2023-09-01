@@ -91,6 +91,7 @@ class BackendBucketsClient {
   ///
   /// Adds a key for validating requests with signed URLs for this backend
   /// bucket.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/addSignedUrlKey
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendBucket resource to which the Signed URL Key should be
@@ -116,7 +117,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L148}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L157}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
@@ -129,6 +130,7 @@ class BackendBucketsClient {
   ///
   /// Adds a key for validating requests with signed URLs for this backend
   /// bucket.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/addSignedUrlKey
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -156,7 +158,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L148}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.AddSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L157}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
@@ -167,6 +169,7 @@ class BackendBucketsClient {
   // clang-format off
   ///
   /// Deletes the specified BackendBucket resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/delete
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendBucket resource to delete.
@@ -190,7 +193,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L177}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -200,6 +203,7 @@ class BackendBucketsClient {
   // clang-format off
   ///
   /// Deletes the specified BackendBucket resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -227,7 +231,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L177}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -239,6 +243,7 @@ class BackendBucketsClient {
   ///
   /// Deletes a key for validating requests with signed URLs for this backend
   /// bucket.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/deleteSignedUrlKey
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendBucket resource to which the Signed URL Key should be
@@ -264,7 +269,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L201}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -276,6 +281,7 @@ class BackendBucketsClient {
   ///
   /// Deletes a key for validating requests with signed URLs for this backend
   /// bucket.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/deleteSignedUrlKey
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -303,7 +309,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L201}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.DeleteSignedUrlKeyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -314,6 +320,7 @@ class BackendBucketsClient {
   // clang-format off
   ///
   /// Returns the specified BackendBucket resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/get
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendBucket resource to return.
@@ -331,7 +338,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L229}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L238}
   /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
@@ -342,6 +349,7 @@ class BackendBucketsClient {
   // clang-format off
   ///
   /// Returns the specified BackendBucket resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -363,7 +371,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L229}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L238}
   /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
@@ -376,6 +384,7 @@ class BackendBucketsClient {
   ///
   /// Creates a BackendBucket resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/insert
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket_resource  The BackendBucket for this request.
@@ -399,7 +408,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.InsertBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L238}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.InsertBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L247}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -412,6 +421,7 @@ class BackendBucketsClient {
   ///
   /// Creates a BackendBucket resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -439,7 +449,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.InsertBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L238}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.InsertBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L247}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -451,6 +461,7 @@ class BackendBucketsClient {
   ///
   /// Retrieves the list of BackendBucket resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -476,7 +487,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L263}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L272}
   /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
@@ -487,6 +498,7 @@ class BackendBucketsClient {
   ///
   /// Retrieves the list of BackendBucket resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -517,7 +529,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L263}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L272}
   /// [google.cloud.cpp.compute.v1.BackendBucket]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
   ///
   // clang-format on
@@ -531,6 +543,7 @@ class BackendBucketsClient {
   /// Updates the specified BackendBucket resource with the data included in the
   /// request. This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/patch
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendBucket resource to patch.
@@ -555,7 +568,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.PatchBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L328}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.PatchBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -570,6 +583,7 @@ class BackendBucketsClient {
   /// Updates the specified BackendBucket resource with the data included in the
   /// request. This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -597,7 +611,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.PatchBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L328}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.PatchBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L337}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -608,6 +622,7 @@ class BackendBucketsClient {
   // clang-format off
   ///
   /// Sets the edge security policy for the specified backend bucket.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/setEdgeSecurityPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendService resource to which the security policy should be
@@ -633,7 +648,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L356}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -646,6 +661,7 @@ class BackendBucketsClient {
   // clang-format off
   ///
   /// Sets the edge security policy for the specified backend bucket.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/setEdgeSecurityPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -673,7 +689,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L356}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.SetEdgeSecurityPolicyRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -685,6 +701,7 @@ class BackendBucketsClient {
   ///
   /// Updates the specified BackendBucket resource with the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/update
   ///
   /// @param project  Project ID for this request.
   /// @param backend_bucket  Name of the BackendBucket resource to update.
@@ -709,7 +726,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.UpdateBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L386}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.UpdateBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L395}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -723,6 +740,7 @@ class BackendBucketsClient {
   ///
   /// Updates the specified BackendBucket resource with the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -750,7 +768,7 @@ class BackendBucketsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.backend_buckets.v1.UpdateBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L386}
+  /// [google.cloud.cpp.compute.backend_buckets.v1.UpdateBackendBucketsRequest]: @googleapis_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L395}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

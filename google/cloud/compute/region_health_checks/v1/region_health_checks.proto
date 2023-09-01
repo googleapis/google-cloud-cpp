@@ -38,6 +38,7 @@ service RegionHealthChecks {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified HealthCheck resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/delete
   rpc DeleteRegionHealthChecks(DeleteRegionHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service RegionHealthChecks {
   }
 
   // Returns the specified HealthCheck resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/get
   rpc GetRegionHealthChecks(GetRegionHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheck) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service RegionHealthChecks {
 
   // Creates a HealthCheck resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/insert
   rpc InsertRegionHealthChecks(InsertRegionHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service RegionHealthChecks {
 
   // Retrieves the list of HealthCheck resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/list
   rpc ListRegionHealthChecks(ListRegionHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheckList) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service RegionHealthChecks {
   // Updates a HealthCheck resource in the specified project using the data
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/patch
   rpc PatchRegionHealthChecks(PatchRegionHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -95,6 +100,7 @@ service RegionHealthChecks {
 
   // Updates a HealthCheck resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/update
   rpc UpdateRegionHealthChecks(UpdateRegionHealthChecksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
