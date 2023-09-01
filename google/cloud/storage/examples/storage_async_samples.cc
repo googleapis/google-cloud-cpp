@@ -213,8 +213,8 @@ int main(int argc, char* argv[]) {
   auto make_entry =
       [](std::string const& name, std::vector<std::string> arg_names,
          Command const& command) -> examples::Commands::value_type {
-    arg_names.insert(arg_names.begin(), "<bucket-name>");
     arg_names.insert(arg_names.begin(), "<object-name>");
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
     auto adapter = [=](std::vector<std::string> const& argv) {
       if (argv.size() != 2 || (argv.size() == 2 && argv[0] == "--help")) {
         std::ostringstream os;
