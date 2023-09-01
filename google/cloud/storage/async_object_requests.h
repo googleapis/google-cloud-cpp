@@ -112,11 +112,10 @@ class InsertObjectRequest {
 };
 
 /**
- * A request to delete an objects.
+ * A request to delete an object.
  *
  * This class can hold all the mandatory and optional parameters to delete an
- * object **except** for the data payload. This class is the public API because
- * it is required for mocking.
+ * object. This class is the public API because it is required for mocking.
  */
 class DeleteObjectRequest {
  public:
