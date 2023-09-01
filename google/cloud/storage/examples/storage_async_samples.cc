@@ -147,9 +147,9 @@ void AsyncDeleteObject(google::cloud::storage_experimental::AsyncClient& client,
   //! [delete-object]
   namespace g = google::cloud;
   namespace gcs_ex = google::cloud::storage_experimental;
-  [](gcs_ex::AsyncClient& client, std::string const& bucket_name,
-     std::string const& object_name) {
-    client.DeleteObject(bucket_name, object_name)
+  [](gcs_ex::AsyncClient& client, std::string bucket_name,
+     std::string object_name) {
+    client.DeleteObject(std::move(bucket_name), std::move(object_name))
         .then([](auto f) {
           auto status = f.get();
           if (!status.ok()) throw g::Status(std::move(status));

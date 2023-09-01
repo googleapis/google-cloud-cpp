@@ -50,6 +50,7 @@ else ()
         internal/async/accumulate_read_object.cc
         internal/async/accumulate_read_object.h
         internal/async/connection.h
+        internal/async/connection_fwd.h
         internal/async/connection_impl.cc
         internal/async/connection_impl.h
         internal/async/insert_object.cc
