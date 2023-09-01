@@ -117,6 +117,8 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Datastore](/google/cloud/datastore/README.md)
 - [Discovery Engine API](/google/cloud/discoveryengine/README.md)
+- [Policy Simulator](/google/cloud/policysimulator/README.md)
+- [Policy Troubleshooter](/google/cloud/policytroubleshooter/README.md)
 
 ### Cloud IoT
 
@@ -132,7 +134,50 @@ unusable components from the C++ libraries. More information in the BeyondCorp
 
 ### [Natural Language AI](/google/cloud/language/README.md)
 
-The library has been expanded to include the v2 service.
+We expanded the library to include the `v2` version of the API.
+
+### [Notebooks](/google/cloud/notebooks/README.md)
+
+We expanded the library to include the `v2` version of the API.
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): url encode routing params on publish
+  ([#12454](https://github.com/googleapis/google-cloud-cpp/pull/12454))
+- feat(pubsub): increase backoff from 1.3 to 4.0
+  ([#12306](https://github.com/googleapis/google-cloud-cpp/pull/12306))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): enable leader aware routing by default
+  ([#12319](https://github.com/googleapis/google-cloud-cpp/pull/12319))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): tracing should decorate retries
+  ([#12314](https://github.com/googleapis/google-cloud-cpp/pull/12314))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix: URL encode explicit routing values
+  ([#12493](https://github.com/googleapis/google-cloud-cpp/pull/12493))
+  ([#12447](https://github.com/googleapis/google-cloud-cpp/pull/12447))
+- feat(common): add `Options::set<>() &&` overload
+  ([#12424](https://github.com/googleapis/google-cloud-cpp/pull/12424))
+- fix(common): gRPC alarms require more locking
+  ([#12406](https://github.com/googleapis/google-cloud-cpp/pull/12406))
+- feat(common): retry loops preserve original message
+  ([#12368](https://github.com/googleapis/google-cloud-cpp/pull/12368))
+- feat(otel): control tracing with environment variable
+  ([#11897](https://github.com/googleapis/google-cloud-cpp/pull/11897))
+- docs(otel): troubleshoot exporter doc
+  ([#12345](https://github.com/googleapis/google-cloud-cpp/pull/12345))
+- docs(otel): build quickstart with vcpkg
+  ([#12324](https://github.com/googleapis/google-cloud-cpp/pull/12324))
+- feat(common): retry loops signal via error info
+  ([#12313](https://github.com/googleapis/google-cloud-cpp/pull/12313))
+- fix(common): handle expired policies in `*RetryLoop`
+  ([#12301](https://github.com/googleapis/google-cloud-cpp/pull/12301))
 
 ### Other Changes
 
