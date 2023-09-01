@@ -56,8 +56,7 @@ class AsyncConnectionImpl : public AsyncConnection {
   future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
       storage::internal::ComposeObjectRequest request) override;
 
-  future<Status> AsyncDeleteObject(
-      storage::internal::DeleteObjectRequest request) override;
+  future<Status> AsyncDeleteObject(DeleteObjectParams p) override;
 
   future<StatusOr<std::string>> AsyncStartResumableWrite(
       storage::internal::ResumableUploadRequest request) override;

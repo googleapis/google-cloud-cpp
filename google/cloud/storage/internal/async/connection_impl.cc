@@ -157,19 +157,21 @@ AsyncConnectionImpl::AsyncComposeObject(
       });
 }
 
-future<Status> AsyncConnectionImpl::AsyncDeleteObject(
-    storage::internal::DeleteObjectRequest request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto proto = ToProto(request);
-  auto const idempotency = idempotency_policy(*current)->IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
+future<Status> AsyncConnectionImpl::AsyncDeleteObject(DeleteObjectParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto proto = ToProto(p.request.impl_);
+  auto const idempotency =
+      idempotency_policy(*current)->IsIdempotent(p.request.impl_)
+          ? Idempotency::kIdempotent
+          : Idempotency::kNonIdempotent;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency, cq_,
-      [stub = stub_, current, request = std::move(request)](
+      [stub = stub_, current, request = std::move(p.request)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::storage::v2::DeleteObjectRequest const& proto) {
         ApplyQueryParameters(*context, *current, request);
+        // TODO(#12359) - pass the `options` parameter
+        google::cloud::internal::OptionsSpan span(current);
         return stub->AsyncDeleteObject(cq, std::move(context), proto);
       },
       proto, __func__);

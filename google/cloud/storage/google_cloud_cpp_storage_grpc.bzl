@@ -24,6 +24,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "grpc_plugin.h",
     "internal/async/accumulate_read_object.h",
     "internal/async/connection.h",
+    "internal/async/connection_fwd.h",
     "internal/async/connection_impl.h",
     "internal/async/insert_object.h",
     "internal/async/token_impl.h",

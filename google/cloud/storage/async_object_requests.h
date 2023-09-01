@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_REQUESTS_H
 
+#include "google/cloud/storage/internal/async/connection_fwd.h"
 #include "google/cloud/storage/internal/async/write_payload_fwd.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
@@ -108,6 +109,46 @@ class InsertObjectRequest {
         Impl>::InsertObjectRequestImpl;
   };
   Impl impl_;
+};
+
+/**
+ * A request to delete an objects.
+ *
+ * This class can hold all the mandatory and optional parameters to delete an
+ * object **except** for the data payload. This class is the public API because
+ * it is required for mocking.
+ */
+class DeleteObjectRequest {
+ public:
+  DeleteObjectRequest() = default;
+  DeleteObjectRequest(std::string bucket_name, std::string object_name)
+      : impl_(std::move(bucket_name), std::move(object_name)) {}
+
+  std::string const& bucket_name() const { return impl_.bucket_name(); }
+  std::string const& object_name() const { return impl_.object_name(); }
+
+  template <typename... O>
+  DeleteObjectRequest& set_multiple_options(O&&... o) & {
+    impl_.set_multiple_options(std::forward<O>(o)...);
+    return *this;
+  }
+  template <typename... O>
+  DeleteObjectRequest&& set_multiple_options(O&&... o) && {
+    return std::move(set_multiple_options(std::forward<O>(o)...));
+  }
+
+  template <typename O>
+  bool HasOption() const {
+    return impl_.HasOption<O>();
+  }
+  template <typename O>
+  O GetOption() const {
+    return impl_.GetOption<O>();
+  }
+
+ protected:
+  friend class storage_internal::AsyncConnectionImpl;
+  storage::internal::DeleteObjectRequest impl_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

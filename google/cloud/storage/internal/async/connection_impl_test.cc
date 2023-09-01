@@ -33,7 +33,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::CurrentOptions;
-using ::google::cloud::internal::OptionsSpan;
 using ::google::cloud::storage::testing::MockAsyncInsertStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -238,10 +237,15 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectTooManyTransients) {
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
+  AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncDeleteObject)
-      .WillOnce([this](
-                    CompletionQueue&, auto context,
+      .WillOnce([&] {
+        return sequencer.PushBack("DeleteObject(1)").then([](auto) {
+          return TransientError();
+        });
+      })
+      .WillOnce([&](CompletionQueue&, auto context,
                     google::storage::v2::DeleteObjectRequest const& request) {
         // Verify at least one option is initialized with the correct
         // values.
@@ -252,24 +256,77 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
-        return make_ready_future(PermanentError());
+        return sequencer.PushBack("DeleteObject(2)").then([](auto) {
+          return Status{};
+        });
       });
-  CompletionQueue cq;
-  auto connection = MakeTestConnection(cq, mock);
-  // Simulate the option span created by the `*Client` class. The
-  // `AuthorityOption` value is used by the `*Stub` classes. We want to verify
-  // it is initialized properly by the time it makes it to the mocked call.
-  OptionsSpan span(connection->options());
-  auto response =
-      connection
-          ->AsyncDeleteObject(
-              storage::internal::DeleteObjectRequest("test-bucket",
-                                                     "test-object")
-                  .set_multiple_options(storage::Fields("field1,field2"),
-                                        storage::QuotaUser("test-quota-user")))
-          .get();
-  EXPECT_THAT(response, StatusIs(PermanentError().code(),
-                                 HasSubstr(PermanentError().message())));
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->AsyncDeleteObject(
+      {storage_experimental::DeleteObjectRequest("test-bucket", "test-object")
+           .set_multiple_options(storage::Fields("field1,field2"),
+                                 storage::QuotaUser("test-quota-user")),
+       connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "DeleteObject(1)");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "DeleteObject(2)");
+  next.first.set_value(true);
+
+  auto response = pending.get();
+  ASSERT_STATUS_OK(response);
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectPermanentError) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncDeleteObject).WillOnce([&] {
+    return sequencer.PushBack("DeleteObject").then([](auto) {
+      return PermanentError();
+    });
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->AsyncDeleteObject(
+      {storage_experimental::DeleteObjectRequest("test-bucket", "test-object"),
+       connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "DeleteObject");
+  next.first.set_value(false);
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(PermanentError().code()));
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectTooManyTransients) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncDeleteObject).Times(3).WillRepeatedly([&] {
+    return sequencer.PushBack("DeleteObject").then([](auto) {
+      return TransientError();
+    });
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->AsyncDeleteObject(
+      {storage_experimental::DeleteObjectRequest("test-bucket", "test-object"),
+       connection->options()});
+
+  for (int i = 0; i != 3; ++i) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "DeleteObject");
+    next.first.set_value(false);
+  }
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(TransientError().code()));
 }
 
 }  // namespace

@@ -241,7 +241,7 @@ class AsyncClient {
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be deleted.
-   * @param options a list of optional query parameters and/or request headers.
+   * @param args a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
    *     `IfMetagenerationNotMatch`, and `UserProject`.
@@ -255,15 +255,14 @@ class AsyncClient {
    * @par Example
    * @snippet storage_async_samples.cc delete-object
    */
-  template <typename... RequestOptions>
-  future<Status> DeleteObject(std::string const& bucket_name,
-                              std::string const& object_name,
-                              RequestOptions&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<RequestOptions>(options)...));
-    storage::internal::DeleteObjectRequest request(bucket_name, object_name);
-    request.set_multiple_options(std::forward<RequestOptions>(options)...);
-    return connection_->AsyncDeleteObject(std::move(request));
+  template <typename... Args>
+  future<Status> DeleteObject(std::string bucket_name, std::string object_name,
+                              Args&&... args) {
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    return connection_->AsyncDeleteObject(
+        {DeleteObjectRequest(std::move(bucket_name), std::move(object_name))
+             .set_multiple_options(std::forward<Args>(args)...),
+         /*.options=*/std::move(options)});
   }
 
   /**
