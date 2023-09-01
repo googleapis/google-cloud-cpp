@@ -140,6 +140,45 @@ The library has been expanded to include the v2 service.
 consider this a breaking change, as Bazel 5.x has been in maintenance mode for
 more than 6 months.
 
+**CMake Proto Libraries**: We only compile service-specific protos if the
+corresponding client library is enabled, via `-DGOOGLE_CLOUD_CPP_ENABLE=...`.
+
+This change reduces build times for customers who use CMake but who are not
+using **all** of the client libraries listed below.
+
+We considered it [a bug][#8022] that customers building with CMake were forced
+to compile large proto libraries that they did not need. It was certainly
+[confusing][#10174].
+
+Any change in behavior, including fixing bugs, can be considered "breaking". By
+policy we don't consider bug fixes to be breaking changes. We applied that
+policy in this case.
+
+The impacted libraries are:
+
+- `bigquery`
+- `bigtable`
+- `dialogflow_es`
+- `iam`
+- `logging`
+- `pubsub`
+- `speech`
+- `storage`
+- `texttospeech`
+- `trace`
+
+If you are dependent on any of these proto libraries **and** you are not
+compiling the corresponding client library, you will need to update your build
+scripts.
+
+For example, if you depend on `google_cloud_cpp_speech_protos` (e.g., if you
+have been using this library to make calls to Cloud Speech using raw gRPC), add
+`-DGOOGLE_CLOUD_CPP_ENABLE=...,speech,...` to your CMake configure command. If
+you build with `vcpkg`, include `speech` in your install command.
+
+Note that `google_cloud_cpp_storage_protos` are associated with the
+`experimental-storage-grpc` feature, not the `storage` feature.
+
 ## v2.14.0 - 2023-08
 
 ### New Libraries
@@ -4247,6 +4286,7 @@ releases. The relevant notes are:
 - Synchronous API for table admin operations is complete.
 
 [#10170]: https://github.com/googleapis/google-cloud-cpp/issues/10170
+[#10174]: https://github.com/googleapis/google-cloud-cpp/discussions/10174
 [#5726]: https://github.com/googleapis/google-cloud-cpp/issues/5726
 [#5923]: https://github.com/googleapis/google-cloud-cpp/issues/5923
 [#5929]: https://github.com/googleapis/google-cloud-cpp/issues/5929
@@ -4254,6 +4294,7 @@ releases. The relevant notes are:
 [#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 [#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
 [#7835]: https://github.com/googleapis/google-cloud-cpp/issues/7835
+[#8022]: https://github.com/googleapis/google-cloud-cpp/issues/8022
 [#8095]: https://github.com/googleapis/google-cloud-cpp/pull/8095
 [#8099]: https://github.com/googleapis/google-cloud-cpp/pull/8099
 [#8234]: https://github.com/googleapis/google-cloud-cpp/issues/8234
