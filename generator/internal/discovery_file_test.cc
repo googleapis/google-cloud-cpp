@@ -170,6 +170,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
+  // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/doFoo
   rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
       post: "my/service/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
@@ -180,6 +181,7 @@ service MyResources {
   }
 
   // Description for the get method.
+  // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/get
   rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get: "my/service/projects/{project}/regions/{region}/myResources/{foo}"
@@ -285,6 +287,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
+  // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/doFoo
   rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
       post: "my/service/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
@@ -295,6 +298,7 @@ service MyResources {
   }
 
   // Description for the get method.
+  // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/get
   rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get: "my/service/projects/{project}/regions/{region}/myResources/{foo}"
@@ -481,6 +485,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
+  // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/noop
   rpc Noop(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "my/service/noop"

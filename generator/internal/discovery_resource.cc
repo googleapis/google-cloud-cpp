@@ -265,6 +265,10 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
     if (!method_description.empty()) {
       rpc_text.push_back(FormatCommentBlock(method_description, 1));
     }
+    auto constexpr kMethodLinkComments =
+        R"""(https://cloud.google.com/$product_name$/docs/reference/rest/$version$/%s/%s)""";
+    rpc_text.push_back(FormatCommentBlock(
+        absl::StrFormat(kMethodLinkComments, name_, iter.key()), 1));
     rpc_text.push_back(absl::StrFormat("  rpc %s(%s) returns (%s) {",
                                        method_name, request_type_name,
                                        response_type_name));

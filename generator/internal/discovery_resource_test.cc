@@ -531,6 +531,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
+  // https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources/doFoo
   rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
       post: "base/path/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
@@ -541,6 +542,7 @@ service MyResources {
   }
 
   // Description for the get method.
+  // https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources/get
   rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       get: "base/path/projects/{project}/regions/{region}/myResources/{foo}"
@@ -668,6 +670,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
+  // https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources/noop
   rpc Noop(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "base/path/noop"
