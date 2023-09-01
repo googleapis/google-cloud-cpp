@@ -74,6 +74,11 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
+    # Some gRPC based authentication is implemented by the IAM Credentials
+    # service.
+    "google/iam/credentials/v1/common.proto"
+    "google/iam/credentials/v1/iamcredentials.proto"
+    # We expose google::iam::v1::Policy in our google::cloud::IAMUpdater
     "google/iam/v1/iam_policy.proto"
     "google/iam/v1/options.proto"
     "google/iam/v1/policy.proto"
@@ -218,7 +223,8 @@ endif ()
 set(external_googleapis_installed_libraries_list
     # cmake-format: sort
     google_cloud_cpp_cloud_common_common_protos
-    google_cloud_cpp_iam_protos
+    google_cloud_cpp_iam_credentials_v1_common_protos
+    google_cloud_cpp_iam_credentials_v1_iamcredentials_protos
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
@@ -243,9 +249,6 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/quota.proto"
     "google/api/service.proto"
     "google/api/usage.proto"
-    "google/iam/v1/iam_policy.proto"
-    "google/iam/v1/options.proto"
-    "google/iam/v1/policy.proto"
     "google/rpc/status.proto")
 
 # For some directories *most* (but not all) the proto files are simple enough
@@ -333,6 +336,13 @@ external_googleapis_add_library(
     iam_v1_options_protos
     iam_v1_policy_protos)
 
+external_googleapis_add_library("google/iam/credentials/v1/common.proto"
+                                api_field_behavior_protos api_resource_protos)
+
+external_googleapis_add_library(
+    "google/iam/credentials/v1/iamcredentials.proto" api_annotations_protos
+    api_client_protos iam_credentials_v1_common_protos)
+
 google_cloud_cpp_load_protolist(cloud_common_list "protolists/common.list")
 google_cloud_cpp_load_protodeps(cloud_common_deps "protodeps/common.deps")
 google_cloud_cpp_grpcpp_library(
@@ -342,14 +352,6 @@ google_cloud_cpp_grpcpp_library(
 external_googleapis_set_version_and_alias(cloud_common_common_protos)
 target_link_libraries(google_cloud_cpp_cloud_common_common_protos
                       PUBLIC ${cloud_common_deps})
-
-google_cloud_cpp_load_protolist(iam_list "protolists/iam.list")
-google_cloud_cpp_load_protodeps(iam_deps "protodeps/iam.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_iam_protos ${iam_list} PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(iam_protos)
-target_link_libraries(google_cloud_cpp_iam_protos PUBLIC ${iam_deps})
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs

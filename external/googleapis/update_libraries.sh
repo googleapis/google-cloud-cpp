@@ -150,16 +150,8 @@ declare -A -r LIBRARIES=(
   )"
   ["gkemulticloud"]="@com_google_googleapis//google/cloud/gkemulticloud/v1:gkemulticloud_cc_grpc"
   ["grafeas"]="@com_google_googleapis//grafeas/v1:grafeas_cc_grpc"
-  ["iam"]="$(
-    printf ",%s" \
-      "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc" \
-      "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
-  )"
-  # We already have libraries, different from `iam_protos` that compile
-  # the protos defined in the following entry. Thus, we cannot merge
-  # the following entry into the existing `iam` entry, that would
-  # introduce either ODR-violations, or break backwards compatibility.
-  ["iam_policy"]="@com_google_googleapis//google/iam/v2:iam_cc_grpc"
+  ["iam"]="@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
+  ["iam_v2"]="@com_google_googleapis//google/iam/v2:iam_cc_grpc"
   ["iap"]="@com_google_googleapis//google/cloud/iap/v1:iap_cc_grpc"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
   ["kms"]="$(
