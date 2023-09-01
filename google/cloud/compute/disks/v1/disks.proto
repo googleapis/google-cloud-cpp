@@ -44,6 +44,7 @@ service Disks {
 
   // Adds existing resource policies to a disk. You can only add one policy
   // which will be applied to this disk for scheduling snapshot creation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/addResourcePolicies
   rpc AddResourcePolicies(AddResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -56,6 +57,7 @@ service Disks {
   }
 
   // Retrieves an aggregated list of persistent disks.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/aggregatedList
   rpc AggregatedListDisks(AggregatedListDisksRequest)
       returns (google.cloud.cpp.compute.v1.DiskAggregatedList) {
     option (google.api.http) = {
@@ -65,6 +67,7 @@ service Disks {
   }
 
   // Bulk create a set of disks.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/bulkInsert
   rpc BulkInsert(BulkInsertRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -80,6 +83,7 @@ service Disks {
   // creation, consider using snapshots.insert instead, as that method supports
   // more features, such as creating snapshots in a project different from the
   // source disk project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/createSnapshot
   rpc CreateSnapshot(CreateSnapshotRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -95,6 +99,7 @@ service Disks {
   // permanently and is irreversible. However, deleting a disk does not delete
   // any snapshots previously made from the disk. You must separately delete
   // snapshots.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/delete
   rpc DeleteDisks(DeleteDisksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -105,6 +110,7 @@ service Disks {
   }
 
   // Returns the specified persistent disk.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/get
   rpc GetDisks(GetDisksRequest) returns (google.cloud.cpp.compute.v1.Disk) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
@@ -114,6 +120,7 @@ service Disks {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -127,6 +134,7 @@ service Disks {
   // or sourceDisk) or create an empty 500 GB data disk by omitting all
   // properties. You can also create a disk that is larger than the default size
   // by specifying the sizeGb property.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/insert
   rpc InsertDisks(InsertDisksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -138,6 +146,7 @@ service Disks {
   }
 
   // Retrieves a list of persistent disks contained within the specified zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/list
   rpc ListDisks(ListDisksRequest)
       returns (google.cloud.cpp.compute.v1.DiskList) {
     option (google.api.http) = {
@@ -147,6 +156,7 @@ service Disks {
   }
 
   // Removes resource policies from a disk.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/removeResourcePolicies
   rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -160,6 +170,7 @@ service Disks {
 
   // Resizes the specified persistent disk. You can only increase the size of
   // the disk.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/resize
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/resize"
@@ -172,6 +183,7 @@ service Disks {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -184,6 +196,7 @@ service Disks {
 
   // Sets the labels on a disk. To learn more about labels, read the Labeling
   // Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -196,6 +209,7 @@ service Disks {
   }
 
   // Starts asynchronous replication. Must be invoked on the primary disk.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/startAsyncReplication
   rpc StartAsyncReplication(StartAsyncReplicationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -209,6 +223,7 @@ service Disks {
 
   // Stops asynchronous replication. Can be invoked either on the primary or on
   // the secondary disk.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/stopAsyncReplication
   rpc StopAsyncReplication(StopAsyncReplicationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -221,6 +236,7 @@ service Disks {
 
   // Stops asynchronous replication for a consistency group of disks. Can be
   // invoked either in the primary or secondary scope.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/stopGroupAsyncReplication
   rpc StopGroupAsyncReplication(StopGroupAsyncReplicationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -233,6 +249,7 @@ service Disks {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
@@ -246,6 +263,7 @@ service Disks {
   // Updates the specified disk with the data included in the request. The
   // update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be modified: user_license.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/disks/update
   rpc UpdateDisks(UpdateDisksRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

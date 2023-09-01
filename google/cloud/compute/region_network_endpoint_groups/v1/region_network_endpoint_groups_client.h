@@ -98,6 +98,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Deletes the specified network endpoint group. Note that the NEG cannot be
   /// deleted if it is configured as a backend of a backend service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region where the network endpoint group is located. It
@@ -124,7 +125,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L89}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L93}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -137,6 +138,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Deletes the specified network endpoint group. Note that the NEG cannot be
   /// deleted if it is configured as a backend of a backend service.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -164,7 +166,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L89}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L93}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -176,6 +178,7 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Returns the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region where the network endpoint group is located. It
@@ -195,7 +198,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L121}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L125}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -208,6 +211,7 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Returns the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -229,7 +233,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L121}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L125}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -243,6 +247,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Creates a network endpoint group in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region where you want to create the network endpoint group.
@@ -268,7 +273,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L134}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L138}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -282,6 +287,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Creates a network endpoint group in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -309,7 +315,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L134}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L138}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -322,6 +328,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Retrieves the list of regional network endpoint groups available to the
   /// specified project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region where the network endpoint group is located. It
@@ -349,7 +356,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L166}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L170}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -361,6 +368,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   /// Retrieves the list of regional network endpoint groups available to the
   /// specified project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -391,7 +399,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L166}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L170}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on

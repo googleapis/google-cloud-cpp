@@ -90,6 +90,7 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetGrpcProxy in the given scope
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param target_grpc_proxy  Name of the TargetGrpcProxy resource to delete.
@@ -113,7 +114,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L96}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,6 +125,7 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetGrpcProxy in the given scope
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -151,7 +153,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L96}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.DeleteTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L101}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,6 +164,7 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetGrpcProxy resource in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/get
   ///
   /// @param project  Project ID for this request.
   /// @param target_grpc_proxy  Name of the TargetGrpcProxy resource to return.
@@ -179,7 +182,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L120}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L125}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
@@ -190,6 +193,7 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetGrpcProxy resource in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -211,7 +215,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L120}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.GetTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L125}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
@@ -224,6 +228,7 @@ class TargetGrpcProxiesClient {
   ///
   /// Creates a TargetGrpcProxy in the specified project in the given scope using
   /// the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param target_grpc_proxy_resource  The TargetGrpcProxy for this request.
@@ -247,7 +252,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L129}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -261,6 +266,7 @@ class TargetGrpcProxiesClient {
   ///
   /// Creates a TargetGrpcProxy in the specified project in the given scope using
   /// the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -288,7 +294,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L129}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.InsertTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L134}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -299,6 +305,7 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Lists the TargetGrpcProxies for a project in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -324,7 +331,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L154}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L159}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
@@ -334,6 +341,7 @@ class TargetGrpcProxiesClient {
   // clang-format off
   ///
   /// Lists the TargetGrpcProxies for a project in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -364,7 +372,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L154}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.ListTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L159}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_118.proto#L29}
   ///
   // clang-format on
@@ -378,6 +386,7 @@ class TargetGrpcProxiesClient {
   /// Patches the specified TargetGrpcProxy resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param target_grpc_proxy  Name of the TargetGrpcProxy resource to patch.
@@ -402,7 +411,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L219}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L224}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -417,6 +426,7 @@ class TargetGrpcProxiesClient {
   /// Patches the specified TargetGrpcProxy resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/targetGrpcProxies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -444,7 +454,7 @@ class TargetGrpcProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L219}
+  /// [google.cloud.cpp.compute.target_grpc_proxies.v1.PatchTargetGrpcProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L224}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -88,6 +88,7 @@ class ZonesClient {
   // clang-format off
   ///
   /// Returns the specified Zone resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zones/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone resource to return.
@@ -106,7 +107,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L57}
+  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
@@ -115,6 +116,7 @@ class ZonesClient {
   // clang-format off
   ///
   /// Returns the specified Zone resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zones/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -137,7 +139,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L57}
+  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
@@ -147,6 +149,7 @@ class ZonesClient {
   // clang-format off
   ///
   /// Retrieves the list of Zone resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zones/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -173,7 +176,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L66}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L68}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
@@ -182,6 +185,7 @@ class ZonesClient {
   // clang-format off
   ///
   /// Retrieves the list of Zone resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/zones/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -213,7 +217,7 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L66}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L68}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(

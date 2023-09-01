@@ -38,6 +38,7 @@ service Routers {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of routers.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/aggregatedList
   rpc AggregatedListRouters(AggregatedListRoutersRequest)
       returns (google.cloud.cpp.compute.v1.RouterAggregatedList) {
     option (google.api.http) = {
@@ -47,6 +48,7 @@ service Routers {
   }
 
   // Deletes the specified Router resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/delete
   rpc DeleteRouters(DeleteRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -57,6 +59,7 @@ service Routers {
   }
 
   // Returns the specified Router resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/get
   rpc GetRouters(GetRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Router) {
     option (google.api.http) = {
@@ -66,6 +69,7 @@ service Routers {
   }
 
   // Retrieves runtime Nat mapping information of VM endpoints.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/getNatMappingInfo
   rpc GetNatMappingInfo(GetNatMappingInfoRequest)
       returns (google.cloud.cpp.compute.v1.VmEndpointNatMappingsList) {
     option (google.api.http) = {
@@ -75,6 +79,7 @@ service Routers {
   }
 
   // Retrieves runtime information of the specified router.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/getRouterStatus
   rpc GetRouterStatus(GetRouterStatusRequest)
       returns (google.cloud.cpp.compute.v1.RouterStatusResponse) {
     option (google.api.http) = {
@@ -85,6 +90,7 @@ service Routers {
 
   // Creates a Router resource in the specified project and region using the
   // data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/insert
   rpc InsertRouters(InsertRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -96,6 +102,7 @@ service Routers {
   }
 
   // Retrieves a list of Router resources available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/list
   rpc ListRouters(ListRoutersRequest)
       returns (google.cloud.cpp.compute.v1.RouterList) {
     option (google.api.http) = {
@@ -107,6 +114,7 @@ service Routers {
   // Patches the specified Router resource with the data included in the
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/patch
   rpc PatchRouters(PatchRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -120,6 +128,7 @@ service Routers {
 
   // Preview fields auto-generated during router create and update operations.
   // Calling this method does NOT create or update the router.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/preview
   rpc Preview(PreviewRequest)
       returns (google.cloud.cpp.compute.v1.RoutersPreviewResponse) {
     option (google.api.http) = {
@@ -134,6 +143,7 @@ service Routers {
   // request. This method conforms to PUT semantics, which requests that the
   // state of the target resource be created or replaced with the state defined
   // by the representation enclosed in the request message payload.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routers/update
   rpc UpdateRouters(UpdateRoutersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -296,7 +306,7 @@ message GetNatMappingInfoRequest {
   // Name of the nat service to filter the Nat Mapping information. If it is
   // omitted, all nats for this router will be returned. Name should conform to
   // RFC1035.
-  optional string nat_name = 9;
+  optional string nat_name = 3;
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -306,25 +316,25 @@ message GetNatMappingInfoRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 4;
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 5;
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 6 [(google.api.field_behavior) = REQUIRED];
 
   // Name of the region for this request.
-  string region = 6 [(google.api.field_behavior) = REQUIRED];
+  string region = 7 [(google.api.field_behavior) = REQUIRED];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 8;
 
   // Name of the Router resource to query for Nat Mapping information of VM
   // endpoints.
-  string router = 8 [(google.api.field_behavior) = REQUIRED];
+  string router = 9 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for GetRouterStatus.

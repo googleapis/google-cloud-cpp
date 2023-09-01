@@ -41,6 +41,7 @@ service NetworkEndpointGroups {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of network endpoint groups and sorts them by zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/aggregatedList
   rpc AggregatedListNetworkEndpointGroups(
       AggregatedListNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupAggregatedList) {
@@ -51,6 +52,7 @@ service NetworkEndpointGroups {
   }
 
   // Attach a list of network endpoints to the specified network endpoint group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/attachNetworkEndpoints
   rpc AttachNetworkEndpoints(AttachNetworkEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -66,6 +68,7 @@ service NetworkEndpointGroups {
   // NEG and the VM instances they belong to are not terminated when the NEG is
   // deleted. Note that the NEG cannot be deleted if there are backend services
   // referencing it.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/delete
   rpc DeleteNetworkEndpointGroups(DeleteNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -78,6 +81,7 @@ service NetworkEndpointGroups {
 
   // Detach a list of network endpoints from the specified network endpoint
   // group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/detachNetworkEndpoints
   rpc DetachNetworkEndpoints(DetachNetworkEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -90,6 +94,7 @@ service NetworkEndpointGroups {
   }
 
   // Returns the specified network endpoint group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/get
   rpc GetNetworkEndpointGroups(GetNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
@@ -101,6 +106,7 @@ service NetworkEndpointGroups {
 
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/insert
   rpc InsertNetworkEndpointGroups(InsertNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -114,6 +120,7 @@ service NetworkEndpointGroups {
 
   // Retrieves the list of network endpoint groups that are located in the
   // specified project and zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/list
   rpc ListNetworkEndpointGroups(ListNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
@@ -123,6 +130,7 @@ service NetworkEndpointGroups {
   }
 
   // Lists the network endpoints in the specified network endpoint group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/listNetworkEndpoints
   rpc ListNetworkEndpoints(ListNetworkEndpointsRequest) returns (
       google.cloud.cpp.compute.v1.NetworkEndpointGroupsListNetworkEndpoints) {
     option (google.api.http) = {
@@ -134,6 +142,7 @@ service NetworkEndpointGroups {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

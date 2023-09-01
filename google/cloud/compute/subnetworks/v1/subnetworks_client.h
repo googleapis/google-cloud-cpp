@@ -91,6 +91,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of subnetworks.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L176}
+  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L188}
   /// [google.cloud.cpp.compute.v1.SubnetworkAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L190}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of subnetworks.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L176}
+  /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L188}
   /// [google.cloud.cpp.compute.v1.SubnetworkAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L190}
   ///
   // clang-format on
@@ -150,6 +152,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Deletes the specified subnetwork.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -174,7 +177,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L250}
+  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L262}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -184,6 +187,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Deletes the specified subnetwork.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -211,7 +215,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L250}
+  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L262}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -222,6 +226,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Expands the IP CIDR range of the subnetwork to a specified value.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/expandIpCidrRange
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -247,7 +252,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L280}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -261,6 +266,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Expands the IP CIDR range of the subnetwork to a specified value.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/expandIpCidrRange
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -288,7 +294,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L280}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L292}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -299,6 +305,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Returns the specified subnetwork.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -317,7 +324,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L330}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L28}
   ///
   // clang-format on
@@ -328,6 +335,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Returns the specified subnetwork.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -349,7 +357,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L330}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L28}
   ///
   // clang-format on
@@ -362,6 +370,7 @@ class SubnetworksClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -380,7 +389,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L315}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L327}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -392,6 +401,7 @@ class SubnetworksClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -413,7 +423,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L315}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L327}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -426,6 +436,7 @@ class SubnetworksClient {
   ///
   /// Creates a subnetwork in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -450,7 +461,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
+  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -463,6 +474,7 @@ class SubnetworksClient {
   ///
   /// Creates a subnetwork in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -490,7 +502,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
+  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -501,6 +513,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Retrieves a list of subnetworks available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -527,7 +540,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L373}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L385}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L28}
   ///
   // clang-format on
@@ -537,6 +550,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Retrieves a list of subnetworks available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -567,7 +581,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L373}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L385}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L28}
   ///
   // clang-format on
@@ -579,6 +593,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of all usable subnetworks in the project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/listUsable
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -604,7 +619,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L441}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L453}
   /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L570}
   ///
   // clang-format on
@@ -614,6 +629,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of all usable subnetworks in the project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/listUsable
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -644,7 +660,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L441}
+  /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L453}
   /// [google.cloud.cpp.compute.v1.UsableSubnetwork]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_117.proto#L570}
   ///
   // clang-format on
@@ -658,6 +674,7 @@ class SubnetworksClient {
   /// Only certain fields can be updated with a patch request as indicated in the
   /// field descriptions. You must specify the current fingerprint of the
   /// subnetwork resource being patched.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -683,7 +700,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L506}
+  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L518}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
@@ -698,6 +715,7 @@ class SubnetworksClient {
   /// Only certain fields can be updated with a patch request as indicated in the
   /// field descriptions. You must specify the current fingerprint of the
   /// subnetwork resource being patched.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -725,7 +743,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L506}
+  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L518}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
@@ -737,6 +755,7 @@ class SubnetworksClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -756,7 +775,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L550}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L562}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -771,6 +790,7 @@ class SubnetworksClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -792,7 +812,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L550}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L562}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -805,6 +825,7 @@ class SubnetworksClient {
   ///
   /// Set whether VMs in this subnet can access Google services without assigning
   /// external IP addresses through Private Google Access.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/setPrivateIpGoogleAccess
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -830,7 +851,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L567}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L579}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -846,6 +867,7 @@ class SubnetworksClient {
   ///
   /// Set whether VMs in this subnet can access Google services without assigning
   /// external IP addresses through Private Google Access.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/setPrivateIpGoogleAccess
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -873,7 +895,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L567}
+  /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L579}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -884,6 +906,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -903,7 +926,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L603}
+  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L615}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -918,6 +941,7 @@ class SubnetworksClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -939,7 +963,7 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L603}
+  /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L615}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

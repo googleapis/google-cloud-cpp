@@ -89,6 +89,7 @@ class ImagesClient {
   // clang-format off
   ///
   /// Deletes the specified image.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/delete
   ///
   /// @param project  Project ID for this request.
   /// @param image  Name of the image resource to delete.
@@ -112,7 +113,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.DeleteImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L177}
+  /// [google.cloud.cpp.compute.images.v1.DeleteImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L188}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImages(
@@ -121,6 +122,7 @@ class ImagesClient {
   // clang-format off
   ///
   /// Deletes the specified image.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -148,7 +150,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.DeleteImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L177}
+  /// [google.cloud.cpp.compute.images.v1.DeleteImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L188}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImages(
@@ -160,6 +162,7 @@ class ImagesClient {
   ///
   /// Sets the deprecation status of an image. If an empty request body is given,
   /// clears the deprecation status instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/deprecate
   ///
   /// @param project  Project ID for this request.
   /// @param image  Image name.
@@ -184,7 +187,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.DeprecateRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L201}
+  /// [google.cloud.cpp.compute.images.v1.DeprecateRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L212}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
@@ -197,6 +200,7 @@ class ImagesClient {
   ///
   /// Sets the deprecation status of an image. If an empty request body is given,
   /// clears the deprecation status instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/deprecate
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -224,7 +228,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.DeprecateRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L201}
+  /// [google.cloud.cpp.compute.images.v1.DeprecateRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L212}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
@@ -234,6 +238,7 @@ class ImagesClient {
   // clang-format off
   ///
   /// Returns the specified image.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/get
   ///
   /// @param project  Project ID for this request.
   /// @param image  Name of the image resource to return.
@@ -251,7 +256,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L251}
+  /// [google.cloud.cpp.compute.images.v1.GetImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L262}
   /// [google.cloud.cpp.compute.v1.Image]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
@@ -261,6 +266,7 @@ class ImagesClient {
   // clang-format off
   ///
   /// Returns the specified image.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -282,7 +288,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L251}
+  /// [google.cloud.cpp.compute.images.v1.GetImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L262}
   /// [google.cloud.cpp.compute.v1.Image]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
@@ -295,6 +301,7 @@ class ImagesClient {
   /// Returns the latest image that is part of an image family and is not
   /// deprecated. For more information on image families, see Public image
   /// families documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/getFromFamily
   ///
   /// @param project  The image project that the image belongs to. For example, to get a CentOS
   ///  image, specify centos-cloud as the image project.
@@ -313,7 +320,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetFromFamilyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L229}
+  /// [google.cloud.cpp.compute.images.v1.GetFromFamilyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L240}
   /// [google.cloud.cpp.compute.v1.Image]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
@@ -325,6 +332,7 @@ class ImagesClient {
   /// Returns the latest image that is part of an image family and is not
   /// deprecated. For more information on image families, see Public image
   /// families documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/getFromFamily
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -346,7 +354,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetFromFamilyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L229}
+  /// [google.cloud.cpp.compute.images.v1.GetFromFamilyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L240}
   /// [google.cloud.cpp.compute.v1.Image]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
@@ -359,6 +367,7 @@ class ImagesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -376,7 +385,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L239}
+  /// [google.cloud.cpp.compute.images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L250}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -388,6 +397,7 @@ class ImagesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -409,7 +419,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L239}
+  /// [google.cloud.cpp.compute.images.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L250}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -422,6 +432,7 @@ class ImagesClient {
   ///
   /// Creates an image in the specified project using the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/insert
   ///
   /// @param project  Project ID for this request.
   /// @param image_resource  The Image for this request.
@@ -445,7 +456,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.InsertImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L260}
+  /// [google.cloud.cpp.compute.images.v1.InsertImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImages(
@@ -457,6 +468,7 @@ class ImagesClient {
   ///
   /// Creates an image in the specified project using the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -484,7 +496,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.InsertImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L260}
+  /// [google.cloud.cpp.compute.images.v1.InsertImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L271}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImages(
@@ -500,6 +512,7 @@ class ImagesClient {
   /// publicly-available images, like Debian 8. If you want to get a list of
   /// publicly-available images, use this method to make a request to the
   /// respective image project, such as debian-cloud or windows-cloud.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -525,7 +538,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.ListImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L288}
+  /// [google.cloud.cpp.compute.images.v1.ListImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L299}
   /// [google.cloud.cpp.compute.v1.Image]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
@@ -540,6 +553,7 @@ class ImagesClient {
   /// publicly-available images, like Debian 8. If you want to get a list of
   /// publicly-available images, use this method to make a request to the
   /// respective image project, such as debian-cloud or windows-cloud.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -570,7 +584,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.ListImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L288}
+  /// [google.cloud.cpp.compute.images.v1.ListImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L299}
   /// [google.cloud.cpp.compute.v1.Image]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
@@ -582,6 +596,7 @@ class ImagesClient {
   ///
   /// Patches the specified image with the data included in the request. Only the
   /// following fields can be modified: family, description, deprecation status.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/patch
   ///
   /// @param project  Project ID for this request.
   /// @param image  Name of the image resource to patch.
@@ -606,7 +621,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.PatchImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L353}
+  /// [google.cloud.cpp.compute.images.v1.PatchImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L364}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImages(
@@ -618,6 +633,7 @@ class ImagesClient {
   ///
   /// Patches the specified image with the data included in the request. Only the
   /// following fields can be modified: family, description, deprecation status.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -645,7 +661,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.PatchImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L353}
+  /// [google.cloud.cpp.compute.images.v1.PatchImagesRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L364}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImages(
@@ -657,6 +673,7 @@ class ImagesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -675,7 +692,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L381}
+  /// [google.cloud.cpp.compute.images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L392}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -689,6 +706,7 @@ class ImagesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -710,7 +728,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L381}
+  /// [google.cloud.cpp.compute.images.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L392}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -723,6 +741,7 @@ class ImagesClient {
   ///
   /// Sets the labels on an image. To learn more about labels, read the Labeling
   /// Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -747,7 +766,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L395}
+  /// [google.cloud.cpp.compute.images.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L406}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -760,6 +779,7 @@ class ImagesClient {
   ///
   /// Sets the labels on an image. To learn more about labels, read the Labeling
   /// Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -787,7 +807,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L395}
+  /// [google.cloud.cpp.compute.images.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L406}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -797,6 +817,7 @@ class ImagesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -815,7 +836,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L412}
+  /// [google.cloud.cpp.compute.images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L423}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -829,6 +850,7 @@ class ImagesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/images/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -850,7 +872,7 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L412}
+  /// [google.cloud.cpp.compute.images.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/images/v1/images.proto#L423}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

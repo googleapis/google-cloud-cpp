@@ -93,6 +93,7 @@ class InstanceGroupsClient {
   /// Adds a list of instances to the specified instance group. All of the
   /// instances in the instance group must be in the same network/subnetwork.
   /// Read Adding instances for more information.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/addInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -118,7 +119,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L154}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L163}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
@@ -133,6 +134,7 @@ class InstanceGroupsClient {
   /// Adds a list of instances to the specified instance group. All of the
   /// instances in the instance group must be in the same network/subnetwork.
   /// Read Adding instances for more information.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/addInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -160,7 +162,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L154}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AddInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L163}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
@@ -171,6 +173,7 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Retrieves the list of instance groups and sorts them by zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -187,7 +190,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L189}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L198}
   /// [google.cloud.cpp.compute.v1.InstanceGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_059.proto#L28}
   ///
   // clang-format on
@@ -197,6 +200,7 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Retrieves the list of instance groups and sorts them by zone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +222,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L189}
+  /// [google.cloud.cpp.compute.instance_groups.v1.AggregatedListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L198}
   /// [google.cloud.cpp.compute.v1.InstanceGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_059.proto#L28}
   ///
   // clang-format on
@@ -233,6 +237,7 @@ class InstanceGroupsClient {
   /// Deletes the specified instance group. The instances in the group are not
   /// deleted. Note that instance group must not belong to a backend service.
   /// Read Deleting an instance group for more information.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/delete
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -257,7 +262,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L263}
+  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -269,6 +274,7 @@ class InstanceGroupsClient {
   /// Deletes the specified instance group. The instances in the group are not
   /// deleted. Note that instance group must not belong to a backend service.
   /// Read Deleting an instance group for more information.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -296,7 +302,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L263}
+  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -310,6 +316,7 @@ class InstanceGroupsClient {
   /// instance groups by making a list() request. For managed instance groups,
   /// use the instanceGroupManagers or regionInstanceGroupManagers methods
   /// instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -328,7 +335,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L293}
+  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L302}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -342,6 +349,7 @@ class InstanceGroupsClient {
   /// instance groups by making a list() request. For managed instance groups,
   /// use the instanceGroupManagers or regionInstanceGroupManagers methods
   /// instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -363,7 +371,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L293}
+  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L302}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -376,6 +384,7 @@ class InstanceGroupsClient {
   ///
   /// Creates an instance group in the specified project using the parameters
   /// that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/insert
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where you want to create the instance group.
@@ -400,7 +409,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L305}
+  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L314}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -413,6 +422,7 @@ class InstanceGroupsClient {
   ///
   /// Creates an instance group in the specified project using the parameters
   /// that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -440,7 +450,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L305}
+  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L314}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -453,6 +463,7 @@ class InstanceGroupsClient {
   /// Retrieves the list of zonal instance group resources contained within the
   /// specified zone. For managed instance groups, use the instanceGroupManagers
   /// or regionInstanceGroupManagers methods instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -479,7 +490,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L336}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L345}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -492,6 +503,7 @@ class InstanceGroupsClient {
   /// Retrieves the list of zonal instance group resources contained within the
   /// specified zone. For managed instance groups, use the instanceGroupManagers
   /// or regionInstanceGroupManagers methods instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -522,7 +534,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L336}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L345}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -536,6 +548,7 @@ class InstanceGroupsClient {
   /// Lists the instances in the specified instance group. The orderBy query
   /// parameter is not supported. The filter query parameter is supported, but
   /// only for expressions that use `eq` (equal) or `ne` (not equal) operators.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/listInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -565,7 +578,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L404}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L413}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L95}
   ///
   // clang-format on
@@ -582,6 +595,7 @@ class InstanceGroupsClient {
   /// Lists the instances in the specified instance group. The orderBy query
   /// parameter is not supported. The filter query parameter is supported, but
   /// only for expressions that use `eq` (equal) or `ne` (not equal) operators.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/listInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -612,7 +626,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L404}
+  /// [google.cloud.cpp.compute.instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L413}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L95}
   ///
   // clang-format on
@@ -628,6 +642,7 @@ class InstanceGroupsClient {
   /// not delete those instances. If the group is part of a backend service that
   /// has enabled connection draining, it can take up to 60 seconds after the
   /// connection draining duration before the VM instance is removed or deleted.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/removeInstances
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -654,7 +669,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L481}
+  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L490}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
@@ -671,6 +686,7 @@ class InstanceGroupsClient {
   /// not delete those instances. If the group is part of a backend service that
   /// has enabled connection draining, it can take up to 60 seconds after the
   /// connection draining duration before the VM instance is removed or deleted.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/removeInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -698,7 +714,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L481}
+  /// [google.cloud.cpp.compute.instance_groups.v1.RemoveInstancesRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L490}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
@@ -709,6 +725,7 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Sets the named ports for the specified instance group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/setNamedPorts
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone where the instance group is located.
@@ -734,7 +751,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L517}
+  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L526}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -747,6 +764,7 @@ class InstanceGroupsClient {
   // clang-format off
   ///
   /// Sets the named ports for the specified instance group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/setNamedPorts
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -774,7 +792,7 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L517}
+  /// [google.cloud.cpp.compute.instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L526}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(

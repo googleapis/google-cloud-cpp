@@ -94,6 +94,7 @@ class RegionTargetHttpProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetHttpProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -118,7 +119,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L97}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -130,6 +131,7 @@ class RegionTargetHttpProxiesClient {
   // clang-format off
   ///
   /// Deletes the specified TargetHttpProxy resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,7 +159,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L97}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.DeleteRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -169,6 +171,7 @@ class RegionTargetHttpProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetHttpProxy resource in the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -187,7 +190,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L127}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L132}
   /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_120.proto#L34}
   ///
   // clang-format on
@@ -200,6 +203,7 @@ class RegionTargetHttpProxiesClient {
   // clang-format off
   ///
   /// Returns the specified TargetHttpProxy resource in the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -221,7 +225,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L127}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.GetRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L132}
   /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_120.proto#L34}
   ///
   // clang-format on
@@ -235,6 +239,7 @@ class RegionTargetHttpProxiesClient {
   ///
   /// Creates a TargetHttpProxy resource in the specified project and region
   /// using the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -259,7 +264,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L139}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -273,6 +278,7 @@ class RegionTargetHttpProxiesClient {
   ///
   /// Creates a TargetHttpProxy resource in the specified project and region
   /// using the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -300,7 +306,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L139}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.InsertRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L144}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -313,6 +319,7 @@ class RegionTargetHttpProxiesClient {
   ///
   /// Retrieves the list of TargetHttpProxy resources available to the specified
   /// project in the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -339,7 +346,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L170}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L175}
   /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_120.proto#L34}
   ///
   // clang-format on
@@ -351,6 +358,7 @@ class RegionTargetHttpProxiesClient {
   ///
   /// Retrieves the list of TargetHttpProxy resources available to the specified
   /// project in the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -381,7 +389,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L170}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.ListRegionTargetHttpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L175}
   /// [google.cloud.cpp.compute.v1.TargetHttpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_120.proto#L34}
   ///
   // clang-format on
@@ -394,6 +402,7 @@ class RegionTargetHttpProxiesClient {
   // clang-format off
   ///
   /// Changes the URL map for TargetHttpProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/setUrlMap
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -419,7 +428,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L238}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
@@ -432,6 +441,7 @@ class RegionTargetHttpProxiesClient {
   // clang-format off
   ///
   /// Changes the URL map for TargetHttpProxy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/setUrlMap
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -459,7 +469,7 @@ class RegionTargetHttpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L238}
+  /// [google.cloud.cpp.compute.region_target_http_proxies.v1.SetUrlMapRequest]: @googleapis_reference_link{google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(

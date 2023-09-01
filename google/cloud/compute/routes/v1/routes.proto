@@ -39,6 +39,7 @@ service Routes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Route resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routes/delete
   rpc DeleteRoutes(DeleteRoutesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service Routes {
   }
 
   // Returns the specified Route resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routes/get
   rpc GetRoutes(GetRoutesRequest) returns (google.cloud.cpp.compute.v1.Route) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/routes/{route}"
@@ -58,6 +60,7 @@ service Routes {
 
   // Creates a Route resource in the specified project using the data included
   // in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routes/insert
   rpc InsertRoutes(InsertRoutesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service Routes {
   }
 
   // Retrieves the list of Route resources available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/routes/list
   rpc ListRoutes(ListRoutesRequest)
       returns (google.cloud.cpp.compute.v1.RouteList) {
     option (google.api.http) = {

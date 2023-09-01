@@ -42,6 +42,7 @@ service TargetHttpsProxies {
 
   // Retrieves the list of all TargetHttpsProxy resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/aggregatedList
   rpc AggregatedListTargetHttpsProxies(AggregatedListTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxyAggregatedList) {
     option (google.api.http) = {
@@ -51,6 +52,7 @@ service TargetHttpsProxies {
   }
 
   // Deletes the specified TargetHttpsProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/delete
   rpc DeleteTargetHttpsProxies(DeleteTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service TargetHttpsProxies {
   }
 
   // Returns the specified TargetHttpsProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/get
   rpc GetTargetHttpsProxies(GetTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxy) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service TargetHttpsProxies {
 
   // Creates a TargetHttpsProxy resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/insert
   rpc InsertTargetHttpsProxies(InsertTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -84,6 +88,7 @@ service TargetHttpsProxies {
 
   // Retrieves the list of TargetHttpsProxy resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/list
   rpc ListTargetHttpsProxies(ListTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxyList) {
     option (google.api.http) = {
@@ -95,6 +100,7 @@ service TargetHttpsProxies {
   // Patches the specified TargetHttpsProxy resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/patch
   rpc PatchTargetHttpsProxies(PatchTargetHttpsProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -107,6 +113,7 @@ service TargetHttpsProxies {
   }
 
   // Changes the Certificate Map for TargetHttpsProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setCertificateMap
   rpc SetCertificateMap(SetCertificateMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -119,6 +126,7 @@ service TargetHttpsProxies {
   }
 
   // Sets the QUIC override policy for TargetHttpsProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setQuicOverride
   rpc SetQuicOverride(SetQuicOverrideRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -131,6 +139,7 @@ service TargetHttpsProxies {
   }
 
   // Replaces SslCertificates for TargetHttpsProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setSslCertificates
   rpc SetSslCertificates(SetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -146,6 +155,7 @@ service TargetHttpsProxies {
   // server-side support for SSL features. This affects connections between
   // clients and the HTTPS proxy load balancer. They do not affect the
   // connection between the load balancer and the backends.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setSslPolicy
   rpc SetSslPolicy(SetSslPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -158,6 +168,7 @@ service TargetHttpsProxies {
   }
 
   // Changes the URL map for TargetHttpsProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpsProxies/setUrlMap
   rpc SetUrlMap(SetUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

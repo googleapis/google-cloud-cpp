@@ -40,6 +40,7 @@ service SslPolicies {
 
   // Retrieves the list of all SslPolicy resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/aggregatedList
   rpc AggregatedListSslPolicies(AggregatedListSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPoliciesAggregatedList) {
     option (google.api.http) = {
@@ -51,6 +52,7 @@ service SslPolicies {
   // Deletes the specified SSL policy. The SSL policy resource can be deleted
   // only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   // resources.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/delete
   rpc DeleteSslPolicies(DeleteSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service SslPolicies {
   }
 
   // Lists all of the ordered rules present in a single specified policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/get
   rpc GetSslPolicies(GetSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPolicy) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service SslPolicies {
   }
 
   // Returns the specified SSL policy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/insert
   rpc InsertSslPolicies(InsertSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service SslPolicies {
 
   // Lists all the SSL policies that have been configured for the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/list
   rpc ListSslPolicies(ListSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SslPoliciesList) {
     option (google.api.http) = {
@@ -92,6 +97,7 @@ service SslPolicies {
 
   // Lists all features that can be specified in the SSL policy when using
   // custom profile.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/listAvailableFeatures
   rpc ListAvailableFeatures(ListAvailableFeaturesRequest) returns (
       google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse) {
     option (google.api.http) = {
@@ -101,6 +107,7 @@ service SslPolicies {
   }
 
   // Patches the specified SSL policy with the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/sslPolicies/patch
   rpc PatchSslPolicies(PatchSslPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

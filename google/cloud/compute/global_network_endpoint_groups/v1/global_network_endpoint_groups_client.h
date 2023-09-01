@@ -97,6 +97,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Attach a network endpoint to the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/attachNetworkEndpoints
   ///
   /// @param project  Project ID for this request.
   /// @param network_endpoint_group  The name of the network endpoint group where you are attaching network
@@ -122,7 +123,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L123}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L130}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -136,6 +137,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Attach a network endpoint to the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/attachNetworkEndpoints
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -163,7 +165,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L123}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L130}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -176,6 +178,7 @@ class GlobalNetworkEndpointGroupsClient {
   ///
   /// Deletes the specified network endpoint group.Note that the NEG cannot be
   /// deleted if there are backend services referencing it.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/delete
   ///
   /// @param project  Project ID for this request.
   /// @param network_endpoint_group  The name of the network endpoint group to delete. It should comply with
@@ -200,7 +203,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DeleteGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L154}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DeleteGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L161}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -212,6 +215,7 @@ class GlobalNetworkEndpointGroupsClient {
   ///
   /// Deletes the specified network endpoint group.Note that the NEG cannot be
   /// deleted if there are backend services referencing it.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -239,7 +243,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DeleteGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L154}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DeleteGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L161}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -251,6 +255,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Detach the network endpoint from the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/detachNetworkEndpoints
   ///
   /// @param project  Project ID for this request.
   /// @param network_endpoint_group  The name of the network endpoint group where you are removing network
@@ -276,7 +281,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L179}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -290,6 +295,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Detach the network endpoint from the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/detachNetworkEndpoints
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -317,7 +323,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L179}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -329,6 +335,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Returns the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/get
   ///
   /// @param project  Project ID for this request.
   /// @param network_endpoint_group  The name of the network endpoint group. It should comply with RFC1035.
@@ -346,7 +353,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.GetGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L210}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.GetGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L217}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -358,6 +365,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Returns the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -379,7 +387,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.GetGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L210}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.GetGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L217}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -393,6 +401,7 @@ class GlobalNetworkEndpointGroupsClient {
   ///
   /// Creates a network endpoint group in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/insert
   ///
   /// @param project  Project ID for this request.
   /// @param network_endpoint_group_resource  The NetworkEndpointGroup for this request.
@@ -416,7 +425,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.InsertGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L219}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.InsertGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -430,6 +439,7 @@ class GlobalNetworkEndpointGroupsClient {
   ///
   /// Creates a network endpoint group in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -457,7 +467,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.InsertGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L219}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.InsertGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -470,6 +480,7 @@ class GlobalNetworkEndpointGroupsClient {
   ///
   /// Retrieves the list of network endpoint groups that are located in the
   /// specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -495,7 +506,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L244}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L251}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -507,6 +518,7 @@ class GlobalNetworkEndpointGroupsClient {
   ///
   /// Retrieves the list of network endpoint groups that are located in the
   /// specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -537,7 +549,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L244}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListGlobalNetworkEndpointGroupsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L251}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
   ///
   // clang-format on
@@ -550,6 +562,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Lists the network endpoints in the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/listNetworkEndpoints
   ///
   /// @param project  Project ID for this request.
   /// @param network_endpoint_group  The name of the network endpoint group from which you want to generate a
@@ -577,7 +590,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L309}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L316}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_012.proto#L202}
   ///
   // clang-format on
@@ -589,6 +602,7 @@ class GlobalNetworkEndpointGroupsClient {
   // clang-format off
   ///
   /// Lists the network endpoints in the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalNetworkEndpointGroups/listNetworkEndpoints
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -619,7 +633,7 @@ class GlobalNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L309}
+  /// [google.cloud.cpp.compute.global_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L316}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_012.proto#L202}
   ///
   // clang-format on

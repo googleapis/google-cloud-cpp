@@ -38,6 +38,7 @@ service RegionInstances {
 
   // Creates multiple instances in a given region. Count specifies the number of
   // instances to create.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstances/bulkInsert
   rpc BulkInsert(BulkInsertRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

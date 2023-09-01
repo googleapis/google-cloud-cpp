@@ -42,6 +42,7 @@ service NetworkAttachments {
 
   // Retrieves the list of all NetworkAttachment resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/aggregatedList
   rpc AggregatedListNetworkAttachments(AggregatedListNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList) {
     option (google.api.http) = {
@@ -51,6 +52,7 @@ service NetworkAttachments {
   }
 
   // Deletes the specified NetworkAttachment in the given scope
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/delete
   rpc DeleteNetworkAttachments(DeleteNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service NetworkAttachments {
   }
 
   // Returns the specified NetworkAttachment resource in the given scope.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/get
   rpc GetNetworkAttachments(GetNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachment) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service NetworkAttachments {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service NetworkAttachments {
 
   // Creates a NetworkAttachment in the specified project in the given scope
   // using the parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/insert
   rpc InsertNetworkAttachments(InsertNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -93,6 +98,7 @@ service NetworkAttachments {
   }
 
   // Lists the NetworkAttachments for a project in the given scope.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/list
   rpc ListNetworkAttachments(ListNetworkAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachmentList) {
     option (google.api.http) = {
@@ -103,6 +109,7 @@ service NetworkAttachments {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -114,6 +121,7 @@ service NetworkAttachments {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

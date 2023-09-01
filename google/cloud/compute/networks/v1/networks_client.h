@@ -88,6 +88,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Adds a peering to the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/addPeering
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network resource to add peering to.
@@ -112,7 +113,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L161}
+  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
@@ -124,6 +125,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Adds a peering to the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/addPeering
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -151,7 +153,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L161}
+  /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
@@ -162,6 +164,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Deletes the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/delete
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network to delete.
@@ -185,7 +188,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L190}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
@@ -195,6 +198,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Deletes the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -222,7 +226,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L190}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
@@ -233,6 +237,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Returns the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/get
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network to return.
@@ -250,7 +255,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L223}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L234}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L159}
   ///
   // clang-format on
@@ -261,6 +266,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Returns the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -282,7 +288,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L223}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L234}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L159}
   ///
   // clang-format on
@@ -294,6 +300,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Returns the effective firewalls on a given network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/getEffectiveFirewalls
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network for this request.
@@ -311,7 +318,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L214}
+  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
   /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L467}
   ///
   // clang-format on
@@ -323,6 +330,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Returns the effective firewalls on a given network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/getEffectiveFirewalls
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -344,7 +352,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L214}
+  /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
   /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L467}
   ///
   // clang-format on
@@ -358,6 +366,7 @@ class NetworksClient {
   ///
   /// Creates a network in the specified project using the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert
   ///
   /// @param project  Project ID for this request.
   /// @param network_resource  The Network for this request.
@@ -381,7 +390,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L232}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
@@ -393,6 +402,7 @@ class NetworksClient {
   ///
   /// Creates a network in the specified project using the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -420,7 +430,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L232}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
@@ -431,6 +441,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Retrieves the list of networks available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -456,7 +467,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L257}
+  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L268}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L159}
   ///
   // clang-format on
@@ -466,6 +477,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Retrieves the list of networks available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -496,7 +508,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L257}
+  /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L268}
   /// [google.cloud.cpp.compute.v1.Network]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L159}
   ///
   // clang-format on
@@ -507,6 +519,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Lists the peering routes exchanged over peering connection.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/listPeeringRoutes
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network for this request.
@@ -533,7 +546,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L322}
+  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L333}
   /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L27}
   ///
   // clang-format on
@@ -544,6 +557,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Lists the peering routes exchanged over peering connection.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/listPeeringRoutes
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -574,7 +588,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L322}
+  /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L333}
   /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_030.proto#L27}
   ///
   // clang-format on
@@ -588,6 +602,7 @@ class NetworksClient {
   ///
   /// Patches the specified network with the data included in the request. Only
   /// the following fields can be modified: routingConfig.routingMode.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/patch
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network to update.
@@ -612,7 +627,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L402}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L413}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
@@ -624,6 +639,7 @@ class NetworksClient {
   ///
   /// Patches the specified network with the data included in the request. Only
   /// the following fields can be modified: routingConfig.routingMode.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -651,7 +667,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L402}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L413}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
@@ -662,6 +678,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Removes a peering from the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/removePeering
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network resource to remove peering from.
@@ -686,7 +703,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L430}
+  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L441}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
@@ -698,6 +715,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Removes a peering from the specified network.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/removePeering
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -725,7 +743,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L430}
+  /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L441}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
@@ -736,6 +754,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Switches the network mode from auto subnet mode to custom subnet mode.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/switchToCustomMode
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network to be updated.
@@ -759,7 +778,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L459}
+  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L470}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -769,6 +788,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Switches the network mode from auto subnet mode to custom subnet mode.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/switchToCustomMode
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -796,7 +816,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L459}
+  /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L470}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -809,6 +829,7 @@ class NetworksClient {
   /// Updates the specified network peering with the data included in the
   /// request. You can only modify the NetworkPeering.export_custom_routes field
   /// and the NetworkPeering.import_custom_routes field.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/updatePeering
   ///
   /// @param project  Project ID for this request.
   /// @param network  Name of the network resource which the updated peering is belonging to.
@@ -833,7 +854,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L483}
+  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L494}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
@@ -847,6 +868,7 @@ class NetworksClient {
   /// Updates the specified network peering with the data included in the
   /// request. You can only modify the NetworkPeering.export_custom_routes field
   /// and the NetworkPeering.import_custom_routes field.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/updatePeering
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -874,7 +896,7 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L483}
+  /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]: @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L494}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(

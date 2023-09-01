@@ -37,6 +37,7 @@ service DiskTypes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of disk types.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/aggregatedList
   rpc AggregatedListDiskTypes(AggregatedListDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskTypeAggregatedList) {
     option (google.api.http) = {
@@ -46,6 +47,7 @@ service DiskTypes {
   }
 
   // Returns the specified disk type.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/get
   rpc GetDiskTypes(GetDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
@@ -55,6 +57,7 @@ service DiskTypes {
   }
 
   // Retrieves a list of disk types available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/list
   rpc ListDiskTypes(ListDiskTypesRequest)
       returns (google.cloud.cpp.compute.v1.DiskTypeList) {
     option (google.api.http) = {

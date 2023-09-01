@@ -38,6 +38,7 @@ service TargetInstances {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of target instances.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/aggregatedList
   rpc AggregatedListTargetInstances(AggregatedListTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.TargetInstanceAggregatedList) {
     option (google.api.http) = {
@@ -47,6 +48,7 @@ service TargetInstances {
   }
 
   // Deletes the specified TargetInstance resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/delete
   rpc DeleteTargetInstances(DeleteTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -57,6 +59,7 @@ service TargetInstances {
   }
 
   // Returns the specified TargetInstance resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/get
   rpc GetTargetInstances(GetTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.TargetInstance) {
     option (google.api.http) = {
@@ -67,6 +70,7 @@ service TargetInstances {
 
   // Creates a TargetInstance resource in the specified project and zone using
   // the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/insert
   rpc InsertTargetInstances(InsertTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service TargetInstances {
 
   // Retrieves a list of TargetInstance resources available to the specified
   // project and zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetInstances/list
   rpc ListTargetInstances(ListTargetInstancesRequest)
       returns (google.cloud.cpp.compute.v1.TargetInstanceList) {
     option (google.api.http) = {

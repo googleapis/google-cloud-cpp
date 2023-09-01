@@ -91,6 +91,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of packetMirrorings.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L119}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L126}
   /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_085.proto#L93}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of packetMirrorings.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L119}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L126}
   /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_085.proto#L93}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Deletes the specified PacketMirroring resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -175,7 +178,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L193}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -186,6 +189,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Deletes the specified PacketMirroring resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -213,7 +217,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L193}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -224,6 +228,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Returns the specified PacketMirroring resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -242,7 +247,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L223}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L230}
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_085.proto#L29}
   ///
   // clang-format on
@@ -253,6 +258,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Returns the specified PacketMirroring resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -274,7 +280,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L223}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L230}
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_085.proto#L29}
   ///
   // clang-format on
@@ -287,6 +293,7 @@ class PacketMirroringsClient {
   ///
   /// Creates a PacketMirroring resource in the specified project and region
   /// using the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -311,7 +318,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L235}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -324,6 +331,7 @@ class PacketMirroringsClient {
   ///
   /// Creates a PacketMirroring resource in the specified project and region
   /// using the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -351,7 +359,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L235}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -363,6 +371,7 @@ class PacketMirroringsClient {
   ///
   /// Retrieves a list of PacketMirroring resources available to the specified
   /// project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -389,7 +398,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L266}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L273}
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_085.proto#L29}
   ///
   // clang-format on
@@ -401,6 +410,7 @@ class PacketMirroringsClient {
   ///
   /// Retrieves a list of PacketMirroring resources available to the specified
   /// project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -431,7 +441,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L266}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L273}
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_085.proto#L29}
   ///
   // clang-format on
@@ -445,6 +455,7 @@ class PacketMirroringsClient {
   /// Patches the specified PacketMirroring resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -470,7 +481,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L334}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L341}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -485,6 +496,7 @@ class PacketMirroringsClient {
   /// Patches the specified PacketMirroring resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -512,7 +524,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L334}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L341}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -523,6 +535,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -542,7 +555,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L368}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L375}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -557,6 +570,7 @@ class PacketMirroringsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/packetMirrorings/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -578,7 +592,7 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L368}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L375}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

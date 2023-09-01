@@ -95,6 +95,7 @@ class RegionInstanceTemplatesClient {
   ///
   /// Deletes the specified instance template. Deleting an instance template is
   /// permanent and cannot be undone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -119,7 +120,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L85}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -132,6 +133,7 @@ class RegionInstanceTemplatesClient {
   ///
   /// Deletes the specified instance template. Deleting an instance template is
   /// permanent and cannot be undone.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -159,7 +161,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L85}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -171,6 +173,7 @@ class RegionInstanceTemplatesClient {
   // clang-format off
   ///
   /// Returns the specified instance template.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -189,7 +192,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L115}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L119}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
@@ -202,6 +205,7 @@ class RegionInstanceTemplatesClient {
   // clang-format off
   ///
   /// Returns the specified instance template.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -223,7 +227,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L115}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L119}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
@@ -237,6 +241,7 @@ class RegionInstanceTemplatesClient {
   ///
   /// Creates an instance template in the specified project and region using the
   /// global instance template whose URL is included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -261,7 +266,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L127}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -275,6 +280,7 @@ class RegionInstanceTemplatesClient {
   ///
   /// Creates an instance template in the specified project and region using the
   /// global instance template whose URL is included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -302,7 +308,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L127}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -315,6 +321,7 @@ class RegionInstanceTemplatesClient {
   ///
   /// Retrieves a list of instance templates that are contained within the
   /// specified project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the regions for this request.
@@ -341,7 +348,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L158}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L162}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
@@ -353,6 +360,7 @@ class RegionInstanceTemplatesClient {
   ///
   /// Retrieves a list of instance templates that are contained within the
   /// specified project and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -383,7 +391,7 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L158}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.ListRegionInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L162}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on

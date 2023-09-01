@@ -89,6 +89,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of addresses.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -105,7 +106,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L117}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L124}
   /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_004.proto#L26}
   ///
   // clang-format on
@@ -115,6 +116,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of addresses.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -136,7 +138,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L117}
+  /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L124}
   /// [google.cloud.cpp.compute.v1.AddressAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_004.proto#L26}
   ///
   // clang-format on
@@ -148,6 +150,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Deletes the specified address resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -172,7 +175,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L191}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
@@ -182,6 +185,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Deletes the specified address resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -209,7 +213,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L191}
+  /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
@@ -220,6 +224,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Returns the specified address resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -238,7 +243,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L221}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L228}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
@@ -249,6 +254,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Returns the specified address resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -270,7 +276,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L221}
+  /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L228}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
@@ -283,6 +289,7 @@ class AddressesClient {
   ///
   /// Creates an address resource in the specified project by using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -307,7 +314,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L233}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
@@ -319,6 +326,7 @@ class AddressesClient {
   ///
   /// Creates an address resource in the specified project by using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -346,7 +354,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L233}
+  /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L240}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
@@ -357,6 +365,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Retrieves a list of addresses contained within the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -383,7 +392,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L264}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L271}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
@@ -393,6 +402,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Retrieves a list of addresses contained within the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -423,7 +433,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L264}
+  /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L271}
   /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
@@ -434,6 +444,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Moves the specified address resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/move
   ///
   /// @param project  Source project ID which the Address is moved from.
   /// @param region  Name of the region for this request.
@@ -459,7 +470,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L332}
+  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -472,6 +483,7 @@ class AddressesClient {
   // clang-format off
   ///
   /// Moves the specified address resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/move
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -499,7 +511,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L332}
+  /// [google.cloud.cpp.compute.addresses.v1.MoveRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L339}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
@@ -510,6 +522,7 @@ class AddressesClient {
   ///
   /// Sets the labels on an Address. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param region  The region for this request.
@@ -535,7 +548,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L367}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L374}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -549,6 +562,7 @@ class AddressesClient {
   ///
   /// Sets the labels on an Address. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/addresses/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -576,7 +590,7 @@ class AddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L367}
+  /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L374}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

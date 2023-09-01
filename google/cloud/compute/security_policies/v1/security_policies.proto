@@ -40,6 +40,7 @@ service SecurityPolicies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Inserts a rule into a security policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/addRule
   rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/addRule"
@@ -52,6 +53,7 @@ service SecurityPolicies {
 
   // Retrieves the list of all SecurityPolicy resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/aggregatedList
   rpc AggregatedListSecurityPolicies(AggregatedListSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service SecurityPolicies {
   }
 
   // Deletes the specified policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/delete
   rpc DeleteSecurityPolicies(DeleteSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service SecurityPolicies {
   }
 
   // List all of the ordered rules present in a single specified policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/get
   rpc GetSecurityPolicies(GetSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicy) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service SecurityPolicies {
   }
 
   // Gets a rule at the specified priority.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/getRule
   rpc GetRule(GetRuleRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicyRule) {
     option (google.api.http) = {
@@ -90,6 +95,7 @@ service SecurityPolicies {
 
   // Creates a new policy in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/insert
   rpc InsertSecurityPolicies(InsertSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -101,6 +107,7 @@ service SecurityPolicies {
   }
 
   // List all the policies that have been configured for the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/list
   rpc ListSecurityPolicies(ListSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.SecurityPolicyList) {
     option (google.api.http) = {
@@ -111,6 +118,7 @@ service SecurityPolicies {
 
   // Gets the current list of preconfigured Web Application Firewall (WAF)
   // expressions.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/listPreconfiguredExpressionSets
   rpc ListPreconfiguredExpressionSets(ListPreconfiguredExpressionSetsRequest)
       returns (google.cloud.cpp.compute.v1
                    .SecurityPoliciesListPreconfiguredExpressionSetsResponse) {
@@ -125,6 +133,7 @@ service SecurityPolicies {
   // updateMask. This cannot be used to be update the rules in the policy.
   // Please use the per rule methods like addRule, patchRule, and removeRule
   // instead.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/patch
   rpc PatchSecurityPolicies(PatchSecurityPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -138,6 +147,7 @@ service SecurityPolicies {
 
   // Patches a rule at the specified priority. To clear fields in the rule,
   // leave the fields empty and specify them in the updateMask.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/patchRule
   rpc PatchRule(PatchRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -150,6 +160,7 @@ service SecurityPolicies {
   }
 
   // Deletes a rule at the specified priority.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/removeRule
   rpc RemoveRule(RemoveRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -162,6 +173,7 @@ service SecurityPolicies {
 
   // Sets the labels on a security policy. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/securityPolicies/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

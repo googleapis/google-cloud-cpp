@@ -95,6 +95,7 @@ class InterconnectLocationsClient {
   ///
   /// Returns the details for the specified interconnect location. Gets a list of
   /// available interconnect locations by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectLocations/get
   ///
   /// @param project  Project ID for this request.
   /// @param interconnect_location  Name of the interconnect location to return.
@@ -112,7 +113,7 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L60}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
@@ -125,6 +126,7 @@ class InterconnectLocationsClient {
   ///
   /// Returns the details for the specified interconnect location. Gets a list of
   /// available interconnect locations by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectLocations/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -146,7 +148,7 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L60}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
@@ -160,6 +162,7 @@ class InterconnectLocationsClient {
   ///
   /// Retrieves the list of interconnect locations available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectLocations/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -185,7 +188,7 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L69}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
@@ -196,6 +199,7 @@ class InterconnectLocationsClient {
   ///
   /// Retrieves the list of interconnect locations available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/interconnectLocations/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -226,7 +230,7 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L69}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on

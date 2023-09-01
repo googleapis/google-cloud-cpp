@@ -42,6 +42,7 @@ service MachineImages {
 
   // Deletes the specified machine image. Deleting a machine image is permanent
   // and cannot be undone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/delete
   rpc DeleteMachineImages(DeleteMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -52,6 +53,7 @@ service MachineImages {
   }
 
   // Returns the specified machine image.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/get
   rpc GetMachineImages(GetMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.MachineImage) {
     option (google.api.http) = {
@@ -62,6 +64,7 @@ service MachineImages {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -74,6 +77,7 @@ service MachineImages {
   // included in the request. If you are creating a new machine image to update
   // an existing instance, your new machine image should use the same network
   // or, if applicable, the same subnetwork as the original instance.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/insert
   rpc InsertMachineImages(InsertMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -86,6 +90,7 @@ service MachineImages {
 
   // Retrieves a list of machine images that are contained within the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/list
   rpc ListMachineImages(ListMachineImagesRequest)
       returns (google.cloud.cpp.compute.v1.MachineImageList) {
     option (google.api.http) = {
@@ -96,6 +101,7 @@ service MachineImages {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -107,6 +113,7 @@ service MachineImages {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

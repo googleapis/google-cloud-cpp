@@ -94,6 +94,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts an association for the specified firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/addAssociation
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -118,7 +119,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L217}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
@@ -130,6 +131,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts an association for the specified firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/addAssociation
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,7 +159,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L217}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L233}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
@@ -168,6 +170,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts a rule into a firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/addRule
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -192,7 +195,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L251}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -204,6 +207,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Inserts a rule into a firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/addRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -231,7 +235,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L251}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.AddRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -242,6 +246,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Copies rules to the specified firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/cloneRules
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -265,7 +270,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L287}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L303}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -275,6 +280,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Copies rules to the specified firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/cloneRules
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -302,7 +308,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L287}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.CloneRulesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L303}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -313,6 +319,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/delete
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to delete.
@@ -336,7 +343,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.DeleteNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L314}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.DeleteNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L330}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -347,6 +354,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes the specified policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -374,7 +382,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.DeleteNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L314}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.DeleteNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L330}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -386,6 +394,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/get
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to get.
@@ -403,7 +412,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L362}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L378}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -415,6 +424,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns the specified network firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -436,7 +446,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L362}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L378}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -449,6 +459,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets an association with the specified name.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/getAssociation
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to which the queried association belongs.
@@ -466,7 +477,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L338}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L354}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L110}
   ///
   // clang-format on
@@ -477,6 +488,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets an association with the specified name.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/getAssociation
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -498,7 +510,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L338}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L354}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyAssociation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L110}
   ///
   // clang-format on
@@ -511,6 +523,7 @@ class NetworkFirewallPoliciesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -528,7 +541,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L350}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L366}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -540,6 +553,7 @@ class NetworkFirewallPoliciesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -561,7 +575,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L350}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L366}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -573,6 +587,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/getRule
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to which the queried rule belongs.
@@ -590,7 +605,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L371}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L387}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_038.proto#L26}
   ///
   // clang-format on
@@ -601,6 +616,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Gets a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/getRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -622,7 +638,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L371}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.GetRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L387}
   /// [google.cloud.cpp.compute.v1.FirewallPolicyRule]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_038.proto#L26}
   ///
   // clang-format on
@@ -635,6 +651,7 @@ class NetworkFirewallPoliciesClient {
   ///
   /// Creates a new policy in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/insert
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy_resource  The FirewallPolicy for this request.
@@ -658,7 +675,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.InsertNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L383}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.InsertNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L399}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -672,6 +689,7 @@ class NetworkFirewallPoliciesClient {
   ///
   /// Creates a new policy in the specified project using the data included in
   /// the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -699,7 +717,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.InsertNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L383}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.InsertNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L399}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -711,6 +729,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Lists all the policies that have been configured for the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -736,7 +755,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.ListNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L408}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.ListNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L424}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -746,6 +765,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Lists all the policies that have been configured for the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -776,7 +796,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.ListNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L408}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.ListNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L424}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
@@ -789,6 +809,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/patch
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -813,7 +834,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L473}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L489}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -826,6 +847,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -853,7 +875,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L473}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchNetworkFirewallPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L489}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -865,6 +887,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/patchRule
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -889,7 +912,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L501}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L517}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -901,6 +924,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Patches a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/patchRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -928,7 +952,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L501}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.PatchRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L517}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -939,6 +963,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Removes an association for the specified firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/removeAssociation
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -962,7 +987,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L532}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L548}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -972,6 +997,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Removes an association for the specified firewall policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/removeAssociation
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -999,7 +1025,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L532}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveAssociationRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L548}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1010,6 +1036,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/removeRule
   ///
   /// @param project  Project ID for this request.
   /// @param firewall_policy  Name of the firewall policy to update.
@@ -1033,7 +1060,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L559}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1043,6 +1070,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Deletes a rule of the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/removeRule
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1070,7 +1098,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L559}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.RemoveRuleRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -1082,6 +1110,7 @@ class NetworkFirewallPoliciesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -1100,7 +1129,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L586}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L602}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -1114,6 +1143,7 @@ class NetworkFirewallPoliciesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1135,7 +1165,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L586}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L602}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -1147,6 +1177,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -1165,7 +1196,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L600}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L616}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -1179,6 +1210,7 @@ class NetworkFirewallPoliciesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1200,7 +1232,7 @@ class NetworkFirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L600}
+  /// [google.cloud.cpp.compute.network_firewall_policies.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto#L616}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

@@ -40,6 +40,7 @@ service RegionBackendServices {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified regional BackendService resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/delete
   rpc DeleteRegionBackendServices(DeleteRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service RegionBackendServices {
   }
 
   // Returns the specified regional BackendService resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/get
   rpc GetRegionBackendServices(GetRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendService) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service RegionBackendServices {
   }
 
   // Gets the most recent health check results for this regional BackendService.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/getHealth
   rpc GetHealth(GetHealthRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceGroupHealth) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service RegionBackendServices {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service RegionBackendServices {
   // Creates a regional BackendService resource in the specified project using
   // the data included in the request. For more information, see Backend
   // services overview.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/insert
   rpc InsertRegionBackendServices(InsertRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -95,6 +100,7 @@ service RegionBackendServices {
 
   // Retrieves the list of regional BackendService resources available to the
   // specified project in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/list
   rpc ListRegionBackendServices(ListRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceList) {
     option (google.api.http) = {
@@ -107,6 +113,7 @@ service RegionBackendServices {
   // included in the request. For more information, see Understanding backend
   // services This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/patch
   rpc PatchRegionBackendServices(PatchRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -120,6 +127,7 @@ service RegionBackendServices {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -133,6 +141,7 @@ service RegionBackendServices {
   // Updates the specified regional BackendService resource with the data
   // included in the request. For more information, see Backend services
   // overview .
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/update
   rpc UpdateRegionBackendServices(UpdateRegionBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

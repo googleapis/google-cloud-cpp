@@ -94,6 +94,7 @@ class RegionSslCertificatesClient {
   // clang-format off
   ///
   /// Deletes the specified SslCertificate resource in the region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -118,7 +119,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L85}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -130,6 +131,7 @@ class RegionSslCertificatesClient {
   // clang-format off
   ///
   /// Deletes the specified SslCertificate resource in the region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,7 +159,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L85}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -170,6 +172,7 @@ class RegionSslCertificatesClient {
   ///
   /// Returns the specified SslCertificate resource in the specified region. Get
   /// a list of available SSL certificates by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -188,7 +191,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L115}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
@@ -202,6 +205,7 @@ class RegionSslCertificatesClient {
   ///
   /// Returns the specified SslCertificate resource in the specified region. Get
   /// a list of available SSL certificates by making a list() request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -223,7 +227,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L115}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
@@ -237,6 +241,7 @@ class RegionSslCertificatesClient {
   ///
   /// Creates a SslCertificate resource in the specified project and region using
   /// the data included in the request
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -261,7 +266,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L127}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -275,6 +280,7 @@ class RegionSslCertificatesClient {
   ///
   /// Creates a SslCertificate resource in the specified project and region using
   /// the data included in the request
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -302,7 +308,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L127}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -315,6 +321,7 @@ class RegionSslCertificatesClient {
   ///
   /// Retrieves the list of SslCertificate resources available to the specified
   /// project in the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -341,7 +348,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L158}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L162}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
@@ -353,6 +360,7 @@ class RegionSslCertificatesClient {
   ///
   /// Retrieves the list of SslCertificate resources available to the specified
   /// project in the specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -383,7 +391,7 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L158}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.ListRegionSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L162}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on

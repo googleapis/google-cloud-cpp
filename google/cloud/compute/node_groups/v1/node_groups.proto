@@ -41,6 +41,7 @@ service NodeGroups {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds specified number of nodes to the node group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/addNodes
   rpc AddNodes(AddNodesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -54,6 +55,7 @@ service NodeGroups {
 
   // Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes
   // for more details about each group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/aggregatedList
   rpc AggregatedListNodeGroups(AggregatedListNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroupAggregatedList) {
     option (google.api.http) = {
@@ -63,6 +65,7 @@ service NodeGroups {
   }
 
   // Deletes the specified NodeGroup resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/delete
   rpc DeleteNodeGroups(DeleteNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -73,6 +76,7 @@ service NodeGroups {
   }
 
   // Deletes specified nodes from the node group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/deleteNodes
   rpc DeleteNodes(DeleteNodesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -87,6 +91,7 @@ service NodeGroups {
   // Returns the specified NodeGroup. Get a list of available NodeGroups by
   // making a list() request. Note: the "nodes" field should not be used. Use
   // nodeGroups.listNodes instead.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/get
   rpc GetNodeGroups(GetNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroup) {
     option (google.api.http) = {
@@ -97,6 +102,7 @@ service NodeGroups {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -107,6 +113,7 @@ service NodeGroups {
 
   // Creates a NodeGroup resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/insert
   rpc InsertNodeGroups(InsertNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -120,6 +127,7 @@ service NodeGroups {
 
   // Retrieves a list of node groups available to the specified project. Note:
   // use nodeGroups.listNodes for more details about each group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/list
   rpc ListNodeGroups(ListNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroupList) {
     option (google.api.http) = {
@@ -129,6 +137,7 @@ service NodeGroups {
   }
 
   // Lists nodes in the node group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/listNodes
   rpc ListNodes(ListNodesRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroupsListNodes) {
     option (google.api.http) = {
@@ -139,6 +148,7 @@ service NodeGroups {
   }
 
   // Updates the specified node group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/patch
   rpc PatchNodeGroups(PatchNodeGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -152,6 +162,7 @@ service NodeGroups {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -163,6 +174,7 @@ service NodeGroups {
   }
 
   // Updates the node template of the node group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/setNodeTemplate
   rpc SetNodeTemplate(SetNodeTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -175,6 +187,7 @@ service NodeGroups {
   }
 
   // Simulates maintenance event on specified nodes from the node group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/simulateMaintenanceEvent
   rpc SimulateMaintenanceEvent(SimulateMaintenanceEventRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -187,6 +200,7 @@ service NodeGroups {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

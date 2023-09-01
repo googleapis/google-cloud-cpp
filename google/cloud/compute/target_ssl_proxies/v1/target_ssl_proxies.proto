@@ -39,6 +39,7 @@ service TargetSslProxies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetSslProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/delete
   rpc DeleteTargetSslProxies(DeleteTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service TargetSslProxies {
   }
 
   // Returns the specified TargetSslProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/get
   rpc GetTargetSslProxies(GetTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetSslProxy) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service TargetSslProxies {
 
   // Creates a TargetSslProxy resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/insert
   rpc InsertTargetSslProxies(InsertTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service TargetSslProxies {
 
   // Retrieves the list of TargetSslProxy resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/list
   rpc ListTargetSslProxies(ListTargetSslProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetSslProxyList) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service TargetSslProxies {
   }
 
   // Changes the BackendService for TargetSslProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setBackendService
   rpc SetBackendService(SetBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -92,6 +97,7 @@ service TargetSslProxies {
   }
 
   // Changes the Certificate Map for TargetSslProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setCertificateMap
   rpc SetCertificateMap(SetCertificateMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -104,6 +110,7 @@ service TargetSslProxies {
   }
 
   // Changes the ProxyHeaderType for TargetSslProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setProxyHeader
   rpc SetProxyHeader(SetProxyHeaderRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -116,6 +123,7 @@ service TargetSslProxies {
   }
 
   // Changes SslCertificates for TargetSslProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslCertificates
   rpc SetSslCertificates(SetSslCertificatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -131,6 +139,7 @@ service TargetSslProxies {
   // server-side support for SSL features. This affects connections between
   // clients and the SSL proxy load balancer. They do not affect the connection
   // between the load balancer and the backends.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/setSslPolicy
   rpc SetSslPolicy(SetSslPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

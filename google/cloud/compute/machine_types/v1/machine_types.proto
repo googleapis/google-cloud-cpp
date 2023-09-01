@@ -36,6 +36,7 @@ service MachineTypes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of machine types.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/aggregatedList
   rpc AggregatedListMachineTypes(AggregatedListMachineTypesRequest)
       returns (google.cloud.cpp.compute.v1.MachineTypeAggregatedList) {
     option (google.api.http) = {
@@ -45,6 +46,7 @@ service MachineTypes {
   }
 
   // Returns the specified machine type.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/get
   rpc GetMachineTypes(GetMachineTypesRequest)
       returns (google.cloud.cpp.compute.v1.MachineType) {
     option (google.api.http) = {
@@ -54,6 +56,7 @@ service MachineTypes {
   }
 
   // Retrieves a list of machine types available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/list
   rpc ListMachineTypes(ListMachineTypesRequest)
       returns (google.cloud.cpp.compute.v1.MachineTypeList) {
     option (google.api.http) = {

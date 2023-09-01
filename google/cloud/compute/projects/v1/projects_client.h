@@ -88,6 +88,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Disable this project as a shared VPC host project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/disableXpnHost
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -110,7 +111,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L209}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L222}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
@@ -119,6 +120,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Disable this project as a shared VPC host project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/disableXpnHost
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -146,7 +148,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L209}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L222}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
@@ -158,6 +160,7 @@ class ProjectsClient {
   ///
   /// Disable a service resource (also known as service project) associated with
   /// this host project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/disableXpnResource
   ///
   /// @param project  Project ID for this request.
   /// @param projects_disable_xpn_resource_request_resource  The ProjectsDisableXpnResourceRequest for this request.
@@ -181,7 +184,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L230}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -195,6 +198,7 @@ class ProjectsClient {
   ///
   /// Disable a service resource (also known as service project) associated with
   /// this host project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/disableXpnResource
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -222,7 +226,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L230}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L243}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -233,6 +237,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Enable this project as a shared VPC host project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/enableXpnHost
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -255,7 +260,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L256}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L269}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
@@ -264,6 +269,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Enable this project as a shared VPC host project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/enableXpnHost
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -291,7 +297,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L256}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L269}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
@@ -304,6 +310,7 @@ class ProjectsClient {
   /// Enable service resource (a.k.a service project) for a host project, so that
   /// subnets in the host project can be used by instances in the service
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/enableXpnResource
   ///
   /// @param project  Project ID for this request.
   /// @param projects_enable_xpn_resource_request_resource  The ProjectsEnableXpnResourceRequest for this request.
@@ -327,7 +334,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L277}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L290}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -342,6 +349,7 @@ class ProjectsClient {
   /// Enable service resource (a.k.a service project) for a host project, so that
   /// subnets in the host project can be used by instances in the service
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/enableXpnResource
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -369,7 +377,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L277}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L290}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -387,6 +395,7 @@ class ProjectsClient {
   /// your request's `fields` query parameter to only include the fields you
   /// need. For example, to only include the `id` and `selfLink` fields, add the
   /// query parameter `?fields=id,selfLink` to your request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/get
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -403,7 +412,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L303}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L316}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
@@ -419,6 +428,7 @@ class ProjectsClient {
   /// your request's `fields` query parameter to only include the fields you
   /// need. For example, to only include the `id` and `selfLink` fields, add the
   /// query parameter `?fields=id,selfLink` to your request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -440,7 +450,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L303}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L316}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
@@ -453,6 +463,7 @@ class ProjectsClient {
   ///
   /// Gets the shared VPC host project that this project links to. May be empty
   /// if no link exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/getXpnHost
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -469,7 +480,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L309}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L322}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
@@ -480,6 +491,7 @@ class ProjectsClient {
   ///
   /// Gets the shared VPC host project that this project links to. May be empty
   /// if no link exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/getXpnHost
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -501,7 +513,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L309}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L322}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
@@ -514,6 +526,7 @@ class ProjectsClient {
   ///
   /// Gets service resources (a.k.a service project) associated with this host
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/getXpnResources
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -530,7 +543,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L315}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L328}
   /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L137}
   ///
   // clang-format on
@@ -541,6 +554,7 @@ class ProjectsClient {
   ///
   /// Gets service resources (a.k.a service project) associated with this host
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/getXpnResources
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -562,7 +576,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L315}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L328}
   /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L137}
   ///
   // clang-format on
@@ -575,6 +589,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Lists all shared VPC host projects visible to the user in an organization.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/listXpnHosts
   ///
   /// @param project  Project ID for this request.
   /// @param projects_list_xpn_hosts_request_resource  The ProjectsListXpnHostsRequest for this request.
@@ -601,7 +616,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L380}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L393}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
@@ -614,6 +629,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Lists all shared VPC host projects visible to the user in an organization.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/listXpnHosts
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -644,7 +660,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L380}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L393}
   /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
@@ -655,6 +671,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Moves a persistent disk from one zone to another.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveDisk
   ///
   /// @param project  Project ID for this request.
   /// @param disk_move_request_resource  The DiskMoveRequest for this request.
@@ -678,7 +695,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L450}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L463}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
@@ -690,6 +707,7 @@ class ProjectsClient {
   // clang-format off
   ///
   /// Moves a persistent disk from one zone to another.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveDisk
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -717,7 +735,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L450}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L463}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
@@ -732,6 +750,7 @@ class ProjectsClient {
   /// issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
   /// [Deprecated] This method is deprecated. See [moving instance across
   /// zones](/compute/docs/instances/moving-instance-across-zones) instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveInstance
   ///
   /// @param project  Project ID for this request.
   /// @param instance_move_request_resource  The InstanceMoveRequest for this request.
@@ -755,7 +774,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L475}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
@@ -772,6 +791,7 @@ class ProjectsClient {
   /// issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
   /// [Deprecated] This method is deprecated. See [moving instance across
   /// zones](/compute/docs/instances/moving-instance-across-zones) instead.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/moveInstance
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -799,7 +819,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L475}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
@@ -811,6 +831,7 @@ class ProjectsClient {
   ///
   /// Sets metadata common to all instances within the specified project using
   /// the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setCommonInstanceMetadata
   ///
   /// @param project  Project ID for this request.
   /// @param metadata_resource  The Metadata for this request.
@@ -834,7 +855,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L500}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L513}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -847,6 +868,7 @@ class ProjectsClient {
   ///
   /// Sets metadata common to all instances within the specified project using
   /// the data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setCommonInstanceMetadata
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -874,7 +896,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L500}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L513}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -887,6 +909,7 @@ class ProjectsClient {
   /// Sets the default network tier of the project. The default network tier is
   /// used when an address/forwardingRule/instance is created without specifying
   /// the network tier field.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setDefaultNetworkTier
   ///
   /// @param project  Project ID for this request.
   /// @param projects_set_default_network_tier_request_resource  The ProjectsSetDefaultNetworkTierRequest for this request.
@@ -910,7 +933,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L525}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L538}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -926,6 +949,7 @@ class ProjectsClient {
   /// Sets the default network tier of the project. The default network tier is
   /// used when an address/forwardingRule/instance is created without specifying
   /// the network tier field.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setDefaultNetworkTier
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -953,7 +977,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L525}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L538}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -966,6 +990,7 @@ class ProjectsClient {
   /// Enables the usage export feature and sets the usage export bucket where
   /// reports are stored. If you provide an empty request body using this method,
   /// the usage export feature will be disabled.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setUsageExportBucket
   ///
   /// @param project  Project ID for this request.
   /// @param usage_export_location_resource  The UsageExportLocation for this request.
@@ -989,7 +1014,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L551}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L564}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1004,6 +1029,7 @@ class ProjectsClient {
   /// Enables the usage export feature and sets the usage export bucket where
   /// reports are stored. If you provide an empty request body using this method,
   /// the usage export feature will be disabled.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/projects/setUsageExportBucket
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1031,7 +1057,7 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L551}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L564}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

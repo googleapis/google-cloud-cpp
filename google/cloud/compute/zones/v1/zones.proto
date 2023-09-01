@@ -36,6 +36,7 @@ service Zones {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified Zone resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/zones/get
   rpc GetZones(GetZonesRequest) returns (google.cloud.cpp.compute.v1.Zone) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}"
@@ -44,6 +45,7 @@ service Zones {
   }
 
   // Retrieves the list of Zone resources available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/zones/list
   rpc ListZones(ListZonesRequest)
       returns (google.cloud.cpp.compute.v1.ZoneList) {
     option (google.api.http) = {

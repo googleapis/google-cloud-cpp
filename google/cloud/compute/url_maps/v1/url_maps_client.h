@@ -90,6 +90,7 @@ class UrlMapsClient {
   ///
   /// Retrieves the list of all UrlMap resources, regional and global, available
   /// to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -106,7 +107,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L145}
+  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L154}
   /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_016.proto#L34}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class UrlMapsClient {
   ///
   /// Retrieves the list of all UrlMap resources, regional and global, available
   /// to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L145}
+  /// [google.cloud.cpp.compute.url_maps.v1.AggregatedListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L154}
   /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_016.proto#L34}
   ///
   // clang-format on
@@ -150,6 +152,7 @@ class UrlMapsClient {
   // clang-format off
   ///
   /// Deletes the specified UrlMap resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/delete
   ///
   /// @param project  Project ID for this request.
   /// @param url_map  Name of the UrlMap resource to delete.
@@ -173,7 +176,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L219}
+  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMaps(
@@ -183,6 +186,7 @@ class UrlMapsClient {
   // clang-format off
   ///
   /// Deletes the specified UrlMap resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -210,7 +214,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L219}
+  /// [google.cloud.cpp.compute.url_maps.v1.DeleteUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMaps(
@@ -221,6 +225,7 @@ class UrlMapsClient {
   // clang-format off
   ///
   /// Returns the specified UrlMap resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/get
   ///
   /// @param project  Project ID for this request.
   /// @param url_map  Name of the UrlMap resource to return.
@@ -238,7 +243,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L243}
+  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L252}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
@@ -249,6 +254,7 @@ class UrlMapsClient {
   // clang-format off
   ///
   /// Returns the specified UrlMap resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -270,7 +276,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L243}
+  /// [google.cloud.cpp.compute.url_maps.v1.GetUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L252}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
@@ -283,6 +289,7 @@ class UrlMapsClient {
   ///
   /// Creates a UrlMap resource in the specified project using the data included
   /// in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/insert
   ///
   /// @param project  Project ID for this request.
   /// @param url_map_resource  The UrlMap for this request.
@@ -306,7 +313,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L252}
+  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMaps(
@@ -318,6 +325,7 @@ class UrlMapsClient {
   ///
   /// Creates a UrlMap resource in the specified project using the data included
   /// in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -345,7 +353,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L252}
+  /// [google.cloud.cpp.compute.url_maps.v1.InsertUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMaps(
@@ -358,6 +366,7 @@ class UrlMapsClient {
   /// Initiates a cache invalidation operation, invalidating the specified path,
   /// scoped to the specified UrlMap. For more information, see [Invalidating
   /// cached content](/cdn/docs/invalidating-cached-content).
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/invalidateCache
   ///
   /// @param project  Project ID for this request.
   /// @param url_map  Name of the UrlMap scoping this request.
@@ -382,7 +391,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L277}
+  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InvalidateCache(
@@ -396,6 +405,7 @@ class UrlMapsClient {
   /// Initiates a cache invalidation operation, invalidating the specified path,
   /// scoped to the specified UrlMap. For more information, see [Invalidating
   /// cached content](/cdn/docs/invalidating-cached-content).
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/invalidateCache
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -423,7 +433,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L277}
+  /// [google.cloud.cpp.compute.url_maps.v1.InvalidateCacheRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InvalidateCache(
@@ -434,6 +444,7 @@ class UrlMapsClient {
   // clang-format off
   ///
   /// Retrieves the list of UrlMap resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -459,7 +470,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L305}
+  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L314}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
@@ -469,6 +480,7 @@ class UrlMapsClient {
   // clang-format off
   ///
   /// Retrieves the list of UrlMap resources available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -499,7 +511,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L305}
+  /// [google.cloud.cpp.compute.url_maps.v1.ListUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L314}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
@@ -512,6 +524,7 @@ class UrlMapsClient {
   /// Patches the specified UrlMap resource with the data included in the
   /// request. This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/patch
   ///
   /// @param project  Project ID for this request.
   /// @param url_map  Name of the UrlMap resource to patch.
@@ -536,7 +549,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L370}
+  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMaps(
@@ -549,6 +562,7 @@ class UrlMapsClient {
   /// Patches the specified UrlMap resource with the data included in the
   /// request. This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -576,7 +590,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L370}
+  /// [google.cloud.cpp.compute.url_maps.v1.PatchUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMaps(
@@ -588,6 +602,7 @@ class UrlMapsClient {
   ///
   /// Updates the specified UrlMap resource with the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/update
   ///
   /// @param project  Project ID for this request.
   /// @param url_map  Name of the UrlMap resource to update.
@@ -612,7 +627,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L398}
+  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L407}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMaps(
@@ -624,6 +639,7 @@ class UrlMapsClient {
   ///
   /// Updates the specified UrlMap resource with the data included in the
   /// request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -651,7 +667,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L398}
+  /// [google.cloud.cpp.compute.url_maps.v1.UpdateUrlMapsRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L407}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMaps(
@@ -664,6 +680,7 @@ class UrlMapsClient {
   /// Runs static validation for the UrlMap. In particular, the tests of the
   /// provided UrlMap will be run. Calling this method does NOT create the
   /// UrlMap.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/validate
   ///
   /// @param project  Project ID for this request.
   /// @param url_map  Name of the UrlMap resource to be validated as.
@@ -682,7 +699,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L426}
+  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L435}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
   ///
   // clang-format on
@@ -697,6 +714,7 @@ class UrlMapsClient {
   /// Runs static validation for the UrlMap. In particular, the tests of the
   /// provided UrlMap will be run. Calling this method does NOT create the
   /// UrlMap.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/validate
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -718,7 +736,7 @@ class UrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L426}
+  /// [google.cloud.cpp.compute.url_maps.v1.ValidateRequest]: @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L435}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
   ///
   // clang-format on

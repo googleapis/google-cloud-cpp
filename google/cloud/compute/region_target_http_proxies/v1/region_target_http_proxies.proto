@@ -39,6 +39,7 @@ service RegionTargetHttpProxies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetHttpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/delete
   rpc DeleteRegionTargetHttpProxies(DeleteRegionTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service RegionTargetHttpProxies {
   }
 
   // Returns the specified TargetHttpProxy resource in the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/get
   rpc GetRegionTargetHttpProxies(GetRegionTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service RegionTargetHttpProxies {
 
   // Creates a TargetHttpProxy resource in the specified project and region
   // using the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/insert
   rpc InsertRegionTargetHttpProxies(InsertRegionTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -72,6 +75,7 @@ service RegionTargetHttpProxies {
 
   // Retrieves the list of TargetHttpProxy resources available to the specified
   // project in the specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/list
   rpc ListRegionTargetHttpProxies(ListRegionTargetHttpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxyList) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service RegionTargetHttpProxies {
   }
 
   // Changes the URL map for TargetHttpProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/setUrlMap
   rpc SetUrlMap(SetUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

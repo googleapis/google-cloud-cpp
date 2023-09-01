@@ -95,6 +95,7 @@ class RegionBackendServicesClient {
   // clang-format off
   ///
   /// Deletes the specified regional BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -119,7 +120,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L149}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L158}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -131,6 +132,7 @@ class RegionBackendServicesClient {
   // clang-format off
   ///
   /// Deletes the specified regional BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -158,7 +160,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L149}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L158}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -170,6 +172,7 @@ class RegionBackendServicesClient {
   // clang-format off
   ///
   /// Returns the specified regional BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -188,7 +191,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L209}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -201,6 +204,7 @@ class RegionBackendServicesClient {
   // clang-format off
   ///
   /// Returns the specified regional BackendService resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -222,7 +226,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L209}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -235,6 +239,7 @@ class RegionBackendServicesClient {
   // clang-format off
   ///
   /// Gets the most recent health check results for this regional BackendService.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/getHealth
   ///
   /// @param project
   /// @param region  Name of the region scoping this request.
@@ -254,7 +259,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L179}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L188}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L702}
   ///
   // clang-format on
@@ -268,6 +273,7 @@ class RegionBackendServicesClient {
   // clang-format off
   ///
   /// Gets the most recent health check results for this regional BackendService.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/getHealth
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -289,7 +295,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L179}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetHealthRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L188}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L702}
   ///
   // clang-format on
@@ -302,6 +308,7 @@ class RegionBackendServicesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -320,7 +327,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L194}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L203}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -332,6 +339,7 @@ class RegionBackendServicesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -353,7 +361,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L194}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L203}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -367,6 +375,7 @@ class RegionBackendServicesClient {
   /// Creates a regional BackendService resource in the specified project using
   /// the data included in the request. For more information, see Backend
   /// services overview.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -391,7 +400,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L221}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -406,6 +415,7 @@ class RegionBackendServicesClient {
   /// Creates a regional BackendService resource in the specified project using
   /// the data included in the request. For more information, see Backend
   /// services overview.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -433,7 +443,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L221}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -446,6 +456,7 @@ class RegionBackendServicesClient {
   ///
   /// Retrieves the list of regional BackendService resources available to the
   /// specified project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -472,7 +483,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L252}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L261}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -484,6 +495,7 @@ class RegionBackendServicesClient {
   ///
   /// Retrieves the list of regional BackendService resources available to the
   /// specified project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -514,7 +526,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L252}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.ListRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L261}
   /// [google.cloud.cpp.compute.v1.BackendService]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
@@ -530,6 +542,7 @@ class RegionBackendServicesClient {
   /// included in the request. For more information, see Understanding backend
   /// services This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -555,7 +568,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L320}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -572,6 +585,7 @@ class RegionBackendServicesClient {
   /// included in the request. For more information, see Understanding backend
   /// services This method supports PATCH semantics and uses the JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -599,7 +613,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L320}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -612,6 +626,7 @@ class RegionBackendServicesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -631,7 +646,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L354}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L363}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -646,6 +661,7 @@ class RegionBackendServicesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -667,7 +683,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L354}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L363}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -681,6 +697,7 @@ class RegionBackendServicesClient {
   /// Updates the specified regional BackendService resource with the data
   /// included in the request. For more information, see Backend services
   /// overview .
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/update
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -706,7 +723,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L371}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -722,6 +739,7 @@ class RegionBackendServicesClient {
   /// Updates the specified regional BackendService resource with the data
   /// included in the request. For more information, see Backend services
   /// overview .
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/update
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -749,7 +767,7 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L371}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

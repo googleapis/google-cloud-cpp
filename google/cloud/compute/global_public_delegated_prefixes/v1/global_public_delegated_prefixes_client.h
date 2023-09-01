@@ -96,6 +96,7 @@ class GlobalPublicDelegatedPrefixesClient {
   // clang-format off
   ///
   /// Deletes the specified global PublicDelegatedPrefix.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/delete
   ///
   /// @param project  Project ID for this request.
   /// @param public_delegated_prefix  Name of the PublicDelegatedPrefix resource to delete.
@@ -119,7 +120,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L101}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L106}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -130,6 +131,7 @@ class GlobalPublicDelegatedPrefixesClient {
   // clang-format off
   ///
   /// Deletes the specified global PublicDelegatedPrefix.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -157,7 +159,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L101}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L106}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -169,6 +171,7 @@ class GlobalPublicDelegatedPrefixesClient {
   // clang-format off
   ///
   /// Returns the specified global PublicDelegatedPrefix resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/get
   ///
   /// @param project  Project ID for this request.
   /// @param public_delegated_prefix  Name of the PublicDelegatedPrefix resource to return.
@@ -186,7 +189,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L125}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L130}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
@@ -198,6 +201,7 @@ class GlobalPublicDelegatedPrefixesClient {
   // clang-format off
   ///
   /// Returns the specified global PublicDelegatedPrefix resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -219,7 +223,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L125}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L130}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
@@ -233,6 +237,7 @@ class GlobalPublicDelegatedPrefixesClient {
   ///
   /// Creates a global PublicDelegatedPrefix in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/insert
   ///
   /// @param project  Project ID for this request.
   /// @param public_delegated_prefix_resource  The PublicDelegatedPrefix for this request.
@@ -256,7 +261,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L134}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L139}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -270,6 +275,7 @@ class GlobalPublicDelegatedPrefixesClient {
   ///
   /// Creates a global PublicDelegatedPrefix in the specified project using the
   /// parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -297,7 +303,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L134}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L139}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -309,6 +315,7 @@ class GlobalPublicDelegatedPrefixesClient {
   // clang-format off
   ///
   /// Lists the global PublicDelegatedPrefixes for a project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -334,7 +341,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L159}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L164}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
@@ -345,6 +352,7 @@ class GlobalPublicDelegatedPrefixesClient {
   // clang-format off
   ///
   /// Lists the global PublicDelegatedPrefixes for a project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -375,7 +383,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L159}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L164}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
@@ -390,6 +398,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// Patches the specified global PublicDelegatedPrefix resource with the data
   /// included in the request. This method supports PATCH semantics and uses JSON
   /// merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/patch
   ///
   /// @param project  Project ID for this request.
   /// @param public_delegated_prefix  Name of the PublicDelegatedPrefix resource to patch.
@@ -414,7 +423,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L224}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -429,6 +438,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// Patches the specified global PublicDelegatedPrefix resource with the data
   /// included in the request. This method supports PATCH semantics and uses JSON
   /// merge patch format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -456,7 +466,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L224}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixesRequest]: @googleapis_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L229}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

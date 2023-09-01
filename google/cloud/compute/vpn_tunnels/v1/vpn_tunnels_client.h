@@ -89,6 +89,7 @@ class VpnTunnelsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of VPN tunnels.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -106,7 +107,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnelAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_133.proto#L173}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L106}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L112}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
@@ -115,6 +116,7 @@ class VpnTunnelsClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of VPN tunnels.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -137,7 +139,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnelAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_133.proto#L173}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L106}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.AggregatedListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L112}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
@@ -148,6 +150,7 @@ class VpnTunnelsClient {
   // clang-format off
   ///
   /// Deletes the specified VpnTunnel resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -172,7 +175,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L180}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnels(
@@ -182,6 +185,7 @@ class VpnTunnelsClient {
   // clang-format off
   ///
   /// Deletes the specified VpnTunnel resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -209,7 +213,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L180}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.DeleteVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnels(
@@ -220,6 +224,7 @@ class VpnTunnelsClient {
   // clang-format off
   ///
   /// Returns the specified VpnTunnel resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -239,7 +244,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_133.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L210}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
@@ -249,6 +254,7 @@ class VpnTunnelsClient {
   // clang-format off
   ///
   /// Returns the specified VpnTunnel resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -271,7 +277,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_133.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L210}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.GetVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L216}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
@@ -283,6 +289,7 @@ class VpnTunnelsClient {
   ///
   /// Creates a VpnTunnel resource in the specified project and region using the
   /// data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -307,7 +314,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L222}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnels(
@@ -319,6 +326,7 @@ class VpnTunnelsClient {
   ///
   /// Creates a VpnTunnel resource in the specified project and region using the
   /// data included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -346,7 +354,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L222}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.InsertVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L228}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnels(
@@ -358,6 +366,7 @@ class VpnTunnelsClient {
   ///
   /// Retrieves a list of VpnTunnel resources contained in the specified project
   /// and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -385,7 +394,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_133.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L253}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L259}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
@@ -395,6 +404,7 @@ class VpnTunnelsClient {
   ///
   /// Retrieves a list of VpnTunnel resources contained in the specified project
   /// and region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -426,7 +436,7 @@ class VpnTunnelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnTunnel]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_133.proto#L26}
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L253}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.ListVpnTunnelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L259}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
@@ -438,6 +448,7 @@ class VpnTunnelsClient {
   ///
   /// Sets the labels on a VpnTunnel. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/setLabels
   ///
   /// @param project  Project ID for this request.
   /// @param region  The region for this request.
@@ -463,7 +474,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L321}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L327}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -477,6 +488,7 @@ class VpnTunnelsClient {
   ///
   /// Sets the labels on a VpnTunnel. To learn more about labels, read the
   /// Labeling Resources documentation.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/setLabels
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -504,7 +516,7 @@ class VpnTunnelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L321}
+  /// [google.cloud.cpp.compute.vpn_tunnels.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto#L327}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(

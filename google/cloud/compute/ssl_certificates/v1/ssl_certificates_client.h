@@ -92,6 +92,7 @@ class SslCertificatesClient {
   ///
   /// Retrieves the list of all SslCertificate resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -108,7 +109,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L94}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L99}
   /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_113.proto#L26}
   ///
   // clang-format on
@@ -119,6 +120,7 @@ class SslCertificatesClient {
   ///
   /// Retrieves the list of all SslCertificate resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -140,7 +142,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L94}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.AggregatedListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L99}
   /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_113.proto#L26}
   ///
   // clang-format on
@@ -153,6 +155,7 @@ class SslCertificatesClient {
   // clang-format off
   ///
   /// Deletes the specified SslCertificate resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/delete
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_certificate  Name of the SslCertificate resource to delete.
@@ -176,7 +179,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L168}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -186,6 +189,7 @@ class SslCertificatesClient {
   // clang-format off
   ///
   /// Deletes the specified SslCertificate resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -213,7 +217,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L168}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.DeleteSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -224,6 +228,7 @@ class SslCertificatesClient {
   // clang-format off
   ///
   /// Returns the specified SslCertificate resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/get
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_certificate  Name of the SslCertificate resource to return.
@@ -241,7 +246,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L192}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L197}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class SslCertificatesClient {
   // clang-format off
   ///
   /// Returns the specified SslCertificate resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -273,7 +279,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L192}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.GetSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L197}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
@@ -286,6 +292,7 @@ class SslCertificatesClient {
   ///
   /// Creates a SslCertificate resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/insert
   ///
   /// @param project  Project ID for this request.
   /// @param ssl_certificate_resource  The SslCertificate for this request.
@@ -309,7 +316,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L201}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -322,6 +329,7 @@ class SslCertificatesClient {
   ///
   /// Creates a SslCertificate resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -349,7 +357,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L201}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.InsertSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -361,6 +369,7 @@ class SslCertificatesClient {
   ///
   /// Retrieves the list of SslCertificate resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/list
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -386,7 +395,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L226}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L231}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
@@ -397,6 +406,7 @@ class SslCertificatesClient {
   ///
   /// Retrieves the list of SslCertificate resources available to the specified
   /// project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -427,7 +437,7 @@ class SslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L226}
+  /// [google.cloud.cpp.compute.ssl_certificates.v1.ListSslCertificatesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L231}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on

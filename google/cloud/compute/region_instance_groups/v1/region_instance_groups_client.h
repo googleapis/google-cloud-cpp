@@ -93,6 +93,7 @@ class RegionInstanceGroupsClient {
   // clang-format off
   ///
   /// Returns the specified instance group resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -111,7 +112,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L88}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -122,6 +123,7 @@ class RegionInstanceGroupsClient {
   // clang-format off
   ///
   /// Returns the specified instance group resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -143,7 +145,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L88}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -156,6 +158,7 @@ class RegionInstanceGroupsClient {
   ///
   /// Retrieves the list of instance group resources contained within the
   /// specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -182,7 +185,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L177}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L181}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -194,6 +197,7 @@ class RegionInstanceGroupsClient {
   ///
   /// Retrieves the list of instance group resources contained within the
   /// specified region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -224,7 +228,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L177}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListRegionInstanceGroupsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L181}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
@@ -239,6 +243,7 @@ class RegionInstanceGroupsClient {
   /// information about the named ports. Depending on the specified options, this
   /// method can list all instances or only the instances that are running. The
   /// orderBy query parameter is not supported.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/listInstances
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -268,7 +273,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L100}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L104}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L95}
   ///
   // clang-format on
@@ -286,6 +291,7 @@ class RegionInstanceGroupsClient {
   /// information about the named ports. Depending on the specified options, this
   /// method can list all instances or only the instances that are running. The
   /// orderBy query parameter is not supported.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/listInstances
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -316,7 +322,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L100}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L104}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_058.proto#L95}
   ///
   // clang-format on
@@ -328,6 +334,7 @@ class RegionInstanceGroupsClient {
   // clang-format off
   ///
   /// Sets the named ports for the specified regional instance group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/setNamedPorts
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -353,7 +360,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L245}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -367,6 +374,7 @@ class RegionInstanceGroupsClient {
   // clang-format off
   ///
   /// Sets the named ports for the specified regional instance group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/setNamedPorts
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -394,7 +402,7 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L245}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.SetNamedPortsRequest]: @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(

@@ -38,6 +38,7 @@ service GlobalPublicDelegatedPrefixes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified global PublicDelegatedPrefix.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/delete
   rpc DeleteGlobalPublicDelegatedPrefixes(
       DeleteGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -49,6 +50,7 @@ service GlobalPublicDelegatedPrefixes {
   }
 
   // Returns the specified global PublicDelegatedPrefix resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/get
   rpc GetGlobalPublicDelegatedPrefixes(GetGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service GlobalPublicDelegatedPrefixes {
 
   // Creates a global PublicDelegatedPrefix in the specified project using the
   // parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/insert
   rpc InsertGlobalPublicDelegatedPrefixes(
       InsertGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -72,6 +75,7 @@ service GlobalPublicDelegatedPrefixes {
   }
 
   // Lists the global PublicDelegatedPrefixes for a project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/list
   rpc ListGlobalPublicDelegatedPrefixes(
       ListGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
@@ -84,6 +88,7 @@ service GlobalPublicDelegatedPrefixes {
   // Patches the specified global PublicDelegatedPrefix resource with the data
   // included in the request. This method supports PATCH semantics and uses JSON
   // merge patch format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/patch
   rpc PatchGlobalPublicDelegatedPrefixes(
       PatchGlobalPublicDelegatedPrefixesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {

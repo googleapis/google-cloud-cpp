@@ -43,6 +43,7 @@ service BackendServices {
 
   // Adds a key for validating requests with signed URLs for this backend
   // service.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/addSignedUrlKey
   rpc AddSignedUrlKey(AddSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -56,6 +57,7 @@ service BackendServices {
 
   // Retrieves the list of all BackendService resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/aggregatedList
   rpc AggregatedListBackendServices(AggregatedListBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceAggregatedList) {
     option (google.api.http) = {
@@ -65,6 +67,7 @@ service BackendServices {
   }
 
   // Deletes the specified BackendService resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/delete
   rpc DeleteBackendServices(DeleteBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -76,6 +79,7 @@ service BackendServices {
 
   // Deletes a key for validating requests with signed URLs for this backend
   // service.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/deleteSignedUrlKey
   rpc DeleteSignedUrlKey(DeleteSignedUrlKeyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -87,6 +91,7 @@ service BackendServices {
   }
 
   // Returns the specified BackendService resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/get
   rpc GetBackendServices(GetBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendService) {
     option (google.api.http) = {
@@ -98,6 +103,7 @@ service BackendServices {
   // Gets the most recent health check results for this BackendService. Example
   // request body: { "group":
   // "/zones/us-east1-b/instanceGroups/lb-backend-example" }
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getHealth
   rpc GetHealth(GetHealthRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceGroupHealth) {
     option (google.api.http) = {
@@ -110,6 +116,7 @@ service BackendServices {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -121,6 +128,7 @@ service BackendServices {
   // Creates a BackendService resource in the specified project using the data
   // included in the request. For more information, see Backend services
   // overview .
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/insert
   rpc InsertBackendServices(InsertBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -133,6 +141,7 @@ service BackendServices {
 
   // Retrieves the list of BackendService resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/list
   rpc ListBackendServices(ListBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.BackendServiceList) {
     option (google.api.http) = {
@@ -145,6 +154,7 @@ service BackendServices {
   // request. For more information, see Backend services overview. This method
   // supports PATCH semantics and uses the JSON merge patch format and
   // processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/patch
   rpc PatchBackendServices(PatchBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -157,6 +167,7 @@ service BackendServices {
   }
 
   // Sets the edge security policy for the specified backend service.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setEdgeSecurityPolicy
   rpc SetEdgeSecurityPolicy(SetEdgeSecurityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -170,6 +181,7 @@ service BackendServices {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -182,6 +194,7 @@ service BackendServices {
 
   // Sets the Google Cloud Armor security policy for the specified backend
   // service. For more information, see Google Cloud Armor Overview
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/setSecurityPolicy
   rpc SetSecurityPolicy(SetSecurityPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -195,6 +208,7 @@ service BackendServices {
 
   // Updates the specified BackendService resource with the data included in the
   // request. For more information, see Backend services overview.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/update
   rpc UpdateBackendServices(UpdateBackendServicesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

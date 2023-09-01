@@ -39,6 +39,7 @@ service RegionInstanceTemplates {
 
   // Deletes the specified instance template. Deleting an instance template is
   // permanent and cannot be undone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/delete
   rpc DeleteRegionInstanceTemplates(DeleteRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service RegionInstanceTemplates {
   }
 
   // Returns the specified instance template.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/get
   rpc GetRegionInstanceTemplates(GetRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service RegionInstanceTemplates {
 
   // Creates an instance template in the specified project and region using the
   // global instance template whose URL is included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/insert
   rpc InsertRegionInstanceTemplates(InsertRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -72,6 +75,7 @@ service RegionInstanceTemplates {
 
   // Retrieves a list of instance templates that are contained within the
   // specified project and region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/list
   rpc ListRegionInstanceTemplates(ListRegionInstanceTemplatesRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplateList) {
     option (google.api.http) = {

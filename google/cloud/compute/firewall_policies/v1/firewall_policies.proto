@@ -42,6 +42,7 @@ service FirewallPolicies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Inserts an association for the specified firewall policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/addAssociation
   rpc AddAssociation(AddAssociationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -54,6 +55,7 @@ service FirewallPolicies {
   }
 
   // Inserts a rule into a firewall policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/addRule
   rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/addRule"
@@ -65,6 +67,7 @@ service FirewallPolicies {
   }
 
   // Copies rules to the specified firewall policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/cloneRules
   rpc CloneRules(CloneRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -76,6 +79,7 @@ service FirewallPolicies {
   }
 
   // Deletes the specified policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/delete
   rpc DeleteFirewallPolicies(DeleteFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -86,6 +90,7 @@ service FirewallPolicies {
   }
 
   // Returns the specified firewall policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/get
   rpc GetFirewallPolicies(GetFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
     option (google.api.http) = {
@@ -95,6 +100,7 @@ service FirewallPolicies {
   }
 
   // Gets an association with the specified name.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/getAssociation
   rpc GetAssociation(GetAssociationRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyAssociation) {
     option (google.api.http) = {
@@ -105,6 +111,7 @@ service FirewallPolicies {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/getIamPolicy
   rpc GetIamPolicy(GetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -114,6 +121,7 @@ service FirewallPolicies {
   }
 
   // Gets a rule of the specified priority.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/getRule
   rpc GetRule(GetRuleRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyRule) {
     option (google.api.http) = {
@@ -124,6 +132,7 @@ service FirewallPolicies {
 
   // Creates a new policy in the specified project using the data included in
   // the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/insert
   rpc InsertFirewallPolicies(InsertFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -135,6 +144,7 @@ service FirewallPolicies {
 
   // Lists all the policies that have been configured for the specified folder
   // or organization.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/list
   rpc ListFirewallPolicies(ListFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicyList) {
     option (google.api.http) = {
@@ -143,6 +153,7 @@ service FirewallPolicies {
   }
 
   // Lists associations of a specified target, i.e., organization or folder.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/listAssociations
   rpc ListAssociations(ListAssociationsRequest) returns (
       google.cloud.cpp.compute.v1.FirewallPoliciesListAssociationsResponse) {
     option (google.api.http) = {
@@ -151,6 +162,7 @@ service FirewallPolicies {
   }
 
   // Moves the specified firewall policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/move
   rpc Move(MoveRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/move"
@@ -161,6 +173,7 @@ service FirewallPolicies {
   }
 
   // Patches the specified policy with the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/patch
   rpc PatchFirewallPolicies(PatchFirewallPoliciesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -173,6 +186,7 @@ service FirewallPolicies {
   }
 
   // Patches a rule of the specified priority.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/patchRule
   rpc PatchRule(PatchRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -185,6 +199,7 @@ service FirewallPolicies {
   }
 
   // Removes an association for the specified firewall policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/removeAssociation
   rpc RemoveAssociation(RemoveAssociationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -196,6 +211,7 @@ service FirewallPolicies {
   }
 
   // Deletes a rule of the specified priority.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/removeRule
   rpc RemoveRule(RemoveRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -208,6 +224,7 @@ service FirewallPolicies {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/setIamPolicy
   rpc SetIamPolicy(SetIamPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
@@ -219,6 +236,7 @@ service FirewallPolicies {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/firewallPolicies/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

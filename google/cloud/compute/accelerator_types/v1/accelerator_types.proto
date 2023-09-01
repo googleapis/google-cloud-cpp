@@ -36,6 +36,7 @@ service AcceleratorTypes {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of accelerator types.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/aggregatedList
   rpc AggregatedListAcceleratorTypes(AggregatedListAcceleratorTypesRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList) {
     option (google.api.http) = {
@@ -45,6 +46,7 @@ service AcceleratorTypes {
   }
 
   // Returns the specified accelerator type.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/get
   rpc GetAcceleratorTypes(GetAcceleratorTypesRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorType) {
     option (google.api.http) = {
@@ -55,6 +57,7 @@ service AcceleratorTypes {
 
   // Retrieves a list of accelerator types that are available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/list
   rpc ListAcceleratorTypes(ListAcceleratorTypesRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorTypeList) {
     option (google.api.http) = {

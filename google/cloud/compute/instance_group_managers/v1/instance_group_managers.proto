@@ -50,6 +50,7 @@ service InstanceGroupManagers {
   // up to 60 seconds after the connection draining duration has elapsed before
   // the VM instance is removed or deleted. You can specify a maximum of 1000
   // instances with this method per request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/abandonInstances
   rpc AbandonInstances(AbandonInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -62,6 +63,7 @@ service InstanceGroupManagers {
   }
 
   // Retrieves the list of managed instance groups and groups them by zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/aggregatedList
   rpc AggregatedListInstanceGroupManagers(
       AggregatedListInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManagerAggregatedList) {
@@ -73,6 +75,7 @@ service InstanceGroupManagers {
 
   // Applies changes to selected instances on the managed instance group. This
   // method can be used to apply new overrides and/or new versions.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/applyUpdatesToInstances
   rpc ApplyUpdatesToInstances(ApplyUpdatesToInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -90,6 +93,7 @@ service InstanceGroupManagers {
   // successful. The underlying actions take additional time. You must
   // separately verify the status of the creating or actions with the
   // listmanagedinstances method.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/createInstances
   rpc CreateInstances(CreateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -104,6 +108,7 @@ service InstanceGroupManagers {
   // Deletes the specified managed instance group and all of the instances in
   // that group. Note that the instance group must not belong to a backend
   // service. Read Deleting an instance group for more information.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/delete
   rpc DeleteInstanceGroupManagers(DeleteInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -125,6 +130,7 @@ service InstanceGroupManagers {
   // seconds after the connection draining duration has elapsed before the VM
   // instance is removed or deleted. You can specify a maximum of 1000 instances
   // with this method per request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deleteInstances
   rpc DeleteInstances(DeleteInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -138,6 +144,7 @@ service InstanceGroupManagers {
 
   // Deletes selected per-instance configurations for the managed instance
   // group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/deletePerInstanceConfigs
   rpc DeletePerInstanceConfigs(DeletePerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -150,6 +157,7 @@ service InstanceGroupManagers {
   }
 
   // Returns all of the details about the specified managed instance group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/get
   rpc GetInstanceGroupManagers(GetInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
     option (google.api.http) = {
@@ -167,6 +175,7 @@ service InstanceGroupManagers {
   // instances with the listmanagedinstances method. A managed instance group
   // can have up to 1000 VM instances per group. Please contact Cloud Support if
   // you need an increase in this limit.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/insert
   rpc InsertInstanceGroupManagers(InsertInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -180,6 +189,7 @@ service InstanceGroupManagers {
 
   // Retrieves a list of managed instance groups that are contained within the
   // specified project and zone.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/list
   rpc ListInstanceGroupManagers(ListInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManagerList) {
     option (google.api.http) = {
@@ -190,6 +200,7 @@ service InstanceGroupManagers {
 
   // Lists all errors thrown by actions on instances for a given managed
   // instance group. The filter and orderBy query parameters are not supported.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listErrors
   rpc ListErrors(ListErrorsRequest) returns (
       google.cloud.cpp.compute.v1.InstanceGroupManagersListErrorsResponse) {
     option (google.api.http) = {
@@ -207,6 +218,7 @@ service InstanceGroupManagers {
   // orderBy query parameter is not supported. The `pageToken` query parameter
   // is supported only in the alpha and beta API and only if the group's
   // `listManagedInstancesResults` field is set to `PAGINATED`.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listManagedInstances
   rpc ListManagedInstances(ListManagedInstancesRequest)
       returns (google.cloud.cpp.compute.v1
                    .InstanceGroupManagersListManagedInstancesResponse) {
@@ -220,6 +232,7 @@ service InstanceGroupManagers {
 
   // Lists all of the per-instance configurations defined for the managed
   // instance group. The orderBy query parameter is not supported.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/listPerInstanceConfigs
   rpc ListPerInstanceConfigs(ListPerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1
                    .InstanceGroupManagersListPerInstanceConfigsResp) {
@@ -241,6 +254,7 @@ service InstanceGroupManagers {
   // possible that your intended specification for each VM in the group is
   // different from the current state of that VM. To learn how to apply an
   // updated configuration to the VMs in a MIG, see Updating instances in a MIG.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patch
   rpc PatchInstanceGroupManagers(PatchInstanceGroupManagersRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -255,6 +269,7 @@ service InstanceGroupManagers {
   // Inserts or patches per-instance configurations for the managed instance
   // group. perInstanceConfig.name serves as a key used to distinguish whether
   // to perform insert or patch.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patchPerInstanceConfigs
   rpc PatchPerInstanceConfigs(PatchPerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -276,6 +291,7 @@ service InstanceGroupManagers {
   // up to 60 seconds after the connection draining duration has elapsed before
   // the VM instance is removed or deleted. You can specify a maximum of 1000
   // instances with this method per request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/recreateInstances
   rpc RecreateInstances(RecreateInstancesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -302,6 +318,7 @@ service InstanceGroupManagers {
   // service that has enabled connection draining, it can take up to 60 seconds
   // after the connection draining duration has elapsed before the VM instance
   // is removed or deleted.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/resize
   rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}/resize"
@@ -316,6 +333,7 @@ service InstanceGroupManagers {
   // group. The templates for existing instances in the group do not change
   // unless you run recreateInstances, run applyUpdatesToInstances, or set the
   // group's updatePolicy.type to PROACTIVE.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setInstanceTemplate
   rpc SetInstanceTemplate(SetInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -333,6 +351,7 @@ service InstanceGroupManagers {
   // you make the request even if the instances have not yet been added to their
   // target pools. The change might take some time to apply to all of the
   // instances in the group depending on the size of the group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/setTargetPools
   rpc SetTargetPools(SetTargetPoolsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -347,6 +366,7 @@ service InstanceGroupManagers {
   // Inserts or updates per-instance configurations for the managed instance
   // group. perInstanceConfig.name serves as a key used to distinguish whether
   // to perform insert or patch.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/updatePerInstanceConfigs
   rpc UpdatePerInstanceConfigs(UpdatePerInstanceConfigsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

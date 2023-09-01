@@ -39,6 +39,7 @@ service RegionNetworkEndpointGroups {
 
   // Deletes the specified network endpoint group. Note that the NEG cannot be
   // deleted if it is configured as a backend of a backend service.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/delete
   rpc DeleteRegionNetworkEndpointGroups(
       DeleteRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -51,6 +52,7 @@ service RegionNetworkEndpointGroups {
   }
 
   // Returns the specified network endpoint group.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/get
   rpc GetRegionNetworkEndpointGroups(GetRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
@@ -62,6 +64,7 @@ service RegionNetworkEndpointGroups {
 
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/insert
   rpc InsertRegionNetworkEndpointGroups(
       InsertRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -76,6 +79,7 @@ service RegionNetworkEndpointGroups {
 
   // Retrieves the list of regional network endpoint groups available to the
   // specified project in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/list
   rpc ListRegionNetworkEndpointGroups(ListRegionNetworkEndpointGroupsRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {

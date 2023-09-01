@@ -38,6 +38,7 @@ service RegionNotificationEndpoints {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified NotificationEndpoint in the given region
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/delete
   rpc DeleteRegionNotificationEndpoints(
       DeleteRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -50,6 +51,7 @@ service RegionNotificationEndpoints {
   }
 
   // Returns the specified NotificationEndpoint resource in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/get
   rpc GetRegionNotificationEndpoints(GetRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.NotificationEndpoint) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service RegionNotificationEndpoints {
 
   // Create a NotificationEndpoint in the specified project in the given region
   // using the parameters that are included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/insert
   rpc InsertRegionNotificationEndpoints(
       InsertRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
@@ -74,6 +77,7 @@ service RegionNotificationEndpoints {
   }
 
   // Lists the NotificationEndpoints for a project in the given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/list
   rpc ListRegionNotificationEndpoints(ListRegionNotificationEndpointsRequest)
       returns (google.cloud.cpp.compute.v1.NotificationEndpointList) {
     option (google.api.http) = {

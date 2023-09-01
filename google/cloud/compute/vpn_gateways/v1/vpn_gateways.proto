@@ -40,6 +40,7 @@ service VpnGateways {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of VPN gateways.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/aggregatedList
   rpc AggregatedListVpnGateways(AggregatedListVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.VpnGatewayAggregatedList) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service VpnGateways {
   }
 
   // Deletes the specified VPN gateway.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/delete
   rpc DeleteVpnGateways(DeleteVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service VpnGateways {
   }
 
   // Returns the specified VPN gateway.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/get
   rpc GetVpnGateways(GetVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.VpnGateway) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service VpnGateways {
   }
 
   // Returns the status for the specified VPN gateway.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/getStatus
   rpc GetStatus(GetStatusRequest)
       returns (google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse) {
     option (google.api.http) = {
@@ -78,6 +82,7 @@ service VpnGateways {
 
   // Creates a VPN gateway in the specified project and region using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/insert
   rpc InsertVpnGateways(InsertVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -91,6 +96,7 @@ service VpnGateways {
 
   // Retrieves a list of VPN gateways available to the specified project and
   // region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/list
   rpc ListVpnGateways(ListVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.VpnGatewayList) {
     option (google.api.http) = {
@@ -101,6 +107,7 @@ service VpnGateways {
 
   // Sets the labels on a VpnGateway. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -113,6 +120,7 @@ service VpnGateways {
   }
 
   // Returns permissions that a caller has on the specified resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnGateways/testIamPermissions
   rpc TestIamPermissions(TestIamPermissionsRequest)
       returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {

@@ -39,6 +39,7 @@ service VpnTunnels {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of VPN tunnels.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/aggregatedList
   rpc AggregatedListVpnTunnels(AggregatedListVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.VpnTunnelAggregatedList) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service VpnTunnels {
   }
 
   // Deletes the specified VpnTunnel resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/delete
   rpc DeleteVpnTunnels(DeleteVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service VpnTunnels {
   }
 
   // Returns the specified VpnTunnel resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/get
   rpc GetVpnTunnels(GetVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.VpnTunnel) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service VpnTunnels {
 
   // Creates a VpnTunnel resource in the specified project and region using the
   // data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/insert
   rpc InsertVpnTunnels(InsertVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -80,6 +84,7 @@ service VpnTunnels {
 
   // Retrieves a list of VpnTunnel resources contained in the specified project
   // and region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/list
   rpc ListVpnTunnels(ListVpnTunnelsRequest)
       returns (google.cloud.cpp.compute.v1.VpnTunnelList) {
     option (google.api.http) = {
@@ -90,6 +95,7 @@ service VpnTunnels {
 
   // Sets the labels on a VpnTunnel. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

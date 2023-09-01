@@ -89,6 +89,7 @@ class DiskTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of disk types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -105,7 +106,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L68}
+  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L71}
   /// [google.cloud.cpp.compute.v1.DiskTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_026.proto#L26}
   ///
   // clang-format on
@@ -115,6 +116,7 @@ class DiskTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of disk types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -136,7 +138,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L68}
+  /// [google.cloud.cpp.compute.disk_types.v1.AggregatedListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L71}
   /// [google.cloud.cpp.compute.v1.DiskTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_026.proto#L26}
   ///
   // clang-format on
@@ -148,6 +150,7 @@ class DiskTypesClient {
   // clang-format off
   ///
   /// Returns the specified disk type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -166,7 +169,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L142}
+  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
@@ -177,6 +180,7 @@ class DiskTypesClient {
   // clang-format off
   ///
   /// Returns the specified disk type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -198,7 +202,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L142}
+  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
@@ -210,6 +214,7 @@ class DiskTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of disk types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -236,7 +241,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L154}
+  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L157}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
@@ -246,6 +251,7 @@ class DiskTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of disk types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -276,7 +282,7 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L154}
+  /// [google.cloud.cpp.compute.disk_types.v1.ListDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L157}
   /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on

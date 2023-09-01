@@ -93,6 +93,7 @@ class ServiceAttachmentsClient {
   ///
   /// Retrieves the list of all ServiceAttachment resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/aggregatedList
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -109,7 +110,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.AggregatedListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L143}
+  /// [google.cloud.cpp.compute.service_attachments.v1.AggregatedListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L152}
   /// [google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_108.proto#L128}
   ///
   // clang-format on
@@ -121,6 +122,7 @@ class ServiceAttachmentsClient {
   ///
   /// Retrieves the list of all ServiceAttachment resources, regional and global,
   /// available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -142,7 +144,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.AggregatedListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L143}
+  /// [google.cloud.cpp.compute.service_attachments.v1.AggregatedListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L152}
   /// [google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_108.proto#L128}
   ///
   // clang-format on
@@ -155,6 +157,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Deletes the specified ServiceAttachment in the given scope
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -179,7 +182,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L217}
+  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -191,6 +194,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Deletes the specified ServiceAttachment in the given scope
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -218,7 +222,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L217}
+  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -230,6 +234,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Returns the specified ServiceAttachment resource in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -248,7 +253,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L262}
+  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L271}
   /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_108.proto#L28}
   ///
   // clang-format on
@@ -260,6 +265,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Returns the specified ServiceAttachment resource in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -281,7 +287,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L262}
+  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L271}
   /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_108.proto#L28}
   ///
   // clang-format on
@@ -294,6 +300,7 @@ class ServiceAttachmentsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -312,7 +319,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L247}
+  /// [google.cloud.cpp.compute.service_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L256}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -324,6 +331,7 @@ class ServiceAttachmentsClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -345,7 +353,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L247}
+  /// [google.cloud.cpp.compute.service_attachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L256}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -358,6 +366,7 @@ class ServiceAttachmentsClient {
   ///
   /// Creates a ServiceAttachment in the specified project in the given scope
   /// using the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -382,7 +391,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L274}
+  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -396,6 +405,7 @@ class ServiceAttachmentsClient {
   ///
   /// Creates a ServiceAttachment in the specified project in the given scope
   /// using the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -423,7 +433,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L274}
+  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -435,6 +445,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Lists the ServiceAttachments for a project in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
@@ -461,7 +472,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.ListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L305}
+  /// [google.cloud.cpp.compute.service_attachments.v1.ListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L314}
   /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_108.proto#L28}
   ///
   // clang-format on
@@ -472,6 +483,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Lists the ServiceAttachments for a project in the given scope.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -502,7 +514,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.ListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L305}
+  /// [google.cloud.cpp.compute.service_attachments.v1.ListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L314}
   /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_108.proto#L28}
   ///
   // clang-format on
@@ -516,6 +528,7 @@ class ServiceAttachmentsClient {
   /// Patches the specified ServiceAttachment resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/patch
   ///
   /// @param project  Project ID for this request.
   /// @param region  The region scoping this request and should conform to RFC1035.
@@ -542,7 +555,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L373}
+  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -558,6 +571,7 @@ class ServiceAttachmentsClient {
   /// Patches the specified ServiceAttachment resource with the data included in
   /// the request. This method supports PATCH semantics and uses JSON merge patch
   /// format and processing rules.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -585,7 +599,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L373}
+  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -597,6 +611,7 @@ class ServiceAttachmentsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -616,7 +631,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L408}
+  /// [google.cloud.cpp.compute.service_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L417}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -631,6 +646,7 @@ class ServiceAttachmentsClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -652,7 +668,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L408}
+  /// [google.cloud.cpp.compute.service_attachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L417}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -664,6 +680,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -683,7 +700,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L425}
+  /// [google.cloud.cpp.compute.service_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L434}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -698,6 +715,7 @@ class ServiceAttachmentsClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/serviceAttachments/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -719,7 +737,7 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L425}
+  /// [google.cloud.cpp.compute.service_attachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L434}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

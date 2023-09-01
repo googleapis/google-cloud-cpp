@@ -91,6 +91,7 @@ class RegionInstancesClient {
   ///
   /// Creates multiple instances in a given region. Count specifies the number of
   /// instances to create.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstances/bulkInsert
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -115,7 +116,7 @@ class RegionInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L54}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L55}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -128,6 +129,7 @@ class RegionInstancesClient {
   ///
   /// Creates multiple instances in a given region. Count specifies the number of
   /// instances to create.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionInstances/bulkInsert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -155,7 +157,7 @@ class RegionInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L54}
+  /// [google.cloud.cpp.compute.region_instances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L55}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(

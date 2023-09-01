@@ -39,6 +39,7 @@ service InterconnectAttachments {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of interconnect attachments.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/aggregatedList
   rpc AggregatedListInterconnectAttachments(
       AggregatedListInterconnectAttachmentsRequest)
       returns (
@@ -50,6 +51,7 @@ service InterconnectAttachments {
   }
 
   // Deletes the specified interconnect attachment.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/delete
   rpc DeleteInterconnectAttachments(DeleteInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -61,6 +63,7 @@ service InterconnectAttachments {
   }
 
   // Returns the specified interconnect attachment.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/get
   rpc GetInterconnectAttachments(GetInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectAttachment) {
     option (google.api.http) = {
@@ -72,6 +75,7 @@ service InterconnectAttachments {
 
   // Creates an InterconnectAttachment in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/insert
   rpc InsertInterconnectAttachments(InsertInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -85,6 +89,7 @@ service InterconnectAttachments {
 
   // Retrieves the list of interconnect attachments contained within the
   // specified region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/list
   rpc ListInterconnectAttachments(ListInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectAttachmentList) {
     option (google.api.http) = {
@@ -96,6 +101,7 @@ service InterconnectAttachments {
   // Updates the specified interconnect attachment with the data included in the
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/patch
   rpc PatchInterconnectAttachments(PatchInterconnectAttachmentsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -109,6 +115,7 @@ service InterconnectAttachments {
 
   // Sets the labels on an InterconnectAttachment. To learn more about labels,
   // read the Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

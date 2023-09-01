@@ -91,6 +91,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of node templates.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -107,7 +108,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L128}
+  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L136}
   /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L100}
   ///
   // clang-format on
@@ -117,6 +118,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of node templates.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -138,7 +140,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L128}
+  /// [google.cloud.cpp.compute.node_templates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L136}
   /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L100}
   ///
   // clang-format on
@@ -151,6 +153,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Deletes the specified NodeTemplate resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -175,7 +178,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L202}
+  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,6 +188,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Deletes the specified NodeTemplate resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -212,7 +216,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L202}
+  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,6 +227,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Returns the specified node template.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -241,7 +246,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L247}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
@@ -252,6 +257,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Returns the specified node template.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -273,7 +279,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L247}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
@@ -286,6 +292,7 @@ class NodeTemplatesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/getIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -304,7 +311,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L232}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L240}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -316,6 +323,7 @@ class NodeTemplatesClient {
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/getIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -337,7 +345,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L232}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L240}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -350,6 +358,7 @@ class NodeTemplatesClient {
   ///
   /// Creates a NodeTemplate resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -374,7 +383,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L259}
+  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -387,6 +396,7 @@ class NodeTemplatesClient {
   ///
   /// Creates a NodeTemplate resource in the specified project using the data
   /// included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -414,7 +424,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L259}
+  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -425,6 +435,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Retrieves a list of node templates available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -451,7 +462,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L290}
+  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L298}
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
@@ -461,6 +472,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Retrieves a list of node templates available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -491,7 +503,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L290}
+  /// [google.cloud.cpp.compute.node_templates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L298}
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
@@ -504,6 +516,7 @@ class NodeTemplatesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/setIamPolicy
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -523,7 +536,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L358}
+  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L366}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -538,6 +551,7 @@ class NodeTemplatesClient {
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/setIamPolicy
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -559,7 +573,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L358}
+  /// [google.cloud.cpp.compute.node_templates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L366}
   /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_006.proto#L262}
   ///
   // clang-format on
@@ -571,6 +585,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -590,7 +605,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L375}
+  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L383}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -605,6 +620,7 @@ class NodeTemplatesClient {
   // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -626,7 +642,7 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L375}
+  /// [google.cloud.cpp.compute.node_templates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L383}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

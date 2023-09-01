@@ -96,6 +96,7 @@ class RegionNotificationEndpointsClient {
   // clang-format off
   ///
   /// Deletes the specified NotificationEndpoint in the given region
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/delete
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -120,7 +121,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L87}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L91}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -132,6 +133,7 @@ class RegionNotificationEndpointsClient {
   // clang-format off
   ///
   /// Deletes the specified NotificationEndpoint in the given region
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/delete
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -159,7 +161,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L87}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L91}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -171,6 +173,7 @@ class RegionNotificationEndpointsClient {
   // clang-format off
   ///
   /// Returns the specified NotificationEndpoint resource in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/get
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -189,7 +192,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L117}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L121}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_082.proto#L30}
   ///
   // clang-format on
@@ -202,6 +205,7 @@ class RegionNotificationEndpointsClient {
   // clang-format off
   ///
   /// Returns the specified NotificationEndpoint resource in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -223,7 +227,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L117}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L121}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_082.proto#L30}
   ///
   // clang-format on
@@ -237,6 +241,7 @@ class RegionNotificationEndpointsClient {
   ///
   /// Create a NotificationEndpoint in the specified project in the given region
   /// using the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/insert
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -261,7 +266,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L129}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L133}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -275,6 +280,7 @@ class RegionNotificationEndpointsClient {
   ///
   /// Create a NotificationEndpoint in the specified project in the given region
   /// using the parameters that are included in the request.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/insert
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -302,7 +308,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L129}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L133}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -314,6 +320,7 @@ class RegionNotificationEndpointsClient {
   // clang-format off
   ///
   /// Lists the NotificationEndpoints for a project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/list
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
@@ -340,7 +347,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L160}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L164}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_082.proto#L30}
   ///
   // clang-format on
@@ -351,6 +358,7 @@ class RegionNotificationEndpointsClient {
   // clang-format off
   ///
   /// Lists the NotificationEndpoints for a project in the given region.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -381,7 +389,7 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L160}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L164}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_082.proto#L30}
   ///
   // clang-format on

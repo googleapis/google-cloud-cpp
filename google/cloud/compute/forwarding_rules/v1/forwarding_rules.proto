@@ -41,6 +41,7 @@ service ForwardingRules {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of forwarding rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/aggregatedList
   rpc AggregatedListForwardingRules(AggregatedListForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList) {
     option (google.api.http) = {
@@ -50,6 +51,7 @@ service ForwardingRules {
   }
 
   // Deletes the specified ForwardingRule resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/delete
   rpc DeleteForwardingRules(DeleteForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -60,6 +62,7 @@ service ForwardingRules {
   }
 
   // Returns the specified ForwardingRule resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/get
   rpc GetForwardingRules(GetForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRule) {
     option (google.api.http) = {
@@ -70,6 +73,7 @@ service ForwardingRules {
 
   // Creates a ForwardingRule resource in the specified project and region using
   // the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/insert
   rpc InsertForwardingRules(InsertForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -83,6 +87,7 @@ service ForwardingRules {
 
   // Retrieves a list of ForwardingRule resources available to the specified
   // project and region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/list
   rpc ListForwardingRules(ListForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRuleList) {
     option (google.api.http) = {
@@ -95,6 +100,7 @@ service ForwardingRules {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules. Currently, you can only patch the network_tier
   // field.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/patch
   rpc PatchForwardingRules(PatchForwardingRulesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -108,6 +114,7 @@ service ForwardingRules {
 
   // Sets the labels on the specified resource. To learn more about labels, read
   // the Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -121,6 +128,7 @@ service ForwardingRules {
 
   // Changes target URL for forwarding rule. The new target should be of the
   // same type as the old target.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/forwardingRules/setTarget
   rpc SetTarget(SetTargetRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

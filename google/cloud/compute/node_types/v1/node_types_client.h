@@ -89,6 +89,7 @@ class NodeTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of node types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/aggregatedList
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -105,7 +106,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L67}
+  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
   /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L74}
   ///
   // clang-format on
@@ -115,6 +116,7 @@ class NodeTypesClient {
   // clang-format off
   ///
   /// Retrieves an aggregated list of node types.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/aggregatedList
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -136,7 +138,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L67}
+  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
   /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L74}
   ///
   // clang-format on
@@ -148,6 +150,7 @@ class NodeTypesClient {
   // clang-format off
   ///
   /// Returns the specified node type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/get
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -166,7 +169,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L141}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
@@ -177,6 +180,7 @@ class NodeTypesClient {
   // clang-format off
   ///
   /// Returns the specified node type.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -198,7 +202,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L141}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
@@ -210,6 +214,7 @@ class NodeTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of node types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/list
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
@@ -236,7 +241,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L153}
+  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L156}
   /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
@@ -246,6 +251,7 @@ class NodeTypesClient {
   // clang-format off
   ///
   /// Retrieves a list of node types available to the specified project.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -276,7 +282,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L153}
+  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L156}
   /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on

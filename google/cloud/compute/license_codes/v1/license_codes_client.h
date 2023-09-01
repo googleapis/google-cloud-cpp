@@ -93,6 +93,7 @@ class LicenseCodesClient {
   /// projects that have permissions to read the License Code. *Caution* This
   /// resource is intended for use only by third-party partners who are creating
   /// Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/get
   ///
   /// @param project  Project ID for this request.
   /// @param license_code  Number corresponding to the License code resource to return.
@@ -110,7 +111,7 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_069.proto#L27}
   ///
   // clang-format on
@@ -124,6 +125,7 @@ class LicenseCodesClient {
   /// projects that have permissions to read the License Code. *Caution* This
   /// resource is intended for use only by third-party partners who are creating
   /// Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -145,7 +147,7 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_069.proto#L27}
   ///
   // clang-format on
@@ -159,6 +161,7 @@ class LicenseCodesClient {
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
   /// creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/testIamPermissions
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
@@ -177,7 +180,7 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L75}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L77}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on
@@ -193,6 +196,7 @@ class LicenseCodesClient {
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
   /// creating Cloud Marketplace images.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/testIamPermissions
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -214,7 +218,7 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L75}
+  /// [google.cloud.cpp.compute.license_codes.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L77}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_130.proto#L30}
   ///
   // clang-format on

@@ -40,6 +40,7 @@ service UrlMaps {
 
   // Retrieves the list of all UrlMap resources, regional and global, available
   // to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/aggregatedList
   rpc AggregatedListUrlMaps(AggregatedListUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapsAggregatedList) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service UrlMaps {
   }
 
   // Deletes the specified UrlMap resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/delete
   rpc DeleteUrlMaps(DeleteUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service UrlMaps {
   }
 
   // Returns the specified UrlMap resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/get
   rpc GetUrlMaps(GetUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service UrlMaps {
 
   // Creates a UrlMap resource in the specified project using the data included
   // in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/insert
   rpc InsertUrlMaps(InsertUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -82,6 +86,7 @@ service UrlMaps {
   // Initiates a cache invalidation operation, invalidating the specified path,
   // scoped to the specified UrlMap. For more information, see [Invalidating
   // cached content](/cdn/docs/invalidating-cached-content).
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/invalidateCache
   rpc InvalidateCache(InvalidateCacheRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -94,6 +99,7 @@ service UrlMaps {
   }
 
   // Retrieves the list of UrlMap resources available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/list
   rpc ListUrlMaps(ListUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapList) {
     option (google.api.http) = {
@@ -105,6 +111,7 @@ service UrlMaps {
   // Patches the specified UrlMap resource with the data included in the
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/patch
   rpc PatchUrlMaps(PatchUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -117,6 +124,7 @@ service UrlMaps {
 
   // Updates the specified UrlMap resource with the data included in the
   // request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/update
   rpc UpdateUrlMaps(UpdateUrlMapsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -130,6 +138,7 @@ service UrlMaps {
   // Runs static validation for the UrlMap. In particular, the tests of the
   // provided UrlMap will be run. Calling this method does NOT create the
   // UrlMap.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/validate
   rpc Validate(ValidateRequest)
       returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
     option (google.api.http) = {

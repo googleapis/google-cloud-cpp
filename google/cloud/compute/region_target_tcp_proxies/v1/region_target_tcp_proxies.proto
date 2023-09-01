@@ -38,6 +38,7 @@ service RegionTargetTcpProxies {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified TargetTcpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/delete
   rpc DeleteRegionTargetTcpProxies(DeleteRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service RegionTargetTcpProxies {
   }
 
   // Returns the specified TargetTcpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/get
   rpc GetRegionTargetTcpProxies(GetRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service RegionTargetTcpProxies {
 
   // Creates a TargetTcpProxy resource in the specified project and region using
   // the data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/insert
   rpc InsertRegionTargetTcpProxies(InsertRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -71,6 +74,7 @@ service RegionTargetTcpProxies {
 
   // Retrieves a list of TargetTcpProxy resources available to the specified
   // project in a given region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/list
   rpc ListRegionTargetTcpProxies(ListRegionTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxyList) {
     option (google.api.http) = {

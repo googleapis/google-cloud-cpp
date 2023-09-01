@@ -39,6 +39,7 @@ service TargetVpnGateways {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of target VPN gateways.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/aggregatedList
   rpc AggregatedListTargetVpnGateways(AggregatedListTargetVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList) {
     option (google.api.http) = {
@@ -48,6 +49,7 @@ service TargetVpnGateways {
   }
 
   // Deletes the specified target VPN gateway.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/delete
   rpc DeleteTargetVpnGateways(DeleteTargetVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service TargetVpnGateways {
   }
 
   // Returns the specified target VPN gateway.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/get
   rpc GetTargetVpnGateways(GetTargetVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.TargetVpnGateway) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service TargetVpnGateways {
 
   // Creates a target VPN gateway in the specified project and region using the
   // data included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/insert
   rpc InsertTargetVpnGateways(InsertTargetVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service TargetVpnGateways {
 
   // Retrieves a list of target VPN gateways available to the specified project
   // and region.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/list
   rpc ListTargetVpnGateways(ListTargetVpnGatewaysRequest)
       returns (google.cloud.cpp.compute.v1.TargetVpnGatewayList) {
     option (google.api.http) = {
@@ -91,6 +96,7 @@ service TargetVpnGateways {
 
   // Sets the labels on a TargetVpnGateway. To learn more about labels, read the
   // Labeling Resources documentation.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways/setLabels
   rpc SetLabels(SetLabelsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

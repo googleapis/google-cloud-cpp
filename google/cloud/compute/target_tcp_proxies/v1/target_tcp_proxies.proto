@@ -40,6 +40,7 @@ service TargetTcpProxies {
 
   // Retrieves the list of all TargetTcpProxy resources, regional and global,
   // available to the specified project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/aggregatedList
   rpc AggregatedListTargetTcpProxies(AggregatedListTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service TargetTcpProxies {
   }
 
   // Deletes the specified TargetTcpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/delete
   rpc DeleteTargetTcpProxies(DeleteTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -59,6 +61,7 @@ service TargetTcpProxies {
   }
 
   // Returns the specified TargetTcpProxy resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/get
   rpc GetTargetTcpProxies(GetTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
     option (google.api.http) = {
@@ -69,6 +72,7 @@ service TargetTcpProxies {
 
   // Creates a TargetTcpProxy resource in the specified project using the data
   // included in the request.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/insert
   rpc InsertTargetTcpProxies(InsertTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -81,6 +85,7 @@ service TargetTcpProxies {
 
   // Retrieves the list of TargetTcpProxy resources available to the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/list
   rpc ListTargetTcpProxies(ListTargetTcpProxiesRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxyList) {
     option (google.api.http) = {
@@ -90,6 +95,7 @@ service TargetTcpProxies {
   }
 
   // Changes the BackendService for TargetTcpProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/setBackendService
   rpc SetBackendService(SetBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -102,6 +108,7 @@ service TargetTcpProxies {
   }
 
   // Changes the ProxyHeaderType for TargetTcpProxy.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/targetTcpProxies/setProxyHeader
   rpc SetProxyHeader(SetProxyHeaderRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {

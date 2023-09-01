@@ -40,6 +40,7 @@ service GlobalOperations {
       "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of all operations.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/aggregatedList
   rpc AggregatedListGlobalOperations(AggregatedListGlobalOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationAggregatedList) {
     option (google.api.http) = {
@@ -49,6 +50,7 @@ service GlobalOperations {
   }
 
   // Deletes the specified Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/delete
   rpc DeleteGlobalOperations(DeleteGlobalOperationsRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -58,6 +60,7 @@ service GlobalOperations {
   }
 
   // Retrieves the specified Operations resource.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/get
   rpc GetGlobalOperations(GetGlobalOperationsRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
@@ -68,6 +71,7 @@ service GlobalOperations {
 
   // Retrieves a list of Operation resources contained within the specified
   // project.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/list
   rpc ListGlobalOperations(ListGlobalOperationsRequest)
       returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
@@ -87,6 +91,7 @@ service GlobalOperations {
   // - If the default deadline is reached, there is no guarantee that the
   // operation is actually done when the method returns. Be prepared to retry if
   // the operation is not `DONE`.
+  // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/wait
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/operations/{operation}/wait"
