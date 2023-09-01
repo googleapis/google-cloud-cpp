@@ -45,6 +45,7 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
+using ms=std::chrono::milliseconds;
 
 using AsyncWriteObjectStream =
     ::google::cloud::internal::AsyncStreamingWriteRpc<
@@ -67,14 +68,13 @@ auto constexpr kAuthority = "storage.googleapis.com";
 std::shared_ptr<AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
-  using namespace std::chrono_literals;  // NOLINT(google-using-directives)
   options = internal::MergeOptions(
       std::move(options),
       Options{}
           .set<storage::RetryPolicyOption>(
               storage::LimitedErrorCountRetryPolicy(2).clone())
           .set<storage::BackoffPolicyOption>(
-              storage::ExponentialBackoffPolicy(1ms, 2ms, 2.0).clone()));
+              storage::ExponentialBackoffPolicy(ms(1), ms(2), 2.0).clone()));
   return MakeAsyncConnection(std::move(cq), std::move(mock),
                              DefaultOptionsGrpc(std::move(options)));
 }
