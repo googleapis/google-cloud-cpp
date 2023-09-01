@@ -45,7 +45,6 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
-using ms=std::chrono::milliseconds;
 
 using AsyncWriteObjectStream =
     ::google::cloud::internal::AsyncStreamingWriteRpc<
@@ -68,6 +67,7 @@ auto constexpr kAuthority = "storage.googleapis.com";
 std::shared_ptr<AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
+  using ms = std::chrono::milliseconds;
   options = internal::MergeOptions(
       std::move(options),
       Options{}
