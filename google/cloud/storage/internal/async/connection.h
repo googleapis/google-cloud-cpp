@@ -65,6 +65,32 @@ class AsyncConnection {
     Options options;
   };
 
+  /// Insert a new object.
+  virtual future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
+      InsertObjectParams p) = 0;
+
+  virtual future<storage_experimental::AsyncReadObjectRangeResponse>
+  AsyncReadObjectRange(storage::internal::ReadObjectRangeRequest request) = 0;
+
+  /**
+   * A thin wrapper around the `ComposeObject()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct ComposeObjectParams {
+    /// The metadata attributes to create the object.
+    storage_experimental::ComposeObjectRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Create a new object by composing (concatenating) the contents of existing
+  /// objects.
+  virtual future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+      ComposeObjectParams p) = 0;
+
   /**
    * A thin wrapper around the `DeleteObject()` parameters.
    *
@@ -79,17 +105,7 @@ class AsyncConnection {
     Options options;
   };
 
-  /// Insert a new object.
-  virtual future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
-      InsertObjectParams p) = 0;
-
-  virtual future<storage_experimental::AsyncReadObjectRangeResponse>
-  AsyncReadObjectRange(storage::internal::ReadObjectRangeRequest request) = 0;
-
-  virtual future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
-      storage::internal::ComposeObjectRequest request) = 0;
-
-  // Delete an object.
+  /// Delete an object.
   virtual future<Status> AsyncDeleteObject(DeleteObjectParams p) = 0;
 
   virtual future<StatusOr<std::string>> AsyncStartResumableWrite(

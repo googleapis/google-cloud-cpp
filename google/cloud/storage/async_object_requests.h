@@ -150,6 +150,51 @@ class DeleteObjectRequest {
   storage::internal::DeleteObjectRequest impl_;
 };
 
+/**
+ * A request to compose multiple objects into a single object.
+ *
+ * This class can hold all the mandatory and optional parameters to delete an
+ * object. This class is the public API because it is required for mocking.
+ */
+class ComposeObjectRequest {
+ public:
+  ComposeObjectRequest() = default;
+  ComposeObjectRequest(std::string bucket_name,
+                       std::vector<storage::ComposeSourceObject> source_objects,
+                       std::string destination_object_name)
+      : impl_(std::move(bucket_name), std::move(source_objects),
+              std::move(destination_object_name)) {}
+
+  std::string const& bucket_name() const { return impl_.bucket_name(); }
+  std::string const& object_name() const { return impl_.object_name(); }
+  std::vector<storage::ComposeSourceObject> source_objects() const {
+    return impl_.source_objects();
+  }
+
+  template <typename... O>
+  ComposeObjectRequest& set_multiple_options(O&&... o) & {
+    impl_.set_multiple_options(std::forward<O>(o)...);
+    return *this;
+  }
+  template <typename... O>
+  ComposeObjectRequest&& set_multiple_options(O&&... o) && {
+    return std::move(set_multiple_options(std::forward<O>(o)...));
+  }
+
+  template <typename O>
+  bool HasOption() const {
+    return impl_.HasOption<O>();
+  }
+  template <typename O>
+  O GetOption() const {
+    return impl_.GetOption<O>();
+  }
+
+ protected:
+  friend class storage_internal::AsyncConnectionImpl;
+  storage::internal::ComposeObjectRequest impl_;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

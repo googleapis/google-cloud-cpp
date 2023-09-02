@@ -93,23 +93,25 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   auto o2 = MakeRandomObjectName();
   auto destination = MakeRandomObjectName();
 
-  auto insert1 = client->InsertObject(bucket_name(), o1, LoremIpsum(),
-                                      gcs::IfGenerationMatch(0));
-  ASSERT_STATUS_OK(insert1);
-  ScheduleForDelete(*insert1);
-  auto insert2 = client->InsertObject(bucket_name(), o2, LoremIpsum(),
-                                      gcs::IfGenerationMatch(0));
-  ASSERT_STATUS_OK(insert2);
-  ScheduleForDelete(*insert2);
-
   auto async = MakeAsyncClient();
-  auto pending = async.ComposeObject(
-      bucket_name(),
-      {storage::ComposeSourceObject{insert1->name(), insert1->generation(),
-                                    absl::nullopt},
-       storage::ComposeSourceObject{insert2->name(), insert2->generation(),
-                                    absl::nullopt}},
-      destination);
+  auto insert1 = async.InsertObject(bucket_name(), o1, LoremIpsum(),
+                                    gcs::IfGenerationMatch(0));
+  auto insert2 = async.InsertObject(bucket_name(), o2, LoremIpsum(),
+                                    gcs::IfGenerationMatch(0));
+  std::vector<StatusOr<storage::ObjectMetadata>> inserted{insert1.get(),
+                                                          insert2.get()};
+  for (auto const& insert : inserted) {
+    ASSERT_STATUS_OK(insert);
+    ScheduleForDelete(*insert);
+  }
+  std::vector<storage::ComposeSourceObject> sources(inserted.size());
+  std::transform(inserted.begin(), inserted.end(), sources.begin(),
+                 [](auto const& o) {
+                   return storage::ComposeSourceObject{
+                       o->name(), o->generation(), absl::nullopt};
+                 });
+  auto pending =
+      async.ComposeObject(bucket_name(), std::move(sources), destination);
   auto const composed = pending.get();
   EXPECT_STATUS_OK(composed);
   ScheduleForDelete(*composed);

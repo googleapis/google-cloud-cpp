@@ -140,8 +140,33 @@ void InsertObjectVectorVectors(
   (client, argv.at(0), argv.at(1));
 }
 
-// The name is redundant, but works around a conflict with the global
-// `DeleteObject()` function on Windows.
+void ComposeObject(google::cloud::storage_experimental::AsyncClient& client,
+                   std::vector<std::string> const& argv) {
+  //! [compose-object]
+  namespace g = google::cloud;
+  namespace gcs = g::storage;
+  namespace gcs_ex = g::storage_experimental;
+  [](gcs_ex::AsyncClient& client, std::string bucket_name,
+     std::string object_name, std::string o1, std::string o2) {
+    std::vector<gcs::ComposeSourceObject> sources;
+    sources.push_back({std::move(o1), absl::nullopt, absl::nullopt});
+    sources.push_back({std::move(o2), absl::nullopt, absl::nullopt});
+    client
+        .ComposeObject(std::move(bucket_name), std::move(sources),
+                       std::move(object_name))
+        .then([](auto f) {
+          auto metadata = f.get();
+          if (!metadata) throw std::move(metadata).status();
+          std::cout << "Object successfully composed: " << *metadata << "\n";
+        })
+        .get();
+  }
+  //! [compose-object]
+  (client, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+// We would like to call this function `DeleteObject()`, but that conflicts with
+// a global `DeleteObject()` function on Windows.
 void AsyncDeleteObject(google::cloud::storage_experimental::AsyncClient& client,
                        std::vector<std::string> const& argv) {
   //! [delete-object]
@@ -181,6 +206,8 @@ void AutoRun(std::vector<std::string> const& argv) {
                          .value();
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const object_name = examples::MakeRandomObjectName(generator, "object-");
+  auto const o1 = examples::MakeRandomObjectName(generator, "object-");
+  auto const o2 = examples::MakeRandomObjectName(generator, "object-");
 
   std::cout << "Running AsyncClient() example" << std::endl;
   CreateClientCommand({});
@@ -202,13 +229,28 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running InsertObjectVectorVector() example" << std::endl;
   InsertObjectVectorVectors(client, {bucket_name, object_name});
 
+  std::cout << "Running InsertObject() example [o1]" << std::endl;
+  InsertObject(client, {bucket_name, o1});
+
+  std::cout << "Running InsertObject() example [o2]" << std::endl;
+  InsertObject(client, {bucket_name, o2});
+
+  std::cout << "Running ComposeObject() example" << std::endl;
+  ComposeObject(client, {bucket_name, object_name, o1, o2});
+
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, object_name});
+
+  namespace g = ::google::cloud;
+  std::vector<g::future<g::Status>> pending;
+  pending.push_back(client.DeleteObject(bucket_name, o1));
+  pending.push_back(client.DeleteObject(bucket_name, o2));
+  for (auto& f : pending) (void)f.get();
 }
 
 }  // namespace
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) try {
   using Command =
       std::function<void(google::cloud::storage_experimental::AsyncClient&,
                          std::vector<std::string>)>;
@@ -239,10 +281,17 @@ int main(int argc, char* argv[]) {
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
       make_entry("insert-object-vector-vectors", {}, InsertObjectVectorVectors),
+      make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
       make_entry("delete-object", {}, AsyncDeleteObject),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
+} catch (std::exception const& ex) {
+  std::cerr << "Standard C++ exception thrown: " << ex.what() << "\n";
+  return 1;
+} catch (...) {
+  std::cerr << "Unknown exception thrown\n";
+  return 1;
 }
 
 #else
