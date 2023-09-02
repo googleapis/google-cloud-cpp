@@ -212,28 +212,27 @@ class AsyncClient {
    *     destination object.
    * @param source_objects objects used to compose `destination_object_name`.
    * @param destination_object_name the composed object name.
-   * @param options a list of optional query parameters and/or request headers.
+   * @param args a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
-   *      `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
-   *      `IfMetagenerationMatch`, `KmsKeyName`, `UserProject`, and
-   *      `WithObjectMetadata`.
+   *     `DestinationPredefinedAcl`, `EncryptionKey`, `IfGenerationMatch`,
+   *     `IfMetagenerationMatch`, `KmsKeyName`, `UserProject`, and
+   *     `WithObjectMetadata`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfGenerationMatch`.
    */
-  template <typename... Options>
+  template <typename... Args>
   future<StatusOr<storage::ObjectMetadata>> ComposeObject(
       std::string bucket_name,
       std::vector<storage::ComposeSourceObject> source_objects,
-      std::string destination_object_name, Options&&... options) {
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    storage::internal::ComposeObjectRequest request(
-        std::move(bucket_name), std::move(source_objects),
-        std::move(destination_object_name));
-    request.set_multiple_options(std::forward<Options>(options)...);
-    return connection_->AsyncComposeObject(request);
+      std::string destination_object_name, Args&&... args) {
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    return connection_->AsyncComposeObject(
+        {ComposeObjectRequest(std::move(bucket_name), std::move(source_objects),
+                              std::move(destination_object_name))
+             .set_multiple_options(std::forward<Args>(args)...),
+         std::move(options)});
   }
 
   /**
