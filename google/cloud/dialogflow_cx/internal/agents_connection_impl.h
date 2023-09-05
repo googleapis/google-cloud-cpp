@@ -87,6 +87,16 @@ class AgentsConnectionImpl : public dialogflow_cx::AgentsConnection {
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  GetGenerativeSettings(
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  UpdateGenerativeSettings(
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+          request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_cx_internal::AgentsStub> stub_;

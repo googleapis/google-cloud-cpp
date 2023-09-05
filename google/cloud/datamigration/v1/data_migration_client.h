@@ -116,8 +116,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ListMigrationJobsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L490}
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
+  /// [google.cloud.clouddms.v1.ListMigrationJobsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L537}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
@@ -156,8 +156,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ListMigrationJobsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L490}
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
+  /// [google.cloud.clouddms.v1.ListMigrationJobsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L537}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::MigrationJob> ListMigrationJobs(
@@ -183,8 +183,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.GetMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L542}
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
+  /// [google.cloud.clouddms.v1.GetMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L589}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
@@ -214,8 +214,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.GetMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L542}
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
+  /// [google.cloud.clouddms.v1.GetMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L589}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
@@ -251,8 +251,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.CreateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L554}
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
+  /// [google.cloud.clouddms.v1.CreateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L601}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -291,8 +291,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.CreateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L554}
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
+  /// [google.cloud.clouddms.v1.CreateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L601}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -327,8 +327,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.UpdateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L582}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.UpdateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L629}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -366,8 +366,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.UpdateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L582}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.UpdateMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L629}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -400,8 +400,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeleteMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L602}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeleteMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L649}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -437,8 +437,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeleteMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L602}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeleteMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L649}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -476,8 +476,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.StartMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L627}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.StartMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L674}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
@@ -514,8 +514,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.StopMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L635}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.StopMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L686}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
@@ -553,8 +553,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.ResumeMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L643}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.ResumeMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L694}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -593,8 +593,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.PromoteMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L651}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.PromoteMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L702}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -633,8 +633,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.VerifyMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L659}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.VerifyMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L710}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -674,8 +674,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L623}
-  /// [google.cloud.clouddms.v1.RestartMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L667}
+  /// [google.cloud.clouddms.v1.MigrationJob]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L648}
+  /// [google.cloud.clouddms.v1.RestartMigrationJobRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L727}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -708,12 +708,45 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.GenerateSshScriptRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L675}
-  /// [google.cloud.clouddms.v1.SshScript]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L716}
+  /// [google.cloud.clouddms.v1.GenerateSshScriptRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L739}
+  /// [google.cloud.clouddms.v1.SshScript]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L780}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Generate a TCP Proxy configuration script to configure a cloud-hosted VM
+  /// running a TCP Proxy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.clouddms.v1.GenerateTcpProxyScriptRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.clouddms.v1.TcpProxyScript])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.GenerateTcpProxyScriptRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L786}
+  /// [google.cloud.clouddms.v1.TcpProxyScript]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L812}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::clouddms::v1::TcpProxyScript> GenerateTcpProxyScript(
+      google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -745,8 +778,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.ListConnectionProfilesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L722}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.ListConnectionProfilesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L818}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
@@ -786,8 +819,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.ListConnectionProfilesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L722}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.ListConnectionProfilesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L818}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
@@ -814,8 +847,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L773}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L869}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
@@ -845,8 +878,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L773}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.GetConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L869}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
@@ -880,8 +913,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.CreateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L784}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.CreateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L880}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -920,8 +953,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.CreateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L784}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.CreateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L880}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -957,8 +990,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.UpdateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L821}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.UpdateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L917}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -996,8 +1029,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L845}
-  /// [google.cloud.clouddms.v1.UpdateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L821}
+  /// [google.cloud.clouddms.v1.ConnectionProfile]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L896}
+  /// [google.cloud.clouddms.v1.UpdateConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L917}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -1033,8 +1066,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeleteConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L852}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeleteConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L948}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -1072,8 +1105,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeleteConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L852}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeleteConnectionProfileRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L948}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -1109,8 +1142,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L877}
-  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1063}
+  /// [google.cloud.clouddms.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L973}
+  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
@@ -1149,8 +1182,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L877}
-  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1063}
+  /// [google.cloud.clouddms.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L973}
+  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
@@ -1178,8 +1211,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L976}
-  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1063}
+  /// [google.cloud.clouddms.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1072}
+  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
@@ -1209,8 +1242,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L976}
-  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1063}
+  /// [google.cloud.clouddms.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1072}
+  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
@@ -1245,8 +1278,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L908}
-  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1063}
+  /// [google.cloud.clouddms.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1004}
+  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::PrivateConnection>
@@ -1285,8 +1318,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L908}
-  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1063}
+  /// [google.cloud.clouddms.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1004}
+  /// [google.cloud.clouddms.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms_resources.proto#L1124}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::PrivateConnection>
@@ -1319,8 +1352,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L956}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1052}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -1356,8 +1389,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L956}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeletePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1052}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -1385,8 +1418,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.GetConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1063}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.GetConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1159}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -1416,8 +1449,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.GetConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1063}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.GetConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1159}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -1453,8 +1486,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.ListConversionWorkspacesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1017}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.ListConversionWorkspacesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1113}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -1493,8 +1526,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.ListConversionWorkspacesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1017}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.ListConversionWorkspacesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1113}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -1529,8 +1562,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.CreateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1075}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.CreateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1171}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1570,8 +1603,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.CreateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1075}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.CreateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1171}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1607,8 +1640,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.UpdateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1102}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.UpdateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1647,8 +1680,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.UpdateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1102}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.UpdateConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1198}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1682,8 +1715,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeleteConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1123}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeleteConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1219}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -1719,14 +1752,271 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DeleteConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1123}
-  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L987}
+  /// [google.cloud.clouddms.v1.DeleteConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1219}
+  /// [google.cloud.clouddms.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1083}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConversionWorkspace(
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new mapping rule for a given conversion workspace.
+  ///
+  /// @param parent  Required. The parent which owns this collection of mapping rules.
+  /// @param mapping_rule  Required. Represents a [mapping rule]
+  ///  (https://cloud.google.com/database-migration/reference/rest/v1/projects.locations.mappingRules)
+  ///  object.
+  /// @param mapping_rule_id  Required. The ID of the rule to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.clouddms.v1.MappingRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.CreateMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1561}
+  /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
+      std::string const& parent,
+      google::cloud::clouddms::v1::MappingRule const& mapping_rule,
+      std::string const& mapping_rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a new mapping rule for a given conversion workspace.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.clouddms.v1.CreateMappingRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.clouddms.v1.MappingRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.CreateMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1561}
+  /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
+      google::cloud::clouddms::v1::CreateMappingRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single mapping rule.
+  ///
+  /// @param name  Required. Name of the mapping rule resource to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.DeleteMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1589}
+  ///
+  // clang-format on
+  Status DeleteMappingRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single mapping rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.clouddms.v1.DeleteMappingRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.DeleteMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1589}
+  ///
+  // clang-format on
+  Status DeleteMappingRule(
+      google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the mapping rules for a specific conversion workspace.
+  ///
+  /// @param parent  Required. Name of the conversion workspace resource whose mapping rules are
+  ///  listed in the form of:
+  ///  projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.clouddms.v1.MappingRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.ListMappingRulesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1301}
+  /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::clouddms::v1::MappingRule> ListMappingRules(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the mapping rules for a specific conversion workspace.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.clouddms.v1.ListMappingRulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.clouddms.v1.MappingRule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.ListMappingRulesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1301}
+  /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::clouddms::v1::MappingRule> ListMappingRules(
+      google::cloud::clouddms::v1::ListMappingRulesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the details of a mapping rule.
+  ///
+  /// @param name  Required. Name of the mapping rule resource to get.
+  ///  Example: conversionWorkspaces/123/mappingRules/rule123
+  ///  @n
+  ///  In order to retrieve a previous revision of the mapping rule, also provide
+  ///  the revision ID.
+  ///  Example:
+  ///  `conversionWorkspace/123/mappingRules/rule123@c7cfa2a8c7cfa2a8c7cfa2a8c7cfa2a8`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.clouddms.v1.MappingRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.GetMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1335}
+  /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the details of a mapping rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.clouddms.v1.GetMappingRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.clouddms.v1.MappingRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.clouddms.v1.GetMappingRuleRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1335}
+  /// [google.cloud.clouddms.v1.MappingRule]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L215}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
+      google::cloud::clouddms::v1::GetMappingRuleRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1760,8 +2050,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.SeedConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1191}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.SeedConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1352}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1801,8 +2091,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.ImportMappingRulesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1233}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.ImportMappingRulesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1402}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1840,8 +2130,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.ConvertConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1216}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.ConvertConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1880,8 +2170,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.CommitConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1143}
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
+  /// [google.cloud.clouddms.v1.CommitConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1243}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1920,8 +2210,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
-  /// [google.cloud.clouddms.v1.RollbackConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1157}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
+  /// [google.cloud.clouddms.v1.RollbackConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1257}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1960,8 +2250,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.ApplyConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1168}
-  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L43}
+  /// [google.cloud.clouddms.v1.ApplyConversionWorkspaceRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1268}
+  /// [google.cloud.clouddms.v1.ConversionWorkspace]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L44}
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -2008,8 +2298,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DatabaseEntity]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L175}
-  /// [google.cloud.clouddms.v1.DescribeDatabaseEntitiesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1267}
+  /// [google.cloud.clouddms.v1.DatabaseEntity]: @googleapis_reference_link{google/cloud/clouddms/v1/conversionworkspace_resources.proto#L734}
+  /// [google.cloud.clouddms.v1.DescribeDatabaseEntitiesRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1437}
   ///
   // clang-format on
   StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
@@ -2046,8 +2336,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.SearchBackgroundJobsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1331}
-  /// [google.cloud.clouddms.v1.SearchBackgroundJobsResponse]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1359}
+  /// [google.cloud.clouddms.v1.SearchBackgroundJobsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1505}
+  /// [google.cloud.clouddms.v1.SearchBackgroundJobsResponse]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1533}
   ///
   // clang-format on
   StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
@@ -2080,8 +2370,8 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.DescribeConversionWorkspaceRevisionsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1365}
-  /// [google.cloud.clouddms.v1.DescribeConversionWorkspaceRevisionsResponse]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1381}
+  /// [google.cloud.clouddms.v1.DescribeConversionWorkspaceRevisionsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1539}
+  /// [google.cloud.clouddms.v1.DescribeConversionWorkspaceRevisionsResponse]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1555}
   ///
   // clang-format on
   StatusOr<
@@ -2119,7 +2409,7 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1387}
+  /// [google.cloud.clouddms.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1609}
   ///
   // clang-format on
   StreamRange<std::string> FetchStaticIps(std::string const& name,
@@ -2157,7 +2447,7 @@ class DataMigrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.clouddms.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1387}
+  /// [google.cloud.clouddms.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/clouddms/v1/clouddms.proto#L1609}
   ///
   // clang-format on
   StreamRange<std::string> FetchStaticIps(

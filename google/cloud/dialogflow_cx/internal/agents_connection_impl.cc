@@ -237,6 +237,39 @@ AgentsConnectionImpl::GetAgentValidationResult(
       request, __func__);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsConnectionImpl::GetGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetGenerativeSettings(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+              request) {
+        return stub_->GetGenerativeSettings(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsConnectionImpl::UpdateGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGenerativeSettings(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::dialogflow::cx::v3::
+                 UpdateGenerativeSettingsRequest const& request) {
+        return stub_->UpdateGenerativeSettings(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
 }  // namespace cloud

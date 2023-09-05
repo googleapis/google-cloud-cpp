@@ -126,6 +126,17 @@ ConversationsLogging::GenerateStatelessSummary(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+ConversationsLogging::SearchKnowledge(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                 request) { return child_->SearchKnowledge(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

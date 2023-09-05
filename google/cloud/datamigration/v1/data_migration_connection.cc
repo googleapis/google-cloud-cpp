@@ -128,6 +128,12 @@ DataMigrationServiceConnection::GenerateSshScript(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceConnection::GenerateTcpProxyScript(
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceConnection::ListConnectionProfiles(
     google::cloud::clouddms::v1::
@@ -232,6 +238,31 @@ DataMigrationServiceConnection::DeleteConversionWorkspace(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceConnection::CreateMappingRule(
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status DataMigrationServiceConnection::DeleteMappingRule(
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceConnection::ListMappingRules(
+    google::cloud::clouddms::v1::
+        ListMappingRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::MappingRule>>();
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceConnection::GetMappingRule(
+    google::cloud::clouddms::v1::GetMappingRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>

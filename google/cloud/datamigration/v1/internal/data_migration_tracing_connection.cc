@@ -150,6 +150,16 @@ DataMigrationServiceTracingConnection::GenerateSshScript(
   return internal::EndSpan(*span, child_->GenerateSshScript(request));
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceTracingConnection::GenerateTcpProxyScript(
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "GenerateTcpProxyScript");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateTcpProxyScript(request));
+}
+
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceTracingConnection::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
@@ -311,6 +321,43 @@ DataMigrationServiceTracingConnection::DeleteConversionWorkspace(
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteConversionWorkspace(request));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceTracingConnection::CreateMappingRule(
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::CreateMappingRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateMappingRule(request));
+}
+
+Status DataMigrationServiceTracingConnection::DeleteMappingRule(
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::DeleteMappingRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteMappingRule(request));
+}
+
+StreamRange<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceTracingConnection::ListMappingRules(
+    google::cloud::clouddms::v1::ListMappingRulesRequest request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::ListMappingRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListMappingRules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::clouddms::v1::MappingRule>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceTracingConnection::GetMappingRule(
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::GetMappingRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMappingRule(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>

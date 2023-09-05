@@ -75,6 +75,16 @@ RecommenderAuth::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderAuth::MarkRecommendationDismissed(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MarkRecommendationDismissed(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderAuth::MarkRecommendationClaimed(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&

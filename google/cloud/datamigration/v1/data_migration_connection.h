@@ -236,6 +236,11 @@ class DataMigrationServiceConnection {
   virtual StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request);
 
+  virtual StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+  GenerateTcpProxyScript(
+      google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
+          request);
+
   virtual StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
   ListConnectionProfiles(
       google::cloud::clouddms::v1::ListConnectionProfilesRequest request);
@@ -300,6 +305,19 @@ class DataMigrationServiceConnection {
   DeleteConversionWorkspace(
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request);
+
+  virtual StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
+      google::cloud::clouddms::v1::CreateMappingRuleRequest const& request);
+
+  virtual Status DeleteMappingRule(
+      google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request);
+
+  virtual StreamRange<google::cloud::clouddms::v1::MappingRule>
+  ListMappingRules(
+      google::cloud::clouddms::v1::ListMappingRulesRequest request);
+
+  virtual StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
+      google::cloud::clouddms::v1::GetMappingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   SeedConversionWorkspace(

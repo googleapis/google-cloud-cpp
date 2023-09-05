@@ -178,6 +178,14 @@ DataMigrationServiceClient::GenerateSshScript(
   return connection_->GenerateSshScript(request);
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceClient::GenerateTcpProxyScript(
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateTcpProxyScript(request);
+}
+
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceClient::ListConnectionProfiles(std::string const& parent,
                                                    Options opts) {
@@ -435,6 +443,76 @@ DataMigrationServiceClient::DeleteConversionWorkspace(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversionWorkspace(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceClient::CreateMappingRule(
+    std::string const& parent,
+    google::cloud::clouddms::v1::MappingRule const& mapping_rule,
+    std::string const& mapping_rule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::CreateMappingRuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_mapping_rule() = mapping_rule;
+  request.set_mapping_rule_id(mapping_rule_id);
+  return connection_->CreateMappingRule(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceClient::CreateMappingRule(
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMappingRule(request);
+}
+
+Status DataMigrationServiceClient::DeleteMappingRule(std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::DeleteMappingRuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteMappingRule(request);
+}
+
+Status DataMigrationServiceClient::DeleteMappingRule(
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMappingRule(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceClient::ListMappingRules(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::ListMappingRulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListMappingRules(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceClient::ListMappingRules(
+    google::cloud::clouddms::v1::ListMappingRulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMappingRules(std::move(request));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceClient::GetMappingRule(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::GetMappingRuleRequest request;
+  request.set_name(name);
+  return connection_->GetMappingRule(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceClient::GetMappingRule(
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMappingRule(request);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>

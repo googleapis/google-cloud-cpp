@@ -92,6 +92,18 @@ AgentsConnection::GetAgentValidationResult(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsConnection::GetGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsConnection::UpdateGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AgentsConnection> MakeAgentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

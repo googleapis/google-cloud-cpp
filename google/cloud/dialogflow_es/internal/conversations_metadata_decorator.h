@@ -74,6 +74,11 @@ class ConversationsMetadata : public ConversationsStub {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+  SearchKnowledge(grpc::ClientContext& context,
+                  google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                      request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

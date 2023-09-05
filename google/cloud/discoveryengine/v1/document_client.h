@@ -165,9 +165,10 @@ class DocumentServiceClient {
   ///  Use `default_branch` as the branch ID, to list documents under the default
   ///  branch.
   ///  @n
-  ///  If the caller does not have permission to list [Documents][]s under this
-  ///  branch, regardless of whether or not this branch exists, a
-  ///  `PERMISSION_DENIED` error is returned.
+  ///  If the caller does not have permission to list
+  ///  [Document][google.cloud.discoveryengine.v1.Document]s under this branch,
+  ///  regardless of whether or not this branch exists, a `PERMISSION_DENIED`
+  ///  error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -278,7 +279,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L237}
+  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L238}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
   ///
   // clang-format on
@@ -311,7 +312,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L237}
+  /// [google.cloud.discoveryengine.v1.CreateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L238}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
   ///
   // clang-format on
@@ -344,7 +345,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
-  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L274}
+  /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L275}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
@@ -377,7 +378,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L296}
+  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L297}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
   ///
   // clang-format on
@@ -405,7 +406,7 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L296}
+  /// [google.cloud.discoveryengine.v1.DeleteDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L297}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
   ///
   // clang-format on
@@ -450,8 +451,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L34}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L219}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L328}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L223}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L332}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>

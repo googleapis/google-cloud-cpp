@@ -83,6 +83,16 @@ RecommenderTracingConnection::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderTracingConnection::MarkRecommendationDismissed(
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recommender_v1::RecommenderConnection::MarkRecommendationDismissed");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MarkRecommendationDismissed(request));
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingConnection::MarkRecommendationClaimed(
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
         request) {

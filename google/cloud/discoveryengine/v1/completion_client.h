@@ -110,7 +110,7 @@ class CompletionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L53}
-  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L106}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L113}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>

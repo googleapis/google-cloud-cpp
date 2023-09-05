@@ -149,6 +149,47 @@ AgentsClient::GetAgentValidationResult(
   return connection_->GetAgentValidationResult(request);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsClient::GetGenerativeSettings(std::string const& name,
+                                    std::string const& language_code,
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest request;
+  request.set_name(name);
+  request.set_language_code(language_code);
+  return connection_->GetGenerativeSettings(request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsClient::GetGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGenerativeSettings(request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsClient::UpdateGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::GenerativeSettings const&
+        generative_settings,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest request;
+  *request.mutable_generative_settings() = generative_settings;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateGenerativeSettings(request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsClient::UpdateGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGenerativeSettings(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
 }  // namespace cloud

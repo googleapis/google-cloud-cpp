@@ -144,6 +144,35 @@ AgentsLogging::GetAgentValidationResult(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsLogging::GetGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+              request) {
+        return child_->GetGenerativeSettings(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsLogging::UpdateGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::dialogflow::cx::v3::
+                 UpdateGenerativeSettingsRequest const& request) {
+        return child_->UpdateGenerativeSettings(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

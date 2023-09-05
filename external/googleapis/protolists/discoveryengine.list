@@ -1,5 +1,7 @@
 @com_google_googleapis//google/cloud/discoveryengine/v1:common.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:completion_service.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:conversation.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:conversational_search_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:document.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:document_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:import_config.proto

@@ -116,6 +116,12 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GenerateSshScriptRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::clouddms::v1::TcpProxyScript>,
+              GenerateTcpProxyScript,
+              (google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
+                   request),
+              (override));
+
   MOCK_METHOD(
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>,
       ListConnectionProfiles,
@@ -206,6 +212,26 @@ class MockDataMigrationServiceConnection
       DeleteConversionWorkspace,
       (google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::clouddms::v1::MappingRule>, CreateMappingRule,
+      (google::cloud::clouddms::v1::CreateMappingRuleRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteMappingRule,
+      (google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request),
+      (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::clouddms::v1::MappingRule>,
+              ListMappingRules,
+              (google::cloud::clouddms::v1::ListMappingRulesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::clouddms::v1::MappingRule>, GetMappingRule,
+      (google::cloud::clouddms::v1::GetMappingRuleRequest const& request),
       (override));
 
   MOCK_METHOD(

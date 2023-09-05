@@ -73,6 +73,11 @@ class ConversationsStub {
       grpc::ClientContext& context,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+  SearchKnowledge(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) = 0;
 };
 
 class DefaultConversationsStub : public ConversationsStub {
@@ -120,6 +125,11 @@ class DefaultConversationsStub : public ConversationsStub {
       grpc::ClientContext& client_context,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
+
+  StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+  SearchKnowledge(grpc::ClientContext& client_context,
+                  google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                      request) override;
 
  private:
   std::unique_ptr<google::cloud::dialogflow::v2::Conversations::StubInterface>

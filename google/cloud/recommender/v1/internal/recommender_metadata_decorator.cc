@@ -78,6 +78,15 @@ RecommenderMetadata::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderMetadata::MarkRecommendationDismissed(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->MarkRecommendationDismissed(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderMetadata::MarkRecommendationClaimed(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&

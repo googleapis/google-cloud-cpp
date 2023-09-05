@@ -65,6 +65,12 @@ class RecommenderAuth : public RecommenderStub {
       override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
+  MarkRecommendationDismissed(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::Recommendation>
   MarkRecommendationClaimed(
       grpc::ClientContext& context,
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&

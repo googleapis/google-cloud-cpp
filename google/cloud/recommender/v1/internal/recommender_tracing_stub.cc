@@ -91,6 +91,19 @@ RecommenderTracingStub::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderTracingStub::MarkRecommendationDismissed(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "MarkRecommendationDismissed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->MarkRecommendationDismissed(context, request));
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingStub::MarkRecommendationClaimed(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&

@@ -214,6 +214,16 @@ class AgentsConnection {
   GetAgentValidationResult(
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
           request);
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  GetGenerativeSettings(
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  UpdateGenerativeSettings(
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+          request);
 };
 
 /**

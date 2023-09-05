@@ -113,6 +113,26 @@ AgentsTracingConnection::GetAgentValidationResult(
   return internal::EndSpan(*span, child_->GetAgentValidationResult(request));
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsTracingConnection::GetGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::AgentsConnection::GetGenerativeSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGenerativeSettings(request));
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsTracingConnection::UpdateGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::AgentsConnection::UpdateGenerativeSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateGenerativeSettings(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<dialogflow_cx::AgentsConnection> MakeAgentsTracingConnection(

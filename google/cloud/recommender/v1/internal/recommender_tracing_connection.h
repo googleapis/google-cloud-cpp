@@ -60,6 +60,11 @@ class RecommenderTracingConnection
       override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
+  MarkRecommendationDismissed(
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::Recommendation>
   MarkRecommendationClaimed(
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
           request) override;

@@ -116,6 +116,18 @@ ConversationsTracingStub::GenerateStatelessSummary(
                            child_->GenerateStatelessSummary(context, request));
 }
 
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+ConversationsTracingStub::SearchKnowledge(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
+                                     "SearchKnowledge");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SearchKnowledge(context, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<ConversationsStub> MakeConversationsTracingStub(

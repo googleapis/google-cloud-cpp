@@ -2,6 +2,7 @@
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:agent.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:audio_config.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:changelog.proto
+@com_google_googleapis//google/cloud/dialogflow/cx/v3:data_store_connection.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:deployment.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:entity_type.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:environment.proto
@@ -9,10 +10,12 @@
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:flow.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:fulfillment.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:gcs.proto
+@com_google_googleapis//google/cloud/dialogflow/cx/v3:generative_settings.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:import_strategy.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:intent.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:page.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:response_message.proto
+@com_google_googleapis//google/cloud/dialogflow/cx/v3:safety_settings.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:security_settings.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:session.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:session_entity_type.proto

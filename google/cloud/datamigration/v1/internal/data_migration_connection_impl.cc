@@ -421,6 +421,21 @@ DataMigrationServiceConnectionImpl::GenerateSshScript(
       request, __func__);
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceConnectionImpl::GenerateTcpProxyScript(
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateTcpProxyScript(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
+                 request) {
+        return stub_->GenerateTcpProxyScript(context, request);
+      },
+      request, __func__);
+}
+
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceConnectionImpl::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
@@ -842,6 +857,84 @@ DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConversionWorkspace(request),
       polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceConnectionImpl::CreateMappingRule(
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMappingRule(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::clouddms::v1::CreateMappingRuleRequest const&
+                 request) {
+        return stub_->CreateMappingRule(context, request);
+      },
+      request, __func__);
+}
+
+Status DataMigrationServiceConnectionImpl::DeleteMappingRule(
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMappingRule(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::clouddms::v1::DeleteMappingRuleRequest const&
+                 request) {
+        return stub_->DeleteMappingRule(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceConnectionImpl::ListMappingRules(
+    google::cloud::clouddms::v1::ListMappingRulesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListMappingRules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::MappingRule>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::clouddms::v1::ListMappingRulesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::clouddms::v1::ListMappingRulesRequest const&
+                       request) {
+              return stub->ListMappingRules(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::clouddms::v1::ListMappingRulesResponse r) {
+        std::vector<google::cloud::clouddms::v1::MappingRule> result(
+            r.mapping_rules().size());
+        auto& messages = *r.mutable_mapping_rules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceConnectionImpl::GetMappingRule(
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMappingRule(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+        return stub_->GetMappingRule(context, request);
+      },
+      request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>

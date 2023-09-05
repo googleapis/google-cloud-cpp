@@ -143,6 +143,14 @@ DataMigrationServiceMetadata::GenerateSshScript(
   return child_->GenerateSshScript(context, request);
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceMetadata::GenerateTcpProxyScript(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  SetMetadata(context, absl::StrCat("migration_job=", request.migration_job()));
+  return child_->GenerateTcpProxyScript(context, request);
+}
+
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceMetadata::ListConnectionProfiles(
     grpc::ClientContext& context,
@@ -275,6 +283,37 @@ DataMigrationServiceMetadata::AsyncDeleteConversionWorkspace(
   SetMetadata(*context, absl::StrCat("name=", request.name()));
   return child_->AsyncDeleteConversionWorkspace(cq, std::move(context),
                                                 request);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceMetadata::CreateMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  return child_->CreateMappingRule(context, request);
+}
+
+Status DataMigrationServiceMetadata::DeleteMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->DeleteMappingRule(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+DataMigrationServiceMetadata::ListMappingRules(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  return child_->ListMappingRules(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceMetadata::GetMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->GetMappingRule(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

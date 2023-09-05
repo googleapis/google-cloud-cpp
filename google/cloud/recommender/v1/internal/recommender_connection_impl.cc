@@ -169,6 +169,22 @@ RecommenderConnectionImpl::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderConnectionImpl::MarkRecommendationDismissed(
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MarkRecommendationDismissed(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recommender::v1::
+                 MarkRecommendationDismissedRequest const& request) {
+        return stub_->MarkRecommendationDismissed(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::MarkRecommendationClaimed(
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
         request) {

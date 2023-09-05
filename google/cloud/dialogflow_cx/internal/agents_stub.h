@@ -80,6 +80,18 @@ class AgentsStub {
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  GetGenerativeSettings(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  UpdateGenerativeSettings(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -146,6 +158,18 @@ class DefaultAgentsStub : public AgentsStub {
   GetAgentValidationResult(
       grpc::ClientContext& client_context,
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  GetGenerativeSettings(
+      grpc::ClientContext& client_context,
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  UpdateGenerativeSettings(
+      grpc::ClientContext& client_context,
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

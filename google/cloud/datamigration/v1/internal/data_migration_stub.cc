@@ -231,6 +231,19 @@ DefaultDataMigrationServiceStub::GenerateSshScript(
   return response;
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DefaultDataMigrationServiceStub::GenerateTcpProxyScript(
+    grpc::ClientContext& client_context,
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  google::cloud::clouddms::v1::TcpProxyScript response;
+  auto status =
+      grpc_stub_->GenerateTcpProxyScript(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DefaultDataMigrationServiceStub::ListConnectionProfiles(
     grpc::ClientContext& client_context,
@@ -463,6 +476,56 @@ DefaultDataMigrationServiceStub::AsyncDeleteConversionWorkspace(
         return grpc_stub_->AsyncDeleteConversionWorkspace(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DefaultDataMigrationServiceStub::CreateMappingRule(
+    grpc::ClientContext& client_context,
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  google::cloud::clouddms::v1::MappingRule response;
+  auto status =
+      grpc_stub_->CreateMappingRule(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDataMigrationServiceStub::DeleteMappingRule(
+    grpc::ClientContext& client_context,
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteMappingRule(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+DefaultDataMigrationServiceStub::ListMappingRules(
+    grpc::ClientContext& client_context,
+    google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+  google::cloud::clouddms::v1::ListMappingRulesResponse response;
+  auto status =
+      grpc_stub_->ListMappingRules(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DefaultDataMigrationServiceStub::GetMappingRule(
+    grpc::ClientContext& client_context,
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  google::cloud::clouddms::v1::MappingRule response;
+  auto status = grpc_stub_->GetMappingRule(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

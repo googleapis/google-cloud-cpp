@@ -71,6 +71,12 @@ RecommenderConnection::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderConnection::MarkRecommendationDismissed(
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderConnection::MarkRecommendationClaimed(
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

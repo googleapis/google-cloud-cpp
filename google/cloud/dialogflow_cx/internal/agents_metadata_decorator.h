@@ -85,6 +85,18 @@ class AgentsMetadata : public AgentsStub {
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  GetGenerativeSettings(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  UpdateGenerativeSettings(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

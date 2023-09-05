@@ -60,6 +60,12 @@ class RecommenderStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::recommender::v1::Recommendation>
+  MarkRecommendationDismissed(
+      grpc::ClientContext& context,
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::recommender::v1::Recommendation>
   MarkRecommendationClaimed(
       grpc::ClientContext& context,
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
@@ -135,6 +141,12 @@ class DefaultRecommenderStub : public RecommenderStub {
       grpc::ClientContext& client_context,
       google::cloud::recommender::v1::GetRecommendationRequest const& request)
       override;
+
+  StatusOr<google::cloud::recommender::v1::Recommendation>
+  MarkRecommendationDismissed(
+      grpc::ClientContext& client_context,
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request) override;
 
   StatusOr<google::cloud::recommender::v1::Recommendation>
   MarkRecommendationClaimed(
