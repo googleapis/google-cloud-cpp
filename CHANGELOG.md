@@ -110,6 +110,10 @@ info, see [#7463] and [#5976].
 
 ## v2.16.0 - TBD
 
+### [Discovery Engine](/google/cloud/discoveryengine/README.md)
+
+New `*Client` for conversational search.
+
 ## v2.15.0 - 2023-09
 
 ### New Libraries
