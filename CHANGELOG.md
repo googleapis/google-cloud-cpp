@@ -110,6 +110,13 @@ info, see [#7463] and [#5976].
 
 ## v2.16.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Infrastructure Manager](/google/cloud/config/README.md)
+
 ### [Discovery Engine](/google/cloud/discoveryengine/README.md)
 
 New `*Client` for conversational search.

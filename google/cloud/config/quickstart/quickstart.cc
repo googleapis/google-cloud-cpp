@@ -13,21 +13,21 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/config/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/config/v1/config_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace config = ::google::cloud::config;
-  auto client = config::Client(config::MakeConnection());
+  namespace config = ::google::cloud::config_v1;
+  auto client = config::ConfigClient(config::MakeConfigConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListDeployments(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
