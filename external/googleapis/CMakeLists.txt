@@ -251,7 +251,6 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/usage.proto"
     "google/rpc/status.proto")
 
-include(CMakePrintHelpers)
 # For some directories *most* (but not all) the proto files are simple enough
 # that the libraries can be generated with a foreach() loop.
 foreach (proto IN LISTS EXTERNAL_GOOGLEAPIS_PROTO_FILES)
@@ -260,7 +259,6 @@ foreach (proto IN LISTS EXTERNAL_GOOGLEAPIS_PROTO_FILES)
         OR proto MATCHES "^google/rpc/"
         OR proto MATCHES "^google/cloud/")
         external_googleapis_short_name(short_name "${proto}")
-        cmake_print_variables(short_name)
         list(APPEND external_googleapis_installed_libraries_list
              google_cloud_cpp_${short_name})
         list(FIND PROTO_FILES_WITH_DEPENDENCIES "${proto}" has_dependency)
