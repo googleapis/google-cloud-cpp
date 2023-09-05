@@ -40,7 +40,8 @@ LoggingServiceV2Metadata::LoggingServiceV2Metadata(
 Status LoggingServiceV2Metadata::DeleteLog(
     grpc::ClientContext& context,
     google::logging::v2::DeleteLogRequest const& request) {
-  SetMetadata(context, absl::StrCat("log_name=", request.log_name()));
+  SetMetadata(context, absl::StrCat("log_name=",
+                                    internal::UrlEncode(request.log_name())));
   return child_->DeleteLog(context, request);
 }
 
@@ -73,7 +74,8 @@ StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
     grpc::ClientContext& context,
     google::logging::v2::ListLogsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLogs(context, request);
 }
 

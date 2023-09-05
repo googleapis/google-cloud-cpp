@@ -40,7 +40,8 @@ CaseServiceMetadata::CaseServiceMetadata(
 StatusOr<google::cloud::support::v2::Case> CaseServiceMetadata::GetCase(
     grpc::ClientContext& context,
     google::cloud::support::v2::GetCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCase(context, request);
 }
 
@@ -48,7 +49,8 @@ StatusOr<google::cloud::support::v2::ListCasesResponse>
 CaseServiceMetadata::ListCases(
     grpc::ClientContext& context,
     google::cloud::support::v2::ListCasesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCases(context, request);
 }
 
@@ -56,35 +58,41 @@ StatusOr<google::cloud::support::v2::SearchCasesResponse>
 CaseServiceMetadata::SearchCases(
     grpc::ClientContext& context,
     google::cloud::support::v2::SearchCasesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchCases(context, request);
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceMetadata::CreateCase(
     grpc::ClientContext& context,
     google::cloud::support::v2::CreateCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCase(context, request);
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceMetadata::UpdateCase(
     grpc::ClientContext& context,
     google::cloud::support::v2::UpdateCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("case.name=", request.case_().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("case.name=", internal::UrlEncode(request.case_().name())));
   return child_->UpdateCase(context, request);
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceMetadata::EscalateCase(
     grpc::ClientContext& context,
     google::cloud::support::v2::EscalateCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EscalateCase(context, request);
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceMetadata::CloseCase(
     grpc::ClientContext& context,
     google::cloud::support::v2::CloseCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CloseCase(context, request);
 }
 

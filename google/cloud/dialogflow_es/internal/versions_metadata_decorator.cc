@@ -41,14 +41,16 @@ StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
 VersionsMetadata::ListVersions(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVersions(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsMetadata::GetVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVersion(context, request);
 }
 
@@ -56,7 +58,8 @@ StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsMetadata::CreateVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateVersion(context, request);
 }
 
@@ -64,14 +67,17 @@ StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsMetadata::UpdateVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
-  SetMetadata(context, absl::StrCat("version.name=", request.version().name()));
+  SetMetadata(context,
+              absl::StrCat("version.name=",
+                           internal::UrlEncode(request.version().name())));
   return child_->UpdateVersion(context, request);
 }
 
 Status VersionsMetadata::DeleteVersion(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteVersion(context, request);
 }
 

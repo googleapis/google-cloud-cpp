@@ -43,7 +43,8 @@ ValidationHelperV1Metadata::ValidateAttestationOccurrence(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
-  SetMetadata(context, absl::StrCat("attestor=", request.attestor()));
+  SetMetadata(context, absl::StrCat("attestor=",
+                                    internal::UrlEncode(request.attestor())));
   return child_->ValidateAttestationOccurrence(context, request);
 }
 

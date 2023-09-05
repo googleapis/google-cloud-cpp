@@ -41,7 +41,8 @@ StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsMetadata::ListAuthorizedDomains(
     grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAuthorizedDomains(context, request);
 }
 

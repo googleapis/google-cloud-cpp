@@ -41,7 +41,8 @@ StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingMetadata::OptimizeTours(
     grpc::ClientContext& context,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->OptimizeTours(context, request);
 }
 
@@ -50,7 +51,8 @@ FleetRoutingMetadata::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchOptimizeTours(cq, std::move(context), request);
 }
 
@@ -59,7 +61,8 @@ FleetRoutingMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -67,7 +70,8 @@ future<Status> FleetRoutingMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

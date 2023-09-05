@@ -41,7 +41,8 @@ StatusOr<google::cloud::retail::v2::SearchResponse>
 SearchServiceMetadata::Search(
     grpc::ClientContext& context,
     google::cloud::retail::v2::SearchRequest const& request) {
-  SetMetadata(context, absl::StrCat("placement=", request.placement()));
+  SetMetadata(context, absl::StrCat("placement=",
+                                    internal::UrlEncode(request.placement())));
   return child_->Search(context, request);
 }
 

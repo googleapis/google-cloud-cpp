@@ -42,7 +42,8 @@ TagHoldsMetadata::AsyncCreateTagHold(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateTagHold(cq, std::move(context), request);
 }
 
@@ -51,7 +52,8 @@ TagHoldsMetadata::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTagHold(cq, std::move(context), request);
 }
 
@@ -59,7 +61,8 @@ StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsMetadata::ListTagHolds(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTagHolds(context, request);
 }
 
@@ -68,7 +71,8 @@ TagHoldsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -76,7 +80,8 @@ future<Status> TagHoldsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

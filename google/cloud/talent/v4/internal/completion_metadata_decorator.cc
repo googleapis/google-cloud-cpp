@@ -41,7 +41,8 @@ StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionMetadata::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("tenant=", request.tenant()));
+  SetMetadata(context,
+              absl::StrCat("tenant=", internal::UrlEncode(request.tenant())));
   return child_->CompleteQuery(context, request);
 }
 

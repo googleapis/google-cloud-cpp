@@ -40,7 +40,8 @@ TraceServiceMetadata::TraceServiceMetadata(
 Status TraceServiceMetadata::BatchWriteSpans(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->BatchWriteSpans(context, request);
 }
 
@@ -48,7 +49,8 @@ StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceMetadata::CreateSpan(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::Span const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateSpan(context, request);
 }
 

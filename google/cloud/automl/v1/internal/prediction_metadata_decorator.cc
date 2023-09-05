@@ -41,7 +41,8 @@ StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceMetadata::Predict(
     grpc::ClientContext& context,
     google::cloud::automl::v1::PredictRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->Predict(context, request);
 }
 
@@ -50,7 +51,8 @@ PredictionServiceMetadata::AsyncBatchPredict(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::BatchPredictRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncBatchPredict(cq, std::move(context), request);
 }
 
@@ -59,7 +61,8 @@ PredictionServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -67,7 +70,8 @@ future<Status> PredictionServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

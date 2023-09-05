@@ -44,7 +44,8 @@ ClientConnectorServicesServiceMetadata::ListClientConnectorServices(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         ListClientConnectorServicesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListClientConnectorServices(context, request);
 }
 
@@ -54,7 +55,8 @@ ClientConnectorServicesServiceMetadata::GetClientConnectorService(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         GetClientConnectorServiceRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetClientConnectorService(context, request);
 }
 
@@ -64,7 +66,8 @@ ClientConnectorServicesServiceMetadata::AsyncCreateClientConnectorService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         CreateClientConnectorServiceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateClientConnectorService(cq, std::move(context),
                                                    request);
 }
@@ -77,7 +80,8 @@ ClientConnectorServicesServiceMetadata::AsyncUpdateClientConnectorService(
         UpdateClientConnectorServiceRequest const& request) {
   SetMetadata(*context,
               absl::StrCat("client_connector_service.name=",
-                           request.client_connector_service().name()));
+                           internal::UrlEncode(
+                               request.client_connector_service().name())));
   return child_->AsyncUpdateClientConnectorService(cq, std::move(context),
                                                    request);
 }
@@ -88,7 +92,8 @@ ClientConnectorServicesServiceMetadata::AsyncDeleteClientConnectorService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         DeleteClientConnectorServiceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteClientConnectorService(cq, std::move(context),
                                                    request);
 }
@@ -98,7 +103,8 @@ ClientConnectorServicesServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -106,7 +112,8 @@ future<Status> ClientConnectorServicesServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

@@ -41,14 +41,16 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse>
 IntentsMetadata::ListIntents(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListIntentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIntents(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent> IntentsMetadata::GetIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIntent(context, request);
 }
 
@@ -56,7 +58,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsMetadata::CreateIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateIntent(context, request);
 }
 
@@ -64,14 +67,17 @@ StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsMetadata::UpdateIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("intent.name=", request.intent().name()));
+  SetMetadata(context,
+              absl::StrCat("intent.name=",
+                           internal::UrlEncode(request.intent().name())));
   return child_->UpdateIntent(context, request);
 }
 
 Status IntentsMetadata::DeleteIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIntent(context, request);
 }
 

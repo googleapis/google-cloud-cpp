@@ -40,7 +40,8 @@ FoldersMetadata::FoldersMetadata(
 StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersMetadata::GetFolder(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFolder(context, request);
 }
 
@@ -74,7 +75,9 @@ FoldersMetadata::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-  SetMetadata(*context, absl::StrCat("folder.name=", request.folder().name()));
+  SetMetadata(*context,
+              absl::StrCat("folder.name=",
+                           internal::UrlEncode(request.folder().name())));
   return child_->AsyncUpdateFolder(cq, std::move(context), request);
 }
 
@@ -83,7 +86,8 @@ FoldersMetadata::AsyncMoveFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncMoveFolder(cq, std::move(context), request);
 }
 
@@ -92,7 +96,8 @@ FoldersMetadata::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFolder(cq, std::move(context), request);
 }
 
@@ -101,21 +106,24 @@ FoldersMetadata::AsyncUndeleteFolder(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeleteFolder(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -123,7 +131,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 FoldersMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -132,7 +141,8 @@ FoldersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -140,7 +150,8 @@ future<Status> FoldersMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

@@ -42,7 +42,8 @@ DatasetServiceMetadata::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateDataset(cq, std::move(context), request);
 }
 
@@ -50,7 +51,8 @@ StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceMetadata::GetDataset(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataset(context, request);
 }
 
@@ -58,7 +60,9 @@ StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceMetadata::UpdateDataset(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(context, absl::StrCat("dataset.name=", request.dataset().name()));
+  SetMetadata(context,
+              absl::StrCat("dataset.name=",
+                           internal::UrlEncode(request.dataset().name())));
   return child_->UpdateDataset(context, request);
 }
 
@@ -66,7 +70,8 @@ StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DatasetServiceMetadata::ListDatasets(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDatasets(context, request);
 }
 
@@ -75,7 +80,8 @@ DatasetServiceMetadata::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDataset(cq, std::move(context), request);
 }
 
@@ -84,7 +90,8 @@ DatasetServiceMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncImportData(cq, std::move(context), request);
 }
 
@@ -93,7 +100,8 @@ DatasetServiceMetadata::AsyncExportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportData(cq, std::move(context), request);
 }
 
@@ -101,7 +109,8 @@ StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceMetadata::ListDataItems(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataItems(context, request);
 }
 
@@ -109,7 +118,8 @@ StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DatasetServiceMetadata::SearchDataItems(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
-  SetMetadata(context, absl::StrCat("dataset=", request.dataset()));
+  SetMetadata(context,
+              absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
   return child_->SearchDataItems(context, request);
 }
 
@@ -117,7 +127,8 @@ StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DatasetServiceMetadata::ListSavedQueries(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSavedQueries(context, request);
 }
 
@@ -126,7 +137,8 @@ DatasetServiceMetadata::AsyncDeleteSavedQuery(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSavedQuery(cq, std::move(context), request);
 }
 
@@ -134,7 +146,8 @@ StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceMetadata::GetAnnotationSpec(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAnnotationSpec(context, request);
 }
 
@@ -142,7 +155,8 @@ StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DatasetServiceMetadata::ListAnnotations(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAnnotations(context, request);
 }
 
@@ -151,7 +165,8 @@ DatasetServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -159,7 +174,8 @@ future<Status> DatasetServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

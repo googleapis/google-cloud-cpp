@@ -42,7 +42,8 @@ SecuritySettingsServiceMetadata::CreateSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSecuritySettings(context, request);
 }
 
@@ -51,7 +52,8 @@ SecuritySettingsServiceMetadata::GetSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSecuritySettings(context, request);
 }
 
@@ -60,8 +62,10 @@ SecuritySettingsServiceMetadata::UpdateSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("security_settings.name=",
-                                    request.security_settings().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("security_settings.name=",
+                   internal::UrlEncode(request.security_settings().name())));
   return child_->UpdateSecuritySettings(context, request);
 }
 
@@ -70,7 +74,8 @@ SecuritySettingsServiceMetadata::ListSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSecuritySettings(context, request);
 }
 
@@ -78,7 +83,8 @@ Status SecuritySettingsServiceMetadata::DeleteSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSecuritySettings(context, request);
 }
 

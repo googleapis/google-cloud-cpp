@@ -41,7 +41,8 @@ StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
 ConnectorsMetadata::ListConnections(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::connectors::v1::Connection>
 ConnectorsMetadata::GetConnection(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnection(context, request);
 }
 
@@ -58,7 +60,8 @@ ConnectorsMetadata::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConnection(cq, std::move(context), request);
 }
 
@@ -68,7 +71,8 @@ ConnectorsMetadata::AsyncUpdateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("connection.name=", request.connection().name()));
+              absl::StrCat("connection.name=",
+                           internal::UrlEncode(request.connection().name())));
   return child_->AsyncUpdateConnection(cq, std::move(context), request);
 }
 
@@ -77,7 +81,8 @@ ConnectorsMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnection(cq, std::move(context), request);
 }
 
@@ -85,7 +90,8 @@ StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
 ConnectorsMetadata::ListProviders(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListProviders(context, request);
 }
 
@@ -93,7 +99,8 @@ StatusOr<google::cloud::connectors::v1::Provider>
 ConnectorsMetadata::GetProvider(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProvider(context, request);
 }
 
@@ -101,7 +108,8 @@ StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
 ConnectorsMetadata::ListConnectors(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnectors(context, request);
 }
 
@@ -109,7 +117,8 @@ StatusOr<google::cloud::connectors::v1::Connector>
 ConnectorsMetadata::GetConnector(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnector(context, request);
 }
 
@@ -118,7 +127,8 @@ ConnectorsMetadata::ListConnectorVersions(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListConnectorVersionsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnectorVersions(context, request);
 }
 
@@ -126,7 +136,8 @@ StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsMetadata::GetConnectorVersion(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnectorVersion(context, request);
 }
 
@@ -135,7 +146,8 @@ ConnectorsMetadata::GetConnectionSchemaMetadata(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnectionSchemaMetadata(context, request);
 }
 
@@ -145,7 +157,8 @@ ConnectorsMetadata::AsyncRefreshConnectionSchemaMetadata(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRefreshConnectionSchemaMetadata(cq, std::move(context),
                                                       request);
 }
@@ -155,7 +168,8 @@ ConnectorsMetadata::ListRuntimeEntitySchemas(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuntimeEntitySchemas(context, request);
 }
 
@@ -164,7 +178,8 @@ ConnectorsMetadata::ListRuntimeActionSchemas(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuntimeActionSchemas(context, request);
 }
 
@@ -172,7 +187,8 @@ StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsMetadata::GetRuntimeConfig(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuntimeConfig(context, request);
 }
 
@@ -180,7 +196,8 @@ StatusOr<google::cloud::connectors::v1::Settings>
 ConnectorsMetadata::GetGlobalSettings(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGlobalSettings(context, request);
 }
 
@@ -189,7 +206,8 @@ ConnectorsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -197,7 +215,8 @@ future<Status> ConnectorsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

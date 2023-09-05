@@ -40,14 +40,16 @@ PoliciesMetadata::PoliciesMetadata(
 StatusOr<google::iam::v2::ListPoliciesResponse> PoliciesMetadata::ListPolicies(
     grpc::ClientContext& context,
     google::iam::v2::ListPoliciesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPolicies(context, request);
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesMetadata::GetPolicy(
     grpc::ClientContext& context,
     google::iam::v2::GetPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPolicy(context, request);
 }
 
@@ -56,7 +58,8 @@ PoliciesMetadata::AsyncCreatePolicy(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::CreatePolicyRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePolicy(cq, std::move(context), request);
 }
 
@@ -65,7 +68,9 @@ PoliciesMetadata::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::UpdatePolicyRequest const& request) {
-  SetMetadata(*context, absl::StrCat("policy.name=", request.policy().name()));
+  SetMetadata(*context,
+              absl::StrCat("policy.name=",
+                           internal::UrlEncode(request.policy().name())));
   return child_->AsyncUpdatePolicy(cq, std::move(context), request);
 }
 
@@ -74,7 +79,8 @@ PoliciesMetadata::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::DeletePolicyRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePolicy(cq, std::move(context), request);
 }
 
@@ -83,7 +89,8 @@ PoliciesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -91,7 +98,8 @@ future<Status> PoliciesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

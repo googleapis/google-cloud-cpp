@@ -42,7 +42,8 @@ MatchServiceMetadata::FindNeighbors(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("index_endpoint=", request.index_endpoint()));
+              absl::StrCat("index_endpoint=",
+                           internal::UrlEncode(request.index_endpoint())));
   return child_->FindNeighbors(context, request);
 }
 
@@ -51,7 +52,8 @@ MatchServiceMetadata::ReadIndexDatapoints(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("index_endpoint=", request.index_endpoint()));
+              absl::StrCat("index_endpoint=",
+                           internal::UrlEncode(request.index_endpoint())));
   return child_->ReadIndexDatapoints(context, request);
 }
 

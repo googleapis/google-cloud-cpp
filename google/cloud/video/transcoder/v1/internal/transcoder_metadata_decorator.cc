@@ -41,7 +41,8 @@ StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceMetadata::CreateJob(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJob(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
 TranscoderServiceMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobs(context, request);
 }
 
@@ -57,14 +59,16 @@ StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJob(context, request);
 }
 
 Status TranscoderServiceMetadata::DeleteJob(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteJob(context, request);
 }
 
@@ -73,7 +77,8 @@ TranscoderServiceMetadata::CreateJobTemplate(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJobTemplate(context, request);
 }
 
@@ -82,7 +87,8 @@ TranscoderServiceMetadata::ListJobTemplates(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobTemplates(context, request);
 }
 
@@ -91,7 +97,8 @@ TranscoderServiceMetadata::GetJobTemplate(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJobTemplate(context, request);
 }
 
@@ -99,7 +106,8 @@ Status TranscoderServiceMetadata::DeleteJobTemplate(
     grpc::ClientContext& context,
     google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteJobTemplate(context, request);
 }
 

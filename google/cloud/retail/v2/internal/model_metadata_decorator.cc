@@ -42,35 +42,40 @@ ModelServiceMetadata::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::CreateModelRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateModel(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::GetModel(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetModelRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetModel(context, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::PauseModel(
     grpc::ClientContext& context,
     google::cloud::retail::v2::PauseModelRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PauseModel(context, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::ResumeModel(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ResumeModelRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeModel(context, request);
 }
 
 Status ModelServiceMetadata::DeleteModel(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteModelRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteModel(context, request);
 }
 
@@ -78,14 +83,17 @@ StatusOr<google::cloud::retail::v2::ListModelsResponse>
 ModelServiceMetadata::ListModels(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListModelsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListModels(context, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::UpdateModel(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateModelRequest const& request) {
-  SetMetadata(context, absl::StrCat("model.name=", request.model().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
   return child_->UpdateModel(context, request);
 }
 
@@ -94,7 +102,8 @@ ModelServiceMetadata::AsyncTuneModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::TuneModelRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncTuneModel(cq, std::move(context), request);
 }
 
@@ -103,7 +112,8 @@ ModelServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -111,7 +121,8 @@ future<Status> ModelServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

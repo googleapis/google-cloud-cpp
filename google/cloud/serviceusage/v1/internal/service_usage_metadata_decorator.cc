@@ -42,7 +42,8 @@ ServiceUsageMetadata::AsyncEnableService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncEnableService(cq, std::move(context), request);
 }
 
@@ -51,7 +52,8 @@ ServiceUsageMetadata::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDisableService(cq, std::move(context), request);
 }
 
@@ -59,7 +61,8 @@ StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageMetadata::GetService(
     grpc::ClientContext& context,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetService(context, request);
 }
 
@@ -67,7 +70,8 @@ StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageMetadata::ListServices(
     grpc::ClientContext& context,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServices(context, request);
 }
 
@@ -76,7 +80,8 @@ ServiceUsageMetadata::AsyncBatchEnableServices(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchEnableServices(cq, std::move(context), request);
 }
 
@@ -84,7 +89,8 @@ StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageMetadata::BatchGetServices(
     grpc::ClientContext& context,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchGetServices(context, request);
 }
 
@@ -93,7 +99,8 @@ ServiceUsageMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -101,7 +108,8 @@ future<Status> ServiceUsageMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

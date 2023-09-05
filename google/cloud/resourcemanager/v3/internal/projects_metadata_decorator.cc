@@ -41,7 +41,8 @@ StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsMetadata::GetProject(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProject(context, request);
 }
 
@@ -76,7 +77,8 @@ ProjectsMetadata::AsyncUpdateProject(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("project.name=", request.project().name()));
+              absl::StrCat("project.name=",
+                           internal::UrlEncode(request.project().name())));
   return child_->AsyncUpdateProject(cq, std::move(context), request);
 }
 
@@ -85,7 +87,8 @@ ProjectsMetadata::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncMoveProject(cq, std::move(context), request);
 }
 
@@ -94,7 +97,8 @@ ProjectsMetadata::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteProject(cq, std::move(context), request);
 }
 
@@ -103,21 +107,24 @@ ProjectsMetadata::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeleteProject(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -125,7 +132,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ProjectsMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -134,7 +142,8 @@ ProjectsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -142,7 +151,8 @@ future<Status> ProjectsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

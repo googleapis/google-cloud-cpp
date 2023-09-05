@@ -41,7 +41,8 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::CreateRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRuleSet(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::GetRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuleSet(context, request);
 }
 
@@ -57,14 +59,16 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::UpdateRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateRuleSet(context, request);
 }
 
 Status RuleSetServiceMetadata::DeleteRuleSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRuleSet(context, request);
 }
 
@@ -72,7 +76,8 @@ StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceMetadata::ListRuleSets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuleSets(context, request);
 }
 

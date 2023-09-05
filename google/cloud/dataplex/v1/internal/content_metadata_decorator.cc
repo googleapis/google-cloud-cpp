@@ -41,7 +41,8 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceMetadata::CreateContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateContent(context, request);
 }
 
@@ -49,14 +50,17 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceMetadata::UpdateContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  SetMetadata(context, absl::StrCat("content.name=", request.content().name()));
+  SetMetadata(context,
+              absl::StrCat("content.name=",
+                           internal::UrlEncode(request.content().name())));
   return child_->UpdateContent(context, request);
 }
 
 Status ContentServiceMetadata::DeleteContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteContent(context, request);
 }
 
@@ -64,21 +68,24 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceMetadata::GetContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetContentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetContent(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -86,7 +93,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContentServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -94,7 +102,8 @@ StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 ContentServiceMetadata::ListContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListContentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListContent(context, request);
 }
 

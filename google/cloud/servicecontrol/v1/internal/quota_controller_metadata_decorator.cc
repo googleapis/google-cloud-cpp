@@ -41,7 +41,9 @@ StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerMetadata::AllocateQuota(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
+  SetMetadata(context,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
   return child_->AllocateQuota(context, request);
 }
 

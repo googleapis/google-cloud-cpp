@@ -42,7 +42,8 @@ KeyTrackingServiceMetadata::GetProtectedResourcesSummary(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProtectedResourcesSummary(context, request);
 }
 
@@ -51,7 +52,8 @@ KeyTrackingServiceMetadata::SearchProtectedResources(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->SearchProtectedResources(context, request);
 }
 

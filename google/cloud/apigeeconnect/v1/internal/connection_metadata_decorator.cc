@@ -41,7 +41,8 @@ StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceMetadata::ListConnections(
     grpc::ClientContext& context,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, request);
 }
 

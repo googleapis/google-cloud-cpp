@@ -42,7 +42,8 @@ DataPolicyServiceMetadata::CreateDataPolicy(
     grpc::ClientContext& context,
     google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataPolicy(context, request);
 }
 
@@ -52,7 +53,8 @@ DataPolicyServiceMetadata::UpdateDataPolicy(
     google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
         request) {
   SetMetadata(context,
-              absl::StrCat("data_policy.name=", request.data_policy().name()));
+              absl::StrCat("data_policy.name=",
+                           internal::UrlEncode(request.data_policy().name())));
   return child_->UpdateDataPolicy(context, request);
 }
 
@@ -61,7 +63,8 @@ DataPolicyServiceMetadata::RenameDataPolicy(
     grpc::ClientContext& context,
     google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenameDataPolicy(context, request);
 }
 
@@ -69,7 +72,8 @@ Status DataPolicyServiceMetadata::DeleteDataPolicy(
     grpc::ClientContext& context,
     google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataPolicy(context, request);
 }
 
@@ -78,7 +82,8 @@ DataPolicyServiceMetadata::GetDataPolicy(
     grpc::ClientContext& context,
     google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataPolicy(context, request);
 }
 
@@ -87,21 +92,24 @@ DataPolicyServiceMetadata::ListDataPolicies(
     grpc::ClientContext& context,
     google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataPolicies(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -109,7 +117,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataPolicyServiceMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
