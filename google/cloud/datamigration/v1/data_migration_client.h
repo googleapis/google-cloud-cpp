@@ -1965,7 +1965,7 @@ class DataMigrationServiceClient {
   ///  In order to retrieve a previous revision of the mapping rule, also provide
   ///  the revision ID.
   ///  Example:
-  ///  conversionWorkspace/123/mappingRules/rule123@c7cfa2a8c7cfa2a8c7cfa2a8c7cfa2a8
+  ///  `conversionWorkspace/123/mappingRules/rule123@c7cfa2a8c7cfa2a8c7cfa2a8c7cfa2a8`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

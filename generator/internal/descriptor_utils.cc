@@ -439,6 +439,11 @@ ParameterCommentSubstitution substitutions[] = {
     {"`filter='strategy=TrafficPercentStrategy'`",
      "``filter='strategy=TrafficPercentStrategy'``"},
 
+    {"conversionWorkspace/123/mappingRules/"
+     "rule123@c7cfa2a8c7cfa2a8c7cfa2a8c7cfa2a8",
+     "`conversionWorkspace/123/mappingRules/"
+     "rule123@c7cfa2a8c7cfa2a8c7cfa2a8c7cfa2a8`"},
+
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`
     // commands we need to represent them as `@n` or they do would terminate the
