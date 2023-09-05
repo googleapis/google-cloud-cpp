@@ -31,23 +31,6 @@ else ()
     # CMake config module. We will need to fix up a few things if the module is
     # found this way.
     find_package(CURL REQUIRED)
-    # Before CMake 3.12 the module does not define a target, compare:
-    # https://cmake.org/cmake/help/v3.12/module/FindCURL.html vs
-    # https://cmake.org/cmake/help/v3.11/module/FindCURL.html
-    #
-    # Manually define the target if it does not exist so the rest of the code
-    # does not have to deal with these details:
-    if (NOT TARGET CURL::libcurl)
-        add_library(CURL::libcurl UNKNOWN IMPORTED)
-        set_property(
-            TARGET CURL::libcurl
-            APPEND
-            PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
-        set_property(
-            TARGET CURL::libcurl
-            APPEND
-            PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
-    endif ()
     # If the library is static, we need to explicitly link its dependencies. The
     # CMake module does not do so. However, we should not do so for shared
     # libraries, because the version of OpenSSL (for example) found by
