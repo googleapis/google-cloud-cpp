@@ -1,8 +1,8 @@
 # Infrastructure Manager API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Infrastructure Manager API][cloud-service-docs], a service to Creates and
-manages Google Cloud Platform resources and infrastructure.
+[Infrastructure Manager API][cloud-service-docs], a service to create and manage
+Google Cloud resources and infrastructure.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -17,21 +17,21 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/config/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/config/v1/config_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace config = ::google::cloud::config;
-  auto client = config::Client(config::MakeConnection());
+  namespace config = ::google::cloud::config_v1;
+  auto client = config::ConfigClient(config::MakeConfigConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListDeployments(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

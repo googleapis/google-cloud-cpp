@@ -2,8 +2,9 @@
 
 @mainpage Infrastructure Manager API C++ Client Library
 
-An idiomatic C++ client library for the [Infrastructure Manager API][cloud-service-docs], a service
-to Creates and manages Google Cloud Platform resources and infrastructure.
+An idiomatic C++ client library for the
+[Infrastructure Manager API][cloud-service-docs], a service
+to create and manage Google Cloud resources and infrastructure.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -41,6 +42,6 @@ application.
 - @ref config-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/config
+[cloud-service-docs]: https://cloud.google.com/infrastructure-manager
 
 */
