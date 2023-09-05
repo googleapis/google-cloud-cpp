@@ -153,8 +153,8 @@ class DeleteObjectRequest {
 /**
  * A request to compose multiple objects into a single object.
  *
- * This class can hold all the mandatory and optional parameters to delete an
- * object. This class is the public API because it is required for mocking.
+ * This class can hold all the mandatory and optional parameters to compose
+ * objects. This class is the public API because it is required for mocking.
  */
 class ComposeObjectRequest {
  public:
