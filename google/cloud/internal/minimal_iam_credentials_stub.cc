@@ -21,6 +21,7 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/url_encode.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 
 namespace google {
@@ -91,7 +92,8 @@ class AsyncAccessTokenGeneratorMetadata : public MinimalIamCredentialsStub {
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
       CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
-    context->AddMetadata("x-goog-request-params", "name=" + request.name());
+    context->AddMetadata("x-goog-request-params",
+                         "name=" + internal::UrlEncode(request.name()));
     context->AddMetadata("x-goog-api-client", x_goog_api_client_);
     return child_->AsyncGenerateAccessToken(cq, std::move(context), request);
   }
@@ -99,7 +101,8 @@ class AsyncAccessTokenGeneratorMetadata : public MinimalIamCredentialsStub {
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       grpc::ClientContext& context,
       google::iam::credentials::v1::SignBlobRequest const& request) override {
-    context.AddMetadata("x-goog-request-params", "name=" + request.name());
+    context.AddMetadata("x-goog-request-params",
+                        "name=" + internal::UrlEncode(request.name()));
     context.AddMetadata("x-goog-api-client", x_goog_api_client_);
     return child_->SignBlob(context, request);
   }
