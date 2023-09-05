@@ -2497,6 +2497,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Netapp
+service {
+  service_proto_path: "google/cloud/netapp/v1/cloud_netapp_service.proto"
+  product_path: "google/cloud/netapp/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Network Connectivity
 service {
   service_proto_path: "google/cloud/networkconnectivity/v1/hub.proto"
