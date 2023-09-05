@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_METADATA_DECORATOR_H
 
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

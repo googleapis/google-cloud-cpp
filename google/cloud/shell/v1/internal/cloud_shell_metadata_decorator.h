@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_METADATA_DECORATOR_H
 
 #include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

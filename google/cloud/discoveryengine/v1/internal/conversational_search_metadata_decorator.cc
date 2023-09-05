@@ -20,6 +20,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/discoveryengine/v1/conversational_search_service.grpc.pb.h>
 #include <memory>
@@ -42,7 +43,8 @@ ConversationalSearchServiceMetadata::ConverseConversation(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ConverseConversationRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ConverseConversation(context, request);
 }
 
@@ -51,7 +53,8 @@ ConversationalSearchServiceMetadata::CreateConversation(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CreateConversationRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConversation(context, request);
 }
 
@@ -59,7 +62,8 @@ Status ConversationalSearchServiceMetadata::DeleteConversation(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConversation(context, request);
 }
 
@@ -68,8 +72,9 @@ ConversationalSearchServiceMetadata::UpdateConversation(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::UpdateConversationRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("conversation.name=",
-                                    request.conversation().name()));
+  SetMetadata(context,
+              absl::StrCat("conversation.name=",
+                           internal::UrlEncode(request.conversation().name())));
   return child_->UpdateConversation(context, request);
 }
 
@@ -77,7 +82,8 @@ StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceMetadata::GetConversation(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConversation(context, request);
 }
 
@@ -86,7 +92,8 @@ ConversationalSearchServiceMetadata::ListConversations(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListConversationsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConversations(context, request);
 }
 

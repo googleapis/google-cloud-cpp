@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_V2_INTERNAL_API_KEYS_METADATA_DECORATOR_H
 
 #include "google/cloud/apikeys/v2/internal/api_keys_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_VALIDATION_HELPER_V1_METADATA_DECORATOR_H
 
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

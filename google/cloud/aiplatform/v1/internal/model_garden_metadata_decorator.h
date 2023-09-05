@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_METADATA_DECORATOR_H
 
 #include "google/cloud/aiplatform/v1/internal/model_garden_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

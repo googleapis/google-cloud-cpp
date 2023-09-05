@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_AUTHORIZED_CERTIFICATES_METADATA_DECORATOR_H
 
 #include "google/cloud/appengine/v1/internal/authorized_certificates_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

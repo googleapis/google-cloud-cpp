@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_METADATA_DECORATOR_H
 
 #include "google/cloud/apigateway/v1/internal/api_gateway_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

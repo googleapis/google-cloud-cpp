@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_INTERNAL_STORAGE_TRANSFER_METADATA_DECORATOR_H
 
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
