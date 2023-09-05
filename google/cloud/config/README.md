@@ -53,6 +53,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/config
+[cloud-service-docs]: https://cloud.google.com/infrastructure-manager
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/config/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/config
