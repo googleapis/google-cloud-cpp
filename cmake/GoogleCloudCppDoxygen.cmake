@@ -32,12 +32,6 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     if (NOT GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN OR NOT DOXYGEN_FOUND)
         return()
     endif ()
-    if (CMAKE_VERSION VERSION_LESS "3.12")
-        # Old versions of CMake have really poor support for Doxygen generation.
-        message(
-            STATUS "Doxygen generation only enabled for cmake 3.12 and higher")
-        return()
-    endif ()
 
     cmake_parse_arguments(opt "RECURSIVE;THREADED" "" "INPUTS;TAGFILES;DEPENDS"
                           ${ARGN})
