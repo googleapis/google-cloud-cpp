@@ -20,6 +20,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
 #include <memory>

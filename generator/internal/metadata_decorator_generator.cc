@@ -123,8 +123,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h",
-                       "google/cloud/internal/url_encode.h"});
+  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "map", "memory", "string"});
@@ -173,16 +172,17 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes(
-      {vars("metadata_header_path"),
-       "google/cloud/internal/absl_str_cat_quiet.h",
-       HasExplicitRoutingMethod()
-           ? "google/cloud/internal/absl_str_join_quiet.h"
-           : "",
-       "google/cloud/internal/api_client_header.h",
-       HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
-                                  : "",
-       "google/cloud/common_options.h", "google/cloud/status_or.h"});
+  CcLocalIncludes({vars("metadata_header_path"),
+                   "google/cloud/internal/absl_str_cat_quiet.h",
+                   HasExplicitRoutingMethod()
+                       ? "google/cloud/internal/absl_str_join_quiet.h"
+                       : "",
+                   "google/cloud/internal/api_client_header.h",
+                   HasExplicitRoutingMethod()
+                       ? "google/cloud/internal/routing_matcher.h"
+                       : "",
+                   "google/cloud/common_options.h", "google/cloud/status_or.h",
+                   "google/cloud/internal/url_encode.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);

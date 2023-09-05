@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_INTERNAL_ALLOY_DB_ADMIN_METADATA_DECORATOR_H
 
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

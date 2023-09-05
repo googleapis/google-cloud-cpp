@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_KITCHEN_SINK_METADATA_DECORATOR_H
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
