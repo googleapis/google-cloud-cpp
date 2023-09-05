@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_DATA_CATALOG_METADATA_DECORATOR_H
 
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

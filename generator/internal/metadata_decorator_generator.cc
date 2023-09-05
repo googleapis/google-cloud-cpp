@@ -123,7 +123,8 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
+  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h",
+                       "google/cloud/internal/url_encode.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "map", "memory", "string"});

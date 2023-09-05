@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_INTERNAL_DATASTORE_METADATA_DECORATOR_H
 
 #include "google/cloud/datastore/v1/internal/datastore_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

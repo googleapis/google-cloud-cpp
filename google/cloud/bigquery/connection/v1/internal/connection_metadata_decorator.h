@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_V1_INTERNAL_CONNECTION_METADATA_DECORATOR_H
 
 #include "google/cloud/bigquery/connection/v1/internal/connection_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

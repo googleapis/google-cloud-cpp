@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_BINAUTHZ_MANAGEMENT_SERVICE_V1_METADATA_DECORATOR_H
 
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_INTERNAL_APP_GATEWAYS_METADATA_DECORATOR_H
 
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_METADATA_DECORATOR_H
 
 #include "google/cloud/dlp/v2/internal/dlp_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
