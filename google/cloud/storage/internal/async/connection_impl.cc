@@ -129,18 +129,18 @@ AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
 }
 
 future<StatusOr<storage::ObjectMetadata>>
-AsyncConnectionImpl::AsyncComposeObject(
-    storage::internal::ComposeObjectRequest request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto proto = ToProto(request);
+AsyncConnectionImpl::AsyncComposeObject(ComposeObjectParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto proto = ToProto(p.request.impl_);
   if (!proto) {
     return make_ready_future(
         StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
   }
-  auto const idempotency = idempotency_policy(*current)->IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
-  auto call = [stub = stub_, current, request = std::move(request)](
+  auto const idempotency =
+      idempotency_policy(*current)->IsIdempotent(p.request.impl_)
+          ? Idempotency::kIdempotent
+          : Idempotency::kNonIdempotent;
+  auto call = [stub = stub_, current, request = std::move(p.request)](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
                   google::storage::v2::ComposeObjectRequest const& proto) {
