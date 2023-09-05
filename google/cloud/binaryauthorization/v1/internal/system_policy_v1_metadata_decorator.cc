@@ -42,7 +42,8 @@ SystemPolicyV1Metadata::GetSystemPolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSystemPolicy(context, request);
 }
 

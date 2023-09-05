@@ -41,7 +41,8 @@ StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceMetadata::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("data_store=", request.data_store()));
+  SetMetadata(context, absl::StrCat("data_store=",
+                                    internal::UrlEncode(request.data_store())));
   return child_->CompleteQuery(context, request);
 }
 

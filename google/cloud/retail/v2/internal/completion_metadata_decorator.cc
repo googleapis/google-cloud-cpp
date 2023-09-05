@@ -41,7 +41,8 @@ StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceMetadata::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("catalog=", request.catalog()));
+  SetMetadata(context,
+              absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
   return child_->CompleteQuery(context, request);
 }
 
@@ -50,7 +51,8 @@ CompletionServiceMetadata::AsyncImportCompletionData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportCompletionData(cq, std::move(context), request);
 }
 
@@ -59,7 +61,8 @@ CompletionServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -67,7 +70,8 @@ future<Status> CompletionServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

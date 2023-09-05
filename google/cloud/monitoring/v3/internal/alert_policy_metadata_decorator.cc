@@ -41,7 +41,8 @@ StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 AlertPolicyServiceMetadata::ListAlertPolicies(
     grpc::ClientContext& context,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListAlertPolicies(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::GetAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAlertPolicy(context, request);
 }
 
@@ -57,14 +59,16 @@ StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::CreateAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateAlertPolicy(context, request);
 }
 
 Status AlertPolicyServiceMetadata::DeleteAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAlertPolicy(context, request);
 }
 
@@ -72,8 +76,9 @@ StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceMetadata::UpdateAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("alert_policy.name=",
-                                    request.alert_policy().name()));
+  SetMetadata(context,
+              absl::StrCat("alert_policy.name=",
+                           internal::UrlEncode(request.alert_policy().name())));
   return child_->UpdateAlertPolicy(context, request);
 }
 

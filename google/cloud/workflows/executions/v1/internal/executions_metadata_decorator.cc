@@ -42,7 +42,8 @@ ExecutionsMetadata::ListExecutions(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListExecutions(context, request);
 }
 
@@ -51,7 +52,8 @@ ExecutionsMetadata::CreateExecution(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateExecution(context, request);
 }
 
@@ -60,7 +62,8 @@ ExecutionsMetadata::GetExecution(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetExecution(context, request);
 }
 
@@ -69,7 +72,8 @@ ExecutionsMetadata::CancelExecution(
     grpc::ClientContext& context,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelExecution(context, request);
 }
 

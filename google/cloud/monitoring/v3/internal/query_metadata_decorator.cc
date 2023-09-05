@@ -41,7 +41,8 @@ StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceMetadata::QueryTimeSeries(
     grpc::ClientContext& context,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->QueryTimeSeries(context, request);
 }
 

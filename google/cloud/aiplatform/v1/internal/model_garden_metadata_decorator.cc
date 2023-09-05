@@ -41,7 +41,8 @@ StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceMetadata::GetPublisherModel(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPublisherModel(context, request);
 }
 

@@ -41,35 +41,41 @@ StatusOr<google::monitoring::v3::ListGroupsResponse>
 GroupServiceMetadata::ListGroups(
     grpc::ClientContext& context,
     google::monitoring::v3::ListGroupsRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListGroups(context, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceMetadata::GetGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::GetGroupRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGroup(context, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceMetadata::CreateGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateGroupRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateGroup(context, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceMetadata::UpdateGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateGroupRequest const& request) {
-  SetMetadata(context, absl::StrCat("group.name=", request.group().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("group.name=", internal::UrlEncode(request.group().name())));
   return child_->UpdateGroup(context, request);
 }
 
 Status GroupServiceMetadata::DeleteGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteGroupRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteGroup(context, request);
 }
 
@@ -77,7 +83,8 @@ StatusOr<google::monitoring::v3::ListGroupMembersResponse>
 GroupServiceMetadata::ListGroupMembers(
     grpc::ClientContext& context,
     google::monitoring::v3::ListGroupMembersRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListGroupMembers(context, request);
 }
 

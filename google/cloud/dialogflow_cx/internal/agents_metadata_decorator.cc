@@ -41,35 +41,41 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 AgentsMetadata::ListAgents(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAgents(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsMetadata::GetAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAgent(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsMetadata::CreateAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAgent(context, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsMetadata::UpdateAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
-  SetMetadata(context, absl::StrCat("agent.name=", request.agent().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("agent.name=", internal::UrlEncode(request.agent().name())));
   return child_->UpdateAgent(context, request);
 }
 
 Status AgentsMetadata::DeleteAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAgent(context, request);
 }
 
@@ -78,7 +84,8 @@ AgentsMetadata::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportAgent(cq, std::move(context), request);
 }
 
@@ -87,7 +94,8 @@ AgentsMetadata::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestoreAgent(cq, std::move(context), request);
 }
 
@@ -95,7 +103,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsMetadata::ValidateAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ValidateAgent(context, request);
 }
 
@@ -104,7 +113,8 @@ AgentsMetadata::GetAgentValidationResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAgentValidationResult(context, request);
 }
 
@@ -113,7 +123,8 @@ AgentsMetadata::GetGenerativeSettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGenerativeSettings(context, request);
 }
 
@@ -122,8 +133,10 @@ AgentsMetadata::UpdateGenerativeSettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("generative_settings.name=",
-                                    request.generative_settings().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("generative_settings.name=",
+                   internal::UrlEncode(request.generative_settings().name())));
   return child_->UpdateGenerativeSettings(context, request);
 }
 
@@ -132,7 +145,8 @@ AgentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -140,7 +154,8 @@ future<Status> AgentsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

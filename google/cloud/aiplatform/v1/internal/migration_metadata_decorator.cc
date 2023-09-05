@@ -42,7 +42,8 @@ MigrationServiceMetadata::SearchMigratableResources(
     grpc::ClientContext& context,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchMigratableResources(context, request);
 }
 
@@ -52,7 +53,8 @@ MigrationServiceMetadata::AsyncBatchMigrateResources(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchMigrateResources(cq, std::move(context), request);
 }
 
@@ -61,7 +63,8 @@ MigrationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -69,7 +72,8 @@ future<Status> MigrationServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

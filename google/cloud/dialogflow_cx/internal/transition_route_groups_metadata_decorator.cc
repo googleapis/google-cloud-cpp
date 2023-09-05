@@ -42,7 +42,8 @@ TransitionRouteGroupsMetadata::ListTransitionRouteGroups(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransitionRouteGroups(context, request);
 }
 
@@ -51,7 +52,8 @@ TransitionRouteGroupsMetadata::GetTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTransitionRouteGroup(context, request);
 }
 
@@ -60,7 +62,8 @@ TransitionRouteGroupsMetadata::CreateTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTransitionRouteGroup(context, request);
 }
 
@@ -69,8 +72,10 @@ TransitionRouteGroupsMetadata::UpdateTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("transition_route_group.name=",
-                                    request.transition_route_group().name()));
+  SetMetadata(context,
+              absl::StrCat("transition_route_group.name=",
+                           internal::UrlEncode(
+                               request.transition_route_group().name())));
   return child_->UpdateTransitionRouteGroup(context, request);
 }
 
@@ -78,7 +83,8 @@ Status TransitionRouteGroupsMetadata::DeleteTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTransitionRouteGroup(context, request);
 }
 

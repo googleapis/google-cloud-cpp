@@ -41,7 +41,8 @@ StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceMetadata::ListRuntimes(
     grpc::ClientContext& context,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuntimes(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceMetadata::GetRuntime(
     grpc::ClientContext& context,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuntime(context, request);
 }
 
@@ -58,7 +60,8 @@ ManagedNotebookServiceMetadata::AsyncCreateRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateRuntime(cq, std::move(context), request);
 }
 
@@ -68,7 +71,8 @@ ManagedNotebookServiceMetadata::AsyncUpdateRuntime(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("runtime.name=", request.runtime().name()));
+              absl::StrCat("runtime.name=",
+                           internal::UrlEncode(request.runtime().name())));
   return child_->AsyncUpdateRuntime(cq, std::move(context), request);
 }
 
@@ -77,7 +81,8 @@ ManagedNotebookServiceMetadata::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRuntime(cq, std::move(context), request);
 }
 
@@ -86,7 +91,8 @@ ManagedNotebookServiceMetadata::AsyncStartRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartRuntime(cq, std::move(context), request);
 }
 
@@ -95,7 +101,8 @@ ManagedNotebookServiceMetadata::AsyncStopRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopRuntime(cq, std::move(context), request);
 }
 
@@ -104,7 +111,8 @@ ManagedNotebookServiceMetadata::AsyncSwitchRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncSwitchRuntime(cq, std::move(context), request);
 }
 
@@ -113,7 +121,8 @@ ManagedNotebookServiceMetadata::AsyncResetRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncResetRuntime(cq, std::move(context), request);
 }
 
@@ -122,7 +131,8 @@ ManagedNotebookServiceMetadata::AsyncUpgradeRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpgradeRuntime(cq, std::move(context), request);
 }
 
@@ -131,7 +141,8 @@ ManagedNotebookServiceMetadata::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncReportRuntimeEvent(cq, std::move(context), request);
 }
 
@@ -140,7 +151,8 @@ ManagedNotebookServiceMetadata::RefreshRuntimeTokenInternal(
     grpc::ClientContext& context,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RefreshRuntimeTokenInternal(context, request);
 }
 
@@ -149,7 +161,8 @@ ManagedNotebookServiceMetadata::AsyncDiagnoseRuntime(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDiagnoseRuntime(cq, std::move(context), request);
 }
 
@@ -158,7 +171,8 @@ ManagedNotebookServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -166,7 +180,8 @@ future<Status> ManagedNotebookServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

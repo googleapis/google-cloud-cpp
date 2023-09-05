@@ -41,7 +41,8 @@ StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceMetadata::CreateClientEvent(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateClientEvent(context, request);
 }
 

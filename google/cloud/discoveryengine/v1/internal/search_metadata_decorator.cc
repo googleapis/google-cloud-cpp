@@ -42,7 +42,8 @@ SearchServiceMetadata::Search(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("serving_config=", request.serving_config()));
+              absl::StrCat("serving_config=",
+                           internal::UrlEncode(request.serving_config())));
   return child_->Search(context, request);
 }
 

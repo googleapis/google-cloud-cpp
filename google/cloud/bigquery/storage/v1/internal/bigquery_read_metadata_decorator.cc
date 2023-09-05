@@ -42,8 +42,10 @@ BigQueryReadMetadata::CreateReadSession(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("read_session.table=",
-                                    request.read_session().table()));
+  SetMetadata(
+      context,
+      absl::StrCat("read_session.table=",
+                   internal::UrlEncode(request.read_session().table())));
   return child_->CreateReadSession(context, request);
 }
 
@@ -52,7 +54,9 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigQueryReadMetadata::ReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("read_stream=", request.read_stream()));
+  SetMetadata(
+      *context,
+      absl::StrCat("read_stream=", internal::UrlEncode(request.read_stream())));
   return child_->ReadRows(std::move(context), request);
 }
 
@@ -61,7 +65,8 @@ BigQueryReadMetadata::SplitReadStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SplitReadStream(context, request);
 }
 

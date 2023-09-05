@@ -41,7 +41,8 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::CreateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateProfile(context, request);
 }
 
@@ -50,7 +51,8 @@ ProfilerServiceMetadata::CreateOfflineProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateOfflineProfile(context, request);
 }
 
@@ -58,7 +60,9 @@ StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::UpdateProfile(
     grpc::ClientContext& context,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  SetMetadata(context, absl::StrCat("profile.name=", request.profile().name()));
+  SetMetadata(context,
+              absl::StrCat("profile.name=",
+                           internal::UrlEncode(request.profile().name())));
   return child_->UpdateProfile(context, request);
 }
 

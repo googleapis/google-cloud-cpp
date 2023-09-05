@@ -42,7 +42,8 @@ SynonymSetServiceMetadata::CreateSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSynonymSet(context, request);
 }
 
@@ -50,7 +51,8 @@ StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceMetadata::GetSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSynonymSet(context, request);
 }
 
@@ -59,7 +61,8 @@ SynonymSetServiceMetadata::UpdateSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateSynonymSet(context, request);
 }
 
@@ -67,7 +70,8 @@ Status SynonymSetServiceMetadata::DeleteSynonymSet(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSynonymSet(context, request);
 }
 
@@ -76,7 +80,8 @@ SynonymSetServiceMetadata::ListSynonymSets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSynonymSets(context, request);
 }
 

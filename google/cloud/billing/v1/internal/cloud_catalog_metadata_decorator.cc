@@ -49,7 +49,8 @@ StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogMetadata::ListSkus(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListSkusRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSkus(context, request);
 }
 

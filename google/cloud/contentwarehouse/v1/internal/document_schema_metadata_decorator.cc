@@ -42,7 +42,8 @@ DocumentSchemaServiceMetadata::CreateDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocumentSchema(context, request);
 }
 
@@ -51,7 +52,8 @@ DocumentSchemaServiceMetadata::UpdateDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateDocumentSchema(context, request);
 }
 
@@ -60,7 +62,8 @@ DocumentSchemaServiceMetadata::GetDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDocumentSchema(context, request);
 }
 
@@ -68,7 +71,8 @@ Status DocumentSchemaServiceMetadata::DeleteDocumentSchema(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocumentSchema(context, request);
 }
 
@@ -77,7 +81,8 @@ DocumentSchemaServiceMetadata::ListDocumentSchemas(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDocumentSchemas(context, request);
 }
 

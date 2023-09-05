@@ -41,7 +41,8 @@ StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateAccessToken(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateIdToken(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsMetadata::SignBlob(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignBlobRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SignBlob(context, request);
 }
 
@@ -65,7 +68,8 @@ StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsMetadata::SignJwt(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignJwtRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SignJwt(context, request);
 }
 

@@ -41,7 +41,8 @@ StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 AuthorizedCertificatesMetadata::ListAuthorizedCertificates(
     grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAuthorizedCertificates(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesMetadata::GetAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAuthorizedCertificate(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesMetadata::CreateAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAuthorizedCertificate(context, request);
 }
 
@@ -65,14 +68,16 @@ StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesMetadata::UpdateAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateAuthorizedCertificate(context, request);
 }
 
 Status AuthorizedCertificatesMetadata::DeleteAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAuthorizedCertificate(context, request);
 }
 

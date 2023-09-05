@@ -42,7 +42,8 @@ BigQueryWriteMetadata::CreateWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWriteStream(context, request);
 }
 
@@ -61,7 +62,8 @@ BigQueryWriteMetadata::GetWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWriteStream(context, request);
 }
 
@@ -70,7 +72,8 @@ BigQueryWriteMetadata::FinalizeWriteStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->FinalizeWriteStream(context, request);
 }
 
@@ -79,7 +82,8 @@ BigQueryWriteMetadata::BatchCommitWriteStreams(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCommitWriteStreams(context, request);
 }
 
@@ -87,7 +91,9 @@ StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 BigQueryWriteMetadata::FlushRows(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
-  SetMetadata(context, absl::StrCat("write_stream=", request.write_stream()));
+  SetMetadata(context,
+              absl::StrCat("write_stream=",
+                           internal::UrlEncode(request.write_stream())));
   return child_->FlushRows(context, request);
 }
 

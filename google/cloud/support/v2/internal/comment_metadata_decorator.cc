@@ -41,7 +41,8 @@ StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceMetadata::ListComments(
     grpc::ClientContext& context,
     google::cloud::support::v2::ListCommentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListComments(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::support::v2::Comment>
 CommentServiceMetadata::CreateComment(
     grpc::ClientContext& context,
     google::cloud::support::v2::CreateCommentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateComment(context, request);
 }
 

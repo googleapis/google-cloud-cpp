@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesMetadata::ListEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntityTypes(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::GetEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEntityType(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesMetadata::CreateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEntityType(context, request);
 }
 
@@ -66,14 +69,16 @@ EntityTypesMetadata::UpdateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("entity_type.name=", request.entity_type().name()));
+              absl::StrCat("entity_type.name=",
+                           internal::UrlEncode(request.entity_type().name())));
   return child_->UpdateEntityType(context, request);
 }
 
 Status EntityTypesMetadata::DeleteEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEntityType(context, request);
 }
 

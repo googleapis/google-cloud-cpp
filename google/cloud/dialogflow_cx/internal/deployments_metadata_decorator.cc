@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DeploymentsMetadata::ListDeployments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDeployments(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsMetadata::GetDeployment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDeployment(context, request);
 }
 

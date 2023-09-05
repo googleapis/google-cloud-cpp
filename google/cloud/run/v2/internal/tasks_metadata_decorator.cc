@@ -40,14 +40,16 @@ TasksMetadata::TasksMetadata(
 StatusOr<google::cloud::run::v2::Task> TasksMetadata::GetTask(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetTaskRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTask(context, request);
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksMetadata::ListTasks(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListTasksRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTasks(context, request);
 }
 

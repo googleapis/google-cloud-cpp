@@ -42,7 +42,8 @@ MigrationServiceMetadata::CreateMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMigrationWorkflow(context, request);
 }
 
@@ -51,7 +52,8 @@ MigrationServiceMetadata::GetMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMigrationWorkflow(context, request);
 }
 
@@ -60,7 +62,8 @@ MigrationServiceMetadata::ListMigrationWorkflows(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMigrationWorkflows(context, request);
 }
 
@@ -68,7 +71,8 @@ Status MigrationServiceMetadata::DeleteMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMigrationWorkflow(context, request);
 }
 
@@ -76,7 +80,8 @@ Status MigrationServiceMetadata::StartMigrationWorkflow(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StartMigrationWorkflow(context, request);
 }
 
@@ -85,7 +90,8 @@ MigrationServiceMetadata::GetMigrationSubtask(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMigrationSubtask(context, request);
 }
 
@@ -94,7 +100,8 @@ MigrationServiceMetadata::ListMigrationSubtasks(
     grpc::ClientContext& context,
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMigrationSubtasks(context, request);
 }
 

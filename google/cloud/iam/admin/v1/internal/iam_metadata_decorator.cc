@@ -40,14 +40,16 @@ StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 IAMMetadata::ListServiceAccounts(
     grpc::ClientContext& context,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListServiceAccounts(context, request);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMMetadata::GetServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServiceAccount(context, request);
 }
 
@@ -55,7 +57,8 @@ StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMMetadata::CreateServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateServiceAccount(context, request);
 }
 
@@ -63,15 +66,18 @@ StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMMetadata::PatchServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("service_account.name=",
-                                    request.service_account().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("service_account.name=",
+                   internal::UrlEncode(request.service_account().name())));
   return child_->PatchServiceAccount(context, request);
 }
 
 Status IAMMetadata::DeleteServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteServiceAccount(context, request);
 }
 
@@ -79,21 +85,24 @@ StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 IAMMetadata::UndeleteServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UndeleteServiceAccount(context, request);
 }
 
 Status IAMMetadata::EnableServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::EnableServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EnableServiceAccount(context, request);
 }
 
 Status IAMMetadata::DisableServiceAccount(
     grpc::ClientContext& context,
     google::iam::admin::v1::DisableServiceAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DisableServiceAccount(context, request);
 }
 
@@ -101,7 +110,8 @@ StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
 IAMMetadata::ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListServiceAccountKeys(context, request);
 }
 
@@ -109,7 +119,8 @@ StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMMetadata::GetServiceAccountKey(
     grpc::ClientContext& context,
     google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServiceAccountKey(context, request);
 }
 
@@ -117,7 +128,8 @@ StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMMetadata::CreateServiceAccountKey(
     grpc::ClientContext& context,
     google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateServiceAccountKey(context, request);
 }
 
@@ -125,42 +137,48 @@ StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMMetadata::UploadServiceAccountKey(
     grpc::ClientContext& context,
     google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UploadServiceAccountKey(context, request);
 }
 
 Status IAMMetadata::DeleteServiceAccountKey(
     grpc::ClientContext& context,
     google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteServiceAccountKey(context, request);
 }
 
 Status IAMMetadata::DisableServiceAccountKey(
     grpc::ClientContext& context,
     google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DisableServiceAccountKey(context, request);
 }
 
 Status IAMMetadata::EnableServiceAccountKey(
     grpc::ClientContext& context,
     google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EnableServiceAccountKey(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> IAMMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> IAMMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -168,7 +186,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -190,35 +209,40 @@ StatusOr<google::iam::admin::v1::ListRolesResponse> IAMMetadata::ListRoles(
 StatusOr<google::iam::admin::v1::Role> IAMMetadata::GetRole(
     grpc::ClientContext& context,
     google::iam::admin::v1::GetRoleRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRole(context, request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMMetadata::CreateRole(
     grpc::ClientContext& context,
     google::iam::admin::v1::CreateRoleRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRole(context, request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMMetadata::UpdateRole(
     grpc::ClientContext& context,
     google::iam::admin::v1::UpdateRoleRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateRole(context, request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMMetadata::DeleteRole(
     grpc::ClientContext& context,
     google::iam::admin::v1::DeleteRoleRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRole(context, request);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMMetadata::UndeleteRole(
     grpc::ClientContext& context,
     google::iam::admin::v1::UndeleteRoleRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UndeleteRole(context, request);
 }
 

@@ -42,7 +42,8 @@ RecaptchaEnterpriseServiceMetadata::CreateAssessment(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAssessment(context, request);
 }
 
@@ -51,7 +52,8 @@ RecaptchaEnterpriseServiceMetadata::AnnotateAssessment(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AnnotateAssessment(context, request);
 }
 
@@ -59,7 +61,8 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::CreateKey(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateKey(context, request);
 }
 
@@ -67,7 +70,8 @@ StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse>
 RecaptchaEnterpriseServiceMetadata::ListKeys(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListKeys(context, request);
 }
 
@@ -77,7 +81,8 @@ RecaptchaEnterpriseServiceMetadata::RetrieveLegacySecretKey(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::
         RetrieveLegacySecretKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("key=", request.key()));
+  SetMetadata(context,
+              absl::StrCat("key=", internal::UrlEncode(request.key())));
   return child_->RetrieveLegacySecretKey(context, request);
 }
 
@@ -85,7 +90,8 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::GetKey(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetKey(context, request);
 }
 
@@ -93,14 +99,16 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::UpdateKey(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("key.name=", request.key().name()));
+  SetMetadata(context, absl::StrCat("key.name=",
+                                    internal::UrlEncode(request.key().name())));
   return child_->UpdateKey(context, request);
 }
 
 Status RecaptchaEnterpriseServiceMetadata::DeleteKey(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteKey(context, request);
 }
 
@@ -108,7 +116,8 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::MigrateKey(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->MigrateKey(context, request);
 }
 
@@ -116,7 +125,8 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceMetadata::GetMetrics(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMetrics(context, request);
 }
 
@@ -126,7 +136,8 @@ RecaptchaEnterpriseServiceMetadata::ListRelatedAccountGroups(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRelatedAccountGroups(context, request);
 }
 
@@ -136,7 +147,8 @@ RecaptchaEnterpriseServiceMetadata::ListRelatedAccountGroupMemberships(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupMembershipsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRelatedAccountGroupMemberships(context, request);
 }
 
@@ -146,7 +158,8 @@ RecaptchaEnterpriseServiceMetadata::SearchRelatedAccountGroupMemberships(
     grpc::ClientContext& context,
     google::cloud::recaptchaenterprise::v1::
         SearchRelatedAccountGroupMembershipsRequest const& request) {
-  SetMetadata(context, absl::StrCat("project=", request.project()));
+  SetMetadata(context,
+              absl::StrCat("project=", internal::UrlEncode(request.project())));
   return child_->SearchRelatedAccountGroupMemberships(context, request);
 }
 

@@ -41,7 +41,8 @@ StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceMetadata::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEnvironment(context, request);
 }
 
@@ -50,7 +51,8 @@ CloudShellServiceMetadata::AsyncStartEnvironment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartEnvironment(cq, std::move(context), request);
 }
 
@@ -59,7 +61,8 @@ CloudShellServiceMetadata::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncAuthorizeEnvironment(cq, std::move(context), request);
 }
 
@@ -68,7 +71,9 @@ CloudShellServiceMetadata::AsyncAddPublicKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
-  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
+  SetMetadata(
+      *context,
+      absl::StrCat("environment=", internal::UrlEncode(request.environment())));
   return child_->AsyncAddPublicKey(cq, std::move(context), request);
 }
 
@@ -77,7 +82,9 @@ CloudShellServiceMetadata::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
-  SetMetadata(*context, absl::StrCat("environment=", request.environment()));
+  SetMetadata(
+      *context,
+      absl::StrCat("environment=", internal::UrlEncode(request.environment())));
   return child_->AsyncRemovePublicKey(cq, std::move(context), request);
 }
 
@@ -86,7 +93,8 @@ CloudShellServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -94,7 +102,8 @@ future<Status> CloudShellServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

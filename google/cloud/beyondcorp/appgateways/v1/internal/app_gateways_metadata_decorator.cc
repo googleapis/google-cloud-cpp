@@ -42,7 +42,8 @@ AppGatewaysServiceMetadata::ListAppGateways(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAppGateways(context, request);
 }
 
@@ -51,7 +52,8 @@ AppGatewaysServiceMetadata::GetAppGateway(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAppGateway(context, request);
 }
 
@@ -61,7 +63,8 @@ AppGatewaysServiceMetadata::AsyncCreateAppGateway(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAppGateway(cq, std::move(context), request);
 }
 
@@ -71,7 +74,8 @@ AppGatewaysServiceMetadata::AsyncDeleteAppGateway(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAppGateway(cq, std::move(context), request);
 }
 
@@ -80,7 +84,8 @@ AppGatewaysServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -88,7 +93,8 @@ future<Status> AppGatewaysServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

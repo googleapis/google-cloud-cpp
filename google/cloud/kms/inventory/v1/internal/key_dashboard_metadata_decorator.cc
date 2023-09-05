@@ -41,7 +41,8 @@ StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceMetadata::ListCryptoKeys(
     grpc::ClientContext& context,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCryptoKeys(context, request);
 }
 

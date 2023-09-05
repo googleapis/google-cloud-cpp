@@ -41,7 +41,8 @@ StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchMetadata::CreateProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::CreateProductSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateProductSet(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::vision::v1::ListProductSetsResponse>
 ProductSearchMetadata::ListProductSets(
     grpc::ClientContext& context,
     google::cloud::vision::v1::ListProductSetsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListProductSets(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchMetadata::GetProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::GetProductSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProductSet(context, request);
 }
 
@@ -66,14 +69,16 @@ ProductSearchMetadata::UpdateProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::UpdateProductSetRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("product_set.name=", request.product_set().name()));
+              absl::StrCat("product_set.name=",
+                           internal::UrlEncode(request.product_set().name())));
   return child_->UpdateProductSet(context, request);
 }
 
 Status ProductSearchMetadata::DeleteProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::DeleteProductSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteProductSet(context, request);
 }
 
@@ -81,7 +86,8 @@ StatusOr<google::cloud::vision::v1::Product>
 ProductSearchMetadata::CreateProduct(
     grpc::ClientContext& context,
     google::cloud::vision::v1::CreateProductRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateProduct(context, request);
 }
 
@@ -89,14 +95,16 @@ StatusOr<google::cloud::vision::v1::ListProductsResponse>
 ProductSearchMetadata::ListProducts(
     grpc::ClientContext& context,
     google::cloud::vision::v1::ListProductsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListProducts(context, request);
 }
 
 StatusOr<google::cloud::vision::v1::Product> ProductSearchMetadata::GetProduct(
     grpc::ClientContext& context,
     google::cloud::vision::v1::GetProductRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProduct(context, request);
 }
 
@@ -104,14 +112,17 @@ StatusOr<google::cloud::vision::v1::Product>
 ProductSearchMetadata::UpdateProduct(
     grpc::ClientContext& context,
     google::cloud::vision::v1::UpdateProductRequest const& request) {
-  SetMetadata(context, absl::StrCat("product.name=", request.product().name()));
+  SetMetadata(context,
+              absl::StrCat("product.name=",
+                           internal::UrlEncode(request.product().name())));
   return child_->UpdateProduct(context, request);
 }
 
 Status ProductSearchMetadata::DeleteProduct(
     grpc::ClientContext& context,
     google::cloud::vision::v1::DeleteProductRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteProduct(context, request);
 }
 
@@ -119,14 +130,16 @@ StatusOr<google::cloud::vision::v1::ReferenceImage>
 ProductSearchMetadata::CreateReferenceImage(
     grpc::ClientContext& context,
     google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateReferenceImage(context, request);
 }
 
 Status ProductSearchMetadata::DeleteReferenceImage(
     grpc::ClientContext& context,
     google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteReferenceImage(context, request);
 }
 
@@ -134,7 +147,8 @@ StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
 ProductSearchMetadata::ListReferenceImages(
     grpc::ClientContext& context,
     google::cloud::vision::v1::ListReferenceImagesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReferenceImages(context, request);
 }
 
@@ -142,14 +156,16 @@ StatusOr<google::cloud::vision::v1::ReferenceImage>
 ProductSearchMetadata::GetReferenceImage(
     grpc::ClientContext& context,
     google::cloud::vision::v1::GetReferenceImageRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReferenceImage(context, request);
 }
 
 Status ProductSearchMetadata::AddProductToProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AddProductToProductSet(context, request);
 }
 
@@ -157,7 +173,8 @@ Status ProductSearchMetadata::RemoveProductFromProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RemoveProductFromProductSet(context, request);
 }
 
@@ -165,7 +182,8 @@ StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
 ProductSearchMetadata::ListProductsInProductSet(
     grpc::ClientContext& context,
     google::cloud::vision::v1::ListProductsInProductSetRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListProductsInProductSet(context, request);
 }
 
@@ -174,7 +192,8 @@ ProductSearchMetadata::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportProductSets(cq, std::move(context), request);
 }
 
@@ -183,7 +202,8 @@ ProductSearchMetadata::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeProducts(cq, std::move(context), request);
 }
 
@@ -192,7 +212,8 @@ ProductSearchMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -200,7 +221,8 @@ future<Status> ProductSearchMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

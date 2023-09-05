@@ -42,7 +42,8 @@ ReachabilityServiceMetadata::ListConnectivityTests(
     grpc::ClientContext& context,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnectivityTests(context, request);
 }
 
@@ -51,7 +52,8 @@ ReachabilityServiceMetadata::GetConnectivityTest(
     grpc::ClientContext& context,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnectivityTest(context, request);
 }
 
@@ -61,7 +63,8 @@ ReachabilityServiceMetadata::AsyncCreateConnectivityTest(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConnectivityTest(cq, std::move(context), request);
 }
 
@@ -72,7 +75,8 @@ ReachabilityServiceMetadata::AsyncUpdateConnectivityTest(
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   SetMetadata(*context,
-              absl::StrCat("resource.name=", request.resource().name()));
+              absl::StrCat("resource.name=",
+                           internal::UrlEncode(request.resource().name())));
   return child_->AsyncUpdateConnectivityTest(cq, std::move(context), request);
 }
 
@@ -82,7 +86,8 @@ ReachabilityServiceMetadata::AsyncRerunConnectivityTest(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRerunConnectivityTest(cq, std::move(context), request);
 }
 
@@ -92,7 +97,8 @@ ReachabilityServiceMetadata::AsyncDeleteConnectivityTest(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnectivityTest(cq, std::move(context), request);
 }
 
@@ -101,7 +107,8 @@ ReachabilityServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -109,7 +116,8 @@ future<Status> ReachabilityServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

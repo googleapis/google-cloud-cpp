@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsMetadata::GetFulfillment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFulfillment(context, request);
 }
 
@@ -50,7 +51,8 @@ FulfillmentsMetadata::UpdateFulfillment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("fulfillment.name=", request.fulfillment().name()));
+              absl::StrCat("fulfillment.name=",
+                           internal::UrlEncode(request.fulfillment().name())));
   return child_->UpdateFulfillment(context, request);
 }
 

@@ -42,7 +42,8 @@ StorageInsightsMetadata::ListReportConfigs(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::ListReportConfigsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReportConfigs(context, request);
 }
 
@@ -50,7 +51,8 @@ StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::GetReportConfig(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReportConfig(context, request);
 }
 
@@ -59,7 +61,8 @@ StorageInsightsMetadata::CreateReportConfig(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::CreateReportConfigRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateReportConfig(context, request);
 }
 
@@ -68,8 +71,10 @@ StorageInsightsMetadata::UpdateReportConfig(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("report_config.name=",
-                                    request.report_config().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("report_config.name=",
+                   internal::UrlEncode(request.report_config().name())));
   return child_->UpdateReportConfig(context, request);
 }
 
@@ -77,7 +82,8 @@ Status StorageInsightsMetadata::DeleteReportConfig(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteReportConfig(context, request);
 }
 
@@ -86,7 +92,8 @@ StorageInsightsMetadata::ListReportDetails(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::ListReportDetailsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListReportDetails(context, request);
 }
 
@@ -94,7 +101,8 @@ StatusOr<google::cloud::storageinsights::v1::ReportDetail>
 StorageInsightsMetadata::GetReportDetail(
     grpc::ClientContext& context,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetReportDetail(context, request);
 }
 
