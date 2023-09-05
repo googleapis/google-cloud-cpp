@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsMetadata::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("session=", request.session()));
+  SetMetadata(context,
+              absl::StrCat("session=", internal::UrlEncode(request.session())));
   return child_->DetectIntent(context, request);
 }
 

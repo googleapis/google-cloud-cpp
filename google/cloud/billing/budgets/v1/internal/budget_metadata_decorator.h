@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_INTERNAL_BUDGET_METADATA_DECORATOR_H
 
 #include "google/cloud/billing/budgets/v1/internal/budget_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

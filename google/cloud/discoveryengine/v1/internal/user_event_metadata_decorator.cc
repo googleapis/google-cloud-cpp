@@ -41,7 +41,8 @@ StatusOr<google::cloud::discoveryengine::v1::UserEvent>
 UserEventServiceMetadata::WriteUserEvent(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->WriteUserEvent(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::api::HttpBody> UserEventServiceMetadata::CollectUserEvent(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CollectUserEventRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CollectUserEvent(context, request);
 }
 
@@ -59,7 +61,8 @@ UserEventServiceMetadata::AsyncImportUserEvents(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportUserEvents(cq, std::move(context), request);
 }
 
@@ -68,7 +71,8 @@ UserEventServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -76,7 +80,8 @@ future<Status> UserEventServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

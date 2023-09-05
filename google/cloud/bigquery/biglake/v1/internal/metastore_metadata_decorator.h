@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_INTERNAL_METASTORE_METADATA_DECORATOR_H
 
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

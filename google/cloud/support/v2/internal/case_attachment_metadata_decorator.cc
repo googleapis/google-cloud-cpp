@@ -41,7 +41,8 @@ StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 CaseAttachmentServiceMetadata::ListAttachments(
     grpc::ClientContext& context,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAttachments(context, request);
 }
 

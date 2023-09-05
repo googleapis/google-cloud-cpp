@@ -41,7 +41,8 @@ StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceMetadata::Predict(
     grpc::ClientContext& context,
     google::cloud::retail::v2::PredictRequest const& request) {
-  SetMetadata(context, absl::StrCat("placement=", request.placement()));
+  SetMetadata(context, absl::StrCat("placement=",
+                                    internal::UrlEncode(request.placement())));
   return child_->Predict(context, request);
 }
 

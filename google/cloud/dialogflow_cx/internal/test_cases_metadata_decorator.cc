@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesMetadata::ListTestCases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTestCases(context, request);
 }
 
@@ -49,7 +50,8 @@ Status TestCasesMetadata::BatchDeleteTestCases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchDeleteTestCases(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::GetTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTestCase(context, request);
 }
 
@@ -65,7 +68,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesMetadata::CreateTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTestCase(context, request);
 }
 
@@ -74,7 +78,8 @@ TestCasesMetadata::UpdateTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("test_case.name=", request.test_case().name()));
+              absl::StrCat("test_case.name=",
+                           internal::UrlEncode(request.test_case().name())));
   return child_->UpdateTestCase(context, request);
 }
 
@@ -83,7 +88,8 @@ TestCasesMetadata::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRunTestCase(cq, std::move(context), request);
 }
 
@@ -93,7 +99,8 @@ TestCasesMetadata::AsyncBatchRunTestCases(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchRunTestCases(cq, std::move(context), request);
 }
 
@@ -102,7 +109,8 @@ TestCasesMetadata::CalculateCoverage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("agent=", request.agent()));
+  SetMetadata(context,
+              absl::StrCat("agent=", internal::UrlEncode(request.agent())));
   return child_->CalculateCoverage(context, request);
 }
 
@@ -111,7 +119,8 @@ TestCasesMetadata::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportTestCases(cq, std::move(context), request);
 }
 
@@ -120,7 +129,8 @@ TestCasesMetadata::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncExportTestCases(cq, std::move(context), request);
 }
 
@@ -129,7 +139,8 @@ TestCasesMetadata::ListTestCaseResults(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTestCaseResults(context, request);
 }
 
@@ -138,7 +149,8 @@ TestCasesMetadata::GetTestCaseResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTestCaseResult(context, request);
 }
 
@@ -147,7 +159,8 @@ TestCasesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -155,7 +168,8 @@ future<Status> TestCasesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

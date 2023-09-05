@@ -41,7 +41,8 @@ StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceMetadata::GetDocument(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDocument(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DocumentServiceMetadata::ListDocuments(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDocuments(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceMetadata::CreateDocument(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocument(context, request);
 }
 
@@ -66,14 +69,16 @@ DocumentServiceMetadata::UpdateDocument(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("document.name=", request.document().name()));
+              absl::StrCat("document.name=",
+                           internal::UrlEncode(request.document().name())));
   return child_->UpdateDocument(context, request);
 }
 
 Status DocumentServiceMetadata::DeleteDocument(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocument(context, request);
 }
 
@@ -82,7 +87,8 @@ DocumentServiceMetadata::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportDocuments(cq, std::move(context), request);
 }
 
@@ -91,7 +97,8 @@ DocumentServiceMetadata::AsyncPurgeDocuments(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeDocuments(cq, std::move(context), request);
 }
 
@@ -100,7 +107,8 @@ DocumentServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -108,7 +116,8 @@ future<Status> DocumentServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

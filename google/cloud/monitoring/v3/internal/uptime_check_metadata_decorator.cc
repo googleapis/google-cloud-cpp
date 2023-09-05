@@ -41,7 +41,8 @@ StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 UptimeCheckServiceMetadata::ListUptimeCheckConfigs(
     grpc::ClientContext& context,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListUptimeCheckConfigs(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::GetUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetUptimeCheckConfig(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::CreateUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateUptimeCheckConfig(context, request);
 }
 
@@ -65,15 +68,18 @@ StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceMetadata::UpdateUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("uptime_check_config.name=",
-                                    request.uptime_check_config().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("uptime_check_config.name=",
+                   internal::UrlEncode(request.uptime_check_config().name())));
   return child_->UpdateUptimeCheckConfig(context, request);
 }
 
 Status UptimeCheckServiceMetadata::DeleteUptimeCheckConfig(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteUptimeCheckConfig(context, request);
 }
 

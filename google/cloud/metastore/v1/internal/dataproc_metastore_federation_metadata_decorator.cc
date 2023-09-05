@@ -41,7 +41,8 @@ StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationMetadata::ListFederations(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFederations(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationMetadata::GetFederation(
     grpc::ClientContext& context,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFederation(context, request);
 }
 
@@ -58,7 +60,8 @@ DataprocMetastoreFederationMetadata::AsyncCreateFederation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateFederation(cq, std::move(context), request);
 }
 
@@ -68,7 +71,8 @@ DataprocMetastoreFederationMetadata::AsyncUpdateFederation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("federation.name=", request.federation().name()));
+              absl::StrCat("federation.name=",
+                           internal::UrlEncode(request.federation().name())));
   return child_->AsyncUpdateFederation(cq, std::move(context), request);
 }
 
@@ -77,7 +81,8 @@ DataprocMetastoreFederationMetadata::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFederation(cq, std::move(context), request);
 }
 
@@ -86,7 +91,8 @@ DataprocMetastoreFederationMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -94,7 +100,8 @@ future<Status> DataprocMetastoreFederationMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

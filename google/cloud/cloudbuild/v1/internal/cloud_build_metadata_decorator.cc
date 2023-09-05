@@ -391,8 +391,10 @@ CloudBuildMetadata::ReceiveTriggerWebhook(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("project_id=", request.project_id(), "&",
-                                    "trigger=", request.trigger()));
+  SetMetadata(
+      context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "trigger=", internal::UrlEncode(request.trigger())));
   return child_->ReceiveTriggerWebhook(context, request);
 }
 
@@ -546,7 +548,8 @@ CloudBuildMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -554,7 +557,8 @@ future<Status> CloudBuildMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

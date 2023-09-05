@@ -42,8 +42,10 @@ ClusterControllerMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "region=", request.region()));
+  SetMetadata(
+      *context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
 
@@ -52,9 +54,12 @@ ClusterControllerMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "region=", request.region(), "&",
-                                     "cluster_name=", request.cluster_name()));
+  SetMetadata(
+      *context,
+      absl::StrCat(
+          "project_id=", internal::UrlEncode(request.project_id()), "&",
+          "region=", internal::UrlEncode(request.region()), "&",
+          "cluster_name=", internal::UrlEncode(request.cluster_name())));
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
 
@@ -63,9 +68,12 @@ ClusterControllerMetadata::AsyncStopCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "region=", request.region(), "&",
-                                     "cluster_name=", request.cluster_name()));
+  SetMetadata(
+      *context,
+      absl::StrCat(
+          "project_id=", internal::UrlEncode(request.project_id()), "&",
+          "region=", internal::UrlEncode(request.region()), "&",
+          "cluster_name=", internal::UrlEncode(request.cluster_name())));
   return child_->AsyncStopCluster(cq, std::move(context), request);
 }
 
@@ -74,9 +82,12 @@ ClusterControllerMetadata::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "region=", request.region(), "&",
-                                     "cluster_name=", request.cluster_name()));
+  SetMetadata(
+      *context,
+      absl::StrCat(
+          "project_id=", internal::UrlEncode(request.project_id()), "&",
+          "region=", internal::UrlEncode(request.region()), "&",
+          "cluster_name=", internal::UrlEncode(request.cluster_name())));
   return child_->AsyncStartCluster(cq, std::move(context), request);
 }
 
@@ -85,9 +96,12 @@ ClusterControllerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "region=", request.region(), "&",
-                                     "cluster_name=", request.cluster_name()));
+  SetMetadata(
+      *context,
+      absl::StrCat(
+          "project_id=", internal::UrlEncode(request.project_id()), "&",
+          "region=", internal::UrlEncode(request.region()), "&",
+          "cluster_name=", internal::UrlEncode(request.cluster_name())));
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
 
@@ -95,9 +109,12 @@ StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerMetadata::GetCluster(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
-  SetMetadata(context, absl::StrCat("project_id=", request.project_id(), "&",
-                                    "region=", request.region(), "&",
-                                    "cluster_name=", request.cluster_name()));
+  SetMetadata(
+      context,
+      absl::StrCat(
+          "project_id=", internal::UrlEncode(request.project_id()), "&",
+          "region=", internal::UrlEncode(request.region()), "&",
+          "cluster_name=", internal::UrlEncode(request.cluster_name())));
   return child_->GetCluster(context, request);
 }
 
@@ -105,8 +122,10 @@ StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 ClusterControllerMetadata::ListClusters(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
-  SetMetadata(context, absl::StrCat("project_id=", request.project_id(), "&",
-                                    "region=", request.region()));
+  SetMetadata(
+      context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
   return child_->ListClusters(context, request);
 }
 
@@ -115,9 +134,12 @@ ClusterControllerMetadata::AsyncDiagnoseCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "region=", request.region(), "&",
-                                     "cluster_name=", request.cluster_name()));
+  SetMetadata(
+      *context,
+      absl::StrCat(
+          "project_id=", internal::UrlEncode(request.project_id()), "&",
+          "region=", internal::UrlEncode(request.region()), "&",
+          "cluster_name=", internal::UrlEncode(request.cluster_name())));
   return child_->AsyncDiagnoseCluster(cq, std::move(context), request);
 }
 
@@ -126,7 +148,8 @@ ClusterControllerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -134,7 +157,8 @@ future<Status> ClusterControllerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

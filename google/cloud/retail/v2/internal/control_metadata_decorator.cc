@@ -41,14 +41,16 @@ StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::CreateControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateControlRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateControl(context, request);
 }
 
 Status ControlServiceMetadata::DeleteControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteControl(context, request);
 }
 
@@ -56,14 +58,17 @@ StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::UpdateControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
-  SetMetadata(context, absl::StrCat("control.name=", request.control().name()));
+  SetMetadata(context,
+              absl::StrCat("control.name=",
+                           internal::UrlEncode(request.control().name())));
   return child_->UpdateControl(context, request);
 }
 
 StatusOr<google::cloud::retail::v2::Control> ControlServiceMetadata::GetControl(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetControlRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetControl(context, request);
 }
 
@@ -71,7 +76,8 @@ StatusOr<google::cloud::retail::v2::ListControlsResponse>
 ControlServiceMetadata::ListControls(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListControlsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListControls(context, request);
 }
 

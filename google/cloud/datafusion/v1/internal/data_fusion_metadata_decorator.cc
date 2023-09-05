@@ -42,7 +42,8 @@ DataFusionMetadata::ListAvailableVersions(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAvailableVersions(context, request);
 }
 
@@ -50,7 +51,8 @@ StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DataFusionMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
 
@@ -58,7 +60,8 @@ StatusOr<google::cloud::datafusion::v1::Instance>
 DataFusionMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
 
@@ -67,7 +70,8 @@ DataFusionMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
@@ -76,7 +80,8 @@ DataFusionMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
@@ -86,7 +91,8 @@ DataFusionMetadata::AsyncUpdateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("instance.name=", request.instance().name()));
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
@@ -95,7 +101,8 @@ DataFusionMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestartInstance(cq, std::move(context), request);
 }
 
@@ -104,7 +111,8 @@ DataFusionMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -112,7 +120,8 @@ future<Status> DataFusionMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

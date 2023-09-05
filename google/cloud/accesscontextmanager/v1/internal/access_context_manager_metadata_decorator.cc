@@ -51,7 +51,8 @@ AccessContextManagerMetadata::GetAccessPolicy(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccessPolicy(context, request);
 }
 
@@ -70,7 +71,9 @@ AccessContextManagerMetadata::AsyncUpdateAccessPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("policy.name=", request.policy().name()));
+  SetMetadata(*context,
+              absl::StrCat("policy.name=",
+                           internal::UrlEncode(request.policy().name())));
   return child_->AsyncUpdateAccessPolicy(cq, std::move(context), request);
 }
 
@@ -80,7 +83,8 @@ AccessContextManagerMetadata::AsyncDeleteAccessPolicy(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAccessPolicy(cq, std::move(context), request);
 }
 
@@ -89,7 +93,8 @@ AccessContextManagerMetadata::ListAccessLevels(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAccessLevels(context, request);
 }
 
@@ -98,7 +103,8 @@ AccessContextManagerMetadata::GetAccessLevel(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccessLevel(context, request);
 }
 
@@ -108,7 +114,8 @@ AccessContextManagerMetadata::AsyncCreateAccessLevel(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAccessLevel(cq, std::move(context), request);
 }
 
@@ -118,8 +125,9 @@ AccessContextManagerMetadata::AsyncUpdateAccessLevel(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("access_level.name=",
-                                     request.access_level().name()));
+  SetMetadata(*context,
+              absl::StrCat("access_level.name=",
+                           internal::UrlEncode(request.access_level().name())));
   return child_->AsyncUpdateAccessLevel(cq, std::move(context), request);
 }
 
@@ -129,7 +137,8 @@ AccessContextManagerMetadata::AsyncDeleteAccessLevel(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAccessLevel(cq, std::move(context), request);
 }
 
@@ -139,7 +148,8 @@ AccessContextManagerMetadata::AsyncReplaceAccessLevels(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncReplaceAccessLevels(cq, std::move(context), request);
 }
 
@@ -149,7 +159,8 @@ AccessContextManagerMetadata::ListServicePerimeters(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::
         ListServicePerimetersRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServicePerimeters(context, request);
 }
 
@@ -158,7 +169,8 @@ AccessContextManagerMetadata::GetServicePerimeter(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::
         GetServicePerimeterRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetServicePerimeter(context, request);
 }
 
@@ -168,7 +180,8 @@ AccessContextManagerMetadata::AsyncCreateServicePerimeter(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateServicePerimeter(cq, std::move(context), request);
 }
 
@@ -178,8 +191,10 @@ AccessContextManagerMetadata::AsyncUpdateServicePerimeter(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("service_perimeter.name=",
-                                     request.service_perimeter().name()));
+  SetMetadata(
+      *context,
+      absl::StrCat("service_perimeter.name=",
+                   internal::UrlEncode(request.service_perimeter().name())));
   return child_->AsyncUpdateServicePerimeter(cq, std::move(context), request);
 }
 
@@ -189,7 +204,8 @@ AccessContextManagerMetadata::AsyncDeleteServicePerimeter(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteServicePerimeter(cq, std::move(context), request);
 }
 
@@ -199,7 +215,8 @@ AccessContextManagerMetadata::AsyncReplaceServicePerimeters(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncReplaceServicePerimeters(cq, std::move(context), request);
 }
 
@@ -209,7 +226,8 @@ AccessContextManagerMetadata::AsyncCommitServicePerimeters(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCommitServicePerimeters(cq, std::move(context), request);
 }
 
@@ -219,7 +237,8 @@ AccessContextManagerMetadata::ListGcpUserAccessBindings(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::
         ListGcpUserAccessBindingsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGcpUserAccessBindings(context, request);
 }
 
@@ -228,7 +247,8 @@ AccessContextManagerMetadata::GetGcpUserAccessBinding(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::
         GetGcpUserAccessBindingRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGcpUserAccessBinding(context, request);
 }
 
@@ -238,7 +258,8 @@ AccessContextManagerMetadata::AsyncCreateGcpUserAccessBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateGcpUserAccessBinding(cq, std::move(context),
                                                  request);
 }
@@ -249,8 +270,10 @@ AccessContextManagerMetadata::AsyncUpdateGcpUserAccessBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
-  SetMetadata(*context, absl::StrCat("gcp_user_access_binding.name=",
-                                     request.gcp_user_access_binding().name()));
+  SetMetadata(*context,
+              absl::StrCat("gcp_user_access_binding.name=",
+                           internal::UrlEncode(
+                               request.gcp_user_access_binding().name())));
   return child_->AsyncUpdateGcpUserAccessBinding(cq, std::move(context),
                                                  request);
 }
@@ -261,7 +284,8 @@ AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGcpUserAccessBinding(cq, std::move(context),
                                                  request);
 }
@@ -269,14 +293,16 @@ AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
 StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -284,7 +310,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AccessContextManagerMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -293,7 +320,8 @@ AccessContextManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -301,7 +329,8 @@ future<Status> AccessContextManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

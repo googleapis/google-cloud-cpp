@@ -43,8 +43,9 @@ PublisherMetadata::PublishChannelConnectionEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
-  SetMetadata(context, absl::StrCat("channel_connection=",
-                                    request.channel_connection()));
+  SetMetadata(context,
+              absl::StrCat("channel_connection=",
+                           internal::UrlEncode(request.channel_connection())));
   return child_->PublishChannelConnectionEvents(context, request);
 }
 
@@ -53,7 +54,8 @@ PublisherMetadata::PublishEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("channel=", request.channel()));
+  SetMetadata(context,
+              absl::StrCat("channel=", internal::UrlEncode(request.channel())));
   return child_->PublishEvents(context, request);
 }
 

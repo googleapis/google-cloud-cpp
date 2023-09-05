@@ -41,7 +41,8 @@ StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingMetadata::GetBillingAccount(
     grpc::ClientContext& context,
     google::cloud::billing::v1::GetBillingAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBillingAccount(context, request);
 }
 
@@ -57,7 +58,8 @@ StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingMetadata::UpdateBillingAccount(
     grpc::ClientContext& context,
     google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateBillingAccount(context, request);
 }
 
@@ -73,7 +75,8 @@ StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
 CloudBillingMetadata::ListProjectBillingInfo(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListProjectBillingInfo(context, request);
 }
 
@@ -81,7 +84,8 @@ StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingMetadata::GetProjectBillingInfo(
     grpc::ClientContext& context,
     google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProjectBillingInfo(context, request);
 }
 
@@ -90,21 +94,24 @@ CloudBillingMetadata::UpdateProjectBillingInfo(
     grpc::ClientContext& context,
     google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateProjectBillingInfo(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -112,7 +119,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudBillingMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 

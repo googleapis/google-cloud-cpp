@@ -41,14 +41,16 @@ StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsMetadata::ListWorkflows(
     grpc::ClientContext& context,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWorkflows(context, request);
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsMetadata::GetWorkflow(
     grpc::ClientContext& context,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWorkflow(context, request);
 }
 
@@ -57,7 +59,8 @@ WorkflowsMetadata::AsyncCreateWorkflow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateWorkflow(cq, std::move(context), request);
 }
 
@@ -66,7 +69,8 @@ WorkflowsMetadata::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteWorkflow(cq, std::move(context), request);
 }
 
@@ -76,7 +80,8 @@ WorkflowsMetadata::AsyncUpdateWorkflow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("workflow.name=", request.workflow().name()));
+              absl::StrCat("workflow.name=",
+                           internal::UrlEncode(request.workflow().name())));
   return child_->AsyncUpdateWorkflow(cq, std::move(context), request);
 }
 
@@ -85,7 +90,8 @@ WorkflowsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -93,7 +99,8 @@ future<Status> WorkflowsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

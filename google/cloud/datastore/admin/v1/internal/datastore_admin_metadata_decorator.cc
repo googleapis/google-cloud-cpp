@@ -42,7 +42,9 @@ DatastoreAdminMetadata::AsyncExportEntities(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id()));
+  SetMetadata(
+      *context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->AsyncExportEntities(cq, std::move(context), request);
 }
 
@@ -51,7 +53,9 @@ DatastoreAdminMetadata::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id()));
+  SetMetadata(
+      *context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->AsyncImportEntities(cq, std::move(context), request);
 }
 
@@ -60,7 +64,9 @@ DatastoreAdminMetadata::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::datastore::admin::v1::CreateIndexRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id()));
+  SetMetadata(
+      *context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->AsyncCreateIndex(cq, std::move(context), request);
 }
 
@@ -69,16 +75,20 @@ DatastoreAdminMetadata::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
-  SetMetadata(*context, absl::StrCat("project_id=", request.project_id(), "&",
-                                     "index_id=", request.index_id()));
+  SetMetadata(
+      *context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "index_id=", internal::UrlEncode(request.index_id())));
   return child_->AsyncDeleteIndex(cq, std::move(context), request);
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminMetadata::GetIndex(
     grpc::ClientContext& context,
     google::datastore::admin::v1::GetIndexRequest const& request) {
-  SetMetadata(context, absl::StrCat("project_id=", request.project_id(), "&",
-                                    "index_id=", request.index_id()));
+  SetMetadata(
+      context,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "index_id=", internal::UrlEncode(request.index_id())));
   return child_->GetIndex(context, request);
 }
 
@@ -86,7 +96,8 @@ StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DatastoreAdminMetadata::ListIndexes(
     grpc::ClientContext& context,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
-  SetMetadata(context, absl::StrCat("project_id=", request.project_id()));
+  SetMetadata(context, absl::StrCat("project_id=",
+                                    internal::UrlEncode(request.project_id())));
   return child_->ListIndexes(context, request);
 }
 
@@ -95,7 +106,8 @@ DatastoreAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -103,7 +115,8 @@ future<Status> DatastoreAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

@@ -40,28 +40,33 @@ TenantServiceMetadata::TenantServiceMetadata(
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::CreateTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTenant(context, request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::GetTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::GetTenantRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTenant(context, request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceMetadata::UpdateTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
-  SetMetadata(context, absl::StrCat("tenant.name=", request.tenant().name()));
+  SetMetadata(context,
+              absl::StrCat("tenant.name=",
+                           internal::UrlEncode(request.tenant().name())));
   return child_->UpdateTenant(context, request);
 }
 
 Status TenantServiceMetadata::DeleteTenant(
     grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTenant(context, request);
 }
 
@@ -69,7 +74,8 @@ StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 TenantServiceMetadata::ListTenants(
     grpc::ClientContext& context,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTenants(context, request);
 }
 

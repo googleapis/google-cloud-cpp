@@ -41,7 +41,8 @@ StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::CreateContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateContact(context, request);
 }
 
@@ -49,7 +50,9 @@ StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::UpdateContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
-  SetMetadata(context, absl::StrCat("contact.name=", request.contact().name()));
+  SetMetadata(context,
+              absl::StrCat("contact.name=",
+                           internal::UrlEncode(request.contact().name())));
   return child_->UpdateContact(context, request);
 }
 
@@ -57,7 +60,8 @@ StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 EssentialContactsServiceMetadata::ListContacts(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListContacts(context, request);
 }
 
@@ -65,14 +69,16 @@ StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::GetContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetContact(context, request);
 }
 
 Status EssentialContactsServiceMetadata::DeleteContact(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteContact(context, request);
 }
 
@@ -81,7 +87,8 @@ EssentialContactsServiceMetadata::ComputeContacts(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ComputeContacts(context, request);
 }
 
@@ -89,7 +96,8 @@ Status EssentialContactsServiceMetadata::SendTestMessage(
     grpc::ClientContext& context,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SendTestMessage(context, request);
 }
 

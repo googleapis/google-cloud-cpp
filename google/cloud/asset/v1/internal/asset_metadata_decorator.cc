@@ -42,7 +42,8 @@ AssetServiceMetadata::AsyncExportAssets(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncExportAssets(cq, std::move(context), request);
 }
 
@@ -50,7 +51,8 @@ StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 AssetServiceMetadata::ListAssets(
     grpc::ClientContext& context,
     google::cloud::asset::v1::ListAssetsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAssets(context, request);
 }
 
@@ -58,21 +60,24 @@ StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
 AssetServiceMetadata::BatchGetAssetsHistory(
     grpc::ClientContext& context,
     google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchGetAssetsHistory(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceMetadata::CreateFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::CreateFeedRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFeed(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceMetadata::GetFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::GetFeedRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFeed(context, request);
 }
 
@@ -80,21 +85,25 @@ StatusOr<google::cloud::asset::v1::ListFeedsResponse>
 AssetServiceMetadata::ListFeeds(
     grpc::ClientContext& context,
     google::cloud::asset::v1::ListFeedsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFeeds(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceMetadata::UpdateFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::UpdateFeedRequest const& request) {
-  SetMetadata(context, absl::StrCat("feed.name=", request.feed().name()));
+  SetMetadata(
+      context,
+      absl::StrCat("feed.name=", internal::UrlEncode(request.feed().name())));
   return child_->UpdateFeed(context, request);
 }
 
 Status AssetServiceMetadata::DeleteFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::DeleteFeedRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFeed(context, request);
 }
 
@@ -102,7 +111,8 @@ StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
 AssetServiceMetadata::SearchAllResources(
     grpc::ClientContext& context,
     google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->SearchAllResources(context, request);
 }
 
@@ -110,7 +120,8 @@ StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
 AssetServiceMetadata::SearchAllIamPolicies(
     grpc::ClientContext& context,
     google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->SearchAllIamPolicies(context, request);
 }
 
@@ -118,8 +129,10 @@ StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
 AssetServiceMetadata::AnalyzeIamPolicy(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("analysis_query.scope=",
-                                    request.analysis_query().scope()));
+  SetMetadata(
+      context,
+      absl::StrCat("analysis_query.scope=",
+                   internal::UrlEncode(request.analysis_query().scope())));
   return child_->AnalyzeIamPolicy(context, request);
 }
 
@@ -129,8 +142,10 @@ AssetServiceMetadata::AsyncAnalyzeIamPolicyLongrunning(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("analysis_query.scope=",
-                                     request.analysis_query().scope()));
+  SetMetadata(
+      *context,
+      absl::StrCat("analysis_query.scope=",
+                   internal::UrlEncode(request.analysis_query().scope())));
   return child_->AsyncAnalyzeIamPolicyLongrunning(cq, std::move(context),
                                                   request);
 }
@@ -139,7 +154,8 @@ StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
 AssetServiceMetadata::AnalyzeMove(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->AnalyzeMove(context, request);
 }
 
@@ -147,7 +163,8 @@ StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
 AssetServiceMetadata::QueryAssets(
     grpc::ClientContext& context,
     google::cloud::asset::v1::QueryAssetsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->QueryAssets(context, request);
 }
 
@@ -155,7 +172,8 @@ StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceMetadata::CreateSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSavedQuery(context, request);
 }
 
@@ -163,7 +181,8 @@ StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceMetadata::GetSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::GetSavedQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSavedQuery(context, request);
 }
 
@@ -171,7 +190,8 @@ StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
 AssetServiceMetadata::ListSavedQueries(
     grpc::ClientContext& context,
     google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSavedQueries(context, request);
 }
 
@@ -180,14 +200,16 @@ AssetServiceMetadata::UpdateSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("saved_query.name=", request.saved_query().name()));
+              absl::StrCat("saved_query.name=",
+                           internal::UrlEncode(request.saved_query().name())));
   return child_->UpdateSavedQuery(context, request);
 }
 
 Status AssetServiceMetadata::DeleteSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSavedQuery(context, request);
 }
 
@@ -196,7 +218,8 @@ AssetServiceMetadata::BatchGetEffectiveIamPolicies(
     grpc::ClientContext& context,
     google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->BatchGetEffectiveIamPolicies(context, request);
 }
 
@@ -204,7 +227,8 @@ StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
 AssetServiceMetadata::AnalyzeOrgPolicies(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->AnalyzeOrgPolicies(context, request);
 }
 
@@ -213,7 +237,8 @@ AssetServiceMetadata::AnalyzeOrgPolicyGovernedContainers(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->AnalyzeOrgPolicyGovernedContainers(context, request);
 }
 
@@ -222,7 +247,8 @@ AssetServiceMetadata::AnalyzeOrgPolicyGovernedAssets(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("scope=", request.scope()));
+  SetMetadata(context,
+              absl::StrCat("scope=", internal::UrlEncode(request.scope())));
   return child_->AnalyzeOrgPolicyGovernedAssets(context, request);
 }
 
@@ -231,7 +257,8 @@ AssetServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -239,7 +266,8 @@ future<Status> AssetServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

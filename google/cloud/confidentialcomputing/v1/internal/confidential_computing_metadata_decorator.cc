@@ -42,7 +42,8 @@ ConfidentialComputingMetadata::CreateChallenge(
     grpc::ClientContext& context,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateChallenge(context, request);
 }
 
@@ -51,7 +52,8 @@ ConfidentialComputingMetadata::VerifyAttestation(
     grpc::ClientContext& context,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("challenge=", request.challenge()));
+  SetMetadata(context, absl::StrCat("challenge=",
+                                    internal::UrlEncode(request.challenge())));
   return child_->VerifyAttestation(context, request);
 }
 

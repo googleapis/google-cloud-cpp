@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V1_INTERNAL_IAM_POLICY_METADATA_DECORATOR_H
 
 #include "google/cloud/iam/v1/internal/iam_policy_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>

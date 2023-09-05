@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsMetadata::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("session=", request.session()));
+  SetMetadata(context,
+              absl::StrCat("session=", internal::UrlEncode(request.session())));
   return child_->DetectIntent(context, request);
 }
 
@@ -59,7 +60,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsMetadata::MatchIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("session=", request.session()));
+  SetMetadata(context,
+              absl::StrCat("session=", internal::UrlEncode(request.session())));
   return child_->MatchIntent(context, request);
 }
 
@@ -67,8 +69,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsMetadata::FulfillIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
-  SetMetadata(context, absl::StrCat("match_intent_request.session=",
-                                    request.match_intent_request().session()));
+  SetMetadata(context,
+              absl::StrCat("match_intent_request.session=",
+                           internal::UrlEncode(
+                               request.match_intent_request().session())));
   return child_->FulfillIntent(context, request);
 }
 

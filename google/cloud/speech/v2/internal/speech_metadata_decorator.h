@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V2_INTERNAL_SPEECH_METADATA_DECORATOR_H
 
 #include "google/cloud/speech/v2/internal/speech_stub.h"
+#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>

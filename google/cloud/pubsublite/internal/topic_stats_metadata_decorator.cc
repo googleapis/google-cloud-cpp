@@ -41,7 +41,8 @@ StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceMetadata::ComputeMessageStats(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", request.topic()));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeMessageStats(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceMetadata::ComputeHeadCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", request.topic()));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeHeadCursor(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceMetadata::ComputeTimeCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  SetMetadata(context, absl::StrCat("topic=", request.topic()));
+  SetMetadata(context,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ComputeTimeCursor(context, request);
 }
 

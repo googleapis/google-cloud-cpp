@@ -41,7 +41,8 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::CreateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDashboard(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceMetadata::ListDashboards(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDashboards(context, request);
 }
 
@@ -57,14 +59,16 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::GetDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDashboard(context, request);
 }
 
 Status DashboardsServiceMetadata::DeleteDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDashboard(context, request);
 }
 
@@ -73,7 +77,8 @@ DashboardsServiceMetadata::UpdateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("dashboard.name=", request.dashboard().name()));
+              absl::StrCat("dashboard.name=",
+                           internal::UrlEncode(request.dashboard().name())));
   return child_->UpdateDashboard(context, request);
 }
 

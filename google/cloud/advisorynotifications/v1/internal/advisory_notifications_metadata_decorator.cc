@@ -42,7 +42,8 @@ AdvisoryNotificationsServiceMetadata::ListNotifications(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNotifications(context, request);
 }
 
@@ -51,7 +52,8 @@ AdvisoryNotificationsServiceMetadata::GetNotification(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNotification(context, request);
 }
 

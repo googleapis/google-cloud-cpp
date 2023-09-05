@@ -51,7 +51,9 @@ StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceMetadata::CommitCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-  SetMetadata(context, absl::StrCat("subscription=", request.subscription()));
+  SetMetadata(context,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->CommitCursor(context, request);
 }
 
@@ -59,7 +61,8 @@ StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceMetadata::ListPartitionCursors(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPartitionCursors(context, request);
 }
 

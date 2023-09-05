@@ -44,7 +44,8 @@ ConsumerProcurementServiceMetadata::AsyncPlaceOrder(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPlaceOrder(cq, std::move(context), request);
 }
 
@@ -53,7 +54,8 @@ ConsumerProcurementServiceMetadata::GetOrder(
     grpc::ClientContext& context,
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOrder(context, request);
 }
 
@@ -62,7 +64,8 @@ ConsumerProcurementServiceMetadata::ListOrders(
     grpc::ClientContext& context,
     google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListOrders(context, request);
 }
 
@@ -71,7 +74,8 @@ ConsumerProcurementServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -79,7 +83,8 @@ future<Status> ConsumerProcurementServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

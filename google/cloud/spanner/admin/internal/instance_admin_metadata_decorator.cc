@@ -42,7 +42,8 @@ InstanceAdminMetadata::ListInstanceConfigs(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstanceConfigs(context, request);
 }
 
@@ -51,7 +52,8 @@ InstanceAdminMetadata::GetInstanceConfig(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstanceConfig(context, request);
 }
 
@@ -61,7 +63,8 @@ InstanceAdminMetadata::AsyncCreateInstanceConfig(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstanceConfig(cq, std::move(context), request);
 }
 
@@ -71,8 +74,10 @@ InstanceAdminMetadata::AsyncUpdateInstanceConfig(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("instance_config.name=",
-                                     request.instance_config().name()));
+  SetMetadata(
+      *context,
+      absl::StrCat("instance_config.name=",
+                   internal::UrlEncode(request.instance_config().name())));
   return child_->AsyncUpdateInstanceConfig(cq, std::move(context), request);
 }
 
@@ -80,7 +85,8 @@ Status InstanceAdminMetadata::DeleteInstanceConfig(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteInstanceConfig(context, request);
 }
 
@@ -90,7 +96,8 @@ InstanceAdminMetadata::ListInstanceConfigOperations(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstanceConfigOperations(context, request);
 }
 
@@ -98,7 +105,8 @@ StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 InstanceAdminMetadata::ListInstances(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
 
@@ -106,7 +114,8 @@ StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminMetadata::GetInstance(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
 
@@ -116,7 +125,8 @@ InstanceAdminMetadata::AsyncCreateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
@@ -127,7 +137,8 @@ InstanceAdminMetadata::AsyncUpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   SetMetadata(*context,
-              absl::StrCat("instance.name=", request.instance().name()));
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
@@ -135,21 +146,24 @@ Status InstanceAdminMetadata::DeleteInstance(
     grpc::ClientContext& context,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteInstance(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, request);
 }
 
@@ -157,7 +171,8 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("resource=", request.resource()));
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -166,7 +181,8 @@ InstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -174,7 +190,8 @@ future<Status> InstanceAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

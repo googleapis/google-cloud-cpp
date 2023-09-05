@@ -43,7 +43,8 @@ ImageVersionsMetadata::ListImageVersions(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListImageVersions(context, request);
 }
 

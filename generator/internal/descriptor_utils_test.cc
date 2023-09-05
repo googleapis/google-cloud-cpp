@@ -835,9 +835,9 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_deduced_response_type",
                              "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method2",
-                             "method_request_params",
-                             "\"parent=\", request.parent()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method2", "method_request_params",
+            "\"parent=\", internal::UrlEncode(request.parent())"),
         MethodVarsTestValues("google.protobuf.Service.Method2", "idempotency",
                              "kNonIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
@@ -856,9 +856,9 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_deduced_response_type",
                              "google::protobuf::Struct"),
-        MethodVarsTestValues("google.protobuf.Service.Method3",
-                             "method_request_params",
-                             "\"parent=\", request.parent()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method3", "method_request_params",
+            "\"parent=\", internal::UrlEncode(request.parent())"),
         MethodVarsTestValues("google.protobuf.Service.Method3", "idempotency",
                              "kIdempotent"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
@@ -871,7 +871,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "range_output_type", "google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "method_request_params",
-                             "\"name=\", request.name()"),
+                             "\"name=\", internal::UrlEncode(request.name())"),
         MethodVarsTestValues("google.protobuf.Service.Method4", "idempotency",
                              "kNonIdempotent"),
         // Method5
@@ -901,9 +901,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_setters1",
                              "  request.set_number(number);\n"
                              "  *request.mutable_widget() = widget;\n"),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
-                             "method_request_params",
-                             "\"parent=\", request.parent()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_request_params",
+            "\"parent=\", internal::UrlEncode(request.parent())"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_body", "*"),
         MethodVarsTestValues("google.protobuf.Service.Method5", "idempotency",
@@ -914,7 +914,7 @@ INSTANTIATE_TEST_SUITE_P(
         // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_params",
-                             "\"name=\", request.name()"),
+                             "\"name=\", internal::UrlEncode(request.name())"),
         MethodVarsTestValues("google.protobuf.Service.Method6", "idempotency",
                              "kIdempotent"),
         MethodVarsTestValues(
@@ -953,7 +953,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "  *request.mutable_namespace_() = namespace_;\n"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_request_params",
-            "\"namespace.name=\", request.namespace_().name()"),
+            "\"namespace.name=\", "
+            "internal::UrlEncode(request.namespace_().name())"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "request_resource", "request.namespace_()"),
         MethodVarsTestValues(

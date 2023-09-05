@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
 ChangelogsMetadata::ListChangelogs(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListChangelogs(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsMetadata::GetChangelog(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetChangelog(context, request);
 }
 

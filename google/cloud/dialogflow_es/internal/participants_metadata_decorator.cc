@@ -41,7 +41,8 @@ StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::CreateParticipant(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateParticipant(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::GetParticipant(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetParticipant(context, request);
 }
 
@@ -57,7 +59,8 @@ StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 ParticipantsMetadata::ListParticipants(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListParticipants(context, request);
 }
 
@@ -66,7 +69,8 @@ ParticipantsMetadata::UpdateParticipant(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   SetMetadata(context,
-              absl::StrCat("participant.name=", request.participant().name()));
+              absl::StrCat("participant.name=",
+                           internal::UrlEncode(request.participant().name())));
   return child_->UpdateParticipant(context, request);
 }
 
@@ -74,7 +78,9 @@ StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsMetadata::AnalyzeContent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
-  SetMetadata(context, absl::StrCat("participant=", request.participant()));
+  SetMetadata(
+      context,
+      absl::StrCat("participant=", internal::UrlEncode(request.participant())));
   return child_->AnalyzeContent(context, request);
 }
 
@@ -92,7 +98,8 @@ StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsMetadata::SuggestArticles(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestArticles(context, request);
 }
 
@@ -100,7 +107,8 @@ StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsMetadata::SuggestFaqAnswers(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestFaqAnswers(context, request);
 }
 
@@ -108,7 +116,8 @@ StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsMetadata::SuggestSmartReplies(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestSmartReplies(context, request);
 }
 

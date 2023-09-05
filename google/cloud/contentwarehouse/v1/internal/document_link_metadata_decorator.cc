@@ -42,7 +42,8 @@ DocumentLinkServiceMetadata::ListLinkedTargets(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLinkedTargets(context, request);
 }
 
@@ -51,7 +52,8 @@ DocumentLinkServiceMetadata::ListLinkedSources(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLinkedSources(context, request);
 }
 
@@ -60,7 +62,8 @@ DocumentLinkServiceMetadata::CreateDocumentLink(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDocumentLink(context, request);
 }
 
@@ -68,7 +71,8 @@ Status DocumentLinkServiceMetadata::DeleteDocumentLink(
     grpc::ClientContext& context,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDocumentLink(context, request);
 }
 

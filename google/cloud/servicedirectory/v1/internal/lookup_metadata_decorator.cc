@@ -41,7 +41,8 @@ StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceMetadata::ResolveService(
     grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResolveService(context, request);
 }
 

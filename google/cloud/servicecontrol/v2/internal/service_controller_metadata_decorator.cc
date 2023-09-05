@@ -41,7 +41,9 @@ StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerMetadata::Check(
     grpc::ClientContext& context,
     google::api::servicecontrol::v2::CheckRequest const& request) {
-  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
+  SetMetadata(context,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
   return child_->Check(context, request);
 }
 
@@ -49,7 +51,9 @@ StatusOr<google::api::servicecontrol::v2::ReportResponse>
 ServiceControllerMetadata::Report(
     grpc::ClientContext& context,
     google::api::servicecontrol::v2::ReportRequest const& request) {
-  SetMetadata(context, absl::StrCat("service_name=", request.service_name()));
+  SetMetadata(context,
+              absl::StrCat("service_name=",
+                           internal::UrlEncode(request.service_name())));
   return child_->Report(context, request);
 }
 

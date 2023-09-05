@@ -39,14 +39,16 @@ TpuMetadata::TpuMetadata(std::shared_ptr<TpuStub> child,
 StatusOr<google::cloud::tpu::v2::ListNodesResponse> TpuMetadata::ListNodes(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::ListNodesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNodes(context, request);
 }
 
 StatusOr<google::cloud::tpu::v2::Node> TpuMetadata::GetNode(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::GetNodeRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNode(context, request);
 }
 
@@ -54,7 +56,8 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncCreateNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateNode(cq, std::move(context), request);
 }
 
@@ -62,7 +65,8 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteNode(cq, std::move(context), request);
 }
 
@@ -70,7 +74,8 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopNode(cq, std::move(context), request);
 }
 
@@ -78,7 +83,8 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartNode(cq, std::move(context), request);
 }
 
@@ -86,7 +92,9 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncUpdateNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
-  SetMetadata(*context, absl::StrCat("node.name=", request.node().name()));
+  SetMetadata(
+      *context,
+      absl::StrCat("node.name=", internal::UrlEncode(request.node().name())));
   return child_->AsyncUpdateNode(cq, std::move(context), request);
 }
 
@@ -94,7 +102,8 @@ StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuMetadata::GenerateServiceIdentity(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GenerateServiceIdentity(context, request);
 }
 
@@ -102,7 +111,8 @@ StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
 TpuMetadata::ListAcceleratorTypes(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAcceleratorTypes(context, request);
 }
 
@@ -110,7 +120,8 @@ StatusOr<google::cloud::tpu::v2::AcceleratorType>
 TpuMetadata::GetAcceleratorType(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAcceleratorType(context, request);
 }
 
@@ -118,14 +129,16 @@ StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
 TpuMetadata::ListRuntimeVersions(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuntimeVersions(context, request);
 }
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion> TpuMetadata::GetRuntimeVersion(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuntimeVersion(context, request);
 }
 
@@ -133,7 +146,8 @@ StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
 TpuMetadata::GetGuestAttributes(
     grpc::ClientContext& context,
     google::cloud::tpu::v2::GetGuestAttributesRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGuestAttributes(context, request);
 }
 
@@ -141,7 +155,8 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -149,7 +164,8 @@ future<Status> TpuMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

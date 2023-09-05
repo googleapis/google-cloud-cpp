@@ -41,14 +41,16 @@ StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceMetadata::WriteUserEvent(
     grpc::ClientContext& context,
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->WriteUserEvent(context, request);
 }
 
 StatusOr<google::api::HttpBody> UserEventServiceMetadata::CollectUserEvent(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CollectUserEvent(context, request);
 }
 
@@ -57,7 +59,8 @@ UserEventServiceMetadata::AsyncPurgeUserEvents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeUserEvents(cq, std::move(context), request);
 }
 
@@ -66,7 +69,8 @@ UserEventServiceMetadata::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportUserEvents(cq, std::move(context), request);
 }
 
@@ -75,7 +79,8 @@ UserEventServiceMetadata::AsyncRejoinUserEvents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRejoinUserEvents(cq, std::move(context), request);
 }
 
@@ -84,7 +89,8 @@ UserEventServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -92,7 +98,8 @@ future<Status> UserEventServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

@@ -42,7 +42,8 @@ RepositoryManagerMetadata::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateConnection(cq, std::move(context), request);
 }
 
@@ -50,7 +51,8 @@ StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerMetadata::GetConnection(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnection(context, request);
 }
 
@@ -58,7 +60,8 @@ StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerMetadata::ListConnections(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, request);
 }
 
@@ -68,7 +71,8 @@ RepositoryManagerMetadata::AsyncUpdateConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("connection.name=", request.connection().name()));
+              absl::StrCat("connection.name=",
+                           internal::UrlEncode(request.connection().name())));
   return child_->AsyncUpdateConnection(cq, std::move(context), request);
 }
 
@@ -77,7 +81,8 @@ RepositoryManagerMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnection(cq, std::move(context), request);
 }
 
@@ -86,7 +91,8 @@ RepositoryManagerMetadata::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateRepository(cq, std::move(context), request);
 }
 
@@ -96,7 +102,8 @@ RepositoryManagerMetadata::AsyncBatchCreateRepositories(
     std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchCreateRepositories(cq, std::move(context), request);
 }
 
@@ -104,7 +111,8 @@ StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerMetadata::GetRepository(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRepository(context, request);
 }
 
@@ -112,7 +120,8 @@ StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerMetadata::ListRepositories(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRepositories(context, request);
 }
 
@@ -121,7 +130,8 @@ RepositoryManagerMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRepository(cq, std::move(context), request);
 }
 
@@ -130,7 +140,8 @@ RepositoryManagerMetadata::FetchReadWriteToken(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("repository=", request.repository()));
+  SetMetadata(context, absl::StrCat("repository=",
+                                    internal::UrlEncode(request.repository())));
   return child_->FetchReadWriteToken(context, request);
 }
 
@@ -138,7 +149,8 @@ StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerMetadata::FetchReadToken(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
-  SetMetadata(context, absl::StrCat("repository=", request.repository()));
+  SetMetadata(context, absl::StrCat("repository=",
+                                    internal::UrlEncode(request.repository())));
   return child_->FetchReadToken(context, request);
 }
 
@@ -147,7 +159,8 @@ RepositoryManagerMetadata::FetchLinkableRepositories(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("connection=", request.connection()));
+  SetMetadata(context, absl::StrCat("connection=",
+                                    internal::UrlEncode(request.connection())));
   return child_->FetchLinkableRepositories(context, request);
 }
 
@@ -155,7 +168,8 @@ StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerMetadata::FetchGitRefs(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
-  SetMetadata(context, absl::StrCat("repository=", request.repository()));
+  SetMetadata(context, absl::StrCat("repository=",
+                                    internal::UrlEncode(request.repository())));
   return child_->FetchGitRefs(context, request);
 }
 
@@ -164,7 +178,8 @@ RepositoryManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -172,7 +187,8 @@ future<Status> RepositoryManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

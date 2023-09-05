@@ -41,7 +41,8 @@ StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceMetadata::GetSchema(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSchema(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceMetadata::ListSchemas(
     grpc::ClientContext& context,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSchemas(context, request);
 }
 
@@ -58,7 +60,8 @@ SchemaServiceMetadata::AsyncCreateSchema(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateSchema(cq, std::move(context), request);
 }
 
@@ -67,7 +70,9 @@ SchemaServiceMetadata::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-  SetMetadata(*context, absl::StrCat("schema.name=", request.schema().name()));
+  SetMetadata(*context,
+              absl::StrCat("schema.name=",
+                           internal::UrlEncode(request.schema().name())));
   return child_->AsyncUpdateSchema(cq, std::move(context), request);
 }
 
@@ -76,7 +81,8 @@ SchemaServiceMetadata::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteSchema(cq, std::move(context), request);
 }
 
@@ -85,7 +91,8 @@ SchemaServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -93,7 +100,8 @@ future<Status> SchemaServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

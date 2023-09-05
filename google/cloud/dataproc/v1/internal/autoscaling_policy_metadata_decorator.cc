@@ -42,7 +42,8 @@ AutoscalingPolicyServiceMetadata::CreateAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAutoscalingPolicy(context, request);
 }
 
@@ -51,7 +52,9 @@ AutoscalingPolicyServiceMetadata::UpdateAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("policy.name=", request.policy().name()));
+  SetMetadata(context,
+              absl::StrCat("policy.name=",
+                           internal::UrlEncode(request.policy().name())));
   return child_->UpdateAutoscalingPolicy(context, request);
 }
 
@@ -59,7 +62,8 @@ StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::GetAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAutoscalingPolicy(context, request);
 }
 
@@ -68,7 +72,8 @@ AutoscalingPolicyServiceMetadata::ListAutoscalingPolicies(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutoscalingPolicies(context, request);
 }
 
@@ -76,7 +81,8 @@ Status AutoscalingPolicyServiceMetadata::DeleteAutoscalingPolicy(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAutoscalingPolicy(context, request);
 }
 

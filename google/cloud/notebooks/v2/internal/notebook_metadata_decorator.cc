@@ -41,7 +41,8 @@ StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
 NotebookServiceMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::notebooks::v2::ListInstancesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, request);
 }
 
@@ -49,7 +50,8 @@ StatusOr<google::cloud::notebooks::v2::Instance>
 NotebookServiceMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::notebooks::v2::GetInstanceRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, request);
 }
 
@@ -58,7 +60,8 @@ NotebookServiceMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::CreateInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(*context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
@@ -68,7 +71,8 @@ NotebookServiceMetadata::AsyncUpdateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::UpdateInstanceRequest const& request) {
   SetMetadata(*context,
-              absl::StrCat("instance.name=", request.instance().name()));
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
@@ -77,7 +81,8 @@ NotebookServiceMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
@@ -86,7 +91,8 @@ NotebookServiceMetadata::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::StartInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartInstance(cq, std::move(context), request);
 }
 
@@ -95,7 +101,8 @@ NotebookServiceMetadata::AsyncStopInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::StopInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopInstance(cq, std::move(context), request);
 }
 
@@ -104,7 +111,8 @@ NotebookServiceMetadata::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::ResetInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncResetInstance(cq, std::move(context), request);
 }
 
@@ -114,7 +122,8 @@ NotebookServiceMetadata::CheckInstanceUpgradability(
     google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
         request) {
   SetMetadata(context,
-              absl::StrCat("notebook_instance=", request.notebook_instance()));
+              absl::StrCat("notebook_instance=",
+                           internal::UrlEncode(request.notebook_instance())));
   return child_->CheckInstanceUpgradability(context, request);
 }
 
@@ -123,7 +132,8 @@ NotebookServiceMetadata::AsyncUpgradeInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpgradeInstance(cq, std::move(context), request);
 }
 
@@ -132,7 +142,8 @@ NotebookServiceMetadata::AsyncRollbackInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::RollbackInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRollbackInstance(cq, std::move(context), request);
 }
 
@@ -141,7 +152,8 @@ NotebookServiceMetadata::AsyncDiagnoseInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) {
-  SetMetadata(*context, absl::StrCat("name=", request.name()));
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDiagnoseInstance(cq, std::move(context), request);
 }
 
@@ -150,7 +162,8 @@ NotebookServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
@@ -158,7 +171,8 @@ future<Status> NotebookServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

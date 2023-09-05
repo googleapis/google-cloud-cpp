@@ -40,7 +40,8 @@ SnoozeServiceMetadata::SnoozeServiceMetadata(
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::CreateSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSnooze(context, request);
 }
 
@@ -48,21 +49,25 @@ StatusOr<google::monitoring::v3::ListSnoozesResponse>
 SnoozeServiceMetadata::ListSnoozes(
     grpc::ClientContext& context,
     google::monitoring::v3::ListSnoozesRequest const& request) {
-  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSnoozes(context, request);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::GetSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::GetSnoozeRequest const& request) {
-  SetMetadata(context, absl::StrCat("name=", request.name()));
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSnooze(context, request);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::UpdateSnooze(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  SetMetadata(context, absl::StrCat("snooze.name=", request.snooze().name()));
+  SetMetadata(context,
+              absl::StrCat("snooze.name=",
+                           internal::UrlEncode(request.snooze().name())));
   return child_->UpdateSnooze(context, request);
 }
 
