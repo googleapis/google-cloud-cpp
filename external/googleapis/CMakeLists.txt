@@ -385,38 +385,36 @@ google_cloud_cpp_set_pkgconfig_paths()
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google APIS C++ Proto Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Platforms.")
-# Note the use of spaces, `string(JOIN)` is not available in cmake-3.5, so we
-# need to add the separator ourselves.
-#
 # This list is for backwards compatibility purposes only. DO NOT add new
 # libraries to it.
-#
 string(
-    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-           "google_cloud_cpp_bigtable_protos"
-           " google_cloud_cpp_cloud_bigquery_protos"
-           " google_cloud_cpp_iam_protos"
-           " google_cloud_cpp_pubsub_protos"
-           " google_cloud_cpp_storage_protos"
-           " google_cloud_cpp_logging_protos"
-           " google_cloud_cpp_iam_v1_iam_policy_protos"
-           " google_cloud_cpp_iam_v1_options_protos"
-           " google_cloud_cpp_iam_v1_policy_protos"
-           " google_cloud_cpp_longrunning_operations_protos"
-           " google_cloud_cpp_api_auth_protos"
-           " google_cloud_cpp_api_annotations_protos"
-           " google_cloud_cpp_api_client_protos"
-           " google_cloud_cpp_api_field_behavior_protos"
-           " google_cloud_cpp_api_http_protos"
-           " google_cloud_cpp_rpc_status_protos"
-           " google_cloud_cpp_rpc_error_details_protos"
-           " google_cloud_cpp_type_expr_protos"
-           " grpc++"
-           " grpc"
-           " openssl"
-           " protobuf"
-           " zlib"
-           " libcares")
+    JOIN
+    " "
+    GOOGLE_CLOUD_CPP_PC_REQUIRES
+    "google_cloud_cpp_bigtable_protos"
+    "google_cloud_cpp_cloud_bigquery_protos"
+    "google_cloud_cpp_iam_protos"
+    "google_cloud_cpp_pubsub_protos"
+    "google_cloud_cpp_storage_protos"
+    "google_cloud_cpp_logging_protos"
+    "google_cloud_cpp_iam_v1_iam_policy_protos"
+    "google_cloud_cpp_iam_v1_options_protos"
+    "google_cloud_cpp_iam_v1_policy_protos"
+    "google_cloud_cpp_longrunning_operations_protos"
+    "google_cloud_cpp_api_auth_protos"
+    "google_cloud_cpp_api_annotations_protos"
+    "google_cloud_cpp_api_client_protos"
+    "google_cloud_cpp_api_field_behavior_protos"
+    "google_cloud_cpp_api_http_protos"
+    "google_cloud_cpp_rpc_status_protos"
+    "google_cloud_cpp_rpc_error_details_protos"
+    "google_cloud_cpp_type_expr_protos"
+    "grpc++"
+    "grpc"
+    "openssl"
+    "protobuf"
+    "zlib"
+    "libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
 google_cloud_cpp_set_pkgconfig_paths()
 configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
