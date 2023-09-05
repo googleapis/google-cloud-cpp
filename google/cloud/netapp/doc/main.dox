@@ -2,8 +2,10 @@
 
 @mainpage NetApp API C++ Client Library
 
-An idiomatic C++ client library for the [NetApp API][cloud-service-docs], a service
-to Google Cloud NetApp Volumes is a fully-managed, cloud-based data storage service that provides advanced data management capabilities and highly scalable performance with global availability.
+An idiomatic C++ client library for the [NetApp API][cloud-service-docs],
+a fully-managed, cloud-based data storage service that provides advanced data
+management capabilities and highly scalable performance with global
+availability.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
