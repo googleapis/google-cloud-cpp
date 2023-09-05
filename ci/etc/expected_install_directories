@@ -786,6 +786,10 @@
 ./include/google/cloud/monitoring/v3
 ./include/google/cloud/monitoring/v3/internal
 ./include/google/cloud/monitoring/v3/mocks
+./include/google/cloud/netapp
+./include/google/cloud/netapp/v1
+./include/google/cloud/netapp/v1/internal
+./include/google/cloud/netapp/v1/mocks
 ./include/google/cloud/networkconnectivity
 ./include/google/cloud/networkconnectivity/mocks
 ./include/google/cloud/networkconnectivity/v1
@@ -1208,6 +1212,7 @@
 ./lib64/cmake/google_cloud_cpp_metastore
 ./lib64/cmake/google_cloud_cpp_migrationcenter
 ./lib64/cmake/google_cloud_cpp_monitoring
+./lib64/cmake/google_cloud_cpp_netapp
 ./lib64/cmake/google_cloud_cpp_networkconnectivity
 ./lib64/cmake/google_cloud_cpp_networkmanagement
 ./lib64/cmake/google_cloud_cpp_networksecurity

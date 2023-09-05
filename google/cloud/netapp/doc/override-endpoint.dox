@@ -1,0 +1,25 @@
+/*!
+@page netapp-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `netapp_v1::NetAppClient`:
+
+@snippet net_app_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page netapp_v1::NetAppClient-endpoint-snippet Override netapp_v1::NetAppClient Endpoint Configuration
+
+@snippet google/cloud/netapp/v1/samples/net_app_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
