@@ -210,6 +210,19 @@ DataMigrationServiceLogging::GenerateSshScript(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceLogging::GenerateTcpProxyScript(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
+                 request) {
+        return child_->GenerateTcpProxyScript(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceLogging::ListConnectionProfiles(
     grpc::ClientContext& context,
@@ -426,6 +439,57 @@ DataMigrationServiceLogging::AsyncDeleteConversionWorkspace(
                                                       request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceLogging::CreateMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::clouddms::v1::CreateMappingRuleRequest const&
+                 request) {
+        return child_->CreateMappingRule(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status DataMigrationServiceLogging::DeleteMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::clouddms::v1::DeleteMappingRuleRequest const&
+                 request) {
+        return child_->DeleteMappingRule(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+DataMigrationServiceLogging::ListMappingRules(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+        return child_->ListMappingRules(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceLogging::GetMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+        return child_->GetMappingRule(context, request);
+      },
+      context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

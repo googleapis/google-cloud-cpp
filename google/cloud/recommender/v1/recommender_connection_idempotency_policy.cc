@@ -59,6 +59,11 @@ Idempotency RecommenderConnectionIdempotencyPolicy::GetRecommendation(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RecommenderConnectionIdempotencyPolicy::MarkRecommendationDismissed(
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency RecommenderConnectionIdempotencyPolicy::MarkRecommendationClaimed(
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&) {
   return Idempotency::kNonIdempotent;

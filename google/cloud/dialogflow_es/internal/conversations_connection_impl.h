@@ -77,6 +77,10 @@ class ConversationsConnectionImpl
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+  SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                      request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ConversationsStub> stub_;

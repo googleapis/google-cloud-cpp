@@ -201,6 +201,19 @@ DataMigrationServiceTracingStub::GenerateSshScript(
                            child_->GenerateSshScript(context, request));
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceTracingStub::GenerateTcpProxyScript(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.clouddms.v1.DataMigrationService",
+                             "GenerateTcpProxyScript");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateTcpProxyScript(context, request));
+}
+
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceTracingStub::ListConnectionProfiles(
     grpc::ClientContext& context,
@@ -412,6 +425,53 @@ DataMigrationServiceTracingStub::AsyncDeleteConversionWorkspace(
   }
   auto f = child_->AsyncDeleteConversionWorkspace(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceTracingStub::CreateMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "CreateMappingRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateMappingRule(context, request));
+}
+
+Status DataMigrationServiceTracingStub::DeleteMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "DeleteMappingRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteMappingRule(context, request));
+}
+
+StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+DataMigrationServiceTracingStub::ListMappingRules(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "ListMappingRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListMappingRules(context, request));
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceTracingStub::GetMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "GetMappingRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetMappingRule(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

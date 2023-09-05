@@ -107,6 +107,11 @@ class DataMigrationServiceMetadata : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request)
       override;
 
+  StatusOr<google::cloud::clouddms::v1::TcpProxyScript> GenerateTcpProxyScript(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request)
+      override;
+
   StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(
       grpc::ClientContext& context,
@@ -191,6 +196,26 @@ class DataMigrationServiceMetadata : public DataMigrationServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request) override;
+
+  StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::CreateMappingRuleRequest const& request)
+      override;
+
+  Status DeleteMappingRule(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request)
+      override;
+
+  StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+  ListMappingRules(grpc::ClientContext& context,
+                   google::cloud::clouddms::v1::ListMappingRulesRequest const&
+                       request) override;
+
+  StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
+      grpc::ClientContext& context,
+      google::cloud::clouddms::v1::GetMappingRuleRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSeedConversionWorkspace(
       google::cloud::CompletionQueue& cq,

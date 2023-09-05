@@ -122,7 +122,7 @@ class UserEventServiceClient {
   // clang-format off
   ///
   /// Writes a single user event from the browser. This uses a GET request to
-  /// due to browser restriction of POST-ing to a 3rd party domain.
+  /// due to browser restriction of POST-ing to a third-party domain.
   ///
   /// This method is used only by the Discovery Engine API JavaScript pixel and
   /// Google Tag Manager. Users should not call this method directly.
@@ -192,8 +192,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L132}
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L168}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L136}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>

@@ -73,6 +73,10 @@ class DataMigrationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GenerateSshScript(
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request);
 
+  virtual google::cloud::Idempotency GenerateTcpProxyScript(
+      google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListConnectionProfiles(
       google::cloud::clouddms::v1::ListConnectionProfilesRequest request);
 
@@ -123,6 +127,18 @@ class DataMigrationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteConversionWorkspace(
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request);
+
+  virtual google::cloud::Idempotency CreateMappingRule(
+      google::cloud::clouddms::v1::CreateMappingRuleRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteMappingRule(
+      google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request);
+
+  virtual google::cloud::Idempotency ListMappingRules(
+      google::cloud::clouddms::v1::ListMappingRulesRequest request);
+
+  virtual google::cloud::Idempotency GetMappingRule(
+      google::cloud::clouddms::v1::GetMappingRuleRequest const& request);
 
   virtual google::cloud::Idempotency SeedConversionWorkspace(
       google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&

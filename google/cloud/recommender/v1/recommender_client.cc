@@ -128,6 +128,15 @@ RecommenderClient::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderClient::MarkRecommendationDismissed(
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MarkRecommendationDismissed(request);
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderClient::MarkRecommendationClaimed(
     std::string const& name,
     std::map<std::string, std::string> const& state_metadata,

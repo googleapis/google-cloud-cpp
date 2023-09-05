@@ -230,6 +230,15 @@ DataMigrationServiceAuth::GenerateSshScript(
   return child_->GenerateSshScript(context, request);
 }
 
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceAuth::GenerateTcpProxyScript(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateTcpProxyScript(context, request);
+}
+
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceAuth::ListConnectionProfiles(
     grpc::ClientContext& context,
@@ -451,6 +460,41 @@ DataMigrationServiceAuth::AsyncDeleteConversionWorkspace(
         return child->AsyncDeleteConversionWorkspace(cq, *std::move(context),
                                                      request);
       });
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceAuth::CreateMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMappingRule(context, request);
+}
+
+Status DataMigrationServiceAuth::DeleteMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMappingRule(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+DataMigrationServiceAuth::ListMappingRules(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMappingRules(context, request);
+}
+
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceAuth::GetMappingRule(
+    grpc::ClientContext& context,
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMappingRule(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

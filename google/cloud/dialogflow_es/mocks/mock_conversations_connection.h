@@ -86,6 +86,12 @@ class MockConversationsConnection
       (google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>,
+      SearchKnowledge,
+      (google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

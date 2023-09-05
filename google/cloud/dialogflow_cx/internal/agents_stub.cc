@@ -150,6 +150,34 @@ DefaultAgentsStub::GetAgentValidationResult(
   return response;
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+DefaultAgentsStub::GetGenerativeSettings(
+    grpc::ClientContext& client_context,
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  google::cloud::dialogflow::cx::v3::GenerativeSettings response;
+  auto status =
+      grpc_stub_->GetGenerativeSettings(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+DefaultAgentsStub::UpdateGenerativeSettings(
+    grpc::ClientContext& client_context,
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  google::cloud::dialogflow::cx::v3::GenerativeSettings response;
+  auto status =
+      grpc_stub_->UpdateGenerativeSettings(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAgentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

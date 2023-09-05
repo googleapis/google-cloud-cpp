@@ -76,6 +76,11 @@ class ConversationsAuth : public ConversationsStub {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+  SearchKnowledge(grpc::ClientContext& context,
+                  google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                      request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ConversationsStub> child_;

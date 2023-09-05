@@ -143,6 +143,14 @@ ConversationsClient::GenerateStatelessSummary(
   return connection_->GenerateStatelessSummary(request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+ConversationsClient::SearchKnowledge(
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SearchKnowledge(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
 }  // namespace cloud

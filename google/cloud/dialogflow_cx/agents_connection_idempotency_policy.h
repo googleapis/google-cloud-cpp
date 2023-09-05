@@ -63,6 +63,14 @@ class AgentsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetAgentValidationResult(
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetGenerativeSettings(
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateGenerativeSettings(
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+          request);
 };
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>

@@ -111,7 +111,7 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L327}
+  /// [google.cloud.dialogflow.cx.v3.CreateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L331}
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
   ///
   // clang-format on
@@ -147,7 +147,7 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L327}
+  /// [google.cloud.dialogflow.cx.v3.CreateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L331}
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
   ///
   // clang-format on
@@ -173,7 +173,7 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L357}
+  /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L361}
   ///
   // clang-format on
   Status DeleteFlow(std::string const& name, Options opts = {});
@@ -200,7 +200,7 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L357}
+  /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L361}
   ///
   // clang-format on
   Status DeleteFlow(
@@ -237,7 +237,7 @@ class FlowsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
-  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L381}
+  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L385}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
@@ -277,7 +277,7 @@ class FlowsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
-  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L381}
+  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L385}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
@@ -305,7 +305,7 @@ class FlowsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
-  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L428}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L432}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
@@ -336,7 +336,7 @@ class FlowsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
-  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L428}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L432}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
@@ -369,7 +369,7 @@ class FlowsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
-  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L455}
+  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L459}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
@@ -405,7 +405,7 @@ class FlowsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L252}
-  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L455}
+  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L459}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
@@ -452,7 +452,7 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TrainFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L480}
+  /// [google.cloud.dialogflow.cx.v3.TrainFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L484}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -503,7 +503,7 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TrainFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L480}
+  /// [google.cloud.dialogflow.cx.v3.TrainFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L484}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -537,8 +537,8 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L524}
-  /// [google.cloud.dialogflow.cx.v3.ValidateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L492}
+  /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L528}
+  /// [google.cloud.dialogflow.cx.v3.ValidateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L496}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
@@ -567,8 +567,8 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L524}
-  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L507}
+  /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L528}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L511}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
@@ -599,8 +599,8 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L524}
-  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L507}
+  /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L528}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L511}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
@@ -652,8 +652,8 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ImportFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L544}
-  /// [google.cloud.dialogflow.cx.v3.ImportFlowResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L609}
+  /// [google.cloud.dialogflow.cx.v3.ImportFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L548}
+  /// [google.cloud.dialogflow.cx.v3.ImportFlowResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
@@ -703,8 +703,8 @@ class FlowsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L620}
-  /// [google.cloud.dialogflow.cx.v3.ExportFlowResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L647}
+  /// [google.cloud.dialogflow.cx.v3.ExportFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L624}
+  /// [google.cloud.dialogflow.cx.v3.ExportFlowResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L651}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>

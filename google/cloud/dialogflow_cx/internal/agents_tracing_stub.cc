@@ -141,6 +141,32 @@ AgentsTracingStub::GetAgentValidationResult(
                            child_->GetAgentValidationResult(context, request));
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsTracingStub::GetGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
+                                     "GetGenerativeSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetGenerativeSettings(context, request));
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsTracingStub::UpdateGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
+                                     "UpdateGenerativeSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateGenerativeSettings(context, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

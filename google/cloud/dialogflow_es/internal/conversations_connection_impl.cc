@@ -202,6 +202,19 @@ ConversationsConnectionImpl::GenerateStatelessSummary(
       request, __func__);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+ConversationsConnectionImpl::SearchKnowledge(
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SearchKnowledge(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                 request) { return stub_->SearchKnowledge(context, request); },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

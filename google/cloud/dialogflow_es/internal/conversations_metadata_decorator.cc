@@ -96,6 +96,14 @@ ConversationsMetadata::GenerateStatelessSummary(
   return child_->GenerateStatelessSummary(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+ConversationsMetadata::SearchKnowledge(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
+  SetMetadata(context, absl::StrCat("parent=", request.parent()));
+  return child_->SearchKnowledge(context, request);
+}
+
 void ConversationsMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

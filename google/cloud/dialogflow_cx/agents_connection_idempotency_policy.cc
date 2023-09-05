@@ -79,6 +79,16 @@ Idempotency AgentsConnectionIdempotencyPolicy::GetAgentValidationResult(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AgentsConnectionIdempotencyPolicy::GetGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AgentsConnectionIdempotencyPolicy::UpdateGenerativeSettings(
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
 MakeDefaultAgentsConnectionIdempotencyPolicy() {
   return std::make_unique<AgentsConnectionIdempotencyPolicy>();

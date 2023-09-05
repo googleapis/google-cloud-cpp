@@ -70,6 +70,11 @@ Idempotency ConversationsConnectionIdempotencyPolicy::GenerateStatelessSummary(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConversationsConnectionIdempotencyPolicy::SearchKnowledge(
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>
 MakeDefaultConversationsConnectionIdempotencyPolicy() {
   return std::make_unique<ConversationsConnectionIdempotencyPolicy>();

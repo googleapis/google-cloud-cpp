@@ -98,6 +98,12 @@ Idempotency DataMigrationServiceConnectionIdempotencyPolicy::GenerateSshScript(
 }
 
 Idempotency
+DataMigrationServiceConnectionIdempotencyPolicy::GenerateTcpProxyScript(
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 DataMigrationServiceConnectionIdempotencyPolicy::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -179,6 +185,26 @@ Idempotency
 DataMigrationServiceConnectionIdempotencyPolicy::DeleteConversionWorkspace(
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::CreateMappingRule(
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::DeleteMappingRule(
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::ListMappingRules(
+    google::cloud::clouddms::v1::ListMappingRulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataMigrationServiceConnectionIdempotencyPolicy::GetMappingRule(
+    google::cloud::clouddms::v1::GetMappingRuleRequest const&) {
+  return Idempotency::kIdempotent;
 }
 
 Idempotency

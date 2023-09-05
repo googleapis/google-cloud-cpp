@@ -126,6 +126,26 @@ AgentsAuth::GetAgentValidationResult(
   return child_->GetAgentValidationResult(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsAuth::GetGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGenerativeSettings(context, request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsAuth::UpdateGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGenerativeSettings(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

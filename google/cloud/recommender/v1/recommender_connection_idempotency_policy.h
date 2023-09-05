@@ -52,6 +52,10 @@ class RecommenderConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetRecommendation(
       google::cloud::recommender::v1::GetRecommendationRequest const& request);
 
+  virtual google::cloud::Idempotency MarkRecommendationDismissed(
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request);
+
   virtual google::cloud::Idempotency MarkRecommendationClaimed(
       google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
           request);

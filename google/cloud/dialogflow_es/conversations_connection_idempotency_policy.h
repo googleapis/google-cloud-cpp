@@ -60,6 +60,9 @@ class ConversationsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GenerateStatelessSummary(
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request);
+
+  virtual google::cloud::Idempotency SearchKnowledge(
+      google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
 };
 
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>

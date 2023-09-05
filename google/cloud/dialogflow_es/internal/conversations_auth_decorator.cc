@@ -95,6 +95,15 @@ ConversationsAuth::GenerateStatelessSummary(
   return child_->GenerateStatelessSummary(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+ConversationsAuth::SearchKnowledge(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SearchKnowledge(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

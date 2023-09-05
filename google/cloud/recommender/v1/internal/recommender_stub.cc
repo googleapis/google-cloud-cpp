@@ -93,6 +93,20 @@ DefaultRecommenderStub::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+DefaultRecommenderStub::MarkRecommendationDismissed(
+    grpc::ClientContext& client_context,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  google::cloud::recommender::v1::Recommendation response;
+  auto status = grpc_stub_->MarkRecommendationDismissed(&client_context,
+                                                        request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationClaimed(
     grpc::ClientContext& client_context,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&

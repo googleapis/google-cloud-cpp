@@ -93,6 +93,20 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
       (google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
+      GetGenerativeSettings,
+      (google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>,
+      UpdateGenerativeSettings,
+      (google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

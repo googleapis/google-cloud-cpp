@@ -94,6 +94,10 @@ class DataMigrationServiceTracingConnection
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request)
       override;
 
+  StatusOr<google::cloud::clouddms::v1::TcpProxyScript> GenerateTcpProxyScript(
+      google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request)
+      override;
+
   StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
   ListConnectionProfiles(
       google::cloud::clouddms::v1::ListConnectionProfilesRequest request)
@@ -161,6 +165,21 @@ class DataMigrationServiceTracingConnection
   DeleteConversionWorkspace(
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request) override;
+
+  StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
+      google::cloud::clouddms::v1::CreateMappingRuleRequest const& request)
+      override;
+
+  Status DeleteMappingRule(
+      google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request)
+      override;
+
+  StreamRange<google::cloud::clouddms::v1::MappingRule> ListMappingRules(
+      google::cloud::clouddms::v1::ListMappingRulesRequest request) override;
+
+  StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
+      google::cloud::clouddms::v1::GetMappingRuleRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   SeedConversionWorkspace(

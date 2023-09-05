@@ -99,6 +99,20 @@ RecommenderLogging::GetRecommendation(
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
+RecommenderLogging::MarkRecommendationDismissed(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recommender::v1::
+                 MarkRecommendationDismissedRequest const& request) {
+        return child_->MarkRecommendationDismissed(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderLogging::MarkRecommendationClaimed(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&

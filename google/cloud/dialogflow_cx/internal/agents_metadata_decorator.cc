@@ -108,6 +108,25 @@ AgentsMetadata::GetAgentValidationResult(
   return child_->GetAgentValidationResult(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsMetadata::GetGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
+  SetMetadata(context, absl::StrCat("name=", request.name()));
+  return child_->GetGenerativeSettings(context, request);
+}
+
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsMetadata::UpdateGenerativeSettings(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
+  SetMetadata(context, absl::StrCat("generative_settings.name=",
+                                    request.generative_settings().name()));
+  return child_->UpdateGenerativeSettings(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
