@@ -105,6 +105,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "metastore"
     "migrationcenter"
     "monitoring"
+    "netapp"
     "networkconnectivity"
     "networkmanagement"
     "networksecurity"
