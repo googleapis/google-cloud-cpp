@@ -110,7 +110,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   .build/quickstart [...]
+   .build/quickstart [PROJECT-ID] [LOCATION-ID]
    ```
 
 ## Platform Specific Notes
