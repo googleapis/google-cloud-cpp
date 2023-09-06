@@ -95,7 +95,7 @@ void LegacyAsyncRowSampler::OnFinish(Status const& status) {
     return;
   }
   if (!rpc_retry_policy_->OnFailure(status)) {
-    promise_.set_value(std::move(status));
+    promise_.set_value(status);
     return;
   }
 
