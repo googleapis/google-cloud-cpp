@@ -378,35 +378,23 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
     endif ()
 endforeach ()
 
-# manually add compute pkconfig due to split libs
-set(target "google_cloud_cpp_compute")
+# add pkconfig for internal proto lib
+unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
+unset(DEPS)
+set(target "google_cloud_cpp_compute_internal_protos")
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Compute API C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to use the Cloud Compute API.")
-list(APPEND DEPS "google_cloud_cpp_rest_internal")
-list(APPEND DEPS "google_cloud_cpp_rest_protobuf_internal")
-list(APPEND DEPS "google_cloud_cpp_grpc_utils")
-list(APPEND DEPS "google_cloud_cpp_common")
 list(APPEND DEPS "google_cloud_cpp_cloud_extended_operations_protos")
 string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${DEPS})
 google_cloud_cpp_set_pkgconfig_paths()
-string(
-    JOIN
-    " -l"
-    GOOGLE_CLOUD_CPP_PC_LIBS_TMP
-    ${compute_lib_targets}
-    ${compute_operation_lib_targets}
-    ${compute_proto_lib_targets}
-    google_cloud_cpp_compute_internal_protos)
-string(PREPEND GOOGLE_CLOUD_CPP_PC_LIBS "-l" "${GOOGLE_CLOUD_CPP_PC_LIBS_TMP}")
-foreach (lib IN LISTS ${compute_lib_targets} ${compute_operation_lib_targets})
-    get_target_property(target_defs ${lib} INTERFACE_COMPILE_DEFINITIONS)
-    if (target_defs)
-        foreach (def ${target_defs})
-            string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
-        endforeach ()
-    endif ()
-endforeach ()
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
+if (target_defs)
+    foreach (def ${target_defs})
+        string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
+    endforeach ()
+endif ()
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "${target}.pc" @ONLY)
@@ -414,6 +402,139 @@ install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
     COMPONENT google_cloud_cpp_development)
+
+
+# add pkconfig for proto libs
+foreach (dir IN LISTS service_dirs operation_service_dirs)
+    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
+    unset(DEPS)
+    if (NOT "${dir}" STREQUAL "v1/")
+        string(REPLACE "/v1/" "" short_dir "${dir}")
+        set(target "google_cloud_cpp_compute_${short_dir}_protos")
+        set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Compute API C++ Client Library")
+        set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+            "Provides C++ APIs to use the Cloud Compute API.")
+        list(APPEND DEPS "google_cloud_cpp_compute_internal_protos")
+        list(APPEND DEPS "google_cloud_cpp_cloud_extended_operations_protos")
+        string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${DEPS})
+        google_cloud_cpp_set_pkgconfig_paths()
+        set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+        get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
+        if (target_defs)
+            foreach (def ${target_defs})
+                string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
+            endforeach ()
+        endif ()
+
+        # Create and install the pkg-config files.
+        configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+                       "${target}.pc" @ONLY)
+        install(
+            FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+            COMPONENT google_cloud_cpp_development)
+    endif ()
+endforeach ()
+
+
+# manually add compute pkconfig due to split libs
+foreach (dir IN LISTS operation_service_dirs)
+    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
+    unset(DEPS)
+    if (NOT "${dir}" STREQUAL "v1/")
+        string(REPLACE "/v1/" "" short_dir "${dir}")
+        set(target "google_cloud_cpp_compute_${short_dir}")
+        set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Compute API C++ Client Library")
+        set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+            "Provides C++ APIs to use the Cloud Compute API.")
+        list(APPEND DEPS "google_cloud_cpp_rest_internal")
+        list(APPEND DEPS "google_cloud_cpp_rest_protobuf_internal")
+        list(APPEND DEPS "google_cloud_cpp_grpc_utils")
+        list(APPEND DEPS "google_cloud_cpp_common")
+        list(APPEND DEPS "google_cloud_cpp_cloud_extended_operations_protos")
+        string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${DEPS})
+        google_cloud_cpp_set_pkgconfig_paths()
+#        string(
+#            JOIN
+#            " -l"
+#            GOOGLE_CLOUD_CPP_PC_LIBS_TMP
+#            ${target}
+#            ${target}_protos
+#            google_cloud_cpp_compute_internal_protos)
+#        string(PREPEND GOOGLE_CLOUD_CPP_PC_LIBS "-l" "${GOOGLE_CLOUD_CPP_PC_LIBS_TMP}")
+        set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+        get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
+        if (target_defs)
+            foreach (def ${target_defs})
+                string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
+            endforeach ()
+        endif ()
+
+        # Create and install the pkg-config files.
+        configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+                       "${target}.pc" @ONLY)
+        install(
+            FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+            COMPONENT google_cloud_cpp_development)
+    endif ()
+endforeach ()
+
+
+foreach (dir IN LISTS service_dirs)
+    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
+    unset(DEPS)
+    if (NOT "${dir}" STREQUAL "v1/")
+        string(REPLACE "/v1/" "" short_dir "${dir}")
+        set(target "google_cloud_cpp_compute_${short_dir}")
+        set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Compute API C++ Client Library")
+        set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+            "Provides C++ APIs to use the Cloud Compute API.")
+        list(APPEND DEPS "google_cloud_cpp_compute_${short_dir}_protos")
+        list(APPEND DEPS "google_cloud_cpp_compute_global_operations")
+        list(APPEND DEPS "google_cloud_cpp_compute_global_organization_operations")
+        list(APPEND DEPS "google_cloud_cpp_compute_region_operations")
+        list(APPEND DEPS "google_cloud_cpp_compute_zone_operations")
+        list(APPEND DEPS "google_cloud_cpp_compute_global_operations_protos")
+        list(APPEND DEPS "google_cloud_cpp_compute_global_organization_operations_protos")
+        list(APPEND DEPS "google_cloud_cpp_compute_region_operations_protos")
+        list(APPEND DEPS "google_cloud_cpp_compute_zone_operations_protos")
+        list(APPEND DEPS "google_cloud_cpp_compute_internal_protos")
+        list(APPEND DEPS "google_cloud_cpp_cloud_extended_operations_protos")
+        list(APPEND DEPS "google_cloud_cpp_rest_protobuf_internal")
+        list(APPEND DEPS "google_cloud_cpp_grpc_utils")
+        list(APPEND DEPS "google_cloud_cpp_rest_internal")
+        list(APPEND DEPS "google_cloud_cpp_common")
+
+        string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${DEPS})
+        google_cloud_cpp_set_pkgconfig_paths()
+#        string(
+#            JOIN
+#            " -l"
+#            GOOGLE_CLOUD_CPP_PC_LIBS_TMP
+#            ${target}
+#            ${target}_protos
+#            google_cloud_cpp_compute_internal_protos)
+#        string(PREPEND GOOGLE_CLOUD_CPP_PC_LIBS "-l" "${GOOGLE_CLOUD_CPP_PC_LIBS_TMP}")
+        set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
+        get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
+        if (target_defs)
+            foreach (def ${target_defs})
+                string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
+            endforeach ()
+        endif ()
+
+        # Create and install the pkg-config files.
+        configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+                       "${target}.pc" @ONLY)
+        install(
+            FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+            COMPONENT google_cloud_cpp_development)
+    endif ()
+endforeach ()
+
+
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
