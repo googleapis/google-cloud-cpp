@@ -403,7 +403,6 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
     COMPONENT google_cloud_cpp_development)
 
-
 # add pkconfig for proto libs
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
@@ -436,7 +435,6 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
     endif ()
 endforeach ()
 
-
 # manually add compute pkconfig due to split libs
 foreach (dir IN LISTS operation_service_dirs)
     unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
@@ -454,14 +452,6 @@ foreach (dir IN LISTS operation_service_dirs)
         list(APPEND DEPS "google_cloud_cpp_cloud_extended_operations_protos")
         string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${DEPS})
         google_cloud_cpp_set_pkgconfig_paths()
-#        string(
-#            JOIN
-#            " -l"
-#            GOOGLE_CLOUD_CPP_PC_LIBS_TMP
-#            ${target}
-#            ${target}_protos
-#            google_cloud_cpp_compute_internal_protos)
-#        string(PREPEND GOOGLE_CLOUD_CPP_PC_LIBS "-l" "${GOOGLE_CLOUD_CPP_PC_LIBS_TMP}")
         set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
         get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
         if (target_defs)
@@ -479,7 +469,6 @@ foreach (dir IN LISTS operation_service_dirs)
             COMPONENT google_cloud_cpp_development)
     endif ()
 endforeach ()
-
 
 foreach (dir IN LISTS service_dirs)
     unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
@@ -492,11 +481,13 @@ foreach (dir IN LISTS service_dirs)
             "Provides C++ APIs to use the Cloud Compute API.")
         list(APPEND DEPS "google_cloud_cpp_compute_${short_dir}_protos")
         list(APPEND DEPS "google_cloud_cpp_compute_global_operations")
-        list(APPEND DEPS "google_cloud_cpp_compute_global_organization_operations")
+        list(APPEND DEPS
+             "google_cloud_cpp_compute_global_organization_operations")
         list(APPEND DEPS "google_cloud_cpp_compute_region_operations")
         list(APPEND DEPS "google_cloud_cpp_compute_zone_operations")
         list(APPEND DEPS "google_cloud_cpp_compute_global_operations_protos")
-        list(APPEND DEPS "google_cloud_cpp_compute_global_organization_operations_protos")
+        list(APPEND DEPS
+             "google_cloud_cpp_compute_global_organization_operations_protos")
         list(APPEND DEPS "google_cloud_cpp_compute_region_operations_protos")
         list(APPEND DEPS "google_cloud_cpp_compute_zone_operations_protos")
         list(APPEND DEPS "google_cloud_cpp_compute_internal_protos")
@@ -508,14 +499,6 @@ foreach (dir IN LISTS service_dirs)
 
         string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${DEPS})
         google_cloud_cpp_set_pkgconfig_paths()
-#        string(
-#            JOIN
-#            " -l"
-#            GOOGLE_CLOUD_CPP_PC_LIBS_TMP
-#            ${target}
-#            ${target}_protos
-#            google_cloud_cpp_compute_internal_protos)
-#        string(PREPEND GOOGLE_CLOUD_CPP_PC_LIBS "-l" "${GOOGLE_CLOUD_CPP_PC_LIBS_TMP}")
         set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
         get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
         if (target_defs)
@@ -533,8 +516,6 @@ foreach (dir IN LISTS service_dirs)
             COMPONENT google_cloud_cpp_development)
     endif ()
 endforeach ()
-
-
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

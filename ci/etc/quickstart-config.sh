@@ -45,6 +45,11 @@ function quickstart::arguments() {
       echo "quickstart"
       return 0
       ;;
+    "compute")
+      echo "${GOOGLE_CLOUD_PROJECT}"
+      echo "${GOOGLE_CLOUD_CPP_TEST_ZONE}"
+      return 0
+      ;;
     "iam")
       echo "${GOOGLE_CLOUD_PROJECT}"
       return 0
