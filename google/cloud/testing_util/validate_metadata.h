@@ -23,6 +23,7 @@
 #include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
+#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 
 namespace google {
 namespace cloud {

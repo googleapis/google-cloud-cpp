@@ -30,6 +30,7 @@ add_library(
 target_link_libraries(
     google_cloud_cpp_testing_grpc
     PUBLIC google-cloud-cpp::grpc_utils
+           google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
            google-cloud-cpp::common
            google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_routing_protos

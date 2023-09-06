@@ -204,6 +204,7 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing
                 google-cloud-cpp::common
+                google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
                 absl::variant
                 GTest::gmock_main
                 GTest::gmock

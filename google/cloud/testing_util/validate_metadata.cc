@@ -321,6 +321,9 @@ void ValidateMetadataFixture::IsContextMDValid(
 
   auto const* method =
       DescriptorPool::generated_pool()->FindMethodByName(method_name);
+  auto const file_name =
+      DescriptorPool::generated_pool()->FindFileContainingSymbol(method_name)->name();
+      std::cout << "alevenb: " << file_name << std::endl;
   ASSERT_THAT(method, NotNull()) << "Method " + method_name + " is unknown.";
 
   // Extract expectations on `x-goog-request-params` from the
