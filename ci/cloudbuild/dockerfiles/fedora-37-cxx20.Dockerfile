@@ -32,9 +32,6 @@ RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
 
-# This is needed to install gRPC
-RUN dnf makecache && dnf install -y c-ares-devel
-
 # The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
 # Bazel needs the '-devel' version with javac.
 RUN dnf makecache && dnf install -y java-latest-openjdk-devel
@@ -158,6 +155,17 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
+
+WORKDIR /var/tmp/build/c-ares
+RUN curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.57.0.tar.gz | \

@@ -390,16 +390,22 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while openSUSE/Leap distributes
-c-ares-1.9. Manually install a newer version:
+gRPC >= 1.58.0 requires c-ares >= 1.18.0. We show how to install c-ares from
+source, but you may install the development package if you are using an older
+version of gRPC.
 
 ```bash
 mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
-curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-sudo make install && \
-sudo ldconfig
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### gRPC
@@ -1310,7 +1316,7 @@ sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y cmake curl findutils gcc-c++ git make openssl-devel \
-        patch zlib-devel libcurl-devel c-ares-devel tar wget which
+        patch zlib-devel libcurl-devel tar wget which
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
@@ -1407,6 +1413,26 @@ curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
+```
+
+#### c-ares
+
+gRPC >= 1.58.0 requires c-ares >= 1.18.0. We show how to install c-ares from
+source, but you may install the development package if you are using an older
+version of gRPC.
+
+```bash
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### gRPC
@@ -1508,7 +1534,7 @@ sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
-        patch zlib-devel libcurl-devel c-ares-devel tar wget which
+        patch zlib-devel libcurl-devel tar wget which
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
@@ -1608,6 +1634,26 @@ curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
+```
+
+#### c-ares
+
+gRPC >= 1.58.0 requires c-ares >= 1.18.0. We show how to install c-ares from
+source, but you may install the development package if you are using an older
+version of gRPC.
+
+```bash
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### gRPC
@@ -1806,16 +1852,22 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while CentOS-7 distributes
-c-ares-1.10. Manually install a newer version:
+gRPC >= 1.58.0 requires c-ares >= 1.18.0. We show how to install c-ares from
+source, but you may install the development package if you are using an older
+version of gRPC.
 
 ```bash
 mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
-curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-sudo make install && \
-sudo ldconfig
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig && \
+    cd /var/tmp && rm -fr build
 ```
 
 #### gRPC

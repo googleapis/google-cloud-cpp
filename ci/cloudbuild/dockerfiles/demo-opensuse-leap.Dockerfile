@@ -91,16 +91,22 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.1.tar.gz 
 
 # #### c-ares
 
-# Recent versions of gRPC require c-ares >= 1.11, while openSUSE/Leap
-# distributes c-ares-1.9. Manually install a newer version:
+# gRPC >= 1.58.0 requires c-ares >= 1.18.0. We show how to install c-ares
+# from source, but you may install the development package if you are using an
+# older version of gRPC.
 
 # ```bash
 WORKDIR /var/tmp/build/c-ares
-RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+RUN curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-    make install && \
-    ldconfig
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 # ```
 
 # #### gRPC
