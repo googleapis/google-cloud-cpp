@@ -22,7 +22,5 @@ endif ()
 
 if (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     include(bigquery_rest.cmake)
-    if (BUILD_TESTING)
-        add_subdirectory(v2/minimal/benchmarks)
-    endif (BUILD_TESTING)
+    add_subdirectory(v2/minimal/benchmarks)
 endif ()

@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,22 +29,13 @@ namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct Config {
-  std::string base_endpoint;
-  std::string relative_endpoint;
   std::string endpoint;
 
   std::string project_id;
 
-  int samples = 2;
-  std::chrono::seconds iteration_duration = std::chrono::seconds(5);
-
-  int minimum_threads = 1;
-  int maximum_threads = 1;
-  int minimum_channels = 1;
-  int maximum_channels = 1;
-
   std::string page_token;
   int max_results = 1000;
+  int connection_pool_size = 4;
 
   google::cloud::StatusOr<Config> ParseArgs(
       std::vector<std::string> const& args);
@@ -56,7 +47,7 @@ struct Config {
   };
 
   void ParseCommonFlags();
-  inline bool FlagsParsed() { return !flags_.empty(); }
+  inline bool CommonFlagsParsed() { return !flags_.empty(); }
   google::cloud::Status ValidateArgs(std::vector<std::string> const& args);
 
   std::vector<Config::Flag> flags_;

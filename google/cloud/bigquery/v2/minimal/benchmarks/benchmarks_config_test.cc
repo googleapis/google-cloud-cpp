@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,23 +28,15 @@ using ::google::cloud::testing_util::StatusIs;
 TEST(BenchmarkConfigTest, ParseAll) {
   Config c;
   auto config = c.ParseArgs(
-      {"placeholder", "--endpoint=/datasets", "--project=test-project",
-       "--samples=50", "--iteration-duration=10", "--minimum-threads=1",
-       "--maximum-threads=1", "--minimum-channels=2", "--maximum-channels=8"});
-  ASSERT_STATUS_OK(config);
+      {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
+       "--project=test-project", "--maximum-results=50",
+       "--connection-pool-size=10"});
+  EXPECT_STATUS_OK(config);
 
-  EXPECT_EQ("/datasets", config->relative_endpoint);
+  EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
   EXPECT_EQ("test-project", config->project_id);
-  EXPECT_EQ(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/test-project/"
-      "datasets",
-      config->endpoint);
-  EXPECT_EQ(50, config->samples);
-  EXPECT_EQ(10, config->iteration_duration.count());
-  EXPECT_EQ(1, config->minimum_threads);
-  EXPECT_EQ(1, config->maximum_threads);
-  EXPECT_EQ(2, config->minimum_channels);
-  EXPECT_EQ(8, config->maximum_channels);
+  EXPECT_EQ(50, config->max_results);
+  EXPECT_EQ(10, config->connection_pool_size);
 }
 
 TEST(BenchmarkConfigTest, ParseNone) {
@@ -52,18 +44,23 @@ TEST(BenchmarkConfigTest, ParseNone) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", "test-project");
   auto config = c.ParseArgs({"placeholder"});
   EXPECT_STATUS_OK(config);
-  EXPECT_EQ("https://bigquery.googleapis.com/bigquery/v2/projects",
-            config->endpoint);
+  EXPECT_EQ("https://bigquery.googleapis.com", config->endpoint);
 }
 
-TEST(BenchmarkConfigTest, ParseThreads) {
+TEST(BenchmarkConfigTest, ParseMaxResults) {
   Config c;
-  auto config = c.ParseArgs({"placeholder", "--project=test-project",
-                             "--minimum-threads=4", "--maximum-threads=16"});
+  auto config = c.ParseArgs(
+      {"placeholder", "--project=test-project", "--maximum-results=4"});
   ASSERT_STATUS_OK(config);
+  EXPECT_EQ(4, config->max_results);
+}
 
-  EXPECT_EQ(4, config->minimum_threads);
-  EXPECT_EQ(16, config->maximum_threads);
+TEST(BenchmarkConfigTest, ParseConnectionPoolSize) {
+  Config c;
+  auto config = c.ParseArgs(
+      {"placeholder", "--project=test-project", "--connection-pool-size=4"});
+  ASSERT_STATUS_OK(config);
+  EXPECT_EQ(4, config->connection_pool_size);
 }
 
 TEST(BenchmarkConfigTest, InvalidFlag) {
@@ -76,9 +73,7 @@ TEST(BenchmarkConfigTest, EmptyEndpoint) {
   Config c;
   auto config =
       c.ParseArgs({"placeholder", "--project=test-project", "--endpoint="});
-  EXPECT_STATUS_OK(config);
-  EXPECT_EQ("https://bigquery.googleapis.com/bigquery/v2/projects",
-            config->endpoint);
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, EmptyProject) {
@@ -94,55 +89,26 @@ TEST(BenchmarkConfigTest, InvalidMaximumResults) {
   EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
-TEST(BenchmarkConfigTest, InvalidMinimumThreads) {
+TEST(BenchmarkConfigTest, InvalidConnectionPoolSize) {
   Config c;
   auto config = c.ParseArgs(
-      {"placeholder", "--project=test-project", "--minimum-threads=-7"});
-  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
-}
-
-TEST(BenchmarkConfigTest, InvalidMaximumThreads) {
-  Config c;
-  auto config = c.ParseArgs({"placeholder", "--project=test-project",
-                             "--minimum-threads=100", "--maximum-threads=5"});
-  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
-}
-
-TEST(BenchmarkConfigTest, InvalidMinimumClients) {
-  Config c;
-  auto config = c.ParseArgs(
-      {"placeholder", "--project=test-project", "--minimum-channels=-7"});
-  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
-}
-
-TEST(BenchmarkConfigTest, InvalidMaximumClients) {
-  Config c;
-  auto config = c.ParseArgs({"placeholder", "--project=test-project",
-                             "--minimum-channels=100", "--maximum-channels=5"});
+      {"placeholder", "--project=test-project", "--connection-pool-size=-7"});
   EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkDatasetConfigTest, ParseAll) {
   DatasetConfig c;
   auto config = c.ParseArgs(
-      {"placeholder", "--endpoint=/datasets", "--project=test-project",
-       "--samples=50", "--iteration-duration=10", "--minimum-threads=1",
-       "--maximum-threads=1", "--minimum-channels=2", "--maximum-channels=8",
-       "--filter=labels.department:receiving", "--all=true"});
-  ASSERT_STATUS_OK(config);
+      {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
+       "--project=test-project", "--maximum-results=50",
+       "--connection-pool-size=10", "--filter=labels.department:receiving",
+       "--all=true"});
+  EXPECT_STATUS_OK(config);
 
-  EXPECT_EQ("/datasets", config->relative_endpoint);
+  EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
   EXPECT_EQ("test-project", config->project_id);
-  EXPECT_EQ(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/test-project/"
-      "datasets",
-      config->endpoint);
-  EXPECT_EQ(50, config->samples);
-  EXPECT_EQ(10, config->iteration_duration.count());
-  EXPECT_EQ(1, config->minimum_threads);
-  EXPECT_EQ(1, config->maximum_threads);
-  EXPECT_EQ(2, config->minimum_channels);
-  EXPECT_EQ(8, config->maximum_channels);
+  EXPECT_EQ(50, config->max_results);
+  EXPECT_EQ(10, config->connection_pool_size);
   EXPECT_EQ(true, config->all);
   EXPECT_EQ("labels.department:receiving", config->filter);
 }
@@ -150,24 +116,16 @@ TEST(BenchmarkDatasetConfigTest, ParseAll) {
 TEST(BenchmarkTableConfigTest, ParseAll) {
   TableConfig c;
   auto config = c.ParseArgs(
-      {"placeholder", "--endpoint=/datasets/1/tables", "--project=test-project",
-       "--samples=50", "--iteration-duration=10", "--minimum-threads=1",
-       "--maximum-threads=1", "--minimum-channels=2", "--maximum-channels=8",
-       "--selected-fields=FIELD-1,FIELD-2", "--view=STORAGE_STATS"});
-  ASSERT_STATUS_OK(config);
+      {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
+       "--project=test-project", "--maximum-results=50",
+       "--connection-pool-size=10", "--selected-fields=FIELD-1,FIELD-2",
+       "--view=STORAGE_STATS"});
+  EXPECT_STATUS_OK(config);
 
-  EXPECT_EQ("/datasets/1/tables", config->relative_endpoint);
+  EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
   EXPECT_EQ("test-project", config->project_id);
-  EXPECT_EQ(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/test-project/"
-      "datasets/1/tables",
-      config->endpoint);
-  EXPECT_EQ(50, config->samples);
-  EXPECT_EQ(10, config->iteration_duration.count());
-  EXPECT_EQ(1, config->minimum_threads);
-  EXPECT_EQ(1, config->maximum_threads);
-  EXPECT_EQ(2, config->minimum_channels);
-  EXPECT_EQ(8, config->maximum_channels);
+  EXPECT_EQ(50, config->max_results);
+  EXPECT_EQ(10, config->connection_pool_size);
   EXPECT_EQ("STORAGE_STATS", config->view.value);
   EXPECT_EQ("FIELD-1,FIELD-2", config->selected_fields);
 }
@@ -175,26 +133,17 @@ TEST(BenchmarkTableConfigTest, ParseAll) {
 TEST(BenchmarkJobConfigTest, ParseAll) {
   JobConfig c;
   auto config = c.ParseArgs(
-      {"placeholder", "--endpoint=/jobs", "--project=test-project",
-       "--samples=50", "--iteration-duration=10", "--minimum-threads=1",
-       "--maximum-threads=1", "--minimum-channels=2", "--maximum-channels=8",
-       "--location=useast", "--parent-job-id=123",
+      {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
+       "--project=test-project", "--maximum-results=50",
+       "--connection-pool-size=10", "--location=useast", "--parent-job-id=123",
        "--min-creation-time=12345678", "--max-creation-time=12345678",
        "--all-users=true", "--projection=FULL", "--state-filter=DONE"});
-  ASSERT_STATUS_OK(config);
+  EXPECT_STATUS_OK(config);
 
-  EXPECT_EQ("/jobs", config->relative_endpoint);
+  EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
   EXPECT_EQ("test-project", config->project_id);
-  EXPECT_EQ(
-      "https://bigquery.googleapis.com/bigquery/v2/projects/test-project/"
-      "jobs",
-      config->endpoint);
-  EXPECT_EQ(50, config->samples);
-  EXPECT_EQ(10, config->iteration_duration.count());
-  EXPECT_EQ(1, config->minimum_threads);
-  EXPECT_EQ(1, config->maximum_threads);
-  EXPECT_EQ(2, config->minimum_channels);
-  EXPECT_EQ(8, config->maximum_channels);
+  EXPECT_EQ(50, config->max_results);
+  EXPECT_EQ(10, config->connection_pool_size);
   EXPECT_EQ("FULL", config->projection.value);
   EXPECT_EQ("DONE", config->state_filter.value);
   EXPECT_EQ(true, config->all_users);

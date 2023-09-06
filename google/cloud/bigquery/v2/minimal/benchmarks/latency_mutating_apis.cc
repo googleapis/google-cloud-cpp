@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,13 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/build_info.h"
-#include "google/cloud/internal/compiler_info.h"
-#include "google/cloud/internal/getenv.h"
-#include "absl/strings/match.h"
-#include <functional>
-#include <sstream>
 
 namespace google {
 namespace cloud {

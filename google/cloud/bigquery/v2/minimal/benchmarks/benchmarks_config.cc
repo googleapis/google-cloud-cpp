@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,19 +31,11 @@ using ::google::cloud::bigquery_v2_minimal_internal::StateFilter;
 using ::google::cloud::bigquery_v2_minimal_internal::TableMetadataView;
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
-  return os << "\n# Base Endpoint: " << config.base_endpoint
-            << "\n# Relative Endpoint: " << config.relative_endpoint
-            << "\n# Endpoint: " << config.endpoint
+  return os << "\n# Endpoint: " << config.endpoint
             << "\n# Project: " << config.project_id
             << "\n# Page Token: " << config.page_token
             << "\n# Max Results: " << config.max_results
-            << "\n# Samples: " << config.samples
-            << "\n# Minimum Threads: " << config.minimum_threads
-            << "\n# Maximum Threads: " << config.maximum_threads
-            << "\n# Minimum Channels: " << config.minimum_channels
-            << "\n# Maximum Channels: " << config.maximum_channels
-            << "\n# Iteration Duration: " << config.iteration_duration.count()
-            << "s"
+            << "\n# Connection Size: " << config.connection_pool_size
             << "\n# Compiler: " << google::cloud::internal::CompilerId() << "-"
             << google::cloud::internal::CompilerVersion()
             << "\n# Build Flags: " << google::cloud::internal::compiler_flags()
@@ -51,31 +43,16 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
 }
 
 void Config::ParseCommonFlags() {
-  flags_.push_back({"--endpoint=", [this](std::string v) {
-                      relative_endpoint = std::move(v);
-                    }});
+  flags_.push_back(
+      {"--endpoint=", [this](std::string v) { endpoint = std::move(v); }});
   flags_.push_back(
       {"--project=", [this](std::string v) { project_id = std::move(v); }});
   flags_.push_back(
       {"--page-token=", [this](std::string v) { page_token = std::move(v); }});
-  flags_.push_back(
-      {"--samples=", [this](std::string const& v) { samples = std::stoi(v); }});
-  flags_.push_back({"--iteration-duration=", [this](std::string const& v) {
-                      iteration_duration = std::chrono::seconds(std::stoi(v));
+  flags_.push_back({"--connection-pool-size=", [this](std::string const& v) {
+                      connection_pool_size = std::stoi(v);
                     }});
-  flags_.push_back({"--minimum-threads=", [this](std::string const& v) {
-                      minimum_threads = std::stoi(v);
-                    }});
-  flags_.push_back({"--maximum-threads=", [this](std::string const& v) {
-                      maximum_threads = std::stoi(v);
-                    }});
-  flags_.push_back({"--minimum-channels=", [this](std::string const& v) {
-                      minimum_channels = std::stoi(v);
-                    }});
-  flags_.push_back({"--maximum-channels=", [this](std::string const& v) {
-                      maximum_channels = std::stoi(v);
-                    }});
-  flags_.push_back({"--max-results=", [this](std::string const& v) {
+  flags_.push_back({"--maximum-results=", [this](std::string const& v) {
                       max_results = std::stoi(v);
                     }});
 }
@@ -106,11 +83,8 @@ google::cloud::Status Config::ValidateArgs(
 
 google::cloud::StatusOr<Config> Config::ParseArgs(
     std::vector<std::string> const& args) {
-  base_endpoint = "https://bigquery.googleapis.com/bigquery/v2/projects";
-
-  std::cout << "Jaya - 1" << std::endl;
-  if (!FlagsParsed()) {
-    std::cout << "Jaya - 2" << std::endl;
+  if (!CommonFlagsParsed()) {
+    endpoint = "https://bigquery.googleapis.com";
     project_id =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
 
@@ -118,11 +92,9 @@ google::cloud::StatusOr<Config> Config::ParseArgs(
     auto status = ValidateArgs(args);
 
     if (!status.ok()) {
-      std::cout << "Jaya - 3" << std::endl;
       return status;
     }
   }
-  std::cout << "Jaya - 4" << std::endl;
   auto invalid_argument = [](std::string msg) {
     return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
                                  std::move(msg));
@@ -133,50 +105,22 @@ google::cloud::StatusOr<Config> Config::ParseArgs(
         "The project id is not set, provide a value in the --project flag,"
         " or set the GOOGLE_CLOUD_PROJECT environment variable");
   }
-  std::cout << "Jaya - 5" << std::endl;
-  if (relative_endpoint.empty()) {
-    endpoint = base_endpoint;
-  } else {
-    endpoint = absl::StrCat(base_endpoint, "/", project_id, relative_endpoint);
+  if (endpoint.empty()) {
+    return invalid_argument(
+        "The endpoint is not set, provide a value in the --endpoint flag");
   }
-  std::cout << "Jaya - 6" << std::endl;
   if (max_results <= 0) {
     std::ostringstream os;
     os << "The maximum number of results (" << max_results << ")"
        << " must be greater than zero";
     return invalid_argument(os.str());
   }
-  std::cout << "Jaya - 7" << std::endl;
-  if (minimum_threads <= 0) {
+  if (connection_pool_size <= 0) {
     std::ostringstream os;
-    os << "The minimum number of threads (" << minimum_threads << ")"
+    os << "The connection pool size (" << connection_pool_size << ")"
        << " must be greater than zero";
     return invalid_argument(os.str());
   }
-  std::cout << "Jaya - 8" << std::endl;
-  if (maximum_threads < minimum_threads) {
-    std::ostringstream os;
-    os << "The maximum number of threads (" << maximum_threads << ")"
-       << " must be greater or equal than the minimum number of threads ("
-       << minimum_threads << ")";
-    return invalid_argument(os.str());
-  }
-  std::cout << "Jaya - 9" << std::endl;
-  if (minimum_channels <= 0) {
-    std::ostringstream os;
-    os << "The minimum number of channels (" << minimum_channels << ")"
-       << " must be greater than zero";
-    return invalid_argument(os.str());
-  }
-  std::cout << "Jaya - 10" << std::endl;
-  if (maximum_channels < minimum_channels) {
-    std::ostringstream os;
-    os << "The maximum number of channels (" << maximum_channels << ")"
-       << " must be greater or equal than the minimum number of channels ("
-       << minimum_channels << ")";
-    return invalid_argument(os.str());
-  }
-  std::cout << "Jaya - 11" << std::endl;
   return *this;
 }
 
