@@ -106,7 +106,7 @@ cc_library(
     name = "google_cloud_cpp_bigquery_rest",
     srcs = google_cloud_cpp_bigquery_rest_srcs,
     hdrs = google_cloud_cpp_bigquery_rest_hdrs,
-    visibility = ["//:__pkg__"],
+    visibility = ["//:__subpackages__"],
     deps = [
         "//:common",
         "//google/cloud:google_cloud_cpp_rest_internal",
@@ -120,7 +120,7 @@ cc_library(
     testonly = True,
     srcs = google_cloud_cpp_bigquery_rest_mocks_srcs,
     hdrs = google_cloud_cpp_bigquery_rest_mocks_hdrs,
-    visibility = ["//:__pkg__"],
+    visibility = ["//:__subpackages__"],
     deps = [
         ":google_cloud_cpp_bigquery_rest",
         "@com_google_googletest//:gtest",
