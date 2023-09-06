@@ -258,10 +258,7 @@ void StreamingSubscriptionBatchSource::OnStart(
 void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
                                                       bool ok) {
   shutdown_manager_->FinishedOperation("InitialWrite");
-  if (!ok) {
-    OnInitialError(std::move(rs));
-    return;
-  }
+  if (!ok) return OnInitialError(rs);
   auto scheduled =
       shutdown_manager_->StartOperation(__func__, "InitialRead", [&] {
         auto weak = WeakFromThis();
@@ -276,7 +273,7 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
       });
   // This is very rare, but it can happen if the session enters shutdown while
   // the initial setup is in progress.
-  if (!scheduled) OnInitialError(std::move(rs));
+  if (!scheduled) OnInitialError(rs);
 }
 
 void StreamingSubscriptionBatchSource::OnInitialRead(
