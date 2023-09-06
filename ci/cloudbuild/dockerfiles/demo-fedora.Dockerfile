@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:37
+FROM fedora:38
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -25,7 +25,7 @@ RUN dnf makecache && \
         openssl-devel patch unzip tar wget zip zlib-devel
 # ```
 
-# Fedora 37 includes packages, with recent enough versions, for most of the
+# Fedora 38 includes packages, with recent enough versions, for most of the
 # direct dependencies of `google-cloud-cpp`.
 
 # ```bash
@@ -54,15 +54,12 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
     ldconfig
 # ```
 
-# The version of RE2 included with this distro hard-codes C++11 in its
-# pkg-config file. This is fixed in later versions, and it is unnecessary as
-# Fedora's compiler defaults to C++17.  If you are not planning to use
-# `pkg-config(1)` you can ignore this step.  Alternatively, you can install
-# RE2 and gRPC from source.
-
-# ```bash
-WORKDIR /var/tmp/build/re2
-RUN sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
+# Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting
+# with Fedora:38. If you using Fedora >= 38 or you are not planning to use
+# `pkg-config(1)` you can ignore this step.  Alternatively, you can install RE2
+# and gRPC from source.
+# ```
+# sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
