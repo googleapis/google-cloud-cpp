@@ -160,7 +160,7 @@ TEST_F(MinimalIamCredentialsStubTest, Invalid) {
 
 // For some reasons the method name is not found in IsContextMDValid()
 TEST_F(MinimalIamCredentialsStubTest,
-       DISABLED_AsyncGenerateAccessTokenMetadata) {
+       AsyncGenerateAccessTokenMetadata) {
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
       .WillOnce([this](CompletionQueue&, auto context,
