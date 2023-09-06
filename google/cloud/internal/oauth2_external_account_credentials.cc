@@ -156,7 +156,7 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
-  if (!payload) return std::move(payload.status());
+  if (!payload) return std::move(payload).status();
 
   auto ec = internal::ErrorContext({
       {"audience", info_.audience},
