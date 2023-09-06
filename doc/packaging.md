@@ -216,7 +216,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Fedora (37)</summary>
+<summary>Fedora (38)</summary>
 <br>
 
 Install the minimal development tools:
@@ -227,7 +227,7 @@ sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
         openssl-devel patch unzip tar wget zip zlib-devel
 ```
 
-Fedora 37 includes packages, with recent enough versions, for most of the direct
+Fedora 38 includes packages, with recent enough versions, for most of the direct
 dependencies of `google-cloud-cpp`.
 
 ```bash
@@ -256,13 +256,12 @@ sudo make install && \
 sudo ldconfig
 ```
 
-The version of RE2 included with this distro hard-codes C++11 in its pkg-config
-file. This is fixed in later versions, and it is unnecessary as Fedora's
-compiler defaults to C++17. If you are not planning to use `pkg-config(1)` you
-can ignore this step. Alternatively, you can install RE2 and gRPC from source.
+Older versions of Fedora hard-code RE2 to use C++11. It was fixed starting with
+Fedora:38. If you using Fedora >= 38 or you are not planning to use
+`pkg-config(1)` you can ignore this step. Alternatively, you can install RE2 and
+gRPC from source.
 
-```bash
-mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+```
 sed -i 's/-std=c\+\+11 //' /usr/lib64/pkgconfig/re2.pc
 ```
 
