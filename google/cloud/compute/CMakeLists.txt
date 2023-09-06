@@ -15,15 +15,7 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Cloud Compute API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Compute API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-unset(mocks_globs)
-unset(source_globs)
-unset(proto_globs)
 set(service_dirs
     "accelerator_types/v1/"
     "addresses/v1/"
@@ -119,10 +111,6 @@ set(operation_service_dirs
     "global_operations/v1/" "global_organization_operations/v1/"
     "region_operations/v1/" "zone_operations/v1/")
 
-include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
-                                 google-cloud-cpp::compute_protos)
-
 include(GoogleCloudCppCommon)
 include(CompileProtos)
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
@@ -192,6 +180,21 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
 
     endif ()
 endforeach ()
+
+set(DOXYGEN_PROJECT_NAME "Cloud Compute API C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Compute API")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+foreach (dir IN LISTS service_dirs operation_service_dirs)
+    if (NOT "${dir}" STREQUAL "v1/")
+        list(APPEND DOXYGEN_EXAMPLE_PATH
+             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    endif ()
+endforeach ()
+list(APPEND DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
+                                 ${compute_proto_lib_targets})
 
 unset(compute_operation_lib_targets)
 foreach (dir IN LISTS operation_service_dirs)
