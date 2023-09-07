@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::MockReadRowsReader;
@@ -151,7 +150,6 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 namespace storage_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOkAndHolds;
@@ -63,7 +62,6 @@ TEST(RequestProjectId, FromOverride) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

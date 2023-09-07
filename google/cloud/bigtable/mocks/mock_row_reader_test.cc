@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable_mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::Row;
@@ -140,7 +139,6 @@ TEST(MakeRowReaderTest, CancelEndsBadStream) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_mocks
 }  // namespace cloud
 }  // namespace google

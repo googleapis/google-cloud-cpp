@@ -21,7 +21,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
@@ -65,6 +64,5 @@ TEST(CommonOptionList, Unexpected) {
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

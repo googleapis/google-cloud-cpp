@@ -27,7 +27,6 @@
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace rest = ::google::cloud::rest_internal;
 using ::google::cloud::rest_internal::HttpStatusCode;
@@ -184,7 +183,6 @@ TEST(TableStubTest, ListTablesRestResponseError) {
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google

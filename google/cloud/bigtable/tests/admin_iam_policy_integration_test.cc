@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 class AdminIAMPolicyIntegrationTest
@@ -72,7 +71,6 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

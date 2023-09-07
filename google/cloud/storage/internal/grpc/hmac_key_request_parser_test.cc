@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 namespace storage_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::storage::v2;
@@ -216,7 +215,6 @@ TEST(GrpcBucketRequestParser, UpdateHmacKeyRequestAllOptions) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

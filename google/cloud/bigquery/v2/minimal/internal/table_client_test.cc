@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
@@ -122,7 +121,6 @@ TEST(TableClientTest, ListTablesFailure) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google

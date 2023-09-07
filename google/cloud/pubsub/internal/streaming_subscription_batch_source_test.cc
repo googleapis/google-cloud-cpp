@@ -31,7 +31,6 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
@@ -1293,7 +1292,6 @@ TEST(StreamingSubscriptionBatchSourceTest,
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

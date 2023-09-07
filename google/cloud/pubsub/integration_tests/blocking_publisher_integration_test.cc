@@ -28,7 +28,6 @@
 namespace google {
 namespace cloud {
 namespace pubsub {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -79,7 +78,6 @@ TEST_F(BlockingPublisherIntegrationTest, Basic) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

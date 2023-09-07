@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace bt = ::google::cloud::bigtable;
@@ -687,7 +686,6 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

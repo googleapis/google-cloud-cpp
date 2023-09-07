@@ -19,7 +19,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 std::string MakeErrorDetails(google::rpc::Status const& proto) {
@@ -242,6 +241,5 @@ TEST(MakeStatusFromRpcError, ProtoInvalidCode) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -17,7 +17,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 TEST(ApplyTest, Simple) {
@@ -72,6 +71,5 @@ TEST(ApplyTest, TupleByReference) {
 }
 
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

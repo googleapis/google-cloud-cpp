@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
@@ -71,7 +70,6 @@ TEST(MakeStreamRangeTest, ValuesThenStatus) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace mocks
 }  // namespace cloud
 }  // namespace google

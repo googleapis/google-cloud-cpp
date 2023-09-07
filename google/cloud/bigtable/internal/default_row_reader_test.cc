@@ -25,7 +25,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::bigtable::v2::ReadRowsRequest;
@@ -785,7 +784,6 @@ TEST_F(DefaultRowReaderTest, ReverseScanResumption) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

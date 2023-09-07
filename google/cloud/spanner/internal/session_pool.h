@@ -42,8 +42,8 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct SessionPoolFriendForTest;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // An option for the Clock that the session pool will use. This is an injection
 // point to facility unit testing.
@@ -153,7 +153,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
                                   bool dissociate_from_pool);
 
-  friend struct SessionPoolFriendForTest;  // To test Async*()
+  friend struct spanner_internal::SessionPoolFriendForTest;  // To test Async*()
   // Asynchronous calls used to maintain the pool.
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(CompletionQueue& cq,

@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::CurrentOptions;
@@ -256,7 +255,6 @@ TEST(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::PermissionDeniedError;
 using ::google::cloud::testing_util::ScopedLog;
@@ -113,7 +112,6 @@ TEST(AckHandlerWrapper, DeliveryAttempt) {
   EXPECT_EQ(tested.delivery_attempt(), 42);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

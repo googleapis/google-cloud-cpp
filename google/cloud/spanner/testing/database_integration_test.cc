@@ -25,7 +25,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_testing {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
@@ -251,7 +250,6 @@ void PgDatabaseIntegrationTest::TearDownTestSuite() {
   testing_util::IntegrationTest::TearDownTestSuite();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google

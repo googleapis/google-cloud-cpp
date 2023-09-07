@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace sql_v1 {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
@@ -115,7 +114,6 @@ TEST_F(SqlIntegrationTest, CreateEphemeral) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1
 }  // namespace cloud
 }  // namespace google

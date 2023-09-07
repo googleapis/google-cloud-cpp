@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::bigtable::v2;
@@ -629,7 +628,6 @@ TEST(TableTest, AsyncReadRow) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -18,7 +18,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::UnorderedElementsAreArray;
@@ -162,7 +161,6 @@ TEST(AppProfileUpdateConfig, SetSeveral) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

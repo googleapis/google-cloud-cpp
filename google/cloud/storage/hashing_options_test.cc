@@ -18,7 +18,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(ComputeMD5HashTest, Empty) {
@@ -54,7 +53,6 @@ TEST(ComputeCrc32cChecksumTest, Simple) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

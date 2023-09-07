@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(Bytes, RoundTrip) {
@@ -164,7 +163,6 @@ TEST(Bytes, OutputStreamEscapingCannotFail) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

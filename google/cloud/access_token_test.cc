@@ -19,7 +19,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::testing::HasSubstr;
 
@@ -55,6 +54,5 @@ TEST(AccessToken, Stream) {
   EXPECT_THAT(actual, HasSubstr("expiration=" + expiration));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

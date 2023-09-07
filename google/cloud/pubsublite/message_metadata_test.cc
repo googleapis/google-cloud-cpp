@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace pubsublite {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::pubsublite::MakeMessageMetadata;
@@ -78,7 +77,6 @@ TEST(MessageMetadata, RoundTrip) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google

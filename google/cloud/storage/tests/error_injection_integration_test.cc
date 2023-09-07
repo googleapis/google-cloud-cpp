@@ -27,7 +27,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
@@ -322,7 +321,6 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
 #endif  // _WIN32
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

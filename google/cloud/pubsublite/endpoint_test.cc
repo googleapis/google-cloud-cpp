@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace pubsublite {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
@@ -44,7 +43,6 @@ TEST(EndpointFromRegion, Basic) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google

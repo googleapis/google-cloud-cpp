@@ -27,7 +27,6 @@
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -1244,7 +1243,6 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

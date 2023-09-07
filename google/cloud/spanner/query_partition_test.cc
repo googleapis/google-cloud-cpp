@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class QueryPartitionTester {
  public:
@@ -49,10 +48,8 @@ class QueryPartitionTester {
   spanner::QueryPartition partition_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::spanner_internal::QueryPartitionTester;
@@ -164,7 +161,6 @@ TEST(QueryPartitionTest, MakeSqlParams) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

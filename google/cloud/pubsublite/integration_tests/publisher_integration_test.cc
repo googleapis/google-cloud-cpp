@@ -22,7 +22,6 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/admin.pb.h>
 #include <gmock/gmock.h>
 #include <regex>
@@ -30,7 +29,6 @@
 namespace google {
 namespace cloud {
 namespace pubsublite {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
@@ -153,7 +151,6 @@ TEST_F(PublisherIntegrationTest, WithOrderingKey) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud
 }  // namespace google

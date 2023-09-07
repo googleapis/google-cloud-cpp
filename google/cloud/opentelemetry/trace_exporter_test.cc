@@ -17,7 +17,6 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <memory>
@@ -27,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace otel {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
@@ -114,7 +112,6 @@ TEST(TraceExporter, LogsOnError) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
 }  // namespace cloud
 }  // namespace google

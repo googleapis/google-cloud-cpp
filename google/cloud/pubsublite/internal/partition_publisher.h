@@ -28,6 +28,7 @@
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
+class PartitionPublisherBatchingTest;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PartitionPublisher
@@ -106,7 +107,7 @@ class PartitionPublisher
 
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 
-  friend class PartitionPublisherBatchingTest;
+  friend class pubsublite_internal::PartitionPublisherBatchingTest;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

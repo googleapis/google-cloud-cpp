@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 /// @test Verify that installing the libraries
@@ -31,7 +30,6 @@ TEST(CurlWrappers, LockingEnabledTest) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

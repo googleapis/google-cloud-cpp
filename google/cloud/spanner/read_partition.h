@@ -26,10 +26,8 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReadPartitionTester;
 struct ReadPartitionInternals;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
@@ -156,7 +154,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct ReadPartitionInternals {
   static spanner::ReadPartition MakeReadPartition(
@@ -205,7 +202,6 @@ inline spanner::Connection::ReadParams MakeReadParams(
   return ReadPartitionInternals::MakeReadParams(read_partition);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
@@ -113,7 +112,6 @@ TEST(OpensslUtilTest, MD5HashSimple) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

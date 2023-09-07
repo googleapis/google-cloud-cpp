@@ -30,7 +30,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::Idempotency;
@@ -602,7 +601,6 @@ TEST(PartialResultSetResume, ResumptionBeforeResync) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

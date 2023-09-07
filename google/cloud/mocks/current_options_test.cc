@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace mocks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(CurrentOptionsTest, Basic) {
@@ -41,7 +40,6 @@ TEST(CurrentOptionsTest, Basic) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace mocks
 }  // namespace cloud
 }  // namespace google

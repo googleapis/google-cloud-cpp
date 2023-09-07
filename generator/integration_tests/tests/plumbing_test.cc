@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace golden_v1 {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::MockBackoffPolicy;
@@ -132,7 +131,6 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google

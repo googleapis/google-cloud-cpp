@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::rest_internal::HttpStatusCode;
@@ -1179,7 +1178,6 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855)""";
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google

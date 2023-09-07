@@ -20,13 +20,11 @@
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::Idempotency;
@@ -306,7 +304,6 @@ TEST(RestRetryLoopTest, TracingDisabled) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

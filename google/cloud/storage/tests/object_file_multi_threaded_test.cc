@@ -27,7 +27,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 auto const kObjectSize = 16 * 1024;
@@ -205,7 +204,6 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace logging_v2 {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -116,7 +115,6 @@ TEST_F(LoggingIntegrationTest, ListLogsFailure) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_v2
 }  // namespace cloud
 }  // namespace google

@@ -31,7 +31,6 @@
 namespace google {
 namespace cloud {
 namespace otel {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -156,7 +155,6 @@ TEST(ConfigureBasicTracing, RestoresPrevious) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
 }  // namespace cloud
 }  // namespace google

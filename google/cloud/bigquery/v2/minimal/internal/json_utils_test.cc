@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::testing::IsNull;
 using ::testing::Not;
@@ -205,7 +204,6 @@ TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
   EXPECT_FALSE(SafeGetTo(val, json, key));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google

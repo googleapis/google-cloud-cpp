@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
@@ -97,7 +96,6 @@ TEST(ExponentialBackoffRetryPolicy, Randomness) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

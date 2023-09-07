@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ReadPartitionTester {
  public:
@@ -48,10 +47,8 @@ class ReadPartitionTester {
   spanner::ReadPartition partition_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::spanner_internal::ReadPartitionTester;
@@ -213,7 +210,6 @@ TEST(ReadPartitionTest, MakeReadParams) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

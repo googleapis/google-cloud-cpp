@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_benchmarks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ::google::cloud::testing_util::StatusIs;
 
@@ -134,7 +133,6 @@ TEST(BenchmarkConfigTest, OnlyClients) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_benchmarks
 }  // namespace cloud
 }  // namespace google

@@ -35,6 +35,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
+struct ClientOptionsTestTraits;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ClientOptions;
 namespace internal {
@@ -712,7 +713,7 @@ class ClientOptions {
   BackgroundThreadsFactory background_threads_factory() const;
 
  private:
-  friend struct ClientOptionsTestTraits;
+  friend struct bigtable::ClientOptionsTestTraits;
   friend Options&& internal::MakeOptions(ClientOptions&&);
 
   /// Return the current endpoint for instance admin RPCs.

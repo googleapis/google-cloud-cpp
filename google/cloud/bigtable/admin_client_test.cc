@@ -18,7 +18,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
@@ -38,7 +37,6 @@ TEST(AdminClientTest, MakeClient) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::IsNull;
@@ -50,7 +49,6 @@ TEST(AdminClientParams, WithoutSuppliedThreads) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ::testing::HasSubstr;
 using testing_util::chrono_literals::operator"" _ms;  // NOLINT
@@ -775,6 +774,5 @@ static_assert(!std::is_constructible<future<FromInt>, future<int*>>{},
               "Should not compile.");
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

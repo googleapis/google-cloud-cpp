@@ -31,7 +31,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 namespace {
 
@@ -544,7 +543,6 @@ TEST_F(GoogleCredentialsTest, LoadP12Credentials) {
 
 }  // namespace
 }  // namespace oauth2
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 // An empty callback just to test things.
 extern "C" void test_cb(int /*mode*/, int /*type*/, char const* /*file*/,
@@ -38,7 +37,6 @@ TEST(CurlWrappers, LockingDisabledTest) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

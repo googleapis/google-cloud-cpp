@@ -23,14 +23,12 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 
 namespace google {
 namespace cloud {
 namespace otel {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
@@ -503,7 +501,6 @@ TEST(ResourceDetector, CachesAttributes) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(QueryOptionsTest, Values) {
@@ -128,7 +127,6 @@ TEST(QueryOptionsTest, OptionsRoundTrip) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -46,7 +46,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ::google::cloud::conformance::storage::v1::PostPolicyV4Test;
 using ::google::cloud::conformance::storage::v1::SigningV4Test;
@@ -276,7 +275,6 @@ INSTANTIATE_TEST_SUITE_P(
     }()));
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

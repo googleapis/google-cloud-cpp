@@ -20,7 +20,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
 using ::testing::_;
@@ -230,6 +229,5 @@ TEST(StatusIsTest, FailureStatusOrNegation) {
 }
 
 }  // namespace testing_util
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

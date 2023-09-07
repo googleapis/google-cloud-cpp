@@ -30,7 +30,6 @@
 namespace google {
 namespace cloud {
 namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::MakeImmutableOptions;
@@ -656,7 +655,6 @@ TEST(AsyncRestRetryLoopTest, CallSpanActiveDuringCancel) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

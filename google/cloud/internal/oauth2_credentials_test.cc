@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::UnavailableError;
@@ -82,7 +81,6 @@ TEST(Credentials, AuthorizationHeaderJoinedError) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace gsai = ::google::spanner::admin::instance;
@@ -314,7 +313,6 @@ TEST(InstanceAdminClientTest, TestIamPermissions) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

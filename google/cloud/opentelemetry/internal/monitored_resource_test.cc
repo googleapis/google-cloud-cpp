@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
-#include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
@@ -21,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace otel_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 using ::testing::Pair;
@@ -309,7 +307,6 @@ TEST(MonitoredResource, GenericNode) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
 }  // namespace cloud
 }  // namespace google

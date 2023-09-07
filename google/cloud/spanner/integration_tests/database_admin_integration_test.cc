@@ -31,7 +31,6 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -481,7 +480,6 @@ TEST_F(DatabaseAdminClientTest, BackwardsCompatibility) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

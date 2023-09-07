@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TEST(JobIdempotencyPolicytTest, GetJob) {
   auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
@@ -83,7 +82,6 @@ TEST(JobIdempotencyPolicytTest, GetQueryResults) {
   EXPECT_EQ(actual->GetQueryResults(request), expected);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google

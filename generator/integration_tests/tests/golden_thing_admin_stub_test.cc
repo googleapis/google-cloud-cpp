@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 namespace golden_v1_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::AsyncGrpcOperation;
@@ -943,7 +942,6 @@ TEST_F(GoldenStubTest, AsyncCancelOperation) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

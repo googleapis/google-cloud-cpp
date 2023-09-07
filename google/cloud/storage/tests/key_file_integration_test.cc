@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::RetryHttpRequest;
@@ -139,7 +138,6 @@ INSTANTIATE_TEST_SUITE_P(KeyFileP12Test, KeyFileIntegrationTest,
                          ::testing::Values(kP12EnvVar));
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

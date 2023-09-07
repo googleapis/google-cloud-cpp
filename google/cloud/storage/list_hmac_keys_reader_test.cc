@@ -24,7 +24,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::internal::ListHmacKeysRequest;
@@ -167,7 +166,6 @@ TEST(ListHmacKeysReaderTest, PermanentFailure) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TEST(WriteVector, Simple) {
   auto const a = std::string(32, 'a');
@@ -59,7 +58,6 @@ TEST(WriteVector, Rewind) {
   EXPECT_EQ(std::string(buffer.begin(), buffer.end()), a + b);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

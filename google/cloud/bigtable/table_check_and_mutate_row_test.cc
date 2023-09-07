@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -85,7 +84,6 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

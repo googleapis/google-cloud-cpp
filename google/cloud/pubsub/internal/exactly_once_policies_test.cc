@@ -18,7 +18,6 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TEST(ExactlyOnceRetryPolicy, PermanentFailure) {
   auto const uut = ExactlyOnceRetryPolicy("test-only-ack-id");
@@ -65,7 +64,6 @@ TEST(ExactlyOnceRetryPolicy, PermanentFailure) {
   }
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

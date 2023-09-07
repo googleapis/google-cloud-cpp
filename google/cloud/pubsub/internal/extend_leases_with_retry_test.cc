@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::pubsub_testing::MockSubscriberStub;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
@@ -162,7 +161,6 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ack_id=test-003")));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google

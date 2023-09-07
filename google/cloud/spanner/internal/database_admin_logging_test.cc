@@ -24,7 +24,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace gsad = ::google::spanner::admin::database;
@@ -362,7 +361,6 @@ TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

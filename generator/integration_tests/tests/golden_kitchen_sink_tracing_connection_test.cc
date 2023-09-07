@@ -25,7 +25,6 @@
 namespace google {
 namespace cloud {
 namespace golden_v1_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::golden_v1_mocks::MockGoldenKitchenSinkConnection;
@@ -388,7 +387,6 @@ TEST(MakeGoldenKitchenSinkTracingConnection, NoOpenTelemetry) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

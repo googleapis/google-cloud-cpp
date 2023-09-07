@@ -14,7 +14,6 @@
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/version.h"
 #include "absl/time/clock.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -24,7 +23,6 @@
 namespace google {
 namespace cloud {
 namespace otel_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
@@ -730,7 +728,6 @@ TEST(Recordable, SetInstrumentationScopeOmitsEmptyVersion) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
 }  // namespace cloud
 }  // namespace google

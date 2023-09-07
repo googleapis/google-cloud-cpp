@@ -28,7 +28,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable_admin {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -424,7 +423,6 @@ TEST_F(AsyncWaitForConsistencyCancelTest, ShutdownDuringTimer) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google

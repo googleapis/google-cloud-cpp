@@ -14,12 +14,10 @@
 
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/internal/compiler_info.h"
-#include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
@@ -35,6 +33,5 @@ TEST(UserAgentPrefix, Format) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

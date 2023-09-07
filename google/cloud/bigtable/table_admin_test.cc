@@ -29,7 +29,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Helper class for checking that the legacy API still functions correctly
 class TableAdminTester {
@@ -61,10 +60,8 @@ class TableAdminTester {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 namespace bigtable {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
@@ -942,7 +939,6 @@ TEST_F(TableAdminTest, TestIamPermissionsBackupFailure) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

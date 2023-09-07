@@ -22,7 +22,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
@@ -300,6 +299,5 @@ TEST(GrpcClientContext, ConfigurePoll) {
   EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context.compression_algorithm());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

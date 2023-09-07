@@ -29,7 +29,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
@@ -495,7 +494,6 @@ TEST_F(ClientOptionsTest, Timeouts) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

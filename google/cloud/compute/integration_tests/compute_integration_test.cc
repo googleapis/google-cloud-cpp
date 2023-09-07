@@ -26,7 +26,6 @@
 namespace google {
 namespace cloud {
 namespace compute_v1 {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
@@ -120,7 +119,6 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_v1
 }  // namespace cloud
 }  // namespace google

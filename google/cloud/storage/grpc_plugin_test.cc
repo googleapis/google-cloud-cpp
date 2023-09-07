@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 namespace storage_experimental {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
@@ -120,7 +119,6 @@ TEST(GrpcPluginTest, HybridUsesGrpcBufferOptions) {
 #include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
 }  // namespace google

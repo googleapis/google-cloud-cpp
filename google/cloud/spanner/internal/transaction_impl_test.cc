@@ -28,7 +28,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::spanner::v1::TransactionSelector;
@@ -255,7 +254,6 @@ TEST(InternalTransaction, ReadFailsAndTxnInvalidated) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

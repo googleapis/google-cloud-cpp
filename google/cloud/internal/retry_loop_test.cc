@@ -24,7 +24,6 @@
 
 namespace google {
 namespace cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
@@ -298,6 +297,5 @@ TEST(RetryLoopTest, TracingDisabled) {
 
 }  // namespace
 }  // namespace internal
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

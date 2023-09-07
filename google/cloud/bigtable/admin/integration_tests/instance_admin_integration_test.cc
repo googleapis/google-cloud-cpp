@@ -36,7 +36,6 @@
 namespace google {
 namespace cloud {
 namespace bigtable_admin {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::bigtable::testing::RandomInstanceId;
@@ -498,7 +497,6 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
 }  // namespace cloud
 }  // namespace google

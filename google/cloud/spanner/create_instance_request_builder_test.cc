@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TEST(CreateInstanceRequestBuilder, Equality) {
   Instance in(Project("test-project"), "test-instance");
@@ -90,7 +89,6 @@ TEST(CreateInstanceRequestBuilder, Lvalue) {
   EXPECT_EQ(expected_display_name, req.instance().display_name());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

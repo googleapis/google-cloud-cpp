@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -133,7 +132,6 @@ TEST(ParseExternalAccountSourceFormat, InvalidFormatSubject) {
                             Pair("key", "value")}));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google

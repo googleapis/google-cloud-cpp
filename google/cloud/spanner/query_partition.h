@@ -25,10 +25,8 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class QueryPartitionTester;
 struct QueryPartitionInternals;
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 
 namespace spanner {
@@ -150,7 +148,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct QueryPartitionInternals {
   static spanner::QueryPartition MakeQueryPartition(
@@ -191,7 +188,6 @@ inline spanner::Connection::SqlParams MakeSqlParams(
   return QueryPartitionInternals::MakeSqlParams(query_partition, query_options);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

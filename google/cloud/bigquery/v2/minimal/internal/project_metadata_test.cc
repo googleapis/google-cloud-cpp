@@ -25,7 +25,6 @@
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockProjectRestStub;
@@ -64,7 +63,6 @@ TEST(ProjectMetadataTest, ListProjects) {
   VerifyMetadataContext(context, "bigquery_v2_project");
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google

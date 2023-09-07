@@ -28,7 +28,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -302,7 +301,6 @@ TEST_F(WriteObjectTest, UploadStreamResumableWithCustomHeader) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

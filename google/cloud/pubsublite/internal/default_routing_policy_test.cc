@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using google::cloud::pubsublite_internal::DefaultRoutingPolicy;
 
@@ -123,7 +122,6 @@ TEST(TestGetMod, ArbitraryValue1) {
   EXPECT_EQ(GetMod(arr, UINT32_MAX - 1), 3416191692);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

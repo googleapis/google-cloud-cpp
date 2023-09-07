@@ -23,7 +23,6 @@
 #include <vector>
 
 namespace google::cloud {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::HasSubstr;
@@ -160,7 +159,6 @@ TEST(FutureCoroutines, ThrowInt) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google::cloud
 
 #endif  // GOOGLE_CLOUD_CPP_CPP_HAVE_COROUTINES

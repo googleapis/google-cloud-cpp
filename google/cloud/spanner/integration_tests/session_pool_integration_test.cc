@@ -24,7 +24,6 @@
 namespace google {
 namespace cloud {
 namespace spanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct SessionPoolFriendForTest {
   static future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
@@ -120,7 +119,6 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

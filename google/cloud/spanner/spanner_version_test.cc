@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace spanner {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -62,7 +61,6 @@ TEST(SpannerVersionTest, NoPreReleaseInRelease) {
   }
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google

@@ -21,7 +21,6 @@
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::ByMove;
@@ -347,7 +346,6 @@ TEST(ServiceTest, AddDependencyAfterStartFailedBeforeShutdown) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google

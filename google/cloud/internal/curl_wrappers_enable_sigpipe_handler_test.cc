@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 extern "C" void test_handler(int) {}
@@ -44,7 +43,6 @@ TEST(CurlWrappers, SigpipeHandlerEnabledTest) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google

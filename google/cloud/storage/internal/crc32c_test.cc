@@ -19,7 +19,6 @@
 namespace google {
 namespace cloud {
 namespace storage_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::internal::ConstBuffer;
@@ -144,7 +143,6 @@ TEST(Crc32c, ExtendPrecomputedCord) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

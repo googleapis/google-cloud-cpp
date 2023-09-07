@@ -28,7 +28,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 using ObjectNameList = std::vector<std::string>;
 
@@ -233,7 +232,6 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   EXPECT_LT(0U, connected.size());
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

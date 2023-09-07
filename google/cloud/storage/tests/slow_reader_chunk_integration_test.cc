@@ -24,7 +24,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 class SlowReaderChunkIntegrationTest
@@ -107,7 +106,6 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
 }
 
 }  // anonymous namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

@@ -25,7 +25,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 // This test depends on Linux-specific features.
@@ -92,7 +91,6 @@ TEST_F(ObjectReadLargeIntegrationTest, LimitedMemoryGrowth) {
 #endif  // GTEST_OS_LINUX
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

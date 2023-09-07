@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::rest_internal::RestContext;
@@ -465,7 +464,6 @@ TEST(ExternalAccountTokenSource, JsonResponseInvalidField) {
            Pair("filename", "my-credentials.json"), Pair("key", "value")}));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google

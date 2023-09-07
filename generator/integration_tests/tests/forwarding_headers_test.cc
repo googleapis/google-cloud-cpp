@@ -28,7 +28,6 @@ namespace cloud {
 // In order to test backwards compatibility, we only use types from the `golden`
 // namespace. We do not use any types from `golden_v1` or `golden_v1_mocks`.
 namespace golden {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(ForwardingHeadersTest, BackwardsCompatForGoldenThingAdmin) {
@@ -79,7 +78,6 @@ TEST(ForwardingHeadersTest, BackwardsCompatForGoldenKitchenSink) {
 }
 
 }  // namespace
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
