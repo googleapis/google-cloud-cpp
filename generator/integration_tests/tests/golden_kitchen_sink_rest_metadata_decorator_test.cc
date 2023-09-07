@@ -85,6 +85,25 @@ TEST(KitchenSinkRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
   }
 }
 
+TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitApiClientHeader) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, GenerateAccessToken)
+      .WillOnce([](rest_internal::RestContext& context,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+                    Contains("test-client-header"));
+        return TransientError();
+      });
+
+  internal::OptionsSpan span(Options{});
+  GoldenKitchenSinkRestMetadata stub(mock, "test-client-header");
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  auto status = stub.GenerateAccessToken(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 TEST(KitchenSinkRestMetadataDecoratorTest, GenerateAccessToken) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)

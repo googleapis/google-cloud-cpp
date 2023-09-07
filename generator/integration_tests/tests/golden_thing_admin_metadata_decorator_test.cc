@@ -52,11 +52,42 @@ class MetadataDecoratorTest : public ::testing::Test {
         google::cloud::internal::ApiClientHeader("generator"));
   }
 
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request,
+                        std::string const& expected_api_client_header) {
+    return validate_metadata_fixture_.IsContextMDValid(
+        context, method, request, expected_api_client_header);
+  }
+
   std::shared_ptr<MockGoldenThingAdminStub> mock_;
 
  private:
   ValidateMetadataFixture validate_metadata_fixture_;
 };
+
+TEST_F(MetadataDecoratorTest, ExplicitApiClientHeader) {
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
+  EXPECT_CALL(*mock_, GetDatabase)
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::test::admin::database::v1::GetDatabaseRequest const&
+                     request) {
+            IsContextMDValid(context,
+                             "google.test.admin.database.v1."
+                             "GoldenThingAdmin.GetDatabase",
+                             request, "test-client-header");
+            return TransientError();
+          });
+
+  GoldenThingAdminMetadata stub(mock_, {}, "test-client-header");
+  grpc::ClientContext context;
+  google::test::admin::database::v1::GetDatabaseRequest request;
+  request.set_name(
+      "projects/my_project/instances/my_instance/databases/my_database");
+  auto status = stub.GetDatabase(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
 
 TEST_F(MetadataDecoratorTest, GetDatabase) {
   EXPECT_CALL(*mock_, GetDatabase)
