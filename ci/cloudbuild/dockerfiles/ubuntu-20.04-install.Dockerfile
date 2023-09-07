@@ -134,7 +134,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.1.tar.gz 
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/c-ares
-RUN curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
+RUN curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
