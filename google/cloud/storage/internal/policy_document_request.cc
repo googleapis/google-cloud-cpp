@@ -78,17 +78,18 @@ inline bool IsEncoded(char c, std::int32_t mask) {
   return (static_cast<std::uint8_t>(c) & mask) == ((mask - 1) & mask);
 }
 
+// REQUIRES: pos < s.zie()
+// REQUIRES: n > 0
+// Note that all call sites are in this file, so it is trivial to verify the
+// requirements are satisfied.
 Status ValidateUTF8Encoding(absl::string_view s, std::size_t pos,
                             std::size_t n) {
-  // `pos` is always <= s.size().
   if (s.size() - pos < n) {
     return InvalidArgumentError(
         absl::StrCat("Expected UTF-8 string, found partial UTF-8 encoding at ",
                      pos, " string=<", s, ">"),
         GCP_ERROR_INFO());
   }
-  // Note that this function is always called with `n > 0`. All the call sites
-  // are in this file.
   for (auto i = pos + 1; i != pos + n; ++i) {
     if (IsEncoded(s[i], kMaskTrail)) continue;
     return InvalidArgumentError(
