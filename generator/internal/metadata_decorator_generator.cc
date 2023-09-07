@@ -138,7 +138,8 @@ class $metadata_class_name$ : public $stub_class_name$ {
   ~$metadata_class_name$() override = default;
   $metadata_class_name$(
       std::shared_ptr<$stub_class_name$> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 )""");
 
   HeaderPrintPublicMethods();
@@ -183,7 +184,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
                        : "",
                    "google/cloud/common_options.h", "google/cloud/status_or.h",
                    "google/cloud/internal/url_encode.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -192,10 +193,14 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   CcPrint(R"""(
 $metadata_class_name$::$metadata_class_name$(
     std::shared_ptr<$stub_class_name$> child,
-    std::multimap<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 )""");
 
   // metadata decorator class member methods
