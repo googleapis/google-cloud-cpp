@@ -13,6 +13,57 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ~~~
+include(CMakePrintHelpers)
+
+# Defines a compute proto library and installs the .proto and .pb.h files.
+function (compute_proto_library library)
+    cmake_parse_arguments(_opt "" "" "DEPS;PROTO_FILES" ${ARGN})
+    string(REPLACE "google_cloud_cpp_" "" alias "${library}")
+
+    cmake_print_variables(library alias _opt_DEPS _opt_PROTO_FILES)
+    google_cloud_cpp_proto_library(
+        "${library}" "${_opt_PROTO_FILES}" PROTO_PATH_DIRECTORIES
+        "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
+        "${PROJECT_SOURCE_DIR}")
+    external_googleapis_set_version_and_alias("${alias}")
+    target_link_libraries("${library}" PUBLIC "${_opt_DEPS}")
+    # Some files are too big for the MSVC defaults.
+    if (MSVC)
+        target_compile_options("${library}" PRIVATE "/bigobj")
+    endif ()
+    google_cloud_cpp_install_proto_library_protos("${library}"
+                                                  "${PROJECT_SOURCE_DIR}")
+    google_cloud_cpp_install_proto_library_headers("${library}")
+endfunction ()
+
+# Defines a compute service library.
+function (compute_service_library library)
+    cmake_parse_arguments(_opt "" "" "DEPS;SRC_FILES" ${ARGN})
+    string(REPLACE "google_cloud_cpp_" "" service_name "${library}")
+    string(REPLACE "_" "-" alias "${service_name}")
+
+    cmake_print_variables(library alias _opt_DEPS _opt_SRC_FILES)
+
+    add_library(${library} ${_opt_SRC_FILES})
+    target_include_directories(
+        ${library}
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
+
+    target_link_libraries(${library} PUBLIC ${_opt_DEPS})
+
+    google_cloud_cpp_add_common_options(${library})
+    set_target_properties(
+        ${library}
+        PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-${alias}
+                   VERSION "${PROJECT_VERSION}"
+                   SOVERSION "${PROJECT_VERSION_MAJOR}")
+    target_compile_options(${library}
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+    add_library(google-cloud-cpp::experimental-${alias} ALIAS ${library})
+endfunction ()
 
 include(GoogleapisConfig)
 
@@ -115,8 +166,7 @@ include(GoogleCloudCppCommon)
 include(CompileProtos)
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
-    proto_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
+    deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
 
 # internal protos
 file(
@@ -125,24 +175,11 @@ file(
     RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "v1/internal/*.proto")
 list(SORT internal_proto_files)
 
-google_cloud_cpp_proto_library(
-    google_cloud_cpp_compute_internal_protos ${internal_proto_files}
-    PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}" "${PROJECT_SOURCE_DIR}")
-external_googleapis_set_version_and_alias(compute_internal_protos)
-target_link_libraries(google_cloud_cpp_compute_internal_protos
-                      PUBLIC ${proto_deps})
-# Some files are too big for the MSVC defaults.
-if (MSVC)
-    target_compile_options(google_cloud_cpp_compute_internal_protos
-                           PRIVATE "/bigobj")
-endif ()
-google_cloud_cpp_install_proto_library_protos(
-    "google_cloud_cpp_compute_internal_protos" "${PROJECT_SOURCE_DIR}")
-google_cloud_cpp_install_proto_library_headers(
-    "google_cloud_cpp_compute_internal_protos")
+compute_proto_library("google_cloud_cpp_compute_internal_protos" PROTO_FILES
+                      "${internal_proto_files}" DEPS "${deps}")
 
 # service protos
+list(APPEND deps google_cloud_cpp_compute_internal_protos)
 unset(compute_proto_lib_targets)
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     if (NOT "${dir}" STREQUAL "v1/")
@@ -153,31 +190,12 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
             RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.proto")
         list(SORT ${short_dir}_proto_files)
 
-        google_cloud_cpp_proto_library(
-            google_cloud_cpp_compute_${short_dir}_protos
-            ${${short_dir}_proto_files}
-            PROTO_PATH_DIRECTORIES
-            "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-            "${PROTO_INCLUDE_DIR}"
-            "${PROJECT_SOURCE_DIR}")
-        external_googleapis_set_version_and_alias(compute_${short_dir}_protos)
-        target_link_libraries(google_cloud_cpp_compute_${short_dir}_protos
-                              PUBLIC google_cloud_cpp_compute_internal_protos)
-        # Some files are too big for the MSVC defaults.
-        if (MSVC)
-            target_compile_options(google_cloud_cpp_compute_${short_dir}_protos
-                                   PRIVATE "/bigobj")
-        endif ()
-
-        google_cloud_cpp_install_proto_library_protos(
-            "google_cloud_cpp_compute_${short_dir}_protos"
-            "${PROJECT_SOURCE_DIR}")
-        google_cloud_cpp_install_proto_library_headers(
-            "google_cloud_cpp_compute_${short_dir}_protos")
+        compute_proto_library(
+            "google_cloud_cpp_compute_${short_dir}_protos" PROTO_FILES
+            "${${short_dir}_proto_files}" DEPS ${deps})
 
         list(APPEND compute_proto_lib_targets
              "google_cloud_cpp_compute_${short_dir}_protos")
-
     endif ()
 endforeach ()
 
@@ -197,91 +215,54 @@ google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
                                  ${compute_proto_lib_targets})
 
 unset(compute_operation_lib_targets)
+list(APPEND deps google-cloud-cpp::rest_protobuf_internal)
+list(APPEND deps google-cloud-cpp::grpc_utils)
+list(APPEND deps google-cloud-cpp::rest_internal)
+list(APPEND deps google-cloud-cpp::common)
 foreach (dir IN LISTS operation_service_dirs)
     if (NOT "${dir}" STREQUAL "v1/")
         string(REPLACE "/v1/" "" short_dir "${dir}")
+        unset(service_source_files)
         file(
-            GLOB ${short_dir}_source_files
+            GLOB service_source_files
             LIST_DIRECTORIES false
             RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h"
             "${dir}*.cc" "${dir}internal/*")
-        list(SORT ${short_dir}_source_files)
+        list(SORT service_source_files)
 
-        add_library(google_cloud_cpp_compute_${short_dir}
-                    ${${short_dir}_source_files})
-        target_include_directories(
-            google_cloud_cpp_compute_${short_dir}
-            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                   $<INSTALL_INTERFACE:include>)
+        compute_service_library(
+            google_cloud_cpp_compute_${short_dir} SRC_FILES
+            ${service_source_files} DEPS ${deps}
+            google-cloud-cpp::compute_${short_dir}_protos)
 
-        target_link_libraries(
-            google_cloud_cpp_compute_${short_dir}
-            PUBLIC google-cloud-cpp::grpc_utils
-                   google-cloud-cpp::common
-                   google-cloud-cpp::rest_internal
-                   google-cloud-cpp::rest_protobuf_internal
-                   google-cloud-cpp::compute_${short_dir}_protos)
-        google_cloud_cpp_add_common_options(
-            google_cloud_cpp_compute_${short_dir})
-        set_target_properties(
-            google_cloud_cpp_compute_${short_dir}
-            PROPERTIES EXPORT_NAME
-                       google-cloud-cpp::experimental-compute-${short_dir}
-                       VERSION "${PROJECT_VERSION}"
-                       SOVERSION "${PROJECT_VERSION_MAJOR}")
-        target_compile_options(google_cloud_cpp_compute_${short_dir}
-                               PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-        add_library(google-cloud-cpp::experimental-compute-${short_dir} ALIAS
-                    google_cloud_cpp_compute_${short_dir})
         list(APPEND compute_operation_lib_targets
              "google_cloud_cpp_compute_${short_dir}")
     endif ()
 endforeach ()
 
 unset(compute_lib_targets)
+
+list(APPEND deps google-cloud-cpp::experimental-compute-global-operations)
+list(APPEND deps
+     google-cloud-cpp::experimental-compute-global-organization-operations)
+list(APPEND deps google-cloud-cpp::experimental-compute-region-operations)
+list(APPEND deps google-cloud-cpp::experimental-compute-zone-operations)
 foreach (dir IN LISTS service_dirs)
     if (NOT "${dir}" STREQUAL "v1/")
         string(REPLACE "/v1/" "" short_dir "${dir}")
+        unset(service_source_files)
         file(
-            GLOB ${short_dir}_source_files
+            GLOB service_source_files
             LIST_DIRECTORIES false
             RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h"
             "${dir}*.cc" "${dir}internal/*")
-        list(SORT ${short_dir}_source_files)
+        list(SORT service_source_files)
 
-        add_library(google_cloud_cpp_compute_${short_dir}
-                    ${${short_dir}_source_files})
-        target_include_directories(
-            google_cloud_cpp_compute_${short_dir}
-            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                   $<INSTALL_INTERFACE:include>)
-        target_link_libraries(
-            google_cloud_cpp_compute_${short_dir}
-            PUBLIC google-cloud-cpp::grpc_utils
-                   google-cloud-cpp::common
-                   google-cloud-cpp::rest_internal
-                   google-cloud-cpp::rest_protobuf_internal
-                   google_cloud_cpp_compute_global_operations
-                   google_cloud_cpp_compute_global_organization_operations
-                   google_cloud_cpp_compute_region_operations
-                   google_cloud_cpp_compute_zone_operations
-                   google-cloud-cpp::compute_${short_dir}_protos)
-        google_cloud_cpp_add_common_options(
-            google_cloud_cpp_compute_${short_dir})
-        set_target_properties(
-            google_cloud_cpp_compute_${short_dir}
-            PROPERTIES EXPORT_NAME
-                       google-cloud-cpp::experimental-compute-${short_dir}
-                       VERSION "${PROJECT_VERSION}"
-                       SOVERSION "${PROJECT_VERSION_MAJOR}")
-        target_compile_options(google_cloud_cpp_compute_${short_dir}
-                               PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+        compute_service_library(
+            google_cloud_cpp_compute_${short_dir} SRC_FILES
+            ${service_source_files} DEPS ${deps}
+            google-cloud-cpp::compute_${short_dir}_protos)
 
-        add_library(google-cloud-cpp::experimental-compute-${short_dir} ALIAS
-                    google_cloud_cpp_compute_${short_dir})
         list(APPEND compute_lib_targets "google_cloud_cpp_compute_${short_dir}")
     endif ()
 endforeach ()
