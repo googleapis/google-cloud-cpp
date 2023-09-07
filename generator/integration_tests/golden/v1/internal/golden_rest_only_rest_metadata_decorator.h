@@ -35,7 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GoldenRestOnlyRestMetadata : public GoldenRestOnlyRestStub {
  public:
   ~GoldenRestOnlyRestMetadata() override = default;
-  explicit GoldenRestOnlyRestMetadata(std::shared_ptr<GoldenRestOnlyRestStub> child);
+  explicit GoldenRestOnlyRestMetadata(
+      std::shared_ptr<GoldenRestOnlyRestStub> child,
+      std::string api_client_header = "");
 
   Status Noop(
       google::cloud::rest_internal::RestContext& rest_context,

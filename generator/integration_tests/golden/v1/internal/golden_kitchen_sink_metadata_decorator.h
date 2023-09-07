@@ -35,7 +35,8 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   ~GoldenKitchenSinkMetadata() override = default;
   GoldenKitchenSinkMetadata(
       std::shared_ptr<GoldenKitchenSinkStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,

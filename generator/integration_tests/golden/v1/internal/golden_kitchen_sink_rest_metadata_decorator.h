@@ -35,7 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GoldenKitchenSinkRestMetadata : public GoldenKitchenSinkRestStub {
  public:
   ~GoldenKitchenSinkRestMetadata() override = default;
-  explicit GoldenKitchenSinkRestMetadata(std::shared_ptr<GoldenKitchenSinkRestStub> child);
+  explicit GoldenKitchenSinkRestMetadata(
+      std::shared_ptr<GoldenKitchenSinkRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,

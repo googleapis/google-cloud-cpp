@@ -36,7 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GoldenThingAdminRestMetadata : public GoldenThingAdminRestStub {
  public:
   ~GoldenThingAdminRestMetadata() override = default;
-  explicit GoldenThingAdminRestMetadata(std::shared_ptr<GoldenThingAdminRestStub> child);
+  explicit GoldenThingAdminRestMetadata(
+      std::shared_ptr<GoldenThingAdminRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
