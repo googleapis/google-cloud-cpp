@@ -23,7 +23,7 @@ ARG NCPU=4
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
+        gcc g++ libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 # ```
 
@@ -136,6 +136,26 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
+# ```
+
+# #### c-ares
+
+# gRPC >= 1.58.0 requires c-ares >= 1.18.0. We show how to install c-ares
+# from source, but you may install the development package if you are using an
+# older version of gRPC.
+
+# ```bash
+WORKDIR /var/tmp/build/c-ares
+RUN curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 # ```
 
 # #### gRPC
