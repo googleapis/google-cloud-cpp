@@ -15,11 +15,13 @@
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/make_status.h"
+#include "absl/functional/function_ref.h"
+#include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
-#include <codecvt>
 #include <iomanip>
-#include <locale>
 #include <sstream>
 
 namespace google {
@@ -28,6 +30,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
+using ::google::cloud::internal::InvalidArgumentError;
 
 nlohmann::json TransformConditions(
     std::vector<PolicyDocumentCondition> const& conditions) {
@@ -56,94 +60,159 @@ nlohmann::json TransformConditions(
   return res;
 }
 
-/// If c is ASCII escape it and append it to result. Return if it is ASCII.
-bool EscapeAsciiChar(std::string& result, char32_t c) {
-  switch (c) {
-    case '\b':
-      result.append("\\b");
-      return true;
-    case '\f':
-      result.append("\\f");
-      return true;
-    case '\n':
-      result.append("\\n");
-      return true;
-    case '\r':
-      result.append("\\r");
-      return true;
-    case '\t':
-      result.append("\\t");
-      return true;
-    case '\v':
-      result.append("\\v");
-      return true;
-  }
-  char32_t constexpr kMaxAsciiChar = 127;
-  if (c > kMaxAsciiChar) {
-    return false;
-  }
-  result.append(1, static_cast<char>(c));
-  return true;
+// https://en.wikipedia.org/wiki/UTF-8
+
+// The masks for 1-byte, 2-byte, 3-byte and 4-byte UTF-8 encodings. The bits
+// that are *set* in these masks are used to extract the marker bits, i.e.,
+// those indicating the length of the encoding. Negating the mask let's you
+// extract the value bits.
+auto constexpr kMask1 = 0b1000'0000U;
+auto constexpr kMask2 = 0b1110'0000U;
+auto constexpr kMask3 = 0b1111'0000U;
+auto constexpr kMask4 = 0b1111'1000U;
+
+// The mask for the trailing bytes.
+auto constexpr kMaskTrail = 0b1100'0000U;
+
+inline bool IsEncoded(char c, std::int32_t mask) {
+  return (static_cast<std::uint8_t>(c) & mask) == ((mask - 1) & mask);
 }
+
+// REQUIRES: pos < s.zie()
+// REQUIRES: n > 0
+// Note that all call sites are in this file, so it is trivial to verify the
+// requirements are satisfied.
+Status ValidateUTF8Encoding(absl::string_view s, std::size_t pos,
+                            std::size_t n) {
+  if (s.size() - pos < n) {
+    return InvalidArgumentError(
+        absl::StrCat("Expected UTF-8 string, found partial UTF-8 encoding at ",
+                     pos, " string=<", s, ">"),
+        GCP_ERROR_INFO());
+  }
+  for (auto i = pos + 1; i != pos + n; ++i) {
+    if (IsEncoded(s[i], kMaskTrail)) continue;
+    return InvalidArgumentError(
+        absl::StrCat(
+            "Expected UTF-8 string, found incorrect UTF-8 encoding at ", pos,
+            " string=<", s, ">"),
+        GCP_ERROR_INFO());
+  }
+  return Status{};
+}
+
+inline std::uint32_t ValueBits(char c, std::uint32_t mask) {
+  return static_cast<std::uint8_t>(c) & ~mask;
+}
+
+inline std::uint32_t Header2(char c) { return ValueBits(c, kMask2); }
+inline std::uint32_t Header3(char c) { return ValueBits(c, kMask3); }
+inline std::uint32_t Header4(char c) { return ValueBits(c, kMask4); }
+inline std::uint32_t Trailer(char c) { return ValueBits(c, kMaskTrail); }
+
+inline std::uint32_t DecodeUTF8(std::uint32_t e3, std::uint32_t e2,
+                                std::uint32_t e1, std::uint32_t e0) {
+  return ((((e3 << 6 | e2) << 6) | e1) << 6) | e0;
+}
+
+StatusOr<std::string> Escape1(absl::string_view s, std::size_t pos) {
+  auto status = ValidateUTF8Encoding(s, pos, 1);
+  if (!status.ok()) return status;
+  // Some characters need to be escaped.
+  switch (s[pos]) {
+    case '\b':
+      return std::string("\\b");
+    case '\f':
+      return std::string("\\f");
+    case '\n':
+      return std::string("\\n");
+    case '\r':
+      return std::string("\\r");
+    case '\t':
+      return std::string("\\t");
+    case '\v':
+      return std::string("\\v");
+  }
+  return std::string(s.substr(pos, 1));
+}
+
+StatusOr<std::string> Escape2(absl::string_view s, std::size_t pos) {
+  auto status = ValidateUTF8Encoding(s, pos, 2);
+  if (!status.ok()) return status;
+  auto const e = s.substr(pos, 2);
+  return absl::StrFormat("\\u%04x",
+                         DecodeUTF8(0, 0, Header2(e[0]), Trailer(e[1])));
+}
+
+StatusOr<std::string> Escape3(absl::string_view s, std::size_t pos) {
+  auto status = ValidateUTF8Encoding(s, pos, 3);
+  if (!status.ok()) return status;
+  auto const e = s.substr(pos, 3);
+  return absl::StrFormat(
+      "\\u%04x", DecodeUTF8(0, Header3(e[0]), Trailer(e[1]), Trailer(e[2])));
+}
+
+StatusOr<std::string> Escape4(absl::string_view s, std::size_t pos) {
+  auto status = ValidateUTF8Encoding(s, pos, 4);
+  if (!status.ok()) return status;
+  auto const e = s.substr(pos, 4);
+  auto codepoint =
+      DecodeUTF8(Header4(e[0]), Trailer(e[1]), Trailer(e[2]), Trailer(e[3]));
+  if (codepoint <= 0xFFFFU) return absl::StrFormat("\\u%04x", codepoint);
+  return absl::StrFormat("\\U%08x", codepoint);
+}
+
+StatusOr<std::string> EscapeUTF8(absl::string_view s) {
+  using Encoder =
+      absl::FunctionRef<StatusOr<std::string>(absl::string_view, std::size_t)>;
+  struct {
+    std::uint32_t mask;
+    Encoder encode;
+  } const encodings[] = {
+      {kMask1, Escape1},
+      {kMask2, Escape2},
+      {kMask3, Escape3},
+      {kMask4, Escape4},
+  };
+  // Iterate over all the bytes in the input string. Interpreting each UTF-8
+  // sequence as needed.
+  std::string result;
+  std::size_t pos = 0;
+  while (pos != s.size()) {
+    // Test if s[pos] is a 1, 2, 3 or 4 byte UTF-8 codepoint. If it is matched
+    // add the escaped characters to `result`. If it is not matched return an
+    // error.
+    bool matched = false;
+    std::size_t n = 1;
+    for (auto const& e : encodings) {
+      if (IsEncoded(s[pos], e.mask)) {
+        // The encoder will return an error if the encoding is too short or
+        // otherwise invalid.
+        auto r = e.encode(s, pos);
+        if (!r) return r;
+        result += *r;
+        matched = true;
+        break;
+      }
+      ++n;
+    }
+    if (!matched) {
+      return InvalidArgumentError(
+          absl::StrCat("Expected UTF-8 string, found non-UTF-8 character (",
+                       static_cast<int>(s[pos]), ") at ", pos, " string=<", s,
+                       ">"),
+          GCP_ERROR_INFO());
+    }
+    // Skip all the bytes in the UTF-8 character.
+    pos += n;
+  }
+  return result;
+}
+
 }  // namespace
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
-  std::string result;
-
-#if (_MSC_VER >= 1900) && !defined(_LIBCPP_VERSION)
-  // Working around missing std::codecvt_utf8<char32_t> symbols in MSVC
-  // Microsoft bug number: VSO#143857
-  // Context:
-  // https://social.msdn.microsoft.com/Forums/en-US/8f40dcd8-c67f-4eba-9134-a19b9178e481/vs-2015-rc-linker-stdcodecvt-error?forum=vcgeneral
-  using WideChar = __int32;
-#else   // (_MSC_VER >= 1900)
-  using WideChar = char32_t;
-#endif  // (_MSC_VER >= 1900)
-  std::wstring_convert<std::codecvt_utf8<WideChar>, WideChar> conv;
-  std::basic_string<WideChar> utf32;
-  try {
-    utf32 = conv.from_bytes(utf8_bytes);
-  } catch (std::exception const& ex) {
-    return Status(StatusCode::kInvalidArgument,
-                  std::string("string failed to parse as UTF-8: ") + ex.what());
-  }
-  utf32 = conv.from_bytes(utf8_bytes);
-  for (auto c : utf32) {
-    bool is_ascii = EscapeAsciiChar(result, c);
-    if (!is_ascii) {
-      // All unicode characters should be encoded as \udead.
-      std::ostringstream os;
-      os << "\\u" << std::setw(4) << std::setfill('0') << std::hex
-         << static_cast<std::uint32_t>(c);
-      result.append(os.str());
-    }
-  }
-  return result;
-}
-#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const&) {
-  return Status(StatusCode::kUnimplemented,
-                "Signing POST policies is unavailable with this compiler due "
-                "to the lack of exception support.");
-}
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-
 StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes) {
-  std::string result;
-
-  for (char32_t c : utf8_bytes) {
-    bool is_ascii = EscapeAsciiChar(result, c);
-    if (!is_ascii) {
-      // We first try to escape the string assuming it's plain ASCII. If it
-      // turns out that there are non-ASCII characters, we fall back to
-      // interpreting it as proper UTF-8. We do it because it will be faster in
-      // the common case and, more importantly, this allows the common case to
-      // work properly on compilers which don't have UTF8 support.
-      return PostPolicyV4EscapeUTF8(utf8_bytes);
-    }
-  }
-  return result;
+  return EscapeUTF8(utf8_bytes);
 }
 
 std::string PolicyDocumentRequest::StringToSign() const {
