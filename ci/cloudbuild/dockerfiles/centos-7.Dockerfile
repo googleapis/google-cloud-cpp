@@ -89,10 +89,14 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.1.tar.gz 
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/c-ares
-RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+RUN curl -fsSL https://github.com/c-ares/c-ares/releases/download/cares-1_18_1/c-ares-1.18.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    ./buildconf && ./configure && make -j "$(nproc)" && \
-    make install && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out && \
+    cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
