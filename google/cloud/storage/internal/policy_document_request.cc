@@ -83,16 +83,18 @@ Status ValidateUTF8Encoding(absl::string_view s, std::size_t pos,
   // `pos` is always <= s.size().
   if (s.size() - pos < n) {
     return InvalidArgumentError(
-        absl::StrCat("Expected UTF-8 string, found partial UTF8 encoding at ",
+        absl::StrCat("Expected UTF-8 string, found partial UTF-8 encoding at ",
                      pos, " string=<", s, ">"),
         GCP_ERROR_INFO());
   }
-  // Note that `n > 0` because `n > s.size() - pos >= 0`.
+  // Note that this function is always called with `n > 0`. All the call sites
+  // are in this file.
   for (auto i = pos + 1; i != pos + n; ++i) {
     if (IsEncoded(s[i], kMaskTrail)) continue;
     return InvalidArgumentError(
-        absl::StrCat("Expected UTF-8 string, found incorrect UTF8 encoding at ",
-                     pos, " string=<", s, ">"),
+        absl::StrCat(
+            "Expected UTF-8 string, found incorrect UTF-8 encoding at ", pos,
+            " string=<", s, ">"),
         GCP_ERROR_INFO());
   }
   return Status{};
@@ -195,7 +197,7 @@ StatusOr<std::string> EscapeUTF8(absl::string_view s) {
     }
     if (!matched) {
       return InvalidArgumentError(
-          absl::StrCat("Expected UTF-8 string, found non-UTF8 character (",
+          absl::StrCat("Expected UTF-8 string, found non-UTF-8 character (",
                        static_cast<int>(s[pos]), ") at ", pos, " string=<", s,
                        ">"),
           GCP_ERROR_INFO());
