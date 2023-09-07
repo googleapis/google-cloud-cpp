@@ -36,7 +36,8 @@ class SqlFlagsServiceRestMetadata : public SqlFlagsServiceRestStub {
  public:
   ~SqlFlagsServiceRestMetadata() override = default;
   explicit SqlFlagsServiceRestMetadata(
-      std::shared_ptr<SqlFlagsServiceRestStub> child);
+      std::shared_ptr<SqlFlagsServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,

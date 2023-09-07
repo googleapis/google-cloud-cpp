@@ -36,7 +36,8 @@ class ImageFamilyViewsRestMetadata : public ImageFamilyViewsRestStub {
  public:
   ~ImageFamilyViewsRestMetadata() override = default;
   explicit ImageFamilyViewsRestMetadata(
-      std::shared_ptr<ImageFamilyViewsRestStub> child);
+      std::shared_ptr<ImageFamilyViewsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
   GetImageFamilyViews(google::cloud::rest_internal::RestContext& rest_context,

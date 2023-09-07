@@ -36,7 +36,8 @@ class ConversationalSearchServiceMetadata
   ~ConversationalSearchServiceMetadata() override = default;
   ConversationalSearchServiceMetadata(
       std::shared_ptr<ConversationalSearchServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
   ConverseConversation(

@@ -35,7 +35,8 @@ class DashboardsServiceMetadata : public DashboardsServiceStub {
   ~DashboardsServiceMetadata() override = default;
   DashboardsServiceMetadata(
       std::shared_ptr<DashboardsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
       grpc::ClientContext& context,

@@ -35,7 +35,8 @@ class ServiceUsageMetadata : public ServiceUsageStub {
  public:
   ~ServiceUsageMetadata() override = default;
   ServiceUsageMetadata(std::shared_ptr<ServiceUsageStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncEnableService(
       google::cloud::CompletionQueue& cq,

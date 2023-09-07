@@ -38,7 +38,8 @@ class RegionInstanceGroupsRestMetadata : public RegionInstanceGroupsRestStub {
  public:
   ~RegionInstanceGroupsRestMetadata() override = default;
   explicit RegionInstanceGroupsRestMetadata(
-      std::shared_ptr<RegionInstanceGroupsRestStub> child);
+      std::shared_ptr<RegionInstanceGroupsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
   GetRegionInstanceGroups(

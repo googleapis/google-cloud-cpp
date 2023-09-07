@@ -36,7 +36,8 @@ class ZoneOperationsRestMetadata : public ZoneOperationsRestStub {
  public:
   ~ZoneOperationsRestMetadata() override = default;
   explicit ZoneOperationsRestMetadata(
-      std::shared_ptr<ZoneOperationsRestStub> child);
+      std::shared_ptr<ZoneOperationsRestStub> child,
+      std::string api_client_header = "");
 
   Status DeleteZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,

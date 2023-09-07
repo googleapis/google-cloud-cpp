@@ -35,7 +35,8 @@ class QuotaControllerMetadata : public QuotaControllerStub {
   ~QuotaControllerMetadata() override = default;
   QuotaControllerMetadata(
       std::shared_ptr<QuotaControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(grpc::ClientContext& context,

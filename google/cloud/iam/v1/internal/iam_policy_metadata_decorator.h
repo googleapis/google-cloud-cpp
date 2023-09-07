@@ -34,7 +34,8 @@ class IAMPolicyMetadata : public IAMPolicyStub {
  public:
   ~IAMPolicyMetadata() override = default;
   IAMPolicyMetadata(std::shared_ptr<IAMPolicyStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,

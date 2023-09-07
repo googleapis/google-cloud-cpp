@@ -38,7 +38,8 @@ class InterconnectRemoteLocationsRestMetadata
  public:
   ~InterconnectRemoteLocationsRestMetadata() override = default;
   explicit InterconnectRemoteLocationsRestMetadata(
-      std::shared_ptr<InterconnectRemoteLocationsRestStub> child);
+      std::shared_ptr<InterconnectRemoteLocationsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
   GetInterconnectRemoteLocations(

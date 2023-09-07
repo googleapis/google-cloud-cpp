@@ -36,7 +36,8 @@ class VpcAccessServiceMetadata : public VpcAccessServiceStub {
   ~VpcAccessServiceMetadata() override = default;
   VpcAccessServiceMetadata(
       std::shared_ptr<VpcAccessServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnector(
       google::cloud::CompletionQueue& cq,

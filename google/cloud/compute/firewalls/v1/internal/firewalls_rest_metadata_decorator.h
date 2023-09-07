@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallsRestMetadata : public FirewallsRestStub {
  public:
   ~FirewallsRestMetadata() override = default;
-  explicit FirewallsRestMetadata(std::shared_ptr<FirewallsRestStub> child);
+  explicit FirewallsRestMetadata(std::shared_ptr<FirewallsRestStub> child,
+                                 std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteFirewalls(

@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,10 +32,13 @@ namespace compute_global_addresses_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalAddressesRestMetadata::GlobalAddressesRestMetadata(
-    std::shared_ptr<GlobalAddressesRestStub> child)
+    std::shared_ptr<GlobalAddressesRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestMetadata::AsyncDeleteGlobalAddresses(

@@ -36,7 +36,8 @@ class AcceleratorTypesRestMetadata : public AcceleratorTypesRestStub {
  public:
   ~AcceleratorTypesRestMetadata() override = default;
   explicit AcceleratorTypesRestMetadata(
-      std::shared_ptr<AcceleratorTypesRestStub> child);
+      std::shared_ptr<AcceleratorTypesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
   AggregatedListAcceleratorTypes(

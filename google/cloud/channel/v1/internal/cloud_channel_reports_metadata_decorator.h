@@ -37,7 +37,8 @@ class CloudChannelReportsServiceMetadata
   ~CloudChannelReportsServiceMetadata() override = default;
   CloudChannelReportsServiceMetadata(
       std::shared_ptr<CloudChannelReportsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunReportJob(
       google::cloud::CompletionQueue& cq,

@@ -35,7 +35,8 @@ class ConnectorsMetadata : public ConnectorsStub {
  public:
   ~ConnectorsMetadata() override = default;
   ConnectorsMetadata(std::shared_ptr<ConnectorsStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
   ListConnections(grpc::ClientContext& context,

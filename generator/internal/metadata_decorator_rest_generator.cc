@@ -129,7 +129,9 @@ Status MetadataDecoratorRestGenerator::GenerateHeader() {
 class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
  public:
   ~$metadata_rest_class_name$() override = default;
-  explicit $metadata_rest_class_name$(std::shared_ptr<$stub_rest_class_name$> child);
+  explicit $metadata_rest_class_name$(
+      std::shared_ptr<$stub_rest_class_name$> child,
+      std::string api_client_header = "");
 )""");
 
   for (auto const& method : methods()) {
@@ -230,7 +232,7 @@ Status MetadataDecoratorRestGenerator::GenerateCc() {
                    "google/cloud/internal/absl_str_cat_quiet.h",
                    "google/cloud/internal/absl_str_join_quiet.h",
                    "absl/strings/str_format.h"});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -238,9 +240,13 @@ Status MetadataDecoratorRestGenerator::GenerateCc() {
   // constructor
   CcPrint(R"""(
 $metadata_rest_class_name$::$metadata_rest_class_name$(
-    std::shared_ptr<$stub_rest_class_name$> child)
+    std::shared_ptr<$stub_rest_class_name$> child,
+    std::string api_client_header)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 )""");
 
   // metadata decorator class member methods

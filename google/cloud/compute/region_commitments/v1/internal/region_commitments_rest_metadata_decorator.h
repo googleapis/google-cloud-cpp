@@ -37,7 +37,8 @@ class RegionCommitmentsRestMetadata : public RegionCommitmentsRestStub {
  public:
   ~RegionCommitmentsRestMetadata() override = default;
   explicit RegionCommitmentsRestMetadata(
-      std::shared_ptr<RegionCommitmentsRestStub> child);
+      std::shared_ptr<RegionCommitmentsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
   AggregatedListRegionCommitments(

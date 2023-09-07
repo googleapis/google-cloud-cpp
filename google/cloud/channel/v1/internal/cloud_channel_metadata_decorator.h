@@ -36,7 +36,8 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
   ~CloudChannelServiceMetadata() override = default;
   CloudChannelServiceMetadata(
       std::shared_ptr<CloudChannelServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
       grpc::ClientContext& context,

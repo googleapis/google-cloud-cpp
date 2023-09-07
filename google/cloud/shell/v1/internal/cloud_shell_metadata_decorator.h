@@ -36,7 +36,8 @@ class CloudShellServiceMetadata : public CloudShellServiceStub {
   ~CloudShellServiceMetadata() override = default;
   CloudShellServiceMetadata(
       std::shared_ptr<CloudShellServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       grpc::ClientContext& context,

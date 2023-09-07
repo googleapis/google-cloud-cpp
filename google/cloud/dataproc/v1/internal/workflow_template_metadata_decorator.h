@@ -36,7 +36,8 @@ class WorkflowTemplateServiceMetadata : public WorkflowTemplateServiceStub {
   ~WorkflowTemplateServiceMetadata() override = default;
   WorkflowTemplateServiceMetadata(
       std::shared_ptr<WorkflowTemplateServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(

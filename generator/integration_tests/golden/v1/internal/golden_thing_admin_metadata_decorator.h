@@ -36,7 +36,8 @@ class GoldenThingAdminMetadata : public GoldenThingAdminStub {
   ~GoldenThingAdminMetadata() override = default;
   GoldenThingAdminMetadata(
       std::shared_ptr<GoldenThingAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
       grpc::ClientContext& context,

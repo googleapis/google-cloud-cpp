@@ -39,7 +39,8 @@ class RegionTargetTcpProxiesRestMetadata
  public:
   ~RegionTargetTcpProxiesRestMetadata() override = default;
   explicit RegionTargetTcpProxiesRestMetadata(
-      std::shared_ptr<RegionTargetTcpProxiesRestStub> child);
+      std::shared_ptr<RegionTargetTcpProxiesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionTargetTcpProxies(

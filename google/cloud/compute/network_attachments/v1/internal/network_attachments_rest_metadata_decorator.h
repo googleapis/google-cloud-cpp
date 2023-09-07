@@ -37,7 +37,8 @@ class NetworkAttachmentsRestMetadata : public NetworkAttachmentsRestStub {
  public:
   ~NetworkAttachmentsRestMetadata() override = default;
   explicit NetworkAttachmentsRestMetadata(
-      std::shared_ptr<NetworkAttachmentsRestStub> child);
+      std::shared_ptr<NetworkAttachmentsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
   AggregatedListNetworkAttachments(

@@ -35,7 +35,8 @@ class MetricsServiceV2Metadata : public MetricsServiceV2Stub {
   ~MetricsServiceV2Metadata() override = default;
   MetricsServiceV2Metadata(
       std::shared_ptr<MetricsServiceV2Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::logging::v2::ListLogMetricsResponse> ListLogMetrics(
       grpc::ClientContext& context,

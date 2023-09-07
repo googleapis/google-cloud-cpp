@@ -36,7 +36,8 @@ class FeaturestoreServiceMetadata : public FeaturestoreServiceStub {
   ~FeaturestoreServiceMetadata() override = default;
   FeaturestoreServiceMetadata(
       std::shared_ptr<FeaturestoreServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeaturestore(
       google::cloud::CompletionQueue& cq,

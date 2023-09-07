@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OsLoginServiceMetadata : public OsLoginServiceStub {
  public:
   ~OsLoginServiceMetadata() override = default;
-  OsLoginServiceMetadata(
-      std::shared_ptr<OsLoginServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  OsLoginServiceMetadata(std::shared_ptr<OsLoginServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       grpc::ClientContext& context,

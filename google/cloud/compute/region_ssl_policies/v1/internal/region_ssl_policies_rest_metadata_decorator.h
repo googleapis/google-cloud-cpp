@@ -37,7 +37,8 @@ class RegionSslPoliciesRestMetadata : public RegionSslPoliciesRestStub {
  public:
   ~RegionSslPoliciesRestMetadata() override = default;
   explicit RegionSslPoliciesRestMetadata(
-      std::shared_ptr<RegionSslPoliciesRestStub> child);
+      std::shared_ptr<RegionSslPoliciesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionSslPolicies(

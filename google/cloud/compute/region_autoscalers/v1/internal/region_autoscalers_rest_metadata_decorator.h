@@ -37,7 +37,8 @@ class RegionAutoscalersRestMetadata : public RegionAutoscalersRestStub {
  public:
   ~RegionAutoscalersRestMetadata() override = default;
   explicit RegionAutoscalersRestMetadata(
-      std::shared_ptr<RegionAutoscalersRestStub> child);
+      std::shared_ptr<RegionAutoscalersRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionAutoscalers(

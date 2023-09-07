@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class UrlMapsRestMetadata : public UrlMapsRestStub {
  public:
   ~UrlMapsRestMetadata() override = default;
-  explicit UrlMapsRestMetadata(std::shared_ptr<UrlMapsRestStub> child);
+  explicit UrlMapsRestMetadata(std::shared_ptr<UrlMapsRestStub> child,
+                               std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
   AggregatedListUrlMaps(

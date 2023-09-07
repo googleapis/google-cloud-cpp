@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CloudSchedulerMetadata : public CloudSchedulerStub {
  public:
   ~CloudSchedulerMetadata() override = default;
-  CloudSchedulerMetadata(
-      std::shared_ptr<CloudSchedulerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  CloudSchedulerMetadata(std::shared_ptr<CloudSchedulerStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context,

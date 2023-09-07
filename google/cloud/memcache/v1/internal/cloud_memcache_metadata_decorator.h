@@ -35,7 +35,8 @@ class CloudMemcacheMetadata : public CloudMemcacheStub {
  public:
   ~CloudMemcacheMetadata() override = default;
   CloudMemcacheMetadata(std::shared_ptr<CloudMemcacheStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

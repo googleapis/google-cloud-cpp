@@ -36,7 +36,8 @@ class UserEventServiceMetadata : public UserEventServiceStub {
   ~UserEventServiceMetadata() override = default;
   UserEventServiceMetadata(
       std::shared_ptr<UserEventServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       grpc::ClientContext& context,

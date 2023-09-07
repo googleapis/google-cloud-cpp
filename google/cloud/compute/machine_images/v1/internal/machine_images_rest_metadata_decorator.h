@@ -37,7 +37,8 @@ class MachineImagesRestMetadata : public MachineImagesRestStub {
  public:
   ~MachineImagesRestMetadata() override = default;
   explicit MachineImagesRestMetadata(
-      std::shared_ptr<MachineImagesRestStub> child);
+      std::shared_ptr<MachineImagesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteMachineImages(

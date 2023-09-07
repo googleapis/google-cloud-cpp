@@ -35,7 +35,8 @@ class ServingConfigServiceMetadata : public ServingConfigServiceStub {
   ~ServingConfigServiceMetadata() override = default;
   ServingConfigServiceMetadata(
       std::shared_ptr<ServingConfigServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
       grpc::ClientContext& context,

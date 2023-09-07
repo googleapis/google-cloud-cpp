@@ -36,7 +36,8 @@ class ManagedNotebookServiceMetadata : public ManagedNotebookServiceStub {
   ~ManagedNotebookServiceMetadata() override = default;
   ManagedNotebookServiceMetadata(
       std::shared_ptr<ManagedNotebookServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse> ListRuntimes(
       grpc::ClientContext& context,

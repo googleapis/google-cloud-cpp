@@ -35,7 +35,8 @@ class ConnectionServiceMetadata : public ConnectionServiceStub {
   ~ConnectionServiceMetadata() override = default;
   ConnectionServiceMetadata(
       std::shared_ptr<ConnectionServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
   ListConnections(

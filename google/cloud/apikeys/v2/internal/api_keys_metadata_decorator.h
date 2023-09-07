@@ -35,7 +35,8 @@ class ApiKeysMetadata : public ApiKeysStub {
  public:
   ~ApiKeysMetadata() override = default;
   ApiKeysMetadata(std::shared_ptr<ApiKeysStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata);
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,

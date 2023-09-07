@@ -34,7 +34,8 @@ class SnoozeServiceMetadata : public SnoozeServiceStub {
  public:
   ~SnoozeServiceMetadata() override = default;
   SnoozeServiceMetadata(std::shared_ptr<SnoozeServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
       grpc::ClientContext& context,

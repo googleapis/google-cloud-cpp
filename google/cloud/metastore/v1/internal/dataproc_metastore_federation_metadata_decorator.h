@@ -37,7 +37,8 @@ class DataprocMetastoreFederationMetadata
   ~DataprocMetastoreFederationMetadata() override = default;
   DataprocMetastoreFederationMetadata(
       std::shared_ptr<DataprocMetastoreFederationStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
   ListFederations(grpc::ClientContext& context,

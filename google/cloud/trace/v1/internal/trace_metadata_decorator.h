@@ -34,7 +34,8 @@ class TraceServiceMetadata : public TraceServiceStub {
  public:
   ~TraceServiceMetadata() override = default;
   TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
       grpc::ClientContext& context,

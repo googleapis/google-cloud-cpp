@@ -34,7 +34,8 @@ class PagesMetadata : public PagesStub {
  public:
   ~PagesMetadata() override = default;
   PagesMetadata(std::shared_ptr<PagesStub> child,
-                std::multimap<std::string, std::string> fixed_metadata);
+                std::multimap<std::string, std::string> fixed_metadata,
+                std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
       grpc::ClientContext& context,

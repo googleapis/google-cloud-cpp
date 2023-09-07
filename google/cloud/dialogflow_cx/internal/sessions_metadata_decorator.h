@@ -34,7 +34,8 @@ class SessionsMetadata : public SessionsStub {
  public:
   ~SessionsMetadata() override = default;
   SessionsMetadata(std::shared_ptr<SessionsStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
   DetectIntent(grpc::ClientContext& context,

@@ -93,6 +93,28 @@ TEST(ThingAdminRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
   }
 }
 
+TEST(ThingAdminRestMetadataDecoratorTest, ExplicitApiClientHeader) {
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  EXPECT_CALL(*mock, GetDatabase)
+      .WillOnce(
+          [](rest_internal::RestContext& context,
+             google::test::admin::database::v1::GetDatabaseRequest const&) {
+            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+                        Contains("test-client-header"));
+            return TransientError();
+          });
+
+  GoldenThingAdminRestMetadata stub(mock, "test-client-header");
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::GetDatabaseRequest request;
+  request.set_name(
+      "projects/my_project/instances/my_instance/databases/my_database");
+  auto status = stub.GetDatabase(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 TEST(ThingAdminRestMetadataDecoratorTest, GetDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetDatabase)

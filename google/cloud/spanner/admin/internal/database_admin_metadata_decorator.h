@@ -35,7 +35,8 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
   ~DatabaseAdminMetadata() override = default;
   DatabaseAdminMetadata(std::shared_ptr<DatabaseAdminStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(

@@ -36,8 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReservationsRestMetadata : public ReservationsRestStub {
  public:
   ~ReservationsRestMetadata() override = default;
-  explicit ReservationsRestMetadata(
-      std::shared_ptr<ReservationsRestStub> child);
+  explicit ReservationsRestMetadata(std::shared_ptr<ReservationsRestStub> child,
+                                    std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
   AggregatedListReservations(

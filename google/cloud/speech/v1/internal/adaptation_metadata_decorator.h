@@ -34,7 +34,8 @@ class AdaptationMetadata : public AdaptationStub {
  public:
   ~AdaptationMetadata() override = default;
   AdaptationMetadata(std::shared_ptr<AdaptationStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
       grpc::ClientContext& context,

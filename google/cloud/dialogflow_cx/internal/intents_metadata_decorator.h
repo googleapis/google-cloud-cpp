@@ -34,7 +34,8 @@ class IntentsMetadata : public IntentsStub {
  public:
   ~IntentsMetadata() override = default;
   IntentsMetadata(std::shared_ptr<IntentsStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata);
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse> ListIntents(
       grpc::ClientContext& context,

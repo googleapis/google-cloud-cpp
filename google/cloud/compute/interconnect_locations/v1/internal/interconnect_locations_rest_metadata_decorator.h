@@ -37,7 +37,8 @@ class InterconnectLocationsRestMetadata : public InterconnectLocationsRestStub {
  public:
   ~InterconnectLocationsRestMetadata() override = default;
   explicit InterconnectLocationsRestMetadata(
-      std::shared_ptr<InterconnectLocationsRestStub> child);
+      std::shared_ptr<InterconnectLocationsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
   GetInterconnectLocations(

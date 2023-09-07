@@ -35,7 +35,8 @@ class ApplicationsMetadata : public ApplicationsStub {
  public:
   ~ApplicationsMetadata() override = default;
   ApplicationsMetadata(std::shared_ptr<ApplicationsStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::Application> GetApplication(
       grpc::ClientContext& context,

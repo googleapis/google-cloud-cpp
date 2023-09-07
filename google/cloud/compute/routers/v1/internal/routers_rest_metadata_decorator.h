@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RoutersRestMetadata : public RoutersRestStub {
  public:
   ~RoutersRestMetadata() override = default;
-  explicit RoutersRestMetadata(std::shared_ptr<RoutersRestStub> child);
+  explicit RoutersRestMetadata(std::shared_ptr<RoutersRestStub> child,
+                               std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
   AggregatedListRouters(

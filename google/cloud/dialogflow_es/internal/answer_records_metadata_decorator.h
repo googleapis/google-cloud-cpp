@@ -34,7 +34,8 @@ class AnswerRecordsMetadata : public AnswerRecordsStub {
  public:
   ~AnswerRecordsMetadata() override = default;
   AnswerRecordsMetadata(std::shared_ptr<AnswerRecordsStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(

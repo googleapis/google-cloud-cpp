@@ -36,7 +36,8 @@ class IndexEndpointServiceMetadata : public IndexEndpointServiceStub {
   ~IndexEndpointServiceMetadata() override = default;
   IndexEndpointServiceMetadata(
       std::shared_ptr<IndexEndpointServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateIndexEndpoint(
       google::cloud::CompletionQueue& cq,

@@ -36,7 +36,8 @@ class BatchControllerMetadata : public BatchControllerStub {
   ~BatchControllerMetadata() override = default;
   BatchControllerMetadata(
       std::shared_ptr<BatchControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBatch(
       google::cloud::CompletionQueue& cq,

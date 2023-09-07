@@ -35,7 +35,8 @@ class VersionsMetadata : public VersionsStub {
  public:
   ~VersionsMetadata() override = default;
   VersionsMetadata(std::shared_ptr<VersionsStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
       grpc::ClientContext& context,

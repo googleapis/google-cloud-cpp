@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,10 +33,13 @@ namespace compute_region_target_http_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionTargetHttpProxiesRestMetadata::RegionTargetHttpProxiesRestMetadata(
-    std::shared_ptr<RegionTargetHttpProxiesRestStub> child)
+    std::shared_ptr<RegionTargetHttpProxiesRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpProxiesRestMetadata::AsyncDeleteRegionTargetHttpProxies(

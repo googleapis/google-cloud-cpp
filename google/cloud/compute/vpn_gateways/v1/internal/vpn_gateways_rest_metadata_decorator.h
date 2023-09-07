@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class VpnGatewaysRestMetadata : public VpnGatewaysRestStub {
  public:
   ~VpnGatewaysRestMetadata() override = default;
-  explicit VpnGatewaysRestMetadata(std::shared_ptr<VpnGatewaysRestStub> child);
+  explicit VpnGatewaysRestMetadata(std::shared_ptr<VpnGatewaysRestStub> child,
+                                   std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
   AggregatedListVpnGateways(

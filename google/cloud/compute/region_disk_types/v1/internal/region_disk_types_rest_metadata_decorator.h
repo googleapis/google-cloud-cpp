@@ -36,7 +36,8 @@ class RegionDiskTypesRestMetadata : public RegionDiskTypesRestStub {
  public:
   ~RegionDiskTypesRestMetadata() override = default;
   explicit RegionDiskTypesRestMetadata(
-      std::shared_ptr<RegionDiskTypesRestStub> child);
+      std::shared_ptr<RegionDiskTypesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,

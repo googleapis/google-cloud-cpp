@@ -34,7 +34,8 @@ class DlpServiceMetadata : public DlpServiceStub {
  public:
   ~DlpServiceMetadata() override = default;
   DlpServiceMetadata(std::shared_ptr<DlpServiceStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       grpc::ClientContext& context,

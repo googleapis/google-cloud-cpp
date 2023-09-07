@@ -37,7 +37,8 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
  public:
   ~BackendBucketsRestMetadata() override = default;
   explicit BackendBucketsRestMetadata(
-      std::shared_ptr<BackendBucketsRestStub> child);
+      std::shared_ptr<BackendBucketsRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddSignedUrlKey(

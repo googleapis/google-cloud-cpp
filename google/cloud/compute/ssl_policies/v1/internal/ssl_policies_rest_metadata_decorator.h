@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SslPoliciesRestMetadata : public SslPoliciesRestStub {
  public:
   ~SslPoliciesRestMetadata() override = default;
-  explicit SslPoliciesRestMetadata(std::shared_ptr<SslPoliciesRestStub> child);
+  explicit SslPoliciesRestMetadata(std::shared_ptr<SslPoliciesRestStub> child,
+                                   std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
   AggregatedListSslPolicies(

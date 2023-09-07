@@ -35,7 +35,8 @@ class VmwareEngineMetadata : public VmwareEngineStub {
  public:
   ~VmwareEngineMetadata() override = default;
   VmwareEngineMetadata(std::shared_ptr<VmwareEngineStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
   ListPrivateClouds(

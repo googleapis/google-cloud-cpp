@@ -35,7 +35,8 @@ class SecretManagerServiceMetadata : public SecretManagerServiceStub {
   ~SecretManagerServiceMetadata() override = default;
   SecretManagerServiceMetadata(
       std::shared_ptr<SecretManagerServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> ListSecrets(
       grpc::ClientContext& context,

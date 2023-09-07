@@ -34,7 +34,8 @@ class MatchServiceMetadata : public MatchServiceStub {
  public:
   ~MatchServiceMetadata() override = default;
   MatchServiceMetadata(std::shared_ptr<MatchServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
       grpc::ClientContext& context,

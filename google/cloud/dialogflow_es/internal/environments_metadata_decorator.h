@@ -34,7 +34,8 @@ class EnvironmentsMetadata : public EnvironmentsStub {
  public:
   ~EnvironmentsMetadata() override = default;
   EnvironmentsMetadata(std::shared_ptr<EnvironmentsStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
   ListEnvironments(grpc::ClientContext& context,

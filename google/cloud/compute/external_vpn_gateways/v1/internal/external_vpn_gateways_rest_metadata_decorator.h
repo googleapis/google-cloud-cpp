@@ -38,7 +38,8 @@ class ExternalVpnGatewaysRestMetadata : public ExternalVpnGatewaysRestStub {
  public:
   ~ExternalVpnGatewaysRestMetadata() override = default;
   explicit ExternalVpnGatewaysRestMetadata(
-      std::shared_ptr<ExternalVpnGatewaysRestStub> child);
+      std::shared_ptr<ExternalVpnGatewaysRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteExternalVpnGateways(

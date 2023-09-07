@@ -35,7 +35,8 @@ class ServiceMonitoringServiceMetadata : public ServiceMonitoringServiceStub {
   ~ServiceMonitoringServiceMetadata() override = default;
   ServiceMonitoringServiceMetadata(
       std::shared_ptr<ServiceMonitoringServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::Service> CreateService(
       grpc::ClientContext& context,

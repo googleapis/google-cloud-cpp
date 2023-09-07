@@ -36,7 +36,8 @@ class SqlTiersServiceRestMetadata : public SqlTiersServiceRestStub {
  public:
   ~SqlTiersServiceRestMetadata() override = default;
   explicit SqlTiersServiceRestMetadata(
-      std::shared_ptr<SqlTiersServiceRestStub> child);
+      std::shared_ptr<SqlTiersServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::TiersListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,

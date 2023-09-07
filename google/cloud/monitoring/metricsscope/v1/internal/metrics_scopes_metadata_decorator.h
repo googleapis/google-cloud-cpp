@@ -35,7 +35,8 @@ class MetricsScopesMetadata : public MetricsScopesStub {
  public:
   ~MetricsScopesMetadata() override = default;
   MetricsScopesMetadata(std::shared_ptr<MetricsScopesStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       grpc::ClientContext& context,

@@ -35,7 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NodeTypesRestMetadata : public NodeTypesRestStub {
  public:
   ~NodeTypesRestMetadata() override = default;
-  explicit NodeTypesRestMetadata(std::shared_ptr<NodeTypesRestStub> child);
+  explicit NodeTypesRestMetadata(std::shared_ptr<NodeTypesRestStub> child,
+                                 std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
   AggregatedListNodeTypes(

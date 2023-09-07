@@ -34,7 +34,8 @@ class BigQueryWriteMetadata : public BigQueryWriteStub {
  public:
   ~BigQueryWriteMetadata() override = default;
   BigQueryWriteMetadata(std::shared_ptr<BigQueryWriteStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       grpc::ClientContext& context,

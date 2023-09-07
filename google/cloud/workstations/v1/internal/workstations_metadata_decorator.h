@@ -35,7 +35,8 @@ class WorkstationsMetadata : public WorkstationsStub {
  public:
   ~WorkstationsMetadata() override = default;
   WorkstationsMetadata(std::shared_ptr<WorkstationsStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(

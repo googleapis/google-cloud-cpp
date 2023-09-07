@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SubnetworksRestMetadata : public SubnetworksRestStub {
  public:
   ~SubnetworksRestMetadata() override = default;
-  explicit SubnetworksRestMetadata(std::shared_ptr<SubnetworksRestStub> child);
+  explicit SubnetworksRestMetadata(std::shared_ptr<SubnetworksRestStub> child,
+                                   std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
   AggregatedListSubnetworks(

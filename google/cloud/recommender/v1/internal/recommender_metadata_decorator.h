@@ -34,7 +34,8 @@ class RecommenderMetadata : public RecommenderStub {
  public:
   ~RecommenderMetadata() override = default;
   RecommenderMetadata(std::shared_ptr<RecommenderStub> child,
-                      std::multimap<std::string, std::string> fixed_metadata);
+                      std::multimap<std::string, std::string> fixed_metadata,
+                      std::string api_client_header = "");
 
   StatusOr<google::cloud::recommender::v1::ListInsightsResponse> ListInsights(
       grpc::ClientContext& context,

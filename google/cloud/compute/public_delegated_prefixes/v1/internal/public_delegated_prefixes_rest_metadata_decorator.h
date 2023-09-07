@@ -39,7 +39,8 @@ class PublicDelegatedPrefixesRestMetadata
  public:
   ~PublicDelegatedPrefixesRestMetadata() override = default;
   explicit PublicDelegatedPrefixesRestMetadata(
-      std::shared_ptr<PublicDelegatedPrefixesRestStub> child);
+      std::shared_ptr<PublicDelegatedPrefixesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
   AggregatedListPublicDelegatedPrefixes(

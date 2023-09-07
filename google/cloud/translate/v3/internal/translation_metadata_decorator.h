@@ -36,7 +36,8 @@ class TranslationServiceMetadata : public TranslationServiceStub {
   ~TranslationServiceMetadata() override = default;
   TranslationServiceMetadata(
       std::shared_ptr<TranslationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       grpc::ClientContext& context,

@@ -36,7 +36,8 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
   ~CloudFilestoreManagerMetadata() override = default;
   CloudFilestoreManagerMetadata(
       std::shared_ptr<CloudFilestoreManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

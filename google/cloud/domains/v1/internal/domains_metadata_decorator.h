@@ -35,7 +35,8 @@ class DomainsMetadata : public DomainsStub {
  public:
   ~DomainsMetadata() override = default;
   DomainsMetadata(std::shared_ptr<DomainsStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata);
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
       grpc::ClientContext& context,

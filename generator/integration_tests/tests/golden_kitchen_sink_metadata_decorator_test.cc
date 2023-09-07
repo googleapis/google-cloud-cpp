@@ -74,6 +74,26 @@ class MetadataDecoratorTest : public ::testing::Test {
   ValidateMetadataFixture validate_metadata_fixture_;
 };
 
+TEST_F(MetadataDecoratorTest, ExplicitApiClientHeader) {
+  // We use knowledge of the implementation to assert that testing a single RPC
+  // is sufficient.
+  EXPECT_CALL(*mock_, GenerateAccessToken)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           GenerateAccessTokenRequest const&) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    Contains(Pair("x-goog-api-client", "test-client-header")));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_, {}, "test-client-header");
+  grpc::ClientContext context;
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  auto status = stub.GenerateAccessToken(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 /// Verify the x-goog-user-project metadata is set.
 TEST_F(MetadataDecoratorTest, UserProject) {
   // We use knowledge of the implementation to assert that testing a single RPC

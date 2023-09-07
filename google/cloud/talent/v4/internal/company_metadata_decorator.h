@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompanyServiceMetadata : public CompanyServiceStub {
  public:
   ~CompanyServiceMetadata() override = default;
-  CompanyServiceMetadata(
-      std::shared_ptr<CompanyServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  CompanyServiceMetadata(std::shared_ptr<CompanyServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       grpc::ClientContext& context,

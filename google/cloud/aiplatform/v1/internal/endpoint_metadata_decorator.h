@@ -36,7 +36,8 @@ class EndpointServiceMetadata : public EndpointServiceStub {
   ~EndpointServiceMetadata() override = default;
   EndpointServiceMetadata(
       std::shared_ptr<EndpointServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(
       google::cloud::CompletionQueue& cq,

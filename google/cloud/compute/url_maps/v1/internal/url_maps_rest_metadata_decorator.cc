@@ -24,16 +24,20 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace compute_url_maps_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-UrlMapsRestMetadata::UrlMapsRestMetadata(std::shared_ptr<UrlMapsRestStub> child)
+UrlMapsRestMetadata::UrlMapsRestMetadata(std::shared_ptr<UrlMapsRestStub> child,
+                                         std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 UrlMapsRestMetadata::AggregatedListUrlMaps(

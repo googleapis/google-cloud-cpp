@@ -36,7 +36,8 @@ class CompletionServiceMetadata : public CompletionServiceStub {
   ~CompletionServiceMetadata() override = default;
   CompletionServiceMetadata(
       std::shared_ptr<CompletionServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       grpc::ClientContext& context,

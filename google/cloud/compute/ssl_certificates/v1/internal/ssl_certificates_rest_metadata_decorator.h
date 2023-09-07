@@ -37,7 +37,8 @@ class SslCertificatesRestMetadata : public SslCertificatesRestStub {
  public:
   ~SslCertificatesRestMetadata() override = default;
   explicit SslCertificatesRestMetadata(
-      std::shared_ptr<SslCertificatesRestStub> child);
+      std::shared_ptr<SslCertificatesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
   AggregatedListSslCertificates(

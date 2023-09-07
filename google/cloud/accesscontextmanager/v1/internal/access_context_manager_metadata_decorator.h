@@ -36,7 +36,8 @@ class AccessContextManagerMetadata : public AccessContextManagerStub {
   ~AccessContextManagerMetadata() override = default;
   AccessContextManagerMetadata(
       std::shared_ptr<AccessContextManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>

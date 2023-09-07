@@ -35,7 +35,8 @@ class EventarcMetadata : public EventarcStub {
  public:
   ~EventarcMetadata() override = default;
   EventarcMetadata(std::shared_ptr<EventarcStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
       grpc::ClientContext& context,

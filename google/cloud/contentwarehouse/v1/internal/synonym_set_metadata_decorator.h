@@ -35,7 +35,8 @@ class SynonymSetServiceMetadata : public SynonymSetServiceStub {
   ~SynonymSetServiceMetadata() override = default;
   SynonymSetServiceMetadata(
       std::shared_ptr<SynonymSetServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
       grpc::ClientContext& context,

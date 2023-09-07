@@ -36,7 +36,8 @@ class SqlOperationsServiceRestMetadata : public SqlOperationsServiceRestStub {
  public:
   ~SqlOperationsServiceRestMetadata() override = default;
   explicit SqlOperationsServiceRestMetadata(
-      std::shared_ptr<SqlOperationsServiceRestStub> child);
+      std::shared_ptr<SqlOperationsServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::Operation> Get(
       google::cloud::rest_internal::RestContext& rest_context,

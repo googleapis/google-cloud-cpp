@@ -36,7 +36,8 @@ class NetworkServicesMetadata : public NetworkServicesStub {
   ~NetworkServicesMetadata() override = default;
   NetworkServicesMetadata(
       std::shared_ptr<NetworkServicesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
   ListEndpointPolicies(

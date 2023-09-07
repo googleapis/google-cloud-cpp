@@ -34,7 +34,8 @@ class StorageMetadata : public StorageStub {
  public:
   ~StorageMetadata() override = default;
   StorageMetadata(std::shared_ptr<StorageStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata);
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   Status DeleteBucket(
       grpc::ClientContext& context,

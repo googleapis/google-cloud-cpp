@@ -35,7 +35,8 @@ class PredictionServiceMetadata : public PredictionServiceStub {
   ~PredictionServiceMetadata() override = default;
   PredictionServiceMetadata(
       std::shared_ptr<PredictionServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
       grpc::ClientContext& context,

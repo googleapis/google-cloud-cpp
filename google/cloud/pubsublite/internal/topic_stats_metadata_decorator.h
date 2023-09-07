@@ -35,7 +35,8 @@ class TopicStatsServiceMetadata : public TopicStatsServiceStub {
   ~TopicStatsServiceMetadata() override = default;
   TopicStatsServiceMetadata(
       std::shared_ptr<TopicStatsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(

@@ -37,7 +37,8 @@ class HttpsHealthChecksRestMetadata : public HttpsHealthChecksRestStub {
  public:
   ~HttpsHealthChecksRestMetadata() override = default;
   explicit HttpsHealthChecksRestMetadata(
-      std::shared_ptr<HttpsHealthChecksRestStub> child);
+      std::shared_ptr<HttpsHealthChecksRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteHttpsHealthChecks(

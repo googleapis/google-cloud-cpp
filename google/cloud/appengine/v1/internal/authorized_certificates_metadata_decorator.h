@@ -35,7 +35,8 @@ class AuthorizedCertificatesMetadata : public AuthorizedCertificatesStub {
   ~AuthorizedCertificatesMetadata() override = default;
   AuthorizedCertificatesMetadata(
       std::shared_ptr<AuthorizedCertificatesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(

@@ -35,7 +35,8 @@ class StorageInsightsMetadata : public StorageInsightsStub {
   ~StorageInsightsMetadata() override = default;
   StorageInsightsMetadata(
       std::shared_ptr<StorageInsightsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(

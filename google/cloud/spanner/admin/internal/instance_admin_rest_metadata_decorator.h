@@ -37,7 +37,8 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
  public:
   ~InstanceAdminRestMetadata() override = default;
   explicit InstanceAdminRestMetadata(
-      std::shared_ptr<InstanceAdminRestStub> child);
+      std::shared_ptr<InstanceAdminRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(

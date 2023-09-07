@@ -34,7 +34,8 @@ class CursorServiceMetadata : public CursorServiceStub {
  public:
   ~CursorServiceMetadata() override = default;
   CursorServiceMetadata(std::shared_ptr<CursorServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,

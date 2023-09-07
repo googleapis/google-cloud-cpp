@@ -36,7 +36,8 @@ class NetworkSecurityMetadata : public NetworkSecurityStub {
   ~NetworkSecurityMetadata() override = default;
   NetworkSecurityMetadata(
       std::shared_ptr<NetworkSecurityStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<
       google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>

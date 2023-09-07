@@ -35,7 +35,8 @@ class ModelServiceMetadata : public ModelServiceStub {
  public:
   ~ModelServiceMetadata() override = default;
   ModelServiceMetadata(std::shared_ptr<ModelServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncUploadModel(
       google::cloud::CompletionQueue& cq,

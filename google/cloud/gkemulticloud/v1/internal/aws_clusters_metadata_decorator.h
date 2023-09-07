@@ -35,7 +35,8 @@ class AwsClustersMetadata : public AwsClustersStub {
  public:
   ~AwsClustersMetadata() override = default;
   AwsClustersMetadata(std::shared_ptr<AwsClustersStub> child,
-                      std::multimap<std::string, std::string> fixed_metadata);
+                      std::multimap<std::string, std::string> fixed_metadata,
+                      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAwsCluster(
       google::cloud::CompletionQueue& cq,

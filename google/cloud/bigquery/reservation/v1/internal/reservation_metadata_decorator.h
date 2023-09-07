@@ -35,7 +35,8 @@ class ReservationServiceMetadata : public ReservationServiceStub {
   ~ReservationServiceMetadata() override = default;
   ReservationServiceMetadata(
       std::shared_ptr<ReservationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(

@@ -36,7 +36,8 @@ class RecaptchaEnterpriseServiceMetadata
   ~RecaptchaEnterpriseServiceMetadata() override = default;
   RecaptchaEnterpriseServiceMetadata(
       std::shared_ptr<RecaptchaEnterpriseServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> CreateAssessment(
       grpc::ClientContext& context,

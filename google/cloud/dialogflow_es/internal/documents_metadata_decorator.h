@@ -35,7 +35,8 @@ class DocumentsMetadata : public DocumentsStub {
  public:
   ~DocumentsMetadata() override = default;
   DocumentsMetadata(std::shared_ptr<DocumentsStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
       grpc::ClientContext& context,

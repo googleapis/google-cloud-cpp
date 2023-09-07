@@ -37,7 +37,8 @@ class SecurityPoliciesRestMetadata : public SecurityPoliciesRestStub {
  public:
   ~SecurityPoliciesRestMetadata() override = default;
   explicit SecurityPoliciesRestMetadata(
-      std::shared_ptr<SecurityPoliciesRestStub> child);
+      std::shared_ptr<SecurityPoliciesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddRule(

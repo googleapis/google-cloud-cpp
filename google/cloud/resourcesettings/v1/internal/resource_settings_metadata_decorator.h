@@ -35,7 +35,8 @@ class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
   ~ResourceSettingsServiceMetadata() override = default;
   ResourceSettingsServiceMetadata(
       std::shared_ptr<ResourceSettingsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
   ListSettings(grpc::ClientContext& context,

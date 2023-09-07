@@ -38,7 +38,8 @@ class GlobalOrganizationOperationsRestMetadata
  public:
   ~GlobalOrganizationOperationsRestMetadata() override = default;
   explicit GlobalOrganizationOperationsRestMetadata(
-      std::shared_ptr<GlobalOrganizationOperationsRestStub> child);
+      std::shared_ptr<GlobalOrganizationOperationsRestStub> child,
+      std::string api_client_header = "");
 
   Status DeleteGlobalOrganizationOperations(
       google::cloud::rest_internal::RestContext& rest_context,

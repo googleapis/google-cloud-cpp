@@ -35,7 +35,8 @@ class CloudBuildMetadata : public CloudBuildStub {
  public:
   ~CloudBuildMetadata() override = default;
   CloudBuildMetadata(std::shared_ptr<CloudBuildStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBuild(
       google::cloud::CompletionQueue& cq,

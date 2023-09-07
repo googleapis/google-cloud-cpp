@@ -35,7 +35,8 @@ class AlertPolicyServiceMetadata : public AlertPolicyServiceStub {
   ~AlertPolicyServiceMetadata() override = default;
   AlertPolicyServiceMetadata(
       std::shared_ptr<AlertPolicyServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
       grpc::ClientContext& context,

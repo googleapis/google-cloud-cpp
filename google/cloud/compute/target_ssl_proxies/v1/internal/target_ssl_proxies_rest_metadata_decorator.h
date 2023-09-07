@@ -37,7 +37,8 @@ class TargetSslProxiesRestMetadata : public TargetSslProxiesRestStub {
  public:
   ~TargetSslProxiesRestMetadata() override = default;
   explicit TargetSslProxiesRestMetadata(
-      std::shared_ptr<TargetSslProxiesRestStub> child);
+      std::shared_ptr<TargetSslProxiesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteTargetSslProxies(

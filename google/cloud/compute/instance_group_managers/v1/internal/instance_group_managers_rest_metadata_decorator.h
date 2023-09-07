@@ -38,7 +38,8 @@ class InstanceGroupManagersRestMetadata : public InstanceGroupManagersRestStub {
  public:
   ~InstanceGroupManagersRestMetadata() override = default;
   explicit InstanceGroupManagersRestMetadata(
-      std::shared_ptr<InstanceGroupManagersRestStub> child);
+      std::shared_ptr<InstanceGroupManagersRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAbandonInstances(

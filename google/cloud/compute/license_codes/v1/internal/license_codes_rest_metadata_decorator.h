@@ -35,8 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LicenseCodesRestMetadata : public LicenseCodesRestStub {
  public:
   ~LicenseCodesRestMetadata() override = default;
-  explicit LicenseCodesRestMetadata(
-      std::shared_ptr<LicenseCodesRestStub> child);
+  explicit LicenseCodesRestMetadata(std::shared_ptr<LicenseCodesRestStub> child,
+                                    std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
       google::cloud::rest_internal::RestContext& rest_context,

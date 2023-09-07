@@ -36,7 +36,8 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
   ~AssuredWorkloadsServiceMetadata() override = default;
   AssuredWorkloadsServiceMetadata(
       std::shared_ptr<AssuredWorkloadsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
       google::cloud::CompletionQueue& cq,

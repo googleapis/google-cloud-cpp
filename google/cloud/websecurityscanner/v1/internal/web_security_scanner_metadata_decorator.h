@@ -35,7 +35,8 @@ class WebSecurityScannerMetadata : public WebSecurityScannerStub {
   ~WebSecurityScannerMetadata() override = default;
   WebSecurityScannerMetadata(
       std::shared_ptr<WebSecurityScannerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
       grpc::ClientContext& context,

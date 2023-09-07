@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AddressesRestMetadata : public AddressesRestStub {
  public:
   ~AddressesRestMetadata() override = default;
-  explicit AddressesRestMetadata(std::shared_ptr<AddressesRestStub> child);
+  explicit AddressesRestMetadata(std::shared_ptr<AddressesRestStub> child,
+                                 std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
   AggregatedListAddresses(

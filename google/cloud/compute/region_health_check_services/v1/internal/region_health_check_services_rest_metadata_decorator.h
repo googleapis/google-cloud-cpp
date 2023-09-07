@@ -39,7 +39,8 @@ class RegionHealthCheckServicesRestMetadata
  public:
   ~RegionHealthCheckServicesRestMetadata() override = default;
   explicit RegionHealthCheckServicesRestMetadata(
-      std::shared_ptr<RegionHealthCheckServicesRestStub> child);
+      std::shared_ptr<RegionHealthCheckServicesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionHealthCheckServices(

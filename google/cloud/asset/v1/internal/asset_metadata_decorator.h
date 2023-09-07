@@ -35,7 +35,8 @@ class AssetServiceMetadata : public AssetServiceStub {
  public:
   ~AssetServiceMetadata() override = default;
   AssetServiceMetadata(std::shared_ptr<AssetServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAssets(
       google::cloud::CompletionQueue& cq,

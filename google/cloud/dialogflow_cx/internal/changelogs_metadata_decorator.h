@@ -34,7 +34,8 @@ class ChangelogsMetadata : public ChangelogsStub {
  public:
   ~ChangelogsMetadata() override = default;
   ChangelogsMetadata(std::shared_ptr<ChangelogsStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
   ListChangelogs(grpc::ClientContext& context,

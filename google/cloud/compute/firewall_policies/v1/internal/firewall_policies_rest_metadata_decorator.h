@@ -37,7 +37,8 @@ class FirewallPoliciesRestMetadata : public FirewallPoliciesRestStub {
  public:
   ~FirewallPoliciesRestMetadata() override = default;
   explicit FirewallPoliciesRestMetadata(
-      std::shared_ptr<FirewallPoliciesRestStub> child);
+      std::shared_ptr<FirewallPoliciesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddAssociation(

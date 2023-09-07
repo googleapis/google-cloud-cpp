@@ -34,7 +34,8 @@ class OrgPolicyMetadata : public OrgPolicyStub {
  public:
   ~OrgPolicyMetadata() override = default;
   OrgPolicyMetadata(std::shared_ptr<OrgPolicyStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(grpc::ClientContext& context,

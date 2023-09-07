@@ -35,7 +35,8 @@ class AutoscalingPolicyServiceMetadata : public AutoscalingPolicyServiceStub {
   ~AutoscalingPolicyServiceMetadata() override = default;
   AutoscalingPolicyServiceMetadata(
       std::shared_ptr<AutoscalingPolicyServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(

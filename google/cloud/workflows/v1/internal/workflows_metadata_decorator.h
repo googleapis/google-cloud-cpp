@@ -35,7 +35,8 @@ class WorkflowsMetadata : public WorkflowsStub {
  public:
   ~WorkflowsMetadata() override = default;
   WorkflowsMetadata(std::shared_ptr<WorkflowsStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> ListWorkflows(
       grpc::ClientContext& context,

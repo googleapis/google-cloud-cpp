@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatastoreAdminMetadata : public DatastoreAdminStub {
  public:
   ~DatastoreAdminMetadata() override = default;
-  DatastoreAdminMetadata(
-      std::shared_ptr<DatastoreAdminStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  DatastoreAdminMetadata(std::shared_ptr<DatastoreAdminStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportEntities(
       google::cloud::CompletionQueue& cq,

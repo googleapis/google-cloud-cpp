@@ -35,7 +35,8 @@ class SecuritySettingsServiceMetadata : public SecuritySettingsServiceStub {
   ~SecuritySettingsServiceMetadata() override = default;
   SecuritySettingsServiceMetadata(
       std::shared_ptr<SecuritySettingsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(

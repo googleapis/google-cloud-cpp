@@ -34,7 +34,8 @@ class ImageVersionsMetadata : public ImageVersionsStub {
  public:
   ~ImageVersionsMetadata() override = default;
   ImageVersionsMetadata(std::shared_ptr<ImageVersionsStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>

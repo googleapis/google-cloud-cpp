@@ -39,7 +39,8 @@ class RegionNetworkEndpointGroupsRestMetadata
  public:
   ~RegionNetworkEndpointGroupsRestMetadata() override = default;
   explicit RegionNetworkEndpointGroupsRestMetadata(
-      std::shared_ptr<RegionNetworkEndpointGroupsRestStub> child);
+      std::shared_ptr<RegionNetworkEndpointGroupsRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionNetworkEndpointGroups(

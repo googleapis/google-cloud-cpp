@@ -39,7 +39,8 @@ class InterconnectAttachmentsRestMetadata
  public:
   ~InterconnectAttachmentsRestMetadata() override = default;
   explicit InterconnectAttachmentsRestMetadata(
-      std::shared_ptr<InterconnectAttachmentsRestStub> child);
+      std::shared_ptr<InterconnectAttachmentsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>

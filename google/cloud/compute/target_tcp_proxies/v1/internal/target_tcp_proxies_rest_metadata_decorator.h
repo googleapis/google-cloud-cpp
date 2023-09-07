@@ -37,7 +37,8 @@ class TargetTcpProxiesRestMetadata : public TargetTcpProxiesRestStub {
  public:
   ~TargetTcpProxiesRestMetadata() override = default;
   explicit TargetTcpProxiesRestMetadata(
-      std::shared_ptr<TargetTcpProxiesRestStub> child);
+      std::shared_ptr<TargetTcpProxiesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
   AggregatedListTargetTcpProxies(

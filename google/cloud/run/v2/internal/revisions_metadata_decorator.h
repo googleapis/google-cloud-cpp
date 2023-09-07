@@ -35,7 +35,8 @@ class RevisionsMetadata : public RevisionsStub {
  public:
   ~RevisionsMetadata() override = default;
   RevisionsMetadata(std::shared_ptr<RevisionsStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       grpc::ClientContext& context,

@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,10 +32,13 @@ namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlBackupRunsServiceRestMetadata::SqlBackupRunsServiceRestMetadata(
-    std::shared_ptr<SqlBackupRunsServiceRestStub> child)
+    std::shared_ptr<SqlBackupRunsServiceRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlBackupRunsServiceRestMetadata::Delete(

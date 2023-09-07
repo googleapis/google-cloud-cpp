@@ -37,7 +37,8 @@ class PacketMirroringsRestMetadata : public PacketMirroringsRestStub {
  public:
   ~PacketMirroringsRestMetadata() override = default;
   explicit PacketMirroringsRestMetadata(
-      std::shared_ptr<PacketMirroringsRestStub> child);
+      std::shared_ptr<PacketMirroringsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
   AggregatedListPacketMirrorings(

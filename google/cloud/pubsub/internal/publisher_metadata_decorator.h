@@ -34,7 +34,8 @@ class PublisherMetadata : public PublisherStub {
  public:
   ~PublisherMetadata() override = default;
   PublisherMetadata(std::shared_ptr<PublisherStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       grpc::ClientContext& context,
