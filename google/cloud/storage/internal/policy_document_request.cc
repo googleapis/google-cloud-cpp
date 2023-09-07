@@ -74,17 +74,22 @@ auto constexpr kMask4 = 0b1111'1000U;
 // The mask for the trailing bytes.
 auto constexpr kMaskTrail = 0b1100'0000U;
 
+inline bool IsEncoded(char c, std::int32_t mask) {
+  return (static_cast<std::uint8_t>(c) & mask) == ((mask - 1) & mask);
+}
+
 Status ValidateUTF8Encoding(absl::string_view s, std::size_t pos,
                             std::size_t n) {
-  if (s.size() < pos + n) {
+  // `pos` is always <= s.size().
+  if (s.size() - pos < n) {
     return InvalidArgumentError(
         absl::StrCat("Expected UTF-8 string, found partial UTF8 encoding at ",
                      pos, " string=<", s, ">"),
         GCP_ERROR_INFO());
   }
-  auto sub = s.substr(pos, n);
-  for (std::size_t i = 1; i != n; ++i) {
-    if ((sub[i] & kMaskTrail) == 0b1000'0000) continue;
+  // Note that `n > 0` because `n > s.size() - pos >= 0`.
+  for (auto i = pos + 1; i != pos + n; ++i) {
+    if (IsEncoded(s[i], kMaskTrail)) continue;
     return InvalidArgumentError(
         absl::StrCat("Expected UTF-8 string, found incorrect UTF8 encoding at ",
                      pos, " string=<", s, ">"),
@@ -159,13 +164,12 @@ StatusOr<std::string> EscapeUTF8(absl::string_view s) {
       absl::FunctionRef<StatusOr<std::string>(absl::string_view, std::size_t)>;
   struct {
     std::uint32_t mask;
-    std::uint32_t value;
     Encoder encode;
   } const encodings[] = {
-      {kMask1, 0b0000'0000U, Escape1},
-      {kMask2, 0b1100'0000U, Escape2},
-      {kMask3, 0b1110'0000U, Escape3},
-      {kMask4, 0b1111'0000U, Escape4},
+      {kMask1, Escape1},
+      {kMask2, Escape2},
+      {kMask3, Escape3},
+      {kMask4, Escape4},
   };
   // Iterate over all the bytes in the input string. Interpreting each UTF-8
   // sequence as needed.
@@ -178,7 +182,7 @@ StatusOr<std::string> EscapeUTF8(absl::string_view s) {
     bool matched = false;
     std::size_t n = 1;
     for (auto const& e : encodings) {
-      if ((e.mask & s[pos]) == e.value) {
+      if (IsEncoded(s[pos], e.mask)) {
         // The encoder will return an error if the encoding is too short or
         // otherwise invalid.
         auto r = e.encode(s, pos);
