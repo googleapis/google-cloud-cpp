@@ -262,7 +262,6 @@ void GenerateMetadata(
   } map_vars[] = {
       {"name_pretty", "title"},
       {"api_id", "nameInServiceConfig"},
-      {"api_shortname", "api_short_name"},
       {"product_documentation", "documentation_uri"},
       {"issue_tracker", "issue_tracker"},
   };
@@ -277,6 +276,10 @@ void GenerateMetadata(
     }
     metadata[kv.metadata_name] = l->second;
   }
+  std::vector<std::string> id_components =
+      absl::StrSplit(metadata.value("api_id", ""), absl::MaxSplits('.', 1));
+  if (id_components.empty()) return;
+  metadata["api_shortname"] = std::string(id_components[0]);
 
   std::ofstream(destination + ".repo-metadata.json")
       << metadata.dump(4) << "\n";
