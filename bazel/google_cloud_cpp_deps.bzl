@@ -39,6 +39,21 @@ def google_cloud_cpp_development_deps(name = None):
             workspace functions.
     """
 
+    # This is needed by com_google_benchmark. We cache it because
+    # sourceforge.net can have outages and that breaks the build.
+    maybe(
+        http_archive,
+        name = "libpfm",
+        build_file = str(Label("//bazel:libpfm.BUILD")),
+        sha256 = "5da5f8872bde14b3634c9688d980f68bda28b510268723cc12973eedbab9fecc",
+        type = "tar.gz",
+        strip_prefix = "libpfm-4.11.0",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/libpfm/libpfm-4.11.0.tar.gz",
+            "https://sourceforge.net/projects/perfmon2/files/libpfm4/libpfm-4.11.0.tar.gz/download",
+        ],
+    )
+
     # This is only needed to run the microbenchmarks.
     maybe(
         http_archive,
