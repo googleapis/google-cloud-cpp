@@ -35,7 +35,8 @@ class JobsMetadata : public JobsStub {
  public:
   ~JobsMetadata() override = default;
   JobsMetadata(std::shared_ptr<JobsStub> child,
-               std::multimap<std::string, std::string> fixed_metadata);
+               std::multimap<std::string, std::string> fixed_metadata,
+               std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateJob(
       google::cloud::CompletionQueue& cq,

@@ -37,7 +37,8 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
  public:
   ~InterconnectsRestMetadata() override = default;
   explicit InterconnectsRestMetadata(
-      std::shared_ptr<InterconnectsRestStub> child);
+      std::shared_ptr<InterconnectsRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteInterconnects(

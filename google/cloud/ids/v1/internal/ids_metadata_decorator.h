@@ -35,7 +35,8 @@ class IDSMetadata : public IDSStub {
  public:
   ~IDSMetadata() override = default;
   IDSMetadata(std::shared_ptr<IDSStub> child,
-              std::multimap<std::string, std::string> fixed_metadata);
+              std::multimap<std::string, std::string> fixed_metadata,
+              std::string api_client_header = "");
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
       grpc::ClientContext& context,

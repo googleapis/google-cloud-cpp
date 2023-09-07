@@ -36,7 +36,8 @@ class SqlConnectServiceRestMetadata : public SqlConnectServiceRestStub {
  public:
   ~SqlConnectServiceRestMetadata() override = default;
   explicit SqlConnectServiceRestMetadata(
-      std::shared_ptr<SqlConnectServiceRestStub> child);
+      std::shared_ptr<SqlConnectServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::rest_internal::RestContext& rest_context,

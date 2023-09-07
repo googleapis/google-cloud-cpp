@@ -36,7 +36,8 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
   ~RepositoryManagerMetadata() override = default;
   RepositoryManagerMetadata(
       std::shared_ptr<RepositoryManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,

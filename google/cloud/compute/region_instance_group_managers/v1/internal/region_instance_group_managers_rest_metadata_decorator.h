@@ -39,7 +39,8 @@ class RegionInstanceGroupManagersRestMetadata
  public:
   ~RegionInstanceGroupManagersRestMetadata() override = default;
   explicit RegionInstanceGroupManagersRestMetadata(
-      std::shared_ptr<RegionInstanceGroupManagersRestStub> child);
+      std::shared_ptr<RegionInstanceGroupManagersRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAbandonInstances(

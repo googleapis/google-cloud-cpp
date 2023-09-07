@@ -37,7 +37,8 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
  public:
   ~ResourcePoliciesRestMetadata() override = default;
   explicit ResourcePoliciesRestMetadata(
-      std::shared_ptr<ResourcePoliciesRestStub> child);
+      std::shared_ptr<ResourcePoliciesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
   AggregatedListResourcePolicies(

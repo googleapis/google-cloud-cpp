@@ -34,7 +34,8 @@ class MetricServiceMetadata : public MetricServiceStub {
  public:
   ~MetricServiceMetadata() override = default;
   MetricServiceMetadata(std::shared_ptr<MetricServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(

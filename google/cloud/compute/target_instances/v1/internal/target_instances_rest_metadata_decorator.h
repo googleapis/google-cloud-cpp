@@ -37,7 +37,8 @@ class TargetInstancesRestMetadata : public TargetInstancesRestStub {
  public:
   ~TargetInstancesRestMetadata() override = default;
   explicit TargetInstancesRestMetadata(
-      std::shared_ptr<TargetInstancesRestStub> child);
+      std::shared_ptr<TargetInstancesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
   AggregatedListTargetInstances(

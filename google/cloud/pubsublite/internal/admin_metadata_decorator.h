@@ -35,7 +35,8 @@ class AdminServiceMetadata : public AdminServiceStub {
  public:
   ~AdminServiceMetadata() override = default;
   AdminServiceMetadata(std::shared_ptr<AdminServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
       grpc::ClientContext& context,

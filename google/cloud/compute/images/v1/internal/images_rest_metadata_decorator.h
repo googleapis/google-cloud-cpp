@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImagesRestMetadata : public ImagesRestStub {
  public:
   ~ImagesRestMetadata() override = default;
-  explicit ImagesRestMetadata(std::shared_ptr<ImagesRestStub> child);
+  explicit ImagesRestMetadata(std::shared_ptr<ImagesRestStub> child,
+                              std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteImages(

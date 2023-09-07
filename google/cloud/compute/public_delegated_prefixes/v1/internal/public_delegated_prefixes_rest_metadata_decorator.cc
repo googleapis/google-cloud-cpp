@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,10 +33,13 @@ namespace compute_public_delegated_prefixes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublicDelegatedPrefixesRestMetadata::PublicDelegatedPrefixesRestMetadata(
-    std::shared_ptr<PublicDelegatedPrefixesRestStub> child)
+    std::shared_ptr<PublicDelegatedPrefixesRestStub> child,
+    std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
 PublicDelegatedPrefixesRestMetadata::AggregatedListPublicDelegatedPrefixes(

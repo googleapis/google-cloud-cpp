@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoscalersRestMetadata : public AutoscalersRestStub {
  public:
   ~AutoscalersRestMetadata() override = default;
-  explicit AutoscalersRestMetadata(std::shared_ptr<AutoscalersRestStub> child);
+  explicit AutoscalersRestMetadata(std::shared_ptr<AutoscalersRestStub> child,
+                                   std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
   AggregatedListAutoscalers(

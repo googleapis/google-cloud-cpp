@@ -36,7 +36,8 @@ class ClusterControllerMetadata : public ClusterControllerStub {
   ~ClusterControllerMetadata() override = default;
   ClusterControllerMetadata(
       std::shared_ptr<ClusterControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,

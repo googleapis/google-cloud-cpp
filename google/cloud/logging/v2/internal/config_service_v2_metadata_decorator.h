@@ -36,7 +36,8 @@ class ConfigServiceV2Metadata : public ConfigServiceV2Stub {
   ~ConfigServiceV2Metadata() override = default;
   ConfigServiceV2Metadata(
       std::shared_ptr<ConfigServiceV2Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::logging::v2::ListBucketsResponse> ListBuckets(
       grpc::ClientContext& context,

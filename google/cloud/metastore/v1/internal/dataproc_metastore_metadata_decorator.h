@@ -36,7 +36,8 @@ class DataprocMetastoreMetadata : public DataprocMetastoreStub {
   ~DataprocMetastoreMetadata() override = default;
   DataprocMetastoreMetadata(
       std::shared_ptr<DataprocMetastoreStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::metastore::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,

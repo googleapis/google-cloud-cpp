@@ -35,7 +35,8 @@ class VizierServiceMetadata : public VizierServiceStub {
  public:
   ~VizierServiceMetadata() override = default;
   VizierServiceMetadata(std::shared_ptr<VizierServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
       grpc::ClientContext& context,

@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstancesRestMetadata : public InstancesRestStub {
  public:
   ~InstancesRestMetadata() override = default;
-  explicit InstancesRestMetadata(std::shared_ptr<InstancesRestStub> child);
+  explicit InstancesRestMetadata(std::shared_ptr<InstancesRestStub> child,
+                                 std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddAccessConfig(

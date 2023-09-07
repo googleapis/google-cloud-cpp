@@ -35,7 +35,8 @@ class PolicyTagManagerMetadata : public PolicyTagManagerStub {
   ~PolicyTagManagerMetadata() override = default;
   PolicyTagManagerMetadata(
       std::shared_ptr<PolicyTagManagerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       grpc::ClientContext& context,

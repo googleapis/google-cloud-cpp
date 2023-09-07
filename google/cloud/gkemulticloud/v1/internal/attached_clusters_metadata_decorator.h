@@ -36,7 +36,8 @@ class AttachedClustersMetadata : public AttachedClustersStub {
   ~AttachedClustersMetadata() override = default;
   AttachedClustersMetadata(
       std::shared_ptr<AttachedClustersStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachedCluster(
       google::cloud::CompletionQueue& cq,

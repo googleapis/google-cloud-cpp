@@ -35,7 +35,8 @@ class FleetRoutingMetadata : public FleetRoutingStub {
  public:
   ~FleetRoutingMetadata() override = default;
   FleetRoutingMetadata(std::shared_ptr<FleetRoutingStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(grpc::ClientContext& context,

@@ -39,7 +39,8 @@ class GlobalNetworkEndpointGroupsRestMetadata
  public:
   ~GlobalNetworkEndpointGroupsRestMetadata() override = default;
   explicit GlobalNetworkEndpointGroupsRestMetadata(
-      std::shared_ptr<GlobalNetworkEndpointGroupsRestStub> child);
+      std::shared_ptr<GlobalNetworkEndpointGroupsRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAttachNetworkEndpoints(

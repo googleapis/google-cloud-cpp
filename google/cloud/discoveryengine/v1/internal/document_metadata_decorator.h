@@ -36,7 +36,8 @@ class DocumentServiceMetadata : public DocumentServiceStub {
   ~DocumentServiceMetadata() override = default;
   DocumentServiceMetadata(
       std::shared_ptr<DocumentServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
       grpc::ClientContext& context,

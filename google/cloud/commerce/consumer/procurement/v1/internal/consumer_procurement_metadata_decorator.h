@@ -38,7 +38,8 @@ class ConsumerProcurementServiceMetadata
   ~ConsumerProcurementServiceMetadata() override = default;
   ConsumerProcurementServiceMetadata(
       std::shared_ptr<ConsumerProcurementServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncPlaceOrder(
       google::cloud::CompletionQueue& cq,

@@ -34,7 +34,8 @@ class ParticipantsMetadata : public ParticipantsStub {
  public:
   ~ParticipantsMetadata() override = default;
   ParticipantsMetadata(std::shared_ptr<ParticipantsStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
       grpc::ClientContext& context,

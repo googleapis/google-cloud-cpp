@@ -37,7 +37,8 @@ class InstanceTemplatesRestMetadata : public InstanceTemplatesRestStub {
  public:
   ~InstanceTemplatesRestMetadata() override = default;
   explicit InstanceTemplatesRestMetadata(
-      std::shared_ptr<InstanceTemplatesRestStub> child);
+      std::shared_ptr<InstanceTemplatesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
   AggregatedListInstanceTemplates(

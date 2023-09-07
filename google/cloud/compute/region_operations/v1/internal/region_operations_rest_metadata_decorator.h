@@ -36,7 +36,8 @@ class RegionOperationsRestMetadata : public RegionOperationsRestStub {
  public:
   ~RegionOperationsRestMetadata() override = default;
   explicit RegionOperationsRestMetadata(
-      std::shared_ptr<RegionOperationsRestStub> child);
+      std::shared_ptr<RegionOperationsRestStub> child,
+      std::string api_client_header = "");
 
   Status DeleteRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,

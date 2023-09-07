@@ -35,7 +35,8 @@ class KeyManagementServiceMetadata : public KeyManagementServiceStub {
   ~KeyManagementServiceMetadata() override = default;
   KeyManagementServiceMetadata(
       std::shared_ptr<KeyManagementServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::kms::v1::ListKeyRingsResponse> ListKeyRings(
       grpc::ClientContext& context,

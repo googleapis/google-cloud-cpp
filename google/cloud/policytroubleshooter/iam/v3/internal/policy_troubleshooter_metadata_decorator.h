@@ -35,7 +35,8 @@ class PolicyTroubleshooterMetadata : public PolicyTroubleshooterStub {
   ~PolicyTroubleshooterMetadata() override = default;
   PolicyTroubleshooterMetadata(
       std::shared_ptr<PolicyTroubleshooterStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::policytroubleshooter::iam::v3::
                TroubleshootIamPolicyResponse>

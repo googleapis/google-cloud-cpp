@@ -35,7 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DiskTypesRestMetadata : public DiskTypesRestStub {
  public:
   ~DiskTypesRestMetadata() override = default;
-  explicit DiskTypesRestMetadata(std::shared_ptr<DiskTypesRestStub> child);
+  explicit DiskTypesRestMetadata(std::shared_ptr<DiskTypesRestStub> child,
+                                 std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
   AggregatedListDiskTypes(

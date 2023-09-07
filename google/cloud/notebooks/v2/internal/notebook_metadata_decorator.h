@@ -36,7 +36,8 @@ class NotebookServiceMetadata : public NotebookServiceStub {
   ~NotebookServiceMetadata() override = default;
   NotebookServiceMetadata(
       std::shared_ptr<NotebookServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::notebooks::v2::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

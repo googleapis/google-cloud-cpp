@@ -36,7 +36,8 @@ class NotificationChannelServiceMetadata
   ~NotificationChannelServiceMetadata() override = default;
   NotificationChannelServiceMetadata(
       std::shared_ptr<NotificationChannelServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
   ListNotificationChannelDescriptors(

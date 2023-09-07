@@ -36,7 +36,8 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
   ~BareMetalSolutionMetadata() override = default;
   BareMetalSolutionMetadata(
       std::shared_ptr<BareMetalSolutionStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(

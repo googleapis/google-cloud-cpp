@@ -34,7 +34,8 @@ class SchemaServiceMetadata : public SchemaServiceStub {
  public:
   ~SchemaServiceMetadata() override = default;
   SchemaServiceMetadata(std::shared_ptr<SchemaServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
       grpc::ClientContext& context,

@@ -36,7 +36,8 @@ class MigrationCenterMetadata : public MigrationCenterStub {
   ~MigrationCenterMetadata() override = default;
   MigrationCenterMetadata(
       std::shared_ptr<MigrationCenterStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse> ListAssets(
       grpc::ClientContext& context,

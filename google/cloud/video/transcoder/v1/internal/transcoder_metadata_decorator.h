@@ -35,7 +35,8 @@ class TranscoderServiceMetadata : public TranscoderServiceStub {
   ~TranscoderServiceMetadata() override = default;
   TranscoderServiceMetadata(
       std::shared_ptr<TranscoderServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
       grpc::ClientContext& context,

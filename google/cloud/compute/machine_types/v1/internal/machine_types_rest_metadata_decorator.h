@@ -35,8 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MachineTypesRestMetadata : public MachineTypesRestStub {
  public:
   ~MachineTypesRestMetadata() override = default;
-  explicit MachineTypesRestMetadata(
-      std::shared_ptr<MachineTypesRestStub> child);
+  explicit MachineTypesRestMetadata(std::shared_ptr<MachineTypesRestStub> child,
+                                    std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
   AggregatedListMachineTypes(

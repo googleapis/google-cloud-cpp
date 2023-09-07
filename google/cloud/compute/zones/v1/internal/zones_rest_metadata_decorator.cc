@@ -24,16 +24,20 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace compute_zones_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ZonesRestMetadata::ZonesRestMetadata(std::shared_ptr<ZonesRestStub> child)
+ZonesRestMetadata::ZonesRestMetadata(std::shared_ptr<ZonesRestStub> child,
+                                     std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestMetadata::GetZones(
     rest_internal::RestContext& rest_context,

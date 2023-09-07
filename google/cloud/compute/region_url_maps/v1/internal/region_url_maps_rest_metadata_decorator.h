@@ -37,7 +37,8 @@ class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
  public:
   ~RegionUrlMapsRestMetadata() override = default;
   explicit RegionUrlMapsRestMetadata(
-      std::shared_ptr<RegionUrlMapsRestStub> child);
+      std::shared_ptr<RegionUrlMapsRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionUrlMaps(

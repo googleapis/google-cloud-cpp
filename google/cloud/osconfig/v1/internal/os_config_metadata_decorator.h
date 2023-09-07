@@ -35,7 +35,8 @@ class OsConfigServiceMetadata : public OsConfigServiceStub {
   ~OsConfigServiceMetadata() override = default;
   OsConfigServiceMetadata(
       std::shared_ptr<OsConfigServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       grpc::ClientContext& context,

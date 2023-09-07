@@ -35,7 +35,8 @@ class TagKeysMetadata : public TagKeysStub {
  public:
   ~TagKeysMetadata() override = default;
   TagKeysMetadata(std::shared_ptr<TagKeysStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata);
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse> ListTagKeys(
       grpc::ClientContext& context,

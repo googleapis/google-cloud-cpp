@@ -35,7 +35,8 @@ class EssentialContactsServiceMetadata : public EssentialContactsServiceStub {
   ~EssentialContactsServiceMetadata() override = default;
   EssentialContactsServiceMetadata(
       std::shared_ptr<EssentialContactsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
       grpc::ClientContext& context,

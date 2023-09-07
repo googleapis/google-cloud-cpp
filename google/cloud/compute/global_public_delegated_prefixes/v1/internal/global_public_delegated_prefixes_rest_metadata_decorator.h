@@ -39,7 +39,8 @@ class GlobalPublicDelegatedPrefixesRestMetadata
  public:
   ~GlobalPublicDelegatedPrefixesRestMetadata() override = default;
   explicit GlobalPublicDelegatedPrefixesRestMetadata(
-      std::shared_ptr<GlobalPublicDelegatedPrefixesRestStub> child);
+      std::shared_ptr<GlobalPublicDelegatedPrefixesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteGlobalPublicDelegatedPrefixes(

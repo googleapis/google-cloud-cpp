@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RoutesRestMetadata : public RoutesRestStub {
  public:
   ~RoutesRestMetadata() override = default;
-  explicit RoutesRestMetadata(std::shared_ptr<RoutesRestStub> child);
+  explicit RoutesRestMetadata(std::shared_ptr<RoutesRestStub> child,
+                              std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRoutes(

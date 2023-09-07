@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NodeGroupsRestMetadata : public NodeGroupsRestStub {
  public:
   ~NodeGroupsRestMetadata() override = default;
-  explicit NodeGroupsRestMetadata(std::shared_ptr<NodeGroupsRestStub> child);
+  explicit NodeGroupsRestMetadata(std::shared_ptr<NodeGroupsRestStub> child,
+                                  std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddNodes(

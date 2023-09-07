@@ -34,7 +34,8 @@ class DatastoreMetadata : public DatastoreStub {
  public:
   ~DatastoreMetadata() override = default;
   DatastoreMetadata(std::shared_ptr<DatastoreStub> child,
-                    std::multimap<std::string, std::string> fixed_metadata);
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::datastore::v1::LookupResponse> Lookup(
       grpc::ClientContext& context,

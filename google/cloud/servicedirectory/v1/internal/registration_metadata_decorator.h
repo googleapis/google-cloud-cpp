@@ -35,7 +35,8 @@ class RegistrationServiceMetadata : public RegistrationServiceStub {
   ~RegistrationServiceMetadata() override = default;
   RegistrationServiceMetadata(
       std::shared_ptr<RegistrationServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       grpc::ClientContext& context,

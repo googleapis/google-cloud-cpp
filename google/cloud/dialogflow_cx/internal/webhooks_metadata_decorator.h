@@ -34,7 +34,8 @@ class WebhooksMetadata : public WebhooksStub {
  public:
   ~WebhooksMetadata() override = default;
   WebhooksMetadata(std::shared_ptr<WebhooksStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
   ListWebhooks(grpc::ClientContext& context,

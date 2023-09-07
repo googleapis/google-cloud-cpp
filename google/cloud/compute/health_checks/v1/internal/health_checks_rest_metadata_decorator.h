@@ -36,8 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class HealthChecksRestMetadata : public HealthChecksRestStub {
  public:
   ~HealthChecksRestMetadata() override = default;
-  explicit HealthChecksRestMetadata(
-      std::shared_ptr<HealthChecksRestStub> child);
+  explicit HealthChecksRestMetadata(std::shared_ptr<HealthChecksRestStub> child,
+                                    std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
   AggregatedListHealthChecks(

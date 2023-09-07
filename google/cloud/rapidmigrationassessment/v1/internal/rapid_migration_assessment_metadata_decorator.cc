@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RapidMigrationAssessmentMetadata::RapidMigrationAssessmentMetadata(
     std::shared_ptr<RapidMigrationAssessmentStub> child,
-    std::multimap<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentMetadata::AsyncCreateCollector(

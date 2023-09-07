@@ -39,7 +39,8 @@ class RegionNetworkFirewallPoliciesRestMetadata
  public:
   ~RegionNetworkFirewallPoliciesRestMetadata() override = default;
   explicit RegionNetworkFirewallPoliciesRestMetadata(
-      std::shared_ptr<RegionNetworkFirewallPoliciesRestStub> child);
+      std::shared_ptr<RegionNetworkFirewallPoliciesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddAssociation(

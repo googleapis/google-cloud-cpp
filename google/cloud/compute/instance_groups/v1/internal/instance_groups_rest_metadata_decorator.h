@@ -37,7 +37,8 @@ class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
  public:
   ~InstanceGroupsRestMetadata() override = default;
   explicit InstanceGroupsRestMetadata(
-      std::shared_ptr<InstanceGroupsRestStub> child);
+      std::shared_ptr<InstanceGroupsRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddInstances(

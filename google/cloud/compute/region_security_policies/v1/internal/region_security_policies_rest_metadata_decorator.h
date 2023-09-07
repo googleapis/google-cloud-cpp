@@ -39,7 +39,8 @@ class RegionSecurityPoliciesRestMetadata
  public:
   ~RegionSecurityPoliciesRestMetadata() override = default;
   explicit RegionSecurityPoliciesRestMetadata(
-      std::shared_ptr<RegionSecurityPoliciesRestStub> child);
+      std::shared_ptr<RegionSecurityPoliciesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionSecurityPolicies(

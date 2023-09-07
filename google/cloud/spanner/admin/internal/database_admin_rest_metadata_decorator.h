@@ -37,7 +37,8 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
  public:
   ~DatabaseAdminRestMetadata() override = default;
   explicit DatabaseAdminRestMetadata(
-      std::shared_ptr<DatabaseAdminRestStub> child);
+      std::shared_ptr<DatabaseAdminRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(

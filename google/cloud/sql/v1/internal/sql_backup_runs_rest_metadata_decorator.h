@@ -36,7 +36,8 @@ class SqlBackupRunsServiceRestMetadata : public SqlBackupRunsServiceRestStub {
  public:
   ~SqlBackupRunsServiceRestMetadata() override = default;
   explicit SqlBackupRunsServiceRestMetadata(
-      std::shared_ptr<SqlBackupRunsServiceRestStub> child);
+      std::shared_ptr<SqlBackupRunsServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,

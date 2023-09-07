@@ -39,7 +39,8 @@ class RegionInstanceTemplatesRestMetadata
  public:
   ~RegionInstanceTemplatesRestMetadata() override = default;
   explicit RegionInstanceTemplatesRestMetadata(
-      std::shared_ptr<RegionInstanceTemplatesRestStub> child);
+      std::shared_ptr<RegionInstanceTemplatesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteRegionInstanceTemplates(

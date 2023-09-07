@@ -36,7 +36,8 @@ class SqlSslCertsServiceRestMetadata : public SqlSslCertsServiceRestStub {
  public:
   ~SqlSslCertsServiceRestMetadata() override = default;
   explicit SqlSslCertsServiceRestMetadata(
-      std::shared_ptr<SqlSslCertsServiceRestStub> child);
+      std::shared_ptr<SqlSslCertsServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,

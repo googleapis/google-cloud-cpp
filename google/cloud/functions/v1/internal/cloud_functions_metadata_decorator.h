@@ -36,7 +36,8 @@ class CloudFunctionsServiceMetadata : public CloudFunctionsServiceStub {
   ~CloudFunctionsServiceMetadata() override = default;
   CloudFunctionsServiceMetadata(
       std::shared_ptr<CloudFunctionsServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
       grpc::ClientContext& context,

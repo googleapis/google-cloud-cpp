@@ -37,7 +37,8 @@ class TargetVpnGatewaysRestMetadata : public TargetVpnGatewaysRestStub {
  public:
   ~TargetVpnGatewaysRestMetadata() override = default;
   explicit TargetVpnGatewaysRestMetadata(
-      std::shared_ptr<TargetVpnGatewaysRestStub> child);
+      std::shared_ptr<TargetVpnGatewaysRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
   AggregatedListTargetVpnGateways(

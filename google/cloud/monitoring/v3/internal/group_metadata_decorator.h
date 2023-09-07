@@ -34,7 +34,8 @@ class GroupServiceMetadata : public GroupServiceStub {
  public:
   ~GroupServiceMetadata() override = default;
   GroupServiceMetadata(std::shared_ptr<GroupServiceStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
       grpc::ClientContext& context,

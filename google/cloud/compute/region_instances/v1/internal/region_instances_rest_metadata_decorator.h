@@ -37,7 +37,8 @@ class RegionInstancesRestMetadata : public RegionInstancesRestStub {
  public:
   ~RegionInstancesRestMetadata() override = default;
   explicit RegionInstancesRestMetadata(
-      std::shared_ptr<RegionInstancesRestStub> child);
+      std::shared_ptr<RegionInstancesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncBulkInsert(

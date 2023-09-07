@@ -35,7 +35,8 @@ class CloudRedisMetadata : public CloudRedisStub {
  public:
   ~CloudRedisMetadata() override = default;
   CloudRedisMetadata(std::shared_ptr<CloudRedisStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::redis::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,

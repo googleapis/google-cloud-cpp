@@ -34,7 +34,8 @@ class BigQueryReadMetadata : public BigQueryReadStub {
  public:
   ~BigQueryReadMetadata() override = default;
   BigQueryReadMetadata(std::shared_ptr<BigQueryReadStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       grpc::ClientContext& context,

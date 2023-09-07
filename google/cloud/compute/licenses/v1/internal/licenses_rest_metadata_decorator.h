@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LicensesRestMetadata : public LicensesRestStub {
  public:
   ~LicensesRestMetadata() override = default;
-  explicit LicensesRestMetadata(std::shared_ptr<LicensesRestStub> child);
+  explicit LicensesRestMetadata(std::shared_ptr<LicensesRestStub> child,
+                                std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteLicenses(

@@ -38,7 +38,8 @@ class NetworkEndpointGroupsRestMetadata : public NetworkEndpointGroupsRestStub {
  public:
   ~NetworkEndpointGroupsRestMetadata() override = default;
   explicit NetworkEndpointGroupsRestMetadata(
-      std::shared_ptr<NetworkEndpointGroupsRestStub> child);
+      std::shared_ptr<NetworkEndpointGroupsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
   AggregatedListNetworkEndpointGroups(

@@ -35,7 +35,8 @@ class InstanceAdminMetadata : public InstanceAdminStub {
  public:
   ~InstanceAdminMetadata() override = default;
   InstanceAdminMetadata(std::shared_ptr<InstanceAdminStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
   ListInstanceConfigs(

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecurityCenterMetadata : public SecurityCenterStub {
  public:
   ~SecurityCenterMetadata() override = default;
-  SecurityCenterMetadata(
-      std::shared_ptr<SecurityCenterStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  SecurityCenterMetadata(std::shared_ptr<SecurityCenterStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,

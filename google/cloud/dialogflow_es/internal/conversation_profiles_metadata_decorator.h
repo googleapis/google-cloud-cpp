@@ -36,7 +36,8 @@ class ConversationProfilesMetadata : public ConversationProfilesStub {
   ~ConversationProfilesMetadata() override = default;
   ConversationProfilesMetadata(
       std::shared_ptr<ConversationProfilesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
   ListConversationProfiles(

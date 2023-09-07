@@ -35,7 +35,8 @@ class AutoMlMetadata : public AutoMlStub {
  public:
   ~AutoMlMetadata() override = default;
   AutoMlMetadata(std::shared_ptr<AutoMlStub> child,
-                 std::multimap<std::string, std::string> fixed_metadata);
+                 std::multimap<std::string, std::string> fixed_metadata,
+                 std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,

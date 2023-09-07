@@ -35,7 +35,8 @@ class BackupForGKEMetadata : public BackupForGKEStub {
  public:
   ~BackupForGKEMetadata() override = default;
   BackupForGKEMetadata(std::shared_ptr<BackupForGKEStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupPlan(
       google::cloud::CompletionQueue& cq,

@@ -36,7 +36,8 @@ class ApiGatewayServiceMetadata : public ApiGatewayServiceStub {
   ~ApiGatewayServiceMetadata() override = default;
   ApiGatewayServiceMetadata(
       std::shared_ptr<ApiGatewayServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse> ListGateways(
       grpc::ClientContext& context,

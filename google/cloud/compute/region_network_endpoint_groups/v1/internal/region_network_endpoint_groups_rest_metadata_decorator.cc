@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_format.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,10 +34,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionNetworkEndpointGroupsRestMetadata::
     RegionNetworkEndpointGroupsRestMetadata(
-        std::shared_ptr<RegionNetworkEndpointGroupsRestStub> child)
+        std::shared_ptr<RegionNetworkEndpointGroupsRestStub> child,
+        std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncDeleteRegionNetworkEndpointGroups(

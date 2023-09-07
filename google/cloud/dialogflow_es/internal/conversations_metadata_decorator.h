@@ -34,7 +34,8 @@ class ConversationsMetadata : public ConversationsStub {
  public:
   ~ConversationsMetadata() override = default;
   ConversationsMetadata(std::shared_ptr<ConversationsStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       grpc::ClientContext& context,

@@ -37,7 +37,8 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
  public:
   ~GlobalAddressesRestMetadata() override = default;
   explicit GlobalAddressesRestMetadata(
-      std::shared_ptr<GlobalAddressesRestStub> child);
+      std::shared_ptr<GlobalAddressesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteGlobalAddresses(

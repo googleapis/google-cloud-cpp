@@ -36,7 +36,8 @@ class MetadataServiceMetadata : public MetadataServiceStub {
   ~MetadataServiceMetadata() override = default;
   MetadataServiceMetadata(
       std::shared_ptr<MetadataServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataStore(
       google::cloud::CompletionQueue& cq,

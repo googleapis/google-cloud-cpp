@@ -34,7 +34,8 @@ class CaseServiceMetadata : public CaseServiceStub {
  public:
   ~CaseServiceMetadata() override = default;
   CaseServiceMetadata(std::shared_ptr<CaseServiceStub> child,
-                      std::multimap<std::string, std::string> fixed_metadata);
+                      std::multimap<std::string, std::string> fixed_metadata,
+                      std::string api_client_header = "");
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
       grpc::ClientContext& context,

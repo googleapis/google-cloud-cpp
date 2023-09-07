@@ -34,7 +34,8 @@ class FirewallMetadata : public FirewallStub {
  public:
   ~FirewallMetadata() override = default;
   FirewallMetadata(std::shared_ptr<FirewallStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
       grpc::ClientContext& context,

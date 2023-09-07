@@ -36,7 +36,8 @@ class ConversationModelsMetadata : public ConversationModelsStub {
   ~ConversationModelsMetadata() override = default;
   ConversationModelsMetadata(
       std::shared_ptr<ConversationModelsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,

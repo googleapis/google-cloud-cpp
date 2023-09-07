@@ -36,7 +36,8 @@ class NodeGroupControllerMetadata : public NodeGroupControllerStub {
   ~NodeGroupControllerMetadata() override = default;
   NodeGroupControllerMetadata(
       std::shared_ptr<NodeGroupControllerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNodeGroup(
       google::cloud::CompletionQueue& cq,

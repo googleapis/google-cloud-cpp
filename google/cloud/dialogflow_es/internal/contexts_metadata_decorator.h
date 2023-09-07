@@ -34,7 +34,8 @@ class ContextsMetadata : public ContextsStub {
  public:
   ~ContextsMetadata() override = default;
   ContextsMetadata(std::shared_ptr<ContextsStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ListContexts(
       grpc::ClientContext& context,

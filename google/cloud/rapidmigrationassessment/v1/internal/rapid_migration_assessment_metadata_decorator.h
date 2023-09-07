@@ -37,7 +37,8 @@ class RapidMigrationAssessmentMetadata : public RapidMigrationAssessmentStub {
   ~RapidMigrationAssessmentMetadata() override = default;
   RapidMigrationAssessmentMetadata(
       std::shared_ptr<RapidMigrationAssessmentStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCollector(
       google::cloud::CompletionQueue& cq,

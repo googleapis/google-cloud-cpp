@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetPoolsRestMetadata : public TargetPoolsRestStub {
  public:
   ~TargetPoolsRestMetadata() override = default;
-  explicit TargetPoolsRestMetadata(std::shared_ptr<TargetPoolsRestStub> child);
+  explicit TargetPoolsRestMetadata(std::shared_ptr<TargetPoolsRestStub> child,
+                                   std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddHealthCheck(

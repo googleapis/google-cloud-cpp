@@ -36,7 +36,8 @@ class SqlInstancesServiceRestMetadata : public SqlInstancesServiceRestStub {
  public:
   ~SqlInstancesServiceRestMetadata() override = default;
   explicit SqlInstancesServiceRestMetadata(
-      std::shared_ptr<SqlInstancesServiceRestStub> child);
+      std::shared_ptr<SqlInstancesServiceRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
       google::cloud::rest_internal::RestContext& rest_context,

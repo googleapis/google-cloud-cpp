@@ -35,7 +35,8 @@ class ProjectsMetadata : public ProjectsStub {
  public:
   ~ProjectsMetadata() override = default;
   ProjectsMetadata(std::shared_ptr<ProjectsStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       grpc::ClientContext& context,

@@ -35,7 +35,8 @@ class ServicesMetadata : public ServicesStub {
  public:
   ~ServicesMetadata() override = default;
   ServicesMetadata(std::shared_ptr<ServicesStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,

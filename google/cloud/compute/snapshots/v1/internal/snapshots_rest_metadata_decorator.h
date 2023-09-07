@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SnapshotsRestMetadata : public SnapshotsRestStub {
  public:
   ~SnapshotsRestMetadata() override = default;
-  explicit SnapshotsRestMetadata(std::shared_ptr<SnapshotsRestStub> child);
+  explicit SnapshotsRestMetadata(std::shared_ptr<SnapshotsRestStub> child,
+                                 std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteSnapshots(

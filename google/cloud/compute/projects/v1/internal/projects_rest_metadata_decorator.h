@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectsRestMetadata : public ProjectsRestStub {
  public:
   ~ProjectsRestMetadata() override = default;
-  explicit ProjectsRestMetadata(std::shared_ptr<ProjectsRestStub> child);
+  explicit ProjectsRestMetadata(std::shared_ptr<ProjectsRestStub> child,
+                                std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDisableXpnHost(

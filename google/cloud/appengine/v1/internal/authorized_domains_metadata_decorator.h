@@ -35,7 +35,8 @@ class AuthorizedDomainsMetadata : public AuthorizedDomainsStub {
   ~AuthorizedDomainsMetadata() override = default;
   AuthorizedDomainsMetadata(
       std::shared_ptr<AuthorizedDomainsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(

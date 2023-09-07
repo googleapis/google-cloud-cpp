@@ -34,7 +34,8 @@ class EkmServiceMetadata : public EkmServiceStub {
  public:
   ~EkmServiceMetadata() override = default;
   EkmServiceMetadata(std::shared_ptr<EkmServiceStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
   ListEkmConnections(grpc::ClientContext& context,

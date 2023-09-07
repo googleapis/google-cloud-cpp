@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RuleSetServiceMetadata : public RuleSetServiceStub {
  public:
   ~RuleSetServiceMetadata() override = default;
-  RuleSetServiceMetadata(
-      std::shared_ptr<RuleSetServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  RuleSetServiceMetadata(std::shared_ptr<RuleSetServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
       grpc::ClientContext& context,

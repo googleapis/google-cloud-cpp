@@ -36,7 +36,8 @@ class LivestreamServiceMetadata : public LivestreamServiceStub {
   ~LivestreamServiceMetadata() override = default;
   LivestreamServiceMetadata(
       std::shared_ptr<LivestreamServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
       google::cloud::CompletionQueue& cq,

@@ -33,9 +33,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ControlServiceMetadata : public ControlServiceStub {
  public:
   ~ControlServiceMetadata() override = default;
-  ControlServiceMetadata(
-      std::shared_ptr<ControlServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  ControlServiceMetadata(std::shared_ptr<ControlServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::Control> CreateControl(
       grpc::ClientContext& context,

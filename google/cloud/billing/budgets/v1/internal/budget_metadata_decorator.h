@@ -34,7 +34,8 @@ class BudgetServiceMetadata : public BudgetServiceStub {
  public:
   ~BudgetServiceMetadata() override = default;
   BudgetServiceMetadata(std::shared_ptr<BudgetServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       grpc::ClientContext& context,

@@ -36,7 +36,8 @@ class AppGatewaysServiceMetadata : public AppGatewaysServiceStub {
   ~AppGatewaysServiceMetadata() override = default;
   AppGatewaysServiceMetadata(
       std::shared_ptr<AppGatewaysServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(

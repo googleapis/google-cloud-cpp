@@ -35,7 +35,8 @@ class CloudDeployMetadata : public CloudDeployStub {
  public:
   ~CloudDeployMetadata() override = default;
   CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child,
-                      std::multimap<std::string, std::string> fixed_metadata);
+                      std::multimap<std::string, std::string> fixed_metadata,
+                      std::string api_client_header = "");
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(

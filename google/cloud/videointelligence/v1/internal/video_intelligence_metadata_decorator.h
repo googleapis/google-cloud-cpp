@@ -36,7 +36,8 @@ class VideoIntelligenceServiceMetadata : public VideoIntelligenceServiceStub {
   ~VideoIntelligenceServiceMetadata() override = default;
   VideoIntelligenceServiceMetadata(
       std::shared_ptr<VideoIntelligenceServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncAnnotateVideo(
       google::cloud::CompletionQueue& cq,

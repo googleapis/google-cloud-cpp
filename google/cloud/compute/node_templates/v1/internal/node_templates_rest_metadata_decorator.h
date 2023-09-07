@@ -37,7 +37,8 @@ class NodeTemplatesRestMetadata : public NodeTemplatesRestStub {
  public:
   ~NodeTemplatesRestMetadata() override = default;
   explicit NodeTemplatesRestMetadata(
-      std::shared_ptr<NodeTemplatesRestStub> child);
+      std::shared_ptr<NodeTemplatesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
   AggregatedListNodeTemplates(

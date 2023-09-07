@@ -35,7 +35,8 @@ class ProductSearchMetadata : public ProductSearchStub {
  public:
   ~ProductSearchMetadata() override = default;
   ProductSearchMetadata(std::shared_ptr<ProductSearchStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
       grpc::ClientContext& context,

@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/essentialcontacts/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,11 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EssentialContactsServiceMetadata::EssentialContactsServiceMetadata(
     std::shared_ptr<EssentialContactsServiceStub> child,
-    std::multimap<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::CreateContact(

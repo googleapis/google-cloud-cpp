@@ -36,7 +36,8 @@ class DataplexServiceMetadata : public DataplexServiceStub {
   ~DataplexServiceMetadata() override = default;
   DataplexServiceMetadata(
       std::shared_ptr<DataplexServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLake(
       google::cloud::CompletionQueue& cq,

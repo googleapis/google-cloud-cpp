@@ -36,7 +36,8 @@ class ReachabilityServiceMetadata : public ReachabilityServiceStub {
   ~ReachabilityServiceMetadata() override = default;
   ReachabilityServiceMetadata(
       std::shared_ptr<ReachabilityServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
   ListConnectivityTests(

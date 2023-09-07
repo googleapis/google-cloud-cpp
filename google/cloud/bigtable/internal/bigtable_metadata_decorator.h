@@ -34,7 +34,8 @@ class BigtableMetadata : public BigtableStub {
  public:
   ~BigtableMetadata() override = default;
   BigtableMetadata(std::shared_ptr<BigtableStub> child,
-                   std::multimap<std::string, std::string> fixed_metadata);
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>

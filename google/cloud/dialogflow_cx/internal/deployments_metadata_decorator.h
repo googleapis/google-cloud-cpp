@@ -34,7 +34,8 @@ class DeploymentsMetadata : public DeploymentsStub {
  public:
   ~DeploymentsMetadata() override = default;
   DeploymentsMetadata(std::shared_ptr<DeploymentsStub> child,
-                      std::multimap<std::string, std::string> fixed_metadata);
+                      std::multimap<std::string, std::string> fixed_metadata,
+                      std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(

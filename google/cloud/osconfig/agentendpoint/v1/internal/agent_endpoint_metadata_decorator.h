@@ -35,7 +35,8 @@ class AgentEndpointServiceMetadata : public AgentEndpointServiceStub {
   ~AgentEndpointServiceMetadata() override = default;
   AgentEndpointServiceMetadata(
       std::shared_ptr<AgentEndpointServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::osconfig::agentendpoint::v1::

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DatasetServiceMetadata : public DatasetServiceStub {
  public:
   ~DatasetServiceMetadata() override = default;
-  DatasetServiceMetadata(
-      std::shared_ptr<DatasetServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+  DatasetServiceMetadata(std::shared_ptr<DatasetServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,

@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NetworksRestMetadata : public NetworksRestStub {
  public:
   ~NetworksRestMetadata() override = default;
-  explicit NetworksRestMetadata(std::shared_ptr<NetworksRestStub> child);
+  explicit NetworksRestMetadata(std::shared_ptr<NetworksRestStub> child,
+                                std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddPeering(

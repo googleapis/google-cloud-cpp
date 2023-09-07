@@ -36,7 +36,8 @@ class GlobalOperationsRestMetadata : public GlobalOperationsRestStub {
  public:
   ~GlobalOperationsRestMetadata() override = default;
   explicit GlobalOperationsRestMetadata(
-      std::shared_ptr<GlobalOperationsRestStub> child);
+      std::shared_ptr<GlobalOperationsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
   AggregatedListGlobalOperations(

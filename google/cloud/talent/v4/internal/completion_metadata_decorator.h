@@ -34,7 +34,8 @@ class CompletionMetadata : public CompletionStub {
  public:
   ~CompletionMetadata() override = default;
   CompletionMetadata(std::shared_ptr<CompletionStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       grpc::ClientContext& context,

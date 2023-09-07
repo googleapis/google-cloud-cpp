@@ -34,7 +34,8 @@ class ExecutionsMetadata : public ExecutionsStub {
  public:
   ~ExecutionsMetadata() override = default;
   ExecutionsMetadata(std::shared_ptr<ExecutionsStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
   ListExecutions(

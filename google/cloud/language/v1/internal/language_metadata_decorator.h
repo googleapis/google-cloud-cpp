@@ -35,7 +35,8 @@ class LanguageServiceMetadata : public LanguageServiceStub {
   ~LanguageServiceMetadata() override = default;
   LanguageServiceMetadata(
       std::shared_ptr<LanguageServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,

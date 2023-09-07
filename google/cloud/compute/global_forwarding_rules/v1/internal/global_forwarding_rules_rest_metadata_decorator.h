@@ -38,7 +38,8 @@ class GlobalForwardingRulesRestMetadata : public GlobalForwardingRulesRestStub {
  public:
   ~GlobalForwardingRulesRestMetadata() override = default;
   explicit GlobalForwardingRulesRestMetadata(
-      std::shared_ptr<GlobalForwardingRulesRestStub> child);
+      std::shared_ptr<GlobalForwardingRulesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteGlobalForwardingRules(

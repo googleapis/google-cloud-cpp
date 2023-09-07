@@ -39,7 +39,8 @@ class NetworkEdgeSecurityServicesRestMetadata
  public:
   ~NetworkEdgeSecurityServicesRestMetadata() override = default;
   explicit NetworkEdgeSecurityServicesRestMetadata(
-      std::shared_ptr<NetworkEdgeSecurityServicesRestStub> child);
+      std::shared_ptr<NetworkEdgeSecurityServicesRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>

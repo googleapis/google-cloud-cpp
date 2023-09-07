@@ -34,7 +34,8 @@ class LookupServiceMetadata : public LookupServiceStub {
  public:
   ~LookupServiceMetadata() override = default;
   LookupServiceMetadata(std::shared_ptr<LookupServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(

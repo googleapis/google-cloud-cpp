@@ -36,7 +36,8 @@ class PartitionAssignmentServiceMetadata
   ~PartitionAssignmentServiceMetadata() override = default;
   PartitionAssignmentServiceMetadata(
       std::shared_ptr<PartitionAssignmentServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,

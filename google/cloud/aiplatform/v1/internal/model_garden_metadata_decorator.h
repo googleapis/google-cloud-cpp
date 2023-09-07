@@ -35,7 +35,8 @@ class ModelGardenServiceMetadata : public ModelGardenServiceStub {
   ~ModelGardenServiceMetadata() override = default;
   ModelGardenServiceMetadata(
       std::shared_ptr<ModelGardenServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
       grpc::ClientContext& context,

@@ -35,7 +35,8 @@ class HubServiceMetadata : public HubServiceStub {
  public:
   ~HubServiceMetadata() override = default;
   HubServiceMetadata(std::shared_ptr<HubServiceStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> ListHubs(
       grpc::ClientContext& context,

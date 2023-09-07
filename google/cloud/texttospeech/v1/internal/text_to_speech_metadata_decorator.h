@@ -34,7 +34,8 @@ class TextToSpeechMetadata : public TextToSpeechStub {
  public:
   ~TextToSpeechMetadata() override = default;
   TextToSpeechMetadata(std::shared_ptr<TextToSpeechStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       grpc::ClientContext& context,

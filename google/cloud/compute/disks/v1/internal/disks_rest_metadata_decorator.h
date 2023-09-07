@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DisksRestMetadata : public DisksRestStub {
  public:
   ~DisksRestMetadata() override = default;
-  explicit DisksRestMetadata(std::shared_ptr<DisksRestStub> child);
+  explicit DisksRestMetadata(std::shared_ptr<DisksRestStub> child,
+                             std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncAddResourcePolicies(

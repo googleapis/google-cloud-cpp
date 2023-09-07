@@ -35,7 +35,8 @@ class DatastreamMetadata : public DatastreamStub {
  public:
   ~DatastreamMetadata() override = default;
   DatastreamMetadata(std::shared_ptr<DatastreamStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(

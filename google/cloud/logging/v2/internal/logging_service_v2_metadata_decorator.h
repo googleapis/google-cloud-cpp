@@ -35,7 +35,8 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
   ~LoggingServiceV2Metadata() override = default;
   LoggingServiceV2Metadata(
       std::shared_ptr<LoggingServiceV2Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   Status DeleteLog(
       grpc::ClientContext& context,

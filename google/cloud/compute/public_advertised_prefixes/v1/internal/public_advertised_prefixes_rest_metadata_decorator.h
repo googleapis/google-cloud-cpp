@@ -39,7 +39,8 @@ class PublicAdvertisedPrefixesRestMetadata
  public:
   ~PublicAdvertisedPrefixesRestMetadata() override = default;
   explicit PublicAdvertisedPrefixesRestMetadata(
-      std::shared_ptr<PublicAdvertisedPrefixesRestStub> child);
+      std::shared_ptr<PublicAdvertisedPrefixesRestStub> child,
+      std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeletePublicAdvertisedPrefixes(

@@ -35,7 +35,8 @@ class MetadataServiceMetadata : public MetadataServiceStub {
   ~MetadataServiceMetadata() override = default;
   MetadataServiceMetadata(
       std::shared_ptr<MetadataServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
       grpc::ClientContext& context,

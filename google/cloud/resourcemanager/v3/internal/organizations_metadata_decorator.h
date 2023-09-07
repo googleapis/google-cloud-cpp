@@ -34,7 +34,8 @@ class OrganizationsMetadata : public OrganizationsStub {
  public:
   ~OrganizationsMetadata() override = default;
   OrganizationsMetadata(std::shared_ptr<OrganizationsStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       grpc::ClientContext& context,

@@ -36,7 +36,8 @@ class PipelineServiceMetadata : public PipelineServiceStub {
   ~PipelineServiceMetadata() override = default;
   PipelineServiceMetadata(
       std::shared_ptr<PipelineServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
   CreateTrainingPipeline(

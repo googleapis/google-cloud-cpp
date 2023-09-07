@@ -34,7 +34,8 @@ class SubscriberMetadata : public SubscriberStub {
  public:
   ~SubscriberMetadata() override = default;
   SubscriberMetadata(std::shared_ptr<SubscriberStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
       grpc::ClientContext& context,

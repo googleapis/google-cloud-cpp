@@ -35,7 +35,8 @@ class CaseAttachmentServiceMetadata : public CaseAttachmentServiceStub {
   ~CaseAttachmentServiceMetadata() override = default;
   CaseAttachmentServiceMetadata(
       std::shared_ptr<CaseAttachmentServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
       grpc::ClientContext& context,

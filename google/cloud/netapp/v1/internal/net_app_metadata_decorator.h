@@ -35,7 +35,8 @@ class NetAppMetadata : public NetAppStub {
  public:
   ~NetAppMetadata() override = default;
   NetAppMetadata(std::shared_ptr<NetAppStub> child,
-                 std::multimap<std::string, std::string> fixed_metadata);
+                 std::multimap<std::string, std::string> fixed_metadata,
+                 std::string api_client_header = "");
 
   StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
   ListStoragePools(grpc::ClientContext& context,

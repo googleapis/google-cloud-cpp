@@ -35,7 +35,8 @@ class ProfilerServiceMetadata : public ProfilerServiceStub {
   ~ProfilerServiceMetadata() override = default;
   ProfilerServiceMetadata(
       std::shared_ptr<ProfilerServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       grpc::ClientContext& context,

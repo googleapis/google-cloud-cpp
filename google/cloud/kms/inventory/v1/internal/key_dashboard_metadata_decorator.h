@@ -35,7 +35,8 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
   ~KeyDashboardServiceMetadata() override = default;
   KeyDashboardServiceMetadata(
       std::shared_ptr<KeyDashboardServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata);
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
   ListCryptoKeys(grpc::ClientContext& context,

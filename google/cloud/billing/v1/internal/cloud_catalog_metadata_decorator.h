@@ -34,7 +34,8 @@ class CloudCatalogMetadata : public CloudCatalogStub {
  public:
   ~CloudCatalogMetadata() override = default;
   CloudCatalogMetadata(std::shared_ptr<CloudCatalogStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context,

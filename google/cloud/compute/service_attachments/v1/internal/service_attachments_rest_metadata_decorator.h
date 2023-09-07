@@ -37,7 +37,8 @@ class ServiceAttachmentsRestMetadata : public ServiceAttachmentsRestStub {
  public:
   ~ServiceAttachmentsRestMetadata() override = default;
   explicit ServiceAttachmentsRestMetadata(
-      std::shared_ptr<ServiceAttachmentsRestStub> child);
+      std::shared_ptr<ServiceAttachmentsRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
   AggregatedListServiceAttachments(

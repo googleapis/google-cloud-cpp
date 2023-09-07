@@ -34,7 +34,8 @@ class SpannerMetadata : public SpannerStub {
  public:
   ~SpannerMetadata() override = default;
   SpannerMetadata(std::shared_ptr<SpannerStub> child,
-                  std::multimap<std::string, std::string> fixed_metadata);
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& context,

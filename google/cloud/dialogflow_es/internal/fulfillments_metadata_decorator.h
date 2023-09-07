@@ -34,7 +34,8 @@ class FulfillmentsMetadata : public FulfillmentsStub {
  public:
   ~FulfillmentsMetadata() override = default;
   FulfillmentsMetadata(std::shared_ptr<FulfillmentsStub> child,
-                       std::multimap<std::string, std::string> fixed_metadata);
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       grpc::ClientContext& context,

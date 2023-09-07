@@ -35,7 +35,8 @@ class JobControllerMetadata : public JobControllerStub {
  public:
   ~JobControllerMetadata() override = default;
   JobControllerMetadata(std::shared_ptr<JobControllerStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       grpc::ClientContext& context,

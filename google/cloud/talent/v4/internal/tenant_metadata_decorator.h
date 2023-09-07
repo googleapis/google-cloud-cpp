@@ -34,7 +34,8 @@ class TenantServiceMetadata : public TenantServiceStub {
  public:
   ~TenantServiceMetadata() override = default;
   TenantServiceMetadata(std::shared_ptr<TenantServiceStub> child,
-                        std::multimap<std::string, std::string> fixed_metadata);
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       grpc::ClientContext& context,

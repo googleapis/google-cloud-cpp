@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,11 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LookupServiceMetadata::LookupServiceMetadata(
     std::shared_ptr<LookupServiceStub> child,
-    std::multimap<std::string, std::string> fixed_metadata)
+    std::multimap<std::string, std::string> fixed_metadata,
+    std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+          api_client_header.empty()
+              ? google::cloud::internal::ApiClientHeader("generator")
+              : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceMetadata::ResolveService(

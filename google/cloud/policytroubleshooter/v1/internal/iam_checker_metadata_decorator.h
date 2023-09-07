@@ -34,7 +34,8 @@ class IamCheckerMetadata : public IamCheckerStub {
  public:
   ~IamCheckerMetadata() override = default;
   IamCheckerMetadata(std::shared_ptr<IamCheckerStub> child,
-                     std::multimap<std::string, std::string> fixed_metadata);
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
