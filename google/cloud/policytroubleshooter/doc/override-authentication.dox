@@ -9,11 +9,10 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
-@snippet policies_client_samples.cc with-service-account
+@snippet policy_troubleshooter_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
 
-- [\c policytroubleshooter_iam_v3::PoliciesClient](@ref policytroubleshooter_iam_v3::PoliciesClient-service-account-snippet)
 - [\c policytroubleshooter_iam_v3::PolicyTroubleshooterClient](@ref policytroubleshooter_iam_v3::PolicyTroubleshooterClient-service-account-snippet)
 - [\c policytroubleshooter_v1::IamCheckerClient](@ref policytroubleshooter_v1::IamCheckerClient-service-account-snippet)
 
@@ -32,12 +31,6 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
-
-/*! @page policytroubleshooter_iam_v3::PoliciesClient-service-account-snippet Override policytroubleshooter_iam_v3::PoliciesClient Authentication Defaults
-
-@snippet google/cloud/policytroubleshooter/iam/v3/samples/policies_client_samples.cc with-service-account
-
-*/
 
 /*! @page policytroubleshooter_iam_v3::PolicyTroubleshooterClient-service-account-snippet Override policytroubleshooter_iam_v3::PolicyTroubleshooterClient Authentication Defaults
 
