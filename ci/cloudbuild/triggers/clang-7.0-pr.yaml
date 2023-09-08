@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.15.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: clang-7-0-pr
+name: v2-15-x-clang-7-0-pr
 substitutions:
   _BUILD_NAME: clang-7.0
   _DISTRO: ubuntu-20.04-install
