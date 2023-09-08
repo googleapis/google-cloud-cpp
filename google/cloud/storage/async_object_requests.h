@@ -112,6 +112,48 @@ class InsertObjectRequest {
 };
 
 /**
+ * A request to read an object.
+ *
+ * This class can hold all the mandatory and optional parameters to read an
+ * object.
+ *
+ * This class is the public API for the library because it is required for
+ * mocking.
+ */
+class ReadObjectRequest {
+ public:
+  ReadObjectRequest() = default;
+  ReadObjectRequest(std::string bucket_name, std::string object_name)
+      : impl_(std::move(bucket_name), std::move(object_name)) {}
+
+  std::string const& bucket_name() const { return impl_.bucket_name(); }
+  std::string const& object_name() const { return impl_.object_name(); }
+
+  template <typename... O>
+  ReadObjectRequest& set_multiple_options(O&&... o) & {
+    impl_.set_multiple_options(std::forward<O>(o)...);
+    return *this;
+  }
+  template <typename... O>
+  ReadObjectRequest&& set_multiple_options(O&&... o) && {
+    return std::move(set_multiple_options(std::forward<O>(o)...));
+  }
+
+  template <typename O>
+  bool HasOption() const {
+    return impl_.HasOption<O>();
+  }
+  template <typename O>
+  O GetOption() const {
+    return impl_.GetOption<O>();
+  }
+
+ protected:
+  friend class storage_internal::AsyncConnectionImpl;
+  storage::internal::ReadObjectRangeRequest impl_;
+};
+
+/**
  * A request to delete an object.
  *
  * This class can hold all the mandatory and optional parameters to delete an

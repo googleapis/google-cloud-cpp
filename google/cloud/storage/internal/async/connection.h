@@ -69,8 +69,21 @@ class AsyncConnection {
   virtual future<StatusOr<storage::ObjectMetadata>> AsyncInsertObject(
       InsertObjectParams p) = 0;
 
+  /**
+   * A thin wrapper around the `ReadObject()` parameters.
+   *
+   * We use a single struct as the input parameter for this function to
+   * prevent breaking any mocks when additional parameters are needed.
+   */
+  struct ReadObjectParams {
+    /// The metadata attributes to create the object.
+    storage_experimental::ReadObjectRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
   virtual future<storage_experimental::AsyncReadObjectRangeResponse>
-  AsyncReadObjectRange(storage::internal::ReadObjectRangeRequest request) = 0;
+  AsyncReadObjectRange(ReadObjectParams p) = 0;
 
   /**
    * A thin wrapper around the `ComposeObject()` parameters.
