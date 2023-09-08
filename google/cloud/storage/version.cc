@@ -24,7 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string version_string() { return ::google::cloud::version_string(); }
 
 std::string x_goog_api_client() {
-  return google::cloud::internal::ApiClientHeader();
+  return google::cloud::internal::HandCraftedLibClientHeader();
 }
 
 // These were sprinkled through the code, consolidated here because I could
