@@ -75,6 +75,13 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
   return status;
 }
 
+void EndSpan(
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span) {
+  span->SetStatus(opentelemetry::trace::StatusCode::kOk);
+  span->SetAttribute("gcloud.status_code", 0);
+  span->End();
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

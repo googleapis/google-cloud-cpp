@@ -85,6 +85,8 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
+    internal/publisher_tracing_connection.cc
+    internal/publisher_tracing_connection.h
     internal/publisher_tracing_stub.cc
     internal/publisher_tracing_stub.h
     internal/pull_lease_manager.cc
@@ -298,6 +300,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
+        internal/publisher_tracing_connection_test.cc
         internal/pull_lease_manager_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/sequential_batch_sink_test.cc
