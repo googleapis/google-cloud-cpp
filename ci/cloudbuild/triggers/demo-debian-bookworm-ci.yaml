@@ -1,0 +1,14 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^main$
+name: demo-debian-bookworm-ci
+substitutions:
+  _BUILD_NAME: demo-install
+  _DISTRO: demo-debian-bookworm
+  _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
+tags:
+- ci

@@ -808,6 +808,63 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
+<summary>Debian (12 - Bookworm)</summary>
+<br>
+
+Install the minimal development tools, libcurl, and OpenSSL:
+
+```bash
+sudo apt-get update && \
+sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential ca-certificates cmake curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
+        libprotobuf-dev libgrpc++-dev libgrpc-dev \
+        protobuf-compiler protobuf-compiler-grpc \
+        libabsl-dev \
+        nlohmann-json3-dev \
+        libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
+```
+
+#### crc32c
+
+The project depends on the Crc32c library, we need to compile this from source:
+
+```bash
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Compile and install the main project
+
+We can now compile and install `google-cloud-cpp`:
+
+```bash
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -S . -B cmake-out \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
+```
+
+</details>
+
+<details>
 <summary>Debian (11 - Bullseye)</summary>
 <br>
 
