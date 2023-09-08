@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TableMetadata::TableMetadata(std::shared_ptr<TableRestStub> child)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("bigquery_v2_table")) {}
+          google::cloud::internal::HandCraftedLibClientHeader()) {}
 
 StatusOr<GetTableResponse> TableMetadata::GetTable(
     rest_internal::RestContext& context, GetTableRequest const& request) {

@@ -69,7 +69,7 @@ TEST(DatasetMetadataTest, GetDataset) {
 
   auto result = metadata->GetDataset(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_dataset");
+  VerifyMetadataContext(context);
 }
 
 TEST(DatasetMetadataTest, ListDatasets) {
@@ -110,7 +110,7 @@ TEST(DatasetMetadataTest, ListDatasets) {
 
   auto result = metadata->ListDatasets(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_dataset");
+  VerifyMetadataContext(context);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

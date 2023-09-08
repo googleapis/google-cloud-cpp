@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectMetadata::ProjectMetadata(std::shared_ptr<ProjectRestStub> child)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("bigquery_v2_project")) {}
+          google::cloud::internal::HandCraftedLibClientHeader()) {}
 
 StatusOr<ListProjectsResponse> ProjectMetadata::ListProjects(
     rest_internal::RestContext& context, ListProjectsRequest const& request) {

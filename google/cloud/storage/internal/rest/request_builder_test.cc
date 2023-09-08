@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/internal/api_client_header.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,8 +26,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using google::cloud::internal::HandCraftedLibClientHeader;
 using google::cloud::rest_internal::RestRequest;
+using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 TEST(RestRequestBuilderTest, WellKnownParameterRequest) {
@@ -47,16 +51,11 @@ TEST(RestRequestBuilderTest, WellKnownParameterRequest) {
 
   RestRequest rest_request = std::move(builder).BuildRequest();
 
-  EXPECT_THAT(
-      rest_request.parameters(),
-      UnorderedElementsAre(
-          Eq(std::pair<std::string, std::string>("projection",
-                                                 "my_projection")),
-          Eq(std::pair<std::string, std::string>("foo", "bar")),
-          Eq(std::pair<std::string, std::string>("userProject", "my_project")),
-          Eq(std::pair<std::string, std::string>("maxResults", "42")),
-          Eq(std::pair<std::string, std::string>("prefix", "my_prefix")),
-          Eq(std::pair<std::string, std::string>("deleted", "true"))));
+  EXPECT_THAT(rest_request.parameters(),
+              UnorderedElementsAre(
+                  Pair("projection", "my_projection"), Pair("foo", "bar"),
+                  Pair("userProject", "my_project"), Pair("maxResults", "42"),
+                  Pair("prefix", "my_prefix"), Pair("deleted", "true")));
 }
 
 TEST(RestRequestBuilderTest, WellKnownHeaderRequest) {
@@ -75,14 +74,13 @@ TEST(RestRequestBuilderTest, WellKnownHeaderRequest) {
 
   RestRequest rest_request = std::move(builder).BuildRequest();
 
-  EXPECT_THAT(rest_request.headers(),
-              UnorderedElementsAre(
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "foo", {"bar", "baz"})),
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "content-type", {"application/json"})),
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "if-match", {"my_etag"}))));
+  EXPECT_THAT(
+      rest_request.headers(),
+      UnorderedElementsAre(
+          Pair("x-goog-api-client", ElementsAre(HandCraftedLibClientHeader())),
+          Pair("foo", ElementsAre("bar", "baz")),
+          Pair("content-type", ElementsAre("application/json")),
+          Pair("if-match", ElementsAre("my_etag"))));
 }
 
 TEST(RestRequestBuilderTest, CustomHeaderRequest) {
@@ -98,12 +96,12 @@ TEST(RestRequestBuilderTest, CustomHeaderRequest) {
 
   RestRequest rest_request = std::move(builder).BuildRequest();
 
-  EXPECT_THAT(rest_request.headers(),
-              UnorderedElementsAre(
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "my_header_key", {"my_header_value"})),
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "foo", {"bar"}))));
+  EXPECT_THAT(
+      rest_request.headers(),
+      UnorderedElementsAre(
+          Pair("x-goog-api-client", ElementsAre(HandCraftedLibClientHeader())),
+          Pair("my_header_key", ElementsAre("my_header_value")),
+          Pair("foo", ElementsAre("bar"))));
 }
 
 TEST(RestRequestBuilderTest, EncryptionKeyHeaderRequest) {
@@ -123,16 +121,14 @@ TEST(RestRequestBuilderTest, EncryptionKeyHeaderRequest) {
 
   RestRequest rest_request = std::move(builder).BuildRequest();
 
-  EXPECT_THAT(rest_request.headers(),
-              UnorderedElementsAre(
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "x-goog-encryption-key-sha256", {"my_sha256"})),
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "x-goog-encryption-key", {"my_key"})),
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "x-goog-encryption-algorithm", {"my_algorithm"})),
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "foo", {"bar"}))));
+  EXPECT_THAT(
+      rest_request.headers(),
+      UnorderedElementsAre(
+          Pair("x-goog-api-client", ElementsAre(HandCraftedLibClientHeader())),
+          Pair("x-goog-encryption-key-sha256", ElementsAre("my_sha256")),
+          Pair("x-goog-encryption-key", ElementsAre("my_key")),
+          Pair("x-goog-encryption-algorithm", ElementsAre("my_algorithm")),
+          Pair("foo", ElementsAre("bar"))));
 }
 
 TEST(RestRequestBuilderTest, SourceEncryptionKeyHeaderRequest) {
@@ -157,14 +153,13 @@ TEST(RestRequestBuilderTest, SourceEncryptionKeyHeaderRequest) {
   EXPECT_THAT(
       rest_request.headers(),
       UnorderedElementsAre(
-          Eq(std::pair<std::string const, std::vector<std::string>>(
-              "x-goog-copy-source-encryption-key-sha256", {"my_sha256"})),
-          Eq(std::pair<std::string const, std::vector<std::string>>(
-              "x-goog-copy-source-encryption-key", {"my_key"})),
-          Eq(std::pair<std::string const, std::vector<std::string>>(
-              "x-goog-copy-source-encryption-algorithm", {"my_algorithm"})),
-          Eq(std::pair<std::string const, std::vector<std::string>>("foo",
-                                                                    {"bar"}))));
+          Pair("x-goog-api-client", ElementsAre(HandCraftedLibClientHeader())),
+          Pair("x-goog-copy-source-encryption-key-sha256",
+               ElementsAre("my_sha256")),
+          Pair("x-goog-copy-source-encryption-key", ElementsAre("my_key")),
+          Pair("x-goog-copy-source-encryption-algorithm",
+               ElementsAre("my_algorithm")),
+          Pair("foo", ElementsAre("bar"))));
 }
 
 TEST(RestRequestBuilderTest, ComplexOptionRequest) {
@@ -190,10 +185,11 @@ TEST(RestRequestBuilderTest, ComplexOptionRequest) {
   RestRequest rest_request = std::move(builder).BuildRequest();
 
   EXPECT_THAT(rest_request.path(), Eq("service/path"));
-  EXPECT_THAT(rest_request.headers(),
-              UnorderedElementsAre(
-                  Eq(std::pair<std::string const, std::vector<std::string>>(
-                      "foo", {"bar"}))));
+  EXPECT_THAT(
+      rest_request.headers(),
+      UnorderedElementsAre(
+          Pair("x-goog-api-client", ElementsAre(HandCraftedLibClientHeader())),
+          Pair("foo", ElementsAre("bar"))));
 }
 
 }  // namespace

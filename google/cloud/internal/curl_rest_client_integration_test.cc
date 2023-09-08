@@ -14,6 +14,7 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_client.h"
@@ -32,12 +33,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::StartsWith;
+
+std::map<std::string, std::string> ExtractHeaders(
+    nlohmann::json const& parsed_response) {
+  auto sent_headers = parsed_response.find("headers");
+  if (sent_headers == parsed_response.end()) return {};
+  std::map<std::string, std::string> result;
+  for (auto const& kv : sent_headers->items()) {
+    if (!kv.value().is_string()) return {};
+    result[kv.key()] = kv.value().get<std::string>();
+  }
+  return result;
+}
 
 class RestClientIntegrationTest : public ::testing::Test {
  protected:
@@ -76,9 +91,7 @@ class RestClientIntegrationTest : public ::testing::Test {
 
     EXPECT_THAT(headers,
                 Contains(std::make_pair("content-type", "application/json")));
-    std::unique_ptr<HttpPayload> payload =
-        std::move(*response).ExtractPayload();
-    auto body = ReadAll(std::move(payload));
+    auto body = ReadAll(std::move(*response).ExtractPayload());
     EXPECT_STATUS_OK(body);
     auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
     EXPECT_FALSE(parsed_response.is_discarded());
@@ -88,25 +101,23 @@ class RestClientIntegrationTest : public ::testing::Test {
     ASSERT_FALSE(http_method == parsed_response.end());
     EXPECT_THAT(http_method.value(), Eq(method));
 
-    auto sent_headers = parsed_response.find("headers");
-    ASSERT_FALSE(sent_headers == parsed_response.end());
-    auto content_type = sent_headers->find("Content-Type");
-    ASSERT_FALSE(content_type == sent_headers->end());
-    EXPECT_THAT(content_type.value(), Eq("application/json"));
-    auto x_goog_api_client = sent_headers->find("X-Goog-Api-Client");
-    ASSERT_FALSE(x_goog_api_client == sent_headers->end());
-    EXPECT_THAT(x_goog_api_client.value(), HasSubstr("gl-cpp/"));
-    EXPECT_THAT(x_goog_api_client.value(), HasSubstr("gccl/"));
-    auto user_agent = sent_headers->find("User-Agent");
-    ASSERT_FALSE(user_agent == sent_headers->end());
-    EXPECT_THAT(user_agent.value(), HasSubstr("gcloud-cpp/"));
+    EXPECT_THAT(
+        parsed_response,
+        ResultOf(ExtractHeaders,
+                 AllOf(Contains(Pair("Content-Type", "application/json")),
+                       Contains(Pair("User-Agent", HasSubstr("gcloud-cpp/"))),
+                       // The metadata decorator adds this header, the
+                       // `CurlRestClient` should not duplicate it.
+                       Not(Contains(Pair("X-Goog-Api-Client", _))))));
+
     // TODO(#8396): httbin.org doesn't send back our content-length header on
     //  PUT methods.
     if (method == "POST" && request_content_length) {
-      auto sent_content_length = sent_headers->find("Content-Length");
-      ASSERT_FALSE(sent_content_length == sent_headers->end());
-      EXPECT_THAT(std::string(sent_content_length.value()),
-                  Eq(std::to_string(*request_content_length)));
+      EXPECT_THAT(
+          parsed_response,
+          ResultOf(ExtractHeaders,
+                   Contains(Pair("Content-Length",
+                                 std::to_string(*request_content_length)))));
     }
 
     auto response_json = parsed_response.find("json");
@@ -147,8 +158,7 @@ TEST_F(RestClientIntegrationTest, Get) {
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   EXPECT_GT(response->Headers().size(), 0);
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
 }
@@ -168,8 +178,7 @@ TEST_F(RestClientIntegrationTest, Delete) {
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   EXPECT_GT(response->Headers().size(), 0);
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
@@ -198,8 +207,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
   });
   ASSERT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
@@ -240,8 +248,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
 
   EXPECT_THAT(headers, testing::Contains(
                            std::make_pair("content-type", "application/json")));
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
   EXPECT_FALSE(parsed_response.is_discarded());
@@ -278,6 +285,65 @@ TEST_F(RestClientIntegrationTest, AnythingPostJsonContentType) {
   });
   VerifyJsonPayloadResponse("POST", json_payload_, std::move(response_status),
                             json_payload_.size());
+}
+
+TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeaders) {
+  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  auto client = MakeDefaultRestClient(url_, options_);
+  RestRequest request;
+  request.SetPath("anything");
+
+  auto response = RetryRestRequest([&] {
+    rest_internal::RestContext context;
+    return client->Get(context, request);
+  });
+  ASSERT_STATUS_OK(response);
+  auto body = ReadAll(std::move(**response).ExtractPayload());
+  EXPECT_STATUS_OK(body);
+  auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
+  ASSERT_TRUE(parsed_response.is_object());
+
+  auto http_method = parsed_response.find("method");
+  ASSERT_FALSE(http_method == parsed_response.end());
+  EXPECT_THAT(http_method.value(), Eq("GET"));
+
+  EXPECT_THAT(
+      parsed_response,
+      ResultOf("sent headers are", ExtractHeaders,
+               AllOf(Contains(Pair("User-Agent", HasSubstr("gcloud-cpp"))),
+                     Not(Contains(Pair("X-Goog-Api-Client", _))))));
+}
+
+TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeadersAsIfDecorated) {
+  options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  auto client = MakeDefaultRestClient(url_, options_);
+  RestRequest request;
+  request.SetPath("anything");
+
+  auto response = RetryRestRequest([&] {
+    rest_internal::RestContext context;
+    context.AddHeader("x-goog-api-client",
+                      internal::GeneratedLibClientHeader());
+    return client->Get(context, request);
+  });
+  ASSERT_STATUS_OK(response);
+  auto body = ReadAll(std::move(**response).ExtractPayload());
+  EXPECT_STATUS_OK(body);
+  auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
+  ASSERT_TRUE(parsed_response.is_object());
+
+  auto http_method = parsed_response.find("method");
+  ASSERT_FALSE(http_method == parsed_response.end());
+  EXPECT_THAT(http_method.value(), Eq("GET"));
+
+  EXPECT_THAT(
+      parsed_response,
+      ResultOf(
+          "sent headers are", ExtractHeaders,
+          AllOf(Contains(Pair("User-Agent", HasSubstr("gcloud-cpp"))),
+                Contains(Pair("X-Goog-Api-Client",
+                              AllOf(HasSubstr("gl-cpp/"), HasSubstr("gapic/"),
+                                    Not(HasSubstr("gccl/"))))))));
 }
 
 TEST_F(RestClientIntegrationTest, AnythingPutJsonContentTypeSingleSpan) {
@@ -420,8 +486,7 @@ TEST_F(RestClientIntegrationTest, PostFormData) {
   ASSERT_TRUE(content_length != headers.end());
   EXPECT_GT(std::stoi(content_length->second), 0);
 
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
   EXPECT_FALSE(parsed_response.is_discarded());

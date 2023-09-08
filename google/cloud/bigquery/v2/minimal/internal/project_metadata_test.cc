@@ -61,7 +61,7 @@ TEST(ProjectMetadataTest, ListProjects) {
 
   auto result = metadata->ListProjects(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_project");
+  VerifyMetadataContext(context);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
