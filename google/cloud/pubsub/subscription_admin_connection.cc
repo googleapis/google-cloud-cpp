@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -281,7 +282,8 @@ std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriptionAdminStub(
                                                              std::move(stub));
   }
   stub = std::make_shared<pubsub_internal::SubscriberMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+      std::move(stub), std::multimap<std::string, std::string>{},
+      internal::HandCraftedLibClientHeader());
   auto const& tracing = opts.get<TracingComponentsOption>();
   if (internal::Contains(tracing, "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

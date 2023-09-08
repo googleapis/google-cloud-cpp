@@ -76,7 +76,7 @@ TEST(TopicAdminConnectionTest, Metadata) {
         ::google::cloud::testing_util::ValidateMetadataFixture fixture;
         fixture.IsContextMDValid(
             context, "google.pubsub.v1.Publisher.CreateTopic", request,
-            google::cloud::internal::ApiClientHeader("generator"));
+            google::cloud::internal::HandCraftedLibClientHeader());
         return make_status_or(request);
       });
 

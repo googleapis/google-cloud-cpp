@@ -137,7 +137,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
                 metadata,
                 UnorderedElementsAre(
                     Pair("x-goog-api-client",
-                         google::cloud::internal::ApiClientHeader("generator")),
+                         google::cloud::internal::HandCraftedLibClientHeader()),
                     Pair("x-goog-request-params",
                          "subscription=" +
                              internal::UrlEncode(subscription.FullName()))));
