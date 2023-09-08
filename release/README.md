@@ -248,7 +248,7 @@ update the patches.
 
 In your development fork:
 
-- We will use `BRANCH=v1.17.x` and `PATCH=v1.17.1` as an example.
+- We will use `BRANCH=v2.15.x` and `PATCH=v2.15.1` as an example.
 - Set these shell variables to appropriate values.
 - Create a new branch
   ```shell
@@ -272,18 +272,18 @@ In your development fork:
       ci/cloudbuild/trigger.sh --import "${trigger}";
     done
     ```
+  - Remove any old triggers for the same major version, e.g.:
+    ```shell
+    cloud builds triggers list \
+        --project=cloud-cpp-testing-resources \
+        --filter=name:v2-10-x --format='value(id)' | \
+        xargs -n 1 gcloud builds triggers delete \
+            --project=cloud-cpp-testing-resources
+    ```
   - Commit these changes:
     ```shell
     git commit -m"Updated GCB triggers" ci
     ```
-- Update the API baselines and `google/cloud/internal/version_info.h`:
-  ```shell
-  ci/cloudbuild/build.sh -t check-api-pr
-  ```
-- Commit the changes:
-  ```shell
-  git commit -m"Update API/ABI baseline" ci
-  ```
 - Push the branch and then create a PR:
   ```shell
   git push --set-upstream origin "$(git branch --show-current)"
@@ -297,7 +297,7 @@ ______________________________________________________________________
   version and baseline ABI dumps.
   ```shell
   git fetch upstream
-  git branch my-patch upstream/v1.17.x
+  git branch my-patch upstream/${BRANCH}
   git checkout my-patch
   ```
 - Create or cherry-pick commits with the desired changes.
