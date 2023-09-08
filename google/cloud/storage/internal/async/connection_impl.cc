@@ -177,34 +177,6 @@ future<Status> AsyncConnectionImpl::AsyncDeleteObject(DeleteObjectParams p) {
       proto, __func__);
 }
 
-future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
-    storage::internal::ResumableUploadRequest request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto proto = ToProto(request);
-  if (!proto) {
-    return make_ready_future(StatusOr<std::string>(std::move(proto).status()));
-  }
-  // Always treat this as idempotent. See the `AsyncClient` documentation for
-  // details.
-  auto const idempotency = Idempotency::kIdempotent;
-  return google::cloud::internal::AsyncRetryLoop(
-             retry_policy(*current), backoff_policy(*current), idempotency, cq_,
-             [stub = stub_, current, request = std::move(request)](
-                 CompletionQueue& cq,
-                 std::shared_ptr<grpc::ClientContext> context,
-                 google::storage::v2::StartResumableWriteRequest const& proto) {
-               ApplyQueryParameters(*context, *current, request);
-               return stub->AsyncStartResumableWrite(cq, std::move(context),
-                                                     proto);
-             },
-             *std::move(proto), __func__)
-      .then([](auto f) -> StatusOr<std::string> {
-        auto response = f.get();
-        if (!response) return std::move(response).status();
-        return response->upload_id();
-      });
-}
-
 std::shared_ptr<AsyncConnection> MakeAsyncConnection(CompletionQueue cq,
                                                      Options options) {
   options = storage_internal::DefaultOptionsGrpc(std::move(options));

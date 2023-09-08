@@ -58,9 +58,6 @@ class AsyncConnectionImpl : public AsyncConnection {
 
   future<Status> AsyncDeleteObject(DeleteObjectParams p) override;
 
-  future<StatusOr<std::string>> AsyncStartResumableWrite(
-      storage::internal::ResumableUploadRequest request) override;
-
  private:
   CompletionQueue cq_;
   std::shared_ptr<GrpcChannelRefresh> refresh_;

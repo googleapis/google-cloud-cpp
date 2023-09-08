@@ -107,9 +107,6 @@ class AsyncConnection {
 
   /// Delete an object.
   virtual future<Status> AsyncDeleteObject(DeleteObjectParams p) = 0;
-
-  virtual future<StatusOr<std::string>> AsyncStartResumableWrite(
-      storage::internal::ResumableUploadRequest request) = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
