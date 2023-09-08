@@ -53,8 +53,7 @@ class PublisherTracingConnectionTest : public ::testing::Test {
 
 TEST_F(PublisherTracingConnectionTest, FlushSpan) {
   EXPECT_CALL(*mock_, Flush).Times(1);
-  auto connection =
-      MakePublisherTracingConnection(std::move(mock_));
+  auto connection = MakePublisherTracingConnection(std::move(mock_));
 
   connection->Flush(PublisherConnection::FlushParams{});
 
@@ -69,8 +68,7 @@ TEST_F(PublisherTracingConnectionTest, FlushSpan) {
 
 TEST_F(PublisherTracingConnectionTest, ResumePublishSpan) {
   EXPECT_CALL(*mock_, ResumePublish).Times(1);
-  auto connection =
-      MakePublisherTracingConnection(std::move(mock_));
+  auto connection = MakePublisherTracingConnection(std::move(mock_));
 
   connection->ResumePublish(PublisherConnection::ResumePublishParams{});
 
