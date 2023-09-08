@@ -191,7 +191,6 @@ google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
     deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
 
-# internal proto lib
 file(
     GLOB internal_proto_files
     LIST_DIRECTORIES false
@@ -201,8 +200,7 @@ list(SORT internal_proto_files)
 compute_proto_library("google_cloud_cpp_compute_internal_protos" PROTO_FILES
                       "${internal_proto_files}" DEPS "${deps}")
 
-# service proto libs
-list(APPEND deps google_cloud_cpp_compute_internal_protos)
+list(APPEND deps "google_cloud_cpp_compute_internal_protos")
 unset(compute_proto_lib_targets)
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     if (NOT "${dir}" STREQUAL "v1/")
@@ -230,16 +228,15 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
              "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
     endif ()
 endforeach ()
-list(APPEND DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+list(APPEND DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
                                  ${compute_proto_lib_targets})
 
 unset(compute_operation_lib_targets)
-list(APPEND deps google-cloud-cpp::rest_protobuf_internal)
-list(APPEND deps google-cloud-cpp::grpc_utils)
-list(APPEND deps google-cloud-cpp::rest_internal)
-list(APPEND deps google-cloud-cpp::common)
+list(APPEND deps "google-cloud-cpp::rest_protobuf_internal"
+     "google-cloud-cpp::grpc_utils" "google-cloud-cpp::rest_internal"
+     "google-cloud-cpp::common")
 foreach (dir IN LISTS operation_service_dirs)
     if (NOT "${dir}" STREQUAL "v1/")
         string(REPLACE "/v1/" "" short_dir "${dir}")
@@ -260,12 +257,13 @@ foreach (dir IN LISTS operation_service_dirs)
 endforeach ()
 
 unset(compute_lib_targets)
-
-list(APPEND deps google-cloud-cpp::experimental-compute-global-operations)
-list(APPEND deps
-     google-cloud-cpp::experimental-compute-global-organization-operations)
-list(APPEND deps google-cloud-cpp::experimental-compute-region-operations)
-list(APPEND deps google-cloud-cpp::experimental-compute-zone-operations)
+list(
+    APPEND
+    deps
+    "google-cloud-cpp::experimental-compute-global-operations"
+    "google-cloud-cpp::experimental-compute-global-organization-operations"
+    "google-cloud-cpp::experimental-compute-region-operations"
+    "google-cloud-cpp::experimental-compute-zone-operations")
 foreach (dir IN LISTS service_dirs)
     if (NOT "${dir}" STREQUAL "v1/")
         string(REPLACE "/v1/" "" short_dir "${dir}")
@@ -386,10 +384,13 @@ compute_pkgconfig(google_cloud_cpp_compute_internal_protos DEPS
                   ${pkgconfig_deps})
 
 unset(pkgconfig_deps)
-list(APPEND pkgconfig_deps "google_cloud_cpp_compute_internal_protos")
-list(APPEND pkgconfig_deps "google_cloud_cpp_api_annotations_protos")
-list(APPEND pkgconfig_deps "google_cloud_cpp_api_client_protos")
-list(APPEND pkgconfig_deps "google_cloud_cpp_api_field_behavior_protos")
+list(
+    APPEND
+    pkgconfig_deps
+    "google_cloud_cpp_compute_internal_protos"
+    "google_cloud_cpp_api_annotations_protos"
+    "google_cloud_cpp_api_client_protos"
+    "google_cloud_cpp_api_field_behavior_protos")
 foreach (dir IN LISTS service_dirs operation_service_dirs)
     unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
     unset(DEPS)
@@ -401,10 +402,9 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
 endforeach ()
 
 unset(pkgconfig_deps)
-list(APPEND pkgconfig_deps "google_cloud_cpp_rest_internal")
-list(APPEND pkgconfig_deps "google_cloud_cpp_rest_protobuf_internal")
-list(APPEND pkgconfig_deps "google_cloud_cpp_grpc_utils")
-list(APPEND pkgconfig_deps "google_cloud_cpp_common")
+list(APPEND pkgconfig_deps "google_cloud_cpp_rest_internal"
+     "google_cloud_cpp_rest_protobuf_internal" "google_cloud_cpp_grpc_utils"
+     "google_cloud_cpp_common")
 foreach (dir IN LISTS operation_service_dirs)
     unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
     unset(DEPS)
@@ -417,11 +417,13 @@ foreach (dir IN LISTS operation_service_dirs)
 endforeach ()
 
 unset(pkgconfig_deps)
-list(APPEND pkgconfig_deps "google_cloud_cpp_compute_global_operations")
-list(APPEND pkgconfig_deps
-     "google_cloud_cpp_compute_global_organization_operations")
-list(APPEND pkgconfig_deps "google_cloud_cpp_compute_region_operations")
-list(APPEND pkgconfig_deps "google_cloud_cpp_compute_zone_operations")
+list(
+    APPEND
+    pkgconfig_deps
+    "google_cloud_cpp_compute_global_operations"
+    "google_cloud_cpp_compute_global_organization_operations"
+    "google_cloud_cpp_compute_region_operations"
+    "google_cloud_cpp_compute_zone_operations")
 foreach (dir IN LISTS service_dirs)
     unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
     unset(DEPS)
