@@ -103,7 +103,6 @@ class RestClientIntegrationTest : public ::testing::Test {
     ASSERT_FALSE(http_method == parsed_response.end());
     EXPECT_THAT(http_method.value(), Eq(method));
 
-    auto sent_headers = ExtractHeaders(parsed_response);
     EXPECT_THAT(
         parsed_response,
         ResultOf(ExtractHeaders,
@@ -305,8 +304,7 @@ TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeaders) {
     return client->Get(context, request);
   });
   ASSERT_STATUS_OK(response);
-  std::unique_ptr<HttpPayload> payload = std::move(**response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(**response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
   ASSERT_TRUE(parsed_response.is_object());
