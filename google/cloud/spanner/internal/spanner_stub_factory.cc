@@ -21,6 +21,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
@@ -38,8 +39,10 @@ std::shared_ptr<SpannerStub> DecorateSpannerStub(
     stub = std::make_shared<SpannerAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<SpannerMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{
-                           {"google-cloud-resource-prefix", db.FullName()}});
+      std::move(stub),
+      std::multimap<std::string, std::string>{
+          {"google-cloud-resource-prefix", db.FullName()}},
+      internal::HandCraftedLibClientHeader());
   if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SpannerLogging>(
