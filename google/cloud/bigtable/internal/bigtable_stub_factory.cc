@@ -24,6 +24,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -92,8 +93,10 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     stub = std::make_shared<BigtableAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<BigtableMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{
-                           {"bigtable-features", FeaturesMetadata()}});
+      std::move(stub),
+      std::multimap<std::string, std::string>{
+          {"bigtable-features", FeaturesMetadata()}},
+      google::cloud::internal::HandCraftedLibClientHeader());
   if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
                                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

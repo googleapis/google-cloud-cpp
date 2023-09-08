@@ -66,7 +66,7 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
     return [this](grpc::ClientContext* context, Request const& request) {
       validate_metadata_fixture_.IsContextMDValid(
           *context, method_, request,
-          google::cloud::internal::ApiClientHeader());
+          google::cloud::internal::HandCraftedLibClientHeader());
       return UniquePtr(this);
     };
   }

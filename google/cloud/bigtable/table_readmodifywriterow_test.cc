@@ -47,7 +47,7 @@ class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {
                btproto::ReadModifyWriteRowResponse* response) {
       validate_metadata_fixture_.IsContextMDValid(
           *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow", request,
-          google::cloud::internal::ApiClientHeader());
+          google::cloud::internal::HandCraftedLibClientHeader());
       btproto::ReadModifyWriteRowRequest expected_request;
       EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
           expected_request_string, &expected_request));
@@ -277,7 +277,7 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
             ::google::cloud::testing_util::ValidateMetadataFixture fixture;
             fixture.IsContextMDValid(
                 *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-                request, google::cloud::internal::ApiClientHeader());
+                request, google::cloud::internal::HandCraftedLibClientHeader());
             return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
           });
 

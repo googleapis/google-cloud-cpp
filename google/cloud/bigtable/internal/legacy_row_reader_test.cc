@@ -191,9 +191,9 @@ TEST_F(LegacyRowReaderTest, ReadOneRowAppProfileId) {
   EXPECT_CALL(*client_, ReadRows)
       .WillOnce([](grpc::ClientContext* context, ReadRowsRequest const& req) {
         ValidateMetadataFixture fixture;
-        fixture.IsContextMDValid(*context,
-                                 "google.bigtable.v2.Bigtable.ReadRows", req,
-                                 google::cloud::internal::ApiClientHeader());
+        fixture.IsContextMDValid(
+            *context, "google.bigtable.v2.Bigtable.ReadRows", req,
+            google::cloud::internal::HandCraftedLibClientHeader());
         EXPECT_EQ("test-app-profile-id", req.app_profile_id());
         auto stream = std::make_unique<MockReadRowsReader>(
             "google.bigtable.v2.Bigtable.ReadRows");
