@@ -81,7 +81,7 @@ TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
         testing_util::ValidateMetadataFixture fixture;
         fixture.IsContextMDValid(
             context, "google.pubsub.v1.Subscriber.CreateSubscription", request,
-            google::cloud::internal::ApiClientHeader("generator"));
+            google::cloud::internal::HandCraftedLibClientHeader());
         EXPECT_EQ(subscription.FullName(), request.name());
         return make_status_or(request);
       });

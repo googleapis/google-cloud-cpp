@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/internal/publisher_logging_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin_decorator.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -35,7 +36,8 @@ std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
                                                             std::move(stub));
   }
   stub = std::make_shared<pubsub_internal::PublisherMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+      std::move(stub), std::multimap<std::string, std::string>{},
+      internal::HandCraftedLibClientHeader());
   if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
