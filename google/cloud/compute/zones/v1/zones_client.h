@@ -101,13 +101,12 @@ class ZonesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
@@ -133,13 +132,12 @@ class ZonesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
@@ -170,13 +168,12 @@ class ZonesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L68}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L68}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
@@ -211,13 +208,12 @@ class ZonesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L68}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L68}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(

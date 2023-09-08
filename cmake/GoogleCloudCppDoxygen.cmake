@@ -89,6 +89,7 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         APPEND
         DOXYGEN_ALIASES
         "cloud_cpp_docs_link{2}=\"https://cloud.google.com/cpp/docs/reference/\\1/${VERSION}/\\2\""
+        "cloud_cpp_reference_link{1}=\"https://github.com/googleapis/google-cloud-cpp/blob/${GOOGLE_CLOUD_CPP_COMMIT_SHA}/\\1\""
     )
     set(DOXYGEN_INLINE_INHERITED_MEMB YES)
     set(DOXYGEN_JAVADOC_AUTOBRIEF YES)

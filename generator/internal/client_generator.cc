@@ -128,7 +128,8 @@ class $client_class_name$ {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
           absl::StrCat(
-              "\n", FormatMethodComments(method, ""),
+              "\n",
+              FormatMethodComments(method, "", IsDiscoveryDocumentProto()),
               // clang-format off
 R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
@@ -147,20 +148,21 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
-          {MethodPattern(
-               {{"\n"},
-                {FormatMethodCommentsMethodSignature(method, signature)},
-                {IsResponseTypeEmpty,
-                 // clang-format off
+          {MethodPattern({{"\n"},
+                          {FormatMethodCommentsMethodSignature(
+                              method, signature, IsDiscoveryDocumentProto())},
+                          {IsResponseTypeEmpty,
+                           // clang-format off
                    "  Status\n",
                    "  StatusOr<$response_type$>\n"},
-                // clang-format on
-                {method_string}},
-               All(IsNonStreaming, Not(IsLongrunningOperation),
-                   Not(IsPaginated))),
+                          // clang-format on
+                          {method_string}},
+                         All(IsNonStreaming, Not(IsLongrunningOperation),
+                             Not(IsPaginated))),
            MethodPattern(
                {{"\n"},
-                {FormatMethodCommentsMethodSignature(method, signature)},
+                {FormatMethodCommentsMethodSignature(
+                    method, signature, IsDiscoveryDocumentProto())},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  future<Status>\n",
@@ -171,7 +173,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
            MethodPattern(
                {
                    {"\n"},
-                   {FormatMethodCommentsMethodSignature(method, signature)},
+                   {FormatMethodCommentsMethodSignature(
+                       method, signature, IsDiscoveryDocumentProto())},
                    {"  StreamRange<$range_output_type$>\n"},
                    {method_string},
                },
@@ -179,7 +182,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
            MethodPattern(
                {
                    {"\n"},
-                   {FormatMethodCommentsMethodSignature(method, signature)},
+                   {FormatMethodCommentsMethodSignature(
+                       method, signature, IsDiscoveryDocumentProto())},
                    {"  StreamRange<$response_type$>\n"},
                    {method_string},
                },
@@ -228,7 +232,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
         {MethodPattern(
              {
                  {"\n"},
-                 {FormatMethodCommentsProtobufRequest(method)},
+                 {FormatMethodCommentsProtobufRequest(
+                     method, IsDiscoveryDocumentProto())},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -241,7 +246,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
          MethodPattern(
              {
                  {"\n"},
-                 {FormatMethodCommentsProtobufRequest(method)},
+                 {FormatMethodCommentsProtobufRequest(
+                     method, IsDiscoveryDocumentProto())},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -253,7 +259,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
          MethodPattern(
              {
                  {"\n"},
-                 {FormatMethodCommentsProtobufRequest(method)},
+                 {FormatMethodCommentsProtobufRequest(
+                     method, IsDiscoveryDocumentProto())},
                  // clang-format off
    {"  StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request, Options opts = {});\n"},
@@ -263,7 +270,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
          MethodPattern(
              {
                  {"\n"},
-                 {FormatMethodCommentsProtobufRequest(method)},
+                 {FormatMethodCommentsProtobufRequest(
+                     method, IsDiscoveryDocumentProto())},
                  // clang-format off
    {"  StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ const& request, Options opts = {});\n"},
@@ -287,7 +295,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
           method,
           {MethodPattern(
               {{"\n"},
-               {FormatMethodCommentsMethodSignature(method, signature)},
+               {FormatMethodCommentsMethodSignature(
+                   method, signature, IsDiscoveryDocumentProto())},
                {IsResponseTypeEmpty,
                 // clang-format off
                    "  future<Status>\n",
@@ -303,7 +312,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
         {MethodPattern(
             {
                 {"\n"},
-                {FormatMethodCommentsProtobufRequest(method)},
+                {FormatMethodCommentsProtobufRequest(
+                    method, IsDiscoveryDocumentProto())},
                 {IsResponseTypeEmpty,
                  // clang-format off
     "  future<Status>\n",

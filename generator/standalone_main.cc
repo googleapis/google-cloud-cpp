@@ -336,6 +336,15 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       args.emplace_back("--cpp_codegen_opt=generate_grpc_transport=true");
     }
 
+    if (service.proto_file_source() ==
+        google::cloud::cpp::generator::ServiceConfiguration::
+            DISCOVERY_DOCUMENT) {
+      args.emplace_back(
+          "--cpp_codegen_opt=proto_file_source=discovery_document");
+    } else {
+      args.emplace_back("--cpp_codegen_opt=proto_file_source=googleapis");
+    }
+
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
 
@@ -441,6 +450,10 @@ int main(int argc, char** argv) {
       rest_services;
   for (auto const& p : config->discovery_products()) {
     rest_services.Add(p.rest_services().begin(), p.rest_services().end());
+  }
+  for (auto& r : rest_services) {
+    r.set_proto_file_source(google::cloud::cpp::generator::
+                                ServiceConfiguration::DISCOVERY_DOCUMENT);
   }
 
   // Generate C++ code from those generated protos.

@@ -50,8 +50,8 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual =
-      FormatMethodComments(*method, "  /// <variable parameter comments>\n");
+  auto const actual = FormatMethodComments(
+      *method, "  /// <variable parameter comments>\n", false);
   // Modern versions of googletest produce diffs for large strings with
   // newlines.
   EXPECT_EQ(actual, R"""(  // clang-format off
@@ -69,7 +69,6 @@ service Service {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
@@ -100,7 +99,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,
@@ -128,7 +127,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,
@@ -158,7 +157,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,
@@ -188,7 +187,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,
@@ -228,7 +227,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(
@@ -267,7 +266,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,
@@ -299,16 +298,81 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
+  // This is the only test where we will check all the lines in detail.
+  auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
+  EXPECT_THAT(
+      lines,
+      AllOf(Contains(StartsWith(
+                "  /// [Long Running Operation]: https://google.aip.dev/151")),
+            Contains(StartsWith(
+                "  /// [test.v1.Request]: "
+                "@googleapis_reference_link{test/v1/common.proto#L")),
+            Contains(StartsWith(
+                "  /// [test.v1.Response]: "
+                "@googleapis_reference_link{test/v1/common.proto#L"))));
+}
+
+TEST_F(FormatMethodCommentsTest, HttpLongRunningWithResponse) {
+  auto constexpr kExtendedOperationsProto = R"""(
+syntax = "proto3";
+package google.cloud;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FieldOptions {
+  OperationResponseMapping operation_field = 1149;
+  string operation_request_field = 1150;
+  string operation_response_field = 1151;
+}
+
+extend google.protobuf.MethodOptions {
+  string operation_service = 1249;
+  bool operation_polling_method = 1250;
+}
+
+enum OperationResponseMapping {
+  UNDEFINED = 0;
+  NAME = 1;
+  STATUS = 2;
+  ERROR_CODE = 3;
+  ERROR_MESSAGE = 4;
+}
+)""";
+
+  auto constexpr kContents = R"""(
+syntax = "proto3";
+import "google/cloud/extended_operations.proto";
+import "test/v1/common.proto";
+package test.v1;
+
+message Operation {}
+
+service Service {
+    // Some brief description of the method.
+    rpc Method(Request) returns (Operation) {
+    option (google.cloud.operation_service) = "ZoneOperations";
+    }
+}
+)""";
+
+  ASSERT_THAT(FindFile("test/v1/common.proto"), NotNull());
+  ASSERT_TRUE(AddProtoFile("google/cloud/extended_operations.proto",
+                           kExtendedOperationsProto));
+  ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
+  auto const* method = pool().FindMethodByName("test.v1.Service.Method");
+  ASSERT_THAT(method, NotNull());
+
+  auto const actual = FormatMethodComments(*method, "", true);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,
               AllOf(Contains(StartsWith(
-                        "  /// [test.v1.Request]: "
-                        "@googleapis_reference_link{test/v1/common.proto#L")),
+                        "  /// [Long Running Operation]: "
+                        "http://cloud/compute/docs/api/how-tos/"
+                        "api-requests-responses#handling_api_responses")),
                     Contains(StartsWith(
-                        "  /// [test.v1.Response]: "
-                        "@googleapis_reference_link{test/v1/common.proto#L"))));
+                        "  /// [test.v1.Request]: "
+                        "@cloud_cpp_reference_link{test/v1/common.proto#L"))));
 }
 
 TEST_F(FormatMethodCommentsTest, LongRunningWithMetadata) {
@@ -334,7 +398,7 @@ service Service {
   auto const* method = pool().FindMethodByName("test.v1.Service.Method");
   ASSERT_THAT(method, NotNull());
 
-  auto const actual = FormatMethodComments(*method, "");
+  auto const actual = FormatMethodComments(*method, "", false);
   // This is the only test where we will check all the lines in detail.
   auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
   EXPECT_THAT(lines,

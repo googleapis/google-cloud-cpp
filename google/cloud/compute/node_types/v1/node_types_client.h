@@ -101,13 +101,12 @@ class NodeTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
-  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L74}
+  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
+  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L74}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
@@ -133,13 +132,12 @@ class NodeTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
-  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L74}
+  /// [google.cloud.cpp.compute.node_types.v1.AggregatedListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L70}
+  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L74}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
@@ -164,13 +162,12 @@ class NodeTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
@@ -197,13 +194,12 @@ class NodeTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
@@ -236,13 +232,12 @@ class NodeTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L156}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
+  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L156}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
@@ -277,13 +272,12 @@ class NodeTypesClient {
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
-  /// [Long Running Operation]: https://google.aip.dev/151
   /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L156}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
+  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L156}
+  /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
