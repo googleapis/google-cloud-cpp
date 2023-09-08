@@ -31,30 +31,16 @@ std::string CppIdentifier() {
 
 }  // namespace
 
-// TODO(#12562) - this function goes away
-std::string ApiClientVersion(std::string const& build_identifier) {
-  auto client_library_version = version_string();
-  if (!build_identifier.empty()) {
-    auto pos = client_library_version.find('+');
-    client_library_version.append(1, pos == std::string::npos ? '+' : '.');
-    client_library_version.append(build_identifier);
-  }
-  return client_library_version;
-}
-
-// TODO(#12562) - this function goes away
-std::string ApiClientHeader(std::string const& build_identifier) {
-  return absl::StrCat(CppIdentifier(), " gccl/",
-                      ApiClientVersion(build_identifier));
-}
-
 std::string HandCraftedLibClientHeader() {
-  return absl::StrCat(CppIdentifier(), " gccl/", ApiClientVersion(""));
+  return absl::StrCat(CppIdentifier(), " gccl/", version_string());
 }
 
 std::string GeneratedLibClientHeader() {
-  return absl::StrCat(CppIdentifier(), " gapic/",
-                      ApiClientVersion("generated"));
+  auto const version = version_string();
+  auto pos = version.find('+');
+  char const* sep = pos == std::string::npos ? "+" : ".";
+  return absl::StrCat(CppIdentifier(), " gapic/", version_string(), sep,
+                      "generated");
 }
 
 }  // namespace internal
