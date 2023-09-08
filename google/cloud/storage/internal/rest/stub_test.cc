@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -26,6 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::HandCraftedLibClientHeader;
 using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
@@ -127,10 +129,15 @@ Matcher<RestContext&> ExpectedContext() {
 }
 
 Matcher<RestRequest const&> ExpectedRequest() {
-  return ResultOf(
-      "request includes TargetApiVersionOption",
-      [](RestRequest const& r) { return r.path(); },
-      HasSubstr("storage/vTest/"));
+  return AllOf(ResultOf(
+                   "request includes TargetApiVersionOption",
+                   [](RestRequest const& r) { return r.path(); },
+                   HasSubstr("storage/vTest/")),
+               ResultOf(
+                   "request includes x-goog-api-client header",
+                   [](RestRequest const& r) { return r.headers(); },
+                   Contains(Pair("x-goog-api-client",
+                                 ElementsAre(HandCraftedLibClientHeader())))));
 }
 
 Matcher<std::vector<absl::Span<char const>> const&> ExpectedPayload() {

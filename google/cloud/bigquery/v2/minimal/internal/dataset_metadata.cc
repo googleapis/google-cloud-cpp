@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatasetMetadata::DatasetMetadata(std::shared_ptr<DatasetRestStub> child)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("bigquery_v2_dataset")) {}
+          google::cloud::internal::HandCraftedLibClientHeader()) {}
 
 StatusOr<GetDatasetResponse> DatasetMetadata::GetDataset(
     rest_internal::RestContext& context, GetDatasetRequest const& request) {

@@ -17,7 +17,6 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/internal/curl_options.h"
@@ -110,8 +109,6 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
                                Options options)
     : endpoint_address_(std::move(endpoint_address)),
       handle_factory_(std::move(factory)),
-      x_goog_api_client_header_("x-goog-api-client: " +
-                                google::cloud::internal::ApiClientHeader()),
       options_(std::move(options)) {
   if (options_.has<UnifiedCredentialsOption>()) {
     credentials_ = MapCredentials(*options_.get<UnifiedCredentialsOption>());
@@ -130,7 +127,6 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     impl->SetHeader(auth_header.value());
   }
   impl->SetHeader(HostHeader(options, endpoint_address_));
-  impl->SetHeader(x_goog_api_client_header_);
   impl->SetHeaders(context, request);
   RestRequest::HttpParameters additional_parameters;
   // The UserIp option has been deprecated in favor of quotaUser. Only add the

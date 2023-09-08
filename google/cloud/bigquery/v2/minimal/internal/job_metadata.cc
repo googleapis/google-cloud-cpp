@@ -31,7 +31,7 @@ BigQueryJobMetadata::BigQueryJobMetadata(
     std::shared_ptr<BigQueryJobRestStub> child)
     : child_(std::move(child)),
       api_client_header_(
-          google::cloud::internal::ApiClientHeader("bigquery_v2_job")) {}
+          google::cloud::internal::HandCraftedLibClientHeader()) {}
 
 StatusOr<GetJobResponse> BigQueryJobMetadata::GetJob(
     rest_internal::RestContext& context, GetJobRequest const& request) {

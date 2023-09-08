@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -22,18 +23,15 @@ namespace cloud {
 namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::testing::Contains;
 using ::testing::ElementsAre;
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 
 static auto const kUserProject = "test-only-project";
 static auto const kQuotaUser = "test-quota-user";
 
-void VerifyMetadataContext(rest_internal::RestContext& context,
-                           std::string const& api_client_header) {
+void VerifyMetadataContext(rest_internal::RestContext& context) {
   EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-              Contains(HasSubstr(api_client_header)));
+              ElementsAre(internal::HandCraftedLibClientHeader()));
   EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
   EXPECT_THAT(context.GetHeader("x-goog-user-project"),
               ElementsAre(kUserProject));

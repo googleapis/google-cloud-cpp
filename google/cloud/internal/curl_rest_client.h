@@ -76,7 +76,6 @@ class CurlRestClient : public RestClient {
 
   std::string endpoint_address_;
   std::shared_ptr<CurlHandleFactory> handle_factory_;
-  std::string x_goog_api_client_header_;
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
   Options options_;
 };

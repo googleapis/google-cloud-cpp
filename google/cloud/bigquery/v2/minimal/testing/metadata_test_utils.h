@@ -24,8 +24,7 @@ namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Options GetMetadataOptions();
-void VerifyMetadataContext(rest_internal::RestContext& context,
-                           std::string const& api_client_header);
+void VerifyMetadataContext(rest_internal::RestContext& context);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing

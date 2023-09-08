@@ -61,7 +61,7 @@ TEST(TableMetadataTest, GetTable) {
 
   auto result = metadata->GetTable(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_table");
+  VerifyMetadataContext(context);
 }
 
 TEST(TableMetadataTest, ListTables) {
@@ -88,7 +88,7 @@ TEST(TableMetadataTest, ListTables) {
 
   auto result = metadata->ListTables(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_table");
+  VerifyMetadataContext(context);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

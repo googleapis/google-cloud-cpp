@@ -79,7 +79,7 @@ TEST(JobMetadataTest, GetJob) {
 
   auto result = metadata->GetJob(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_job");
+  VerifyMetadataContext(context);
 }
 
 TEST(JobMetadataTest, ListJobs) {
@@ -124,7 +124,7 @@ TEST(JobMetadataTest, ListJobs) {
 
   auto result = metadata->ListJobs(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_job");
+  VerifyMetadataContext(context);
 }
 
 TEST(JobMetadataTest, InsertJob) {
@@ -162,7 +162,7 @@ TEST(JobMetadataTest, InsertJob) {
 
   auto result = metadata->InsertJob(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_job");
+  VerifyMetadataContext(context);
 }
 
 TEST(JobMetadataTest, CancelJob) {
@@ -202,7 +202,7 @@ TEST(JobMetadataTest, CancelJob) {
 
   auto result = metadata->CancelJob(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_job");
+  VerifyMetadataContext(context);
 }
 
 TEST(JobMetadataTest, Query) {
@@ -231,7 +231,7 @@ TEST(JobMetadataTest, Query) {
 
   auto result = metadata->Query(context, job_request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_job");
+  VerifyMetadataContext(context);
 }
 
 TEST(JobMetadataTest, GetQueryResults) {
@@ -260,7 +260,7 @@ TEST(JobMetadataTest, GetQueryResults) {
 
   auto result = metadata->GetQueryResults(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context, "bigquery_v2_job");
+  VerifyMetadataContext(context);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
