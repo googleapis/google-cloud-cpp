@@ -855,7 +855,7 @@ class Client {
    * Creates an object given its name and contents.
    *
    * If you need to perform larger uploads or uploads where the data is not
-   * contiguous in memory use `WriteObject()`. This function always performs a
+   * contiguous in memory, use `WriteObject()`. This function always performs a
    * single-shot upload, while `WriteObject()` always uses resumable uploads.
    * The [service documentation] has recommendations on the upload size vs.
    * single-shot or resumable uploads.
