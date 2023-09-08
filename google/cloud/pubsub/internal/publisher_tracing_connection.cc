@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/pubsub/topic.h"
 #include <memory>
 #include <string>
 
@@ -42,14 +41,14 @@ void PublisherTracingConnection::Flush(FlushParams p) {
   auto span = internal::MakeSpan("pubsub::Publisher::Flush");
   auto scope = opentelemetry::trace::Scope(span);
   child_->Flush(std::move(p));
-  internal::EndSpan(std::move(span));
+  internal::EndSpan(*span);
 }
 
 void PublisherTracingConnection::ResumePublish(ResumePublishParams p) {
   auto span = internal::MakeSpan("pubsub::Publisher::ResumePublish");
   auto scope = opentelemetry::trace::Scope(span);
   child_->ResumePublish(std::move(p));
-  internal::EndSpan(std::move(span));
+  internal::EndSpan(*span);
 }
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(

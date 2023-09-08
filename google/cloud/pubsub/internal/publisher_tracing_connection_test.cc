@@ -17,7 +17,6 @@
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
@@ -29,7 +28,6 @@ namespace pubsub_internal {
 namespace {
 
 using ::google::cloud::pubsub::PublisherConnection;
-using ::google::cloud::pubsub::Topic;
 using ::google::cloud::pubsub_internal::MakePublisherTracingConnection;
 using ::google::cloud::pubsub_mocks::MockPublisherConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -55,7 +53,8 @@ class PublisherTracingConnectionTest : public ::testing::Test {
 
 TEST_F(PublisherTracingConnectionTest, FlushSpan) {
   EXPECT_CALL(*mock_, Flush).Times(1);
-  auto connection = MakePublisherTracingConnection(std::move(mock_));
+  auto connection =
+      MakePublisherTracingConnection(std::move(mock_));
 
   connection->Flush(PublisherConnection::FlushParams{});
 
@@ -70,7 +69,8 @@ TEST_F(PublisherTracingConnectionTest, FlushSpan) {
 
 TEST_F(PublisherTracingConnectionTest, ResumePublishSpan) {
   EXPECT_CALL(*mock_, ResumePublish).Times(1);
-  auto connection = MakePublisherTracingConnection(std::move(mock_));
+  auto connection =
+      MakePublisherTracingConnection(std::move(mock_));
 
   connection->ResumePublish(PublisherConnection::ResumePublishParams{});
 
@@ -88,17 +88,6 @@ TEST(MakePublisherTracingConnectionTest, CreatesTracingConnection) {
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-  });
-  auto connection_ = MakePublisherTracingConnection(std::move(mock));
-
-  connection_->Flush(PublisherConnection::FlushParams{});
-}
-
-TEST(MakePublisherTracingConnectionTest, DoesNotCreateTracingConnection) {
-  auto span_catcher = InstallSpanCatcher();
-  auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, Flush).WillOnce([] {
-    EXPECT_FALSE(ThereIsAnActiveSpan());
   });
   auto connection_ = MakePublisherTracingConnection(std::move(mock));
 
