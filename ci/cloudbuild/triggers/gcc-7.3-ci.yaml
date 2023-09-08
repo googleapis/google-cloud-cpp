@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: gcc-7-3-ci
+    branch: v2.15.x
+name: v2-15-x-gcc-7-3-ci
 substitutions:
   _BUILD_NAME: gcc-7.3
   _DISTRO: centos-7

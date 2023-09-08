@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.15.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cmake-split-install-pr
+name: v2-15-x-cmake-split-install-pr
 substitutions:
   _BUILD_NAME: cmake-split-install
   _DISTRO: fedora-37-cmake
