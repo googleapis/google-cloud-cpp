@@ -37,7 +37,7 @@ ImageFamilyViewsRestMetadata::ImageFamilyViewsRestMetadata(
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
-              ? google::cloud::internal::ApiClientHeader("generator")
+              ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
