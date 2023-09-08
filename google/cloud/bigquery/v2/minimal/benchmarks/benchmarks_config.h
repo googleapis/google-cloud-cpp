@@ -54,6 +54,7 @@ struct Config {
 };
 
 struct DatasetConfig : public Config {
+  std::string dataset_id;
   std::string filter;
   bool all;
 
@@ -62,6 +63,8 @@ struct DatasetConfig : public Config {
 };
 
 struct TableConfig : public Config {
+  std::string dataset_id;
+  std::string table_id;
   std::string selected_fields;
   bigquery_v2_minimal_internal::TableMetadataView view;
 
@@ -70,20 +73,39 @@ struct TableConfig : public Config {
 };
 
 struct JobConfig : public Config {
+  std::string job_id;
   std::string location;
   bool all_users;
   std::string min_creation_time;
   std::string max_creation_time;
   std::string parent_job_id;
+  bool dry_run;
+  bool query_create_replace;
+  bool query_drop;
+
+  int start_index = 0;
+  int timeout_ms;
+  bool use_int64_timestamp;
 
   bigquery_v2_minimal_internal::Projection projection;
   bigquery_v2_minimal_internal::StateFilter state_filter;
+
+  static std::string GetInsertJobDryRunRequestBody();
+  static std::string GetInsertJobRequestBody();
+
+  static std::string GetQueryCreateReplaceDryRunRequestBody();
+  static std::string GetQueryCreateReplaceRequestBody();
+  static std::string GetQueryDropDryRunRequestBody();
+  static std::string GetQueryDropRequestBody();
 
   google::cloud::StatusOr<JobConfig> ParseArgs(
       std::vector<std::string> const& args);
 };
 
 std::ostream& operator<<(std::ostream& os, Config const& config);
+std::ostream& operator<<(std::ostream& os, DatasetConfig const& config);
+std::ostream& operator<<(std::ostream& os, TableConfig const& config);
+std::ostream& operator<<(std::ostream& os, JobConfig const& config);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_benchmarks

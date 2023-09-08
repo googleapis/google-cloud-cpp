@@ -17,6 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 experimental_bigquery_rest_client_benchmark_programs = [
-    "latency_mutating_apis.cc",
-    "latency_readonly_apis.cc",
+    "dataset_benchmark_programs.cc",
+    "job_benchmark_programs.cc",
+    "project_benchmark_programs.cc",
+    "table_benchmark_programs.cc",
 ]
