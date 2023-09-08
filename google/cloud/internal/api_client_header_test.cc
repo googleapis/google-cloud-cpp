@@ -14,7 +14,10 @@
 
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/compiler_info.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -22,19 +25,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::testing::AllOf;
 using ::testing::HasSubstr;
+using ::testing::Matcher;
+using ::testing::ResultOf;
+using ::testing::StartsWith;
+using ::testing::UnorderedElementsAre;
 
-TEST(ApiClientHeaderTest, Basic) {
+Matcher<std::string const&> IsCppIdentifier() {
+  // This is a change detector test. A bit boring, but the point is that the
+  // format of this field *must be just so*:
+  return StartsWith("gl-cpp/" + CompilerId() + "-" + CompilerVersion() + "-" +
+                    CompilerFeatures() + "-" + LanguageVersion());
+}
+
+Matcher<std::string const&> IsLibraryIdentifier(std::string const& prefix) {
+  return AllOf(StartsWith(prefix), HasSubstr(ApiClientVersion("")));
+}
+
+Matcher<std::string const&> IsClientHeader(std::string const& prefix) {
+  return ResultOf(
+      "x-goog-api-client elements match C++ and Library version identifiers",
+      [](std::string const& header) -> std::vector<std::string> {
+        return absl::StrSplit(header, ' ');
+      },
+      UnorderedElementsAre(IsCppIdentifier(), IsLibraryIdentifier(prefix)));
+}
+
+TEST(ApiClientHeaderTest, ApiClientHeader) {
   for (auto const& build_identifier : {"", "build-identifier"}) {
-    auto actual = ApiClientHeader(build_identifier);
-    EXPECT_THAT(actual,
-                HasSubstr("gl-cpp/" + google::cloud::internal::CompilerId() +
-                          "-" + google::cloud::internal::CompilerVersion() +
-                          "-" + google::cloud::internal::CompilerFeatures() +
-                          "-" + google::cloud::internal::LanguageVersion()));
-    EXPECT_THAT(actual,
-                HasSubstr("gccl/" + ApiClientVersion(build_identifier)));
+    auto const actual = ApiClientHeader(build_identifier);
+    EXPECT_THAT(actual, IsClientHeader("gccl/"));
   }
+}
+
+TEST(ApiClientHeaderTest, HandCrafted) {
+  auto const actual = HandCraftedLibClientHeader();
+  EXPECT_THAT(actual, IsClientHeader("gccl/"));
+}
+
+TEST(ApiClientHeaderTest, Generated) {
+  auto const actual = GeneratedLibClientHeader();
+  EXPECT_THAT(actual, IsClientHeader("gapic/"));
 }
 
 }  // namespace

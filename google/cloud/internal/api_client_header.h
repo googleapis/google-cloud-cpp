@@ -29,6 +29,12 @@ std::string ApiClientVersion(std::string const& build_identifier);
 /// Return the value for the x-goog-api-client header (aka metadata).
 std::string ApiClientHeader(std::string const& build_identifier = "");
 
+/// The value for the x-goog-api-client header for hand-crafted libraries.
+std::string HandCraftedLibClientHeader();
+
+/// The value for the x-goog-api-client header for generated libraries.
+std::string GeneratedLibClientHeader();
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
