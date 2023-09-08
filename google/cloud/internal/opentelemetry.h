@@ -130,8 +130,10 @@ future<T> EndSpan(
 
 /**
  * Ends a span with an ok status.
+ *
+ * This is used to end spans that wrap void functions.
  */
-void EndSpan(opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span);
+void EndSpan(opentelemetry::trace::Span& span);
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

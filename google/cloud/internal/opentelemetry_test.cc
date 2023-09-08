@@ -275,6 +275,20 @@ TEST(OpenTelemetry, EndSpanFutureStatusOr) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
 }
 
+TEST(OpenTelemetry, EndSpanVoid) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto span = MakeSpan("success");
+  EndSpan(*span, Status());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+}
+
 TEST(OpenTelemetry, TracingEnabled) {
   auto options = Options{};
   EXPECT_FALSE(TracingEnabled(options));

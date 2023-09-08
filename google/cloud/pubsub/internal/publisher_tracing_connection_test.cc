@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
@@ -28,12 +30,11 @@ namespace {
 
 using ::google::cloud::pubsub::PublisherConnection;
 using ::google::cloud::pubsub::Topic;
-using ::google::cloud::pubsub_internal::PublisherTracingConnection;
+using ::google::cloud::pubsub_internal::MakePublisherTracingConnection;
 using ::google::cloud::pubsub_mocks::MockPublisherConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::testing_util::SpanCatcher;
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanCatcher;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
@@ -97,8 +98,6 @@ TEST(MakePublisherTracingConnectionTest, CreatesTracingConnection) {
   connection_->Flush(PublisherConnection::FlushParams{});
 }
 
-#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 TEST(MakePublisherTracingConnectionTest, DoesNotCreateTracingConnection) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
@@ -111,9 +110,9 @@ TEST(MakePublisherTracingConnectionTest, DoesNotCreateTracingConnection) {
   connection_->Flush(PublisherConnection::FlushParams{});
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 }  // namespace
 }  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
