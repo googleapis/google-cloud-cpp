@@ -39,7 +39,7 @@ ConnectionServiceMetadata::ConnectionServiceMetadata(
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           api_client_header.empty()
-              ? google::cloud::internal::ApiClientHeader("generator")
+              ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>

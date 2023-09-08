@@ -49,7 +49,7 @@ class MetadataDecoratorTest : public ::testing::Test {
                         google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
         context, method, request,
-        google::cloud::internal::ApiClientHeader("generator"));
+        google::cloud::internal::GeneratedLibClientHeader());
   }
 
   void IsContextMDValid(grpc::ClientContext& context, std::string const& method,

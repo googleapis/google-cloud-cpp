@@ -121,9 +121,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabase) {
       .WillOnce(
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::GetDatabaseRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -146,9 +146,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListDatabases) {
       .WillOnce(
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ListDatabasesRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"),
                         Contains("test-user-project"));
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
@@ -174,9 +174,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
           [](CompletionQueue&,
              std::unique_ptr<rest_internal::RestContext> context,
              google::test::admin::database::v1::CreateDatabaseRequest const&) {
-            EXPECT_THAT(context->GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context->GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context->GetHeader("x-goog-quota-user"),
                         Contains("test-quota-user"));
@@ -204,7 +204,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
                        UpdateDatabaseDdlRequest const&) {
         EXPECT_THAT(
             context->GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context->GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
@@ -229,9 +229,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::DropDatabaseRequest const&)
               -> google::cloud::Status {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -261,9 +261,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingNoMatch) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::DropDatabaseRequest const&)
               -> google::cloud::Status {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -285,9 +285,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabaseDdl) {
       .WillOnce(
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::GetDatabaseDdlRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -311,7 +311,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, SetIamPolicy) {
                    google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -335,7 +335,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetIamPolicy) {
                    google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -359,7 +359,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, TestIamPermissions) {
                    google::iam::v1::TestIamPermissionsRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -383,9 +383,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
           [](CompletionQueue&,
              std::unique_ptr<rest_internal::RestContext> context,
              google::test::admin::database::v1::CreateBackupRequest const&) {
-            EXPECT_THAT(context->GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context->GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context->GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
@@ -409,7 +409,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetBackup) {
                    google::test::admin::database::v1::GetBackupRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -432,9 +432,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, UpdateBackup) {
       .WillOnce(
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::UpdateBackupRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -457,9 +457,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, DeleteBackup) {
       .WillOnce(
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::DeleteBackupRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -482,9 +482,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackups) {
       .WillOnce(
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ListBackupsRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -507,9 +507,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
           [](CompletionQueue&,
              std::unique_ptr<rest_internal::RestContext> context,
              google::test::admin::database::v1::RestoreDatabaseRequest const&) {
-            EXPECT_THAT(context->GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+            EXPECT_THAT(
+                context->GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context->GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
@@ -534,7 +534,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListDatabaseOperations) {
                        ListDatabaseOperationsRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -558,7 +558,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackupOperations) {
                        ListBackupOperationsRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());

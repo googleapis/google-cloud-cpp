@@ -40,7 +40,7 @@ Matcher<std::string const&> IsCppIdentifier() {
 }
 
 Matcher<std::string const&> IsLibraryIdentifier(std::string const& prefix) {
-  return AllOf(StartsWith(prefix), HasSubstr(ApiClientVersion("")));
+  return AllOf(StartsWith(prefix), HasSubstr(version_string()));
 }
 
 Matcher<std::string const&> IsClientHeader(std::string const& prefix) {
@@ -52,13 +52,6 @@ Matcher<std::string const&> IsClientHeader(std::string const& prefix) {
       UnorderedElementsAre(IsCppIdentifier(), IsLibraryIdentifier(prefix)));
 }
 
-TEST(ApiClientHeaderTest, ApiClientHeader) {
-  for (auto const& build_identifier : {"", "build-identifier"}) {
-    auto const actual = ApiClientHeader(build_identifier);
-    EXPECT_THAT(actual, IsClientHeader("gccl/"));
-  }
-}
-
 TEST(ApiClientHeaderTest, HandCrafted) {
   auto const actual = HandCraftedLibClientHeader();
   EXPECT_THAT(actual, IsClientHeader("gccl/"));
@@ -67,6 +60,7 @@ TEST(ApiClientHeaderTest, HandCrafted) {
 TEST(ApiClientHeaderTest, Generated) {
   auto const actual = GeneratedLibClientHeader();
   EXPECT_THAT(actual, IsClientHeader("gapic/"));
+  EXPECT_THAT(actual, HasSubstr("generated"));
 }
 
 }  // namespace
