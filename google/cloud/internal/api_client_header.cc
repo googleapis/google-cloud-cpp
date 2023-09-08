@@ -39,8 +39,7 @@ std::string GeneratedLibClientHeader() {
   auto const version = version_string();
   auto pos = version.find('+');
   char const* sep = pos == std::string::npos ? "+" : ".";
-  return absl::StrCat(CppIdentifier(), " gapic/", version_string(), sep,
-                      "generated");
+  return absl::StrCat(CppIdentifier(), " gapic/", version, sep, "generated");
 }
 
 }  // namespace internal
