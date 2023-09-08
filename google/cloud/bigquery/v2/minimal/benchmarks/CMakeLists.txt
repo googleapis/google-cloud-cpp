@@ -19,7 +19,7 @@ if (NOT BUILD_TESTING)
 endif ()
 
 add_library(experimental_bigquery_rest_client_benchmarks # cmake-format: sort
-            benchmarks_config.cc benchmarks_config.h)
+            benchmark.cc benchmark.h benchmarks_config.cc benchmarks_config.h)
 target_link_libraries(
     experimental_bigquery_rest_client_benchmarks
     PUBLIC google_cloud_cpp_testing
@@ -39,7 +39,7 @@ target_compile_options(experimental_bigquery_rest_client_benchmarks
 # Runs all benchmark unit tests
 set(experimental_bigquery_rest_client_benchmark_unit_tests
     # cmake-format: sort
-    benchmarks_config_test.cc)
+    benchmark_test.cc benchmarks_config_test.cc)
 
 # Export the list of unit tests to a .bzl file so we do not need to maintain the
 # list in two places.
@@ -67,7 +67,8 @@ endforeach ()
 # Runs benchmark integration tests.
 set(experimental_bigquery_rest_client_benchmark_programs
     # cmake-format: sort
-    latency_mutating_apis.cc latency_readonly_apis.cc)
+    dataset_benchmark_programs.cc job_benchmark_programs.cc
+    project_benchmark_programs.cc table_benchmark_programs.cc)
 
 # Export the list of benchmark integration tests to a .bzl file so we do not
 # need to maintain the list in two places.

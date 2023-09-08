@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 experimental_bigquery_rest_client_benchmark_unit_tests = [
+    "benchmark_test.cc",
     "benchmarks_config_test.cc",
 ]

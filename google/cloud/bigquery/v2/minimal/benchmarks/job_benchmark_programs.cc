@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
+#include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
 
 namespace google {
 namespace cloud {
