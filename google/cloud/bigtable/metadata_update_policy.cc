@@ -42,7 +42,7 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string const& resource_name,
     MetadataParamTypes const& metadata_param_type)
     : value_(metadata_param_type.type() + '=' + resource_name),
-      api_client_header_(internal::ApiClientHeader()) {}
+      api_client_header_(internal::HandCraftedLibClientHeader()) {}
 
 void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
   context.AddMetadata(std::string("x-goog-request-params"), value());

@@ -59,7 +59,7 @@ struct MockAsyncFailingRpcFactory {
                                             grpc::CompletionQueue*) {
       validate_metadata_fixture_.IsContextMDValid(
           *context, method, request,
-          google::cloud::internal::ApiClientHeader());
+          google::cloud::internal::HandCraftedLibClientHeader());
       RequestType expected;
       // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
       EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
