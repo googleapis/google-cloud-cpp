@@ -26,7 +26,8 @@ namespace gsad = ::google::spanner::admin::database;
 DatabaseAdminMetadata::DatabaseAdminMetadata(
     std::shared_ptr<DatabaseAdminStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
+      api_client_header_(
+          google::cloud::internal::HandCraftedLibClientHeader()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateDatabase(

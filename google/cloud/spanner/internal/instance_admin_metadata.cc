@@ -26,7 +26,8 @@ namespace gsai = ::google::spanner::admin::instance;
 InstanceAdminMetadata::InstanceAdminMetadata(
     std::shared_ptr<InstanceAdminStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader()) {}
+      api_client_header_(
+          google::cloud::internal::HandCraftedLibClientHeader()) {}
 
 StatusOr<gsai::v1::Instance> InstanceAdminMetadata::GetInstance(
     grpc::ClientContext& context, gsai::v1::GetInstanceRequest const& request) {
