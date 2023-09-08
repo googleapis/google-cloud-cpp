@@ -17,18 +17,45 @@ ARG NCPU=4
 
 ## [BEGIN packaging.md]
 
-# Install the minimal development tools, libcurl, and OpenSSL:
+# Install the minimal development tools.
 
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
-        libprotobuf-dev libgrpc++-dev libgrpc-dev \
-        protobuf-compiler protobuf-compiler-grpc \
+        gcc g++ m4 make ninja-build pkg-config tar wget zlib1g-dev
+# ```
+
+# Install the development packages for direct `google-cloud-cpp` dependencies:
+
+# ```bash
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y \
         libabsl-dev \
-        nlohmann-json3-dev \
-        libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
+        libprotobuf-dev protobuf-compiler \
+        libgrpc++-dev libgrpc-dev protobuf-compiler-grpc \
+        libcurl4-openssl-dev libssl-dev nlohmann-json3-dev
+# ```
+
+# #### Patching pkg-config
+
+# If you are not planning to use `pkg-config(1)` you can skip these steps.
+
+# Debian's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
+# when handling `.pc` files with lots of `Requires:` deps, which happens with
+# Abseil. If you plan to use `pkg-config` with any of the installed artifacts,
+# you may want to use a recent version of the standard `pkg-config` binary. If
+# not, `dnf install pkgconfig` should work.
+
+# ```bash
+WORKDIR /var/tmp/build/pkg-config-cpp
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./configure --with-internal-glib && \
+    make -j ${NCPU:-4} && \
+    make install && \
+    ldconfig
+ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig/
 # ```
 
 # #### crc32c
