@@ -375,15 +375,24 @@ void WriteObjectFromMemory(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name) {
     std::string const text = "Lorem ipsum dolor sit amet";
+    // For small uploads where the data is contiguous in memory use
+    // `InsertObject()`. For more specific size recommendations see
+    //     https://cloud.google.com/storage/docs/uploads-downloads#size
+    auto metadata = client.InsertObject(bucket_name, object_name, text);
+    if (!metadata) throw std::move(metadata).status();
+    std::cout << "Successfully wrote to object " << metadata->name()
+              << " its size is: " << metadata->size() << "\n";
+
+    // For larger uploads, or uploads where the data is not contiguous in
+    // memory, use `WriteObject()`. Consider using `std::ostream::write()` for
+    // best performance.
     std::vector<std::string> v(100, text);
     gcs::ObjectWriteStream stream =
         client.WriteObject(bucket_name, object_name);
-
     std::copy(v.begin(), v.end(), std::ostream_iterator<std::string>(stream));
-
     stream.Close();
 
-    StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
+    metadata = std::move(stream).metadata();
     if (!metadata) throw std::move(metadata).status();
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()

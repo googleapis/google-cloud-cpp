@@ -854,6 +854,12 @@ class Client {
   /**
    * Creates an object given its name and contents.
    *
+   * If you need to perform larger uploads or uploads where the data is not
+   * contiguous in memory use `WriteObject()`. This function always performs a
+   * single-shot upload, while `WriteObject()` always uses resumable uploads.
+   * The [service documentation] has recommendations on the upload size vs.
+   * single-shot or resumable uploads.
+   *
    * @param bucket_name the name of the bucket that will contain the object.
    * @param object_name the name of the object to be created.
    * @param contents the contents (media) for the new object.
@@ -874,6 +880,9 @@ class Client {
    *
    * @par Example
    * @snippet storage_object_samples.cc insert object multipart
+   *
+   * [service documentation]:
+   * https://cloud.google.com/storage/docs/uploads-downloads#size
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> InsertObject(std::string const& bucket_name,
@@ -1135,6 +1144,10 @@ class Client {
    * can use either the regular `operator<<()`, or `std::ostream::write()` to
    * upload data.
    *
+   * For small uploads where all the data is contiguous in memory we recommend
+   * using `InsertObject()`. The [service documentation] has specific
+   * recommendations on object sizes and upload types.
+   *
    * This function always uses [resumable uploads][resumable-link]. The
    * application can provide a `#RestoreResumableUploadSession()` option to
    * resume a previously created upload. The returned object has accessors to
@@ -1144,9 +1157,6 @@ class Client {
    *     the session id to restart the upload later. Likewise, it is the
    *     application's responsibility to query the next expected byte and send
    *     the remaining data without gaps or duplications.
-   *
-   * For small uploads we recommend using `InsertObject`, consult
-   * [the documentation][how-to-upload-link] for details.
    *
    * If the application does not provide a `#RestoreResumableUploadSession()`
    * option, or it provides the `#NewResumableUploadSession()` option then a new
@@ -1186,8 +1196,8 @@ class Client {
    *     resumable uploads.
    *
    * [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
-   * [how-to-upload-link]:
-   * https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload
+   * [service documentation]:
+   * https://cloud.google.com/storage/docs/uploads-downloads#size
    */
   template <typename... Options>
   ObjectWriteStream WriteObject(std::string const& bucket_name,
