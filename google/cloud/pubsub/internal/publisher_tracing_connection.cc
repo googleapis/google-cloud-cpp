@@ -53,16 +53,13 @@ void PublisherTracingConnection::ResumePublish(ResumePublishParams p) {
 }
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
-    pubsub::Topic topic,
     std::shared_ptr<pubsub::PublisherConnection> connection) {
-  return std::make_shared<PublisherTracingConnection>(std::move(topic),
-                                                      std::move(connection));
+  return std::make_shared<PublisherTracingConnection>(std::move(connection));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
-    pubsub::Topic topic,
     std::shared_ptr<pubsub::PublisherConnection> connection) {
   return connection;
 }

@@ -51,13 +51,11 @@ class PublisherTracingConnectionTest : public ::testing::Test {
 
   std::shared_ptr<SpanCatcher> span_catcher_;
   std::shared_ptr<MockPublisherConnection> mock_;
-  Topic topic_ = Topic("test-project-id", "test-topic-id");
 };
 
 TEST_F(PublisherTracingConnectionTest, FlushSpan) {
   EXPECT_CALL(*mock_, Flush).Times(1);
-  auto connection =
-      MakePublisherTracingConnection(std::move(topic_), std::move(mock_));
+  auto connection = MakePublisherTracingConnection(std::move(mock_));
 
   connection->Flush(PublisherConnection::FlushParams{});
 
@@ -72,8 +70,7 @@ TEST_F(PublisherTracingConnectionTest, FlushSpan) {
 
 TEST_F(PublisherTracingConnectionTest, ResumePublishSpan) {
   EXPECT_CALL(*mock_, ResumePublish).Times(1);
-  auto connection =
-      MakePublisherTracingConnection(std::move(topic_), std::move(mock_));
+  auto connection = MakePublisherTracingConnection(std::move(mock_));
 
   connection->ResumePublish(PublisherConnection::ResumePublishParams{});
 
@@ -92,8 +89,7 @@ TEST(MakePublisherTracingConnectionTest, CreatesTracingConnection) {
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
   });
-  auto connection_ = MakePublisherTracingConnection(
-      Topic("test-project-id", "test-topic-id"), std::move(mock));
+  auto connection_ = MakePublisherTracingConnection(std::move(mock));
 
   connection_->Flush(PublisherConnection::FlushParams{});
 }
@@ -104,8 +100,7 @@ TEST(MakePublisherTracingConnectionTest, DoesNotCreateTracingConnection) {
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_FALSE(ThereIsAnActiveSpan());
   });
-  auto connection_ = MakePublisherTracingConnection(
-      Topic("test-project-id", "test-topic-id"), std::move(mock));
+  auto connection_ = MakePublisherTracingConnection(std::move(mock));
 
   connection_->Flush(PublisherConnection::FlushParams{});
 }

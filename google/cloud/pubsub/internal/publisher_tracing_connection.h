@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PUBLISHER_TRACING_CONNECTION_H
 
 #include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/pubsub/topic.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PublisherTracingConnection : public pubsub::PublisherConnection {
  public:
   explicit PublisherTracingConnection(
-      pubsub::Topic topic, std::shared_ptr<pubsub::PublisherConnection> child)
-      : topic_(std::move(topic)), child_(std::move(child)) {}
+      std::shared_ptr<pubsub::PublisherConnection> child)
+      : child_(std::move(child)) {}
 
   ~PublisherTracingConnection() override = default;
 
@@ -44,7 +43,6 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
   void ResumePublish(ResumePublishParams p) override;
 
  private:
-  pubsub::Topic const topic_;
   std::shared_ptr<pubsub::PublisherConnection> child_;
 };
 
@@ -57,7 +55,6 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
  * OpenTelemetry.
  */
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
-    pubsub::Topic topic,
     std::shared_ptr<pubsub::PublisherConnection> connection);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
