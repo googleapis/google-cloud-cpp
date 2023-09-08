@@ -91,9 +91,7 @@ class RestClientIntegrationTest : public ::testing::Test {
 
     EXPECT_THAT(headers,
                 Contains(std::make_pair("content-type", "application/json")));
-    std::unique_ptr<HttpPayload> payload =
-        std::move(*response).ExtractPayload();
-    auto body = ReadAll(std::move(payload));
+    auto body = ReadAll(std::move(*response).ExtractPayload());
     EXPECT_STATUS_OK(body);
     auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
     EXPECT_FALSE(parsed_response.is_discarded());
@@ -160,8 +158,7 @@ TEST_F(RestClientIntegrationTest, Get) {
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   EXPECT_GT(response->Headers().size(), 0);
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
 }
@@ -181,8 +178,7 @@ TEST_F(RestClientIntegrationTest, Delete) {
   auto response = std::move(response_status.value());
   EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
   EXPECT_GT(response->Headers().size(), 0);
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
@@ -211,8 +207,7 @@ TEST_F(RestClientIntegrationTest, PatchJsonContentType) {
   });
   ASSERT_STATUS_OK(response_status);
   auto response = std::move(response_status.value());
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   EXPECT_GT(body->size(), 0);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
@@ -253,8 +248,7 @@ TEST_F(RestClientIntegrationTest, AnythingPostNoContentType) {
 
   EXPECT_THAT(headers, testing::Contains(
                            std::make_pair("content-type", "application/json")));
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
   EXPECT_FALSE(parsed_response.is_discarded());
@@ -333,8 +327,7 @@ TEST_F(RestClientIntegrationTest, AnythingGetVerifyHeadersAsIfDecorated) {
     return client->Get(context, request);
   });
   ASSERT_STATUS_OK(response);
-  std::unique_ptr<HttpPayload> payload = std::move(**response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(**response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
   ASSERT_TRUE(parsed_response.is_object());
@@ -493,8 +486,7 @@ TEST_F(RestClientIntegrationTest, PostFormData) {
   ASSERT_TRUE(content_length != headers.end());
   EXPECT_GT(std::stoi(content_length->second), 0);
 
-  std::unique_ptr<HttpPayload> payload = std::move(*response).ExtractPayload();
-  auto body = ReadAll(std::move(payload));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
   EXPECT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
   EXPECT_FALSE(parsed_response.is_discarded());
