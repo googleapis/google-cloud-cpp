@@ -86,7 +86,8 @@ class AsyncAccessTokenGeneratorMetadata : public MinimalIamCredentialsStub {
   explicit AsyncAccessTokenGeneratorMetadata(
       std::shared_ptr<MinimalIamCredentialsStub> child)
       : child_(std::move(child)),
-        x_goog_api_client_(google::cloud::internal::ApiClientHeader()) {}
+        x_goog_api_client_(
+            google::cloud::internal::HandCraftedLibClientHeader()) {}
   ~AsyncAccessTokenGeneratorMetadata() override = default;
 
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
