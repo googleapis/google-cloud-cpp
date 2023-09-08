@@ -68,18 +68,17 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section policytroubleshooter-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
-For example, this will override the retry policies for `policytroubleshooter_iam_v3::PoliciesClient`:
+For example, this will override the retry policies for `policytroubleshooter_iam_v3::PolicyTroubleshooterClient`:
 
-@snippet policies_client_samples.cc set-retry-policy
+@snippet policy_troubleshooter_client_samples.cc set-retry-policy
 
 This assumes you have created a custom idempotency policy. Such as:
 
-@snippet policies_client_samples.cc custom-idempotency-policy
+@snippet policy_troubleshooter_client_samples.cc custom-idempotency-policy
 
 
 Follow these links to find examples for other \c *Client classes:
 
-- [\c policytroubleshooter_iam_v3::PoliciesClient](@ref policytroubleshooter_iam_v3::PoliciesClient-retry-snippet)
 - [\c policytroubleshooter_iam_v3::PolicyTroubleshooterClient](@ref policytroubleshooter_iam_v3::PolicyTroubleshooterClient-retry-snippet)
 - [\c policytroubleshooter_v1::IamCheckerClient](@ref policytroubleshooter_v1::IamCheckerClient-retry-snippet)
 
@@ -96,18 +95,6 @@ Follow these links to find examples for other \c *Client classes:
 */
 
 // <!-- inject-retry-pages-start -->
-
-/*! @page policytroubleshooter_iam_v3::PoliciesClient-retry-snippet Override policytroubleshooter_iam_v3::PoliciesClient Retry Policies
-
-This shows how to override the retry policies for policytroubleshooter_iam_v3::PoliciesClient:
-
-@snippet google/cloud/policytroubleshooter/iam/v3/samples/policies_client_samples.cc set-retry-policy
-
-Assuming you have created a custom idempotency policy. Such as:
-
-@snippet google/cloud/policytroubleshooter/iam/v3/samples/policies_client_samples.cc custom-idempotency-policy
-
-*/
 
 /*! @page policytroubleshooter_iam_v3::PolicyTroubleshooterClient-retry-snippet Override policytroubleshooter_iam_v3::PolicyTroubleshooterClient Retry Policies
 

@@ -14,10 +14,6 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "policytroubleshooter.googleapis.com")
   used by `MakeIamCheckerConnection()`.
 
-- `GOOGLE_CLOUD_CPP_POLICIES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "iam.googleapis.com")
-  used by `MakePoliciesConnection()`.
-
 - `GOOGLE_CLOUD_CPP_POLICY_TROUBLESHOOTER_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "policytroubleshooter.googleapis.com")
   used by `MakePolicyTroubleshooterConnection()`.

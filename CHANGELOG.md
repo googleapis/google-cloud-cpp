@@ -108,6 +108,13 @@ info, see [#7463] and [#5976].
 
 </details>
 
+## v2.15.1 - 2023-09
+
+### [Policy Troubleshooter](/google/cloud/policytroubleshooter/README.md)
+
+Remove `PoliciesClient`. This client was placed in the wrong library. The
+correct location is google/cloud/iam/v2.
+
 ## v2.15.0 - 2023-09
 
 ### New Libraries
