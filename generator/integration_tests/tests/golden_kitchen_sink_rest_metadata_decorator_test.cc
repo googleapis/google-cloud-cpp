@@ -112,7 +112,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, GenerateAccessToken) {
                        GenerateAccessTokenRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -135,8 +135,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, GenerateIdToken) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::GenerateIdTokenRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"),
                         Contains("test-user-project"));
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
@@ -161,8 +160,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, WriteLogEntries) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::WriteLogEntriesRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"),
                         Contains("test-quota-user"));
@@ -186,7 +184,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ListLogs) {
                    google::test::admin::database::v1::ListLogsRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -209,7 +207,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ListServiceAccountKeys) {
                        ListServiceAccountKeysRequest const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"),
                     Contains("test-user-project"));
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"),
@@ -236,7 +234,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, DoNothing) {
                    google::protobuf::Empty const&) {
         EXPECT_THAT(
             context.GetHeader("x-goog-api-client"),
-            Contains(google::cloud::internal::ApiClientHeader("generator")));
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -259,8 +257,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRouting) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -292,8 +289,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest,
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -318,8 +314,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNoRegexNeeded) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -345,8 +340,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNestedField) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
@@ -371,8 +365,7 @@ TEST(KitchenSinkRestMetadataDecoratorTest, UrlEncodeRoutingParam) {
           [](rest_internal::RestContext& context,
              google::test::admin::database::v1::ExplicitRoutingRequest const&) {
             EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-                        Contains(google::cloud::internal::ApiClientHeader(
-                            "generator")));
+                        Contains(google::cloud::internal::GeneratedLibClientHeader()));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
