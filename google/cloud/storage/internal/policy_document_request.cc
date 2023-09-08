@@ -78,7 +78,7 @@ inline bool IsEncoded(char c, std::int32_t mask) {
   return (static_cast<std::uint8_t>(c) & mask) == ((mask - 1) & mask);
 }
 
-// REQUIRES: pos < s.zie()
+// REQUIRES: pos < s.size()
 // REQUIRES: n > 0
 // Note that all call sites are in this file, so it is trivial to verify the
 // requirements are satisfied.
