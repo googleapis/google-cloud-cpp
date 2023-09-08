@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
@@ -74,7 +75,8 @@ CreateDecoratedStubs(google::cloud::CompletionQueue cq, Options const& options,
     stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<StorageMetadata>(
-      std::move(stub), std::multimap<std::string, std::string>{});
+      std::move(stub), std::multimap<std::string, std::string>{},
+      internal::HandCraftedLibClientHeader());
   if (google::cloud::internal::Contains(options.get<TracingComponentsOption>(),
                                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
