@@ -122,6 +122,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 New `*Client` for conversational search.
 
+### [Policy Troubleshooter](/google/cloud/policytroubleshooter/README.md)
+
+Remove `PoliciesClient`. This client was placed in the wrong library. The
+correct location is google/cloud/iam/v2.
+
 ## v2.15.0 - 2023-09
 
 ### New Libraries

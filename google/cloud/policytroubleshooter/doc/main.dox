@@ -32,7 +32,6 @@ The library also has other classes that provide helpers, configuration
 parameters, and infrastructure to mock the `*Client` classes when testing your
 application.
 
-- [\c policytroubleshooter_iam_v3::PoliciesClient](@ref google::cloud::policytroubleshooter_iam_v3::PoliciesClient)
 - [\c policytroubleshooter_iam_v3::PolicyTroubleshooterClient](@ref google::cloud::policytroubleshooter_iam_v3::PolicyTroubleshooterClient)
 - [\c policytroubleshooter_v1::IamCheckerClient](@ref google::cloud::policytroubleshooter_v1::IamCheckerClient)
 <!-- inject-client-list-end -->
