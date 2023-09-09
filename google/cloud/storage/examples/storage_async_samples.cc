@@ -140,6 +140,40 @@ void InsertObjectVectorVectors(
   (client, argv.at(0), argv.at(1));
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_COROUTINES
+void ReadObject(google::cloud::storage_experimental::AsyncClient& client,
+                std::vector<std::string> const& argv) {
+  //! [read-object]
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro =
+      [](gcs_ex::AsyncClient& client, std::string bucket_name,
+         std::string object_name) -> google::cloud::future<std::uint64_t> {
+    auto [reader, token] = (co_await client.ReadObject(std::move(bucket_name),
+                                                       std::move(object_name)))
+                               .value();
+    std::uint64_t count = 0;
+    while (token.valid()) {
+      auto [payload, t_] = (co_await reader.Read(std::move(token))).value();
+      token = std::move(t_);
+      for (auto const& buffer : payload.contents()) {
+        count += std::count(buffer.begin(), buffer.end(), '\n');
+      }
+    }
+    co_return count;
+  };
+  //! [read-object]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  coro(client, argv.at(0), argv.at(1)).get();
+}
+#else
+void ReadObject(google::cloud::storage_experimental::AsyncClient&,
+                std::vector<std::string> const&) {
+  std::cerr
+      << "AsyncClient::ReadObjectStreaming() example requires coroutines\n";
+}
+#endif  // GOOGLE_CLOUD_CPP
+
 void ComposeObject(google::cloud::storage_experimental::AsyncClient& client,
                    std::vector<std::string> const& argv) {
   //! [compose-object]
@@ -238,6 +272,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running ComposeObject() example" << std::endl;
   ComposeObject(client, {bucket_name, object_name, o1, o2});
 
+  std::cout << "Running the ReadObject() example" << std::endl;
+  ReadObject(client, {bucket_name, object_name});
+
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, object_name});
 
@@ -281,6 +318,7 @@ int main(int argc, char* argv[]) try {
       make_entry("insert-object-vector", {}, InsertObjectVector),
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
       make_entry("insert-object-vector-vectors", {}, InsertObjectVectorVectors),
+      make_entry("read-object", {}, ReadObject),
       make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
       make_entry("delete-object", {}, AsyncDeleteObject),
       {"auto", AutoRun},
