@@ -32,7 +32,6 @@ using ::google::cloud::pubsub_internal::MakePublisherTracingConnection;
 using ::google::cloud::pubsub_mocks::MockPublisherConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
-using ::google::cloud::testing_util::SpanCatcher;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
