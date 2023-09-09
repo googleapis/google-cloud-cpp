@@ -55,7 +55,7 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
 
   auto object_name = MakeRandomObjectName();
 
-  auto async = MakeAsyncClient();
+  auto async = AsyncClient();
   auto insert = async
                     .InsertObject(bucket_name(), object_name, LoremIpsum(),
                                   gcs::IfGenerationMatch(0))
@@ -93,7 +93,7 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   auto o2 = MakeRandomObjectName();
   auto destination = MakeRandomObjectName();
 
-  auto async = MakeAsyncClient();
+  auto async = AsyncClient();
   auto insert1 = async.InsertObject(bucket_name(), o1, LoremIpsum(),
                                     gcs::IfGenerationMatch(0));
   auto insert2 = async.InsertObject(bucket_name(), o2, LoremIpsum(),

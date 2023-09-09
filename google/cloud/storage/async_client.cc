@@ -24,18 +24,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 
-AsyncClient::AsyncClient(
-    std::shared_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<storage_internal::AsyncConnection> connection)
-    : background_(std::move(background)), connection_(std::move(connection)) {}
-
-AsyncClient MakeAsyncClient(Options opts) {
-  auto options = storage_internal::DefaultOptionsGrpc(std::move(opts));
-  auto background = MakeBackgroundThreadsFactory(options)();
-  auto connection = storage_internal::MakeAsyncConnection(background->cq(),
-                                                          std::move(options));
-  return AsyncClient(std::move(background), std::move(connection));
+AsyncClient::AsyncClient(Options options) {
+  options = storage_internal::DefaultOptionsGrpc(std::move(options));
+  background_ = MakeBackgroundThreadsFactory(options)();
+  connection_ = storage_internal::MakeAsyncConnection(background_->cq(),
+                                                      std::move(options));
 }
+
+AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
+    : connection_(std::move(connection)) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

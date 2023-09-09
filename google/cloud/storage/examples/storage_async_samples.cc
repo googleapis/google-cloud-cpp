@@ -32,7 +32,7 @@ namespace examples = ::google::cloud::storage::examples;
 
 void CreateClient() {
   //! [async-client]
-  auto client = google::cloud::storage_experimental::MakeAsyncClient();
+  auto client = google::cloud::storage_experimental::AsyncClient();
   // Use the client.
   //! [async-client]
 }
@@ -40,7 +40,7 @@ void CreateClient() {
 //! [async-client-with-dp]
 void CreateClientWithDP() {
   namespace g = ::google::cloud;
-  auto client = google::cloud::storage_experimental::MakeAsyncClient(
+  auto client = google::cloud::storage_experimental::AsyncClient(
       g::Options{}.set<g::EndpointOption>(
           "google-c2p:///storage.googleapis.com"));
   // Use the client.
@@ -215,7 +215,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running AsyncClientWithDP() example" << std::endl;
   CreateClientWithDPCommand({});
 
-  auto client = google::cloud::storage_experimental::MakeAsyncClient();
+  auto client = google::cloud::storage_experimental::AsyncClient();
 
   std::cout << "Running InsertObject() example" << std::endl;
   InsertObject(client, {bucket_name, object_name});
@@ -268,7 +268,7 @@ int main(int argc, char* argv[]) try {
         }
         throw examples::Usage{std::move(os).str()};
       }
-      auto client = google::cloud::storage_experimental::MakeAsyncClient();
+      auto client = google::cloud::storage_experimental::AsyncClient();
       command(client, std::move(argv));
     };
     return {name, std::move(adapter)};

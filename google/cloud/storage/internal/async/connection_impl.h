@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_IMPL_H
 
+#include "google/cloud/storage/async_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"
-#include "google/cloud/storage/internal/async/connection.h"
 #include "google/cloud/storage/internal/invocation_id_generator.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GrpcChannelRefresh;
 class StorageStub;
 
-class AsyncConnectionImpl : public AsyncConnection {
+class AsyncConnectionImpl : public storage_experimental::AsyncConnection {
  public:
   explicit AsyncConnectionImpl(CompletionQueue cq,
                                std::shared_ptr<GrpcChannelRefresh> refresh,
@@ -65,12 +65,12 @@ class AsyncConnectionImpl : public AsyncConnection {
   storage::internal::InvocationIdGenerator invocation_id_generator_;
 };
 
-/// Create a connection with the default stub.
-std::shared_ptr<AsyncConnection> MakeAsyncConnection(
+/// Create a connection and the default stub.
+std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, Options options = Options{});
 
 /// Create a connection with a custom stub (usually a mock).
-std::shared_ptr<AsyncConnection> MakeAsyncConnection(
+std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

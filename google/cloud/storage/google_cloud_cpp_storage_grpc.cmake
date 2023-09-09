@@ -42,6 +42,7 @@ else ()
         google_cloud_cpp_storage_grpc # cmake-format: sort
         async_client.cc
         async_client.h
+        async_connection.h
         async_object_requests.h
         async_object_responses.h
         async_token.h
@@ -49,7 +50,6 @@ else ()
         grpc_plugin.h
         internal/async/accumulate_read_object.cc
         internal/async/accumulate_read_object.h
-        internal/async/connection.h
         internal/async/connection_fwd.h
         internal/async/connection_impl.cc
         internal/async/connection_impl.h

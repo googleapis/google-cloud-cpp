@@ -176,8 +176,8 @@ future<Status> AsyncConnectionImpl::AsyncDeleteObject(DeleteObjectParams p) {
       proto, __func__);
 }
 
-std::shared_ptr<AsyncConnection> MakeAsyncConnection(CompletionQueue cq,
-                                                     Options options) {
+std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
+    CompletionQueue cq, Options options) {
   options = storage_internal::DefaultOptionsGrpc(std::move(options));
   auto p = CreateStorageStub(cq, options);
   return std::make_shared<AsyncConnectionImpl>(
@@ -185,7 +185,7 @@ std::shared_ptr<AsyncConnection> MakeAsyncConnection(CompletionQueue cq,
       std::move(options));
 }
 
-std::shared_ptr<AsyncConnection> MakeAsyncConnection(
+std::shared_ptr<storage_experimental::AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub, Options options) {
   return std::make_shared<AsyncConnectionImpl>(
       std::move(cq), std::shared_ptr<GrpcChannelRefresh>{}, std::move(stub),
