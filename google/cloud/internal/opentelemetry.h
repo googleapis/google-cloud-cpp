@@ -128,6 +128,13 @@ future<T> EndSpan(
       [s = std::move(span)](auto f) { return EndSpan(*s, f.get()); });
 }
 
+/**
+ * Ends a span with an ok status.
+ *
+ * This is used to end spans that wrap void functions.
+ */
+void EndSpan(opentelemetry::trace::Span& span);
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 bool TracingEnabled(Options const& options);

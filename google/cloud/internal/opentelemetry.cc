@@ -75,6 +75,11 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
   return status;
 }
 
+// Note: we aren't passing the opentelemetry::nostd::shared_ptr<Span> because
+// clang-tidy thinks that it should be passed as const
+// opentelemetry::nostd::shared_ptr<Span>& since the container isn't mutated.
+void EndSpan(opentelemetry::trace::Span& span) { EndSpanImpl(span, Status{}); }
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
