@@ -46,38 +46,38 @@ SslCertificatesTracingConnection::AggregatedListSslCertificates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesTracingConnection::DeleteSslCertificates(
+SslCertificatesTracingConnection::DeleteSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificatesRequest const& request) {
+        DeleteSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "DeleteSslCertificates");
+      "DeleteSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteSslCertificates(request));
+                           child_->DeleteSslCertificate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesTracingConnection::GetSslCertificates(
+SslCertificatesTracingConnection::GetSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificatesRequest const& request) {
+        GetSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "GetSslCertificates");
+      "GetSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetSslCertificates(request));
+  return internal::EndSpan(*span, child_->GetSslCertificate(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesTracingConnection::InsertSslCertificates(
+SslCertificatesTracingConnection::InsertSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificatesRequest const& request) {
+        InsertSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
-      "InsertSslCertificates");
+      "InsertSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertSslCertificates(request));
+                           child_->InsertSslCertificate(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

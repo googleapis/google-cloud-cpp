@@ -39,8 +39,8 @@ service GlobalPublicDelegatedPrefixes {
 
   // Deletes the specified global PublicDelegatedPrefix.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/delete
-  rpc DeleteGlobalPublicDelegatedPrefixes(
-      DeleteGlobalPublicDelegatedPrefixesRequest)
+  rpc DeleteGlobalPublicDelegatedPrefix(
+      DeleteGlobalPublicDelegatedPrefixRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
@@ -51,7 +51,7 @@ service GlobalPublicDelegatedPrefixes {
 
   // Returns the specified global PublicDelegatedPrefix resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/get
-  rpc GetGlobalPublicDelegatedPrefixes(GetGlobalPublicDelegatedPrefixesRequest)
+  rpc GetGlobalPublicDelegatedPrefix(GetGlobalPublicDelegatedPrefixRequest)
       returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
@@ -62,8 +62,8 @@ service GlobalPublicDelegatedPrefixes {
   // Creates a global PublicDelegatedPrefix in the specified project using the
   // parameters that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/insert
-  rpc InsertGlobalPublicDelegatedPrefixes(
-      InsertGlobalPublicDelegatedPrefixesRequest)
+  rpc InsertGlobalPublicDelegatedPrefix(
+      InsertGlobalPublicDelegatedPrefixRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes"
@@ -89,8 +89,7 @@ service GlobalPublicDelegatedPrefixes {
   // included in the request. This method supports PATCH semantics and uses JSON
   // merge patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalPublicDelegatedPrefixes/patch
-  rpc PatchGlobalPublicDelegatedPrefixes(
-      PatchGlobalPublicDelegatedPrefixesRequest)
+  rpc PatchGlobalPublicDelegatedPrefix(PatchGlobalPublicDelegatedPrefixRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
@@ -102,8 +101,8 @@ service GlobalPublicDelegatedPrefixes {
   }
 }
 
-// Request message for DeleteGlobalPublicDelegatedPrefixes.
-message DeleteGlobalPublicDelegatedPrefixesRequest {
+// Request message for DeleteGlobalPublicDelegatedPrefix.
+message DeleteGlobalPublicDelegatedPrefixRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -126,8 +125,8 @@ message DeleteGlobalPublicDelegatedPrefixesRequest {
   optional string request_id = 3;
 }
 
-// Request message for GetGlobalPublicDelegatedPrefixes.
-message GetGlobalPublicDelegatedPrefixesRequest {
+// Request message for GetGlobalPublicDelegatedPrefix.
+message GetGlobalPublicDelegatedPrefixRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -135,8 +134,8 @@ message GetGlobalPublicDelegatedPrefixesRequest {
   string public_delegated_prefix = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertGlobalPublicDelegatedPrefixes.
-message InsertGlobalPublicDelegatedPrefixesRequest {
+// Request message for InsertGlobalPublicDelegatedPrefix.
+message InsertGlobalPublicDelegatedPrefixRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -225,8 +224,8 @@ message ListGlobalPublicDelegatedPrefixesRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchGlobalPublicDelegatedPrefixes.
-message PatchGlobalPublicDelegatedPrefixesRequest {
+// Request message for PatchGlobalPublicDelegatedPrefix.
+message PatchGlobalPublicDelegatedPrefixRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

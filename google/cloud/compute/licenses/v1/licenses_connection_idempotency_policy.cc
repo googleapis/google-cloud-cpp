@@ -34,13 +34,13 @@ LicensesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LicensesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::DeleteLicenses(
-    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::DeleteLicense(
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::GetLicenses(
-    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::GetLicense(
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -49,8 +49,8 @@ Idempotency LicensesConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency LicensesConnectionIdempotencyPolicy::InsertLicenses(
-    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&) {
+Idempotency LicensesConnectionIdempotencyPolicy::InsertLicense(
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

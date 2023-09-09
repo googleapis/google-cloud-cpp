@@ -45,15 +45,15 @@ class NetworksRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNetworks(
+  AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request) = 0;
 
   virtual StatusOr<
@@ -63,10 +63,10 @@ class NetworksRestStub {
                             GetEffectiveFirewallsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNetworks(
+  AsyncInsertNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkList> ListNetworks(
@@ -81,10 +81,10 @@ class NetworksRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNetworks(
+  AsyncPatchNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -113,13 +113,13 @@ class NetworksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetGlobalOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteGlobalOperationRequest const& request) = 0;
 };
 
 class DefaultNetworksRestStub : public NetworksRestStub {
@@ -138,15 +138,15 @@ class DefaultNetworksRestStub : public NetworksRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNetworks(
+  AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request) override;
 
   StatusOr<
@@ -157,10 +157,10 @@ class DefaultNetworksRestStub : public NetworksRestStub {
           GetEffectiveFirewallsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNetworks(
+  AsyncInsertNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkList> ListNetworks(
@@ -175,10 +175,10 @@ class DefaultNetworksRestStub : public NetworksRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNetworks(
+  AsyncPatchNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -207,13 +207,13 @@ class DefaultNetworksRestStub : public NetworksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

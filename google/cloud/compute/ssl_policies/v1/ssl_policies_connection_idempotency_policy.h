@@ -40,17 +40,17 @@ class SslPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::ssl_policies::v1::
           AggregatedListSslPoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSslPolicies(
+  virtual google::cloud::Idempotency DeleteSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
-          DeleteSslPoliciesRequest const& request);
+          DeleteSslPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetSslPolicies(
-      google::cloud::cpp::compute::ssl_policies::v1::
-          GetSslPoliciesRequest const& request);
+  virtual google::cloud::Idempotency GetSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency InsertSslPolicies(
+  virtual google::cloud::Idempotency InsertSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
-          InsertSslPoliciesRequest const& request);
+          InsertSslPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListSslPolicies(
       google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
@@ -60,9 +60,9 @@ class SslPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::ssl_policies::v1::
           ListAvailableFeaturesRequest const& request);
 
-  virtual google::cloud::Idempotency PatchSslPolicies(
+  virtual google::cloud::Idempotency PatchSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
-          PatchSslPoliciesRequest const& request);
+          PatchSslPolicyRequest const& request);
 };
 
 std::unique_ptr<SslPoliciesConnectionIdempotencyPolicy>

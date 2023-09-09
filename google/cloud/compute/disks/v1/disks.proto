@@ -100,7 +100,7 @@ service Disks {
   // any snapshots previously made from the disk. You must separately delete
   // snapshots.
   // https://cloud.google.com/compute/docs/reference/rest/v1/disks/delete
-  rpc DeleteDisks(DeleteDisksRequest)
+  rpc DeleteDisk(DeleteDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
@@ -111,7 +111,7 @@ service Disks {
 
   // Returns the specified persistent disk.
   // https://cloud.google.com/compute/docs/reference/rest/v1/disks/get
-  rpc GetDisks(GetDisksRequest) returns (google.cloud.cpp.compute.v1.Disk) {
+  rpc GetDisk(GetDiskRequest) returns (google.cloud.cpp.compute.v1.Disk) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
     };
@@ -135,7 +135,7 @@ service Disks {
   // properties. You can also create a disk that is larger than the default size
   // by specifying the sizeGb property.
   // https://cloud.google.com/compute/docs/reference/rest/v1/disks/insert
-  rpc InsertDisks(InsertDisksRequest)
+  rpc InsertDisk(InsertDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks"
@@ -264,7 +264,7 @@ service Disks {
   // update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be modified: user_license.
   // https://cloud.google.com/compute/docs/reference/rest/v1/disks/update
-  rpc UpdateDisks(UpdateDisksRequest)
+  rpc UpdateDisk(UpdateDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
@@ -453,8 +453,8 @@ message CreateSnapshotRequest {
   ];
 }
 
-// Request message for DeleteDisks.
-message DeleteDisksRequest {
+// Request message for DeleteDisk.
+message DeleteDiskRequest {
   // Name of the persistent disk to delete.
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -483,8 +483,8 @@ message DeleteDisksRequest {
   ];
 }
 
-// Request message for GetDisks.
-message GetDisksRequest {
+// Request message for GetDisk.
+message GetDiskRequest {
   // Name of the persistent disk to return.
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -510,8 +510,8 @@ message GetIamPolicyRequest {
   string zone = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertDisks.
-message InsertDisksRequest {
+// Request message for InsertDisk.
+message InsertDiskRequest {
   // The Disk for this request.
   optional google.cloud.cpp.compute.v1.Disk disk_resource = 1
       [json_name = "__json_request_body"];
@@ -845,8 +845,8 @@ message TestIamPermissionsRequest {
   string zone = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for UpdateDisks.
-message UpdateDisksRequest {
+// Request message for UpdateDisk.
+message UpdateDiskRequest {
   // The disk name for this request.
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 

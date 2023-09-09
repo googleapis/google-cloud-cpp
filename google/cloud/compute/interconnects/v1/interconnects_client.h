@@ -115,12 +115,12 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(std::string const& project,
-                      std::string const& interconnect, Options opts = {});
+  DeleteInterconnect(std::string const& project,
+                     std::string const& interconnect, Options opts = {});
 
   // clang-format off
   ///
@@ -130,7 +130,7 @@ class InterconnectsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest].
+  ///     [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -153,13 +153,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
+  /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L127}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                          DeleteInterconnectsRequest const& request,
-                      Options opts = {});
+  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         DeleteInterconnectRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -182,11 +182,11 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       std::string const& project, std::string const& interconnect,
       Options opts = {});
 
@@ -199,7 +199,7 @@ class InterconnectsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest].
+  ///     [google.cloud.cpp.compute.interconnects.v1.GetInterconnectRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -215,13 +215,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
+  /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L160}
   /// [google.cloud.cpp.compute.v1.Interconnect]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_063.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
-          GetInterconnectsRequest const& request,
+          GetInterconnectRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -313,14 +313,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(std::string const& project,
-                      google::cloud::cpp::compute::v1::Interconnect const&
-                          interconnect_resource,
-                      Options opts = {});
+  InsertInterconnect(std::string const& project,
+                     google::cloud::cpp::compute::v1::Interconnect const&
+                         interconnect_resource,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -331,7 +331,7 @@ class InterconnectsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest].
+  ///     [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -354,13 +354,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
+  /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                          InsertInterconnectsRequest const& request,
-                      Options opts = {});
+  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         InsertInterconnectRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -469,15 +469,14 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(std::string const& project,
-                     std::string const& interconnect,
-                     google::cloud::cpp::compute::v1::Interconnect const&
-                         interconnect_resource,
-                     Options opts = {});
+  PatchInterconnect(std::string const& project, std::string const& interconnect,
+                    google::cloud::cpp::compute::v1::Interconnect const&
+                        interconnect_resource,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -489,7 +488,7 @@ class InterconnectsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest].
+  ///     [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -512,13 +511,13 @@ class InterconnectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
+  /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L259}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                         PatchInterconnectsRequest const& request,
-                     Options opts = {});
+  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                        PatchInterconnectRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///

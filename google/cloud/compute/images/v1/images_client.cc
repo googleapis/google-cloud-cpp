@@ -33,21 +33,21 @@ ImagesClient::ImagesClient(ExperimentalTag,
 ImagesClient::~ImagesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesClient::DeleteImages(std::string const& project, std::string const& image,
-                           Options opts) {
+ImagesClient::DeleteImage(std::string const& project, std::string const& image,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::images::v1::DeleteImagesRequest request;
+  google::cloud::cpp::compute::images::v1::DeleteImageRequest request;
   request.set_project(project);
   request.set_image(image);
-  return connection_->DeleteImages(request);
+  return connection_->DeleteImage(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesClient::DeleteImages(
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request,
+ImagesClient::DeleteImage(
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteImages(request);
+  return connection_->DeleteImage(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -72,20 +72,20 @@ ImagesClient::Deprecate(
   return connection_->Deprecate(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image> ImagesClient::GetImages(
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesClient::GetImage(
     std::string const& project, std::string const& image, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::images::v1::GetImagesRequest request;
+  google::cloud::cpp::compute::images::v1::GetImageRequest request;
   request.set_project(project);
   request.set_image(image);
-  return connection_->GetImages(request);
+  return connection_->GetImage(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image> ImagesClient::GetImages(
-    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request,
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesClient::GetImage(
+    google::cloud::cpp::compute::images::v1::GetImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetImages(request);
+  return connection_->GetImage(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image> ImagesClient::GetFromFamily(
@@ -122,23 +122,23 @@ StatusOr<google::cloud::cpp::compute::v1::Policy> ImagesClient::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesClient::InsertImages(
+ImagesClient::InsertImage(
     std::string const& project,
     google::cloud::cpp::compute::v1::Image const& image_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::images::v1::InsertImagesRequest request;
+  google::cloud::cpp::compute::images::v1::InsertImageRequest request;
   request.set_project(project);
   *request.mutable_image_resource() = image_resource;
-  return connection_->InsertImages(request);
+  return connection_->InsertImage(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesClient::InsertImages(
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request,
+ImagesClient::InsertImage(
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertImages(request);
+  return connection_->InsertImage(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Image> ImagesClient::ListImages(
@@ -157,24 +157,24 @@ StreamRange<google::cloud::cpp::compute::v1::Image> ImagesClient::ListImages(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesClient::PatchImages(
+ImagesClient::PatchImage(
     std::string const& project, std::string const& image,
     google::cloud::cpp::compute::v1::Image const& image_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::images::v1::PatchImagesRequest request;
+  google::cloud::cpp::compute::images::v1::PatchImageRequest request;
   request.set_project(project);
   request.set_image(image);
   *request.mutable_image_resource() = image_resource;
-  return connection_->PatchImages(request);
+  return connection_->PatchImage(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesClient::PatchImages(
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request,
+ImagesClient::PatchImage(
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchImages(request);
+  return connection_->PatchImage(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy> ImagesClient::SetIamPolicy(

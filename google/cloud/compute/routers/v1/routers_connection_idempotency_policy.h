@@ -40,12 +40,12 @@ class RoutersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::routers::v1::
           AggregatedListRoutersRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRouters(
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+  virtual google::cloud::Idempotency DeleteRouter(
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetRouters(
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+  virtual google::cloud::Idempotency GetRouter(
+      google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
           request);
 
   virtual google::cloud::Idempotency GetNatMappingInfo(
@@ -56,22 +56,22 @@ class RoutersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertRouters(
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+  virtual google::cloud::Idempotency InsertRouter(
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request);
 
   virtual google::cloud::Idempotency ListRouters(
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
 
-  virtual google::cloud::Idempotency PatchRouters(
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+  virtual google::cloud::Idempotency PatchRouter(
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request);
 
   virtual google::cloud::Idempotency Preview(
       google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRouters(
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+  virtual google::cloud::Idempotency UpdateRouter(
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request);
 };
 

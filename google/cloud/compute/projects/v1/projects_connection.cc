@@ -68,8 +68,8 @@ ProjectsConnection::EnableXpnResource(google::cloud::cpp::compute::projects::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
-ProjectsConnection::GetProjects(
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&) {
+ProjectsConnection::GetProject(
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

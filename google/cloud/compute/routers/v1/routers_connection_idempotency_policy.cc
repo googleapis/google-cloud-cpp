@@ -40,13 +40,13 @@ Idempotency RoutersConnectionIdempotencyPolicy::AggregatedListRouters(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::DeleteRouters(
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::DeleteRouter(
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::GetRouters(
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::GetRouter(
+    google::cloud::cpp::compute::routers::v1::GetRouterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -60,8 +60,8 @@ Idempotency RoutersConnectionIdempotencyPolicy::GetRouterStatus(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::InsertRouters(
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::InsertRouter(
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -70,8 +70,8 @@ Idempotency RoutersConnectionIdempotencyPolicy::ListRouters(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::PatchRouters(
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::PatchRouter(
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -80,8 +80,8 @@ Idempotency RoutersConnectionIdempotencyPolicy::Preview(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutersConnectionIdempotencyPolicy::UpdateRouters(
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&) {
+Idempotency RoutersConnectionIdempotencyPolicy::UpdateRouter(
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&) {
   return Idempotency::kIdempotent;
 }
 

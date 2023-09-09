@@ -35,15 +35,15 @@ InterconnectRemoteLocationsRestLogging::InterconnectRemoteLocationsRestLogging(
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsRestLogging::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsRestLogging::GetInterconnectRemoteLocation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
-        GetInterconnectRemoteLocationsRequest const& request) {
+        GetInterconnectRemoteLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnect_remote_locations::v1::
-                 GetInterconnectRemoteLocationsRequest const& request) {
-        return child_->GetInterconnectRemoteLocations(rest_context, request);
+                 GetInterconnectRemoteLocationRequest const& request) {
+        return child_->GetInterconnectRemoteLocation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

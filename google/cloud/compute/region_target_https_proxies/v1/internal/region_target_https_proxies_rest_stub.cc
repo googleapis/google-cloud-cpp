@@ -48,11 +48,11 @@ DefaultRegionTargetHttpsProxiesRestStub::
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteRegionTargetHttpsProxies(
+DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteRegionTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        DeleteRegionTargetHttpsProxiesRequest const& request) {
+        DeleteRegionTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -74,10 +74,10 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteRegionTargetHttpsProxies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-DefaultRegionTargetHttpsProxiesRestStub::GetRegionTargetHttpsProxies(
+DefaultRegionTargetHttpsProxiesRestStub::GetRegionTargetHttpsProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        GetRegionTargetHttpsProxiesRequest const& request) {
+        GetRegionTargetHttpsProxyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -88,11 +88,11 @@ DefaultRegionTargetHttpsProxiesRestStub::GetRegionTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionTargetHttpsProxiesRestStub::AsyncInsertRegionTargetHttpsProxies(
+DefaultRegionTargetHttpsProxiesRestStub::AsyncInsertRegionTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        InsertRegionTargetHttpsProxiesRequest const& request) {
+        InsertRegionTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -132,11 +132,11 @@ DefaultRegionTargetHttpsProxiesRestStub::ListRegionTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionTargetHttpsProxiesRestStub::AsyncPatchRegionTargetHttpsProxies(
+DefaultRegionTargetHttpsProxiesRestStub::AsyncPatchRegionTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        PatchRegionTargetHttpsProxiesRequest const& request) {
+        PatchRegionTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -217,7 +217,7 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -241,7 +241,7 @@ future<Status> DefaultRegionTargetHttpsProxiesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

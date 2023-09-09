@@ -48,23 +48,22 @@ class NetworkAttachmentsTracingConnection
           AggregatedListNetworkAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachments(
+  DeleteNetworkAttachment(
       google::cloud::cpp::compute::network_attachments::v1::
-          DeleteNetworkAttachmentsRequest const& request) override;
+          DeleteNetworkAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          GetNetworkAttachmentsRequest const& request) override;
+  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
+                           GetNetworkAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachments(
+  InsertNetworkAttachment(
       google::cloud::cpp::compute::network_attachments::v1::
-          InsertNetworkAttachmentsRequest const& request) override;
+          InsertNetworkAttachmentRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
   ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::

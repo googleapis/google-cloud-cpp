@@ -67,11 +67,11 @@ DefaultPacketMirroringsRestStub::AggregatedListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultPacketMirroringsRestStub::AsyncDeletePacketMirrorings(
+DefaultPacketMirroringsRestStub::AsyncDeletePacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringsRequest const& request) {
+        DeletePacketMirroringRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -93,10 +93,10 @@ DefaultPacketMirroringsRestStub::AsyncDeletePacketMirrorings(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-DefaultPacketMirroringsRestStub::GetPacketMirrorings(
+DefaultPacketMirroringsRestStub::GetPacketMirroring(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        GetPacketMirroringsRequest const& request) {
+        GetPacketMirroringRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroring>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -106,11 +106,11 @@ DefaultPacketMirroringsRestStub::GetPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultPacketMirroringsRestStub::AsyncInsertPacketMirrorings(
+DefaultPacketMirroringsRestStub::AsyncInsertPacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringsRequest const& request) {
+        InsertPacketMirroringRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -150,11 +150,11 @@ DefaultPacketMirroringsRestStub::ListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultPacketMirroringsRestStub::AsyncPatchPacketMirrorings(
+DefaultPacketMirroringsRestStub::AsyncPatchPacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringsRequest const& request) {
+        PatchPacketMirroringRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -194,7 +194,7 @@ DefaultPacketMirroringsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -218,7 +218,7 @@ future<Status> DefaultPacketMirroringsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

@@ -48,9 +48,9 @@ class MockLicenseCodesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::LicenseCode>,
-              GetLicenseCodes,
+              GetLicenseCode,
               (google::cloud::cpp::compute::license_codes::v1::
-                   GetLicenseCodesRequest const& request),
+                   GetLicenseCodeRequest const& request),
               (override));
 
   MOCK_METHOD(

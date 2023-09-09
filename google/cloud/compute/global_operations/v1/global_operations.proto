@@ -51,7 +51,7 @@ service GlobalOperations {
 
   // Deletes the specified Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/delete
-  rpc DeleteGlobalOperations(DeleteGlobalOperationsRequest)
+  rpc DeleteGlobalOperation(DeleteGlobalOperationRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/operations/{operation}"
@@ -61,7 +61,7 @@ service GlobalOperations {
 
   // Retrieves the specified Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalOperations/get
-  rpc GetGlobalOperations(GetGlobalOperationsRequest)
+  rpc GetGlobalOperation(GetGlobalOperationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/operations/{operation}"
@@ -175,8 +175,8 @@ message AggregatedListGlobalOperationsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteGlobalOperations.
-message DeleteGlobalOperationsRequest {
+// Request message for DeleteGlobalOperation.
+message DeleteGlobalOperationRequest {
   // Name of the Operations resource to delete.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -184,8 +184,8 @@ message DeleteGlobalOperationsRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetGlobalOperations.
-message GetGlobalOperationsRequest {
+// Request message for GetGlobalOperation.
+message GetGlobalOperationRequest {
   // Name of the Operations resource to return.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 

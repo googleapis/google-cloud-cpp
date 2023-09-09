@@ -196,19 +196,19 @@ class GlobalForwardingRulesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalForwardingRules(
+  DeleteGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          DeleteGlobalForwardingRulesRequest const& request);
+          DeleteGlobalForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetGlobalForwardingRules(
+  GetGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          GetGlobalForwardingRulesRequest const& request);
+          GetGlobalForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalForwardingRules(
+  InsertGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          InsertGlobalForwardingRulesRequest const& request);
+          InsertGlobalForwardingRuleRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
   ListGlobalForwardingRules(
@@ -216,9 +216,9 @@ class GlobalForwardingRulesConnection {
           ListGlobalForwardingRulesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchGlobalForwardingRules(
+  PatchGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          PatchGlobalForwardingRulesRequest const& request);
+          PatchGlobalForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::global_forwarding_rules::v1::

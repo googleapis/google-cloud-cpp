@@ -47,15 +47,15 @@ class MockZoneOperationsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status, DeleteZoneOperations,
+  MOCK_METHOD(Status, DeleteZoneOperation,
               (google::cloud::cpp::compute::zone_operations::v1::
-                   DeleteZoneOperationsRequest const& request),
+                   DeleteZoneOperationRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              GetZoneOperations,
+              GetZoneOperation,
               (google::cloud::cpp::compute::zone_operations::v1::
-                   GetZoneOperationsRequest const& request),
+                   GetZoneOperationRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,

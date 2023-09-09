@@ -192,20 +192,20 @@ class NodeTemplatesConnection {
           AggregatedListNodeTemplatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                          DeleteNodeTemplatesRequest const& request);
+  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         DeleteNodeTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                       GetNodeTemplatesRequest const& request);
+  GetNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                      GetNodeTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::node_templates::v1::
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                          InsertNodeTemplatesRequest const& request);
+  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         InsertNodeTemplateRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
   ListNodeTemplates(

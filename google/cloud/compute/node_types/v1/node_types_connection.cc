@@ -42,8 +42,8 @@ NodeTypesConnection::AggregatedListNodeTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesConnection::GetNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&) {
+NodeTypesConnection::GetNodeType(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

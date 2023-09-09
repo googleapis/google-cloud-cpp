@@ -40,7 +40,7 @@ service RegionTargetHttpProxies {
 
   // Deletes the specified TargetHttpProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/delete
-  rpc DeleteRegionTargetHttpProxies(DeleteRegionTargetHttpProxiesRequest)
+  rpc DeleteRegionTargetHttpProxy(DeleteRegionTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/targetHttpProxies/{target_http_proxy}"
@@ -51,7 +51,7 @@ service RegionTargetHttpProxies {
 
   // Returns the specified TargetHttpProxy resource in the specified region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/get
-  rpc GetRegionTargetHttpProxies(GetRegionTargetHttpProxiesRequest)
+  rpc GetRegionTargetHttpProxy(GetRegionTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/targetHttpProxies/{target_http_proxy}"
@@ -62,7 +62,7 @@ service RegionTargetHttpProxies {
   // Creates a TargetHttpProxy resource in the specified project and region
   // using the data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpProxies/insert
-  rpc InsertRegionTargetHttpProxies(InsertRegionTargetHttpProxiesRequest)
+  rpc InsertRegionTargetHttpProxy(InsertRegionTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/targetHttpProxies"
@@ -98,8 +98,8 @@ service RegionTargetHttpProxies {
   }
 }
 
-// Request message for DeleteRegionTargetHttpProxies.
-message DeleteRegionTargetHttpProxiesRequest {
+// Request message for DeleteRegionTargetHttpProxy.
+message DeleteRegionTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -128,8 +128,8 @@ message DeleteRegionTargetHttpProxiesRequest {
   string target_http_proxy = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionTargetHttpProxies.
-message GetRegionTargetHttpProxiesRequest {
+// Request message for GetRegionTargetHttpProxy.
+message GetRegionTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -140,8 +140,8 @@ message GetRegionTargetHttpProxiesRequest {
   string target_http_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionTargetHttpProxies.
-message InsertRegionTargetHttpProxiesRequest {
+// Request message for InsertRegionTargetHttpProxy.
+message InsertRegionTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

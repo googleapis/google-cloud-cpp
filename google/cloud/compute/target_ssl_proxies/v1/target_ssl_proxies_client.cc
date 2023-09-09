@@ -33,68 +33,68 @@ TargetSslProxiesClient::TargetSslProxiesClient(
 TargetSslProxiesClient::~TargetSslProxiesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesClient::DeleteTargetSslProxies(
+TargetSslProxiesClient::DeleteTargetSslProxy(
     std::string const& project, std::string const& target_ssl_proxy,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_ssl_proxies::v1::
-      DeleteTargetSslProxiesRequest request;
+      DeleteTargetSslProxyRequest request;
   request.set_project(project);
   request.set_target_ssl_proxy(target_ssl_proxy);
-  return connection_->DeleteTargetSslProxies(request);
+  return connection_->DeleteTargetSslProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesClient::DeleteTargetSslProxies(
+TargetSslProxiesClient::DeleteTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxiesRequest const& request,
+        DeleteTargetSslProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetSslProxies(request);
+  return connection_->DeleteTargetSslProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesClient::GetTargetSslProxies(std::string const& project,
-                                            std::string const& target_ssl_proxy,
-                                            Options opts) {
+TargetSslProxiesClient::GetTargetSslProxy(std::string const& project,
+                                          std::string const& target_ssl_proxy,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_ssl_proxies::v1::
-      GetTargetSslProxiesRequest request;
+  google::cloud::cpp::compute::target_ssl_proxies::v1::GetTargetSslProxyRequest
+      request;
   request.set_project(project);
   request.set_target_ssl_proxy(target_ssl_proxy);
-  return connection_->GetTargetSslProxies(request);
+  return connection_->GetTargetSslProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesClient::GetTargetSslProxies(
+TargetSslProxiesClient::GetTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        GetTargetSslProxiesRequest const& request,
+        GetTargetSslProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetTargetSslProxies(request);
+  return connection_->GetTargetSslProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesClient::InsertTargetSslProxies(
+TargetSslProxiesClient::InsertTargetSslProxy(
     std::string const& project,
     google::cloud::cpp::compute::v1::TargetSslProxy const&
         target_ssl_proxy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_ssl_proxies::v1::
-      InsertTargetSslProxiesRequest request;
+      InsertTargetSslProxyRequest request;
   request.set_project(project);
   *request.mutable_target_ssl_proxy_resource() = target_ssl_proxy_resource;
-  return connection_->InsertTargetSslProxies(request);
+  return connection_->InsertTargetSslProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesClient::InsertTargetSslProxies(
+TargetSslProxiesClient::InsertTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxiesRequest const& request,
+        InsertTargetSslProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertTargetSslProxies(request);
+  return connection_->InsertTargetSslProxy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>

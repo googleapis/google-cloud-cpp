@@ -113,10 +113,10 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L142}
+  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L142}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicenses(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
       std::string const& project, std::string const& license,
       Options opts = {});
 
@@ -129,7 +129,7 @@ class LicensesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest].
+  ///     [google.cloud.cpp.compute.licenses.v1.DeleteLicenseRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -152,11 +152,11 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L142}
+  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L142}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicenses(
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request,
       Options opts = {});
 
@@ -182,11 +182,11 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       std::string const& project, std::string const& license,
       Options opts = {});
 
@@ -200,7 +200,7 @@ class LicensesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest].
+  ///     [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -216,12 +216,12 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request,
       Options opts = {});
 
@@ -319,10 +319,10 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicenses(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
       std::string const& project,
       google::cloud::cpp::compute::v1::License const& license_resource,
       Options opts = {});
@@ -337,7 +337,7 @@ class LicensesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest].
+  ///     [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -360,11 +360,11 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicenses(
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request,
       Options opts = {});
 

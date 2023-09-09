@@ -260,12 +260,12 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L272}
+  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroups(std::string const& project, std::string const& zone,
-                       std::string const& instance_group, Options opts = {});
+  DeleteInstanceGroup(std::string const& project, std::string const& zone,
+                      std::string const& instance_group, Options opts = {});
 
   // clang-format off
   ///
@@ -277,7 +277,7 @@ class InstanceGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest].
+  ///     [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -300,13 +300,13 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L272}
+  /// [google.cloud.cpp.compute.instance_groups.v1.DeleteInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
-                           DeleteInstanceGroupsRequest const& request,
-                       Options opts = {});
+  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                          DeleteInstanceGroupRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -332,11 +332,11 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L302}
+  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L302}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       std::string const& project, std::string const& zone,
       std::string const& instance_group, Options opts = {});
 
@@ -351,7 +351,7 @@ class InstanceGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest].
+  ///     [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -367,13 +367,13 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L302}
+  /// [google.cloud.cpp.compute.instance_groups.v1.GetInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L302}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::cpp::compute::instance_groups::v1::
-          GetInstanceGroupsRequest const& request,
+          GetInstanceGroupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -405,14 +405,14 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L314}
+  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L314}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroups(std::string const& project, std::string const& zone,
-                       google::cloud::cpp::compute::v1::InstanceGroup const&
-                           instance_group_resource,
-                       Options opts = {});
+  InsertInstanceGroup(std::string const& project, std::string const& zone,
+                      google::cloud::cpp::compute::v1::InstanceGroup const&
+                          instance_group_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -423,7 +423,7 @@ class InstanceGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest].
+  ///     [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -446,13 +446,13 @@ class InstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L314}
+  /// [google.cloud.cpp.compute.instance_groups.v1.InsertInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L314}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
-                           InsertInstanceGroupsRequest const& request,
-                       Options opts = {});
+  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                          InsertInstanceGroupRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///

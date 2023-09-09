@@ -42,18 +42,18 @@ NetworkAttachmentsConnection::AggregatedListNetworkAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsConnection::DeleteNetworkAttachments(
+NetworkAttachmentsConnection::DeleteNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentsRequest const&) {
+        DeleteNetworkAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsConnection::GetNetworkAttachments(
+NetworkAttachmentsConnection::GetNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
-        GetNetworkAttachmentsRequest const&) {
+        GetNetworkAttachmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -65,9 +65,9 @@ NetworkAttachmentsConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkAttachmentsConnection::InsertNetworkAttachments(
+NetworkAttachmentsConnection::InsertNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentsRequest const&) {
+        InsertNetworkAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

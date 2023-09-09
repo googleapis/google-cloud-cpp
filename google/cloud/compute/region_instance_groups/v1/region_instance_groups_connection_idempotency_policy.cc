@@ -37,9 +37,9 @@ RegionInstanceGroupsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionInstanceGroupsConnectionIdempotencyPolicy::GetRegionInstanceGroups(
+RegionInstanceGroupsConnectionIdempotencyPolicy::GetRegionInstanceGroup(
     google::cloud::cpp::compute::region_instance_groups::v1::
-        GetRegionInstanceGroupsRequest const&) {
+        GetRegionInstanceGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 

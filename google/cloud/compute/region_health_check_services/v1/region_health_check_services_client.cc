@@ -35,72 +35,72 @@ RegionHealthCheckServicesClient::RegionHealthCheckServicesClient(
 RegionHealthCheckServicesClient::~RegionHealthCheckServicesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesClient::DeleteRegionHealthCheckServices(
+RegionHealthCheckServicesClient::DeleteRegionHealthCheckService(
     std::string const& project, std::string const& region,
     std::string const& health_check_service, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_health_check_services::v1::
-      DeleteRegionHealthCheckServicesRequest request;
+      DeleteRegionHealthCheckServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_health_check_service(health_check_service);
-  return connection_->DeleteRegionHealthCheckServices(request);
+  return connection_->DeleteRegionHealthCheckService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesClient::DeleteRegionHealthCheckServices(
+RegionHealthCheckServicesClient::DeleteRegionHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteRegionHealthCheckServicesRequest const& request,
+        DeleteRegionHealthCheckServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionHealthCheckServices(request);
+  return connection_->DeleteRegionHealthCheckService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-RegionHealthCheckServicesClient::GetRegionHealthCheckServices(
+RegionHealthCheckServicesClient::GetRegionHealthCheckService(
     std::string const& project, std::string const& region,
     std::string const& health_check_service, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_health_check_services::v1::
-      GetRegionHealthCheckServicesRequest request;
+      GetRegionHealthCheckServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_health_check_service(health_check_service);
-  return connection_->GetRegionHealthCheckServices(request);
+  return connection_->GetRegionHealthCheckService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-RegionHealthCheckServicesClient::GetRegionHealthCheckServices(
+RegionHealthCheckServicesClient::GetRegionHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        GetRegionHealthCheckServicesRequest const& request,
+        GetRegionHealthCheckServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionHealthCheckServices(request);
+  return connection_->GetRegionHealthCheckService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesClient::InsertRegionHealthCheckServices(
+RegionHealthCheckServicesClient::InsertRegionHealthCheckService(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::HealthCheckService const&
         health_check_service_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_health_check_services::v1::
-      InsertRegionHealthCheckServicesRequest request;
+      InsertRegionHealthCheckServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_health_check_service_resource() =
       health_check_service_resource;
-  return connection_->InsertRegionHealthCheckServices(request);
+  return connection_->InsertRegionHealthCheckService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesClient::InsertRegionHealthCheckServices(
+RegionHealthCheckServicesClient::InsertRegionHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertRegionHealthCheckServicesRequest const& request,
+        InsertRegionHealthCheckServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionHealthCheckServices(request);
+  return connection_->InsertRegionHealthCheckService(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>
@@ -124,7 +124,7 @@ RegionHealthCheckServicesClient::ListRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesClient::PatchRegionHealthCheckServices(
+RegionHealthCheckServicesClient::PatchRegionHealthCheckService(
     std::string const& project, std::string const& region,
     std::string const& health_check_service,
     google::cloud::cpp::compute::v1::HealthCheckService const&
@@ -132,22 +132,22 @@ RegionHealthCheckServicesClient::PatchRegionHealthCheckServices(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_health_check_services::v1::
-      PatchRegionHealthCheckServicesRequest request;
+      PatchRegionHealthCheckServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_health_check_service(health_check_service);
   *request.mutable_health_check_service_resource() =
       health_check_service_resource;
-  return connection_->PatchRegionHealthCheckServices(request);
+  return connection_->PatchRegionHealthCheckService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesClient::PatchRegionHealthCheckServices(
+RegionHealthCheckServicesClient::PatchRegionHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchRegionHealthCheckServicesRequest const& request,
+        PatchRegionHealthCheckServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchRegionHealthCheckServices(request);
+  return connection_->PatchRegionHealthCheckService(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

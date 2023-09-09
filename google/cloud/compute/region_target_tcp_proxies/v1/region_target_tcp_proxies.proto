@@ -39,7 +39,7 @@ service RegionTargetTcpProxies {
 
   // Deletes the specified TargetTcpProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/delete
-  rpc DeleteRegionTargetTcpProxies(DeleteRegionTargetTcpProxiesRequest)
+  rpc DeleteRegionTargetTcpProxy(DeleteRegionTargetTcpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies/{target_tcp_proxy}"
@@ -50,7 +50,7 @@ service RegionTargetTcpProxies {
 
   // Returns the specified TargetTcpProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/get
-  rpc GetRegionTargetTcpProxies(GetRegionTargetTcpProxiesRequest)
+  rpc GetRegionTargetTcpProxy(GetRegionTargetTcpProxyRequest)
       returns (google.cloud.cpp.compute.v1.TargetTcpProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies/{target_tcp_proxy}"
@@ -61,7 +61,7 @@ service RegionTargetTcpProxies {
   // Creates a TargetTcpProxy resource in the specified project and region using
   // the data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetTcpProxies/insert
-  rpc InsertRegionTargetTcpProxies(InsertRegionTargetTcpProxiesRequest)
+  rpc InsertRegionTargetTcpProxy(InsertRegionTargetTcpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/targetTcpProxies"
@@ -84,8 +84,8 @@ service RegionTargetTcpProxies {
   }
 }
 
-// Request message for DeleteRegionTargetTcpProxies.
-message DeleteRegionTargetTcpProxiesRequest {
+// Request message for DeleteRegionTargetTcpProxy.
+message DeleteRegionTargetTcpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -114,8 +114,8 @@ message DeleteRegionTargetTcpProxiesRequest {
   string target_tcp_proxy = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionTargetTcpProxies.
-message GetRegionTargetTcpProxiesRequest {
+// Request message for GetRegionTargetTcpProxy.
+message GetRegionTargetTcpProxyRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -126,8 +126,8 @@ message GetRegionTargetTcpProxiesRequest {
   string target_tcp_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionTargetTcpProxies.
-message InsertRegionTargetTcpProxiesRequest {
+// Request message for InsertRegionTargetTcpProxy.
+message InsertRegionTargetTcpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

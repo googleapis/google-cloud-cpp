@@ -42,16 +42,15 @@ ServiceAttachmentsConnectionIdempotencyPolicy::AggregatedListServiceAttachments(
 }
 
 Idempotency
-ServiceAttachmentsConnectionIdempotencyPolicy::DeleteServiceAttachments(
+ServiceAttachmentsConnectionIdempotencyPolicy::DeleteServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const&) {
+        DeleteServiceAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-ServiceAttachmentsConnectionIdempotencyPolicy::GetServiceAttachments(
+Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const&) {
+        GetServiceAttachmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -62,9 +61,9 @@ Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::GetIamPolicy(
 }
 
 Idempotency
-ServiceAttachmentsConnectionIdempotencyPolicy::InsertServiceAttachments(
+ServiceAttachmentsConnectionIdempotencyPolicy::InsertServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const&) {
+        InsertServiceAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -76,9 +75,9 @@ ServiceAttachmentsConnectionIdempotencyPolicy::ListServiceAttachments(
 }
 
 Idempotency
-ServiceAttachmentsConnectionIdempotencyPolicy::PatchServiceAttachments(
+ServiceAttachmentsConnectionIdempotencyPolicy::PatchServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const&) {
+        PatchServiceAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

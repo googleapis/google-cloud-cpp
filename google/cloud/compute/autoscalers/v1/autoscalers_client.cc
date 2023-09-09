@@ -52,70 +52,68 @@ AutoscalersClient::AggregatedListAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::DeleteAutoscalers(std::string const& project,
-                                     std::string const& zone,
-                                     std::string const& autoscaler,
-                                     Options opts) {
+AutoscalersClient::DeleteAutoscaler(std::string const& project,
+                                    std::string const& zone,
+                                    std::string const& autoscaler,
+                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest
-      request;
+  google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_autoscaler(autoscaler);
-  return connection_->DeleteAutoscalers(request);
+  return connection_->DeleteAutoscaler(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::DeleteAutoscalers(
-    google::cloud::cpp::compute::autoscalers::v1::
-        DeleteAutoscalersRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAutoscalers(request);
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-AutoscalersClient::GetAutoscalers(std::string const& project,
-                                  std::string const& zone,
-                                  std::string const& autoscaler, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest request;
-  request.set_project(project);
-  request.set_zone(zone);
-  request.set_autoscaler(autoscaler);
-  return connection_->GetAutoscalers(request);
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-AutoscalersClient::GetAutoscalers(
-    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+AutoscalersClient::DeleteAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetAutoscalers(request);
+  return connection_->DeleteAutoscaler(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
+AutoscalersClient::GetAutoscaler(std::string const& project,
+                                 std::string const& zone,
+                                 std::string const& autoscaler, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_autoscaler(autoscaler);
+  return connection_->GetAutoscaler(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
+AutoscalersClient::GetAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAutoscaler(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::InsertAutoscalers(
+AutoscalersClient::InsertAutoscaler(
     std::string const& project, std::string const& zone,
     google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest
-      request;
+  google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_autoscaler_resource() = autoscaler_resource;
-  return connection_->InsertAutoscalers(request);
+  return connection_->InsertAutoscaler(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::InsertAutoscalers(
-    google::cloud::cpp::compute::autoscalers::v1::
-        InsertAutoscalersRequest const& request,
+AutoscalersClient::InsertAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertAutoscalers(request);
+  return connection_->InsertAutoscaler(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -138,48 +136,47 @@ AutoscalersClient::ListAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::PatchAutoscalers(
+AutoscalersClient::PatchAutoscaler(
     std::string const& project, std::string const& zone,
     google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest request;
+  google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_autoscaler_resource() = autoscaler_resource;
-  return connection_->PatchAutoscalers(request);
+  return connection_->PatchAutoscaler(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::PatchAutoscalers(
-    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const&
+AutoscalersClient::PatchAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchAutoscalers(request);
+  return connection_->PatchAutoscaler(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::UpdateAutoscalers(
+AutoscalersClient::UpdateAutoscaler(
     std::string const& project, std::string const& zone,
     google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest
-      request;
+  google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_autoscaler_resource() = autoscaler_resource;
-  return connection_->UpdateAutoscalers(request);
+  return connection_->UpdateAutoscaler(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersClient::UpdateAutoscalers(
-    google::cloud::cpp::compute::autoscalers::v1::
-        UpdateAutoscalersRequest const& request,
+AutoscalersClient::UpdateAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAutoscalers(request);
+  return connection_->UpdateAutoscaler(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

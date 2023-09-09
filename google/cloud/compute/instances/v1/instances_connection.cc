@@ -75,8 +75,8 @@ InstancesConnection::BulkInsert(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::DeleteInstances(
-    google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&) {
+InstancesConnection::DeleteInstance(
+    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -100,8 +100,8 @@ InstancesConnection::DetachDisk(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
-InstancesConnection::GetInstances(
-    google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&) {
+InstancesConnection::GetInstance(
+    google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -147,8 +147,8 @@ InstancesConnection::GetShieldedInstanceIdentity(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::InsertInstances(
-    google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&) {
+InstancesConnection::InsertInstance(
+    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -359,8 +359,8 @@ InstancesConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::UpdateInstances(
-    google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&) {
+InstancesConnection::UpdateInstance(
+    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

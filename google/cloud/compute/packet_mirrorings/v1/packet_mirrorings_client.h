@@ -176,13 +176,12 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirrorings(std::string const& project, std::string const& region,
-                         std::string const& packet_mirroring,
-                         Options opts = {});
+  DeletePacketMirroring(std::string const& project, std::string const& region,
+                        std::string const& packet_mirroring, Options opts = {});
 
   // clang-format off
   ///
@@ -192,7 +191,7 @@ class PacketMirroringsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest].
+  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -215,13 +214,13 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.DeletePacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                             DeletePacketMirroringsRequest const& request,
-                         Options opts = {});
+  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                            DeletePacketMirroringRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -244,13 +243,13 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L230}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L230}
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_085.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(std::string const& project, std::string const& region,
-                      std::string const& packet_mirroring, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
+      std::string const& project, std::string const& region,
+      std::string const& packet_mirroring, Options opts = {});
 
   // clang-format off
   ///
@@ -260,7 +259,7 @@ class PacketMirroringsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest].
+  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -276,14 +275,14 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L230}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.GetPacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L230}
   /// [google.cloud.cpp.compute.v1.PacketMirroring]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_085.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                          GetPacketMirroringsRequest const& request,
-                      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          GetPacketMirroringRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -314,14 +313,14 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L242}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirrorings(std::string const& project, std::string const& region,
-                         google::cloud::cpp::compute::v1::PacketMirroring const&
-                             packet_mirroring_resource,
-                         Options opts = {});
+  InsertPacketMirroring(std::string const& project, std::string const& region,
+                        google::cloud::cpp::compute::v1::PacketMirroring const&
+                            packet_mirroring_resource,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -332,7 +331,7 @@ class PacketMirroringsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest].
+  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -355,13 +354,13 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L242}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.InsertPacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L242}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                             InsertPacketMirroringsRequest const& request,
-                         Options opts = {});
+  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                            InsertPacketMirroringRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -475,15 +474,15 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L341}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L341}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirrorings(std::string const& project, std::string const& region,
-                        std::string const& packet_mirroring,
-                        google::cloud::cpp::compute::v1::PacketMirroring const&
-                            packet_mirroring_resource,
-                        Options opts = {});
+  PatchPacketMirroring(std::string const& project, std::string const& region,
+                       std::string const& packet_mirroring,
+                       google::cloud::cpp::compute::v1::PacketMirroring const&
+                           packet_mirroring_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -495,7 +494,7 @@ class PacketMirroringsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest].
+  ///     [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -518,13 +517,13 @@ class PacketMirroringsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringsRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L341}
+  /// [google.cloud.cpp.compute.packet_mirrorings.v1.PatchPacketMirroringRequest]: @cloud_cpp_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L341}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                            PatchPacketMirroringsRequest const& request,
-                        Options opts = {});
+  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                           PatchPacketMirroringRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///

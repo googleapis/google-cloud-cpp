@@ -185,13 +185,13 @@ class RegionOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status DeleteRegionOperations(
+  virtual Status DeleteRegionOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request);
+          DeleteRegionOperationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetRegionOperations(google::cloud::cpp::compute::region_operations::v1::
-                          GetRegionOperationsRequest const& request);
+  GetRegionOperation(google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
   ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::

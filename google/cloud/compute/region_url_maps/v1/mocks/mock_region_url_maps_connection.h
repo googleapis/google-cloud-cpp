@@ -48,21 +48,21 @@ class MockRegionUrlMapsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionUrlMaps,
+              DeleteRegionUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   DeleteRegionUrlMapsRequest const& request),
+                   DeleteRegionUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMap>,
-              GetRegionUrlMaps,
+              GetRegionUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   GetRegionUrlMapsRequest const& request),
+                   GetRegionUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionUrlMaps,
+              InsertRegionUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   InsertRegionUrlMapsRequest const& request),
+                   InsertRegionUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::UrlMap>,
@@ -72,15 +72,15 @@ class MockRegionUrlMapsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionUrlMaps,
+              PatchRegionUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   PatchRegionUrlMapsRequest const& request),
+                   PatchRegionUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionUrlMaps,
+              UpdateRegionUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   UpdateRegionUrlMapsRequest const& request),
+                   UpdateRegionUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(

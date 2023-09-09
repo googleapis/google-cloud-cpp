@@ -66,15 +66,15 @@ class MockFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteFirewallPolicies,
+              DeleteFirewallPolicy,
               (google::cloud::cpp::compute::firewall_policies::v1::
-                   DeleteFirewallPoliciesRequest const& request),
+                   DeleteFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
-              GetFirewallPolicies,
+              GetFirewallPolicy,
               (google::cloud::cpp::compute::firewall_policies::v1::
-                   GetFirewallPoliciesRequest const& request),
+                   GetFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -96,9 +96,9 @@ class MockFirewallPoliciesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertFirewallPolicies,
+              InsertFirewallPolicy,
               (google::cloud::cpp::compute::firewall_policies::v1::
-                   InsertFirewallPoliciesRequest const& request),
+                   InsertFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>,
@@ -121,9 +121,9 @@ class MockFirewallPoliciesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchFirewallPolicies,
+              PatchFirewallPolicy,
               (google::cloud::cpp::compute::firewall_policies::v1::
-                   PatchFirewallPoliciesRequest const& request),
+                   PatchFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

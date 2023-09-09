@@ -43,8 +43,7 @@ service Regions {
   // example, to only include the `id` and `selfLink` fields, add the query
   // parameter `?fields=id,selfLink` to your request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regions/get
-  rpc GetRegions(GetRegionsRequest)
-      returns (google.cloud.cpp.compute.v1.Region) {
+  rpc GetRegion(GetRegionRequest) returns (google.cloud.cpp.compute.v1.Region) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}"
     };
@@ -69,8 +68,8 @@ service Regions {
   }
 }
 
-// Request message for GetRegions.
-message GetRegionsRequest {
+// Request message for GetRegion.
+message GetRegionRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 

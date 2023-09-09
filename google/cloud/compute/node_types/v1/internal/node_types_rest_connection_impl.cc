@@ -56,18 +56,17 @@ NodeTypesRestConnectionImpl::AggregatedListNodeTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesRestConnectionImpl::GetNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+NodeTypesRestConnectionImpl::GetNodeType(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetNodeTypes(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_types::v1::
-                 GetNodeTypesRequest const& request) {
-        return stub_->GetNodeTypes(rest_context, request);
-      },
+      idempotency_policy(*current)->GetNodeType(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
+              request) { return stub_->GetNodeType(rest_context, request); },
       request, __func__);
 }
 

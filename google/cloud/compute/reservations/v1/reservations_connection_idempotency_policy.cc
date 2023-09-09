@@ -40,15 +40,15 @@ Idempotency ReservationsConnectionIdempotencyPolicy::AggregatedListReservations(
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::DeleteReservations(
+Idempotency ReservationsConnectionIdempotencyPolicy::DeleteReservation(
     google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationsRequest const&) {
+        DeleteReservationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::GetReservations(
+Idempotency ReservationsConnectionIdempotencyPolicy::GetReservation(
     google::cloud::cpp::compute::reservations::v1::
-        GetReservationsRequest const&) {
+        GetReservationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -57,9 +57,9 @@ Idempotency ReservationsConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::InsertReservations(
+Idempotency ReservationsConnectionIdempotencyPolicy::InsertReservation(
     google::cloud::cpp::compute::reservations::v1::
-        InsertReservationsRequest const&) {
+        InsertReservationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -85,9 +85,9 @@ Idempotency ReservationsConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReservationsConnectionIdempotencyPolicy::UpdateReservations(
+Idempotency ReservationsConnectionIdempotencyPolicy::UpdateReservation(
     google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationsRequest const&) {
+        UpdateReservationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

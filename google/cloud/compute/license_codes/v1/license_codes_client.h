@@ -110,11 +110,11 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       std::string const& project, std::string const& license_code,
       Options opts = {});
 
@@ -129,7 +129,7 @@ class LicenseCodesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest].
+  ///     [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -145,13 +145,13 @@ class LicenseCodesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodesRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
+  /// [google.cloud.cpp.compute.license_codes.v1.GetLicenseCodeRequest]: @cloud_cpp_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L68}
   /// [google.cloud.cpp.compute.v1.LicenseCode]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodesRequest const& request,
+          GetLicenseCodeRequest const& request,
       Options opts = {});
 
   // clang-format off

@@ -37,49 +37,49 @@ GlobalPublicDelegatedPrefixesRestLogging::
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestLogging::
-    AsyncDeleteGlobalPublicDelegatedPrefixes(
+    AsyncDeleteGlobalPublicDelegatedPrefix(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            DeleteGlobalPublicDelegatedPrefixesRequest const& request) {
+            DeleteGlobalPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-                 DeleteGlobalPublicDelegatedPrefixesRequest const& request) {
-        return child_->AsyncDeleteGlobalPublicDelegatedPrefixes(
+                 DeleteGlobalPublicDelegatedPrefixRequest const& request) {
+        return child_->AsyncDeleteGlobalPublicDelegatedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-GlobalPublicDelegatedPrefixesRestLogging::GetGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesRestLogging::GetGlobalPublicDelegatedPrefix(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        GetGlobalPublicDelegatedPrefixesRequest const& request) {
+        GetGlobalPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-                 GetGlobalPublicDelegatedPrefixesRequest const& request) {
-        return child_->GetGlobalPublicDelegatedPrefixes(rest_context, request);
+                 GetGlobalPublicDelegatedPrefixRequest const& request) {
+        return child_->GetGlobalPublicDelegatedPrefix(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestLogging::
-    AsyncInsertGlobalPublicDelegatedPrefixes(
+    AsyncInsertGlobalPublicDelegatedPrefix(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            InsertGlobalPublicDelegatedPrefixesRequest const& request) {
+            InsertGlobalPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-                 InsertGlobalPublicDelegatedPrefixesRequest const& request) {
-        return child_->AsyncInsertGlobalPublicDelegatedPrefixes(
+                 InsertGlobalPublicDelegatedPrefixRequest const& request) {
+        return child_->AsyncInsertGlobalPublicDelegatedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -100,18 +100,17 @@ GlobalPublicDelegatedPrefixesRestLogging::ListGlobalPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesRestLogging::
-    AsyncPatchGlobalPublicDelegatedPrefixes(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            PatchGlobalPublicDelegatedPrefixesRequest const& request) {
+GlobalPublicDelegatedPrefixesRestLogging::AsyncPatchGlobalPublicDelegatedPrefix(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        PatchGlobalPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-                 PatchGlobalPublicDelegatedPrefixesRequest const& request) {
-        return child_->AsyncPatchGlobalPublicDelegatedPrefixes(
+                 PatchGlobalPublicDelegatedPrefixRequest const& request) {
+        return child_->AsyncPatchGlobalPublicDelegatedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -122,12 +121,12 @@ GlobalPublicDelegatedPrefixesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -137,12 +136,12 @@ future<Status> GlobalPublicDelegatedPrefixesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

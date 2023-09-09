@@ -56,39 +56,38 @@ NetworksClient::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksClient::DeleteNetworks(std::string const& project,
-                               std::string const& network, Options opts) {
+NetworksClient::DeleteNetwork(std::string const& project,
+                              std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest request;
+  google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest request;
   request.set_project(project);
   request.set_network(network);
-  return connection_->DeleteNetworks(request);
+  return connection_->DeleteNetwork(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksClient::DeleteNetworks(
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+NetworksClient::DeleteNetwork(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNetworks(request);
+  return connection_->DeleteNetwork(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetworks(
+StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetwork(
     std::string const& project, std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::networks::v1::GetNetworksRequest request;
+  google::cloud::cpp::compute::networks::v1::GetNetworkRequest request;
   request.set_project(project);
   request.set_network(network);
-  return connection_->GetNetworks(request);
+  return connection_->GetNetwork(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetworks(
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
-        request,
+StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetwork(
+    google::cloud::cpp::compute::networks::v1::GetNetworkRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetNetworks(request);
+  return connection_->GetNetwork(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -113,24 +112,24 @@ NetworksClient::GetEffectiveFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksClient::InsertNetworks(
+NetworksClient::InsertNetwork(
     std::string const& project,
     google::cloud::cpp::compute::v1::Network const& network_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::networks::v1::InsertNetworksRequest request;
+  google::cloud::cpp::compute::networks::v1::InsertNetworkRequest request;
   request.set_project(project);
   *request.mutable_network_resource() = network_resource;
-  return connection_->InsertNetworks(request);
+  return connection_->InsertNetwork(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksClient::InsertNetworks(
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+NetworksClient::InsertNetwork(
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNetworks(request);
+  return connection_->InsertNetwork(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Network>
@@ -168,25 +167,25 @@ NetworksClient::ListPeeringRoutes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksClient::PatchNetworks(
+NetworksClient::PatchNetwork(
     std::string const& project, std::string const& network,
     google::cloud::cpp::compute::v1::Network const& network_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::networks::v1::PatchNetworksRequest request;
+  google::cloud::cpp::compute::networks::v1::PatchNetworkRequest request;
   request.set_project(project);
   request.set_network(network);
   *request.mutable_network_resource() = network_resource;
-  return connection_->PatchNetworks(request);
+  return connection_->PatchNetwork(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksClient::PatchNetworks(
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+NetworksClient::PatchNetwork(
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchNetworks(request);
+  return connection_->PatchNetwork(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

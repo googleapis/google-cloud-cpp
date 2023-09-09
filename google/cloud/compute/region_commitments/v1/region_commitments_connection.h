@@ -193,20 +193,20 @@ class RegionCommitmentsConnection {
           AggregatedListRegionCommitmentsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Commitment>
-  GetRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
-                           GetRegionCommitmentsRequest const& request);
+  GetRegionCommitment(google::cloud::cpp::compute::region_commitments::v1::
+                          GetRegionCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
-                              InsertRegionCommitmentsRequest const& request);
+  InsertRegionCommitment(google::cloud::cpp::compute::region_commitments::v1::
+                             InsertRegionCommitmentRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
                             ListRegionCommitmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
-                              UpdateRegionCommitmentsRequest const& request);
+  UpdateRegionCommitment(google::cloud::cpp::compute::region_commitments::v1::
+                             UpdateRegionCommitmentRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -207,19 +207,19 @@ class GlobalPublicDelegatedPrefixesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalPublicDelegatedPrefixes(
+  DeleteGlobalPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          DeleteGlobalPublicDelegatedPrefixesRequest const& request);
+          DeleteGlobalPublicDelegatedPrefixRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-  GetGlobalPublicDelegatedPrefixes(
+  GetGlobalPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          GetGlobalPublicDelegatedPrefixesRequest const& request);
+          GetGlobalPublicDelegatedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalPublicDelegatedPrefixes(
+  InsertGlobalPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          InsertGlobalPublicDelegatedPrefixesRequest const& request);
+          InsertGlobalPublicDelegatedPrefixRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   ListGlobalPublicDelegatedPrefixes(
@@ -227,9 +227,9 @@ class GlobalPublicDelegatedPrefixesConnection {
           ListGlobalPublicDelegatedPrefixesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchGlobalPublicDelegatedPrefixes(
+  PatchGlobalPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          PatchGlobalPublicDelegatedPrefixesRequest const& request);
+          PatchGlobalPublicDelegatedPrefixRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

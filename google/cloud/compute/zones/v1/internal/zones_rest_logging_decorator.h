@@ -41,9 +41,9 @@ class ZonesRestLogging : public ZonesRestStub {
                    TracingOptions tracing_options,
                    std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request)
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(

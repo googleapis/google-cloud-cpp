@@ -41,29 +41,29 @@ class ServiceAttachmentsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::service_attachments::v1::
           AggregatedListServiceAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteServiceAttachments(
+  virtual google::cloud::Idempotency DeleteServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentsRequest const& request);
+          DeleteServiceAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetServiceAttachments(
+  virtual google::cloud::Idempotency GetServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          GetServiceAttachmentsRequest const& request);
+          GetServiceAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertServiceAttachments(
+  virtual google::cloud::Idempotency InsertServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentsRequest const& request);
+          InsertServiceAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency ListServiceAttachments(
       google::cloud::cpp::compute::service_attachments::v1::
           ListServiceAttachmentsRequest request);
 
-  virtual google::cloud::Idempotency PatchServiceAttachments(
+  virtual google::cloud::Idempotency PatchServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          PatchServiceAttachmentsRequest const& request);
+          PatchServiceAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::

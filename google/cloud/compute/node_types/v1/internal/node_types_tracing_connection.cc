@@ -43,13 +43,13 @@ NodeTypesTracingConnection::AggregatedListNodeTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesTracingConnection::GetNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+NodeTypesTracingConnection::GetNodeType(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_node_types_v1::NodeTypesConnection::GetNodeTypes");
+      "compute_node_types_v1::NodeTypesConnection::GetNodeType");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetNodeTypes(request));
+  return internal::EndSpan(*span, child_->GetNodeType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>

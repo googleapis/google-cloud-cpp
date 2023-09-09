@@ -52,7 +52,7 @@ service TargetHttpProxies {
 
   // Deletes the specified TargetHttpProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/delete
-  rpc DeleteTargetHttpProxies(DeleteTargetHttpProxiesRequest)
+  rpc DeleteTargetHttpProxy(DeleteTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/targetHttpProxies/{target_http_proxy}"
@@ -63,7 +63,7 @@ service TargetHttpProxies {
 
   // Returns the specified TargetHttpProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/get
-  rpc GetTargetHttpProxies(GetTargetHttpProxiesRequest)
+  rpc GetTargetHttpProxy(GetTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/targetHttpProxies/{target_http_proxy}"
@@ -74,7 +74,7 @@ service TargetHttpProxies {
   // Creates a TargetHttpProxy resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/insert
-  rpc InsertTargetHttpProxies(InsertTargetHttpProxiesRequest)
+  rpc InsertTargetHttpProxy(InsertTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/targetHttpProxies"
@@ -99,7 +99,7 @@ service TargetHttpProxies {
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetHttpProxies/patch
-  rpc PatchTargetHttpProxies(PatchTargetHttpProxiesRequest)
+  rpc PatchTargetHttpProxy(PatchTargetHttpProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/targetHttpProxies/{target_http_proxy}"
@@ -198,8 +198,8 @@ message AggregatedListTargetHttpProxiesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteTargetHttpProxies.
-message DeleteTargetHttpProxiesRequest {
+// Request message for DeleteTargetHttpProxy.
+message DeleteTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -222,8 +222,8 @@ message DeleteTargetHttpProxiesRequest {
   string target_http_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetTargetHttpProxies.
-message GetTargetHttpProxiesRequest {
+// Request message for GetTargetHttpProxy.
+message GetTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -231,8 +231,8 @@ message GetTargetHttpProxiesRequest {
   string target_http_proxy = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertTargetHttpProxies.
-message InsertTargetHttpProxiesRequest {
+// Request message for InsertTargetHttpProxy.
+message InsertTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -321,8 +321,8 @@ message ListTargetHttpProxiesRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchTargetHttpProxies.
-message PatchTargetHttpProxiesRequest {
+// Request message for PatchTargetHttpProxy.
+message PatchTargetHttpProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

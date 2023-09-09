@@ -67,7 +67,7 @@ service InstanceGroups {
   // deleted. Note that instance group must not belong to a backend service.
   // Read Deleting an instance group for more information.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/delete
-  rpc DeleteInstanceGroups(DeleteInstanceGroupsRequest)
+  rpc DeleteInstanceGroup(DeleteInstanceGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}"
@@ -81,7 +81,7 @@ service InstanceGroups {
   // use the instanceGroupManagers or regionInstanceGroupManagers methods
   // instead.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/get
-  rpc GetInstanceGroups(GetInstanceGroupsRequest)
+  rpc GetInstanceGroup(GetInstanceGroupRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}"
@@ -92,7 +92,7 @@ service InstanceGroups {
   // Creates an instance group in the specified project using the parameters
   // that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroups/insert
-  rpc InsertInstanceGroups(InsertInstanceGroupsRequest)
+  rpc InsertInstanceGroup(InsertInstanceGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instanceGroups"
@@ -268,8 +268,8 @@ message AggregatedListInstanceGroupsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteInstanceGroups.
-message DeleteInstanceGroupsRequest {
+// Request message for DeleteInstanceGroup.
+message DeleteInstanceGroupRequest {
   // The name of the instance group to delete.
   string instance_group = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -298,8 +298,8 @@ message DeleteInstanceGroupsRequest {
   ];
 }
 
-// Request message for GetInstanceGroups.
-message GetInstanceGroupsRequest {
+// Request message for GetInstanceGroup.
+message GetInstanceGroupRequest {
   // The name of the instance group.
   string instance_group = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -310,8 +310,8 @@ message GetInstanceGroupsRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertInstanceGroups.
-message InsertInstanceGroupsRequest {
+// Request message for InsertInstanceGroup.
+message InsertInstanceGroupRequest {
   // The InstanceGroup for this request.
   optional google.cloud.cpp.compute.v1.InstanceGroup instance_group_resource = 1
       [json_name = "__json_request_body"];

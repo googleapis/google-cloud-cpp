@@ -187,17 +187,17 @@ class UrlMapsConnection {
                             AggregatedListUrlMapsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+  DeleteUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+  InsertUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -209,13 +209,13 @@ class UrlMapsConnection {
       google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+  PatchUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+  UpdateUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>

@@ -111,13 +111,13 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroups(std::string const& project, std::string const& region,
-                          std::string const& instance_group, Options opts = {});
+  GetRegionInstanceGroup(std::string const& project, std::string const& region,
+                         std::string const& instance_group, Options opts = {});
 
   // clang-format off
   ///
@@ -127,7 +127,7 @@ class RegionInstanceGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest].
+  ///     [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -143,14 +143,14 @@ class RegionInstanceGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
+  /// [google.cloud.cpp.compute.region_instance_groups.v1.GetRegionInstanceGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L92}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_058.proto#L34}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroups(google::cloud::cpp::compute::region_instance_groups::
-                              v1::GetRegionInstanceGroupsRequest const& request,
-                          Options opts = {});
+  GetRegionInstanceGroup(google::cloud::cpp::compute::region_instance_groups::
+                             v1::GetRegionInstanceGroupRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///

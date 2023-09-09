@@ -37,23 +37,23 @@ RegionInstanceTemplatesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RegionInstanceTemplatesConnectionIdempotencyPolicy::
-    DeleteRegionInstanceTemplates(
+    DeleteRegionInstanceTemplate(
         google::cloud::cpp::compute::region_instance_templates::v1::
-            DeleteRegionInstanceTemplatesRequest const&) {
+            DeleteRegionInstanceTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-RegionInstanceTemplatesConnectionIdempotencyPolicy::GetRegionInstanceTemplates(
+RegionInstanceTemplatesConnectionIdempotencyPolicy::GetRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplatesRequest const&) {
+        GetRegionInstanceTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency RegionInstanceTemplatesConnectionIdempotencyPolicy::
-    InsertRegionInstanceTemplates(
+    InsertRegionInstanceTemplate(
         google::cloud::cpp::compute::region_instance_templates::v1::
-            InsertRegionInstanceTemplatesRequest const&) {
+            InsertRegionInstanceTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

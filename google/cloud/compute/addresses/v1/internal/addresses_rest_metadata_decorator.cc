@@ -49,32 +49,32 @@ AddressesRestMetadata::AggregatedListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesRestMetadata::AsyncDeleteAddresses(
+AddressesRestMetadata::AsyncDeleteAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteAddresses(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteAddress(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesRestMetadata::GetAddresses(
+AddressesRestMetadata::GetAddress(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetAddresses(rest_context, request);
+  return child_->GetAddress(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesRestMetadata::AsyncInsertAddresses(
+AddressesRestMetadata::AsyncInsertAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertAddresses(cq, std::move(rest_context), request);
+  return child_->AsyncInsertAddress(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
@@ -110,7 +110,7 @@ AddressesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -119,7 +119,7 @@ future<Status> AddressesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

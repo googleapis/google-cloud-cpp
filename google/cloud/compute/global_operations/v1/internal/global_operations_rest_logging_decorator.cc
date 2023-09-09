@@ -47,29 +47,29 @@ GlobalOperationsRestLogging::AggregatedListGlobalOperations(
       rest_context, request, __func__, tracing_options_);
 }
 
-Status GlobalOperationsRestLogging::DeleteGlobalOperations(
+Status GlobalOperationsRestLogging::DeleteGlobalOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
-        return child_->DeleteGlobalOperations(rest_context, request);
+                 DeleteGlobalOperationRequest const& request) {
+        return child_->DeleteGlobalOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsRestLogging::GetGlobalOperations(
+GlobalOperationsRestLogging::GetGlobalOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
-        return child_->GetGlobalOperations(rest_context, request);
+                 GetGlobalOperationRequest const& request) {
+        return child_->GetGlobalOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

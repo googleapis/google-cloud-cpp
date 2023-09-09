@@ -41,10 +41,10 @@ class LicenseCodesRestLogging : public LicenseCodesRestStub {
                           TracingOptions tracing_options,
                           std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodesRequest const& request) override;
+          GetLicenseCodeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,

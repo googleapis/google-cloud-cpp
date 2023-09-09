@@ -76,9 +76,9 @@ class MockInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteInstanceGroupManagers,
+              DeleteInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
-                   DeleteInstanceGroupManagersRequest const& request),
+                   DeleteInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -94,15 +94,15 @@ class MockInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>,
-              GetInstanceGroupManagers,
+              GetInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
-                   GetInstanceGroupManagersRequest const& request),
+                   GetInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertInstanceGroupManagers,
+              InsertInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
-                   InsertInstanceGroupManagersRequest const& request),
+                   InsertInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -133,9 +133,9 @@ class MockInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchInstanceGroupManagers,
+              PatchInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
-                   PatchInstanceGroupManagersRequest const& request),
+                   PatchInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

@@ -46,11 +46,11 @@ DefaultHttpHealthChecksRestStub::DefaultHttpHealthChecksRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthChecks(
+DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
-        DeleteHttpHealthChecksRequest const& request) {
+        DeleteHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -72,10 +72,10 @@ DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthChecks(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-DefaultHttpHealthChecksRestStub::GetHttpHealthChecks(
+DefaultHttpHealthChecksRestStub::GetHttpHealthCheck(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
-        GetHttpHealthChecksRequest const& request) {
+        GetHttpHealthCheckRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpHealthCheck>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -85,11 +85,11 @@ DefaultHttpHealthChecksRestStub::GetHttpHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthChecks(
+DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
-        InsertHttpHealthChecksRequest const& request) {
+        InsertHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -128,11 +128,11 @@ DefaultHttpHealthChecksRestStub::ListHttpHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthChecks(
+DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
-        PatchHttpHealthChecksRequest const& request) {
+        PatchHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -154,11 +154,11 @@ DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthChecks(
+DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
-        UpdateHttpHealthChecksRequest const& request) {
+        UpdateHttpHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -184,7 +184,7 @@ DefaultHttpHealthChecksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -207,7 +207,7 @@ future<Status> DefaultHttpHealthChecksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

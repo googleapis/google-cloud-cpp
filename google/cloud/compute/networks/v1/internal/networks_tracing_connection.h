@@ -44,12 +44,12 @@ class NetworksTracingConnection
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request) override;
 
   StatusOr<
@@ -58,8 +58,8 @@ class NetworksTracingConnection
       google::cloud::cpp::compute::networks::v1::
           GetEffectiveFirewallsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -71,8 +71,8 @@ class NetworksTracingConnection
       google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(

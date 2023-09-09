@@ -94,11 +94,11 @@ DefaultSecurityPoliciesRestStub::AggregatedListSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicies(
+DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPoliciesRequest const& request) {
+        DeleteSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -120,10 +120,10 @@ DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-DefaultSecurityPoliciesRestStub::GetSecurityPolicies(
+DefaultSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPoliciesRequest const& request) {
+        GetSecurityPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -147,11 +147,11 @@ DefaultSecurityPoliciesRestStub::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSecurityPoliciesRestStub::AsyncInsertSecurityPolicies(
+DefaultSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPoliciesRequest const& request) {
+        InsertSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -211,11 +211,11 @@ DefaultSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSecurityPoliciesRestStub::AsyncPatchSecurityPolicies(
+DefaultSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPoliciesRequest const& request) {
+        PatchSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -321,7 +321,7 @@ DefaultSecurityPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -344,7 +344,7 @@ future<Status> DefaultSecurityPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

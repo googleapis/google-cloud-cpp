@@ -203,19 +203,19 @@ class PublicAdvertisedPrefixesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePublicAdvertisedPrefixes(
+  DeletePublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          DeletePublicAdvertisedPrefixesRequest const& request);
+          DeletePublicAdvertisedPrefixRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-  GetPublicAdvertisedPrefixes(
+  GetPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          GetPublicAdvertisedPrefixesRequest const& request);
+          GetPublicAdvertisedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPublicAdvertisedPrefixes(
+  InsertPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          InsertPublicAdvertisedPrefixesRequest const& request);
+          InsertPublicAdvertisedPrefixRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
   ListPublicAdvertisedPrefixes(
@@ -223,9 +223,9 @@ class PublicAdvertisedPrefixesConnection {
           ListPublicAdvertisedPrefixesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPublicAdvertisedPrefixes(
+  PatchPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          PatchPublicAdvertisedPrefixesRequest const& request);
+          PatchPublicAdvertisedPrefixRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

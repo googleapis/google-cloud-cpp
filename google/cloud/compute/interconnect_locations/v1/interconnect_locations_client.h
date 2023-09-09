@@ -112,14 +112,14 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-  GetInterconnectLocations(std::string const& project,
-                           std::string const& interconnect_location,
-                           Options opts = {});
+  GetInterconnectLocation(std::string const& project,
+                          std::string const& interconnect_location,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -130,7 +130,7 @@ class InterconnectLocationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest].
+  ///     [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -146,15 +146,14 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.GetInterconnectLocationRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-  GetInterconnectLocations(
-      google::cloud::cpp::compute::interconnect_locations::v1::
-          GetInterconnectLocationsRequest const& request,
-      Options opts = {});
+  GetInterconnectLocation(google::cloud::cpp::compute::interconnect_locations::
+                              v1::GetInterconnectLocationRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///

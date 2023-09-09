@@ -35,22 +35,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FirewallsConnection::~FirewallsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsConnection::DeleteFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&) {
+FirewallsConnection::DeleteFirewall(
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsConnection::GetFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&) {
+FirewallsConnection::GetFirewall(
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsConnection::InsertFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&) {
+FirewallsConnection::InsertFirewall(
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -65,16 +65,16 @@ FirewallsConnection::ListFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsConnection::PatchFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&) {
+FirewallsConnection::PatchFirewall(
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsConnection::UpdateFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&) {
+FirewallsConnection::UpdateFirewall(
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

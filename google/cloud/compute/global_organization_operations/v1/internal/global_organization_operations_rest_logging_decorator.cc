@@ -36,30 +36,29 @@ GlobalOrganizationOperationsRestLogging::
       components_(std::move(components)) {}
 
 Status
-GlobalOrganizationOperationsRestLogging::DeleteGlobalOrganizationOperations(
+GlobalOrganizationOperationsRestLogging::DeleteGlobalOrganizationOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationsRequest const& request) {
+        DeleteGlobalOrganizationOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_organization_operations::v1::
-                 DeleteGlobalOrganizationOperationsRequest const& request) {
-        return child_->DeleteGlobalOrganizationOperations(rest_context,
-                                                          request);
+                 DeleteGlobalOrganizationOperationRequest const& request) {
+        return child_->DeleteGlobalOrganizationOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsRestLogging::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsRestLogging::GetGlobalOrganizationOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const& request) {
+        GetGlobalOrganizationOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_organization_operations::v1::
-                 GetGlobalOrganizationOperationsRequest const& request) {
-        return child_->GetGlobalOrganizationOperations(rest_context, request);
+                 GetGlobalOrganizationOperationRequest const& request) {
+        return child_->GetGlobalOrganizationOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

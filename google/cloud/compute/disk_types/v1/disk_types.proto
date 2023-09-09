@@ -48,7 +48,7 @@ service DiskTypes {
 
   // Returns the specified disk type.
   // https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes/get
-  rpc GetDiskTypes(GetDiskTypesRequest)
+  rpc GetDiskType(GetDiskTypeRequest)
       returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/diskTypes/{disk_type}"
@@ -141,8 +141,8 @@ message AggregatedListDiskTypesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for GetDiskTypes.
-message GetDiskTypesRequest {
+// Request message for GetDiskType.
+message GetDiskTypeRequest {
   // Name of the disk type to return.
   string disk_type = 1 [(google.api.field_behavior) = REQUIRED];
 

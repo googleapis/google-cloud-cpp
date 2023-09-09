@@ -206,19 +206,19 @@ class RegionNotificationEndpointsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNotificationEndpoints(
+  DeleteRegionNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteRegionNotificationEndpointsRequest const& request);
+          DeleteRegionNotificationEndpointRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-  GetRegionNotificationEndpoints(
+  GetRegionNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          GetRegionNotificationEndpointsRequest const& request);
+          GetRegionNotificationEndpointRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNotificationEndpoints(
+  InsertRegionNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertRegionNotificationEndpointsRequest const& request);
+          InsertRegionNotificationEndpointRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
   ListRegionNotificationEndpoints(

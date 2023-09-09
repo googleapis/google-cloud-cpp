@@ -35,40 +35,40 @@ GlobalOrganizationOperationsClient::GlobalOrganizationOperationsClient(
 GlobalOrganizationOperationsClient::~GlobalOrganizationOperationsClient() =
     default;
 
-Status GlobalOrganizationOperationsClient::DeleteGlobalOrganizationOperations(
+Status GlobalOrganizationOperationsClient::DeleteGlobalOrganizationOperation(
     std::string const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_organization_operations::v1::
-      DeleteGlobalOrganizationOperationsRequest request;
+      DeleteGlobalOrganizationOperationRequest request;
   request.set_operation(operation);
-  return connection_->DeleteGlobalOrganizationOperations(request);
+  return connection_->DeleteGlobalOrganizationOperation(request);
 }
 
-Status GlobalOrganizationOperationsClient::DeleteGlobalOrganizationOperations(
+Status GlobalOrganizationOperationsClient::DeleteGlobalOrganizationOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationsRequest const& request,
+        DeleteGlobalOrganizationOperationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGlobalOrganizationOperations(request);
+  return connection_->DeleteGlobalOrganizationOperation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsClient::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsClient::GetGlobalOrganizationOperation(
     std::string const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_organization_operations::v1::
-      GetGlobalOrganizationOperationsRequest request;
+      GetGlobalOrganizationOperationRequest request;
   request.set_operation(operation);
-  return connection_->GetGlobalOrganizationOperations(request);
+  return connection_->GetGlobalOrganizationOperation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsClient::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsClient::GetGlobalOrganizationOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const& request,
+        GetGlobalOrganizationOperationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetGlobalOrganizationOperations(request);
+  return connection_->GetGlobalOrganizationOperation(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>

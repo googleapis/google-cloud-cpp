@@ -194,16 +194,16 @@ class SslCertificatesConnection {
           AggregatedListSslCertificatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::
-                            DeleteSslCertificatesRequest const& request);
+  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
+                           DeleteSslCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::
-                         GetSslCertificatesRequest const& request);
+  GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
+                        GetSslCertificateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::
-                            InsertSslCertificatesRequest const& request);
+  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
+                           InsertSslCertificateRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::

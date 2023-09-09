@@ -169,13 +169,13 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(std::string const& project, std::string const& zone,
-                      std::string const& accelerator_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
+      std::string const& project, std::string const& zone,
+      std::string const& accelerator_type, Options opts = {});
 
   // clang-format off
   ///
@@ -185,7 +185,7 @@ class AcceleratorTypesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest].
+  ///     [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -201,14 +201,14 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::
-                          GetAcceleratorTypesRequest const& request,
-                      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///

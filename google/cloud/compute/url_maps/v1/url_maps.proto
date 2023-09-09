@@ -51,7 +51,7 @@ service UrlMaps {
 
   // Deletes the specified UrlMap resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/delete
-  rpc DeleteUrlMaps(DeleteUrlMapsRequest)
+  rpc DeleteUrlMap(DeleteUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
@@ -62,8 +62,7 @@ service UrlMaps {
 
   // Returns the specified UrlMap resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/get
-  rpc GetUrlMaps(GetUrlMapsRequest)
-      returns (google.cloud.cpp.compute.v1.UrlMap) {
+  rpc GetUrlMap(GetUrlMapRequest) returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
     };
@@ -73,7 +72,7 @@ service UrlMaps {
   // Creates a UrlMap resource in the specified project using the data included
   // in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/insert
-  rpc InsertUrlMaps(InsertUrlMapsRequest)
+  rpc InsertUrlMap(InsertUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/urlMaps"
@@ -112,7 +111,7 @@ service UrlMaps {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/patch
-  rpc PatchUrlMaps(PatchUrlMapsRequest)
+  rpc PatchUrlMap(PatchUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
@@ -125,7 +124,7 @@ service UrlMaps {
   // Updates the specified UrlMap resource with the data included in the
   // request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/urlMaps/update
-  rpc UpdateUrlMaps(UpdateUrlMapsRequest)
+  rpc UpdateUrlMap(UpdateUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
@@ -224,8 +223,8 @@ message AggregatedListUrlMapsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteUrlMaps.
-message DeleteUrlMapsRequest {
+// Request message for DeleteUrlMap.
+message DeleteUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -248,8 +247,8 @@ message DeleteUrlMapsRequest {
   string url_map = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetUrlMaps.
-message GetUrlMapsRequest {
+// Request message for GetUrlMap.
+message GetUrlMapRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -257,8 +256,8 @@ message GetUrlMapsRequest {
   string url_map = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertUrlMaps.
-message InsertUrlMapsRequest {
+// Request message for InsertUrlMap.
+message InsertUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -375,8 +374,8 @@ message ListUrlMapsRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchUrlMaps.
-message PatchUrlMapsRequest {
+// Request message for PatchUrlMap.
+message PatchUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -403,8 +402,8 @@ message PatchUrlMapsRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for UpdateUrlMaps.
-message UpdateUrlMapsRequest {
+// Request message for UpdateUrlMap.
+message UpdateUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

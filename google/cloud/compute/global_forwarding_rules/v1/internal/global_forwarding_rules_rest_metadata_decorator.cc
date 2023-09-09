@@ -42,34 +42,34 @@ GlobalForwardingRulesRestMetadata::GlobalForwardingRulesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestMetadata::AsyncDeleteGlobalForwardingRules(
+GlobalForwardingRulesRestMetadata::AsyncDeleteGlobalForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRulesRequest const& request) {
+        DeleteGlobalForwardingRuleRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteGlobalForwardingRules(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncDeleteGlobalForwardingRule(cq, std::move(rest_context),
+                                                 request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesRestMetadata::GetGlobalForwardingRules(
+GlobalForwardingRulesRestMetadata::GetGlobalForwardingRule(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRulesRequest const& request) {
+        GetGlobalForwardingRuleRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetGlobalForwardingRules(rest_context, request);
+  return child_->GetGlobalForwardingRule(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestMetadata::AsyncInsertGlobalForwardingRules(
+GlobalForwardingRulesRestMetadata::AsyncInsertGlobalForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRulesRequest const& request) {
+        InsertGlobalForwardingRuleRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertGlobalForwardingRules(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncInsertGlobalForwardingRule(cq, std::move(rest_context),
+                                                 request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
@@ -82,14 +82,14 @@ GlobalForwardingRulesRestMetadata::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestMetadata::AsyncPatchGlobalForwardingRules(
+GlobalForwardingRulesRestMetadata::AsyncPatchGlobalForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRulesRequest const& request) {
+        PatchGlobalForwardingRuleRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchGlobalForwardingRules(cq, std::move(rest_context),
-                                                 request);
+  return child_->AsyncPatchGlobalForwardingRule(cq, std::move(rest_context),
+                                                request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -117,7 +117,7 @@ GlobalForwardingRulesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -126,7 +126,7 @@ future<Status> GlobalForwardingRulesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

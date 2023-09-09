@@ -61,19 +61,19 @@ class InterconnectAttachmentsRestConnectionImpl
           AggregatedListInterconnectAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectAttachments(
+  DeleteInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          DeleteInterconnectAttachmentsRequest const& request) override;
+          DeleteInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-  GetInterconnectAttachments(
+  GetInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          GetInterconnectAttachmentsRequest const& request) override;
+          GetInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectAttachments(
+  InsertInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          InsertInterconnectAttachmentsRequest const& request) override;
+          InsertInterconnectAttachmentRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
   ListInterconnectAttachments(
@@ -81,9 +81,9 @@ class InterconnectAttachmentsRestConnectionImpl
           ListInterconnectAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectAttachments(
+  PatchInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          PatchInterconnectAttachmentsRequest const& request) override;
+          PatchInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::interconnect_attachments::v1::

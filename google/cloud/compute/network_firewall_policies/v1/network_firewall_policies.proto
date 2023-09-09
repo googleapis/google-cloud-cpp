@@ -80,7 +80,7 @@ service NetworkFirewallPolicies {
 
   // Deletes the specified policy.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/delete
-  rpc DeleteNetworkFirewallPolicies(DeleteNetworkFirewallPoliciesRequest)
+  rpc DeleteNetworkFirewallPolicy(DeleteNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/firewallPolicies/{firewall_policy}"
@@ -91,7 +91,7 @@ service NetworkFirewallPolicies {
 
   // Returns the specified network firewall policy.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/get
-  rpc GetNetworkFirewallPolicies(GetNetworkFirewallPoliciesRequest)
+  rpc GetNetworkFirewallPolicy(GetNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/firewallPolicies/{firewall_policy}"
@@ -133,7 +133,7 @@ service NetworkFirewallPolicies {
   // Creates a new policy in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/insert
-  rpc InsertNetworkFirewallPolicies(InsertNetworkFirewallPoliciesRequest)
+  rpc InsertNetworkFirewallPolicy(InsertNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/firewallPolicies"
@@ -155,7 +155,7 @@ service NetworkFirewallPolicies {
 
   // Patches the specified policy with the data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkFirewallPolicies/patch
-  rpc PatchNetworkFirewallPolicies(PatchNetworkFirewallPoliciesRequest)
+  rpc PatchNetworkFirewallPolicy(PatchNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/firewallPolicies/{firewall_policy}"
@@ -326,8 +326,8 @@ message CloneRulesRequest {
   optional string source_firewall_policy = 4;
 }
 
-// Request message for DeleteNetworkFirewallPolicies.
-message DeleteNetworkFirewallPoliciesRequest {
+// Request message for DeleteNetworkFirewallPolicy.
+message DeleteNetworkFirewallPolicyRequest {
   // Name of the firewall policy to delete.
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -374,8 +374,8 @@ message GetIamPolicyRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetNetworkFirewallPolicies.
-message GetNetworkFirewallPoliciesRequest {
+// Request message for GetNetworkFirewallPolicy.
+message GetNetworkFirewallPolicyRequest {
   // Name of the firewall policy to get.
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -395,8 +395,8 @@ message GetRuleRequest {
   string project = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertNetworkFirewallPolicies.
-message InsertNetworkFirewallPoliciesRequest {
+// Request message for InsertNetworkFirewallPolicy.
+message InsertNetworkFirewallPolicyRequest {
   // The FirewallPolicy for this request.
   optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource =
       1 [json_name = "__json_request_body"];
@@ -485,8 +485,8 @@ message ListNetworkFirewallPoliciesRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchNetworkFirewallPolicies.
-message PatchNetworkFirewallPoliciesRequest {
+// Request message for PatchNetworkFirewallPolicy.
+message PatchNetworkFirewallPolicyRequest {
   // Name of the firewall policy to update.
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 

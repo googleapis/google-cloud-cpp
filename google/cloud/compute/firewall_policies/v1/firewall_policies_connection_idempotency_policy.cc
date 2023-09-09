@@ -51,15 +51,15 @@ Idempotency FirewallPoliciesConnectionIdempotencyPolicy::CloneRules(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::DeleteFirewallPolicies(
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::DeleteFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        DeleteFirewallPoliciesRequest const&) {
+        DeleteFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetFirewallPolicies(
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        GetFirewallPoliciesRequest const&) {
+        GetFirewallPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -80,9 +80,9 @@ Idempotency FirewallPoliciesConnectionIdempotencyPolicy::GetRule(
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::InsertFirewallPolicies(
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::InsertFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        InsertFirewallPoliciesRequest const&) {
+        InsertFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -103,9 +103,9 @@ Idempotency FirewallPoliciesConnectionIdempotencyPolicy::Move(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicies(
+Idempotency FirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        PatchFirewallPoliciesRequest const&) {
+        PatchFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

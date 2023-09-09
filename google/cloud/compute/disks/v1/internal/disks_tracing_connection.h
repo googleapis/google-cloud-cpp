@@ -57,20 +57,20 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisks(
-      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request)
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request)
       override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request)
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
+      google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisks(
-      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request)
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request)
       override;
 
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
@@ -114,8 +114,8 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisks(
-      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request)
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request)
       override;
 
  private:

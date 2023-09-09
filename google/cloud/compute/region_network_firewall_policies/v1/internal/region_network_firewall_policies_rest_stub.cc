@@ -130,11 +130,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncCloneRules(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNetworkFirewallPoliciesRestStub::
-    AsyncDeleteRegionNetworkFirewallPolicies(
+    AsyncDeleteRegionNetworkFirewallPolicy(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            DeleteRegionNetworkFirewallPoliciesRequest const& request) {
+            DeleteRegionNetworkFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -156,10 +156,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-DefaultRegionNetworkFirewallPoliciesRestStub::GetRegionNetworkFirewallPolicies(
+DefaultRegionNetworkFirewallPoliciesRestStub::GetRegionNetworkFirewallPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        GetRegionNetworkFirewallPoliciesRequest const& request) {
+        GetRegionNetworkFirewallPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -232,11 +232,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNetworkFirewallPoliciesRestStub::
-    AsyncInsertRegionNetworkFirewallPolicies(
+    AsyncInsertRegionNetworkFirewallPolicy(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            InsertRegionNetworkFirewallPoliciesRequest const& request) {
+            InsertRegionNetworkFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -277,11 +277,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::ListRegionNetworkFirewallPolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionNetworkFirewallPoliciesRestStub::
-    AsyncPatchRegionNetworkFirewallPolicies(
+    AsyncPatchRegionNetworkFirewallPolicy(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            PatchRegionNetworkFirewallPoliciesRequest const& request) {
+            PatchRegionNetworkFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -414,7 +414,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -439,7 +439,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

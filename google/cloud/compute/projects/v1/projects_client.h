@@ -411,11 +411,11 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L316}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L316}
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       std::string const& project, Options opts = {});
 
   // clang-format off
@@ -432,7 +432,7 @@ class ProjectsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.projects.v1.GetProjectsRequest].
+  ///     [google.cloud.cpp.compute.projects.v1.GetProjectRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -448,12 +448,12 @@ class ProjectsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L316}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectRequest]: @cloud_cpp_reference_link{google/cloud/compute/projects/v1/projects.proto#L316}
   /// [google.cloud.cpp.compute.v1.Project]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L60}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
+      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
           request,
       Options opts = {});
 

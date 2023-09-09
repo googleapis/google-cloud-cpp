@@ -41,9 +41,9 @@ class MachineTypesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::machine_types::v1::
           AggregatedListMachineTypesRequest const& request);
 
-  virtual google::cloud::Idempotency GetMachineTypes(
+  virtual google::cloud::Idempotency GetMachineType(
       google::cloud::cpp::compute::machine_types::v1::
-          GetMachineTypesRequest const& request);
+          GetMachineTypeRequest const& request);
 
   virtual google::cloud::Idempotency ListMachineTypes(
       google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest

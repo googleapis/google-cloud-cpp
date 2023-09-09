@@ -41,7 +41,7 @@ service ExternalVpnGateways {
 
   // Deletes the specified externalVpnGateway.
   // https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/delete
-  rpc DeleteExternalVpnGateways(DeleteExternalVpnGatewaysRequest)
+  rpc DeleteExternalVpnGateway(DeleteExternalVpnGatewayRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/externalVpnGateways/{external_vpn_gateway}"
@@ -53,7 +53,7 @@ service ExternalVpnGateways {
   // Returns the specified externalVpnGateway. Get a list of available
   // externalVpnGateways by making a list() request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/get
-  rpc GetExternalVpnGateways(GetExternalVpnGatewaysRequest)
+  rpc GetExternalVpnGateway(GetExternalVpnGatewayRequest)
       returns (google.cloud.cpp.compute.v1.ExternalVpnGateway) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/externalVpnGateways/{external_vpn_gateway}"
@@ -64,7 +64,7 @@ service ExternalVpnGateways {
   // Creates a ExternalVpnGateway in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/externalVpnGateways/insert
-  rpc InsertExternalVpnGateways(InsertExternalVpnGatewaysRequest)
+  rpc InsertExternalVpnGateway(InsertExternalVpnGatewayRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/externalVpnGateways"
@@ -113,8 +113,8 @@ service ExternalVpnGateways {
   }
 }
 
-// Request message for DeleteExternalVpnGateways.
-message DeleteExternalVpnGatewaysRequest {
+// Request message for DeleteExternalVpnGateway.
+message DeleteExternalVpnGatewayRequest {
   // Name of the externalVpnGateways to delete.
   string external_vpn_gateway = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -137,8 +137,8 @@ message DeleteExternalVpnGatewaysRequest {
   optional string request_id = 3;
 }
 
-// Request message for GetExternalVpnGateways.
-message GetExternalVpnGatewaysRequest {
+// Request message for GetExternalVpnGateway.
+message GetExternalVpnGatewayRequest {
   // Name of the externalVpnGateway to return.
   string external_vpn_gateway = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -146,8 +146,8 @@ message GetExternalVpnGatewaysRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertExternalVpnGateways.
-message InsertExternalVpnGatewaysRequest {
+// Request message for InsertExternalVpnGateway.
+message InsertExternalVpnGatewayRequest {
   // The ExternalVpnGateway for this request.
   optional google.cloud.cpp.compute.v1.ExternalVpnGateway
       external_vpn_gateway_resource = 1 [json_name = "__json_request_body"];

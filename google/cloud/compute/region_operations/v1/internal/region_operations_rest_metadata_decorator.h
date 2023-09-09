@@ -39,15 +39,15 @@ class RegionOperationsRestMetadata : public RegionOperationsRestStub {
       std::shared_ptr<RegionOperationsRestStub> child,
       std::string api_client_header = "");
 
-  Status DeleteRegionOperations(
+  Status DeleteRegionOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteRegionOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetRegionOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,

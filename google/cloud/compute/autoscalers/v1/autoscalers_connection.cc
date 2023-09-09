@@ -42,24 +42,24 @@ AutoscalersConnection::AggregatedListAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersConnection::DeleteAutoscalers(
+AutoscalersConnection::DeleteAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        DeleteAutoscalersRequest const&) {
+        DeleteAutoscalerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-AutoscalersConnection::GetAutoscalers(google::cloud::cpp::compute::autoscalers::
-                                          v1::GetAutoscalersRequest const&) {
+AutoscalersConnection::GetAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersConnection::InsertAutoscalers(
+AutoscalersConnection::InsertAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        InsertAutoscalersRequest const&) {
+        InsertAutoscalerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -74,18 +74,18 @@ AutoscalersConnection::ListAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersConnection::PatchAutoscalers(
+AutoscalersConnection::PatchAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        PatchAutoscalersRequest const&) {
+        PatchAutoscalerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersConnection::UpdateAutoscalers(
+AutoscalersConnection::UpdateAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        UpdateAutoscalersRequest const&) {
+        UpdateAutoscalerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

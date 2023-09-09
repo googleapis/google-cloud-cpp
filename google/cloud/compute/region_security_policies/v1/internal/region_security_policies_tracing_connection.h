@@ -45,19 +45,19 @@ class RegionSecurityPoliciesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSecurityPolicies(
+  DeleteRegionSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          DeleteRegionSecurityPoliciesRequest const& request) override;
+          DeleteRegionSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetRegionSecurityPolicies(
+  GetRegionSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          GetRegionSecurityPoliciesRequest const& request) override;
+          GetRegionSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSecurityPolicies(
+  InsertRegionSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          InsertRegionSecurityPoliciesRequest const& request) override;
+          InsertRegionSecurityPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListRegionSecurityPolicies(
@@ -65,9 +65,9 @@ class RegionSecurityPoliciesTracingConnection
           ListRegionSecurityPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSecurityPolicies(
+  PatchRegionSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          PatchRegionSecurityPoliciesRequest const& request) override;
+          PatchRegionSecurityPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<

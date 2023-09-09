@@ -114,14 +114,14 @@ class InterconnectRemoteLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L63}
+  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L63}
   /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-  GetInterconnectRemoteLocations(
-      std::string const& project,
-      std::string const& interconnect_remote_location, Options opts = {});
+  GetInterconnectRemoteLocation(std::string const& project,
+                                std::string const& interconnect_remote_location,
+                                Options opts = {});
 
   // clang-format off
   ///
@@ -132,7 +132,7 @@ class InterconnectRemoteLocationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest].
+  ///     [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -148,14 +148,14 @@ class InterconnectRemoteLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L63}
+  /// [google.cloud.cpp.compute.interconnect_remote_locations.v1.GetInterconnectRemoteLocationRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto#L63}
   /// [google.cloud.cpp.compute.v1.InterconnectRemoteLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-  GetInterconnectRemoteLocations(
+  GetInterconnectRemoteLocation(
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
-          GetInterconnectRemoteLocationsRequest const& request,
+          GetInterconnectRemoteLocationRequest const& request,
       Options opts = {});
 
   // clang-format off

@@ -176,12 +176,12 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
+  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplates(std::string const& project, std::string const& region,
-                      std::string const& node_template, Options opts = {});
+  DeleteNodeTemplate(std::string const& project, std::string const& region,
+                     std::string const& node_template, Options opts = {});
 
   // clang-format off
   ///
@@ -191,7 +191,7 @@ class NodeTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest].
+  ///     [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -214,13 +214,13 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
+  /// [google.cloud.cpp.compute.node_templates.v1.DeleteNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                          DeleteNodeTemplatesRequest const& request,
-                      Options opts = {});
+  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         DeleteNodeTemplateRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -243,11 +243,11 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
       std::string const& project, std::string const& region,
       std::string const& node_template, Options opts = {});
 
@@ -259,7 +259,7 @@ class NodeTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest].
+  ///     [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,13 +275,13 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
+  /// [google.cloud.cpp.compute.node_templates.v1.GetNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L255}
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
       google::cloud::cpp::compute::node_templates::v1::
-          GetNodeTemplatesRequest const& request,
+          GetNodeTemplateRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -377,14 +377,14 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
+  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplates(std::string const& project, std::string const& region,
-                      google::cloud::cpp::compute::v1::NodeTemplate const&
-                          node_template_resource,
-                      Options opts = {});
+  InsertNodeTemplate(std::string const& project, std::string const& region,
+                     google::cloud::cpp::compute::v1::NodeTemplate const&
+                         node_template_resource,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -395,7 +395,7 @@ class NodeTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest].
+  ///     [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -418,13 +418,13 @@ class NodeTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
+  /// [google.cloud.cpp.compute.node_templates.v1.InsertNodeTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L267}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                          InsertNodeTemplatesRequest const& request,
-                      Options opts = {});
+  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         InsertNodeTemplateRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///

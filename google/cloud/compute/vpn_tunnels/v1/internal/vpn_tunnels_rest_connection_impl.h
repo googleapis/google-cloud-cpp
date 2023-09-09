@@ -55,17 +55,17 @@ class VpnTunnelsRestConnectionImpl
       google::cloud::cpp::compute::vpn_tunnels::v1::
           AggregatedListVpnTunnelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelsRequest const& request) override;
+          DeleteVpnTunnelRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelsRequest const& request) override;
+          InsertVpnTunnelRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
       google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest

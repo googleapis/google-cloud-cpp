@@ -166,11 +166,11 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
+  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       std::string const& project, std::string const& zone,
       std::string const& disk_type, Options opts = {});
 
@@ -182,7 +182,7 @@ class DiskTypesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest].
+  ///     [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -198,12 +198,12 @@ class DiskTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
+  /// [google.cloud.cpp.compute.disk_types.v1.GetDiskTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
   /// [google.cloud.cpp.compute.v1.DiskType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
-      google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
+      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
           request,
       Options opts = {});
 

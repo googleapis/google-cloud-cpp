@@ -192,16 +192,16 @@ class HealthChecksConnection {
           AggregatedListHealthChecksRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         DeleteHealthChecksRequest const& request);
+  DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        DeleteHealthCheckRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                      GetHealthChecksRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
+      google::cloud::cpp::compute::health_checks::v1::
+          GetHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         InsertHealthChecksRequest const& request);
+  InsertHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        InsertHealthCheckRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListHealthChecks(
@@ -209,12 +209,12 @@ class HealthChecksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                        PatchHealthChecksRequest const& request);
+  PatchHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                       PatchHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         UpdateHealthChecksRequest const& request);
+  UpdateHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        UpdateHealthCheckRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

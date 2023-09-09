@@ -112,20 +112,19 @@ ProjectsClient::EnableXpnResource(
   return connection_->EnableXpnResource(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Project> ProjectsClient::GetProjects(
+StatusOr<google::cloud::cpp::compute::v1::Project> ProjectsClient::GetProject(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::projects::v1::GetProjectsRequest request;
+  google::cloud::cpp::compute::projects::v1::GetProjectRequest request;
   request.set_project(project);
-  return connection_->GetProjects(request);
+  return connection_->GetProject(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Project> ProjectsClient::GetProjects(
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
-        request,
+StatusOr<google::cloud::cpp::compute::v1::Project> ProjectsClient::GetProject(
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetProjects(request);
+  return connection_->GetProject(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project> ProjectsClient::GetXpnHost(

@@ -56,8 +56,8 @@ Idempotency ProjectsConnectionIdempotencyPolicy::EnableXpnResource(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetProjects(
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&) {
   return Idempotency::kIdempotent;
 }
 

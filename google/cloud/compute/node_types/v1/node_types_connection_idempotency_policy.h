@@ -40,8 +40,8 @@ class NodeTypesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::node_types::v1::
           AggregatedListNodeTypesRequest const& request);
 
-  virtual google::cloud::Idempotency GetNodeTypes(
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+  virtual google::cloud::Idempotency GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
           request);
 
   virtual google::cloud::Idempotency ListNodeTypes(

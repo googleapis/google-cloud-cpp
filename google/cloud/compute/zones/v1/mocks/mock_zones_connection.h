@@ -47,8 +47,8 @@ class MockZonesConnection : public compute_zones_v1::ZonesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Zone>, GetZones,
-      (google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request),
+      StatusOr<google::cloud::cpp::compute::v1::Zone>, GetZone,
+      (google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request),
       (override));
 
   MOCK_METHOD(

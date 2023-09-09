@@ -49,38 +49,38 @@ PublicDelegatedPrefixesTracingConnection::AggregatedListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefixes(
+PublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixesRequest const& request) {
+        DeletePublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
-      ":DeletePublicDelegatedPrefixes");
+      ":DeletePublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeletePublicDelegatedPrefixes(request));
+                           child_->DeletePublicDelegatedPrefix(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-PublicDelegatedPrefixesTracingConnection::GetPublicDelegatedPrefixes(
+PublicDelegatedPrefixesTracingConnection::GetPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        GetPublicDelegatedPrefixesRequest const& request) {
+        GetPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
-      ":GetPublicDelegatedPrefixes");
+      ":GetPublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetPublicDelegatedPrefixes(request));
+  return internal::EndSpan(*span, child_->GetPublicDelegatedPrefix(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefixes(
+PublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixesRequest const& request) {
+        InsertPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
-      ":InsertPublicDelegatedPrefixes");
+      ":InsertPublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertPublicDelegatedPrefixes(request));
+                           child_->InsertPublicDelegatedPrefix(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -98,15 +98,15 @@ PublicDelegatedPrefixesTracingConnection::ListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefixes(
+PublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixesRequest const& request) {
+        PatchPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
-      ":PatchPublicDelegatedPrefixes");
+      ":PatchPublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchPublicDelegatedPrefixes(request));
+                           child_->PatchPublicDelegatedPrefix(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -48,14 +48,14 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteLicenses,
-      (google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+      DeleteLicense,
+      (google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::License>, GetLicenses,
-      (google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::License>, GetLicense,
+      (google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
            request),
       (override));
 
@@ -67,8 +67,8 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertLicenses,
-      (google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+      InsertLicense,
+      (google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
            request),
       (override));
 

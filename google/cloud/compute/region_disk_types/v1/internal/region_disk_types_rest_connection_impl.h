@@ -51,9 +51,9 @@ class RegionDiskTypesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskType(
       google::cloud::cpp::compute::region_disk_types::v1::
-          GetRegionDiskTypesRequest const& request) override;
+          GetRegionDiskTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
       google::cloud::cpp::compute::region_disk_types::v1::

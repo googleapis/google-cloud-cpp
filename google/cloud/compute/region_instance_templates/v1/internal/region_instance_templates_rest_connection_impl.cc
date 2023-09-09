@@ -46,56 +46,56 @@ RegionInstanceTemplatesRestConnectionImpl::
           std::move(options), RegionInstanceTemplatesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesRestConnectionImpl::DeleteRegionInstanceTemplates(
+RegionInstanceTemplatesRestConnectionImpl::DeleteRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteRegionInstanceTemplatesRequest const& request) {
+        DeleteRegionInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
+          GetRegionOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteRegionOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::region_instance_templates::v1::
-              DeleteRegionInstanceTemplatesRequest const& request) {
-        return stub->AsyncDeleteRegionInstanceTemplates(cq, std::move(context),
-                                                        request);
+              DeleteRegionInstanceTemplateRequest const& request) {
+        return stub->AsyncDeleteRegionInstanceTemplate(cq, std::move(context),
+                                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetRegionOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteRegionOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionInstanceTemplates(request),
+      idempotency_policy(*current)->DeleteRegionInstanceTemplate(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -103,72 +103,72 @@ RegionInstanceTemplatesRestConnectionImpl::DeleteRegionInstanceTemplates(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesRestConnectionImpl::GetRegionInstanceTemplates(
+RegionInstanceTemplatesRestConnectionImpl::GetRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplatesRequest const& request) {
+        GetRegionInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionInstanceTemplates(request),
+      idempotency_policy(*current)->GetRegionInstanceTemplate(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_instance_templates::v1::
-                 GetRegionInstanceTemplatesRequest const& request) {
-        return stub_->GetRegionInstanceTemplates(rest_context, request);
+                 GetRegionInstanceTemplateRequest const& request) {
+        return stub_->GetRegionInstanceTemplate(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesRestConnectionImpl::InsertRegionInstanceTemplates(
+RegionInstanceTemplatesRestConnectionImpl::InsertRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertRegionInstanceTemplatesRequest const& request) {
+        InsertRegionInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
+          GetRegionOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteRegionOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::region_instance_templates::v1::
-              InsertRegionInstanceTemplatesRequest const& request) {
-        return stub->AsyncInsertRegionInstanceTemplates(cq, std::move(context),
-                                                        request);
+              InsertRegionInstanceTemplateRequest const& request) {
+        return stub->AsyncInsertRegionInstanceTemplate(cq, std::move(context),
+                                                       request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetRegionOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteRegionOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionInstanceTemplates(request),
+      idempotency_policy(*current)->InsertRegionInstanceTemplate(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

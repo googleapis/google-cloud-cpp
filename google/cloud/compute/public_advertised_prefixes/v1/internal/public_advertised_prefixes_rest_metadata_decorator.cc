@@ -42,34 +42,34 @@ PublicAdvertisedPrefixesRestMetadata::PublicAdvertisedPrefixesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesRestMetadata::AsyncDeletePublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestMetadata::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixesRequest const& request) {
+        DeletePublicAdvertisedPrefixRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeletePublicAdvertisedPrefixes(
-      cq, std::move(rest_context), request);
+  return child_->AsyncDeletePublicAdvertisedPrefix(cq, std::move(rest_context),
+                                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-PublicAdvertisedPrefixesRestMetadata::GetPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestMetadata::GetPublicAdvertisedPrefix(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        GetPublicAdvertisedPrefixesRequest const& request) {
+        GetPublicAdvertisedPrefixRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetPublicAdvertisedPrefixes(rest_context, request);
+  return child_->GetPublicAdvertisedPrefix(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesRestMetadata::AsyncInsertPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestMetadata::AsyncInsertPublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixesRequest const& request) {
+        InsertPublicAdvertisedPrefixRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertPublicAdvertisedPrefixes(
-      cq, std::move(rest_context), request);
+  return child_->AsyncInsertPublicAdvertisedPrefix(cq, std::move(rest_context),
+                                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>
@@ -82,14 +82,14 @@ PublicAdvertisedPrefixesRestMetadata::ListPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesRestMetadata::AsyncPatchPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestMetadata::AsyncPatchPublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixesRequest const& request) {
+        PatchPublicAdvertisedPrefixRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchPublicAdvertisedPrefixes(cq, std::move(rest_context),
-                                                    request);
+  return child_->AsyncPatchPublicAdvertisedPrefix(cq, std::move(rest_context),
+                                                  request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -97,7 +97,7 @@ PublicAdvertisedPrefixesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -106,7 +106,7 @@ future<Status> PublicAdvertisedPrefixesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

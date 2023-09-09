@@ -56,23 +56,23 @@ class InstanceGroupsRestLogging : public InstanceGroupsRestStub {
           AggregatedListInstanceGroupsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstanceGroups(
+  AsyncDeleteInstanceGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_groups::v1::
-          DeleteInstanceGroupsRequest const& request) override;
+          DeleteInstanceGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::instance_groups::v1::
-          GetInstanceGroupsRequest const& request) override;
+          GetInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstanceGroups(
+  AsyncInsertInstanceGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_groups::v1::
-          InsertInstanceGroupsRequest const& request) override;
+          InsertInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
   ListInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
@@ -103,13 +103,13 @@ class InstanceGroupsRestLogging : public InstanceGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
  private:
   std::shared_ptr<InstanceGroupsRestStub> child_;

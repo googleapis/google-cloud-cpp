@@ -35,18 +35,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InterconnectsConnection::~InterconnectsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsConnection::DeleteInterconnects(
+InterconnectsConnection::DeleteInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectsRequest const&) {
+        DeleteInterconnectRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsConnection::GetInterconnects(
+InterconnectsConnection::GetInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectsRequest const&) {
+        GetInterconnectRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -58,9 +58,9 @@ InterconnectsConnection::GetDiagnostics(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsConnection::InsertInterconnects(
+InterconnectsConnection::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectsRequest const&) {
+        InsertInterconnectRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -75,9 +75,9 @@ InterconnectsConnection::ListInterconnects(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsConnection::PatchInterconnects(
+InterconnectsConnection::PatchInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectsRequest const&) {
+        PatchInterconnectRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

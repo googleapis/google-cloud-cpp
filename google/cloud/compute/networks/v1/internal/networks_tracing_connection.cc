@@ -43,23 +43,23 @@ NetworksTracingConnection::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksTracingConnection::DeleteNetworks(
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+NetworksTracingConnection::DeleteNetwork(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_networks_v1::NetworksConnection::DeleteNetworks");
+      "compute_networks_v1::NetworksConnection::DeleteNetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNetworks(request));
+  return internal::EndSpan(std::move(span), child_->DeleteNetwork(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
-NetworksTracingConnection::GetNetworks(
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+NetworksTracingConnection::GetNetwork(
+    google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
         request) {
-  auto span = internal::MakeSpan(
-      "compute_networks_v1::NetworksConnection::GetNetworks");
+  auto span =
+      internal::MakeSpan("compute_networks_v1::NetworksConnection::GetNetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetNetworks(request));
+  return internal::EndSpan(*span, child_->GetNetwork(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -73,13 +73,13 @@ NetworksTracingConnection::GetEffectiveFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksTracingConnection::InsertNetworks(
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+NetworksTracingConnection::InsertNetwork(
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_networks_v1::NetworksConnection::InsertNetworks");
+      "compute_networks_v1::NetworksConnection::InsertNetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertNetworks(request));
+  return internal::EndSpan(std::move(span), child_->InsertNetwork(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Network>
@@ -107,13 +107,13 @@ NetworksTracingConnection::ListPeeringRoutes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksTracingConnection::PatchNetworks(
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+NetworksTracingConnection::PatchNetwork(
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_networks_v1::NetworksConnection::PatchNetworks");
+      "compute_networks_v1::NetworksConnection::PatchNetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchNetworks(request));
+  return internal::EndSpan(std::move(span), child_->PatchNetwork(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

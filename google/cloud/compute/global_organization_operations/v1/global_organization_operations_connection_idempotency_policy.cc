@@ -37,16 +37,16 @@ GlobalOrganizationOperationsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency GlobalOrganizationOperationsConnectionIdempotencyPolicy::
-    DeleteGlobalOrganizationOperations(
+    DeleteGlobalOrganizationOperation(
         google::cloud::cpp::compute::global_organization_operations::v1::
-            DeleteGlobalOrganizationOperationsRequest const&) {
+            DeleteGlobalOrganizationOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency GlobalOrganizationOperationsConnectionIdempotencyPolicy::
-    GetGlobalOrganizationOperations(
+    GetGlobalOrganizationOperation(
         google::cloud::cpp::compute::global_organization_operations::v1::
-            GetGlobalOrganizationOperationsRequest const&) {
+            GetGlobalOrganizationOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

@@ -52,9 +52,9 @@ NetworkEndpointGroupsConnection::AttachNetworkEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEndpointGroupsConnection::DeleteNetworkEndpointGroups(
+NetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        DeleteNetworkEndpointGroupsRequest const&) {
+        DeleteNetworkEndpointGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,16 +70,16 @@ NetworkEndpointGroupsConnection::DetachNetworkEndpoints(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-NetworkEndpointGroupsConnection::GetNetworkEndpointGroups(
+NetworkEndpointGroupsConnection::GetNetworkEndpointGroup(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        GetNetworkEndpointGroupsRequest const&) {
+        GetNetworkEndpointGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEndpointGroupsConnection::InsertNetworkEndpointGroups(
+NetworkEndpointGroupsConnection::InsertNetworkEndpointGroup(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        InsertNetworkEndpointGroupsRequest const&) {
+        InsertNetworkEndpointGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

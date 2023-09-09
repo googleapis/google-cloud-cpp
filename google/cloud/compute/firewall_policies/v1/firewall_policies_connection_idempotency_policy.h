@@ -49,13 +49,13 @@ class FirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::firewall_policies::v1::
           CloneRulesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteFirewallPolicies(
+  virtual google::cloud::Idempotency DeleteFirewallPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::
-          DeleteFirewallPoliciesRequest const& request);
+          DeleteFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetFirewallPolicies(
+  virtual google::cloud::Idempotency GetFirewallPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::
-          GetFirewallPoliciesRequest const& request);
+          GetFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetAssociation(
       google::cloud::cpp::compute::firewall_policies::v1::
@@ -69,9 +69,9 @@ class FirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertFirewallPolicies(
+  virtual google::cloud::Idempotency InsertFirewallPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::
-          InsertFirewallPoliciesRequest const& request);
+          InsertFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListFirewallPolicies(
       google::cloud::cpp::compute::firewall_policies::v1::
@@ -85,9 +85,9 @@ class FirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
           request);
 
-  virtual google::cloud::Idempotency PatchFirewallPolicies(
+  virtual google::cloud::Idempotency PatchFirewallPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::
-          PatchFirewallPoliciesRequest const& request);
+          PatchFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency PatchRule(
       google::cloud::cpp::compute::firewall_policies::v1::

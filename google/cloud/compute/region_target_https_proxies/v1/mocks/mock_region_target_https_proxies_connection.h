@@ -50,21 +50,21 @@ class MockRegionTargetHttpsProxiesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionTargetHttpsProxies,
+              DeleteRegionTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   DeleteRegionTargetHttpsProxiesRequest const& request),
+                   DeleteRegionTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>,
-              GetRegionTargetHttpsProxies,
+              GetRegionTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   GetRegionTargetHttpsProxiesRequest const& request),
+                   GetRegionTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionTargetHttpsProxies,
+              InsertRegionTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   InsertRegionTargetHttpsProxiesRequest const& request),
+                   InsertRegionTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>,
@@ -74,9 +74,9 @@ class MockRegionTargetHttpsProxiesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionTargetHttpsProxies,
+              PatchRegionTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   PatchRegionTargetHttpsProxiesRequest const& request),
+                   PatchRegionTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

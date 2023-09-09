@@ -50,48 +50,48 @@ InterconnectAttachmentsRestLogging::AggregatedListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsRestLogging::AsyncDeleteInterconnectAttachments(
+InterconnectAttachmentsRestLogging::AsyncDeleteInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        DeleteInterconnectAttachmentsRequest const& request) {
+        DeleteInterconnectAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::interconnect_attachments::v1::
-                 DeleteInterconnectAttachmentsRequest const& request) {
-        return child_->AsyncDeleteInterconnectAttachments(
+                 DeleteInterconnectAttachmentRequest const& request) {
+        return child_->AsyncDeleteInterconnectAttachment(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-InterconnectAttachmentsRestLogging::GetInterconnectAttachments(
+InterconnectAttachmentsRestLogging::GetInterconnectAttachment(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const& request) {
+        GetInterconnectAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnect_attachments::v1::
-                 GetInterconnectAttachmentsRequest const& request) {
-        return child_->GetInterconnectAttachments(rest_context, request);
+                 GetInterconnectAttachmentRequest const& request) {
+        return child_->GetInterconnectAttachment(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsRestLogging::AsyncInsertInterconnectAttachments(
+InterconnectAttachmentsRestLogging::AsyncInsertInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        InsertInterconnectAttachmentsRequest const& request) {
+        InsertInterconnectAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::interconnect_attachments::v1::
-                 InsertInterconnectAttachmentsRequest const& request) {
-        return child_->AsyncInsertInterconnectAttachments(
+                 InsertInterconnectAttachmentRequest const& request) {
+        return child_->AsyncInsertInterconnectAttachment(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -112,17 +112,17 @@ InterconnectAttachmentsRestLogging::ListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsRestLogging::AsyncPatchInterconnectAttachments(
+InterconnectAttachmentsRestLogging::AsyncPatchInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        PatchInterconnectAttachmentsRequest const& request) {
+        PatchInterconnectAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::interconnect_attachments::v1::
-                 PatchInterconnectAttachmentsRequest const& request) {
-        return child_->AsyncPatchInterconnectAttachments(
+                 PatchInterconnectAttachmentRequest const& request) {
+        return child_->AsyncPatchInterconnectAttachment(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -149,12 +149,12 @@ InterconnectAttachmentsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetRegionOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -164,12 +164,12 @@ future<Status> InterconnectAttachmentsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteRegionOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -71,30 +71,29 @@ RegionNetworkFirewallPoliciesTracingConnection::CloneRules(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesTracingConnection::
-    DeleteRegionNetworkFirewallPolicies(
+    DeleteRegionNetworkFirewallPolicy(
         google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            DeleteRegionNetworkFirewallPoliciesRequest const& request) {
+            DeleteRegionNetworkFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::"
-      "DeleteRegionNetworkFirewallPolicies");
+      "DeleteRegionNetworkFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteRegionNetworkFirewallPolicies(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRegionNetworkFirewallPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-RegionNetworkFirewallPoliciesTracingConnection::
-    GetRegionNetworkFirewallPolicies(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            GetRegionNetworkFirewallPoliciesRequest const& request) {
+RegionNetworkFirewallPoliciesTracingConnection::GetRegionNetworkFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        GetRegionNetworkFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::"
-      "GetRegionNetworkFirewallPolicies");
+      "GetRegionNetworkFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->GetRegionNetworkFirewallPolicies(request));
+                           child_->GetRegionNetworkFirewallPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -144,16 +143,16 @@ RegionNetworkFirewallPoliciesTracingConnection::GetRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesTracingConnection::
-    InsertRegionNetworkFirewallPolicies(
+    InsertRegionNetworkFirewallPolicy(
         google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            InsertRegionNetworkFirewallPoliciesRequest const& request) {
+            InsertRegionNetworkFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::"
-      "InsertRegionNetworkFirewallPolicies");
+      "InsertRegionNetworkFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->InsertRegionNetworkFirewallPolicies(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertRegionNetworkFirewallPolicy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -174,16 +173,16 @@ RegionNetworkFirewallPoliciesTracingConnection::
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesTracingConnection::
-    PatchRegionNetworkFirewallPolicies(
+    PatchRegionNetworkFirewallPolicy(
         google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            PatchRegionNetworkFirewallPoliciesRequest const& request) {
+            PatchRegionNetworkFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::"
-      "PatchRegionNetworkFirewallPolicies");
+      "PatchRegionNetworkFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchRegionNetworkFirewallPolicies(request));
+                           child_->PatchRegionNetworkFirewallPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

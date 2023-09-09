@@ -38,10 +38,10 @@ class ImagesRestStub {
   virtual ~ImagesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteImages(
+  AsyncDeleteImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -51,9 +51,9 @@ class ImagesRestStub {
       google::cloud::cpp::compute::images::v1::DeprecateRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::GetImagesRequest const&
+      google::cloud::cpp::compute::images::v1::GetImageRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
@@ -67,10 +67,10 @@ class ImagesRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertImages(
+  AsyncInsertImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ImageList> ListImages(
@@ -79,10 +79,10 @@ class ImagesRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchImages(
+  AsyncPatchImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -108,13 +108,13 @@ class ImagesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetGlobalOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteGlobalOperationRequest const& request) = 0;
 };
 
 class DefaultImagesRestStub : public ImagesRestStub {
@@ -126,11 +126,10 @@ class DefaultImagesRestStub : public ImagesRestStub {
                         std::shared_ptr<rest_internal::RestClient> operations,
                         Options options);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeprecate(
@@ -139,9 +138,9 @@ class DefaultImagesRestStub : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
       override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request)
+      google::cloud::cpp::compute::images::v1::GetImageRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
@@ -154,11 +153,10 @@ class DefaultImagesRestStub : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ImageList> ListImages(
@@ -166,11 +164,11 @@ class DefaultImagesRestStub : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::ListImagesRequest const& request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-          request) override;
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -194,13 +192,13 @@ class DefaultImagesRestStub : public ImagesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

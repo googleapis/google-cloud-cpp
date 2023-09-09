@@ -43,33 +43,33 @@ VpnTunnelsTracingConnection::AggregatedListVpnTunnels(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsTracingConnection::DeleteVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const&
+VpnTunnelsTracingConnection::DeleteVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_vpn_tunnels_v1::VpnTunnelsConnection::DeleteVpnTunnels");
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::DeleteVpnTunnel");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteVpnTunnels(request));
+  return internal::EndSpan(std::move(span), child_->DeleteVpnTunnel(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-VpnTunnelsTracingConnection::GetVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+VpnTunnelsTracingConnection::GetVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_vpn_tunnels_v1::VpnTunnelsConnection::GetVpnTunnels");
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::GetVpnTunnel");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetVpnTunnels(request));
+  return internal::EndSpan(*span, child_->GetVpnTunnel(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsTracingConnection::InsertVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const&
+VpnTunnelsTracingConnection::InsertVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_vpn_tunnels_v1::VpnTunnelsConnection::InsertVpnTunnels");
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::InsertVpnTunnel");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertVpnTunnels(request));
+  return internal::EndSpan(std::move(span), child_->InsertVpnTunnel(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>

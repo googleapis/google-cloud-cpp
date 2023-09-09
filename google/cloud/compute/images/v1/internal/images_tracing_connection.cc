@@ -33,13 +33,13 @@ ImagesTracingConnection::ImagesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesTracingConnection::DeleteImages(
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+ImagesTracingConnection::DeleteImage(
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   auto span =
-      internal::MakeSpan("compute_images_v1::ImagesConnection::DeleteImages");
+      internal::MakeSpan("compute_images_v1::ImagesConnection::DeleteImage");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteImages(request));
+  return internal::EndSpan(std::move(span), child_->DeleteImage(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -52,12 +52,12 @@ ImagesTracingConnection::Deprecate(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
-ImagesTracingConnection::GetImages(
-    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
+ImagesTracingConnection::GetImage(
+    google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
   auto span =
-      internal::MakeSpan("compute_images_v1::ImagesConnection::GetImages");
+      internal::MakeSpan("compute_images_v1::ImagesConnection::GetImage");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetImages(request));
+  return internal::EndSpan(*span, child_->GetImage(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
@@ -81,13 +81,13 @@ ImagesTracingConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesTracingConnection::InsertImages(
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+ImagesTracingConnection::InsertImage(
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   auto span =
-      internal::MakeSpan("compute_images_v1::ImagesConnection::InsertImages");
+      internal::MakeSpan("compute_images_v1::ImagesConnection::InsertImage");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertImages(request));
+  return internal::EndSpan(std::move(span), child_->InsertImage(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Image>
@@ -102,13 +102,12 @@ ImagesTracingConnection::ListImages(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesTracingConnection::PatchImages(
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-        request) {
+ImagesTracingConnection::PatchImage(
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   auto span =
-      internal::MakeSpan("compute_images_v1::ImagesConnection::PatchImages");
+      internal::MakeSpan("compute_images_v1::ImagesConnection::PatchImage");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchImages(request));
+  return internal::EndSpan(std::move(span), child_->PatchImage(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

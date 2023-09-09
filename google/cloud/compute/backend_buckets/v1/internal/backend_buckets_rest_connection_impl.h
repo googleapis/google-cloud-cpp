@@ -57,28 +57,28 @@ class BackendBucketsRestConnectionImpl
           AddSignedUrlKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
-                           DeleteBackendBucketsRequest const& request) override;
+  DeleteBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
+                          DeleteBackendBucketRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::
                          DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
-          GetBackendBucketsRequest const& request) override;
+          GetBackendBucketRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
-                           InsertBackendBucketsRequest const& request) override;
+  InsertBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
+                          InsertBackendBucketRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
   ListBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
                          ListBackendBucketsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
-                          PatchBackendBucketsRequest const& request) override;
+  PatchBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
+                         PatchBackendBucketRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
@@ -86,8 +86,8 @@ class BackendBucketsRestConnectionImpl
           SetEdgeSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::
-                           UpdateBackendBucketsRequest const& request) override;
+  UpdateBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
+                          UpdateBackendBucketRequest const& request) override;
 
  private:
   static std::unique_ptr<compute_backend_buckets_v1::BackendBucketsRetryPolicy>

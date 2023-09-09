@@ -38,25 +38,25 @@ class RegionHealthCheckServicesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionHealthCheckServicesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionHealthCheckServices(
+  virtual google::cloud::Idempotency DeleteRegionHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          DeleteRegionHealthCheckServicesRequest const& request);
+          DeleteRegionHealthCheckServiceRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionHealthCheckServices(
+  virtual google::cloud::Idempotency GetRegionHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          GetRegionHealthCheckServicesRequest const& request);
+          GetRegionHealthCheckServiceRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionHealthCheckServices(
+  virtual google::cloud::Idempotency InsertRegionHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          InsertRegionHealthCheckServicesRequest const& request);
+          InsertRegionHealthCheckServiceRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionHealthCheckServices(
       google::cloud::cpp::compute::region_health_check_services::v1::
           ListRegionHealthCheckServicesRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionHealthCheckServices(
+  virtual google::cloud::Idempotency PatchRegionHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          PatchRegionHealthCheckServicesRequest const& request);
+          PatchRegionHealthCheckServiceRequest const& request);
 };
 
 std::unique_ptr<RegionHealthCheckServicesConnectionIdempotencyPolicy>

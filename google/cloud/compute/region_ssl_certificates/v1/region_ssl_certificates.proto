@@ -39,7 +39,7 @@ service RegionSslCertificates {
 
   // Deletes the specified SslCertificate resource in the region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/delete
-  rpc DeleteRegionSslCertificates(DeleteRegionSslCertificatesRequest)
+  rpc DeleteRegionSslCertificate(DeleteRegionSslCertificateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/sslCertificates/{ssl_certificate}"
@@ -51,7 +51,7 @@ service RegionSslCertificates {
   // Returns the specified SslCertificate resource in the specified region. Get
   // a list of available SSL certificates by making a list() request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/get
-  rpc GetRegionSslCertificates(GetRegionSslCertificatesRequest)
+  rpc GetRegionSslCertificate(GetRegionSslCertificateRequest)
       returns (google.cloud.cpp.compute.v1.SslCertificate) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/sslCertificates/{ssl_certificate}"
@@ -62,7 +62,7 @@ service RegionSslCertificates {
   // Creates a SslCertificate resource in the specified project and region using
   // the data included in the request
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionSslCertificates/insert
-  rpc InsertRegionSslCertificates(InsertRegionSslCertificatesRequest)
+  rpc InsertRegionSslCertificate(InsertRegionSslCertificateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/sslCertificates"
@@ -85,8 +85,8 @@ service RegionSslCertificates {
   }
 }
 
-// Request message for DeleteRegionSslCertificates.
-message DeleteRegionSslCertificatesRequest {
+// Request message for DeleteRegionSslCertificate.
+message DeleteRegionSslCertificateRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -115,8 +115,8 @@ message DeleteRegionSslCertificatesRequest {
   string ssl_certificate = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionSslCertificates.
-message GetRegionSslCertificatesRequest {
+// Request message for GetRegionSslCertificate.
+message GetRegionSslCertificateRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -127,8 +127,8 @@ message GetRegionSslCertificatesRequest {
   string ssl_certificate = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionSslCertificates.
-message InsertRegionSslCertificatesRequest {
+// Request message for InsertRegionSslCertificate.
+message InsertRegionSslCertificateRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

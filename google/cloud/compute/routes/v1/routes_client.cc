@@ -33,57 +33,57 @@ RoutesClient::RoutesClient(ExperimentalTag,
 RoutesClient::~RoutesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesClient::DeleteRoutes(std::string const& project, std::string const& route,
-                           Options opts) {
+RoutesClient::DeleteRoute(std::string const& project, std::string const& route,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest request;
+  google::cloud::cpp::compute::routes::v1::DeleteRouteRequest request;
   request.set_project(project);
   request.set_route(route);
-  return connection_->DeleteRoutes(request);
+  return connection_->DeleteRoute(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesClient::DeleteRoutes(
-    google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request,
+RoutesClient::DeleteRoute(
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRoutes(request);
+  return connection_->DeleteRoute(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Route> RoutesClient::GetRoutes(
+StatusOr<google::cloud::cpp::compute::v1::Route> RoutesClient::GetRoute(
     std::string const& project, std::string const& route, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::routes::v1::GetRoutesRequest request;
+  google::cloud::cpp::compute::routes::v1::GetRouteRequest request;
   request.set_project(project);
   request.set_route(route);
-  return connection_->GetRoutes(request);
+  return connection_->GetRoute(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Route> RoutesClient::GetRoutes(
-    google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request,
+StatusOr<google::cloud::cpp::compute::v1::Route> RoutesClient::GetRoute(
+    google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRoutes(request);
+  return connection_->GetRoute(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesClient::InsertRoutes(
+RoutesClient::InsertRoute(
     std::string const& project,
     google::cloud::cpp::compute::v1::Route const& route_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::routes::v1::InsertRoutesRequest request;
+  google::cloud::cpp::compute::routes::v1::InsertRouteRequest request;
   request.set_project(project);
   *request.mutable_route_resource() = route_resource;
-  return connection_->InsertRoutes(request);
+  return connection_->InsertRoute(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesClient::InsertRoutes(
-    google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request,
+RoutesClient::InsertRoute(
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRoutes(request);
+  return connection_->InsertRoute(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Route> RoutesClient::ListRoutes(

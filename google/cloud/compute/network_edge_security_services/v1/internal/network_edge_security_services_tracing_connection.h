@@ -52,24 +52,24 @@ class NetworkEdgeSecurityServicesTracingConnection
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkEdgeSecurityServices(
+  DeleteNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          DeleteNetworkEdgeSecurityServicesRequest const& request) override;
+          DeleteNetworkEdgeSecurityServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-  GetNetworkEdgeSecurityServices(
+  GetNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          GetNetworkEdgeSecurityServicesRequest const& request) override;
+          GetNetworkEdgeSecurityServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkEdgeSecurityServices(
+  InsertNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          InsertNetworkEdgeSecurityServicesRequest const& request) override;
+          InsertNetworkEdgeSecurityServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkEdgeSecurityServices(
+  PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          PatchNetworkEdgeSecurityServicesRequest const& request) override;
+          PatchNetworkEdgeSecurityServiceRequest const& request) override;
 
  private:
   std::shared_ptr<compute_network_edge_security_services_v1::

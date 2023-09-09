@@ -51,16 +51,16 @@ class InstanceGroupsTracingConnection
           AggregatedListInstanceGroupsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
-                           DeleteInstanceGroupsRequest const& request) override;
+  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                          DeleteInstanceGroupRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::cpp::compute::instance_groups::v1::
-          GetInstanceGroupsRequest const& request) override;
+          GetInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
-                           InsertInstanceGroupsRequest const& request) override;
+  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                          InsertInstanceGroupRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::

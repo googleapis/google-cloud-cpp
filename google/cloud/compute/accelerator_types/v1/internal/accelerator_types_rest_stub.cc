@@ -61,10 +61,10 @@ DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-DefaultAcceleratorTypesRestStub::GetAcceleratorTypes(
+DefaultAcceleratorTypesRestStub::GetAcceleratorType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypesRequest const& request) {
+        GetAcceleratorTypeRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorType>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

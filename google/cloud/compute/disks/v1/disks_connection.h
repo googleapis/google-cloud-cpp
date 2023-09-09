@@ -201,19 +201,19 @@ class DisksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
-                  request);
+  DeleteDisk(
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
+      google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
-                  request);
+  InsertDisk(
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
       google::cloud::cpp::compute::disks::v1::ListDisksRequest request);
@@ -253,8 +253,8 @@ class DisksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
-                  request);
+  UpdateDisk(
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -65,11 +65,11 @@ DefaultVpnGatewaysRestStub::AggregatedListVpnGateways(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateways(
+DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateway(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::
-        DeleteVpnGatewaysRequest const& request) {
+        DeleteVpnGatewayRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -91,9 +91,9 @@ DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateways(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
-DefaultVpnGatewaysRestStub::GetVpnGateways(
+DefaultVpnGatewaysRestStub::GetVpnGateway(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewaysRequest const&
+    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGateway>(
       *service_, rest_context, request,
@@ -119,11 +119,11 @@ DefaultVpnGatewaysRestStub::GetStatus(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultVpnGatewaysRestStub::AsyncInsertVpnGateways(
+DefaultVpnGatewaysRestStub::AsyncInsertVpnGateway(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::
-        InsertVpnGatewaysRequest const& request) {
+        InsertVpnGatewayRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -207,7 +207,7 @@ DefaultVpnGatewaysRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -231,7 +231,7 @@ future<Status> DefaultVpnGatewaysRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

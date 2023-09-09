@@ -41,34 +41,32 @@ GlobalAddressesRestMetadata::GlobalAddressesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesRestMetadata::AsyncDeleteGlobalAddresses(
+GlobalAddressesRestMetadata::AsyncDeleteGlobalAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressesRequest const& request) {
+        DeleteGlobalAddressRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteGlobalAddresses(cq, std::move(rest_context),
-                                            request);
+  return child_->AsyncDeleteGlobalAddress(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesRestMetadata::GetGlobalAddresses(
+GlobalAddressesRestMetadata::GetGlobalAddress(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressesRequest const& request) {
+        GetGlobalAddressRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetGlobalAddresses(rest_context, request);
+  return child_->GetGlobalAddress(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesRestMetadata::AsyncInsertGlobalAddresses(
+GlobalAddressesRestMetadata::AsyncInsertGlobalAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressesRequest const& request) {
+        InsertGlobalAddressRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertGlobalAddresses(cq, std::move(rest_context),
-                                            request);
+  return child_->AsyncInsertGlobalAddress(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
@@ -105,7 +103,7 @@ GlobalAddressesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -114,7 +112,7 @@ future<Status> GlobalAddressesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

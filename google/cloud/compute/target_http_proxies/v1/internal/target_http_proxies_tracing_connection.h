@@ -48,27 +48,26 @@ class TargetHttpProxiesTracingConnection
           AggregatedListTargetHttpProxiesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxies(
+  DeleteTargetHttpProxy(
       google::cloud::cpp::compute::target_http_proxies::v1::
-          DeleteTargetHttpProxiesRequest const& request) override;
+          DeleteTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::
-                           GetTargetHttpProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          GetTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxies(
+  InsertTargetHttpProxy(
       google::cloud::cpp::compute::target_http_proxies::v1::
-          InsertTargetHttpProxiesRequest const& request) override;
+          InsertTargetHttpProxyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
   ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::
                             ListTargetHttpProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxies(
-      google::cloud::cpp::compute::target_http_proxies::v1::
-          PatchTargetHttpProxiesRequest const& request) override;
+  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
+                           PatchTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
       google::cloud::cpp::compute::target_http_proxies::v1::

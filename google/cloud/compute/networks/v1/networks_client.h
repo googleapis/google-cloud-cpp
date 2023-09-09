@@ -188,10 +188,10 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
       std::string const& project, std::string const& network,
       Options opts = {});
 
@@ -203,7 +203,7 @@ class NetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest].
+  ///     [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -226,11 +226,11 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
+  /// [google.cloud.cpp.compute.networks.v1.DeleteNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L201}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetworks(
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request,
       Options opts = {});
 
@@ -254,11 +254,11 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L234}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L234}
   /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L159}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
       std::string const& project, std::string const& network,
       Options opts = {});
 
@@ -270,7 +270,7 @@ class NetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.networks.v1.GetNetworksRequest].
+  ///     [google.cloud.cpp.compute.networks.v1.GetNetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -286,12 +286,12 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L234}
+  /// [google.cloud.cpp.compute.networks.v1.GetNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L234}
   /// [google.cloud.cpp.compute.v1.Network]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L159}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request,
       Options opts = {});
 
@@ -386,10 +386,10 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L243}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L243}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
       std::string const& project,
       google::cloud::cpp::compute::v1::Network const& network_resource,
       Options opts = {});
@@ -403,7 +403,7 @@ class NetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest].
+  ///     [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -426,11 +426,11 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L243}
+  /// [google.cloud.cpp.compute.networks.v1.InsertNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L243}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetworks(
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request,
       Options opts = {});
 
@@ -619,10 +619,10 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L413}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L413}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
       std::string const& project, std::string const& network,
       google::cloud::cpp::compute::v1::Network const& network_resource,
       Options opts = {});
@@ -636,7 +636,7 @@ class NetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest].
+  ///     [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -659,11 +659,11 @@ class NetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L413}
+  /// [google.cloud.cpp.compute.networks.v1.PatchNetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L413}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetworks(
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request,
       Options opts = {});
 

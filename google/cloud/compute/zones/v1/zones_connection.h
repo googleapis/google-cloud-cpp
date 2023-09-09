@@ -179,8 +179,8 @@ class ZonesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
       google::cloud::cpp::compute::zones::v1::ListZonesRequest request);

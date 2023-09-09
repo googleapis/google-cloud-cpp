@@ -43,12 +43,12 @@ InterconnectRemoteLocationsRestMetadata::
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsRestMetadata::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsRestMetadata::GetInterconnectRemoteLocation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
-        GetInterconnectRemoteLocationsRequest const& request) {
+        GetInterconnectRemoteLocationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetInterconnectRemoteLocations(rest_context, request);
+  return child_->GetInterconnectRemoteLocation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>

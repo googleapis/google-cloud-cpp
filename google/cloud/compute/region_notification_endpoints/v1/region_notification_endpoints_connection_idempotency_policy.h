@@ -39,17 +39,17 @@ class RegionNotificationEndpointsConnectionIdempotencyPolicy {
       RegionNotificationEndpointsConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionNotificationEndpoints(
+  virtual google::cloud::Idempotency DeleteRegionNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteRegionNotificationEndpointsRequest const& request);
+          DeleteRegionNotificationEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionNotificationEndpoints(
+  virtual google::cloud::Idempotency GetRegionNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          GetRegionNotificationEndpointsRequest const& request);
+          GetRegionNotificationEndpointRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionNotificationEndpoints(
+  virtual google::cloud::Idempotency InsertRegionNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertRegionNotificationEndpointsRequest const& request);
+          InsertRegionNotificationEndpointRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionNotificationEndpoints(
       google::cloud::cpp::compute::region_notification_endpoints::v1::

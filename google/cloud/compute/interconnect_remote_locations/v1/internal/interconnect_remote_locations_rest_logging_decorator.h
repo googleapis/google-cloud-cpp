@@ -44,10 +44,10 @@ class InterconnectRemoteLocationsRestLogging
       TracingOptions tracing_options, std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-  GetInterconnectRemoteLocations(
+  GetInterconnectRemoteLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
-          GetInterconnectRemoteLocationsRequest const& request) override;
+          GetInterconnectRemoteLocationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>
   ListInterconnectRemoteLocations(

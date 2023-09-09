@@ -106,10 +106,10 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
+  /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
@@ -120,7 +120,7 @@ class ZonesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.zones.v1.GetZonesRequest].
+  ///     [google.cloud.cpp.compute.zones.v1.GetZoneRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -137,11 +137,11 @@ class ZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_134.proto#L29}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
+  /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request,
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request,
       Options opts = {});
 
   // clang-format off

@@ -54,19 +54,19 @@ class ExternalVpnGatewaysRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteExternalVpnGateways(
+  DeleteExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          DeleteExternalVpnGatewaysRequest const& request) override;
+          DeleteExternalVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-  GetExternalVpnGateways(
+  GetExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          GetExternalVpnGatewaysRequest const& request) override;
+          GetExternalVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertExternalVpnGateways(
+  InsertExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          InsertExternalVpnGatewaysRequest const& request) override;
+          InsertExternalVpnGatewayRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
   ListExternalVpnGateways(

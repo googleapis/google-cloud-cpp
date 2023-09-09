@@ -37,25 +37,25 @@ class TargetGrpcProxiesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<TargetGrpcProxiesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteTargetGrpcProxies(
+  virtual google::cloud::Idempotency DeleteTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxiesRequest const& request);
+          DeleteTargetGrpcProxyRequest const& request);
 
-  virtual google::cloud::Idempotency GetTargetGrpcProxies(
+  virtual google::cloud::Idempotency GetTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
-          GetTargetGrpcProxiesRequest const& request);
+          GetTargetGrpcProxyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertTargetGrpcProxies(
+  virtual google::cloud::Idempotency InsertTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxiesRequest const& request);
+          InsertTargetGrpcProxyRequest const& request);
 
   virtual google::cloud::Idempotency ListTargetGrpcProxies(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           ListTargetGrpcProxiesRequest request);
 
-  virtual google::cloud::Idempotency PatchTargetGrpcProxies(
+  virtual google::cloud::Idempotency PatchTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
-          PatchTargetGrpcProxiesRequest const& request);
+          PatchTargetGrpcProxyRequest const& request);
 };
 
 std::unique_ptr<TargetGrpcProxiesConnectionIdempotencyPolicy>

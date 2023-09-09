@@ -48,7 +48,7 @@ service Snapshots {
   // subsequent snapshots, the data will be moved to the next corresponding
   // snapshot. For more information, see Deleting snapshots.
   // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/delete
-  rpc DeleteSnapshots(DeleteSnapshotsRequest)
+  rpc DeleteSnapshot(DeleteSnapshotRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/snapshots/{snapshot}"
@@ -59,7 +59,7 @@ service Snapshots {
 
   // Returns the specified Snapshot resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/get
-  rpc GetSnapshots(GetSnapshotsRequest)
+  rpc GetSnapshot(GetSnapshotRequest)
       returns (google.cloud.cpp.compute.v1.Snapshot) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/snapshots/{snapshot}"
@@ -83,7 +83,7 @@ service Snapshots {
   // of disks.createSnapshot, as this method supports more features, such as
   // creating snapshots in a project different from the source disk project.
   // https://cloud.google.com/compute/docs/reference/rest/v1/snapshots/insert
-  rpc InsertSnapshots(InsertSnapshotsRequest)
+  rpc InsertSnapshot(InsertSnapshotRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/snapshots"
@@ -144,8 +144,8 @@ service Snapshots {
   }
 }
 
-// Request message for DeleteSnapshots.
-message DeleteSnapshotsRequest {
+// Request message for DeleteSnapshot.
+message DeleteSnapshotRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -180,8 +180,8 @@ message GetIamPolicyRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetSnapshots.
-message GetSnapshotsRequest {
+// Request message for GetSnapshot.
+message GetSnapshotRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -189,8 +189,8 @@ message GetSnapshotsRequest {
   string snapshot = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertSnapshots.
-message InsertSnapshotsRequest {
+// Request message for InsertSnapshot.
+message InsertSnapshotRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

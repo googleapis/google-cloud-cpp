@@ -45,17 +45,17 @@ class BackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_services::v1::
           AggregatedListBackendServicesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBackendServices(
+  virtual google::cloud::Idempotency DeleteBackendService(
       google::cloud::cpp::compute::backend_services::v1::
-          DeleteBackendServicesRequest const& request);
+          DeleteBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency DeleteSignedUrlKey(
       google::cloud::cpp::compute::backend_services::v1::
           DeleteSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency GetBackendServices(
+  virtual google::cloud::Idempotency GetBackendService(
       google::cloud::cpp::compute::backend_services::v1::
-          GetBackendServicesRequest const& request);
+          GetBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency GetHealth(
       google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
@@ -65,17 +65,17 @@ class BackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_services::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertBackendServices(
+  virtual google::cloud::Idempotency InsertBackendService(
       google::cloud::cpp::compute::backend_services::v1::
-          InsertBackendServicesRequest const& request);
+          InsertBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency ListBackendServices(
       google::cloud::cpp::compute::backend_services::v1::
           ListBackendServicesRequest request);
 
-  virtual google::cloud::Idempotency PatchBackendServices(
+  virtual google::cloud::Idempotency PatchBackendService(
       google::cloud::cpp::compute::backend_services::v1::
-          PatchBackendServicesRequest const& request);
+          PatchBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency SetEdgeSecurityPolicy(
       google::cloud::cpp::compute::backend_services::v1::
@@ -89,9 +89,9 @@ class BackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_services::v1::
           SetSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBackendServices(
+  virtual google::cloud::Idempotency UpdateBackendService(
       google::cloud::cpp::compute::backend_services::v1::
-          UpdateBackendServicesRequest const& request);
+          UpdateBackendServiceRequest const& request);
 };
 
 std::unique_ptr<BackendServicesConnectionIdempotencyPolicy>

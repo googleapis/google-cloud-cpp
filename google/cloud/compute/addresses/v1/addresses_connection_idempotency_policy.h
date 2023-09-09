@@ -40,16 +40,16 @@ class AddressesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::addresses::v1::
           AggregatedListAddressesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteAddresses(
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+  virtual google::cloud::Idempotency DeleteAddress(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetAddresses(
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+  virtual google::cloud::Idempotency GetAddress(
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertAddresses(
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+  virtual google::cloud::Idempotency InsertAddress(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request);
 
   virtual google::cloud::Idempotency ListAddresses(

@@ -40,8 +40,8 @@ Idempotency DiskTypesConnectionIdempotencyPolicy::AggregatedListDiskTypes(
   return Idempotency::kIdempotent;
 }
 
-Idempotency DiskTypesConnectionIdempotencyPolicy::GetDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&) {
+Idempotency DiskTypesConnectionIdempotencyPolicy::GetDiskType(
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 

@@ -35,48 +35,48 @@ RegionNetworkEndpointGroupsRestLogging::RegionNetworkEndpointGroupsRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsRestLogging::AsyncDeleteRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsRestLogging::AsyncDeleteRegionNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        DeleteRegionNetworkEndpointGroupsRequest const& request) {
+        DeleteRegionNetworkEndpointGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                 DeleteRegionNetworkEndpointGroupsRequest const& request) {
-        return child_->AsyncDeleteRegionNetworkEndpointGroups(
+                 DeleteRegionNetworkEndpointGroupRequest const& request) {
+        return child_->AsyncDeleteRegionNetworkEndpointGroup(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-RegionNetworkEndpointGroupsRestLogging::GetRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsRestLogging::GetRegionNetworkEndpointGroup(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        GetRegionNetworkEndpointGroupsRequest const& request) {
+        GetRegionNetworkEndpointGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                 GetRegionNetworkEndpointGroupsRequest const& request) {
-        return child_->GetRegionNetworkEndpointGroups(rest_context, request);
+                 GetRegionNetworkEndpointGroupRequest const& request) {
+        return child_->GetRegionNetworkEndpointGroup(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsRestLogging::AsyncInsertRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsRestLogging::AsyncInsertRegionNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        InsertRegionNetworkEndpointGroupsRequest const& request) {
+        InsertRegionNetworkEndpointGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                 InsertRegionNetworkEndpointGroupsRequest const& request) {
-        return child_->AsyncInsertRegionNetworkEndpointGroups(
+                 InsertRegionNetworkEndpointGroupRequest const& request) {
+        return child_->AsyncInsertRegionNetworkEndpointGroup(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -101,12 +101,12 @@ RegionNetworkEndpointGroupsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetRegionOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -116,12 +116,12 @@ future<Status> RegionNetworkEndpointGroupsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteRegionOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

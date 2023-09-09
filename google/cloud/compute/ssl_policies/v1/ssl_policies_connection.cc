@@ -42,25 +42,24 @@ SslPoliciesConnection::AggregatedListSslPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesConnection::DeleteSslPolicies(
+SslPoliciesConnection::DeleteSslPolicy(
     google::cloud::cpp::compute::ssl_policies::v1::
-        DeleteSslPoliciesRequest const&) {
+        DeleteSslPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-SslPoliciesConnection::GetSslPolicies(
-    google::cloud::cpp::compute::ssl_policies::v1::
-        GetSslPoliciesRequest const&) {
+SslPoliciesConnection::GetSslPolicy(
+    google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesConnection::InsertSslPolicies(
+SslPoliciesConnection::InsertSslPolicy(
     google::cloud::cpp::compute::ssl_policies::v1::
-        InsertSslPoliciesRequest const&) {
+        InsertSslPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,9 +82,9 @@ SslPoliciesConnection::ListAvailableFeatures(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslPoliciesConnection::PatchSslPolicies(
+SslPoliciesConnection::PatchSslPolicy(
     google::cloud::cpp::compute::ssl_policies::v1::
-        PatchSslPoliciesRequest const&) {
+        PatchSslPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

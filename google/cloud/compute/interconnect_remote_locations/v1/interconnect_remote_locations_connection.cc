@@ -37,9 +37,9 @@ InterconnectRemoteLocationsConnection::
     ~InterconnectRemoteLocationsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsConnection::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsConnection::GetInterconnectRemoteLocation(
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
-        GetInterconnectRemoteLocationsRequest const&) {
+        GetInterconnectRemoteLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

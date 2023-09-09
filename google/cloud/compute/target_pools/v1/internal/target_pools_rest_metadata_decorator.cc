@@ -69,22 +69,22 @@ TargetPoolsRestMetadata::AggregatedListTargetPools(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsRestMetadata::AsyncDeleteTargetPools(
+TargetPoolsRestMetadata::AsyncDeleteTargetPool(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_pools::v1::
-        DeleteTargetPoolsRequest const& request) {
+        DeleteTargetPoolRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteTargetPools(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteTargetPool(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsRestMetadata::GetTargetPools(
+TargetPoolsRestMetadata::GetTargetPool(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolsRequest const&
+    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetTargetPools(rest_context, request);
+  return child_->GetTargetPool(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
@@ -97,13 +97,13 @@ TargetPoolsRestMetadata::GetHealth(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsRestMetadata::AsyncInsertTargetPools(
+TargetPoolsRestMetadata::AsyncInsertTargetPool(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_pools::v1::
-        InsertTargetPoolsRequest const& request) {
+        InsertTargetPoolRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertTargetPools(cq, std::move(rest_context), request);
+  return child_->AsyncInsertTargetPool(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
@@ -150,7 +150,7 @@ TargetPoolsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -159,7 +159,7 @@ future<Status> TargetPoolsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

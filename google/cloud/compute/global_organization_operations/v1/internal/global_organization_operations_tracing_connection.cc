@@ -37,29 +37,28 @@ GlobalOrganizationOperationsTracingConnection::
     : child_(std::move(child)) {}
 
 Status GlobalOrganizationOperationsTracingConnection::
-    DeleteGlobalOrganizationOperations(
+    DeleteGlobalOrganizationOperation(
         google::cloud::cpp::compute::global_organization_operations::v1::
-            DeleteGlobalOrganizationOperationsRequest const& request) {
+            DeleteGlobalOrganizationOperationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_organization_operations_v1::"
       "GlobalOrganizationOperationsConnection::"
-      "DeleteGlobalOrganizationOperations");
+      "DeleteGlobalOrganizationOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->DeleteGlobalOrganizationOperations(request));
+                           child_->DeleteGlobalOrganizationOperation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsTracingConnection::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsTracingConnection::GetGlobalOrganizationOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const& request) {
+        GetGlobalOrganizationOperationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_organization_operations_v1::"
-      "GlobalOrganizationOperationsConnection::"
-      "GetGlobalOrganizationOperations");
+      "GlobalOrganizationOperationsConnection::GetGlobalOrganizationOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->GetGlobalOrganizationOperations(request));
+                           child_->GetGlobalOrganizationOperation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>

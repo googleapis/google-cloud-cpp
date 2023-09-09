@@ -41,25 +41,25 @@ class ForwardingRulesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::forwarding_rules::v1::
           AggregatedListForwardingRulesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteForwardingRules(
+  virtual google::cloud::Idempotency DeleteForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          DeleteForwardingRulesRequest const& request);
+          DeleteForwardingRuleRequest const& request);
 
-  virtual google::cloud::Idempotency GetForwardingRules(
+  virtual google::cloud::Idempotency GetForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          GetForwardingRulesRequest const& request);
+          GetForwardingRuleRequest const& request);
 
-  virtual google::cloud::Idempotency InsertForwardingRules(
+  virtual google::cloud::Idempotency InsertForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          InsertForwardingRulesRequest const& request);
+          InsertForwardingRuleRequest const& request);
 
   virtual google::cloud::Idempotency ListForwardingRules(
       google::cloud::cpp::compute::forwarding_rules::v1::
           ListForwardingRulesRequest request);
 
-  virtual google::cloud::Idempotency PatchForwardingRules(
+  virtual google::cloud::Idempotency PatchForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          PatchForwardingRulesRequest const& request);
+          PatchForwardingRuleRequest const& request);
 
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&

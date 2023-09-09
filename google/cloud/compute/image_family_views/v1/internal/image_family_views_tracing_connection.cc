@@ -33,14 +33,14 @@ ImageFamilyViewsTracingConnection::ImageFamilyViewsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsTracingConnection::GetImageFamilyViews(
+ImageFamilyViewsTracingConnection::GetImageFamilyView(
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const& request) {
+        GetImageFamilyViewRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_image_family_views_v1::ImageFamilyViewsConnection::"
-      "GetImageFamilyViews");
+      "GetImageFamilyView");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetImageFamilyViews(request));
+  return internal::EndSpan(*span, child_->GetImageFamilyView(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

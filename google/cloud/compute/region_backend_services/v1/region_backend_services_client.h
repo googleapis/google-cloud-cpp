@@ -120,14 +120,14 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L158}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L158}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionBackendServices(std::string const& project,
-                              std::string const& region,
-                              std::string const& backend_service,
-                              Options opts = {});
+  DeleteRegionBackendService(std::string const& project,
+                             std::string const& region,
+                             std::string const& backend_service,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -137,7 +137,7 @@ class RegionBackendServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest].
+  ///     [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -160,13 +160,13 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L158}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.DeleteRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L158}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionBackendServices(
+  DeleteRegionBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          DeleteRegionBackendServicesRequest const& request,
+          DeleteRegionBackendServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -190,15 +190,14 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
   /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetRegionBackendServices(std::string const& project,
-                           std::string const& region,
-                           std::string const& backend_service,
-                           Options opts = {});
+  GetRegionBackendService(std::string const& project, std::string const& region,
+                          std::string const& backend_service,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -208,7 +207,7 @@ class RegionBackendServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest].
+  ///     [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -224,15 +223,14 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.GetRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L218}
   /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_009.proto#L120}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetRegionBackendServices(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          GetRegionBackendServicesRequest const& request,
-      Options opts = {});
+  GetRegionBackendService(google::cloud::cpp::compute::region_backend_services::
+                              v1::GetRegionBackendServiceRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -394,11 +392,11 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L230}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionBackendServices(
+  InsertRegionBackendService(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::BackendService const&
           backend_service_resource,
@@ -414,7 +412,7 @@ class RegionBackendServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest].
+  ///     [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -437,13 +435,13 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L230}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.InsertRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L230}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionBackendServices(
+  InsertRegionBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          InsertRegionBackendServicesRequest const& request,
+          InsertRegionBackendServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -560,11 +558,11 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L329}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionBackendServices(
+  PatchRegionBackendService(
       std::string const& project, std::string const& region,
       std::string const& backend_service,
       google::cloud::cpp::compute::v1::BackendService const&
@@ -582,7 +580,7 @@ class RegionBackendServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest].
+  ///     [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -605,13 +603,13 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L329}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.PatchRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionBackendServices(
+  PatchRegionBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          PatchRegionBackendServicesRequest const& request,
+          PatchRegionBackendServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -713,11 +711,11 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L380}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionBackendServices(
+  UpdateRegionBackendService(
       std::string const& project, std::string const& region,
       std::string const& backend_service,
       google::cloud::cpp::compute::v1::BackendService const&
@@ -734,7 +732,7 @@ class RegionBackendServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest].
+  ///     [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -757,13 +755,13 @@ class RegionBackendServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L380}
+  /// [google.cloud.cpp.compute.region_backend_services.v1.UpdateRegionBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L380}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionBackendServices(
+  UpdateRegionBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          UpdateRegionBackendServicesRequest const& request,
+          UpdateRegionBackendServiceRequest const& request,
       Options opts = {});
 
  private:

@@ -38,25 +38,25 @@ class PublicAdvertisedPrefixesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<PublicAdvertisedPrefixesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeletePublicAdvertisedPrefixes(
+  virtual google::cloud::Idempotency DeletePublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          DeletePublicAdvertisedPrefixesRequest const& request);
+          DeletePublicAdvertisedPrefixRequest const& request);
 
-  virtual google::cloud::Idempotency GetPublicAdvertisedPrefixes(
+  virtual google::cloud::Idempotency GetPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          GetPublicAdvertisedPrefixesRequest const& request);
+          GetPublicAdvertisedPrefixRequest const& request);
 
-  virtual google::cloud::Idempotency InsertPublicAdvertisedPrefixes(
+  virtual google::cloud::Idempotency InsertPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          InsertPublicAdvertisedPrefixesRequest const& request);
+          InsertPublicAdvertisedPrefixRequest const& request);
 
   virtual google::cloud::Idempotency ListPublicAdvertisedPrefixes(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           ListPublicAdvertisedPrefixesRequest request);
 
-  virtual google::cloud::Idempotency PatchPublicAdvertisedPrefixes(
+  virtual google::cloud::Idempotency PatchPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          PatchPublicAdvertisedPrefixesRequest const& request);
+          PatchPublicAdvertisedPrefixRequest const& request);
 };
 
 std::unique_ptr<PublicAdvertisedPrefixesConnectionIdempotencyPolicy>

@@ -44,25 +44,25 @@ class NodeGroupsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::node_groups::v1::
           AggregatedListNodeGroupsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNodeGroups(
+  virtual google::cloud::Idempotency DeleteNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupsRequest const& request);
+          DeleteNodeGroupRequest const& request);
 
   virtual google::cloud::Idempotency DeleteNodes(
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+  virtual google::cloud::Idempotency GetNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertNodeGroups(
+  virtual google::cloud::Idempotency InsertNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupsRequest const& request);
+          InsertNodeGroupRequest const& request);
 
   virtual google::cloud::Idempotency ListNodeGroups(
       google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
@@ -71,9 +71,9 @@ class NodeGroupsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListNodes(
       google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request);
 
-  virtual google::cloud::Idempotency PatchNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::
-          PatchNodeGroupsRequest const& request);
+  virtual google::cloud::Idempotency PatchNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&

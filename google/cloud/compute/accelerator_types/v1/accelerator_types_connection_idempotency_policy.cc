@@ -41,9 +41,9 @@ AcceleratorTypesConnectionIdempotencyPolicy::AggregatedListAcceleratorTypes(
   return Idempotency::kIdempotent;
 }
 
-Idempotency AcceleratorTypesConnectionIdempotencyPolicy::GetAcceleratorTypes(
+Idempotency AcceleratorTypesConnectionIdempotencyPolicy::GetAcceleratorType(
     google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypesRequest const&) {
+        GetAcceleratorTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 

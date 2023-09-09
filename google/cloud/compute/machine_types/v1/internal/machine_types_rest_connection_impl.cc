@@ -57,17 +57,17 @@ MachineTypesRestConnectionImpl::AggregatedListMachineTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesRestConnectionImpl::GetMachineTypes(
-    google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const& request) {
+MachineTypesRestConnectionImpl::GetMachineType(
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetMachineTypes(request),
+      idempotency_policy(*current)->GetMachineType(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::machine_types::v1::
-                 GetMachineTypesRequest const& request) {
-        return stub_->GetMachineTypes(rest_context, request);
+                 GetMachineTypeRequest const& request) {
+        return stub_->GetMachineType(rest_context, request);
       },
       request, __func__);
 }

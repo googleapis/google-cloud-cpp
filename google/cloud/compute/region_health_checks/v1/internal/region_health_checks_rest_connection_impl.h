@@ -54,32 +54,32 @@ class RegionHealthChecksRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthChecks(
+  DeleteRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          DeleteRegionHealthChecksRequest const& request) override;
+          DeleteRegionHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetRegionHealthChecks(
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          GetRegionHealthChecksRequest const& request) override;
+          GetRegionHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthChecks(
+  InsertRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          InsertRegionHealthChecksRequest const& request) override;
+          InsertRegionHealthCheckRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(google::cloud::cpp::compute::region_health_checks::v1::
                              ListRegionHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthChecks(
+  PatchRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          PatchRegionHealthChecksRequest const& request) override;
+          PatchRegionHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionHealthChecks(
+  UpdateRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          UpdateRegionHealthChecksRequest const& request) override;
+          UpdateRegionHealthCheckRequest const& request) override;
 
  private:
   static std::unique_ptr<

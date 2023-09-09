@@ -111,11 +111,11 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L72}
   /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
       std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
@@ -132,7 +132,7 @@ class RegionsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.regions.v1.GetRegionsRequest].
+  ///     [google.cloud.cpp.compute.regions.v1.GetRegionRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -148,13 +148,12 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L72}
   /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-          request,
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -192,7 +191,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L82}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L81}
   /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on
@@ -239,7 +238,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L82}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L81}
   /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L29}
   ///
   // clang-format on

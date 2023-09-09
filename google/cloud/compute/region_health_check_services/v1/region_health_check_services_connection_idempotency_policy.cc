@@ -37,23 +37,23 @@ RegionHealthCheckServicesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    DeleteRegionHealthCheckServices(
+    DeleteRegionHealthCheckService(
         google::cloud::cpp::compute::region_health_check_services::v1::
-            DeleteRegionHealthCheckServicesRequest const&) {
+            DeleteRegionHealthCheckServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    GetRegionHealthCheckServices(
+    GetRegionHealthCheckService(
         google::cloud::cpp::compute::region_health_check_services::v1::
-            GetRegionHealthCheckServicesRequest const&) {
+            GetRegionHealthCheckServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    InsertRegionHealthCheckServices(
+    InsertRegionHealthCheckService(
         google::cloud::cpp::compute::region_health_check_services::v1::
-            InsertRegionHealthCheckServicesRequest const&) {
+            InsertRegionHealthCheckServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,9 +65,9 @@ Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
 }
 
 Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    PatchRegionHealthCheckServices(
+    PatchRegionHealthCheckService(
         google::cloud::cpp::compute::region_health_check_services::v1::
-            PatchRegionHealthCheckServicesRequest const&) {
+            PatchRegionHealthCheckServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

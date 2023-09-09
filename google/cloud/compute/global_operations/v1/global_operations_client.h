@@ -166,12 +166,11 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L179}
+  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L179}
   ///
   // clang-format on
-  Status DeleteGlobalOperations(std::string const& project,
-                                std::string const& operation,
-                                Options opts = {});
+  Status DeleteGlobalOperation(std::string const& project,
+                               std::string const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -181,7 +180,7 @@ class GlobalOperationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest].
+  ///     [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -195,12 +194,12 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L179}
+  /// [google.cloud.cpp.compute.global_operations.v1.DeleteGlobalOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L179}
   ///
   // clang-format on
-  Status DeleteGlobalOperations(
+  Status DeleteGlobalOperation(
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request,
+          DeleteGlobalOperationRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -223,11 +222,11 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L188}
+  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L188}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperation(
       std::string const& project, std::string const& operation,
       Options opts = {});
 
@@ -239,7 +238,7 @@ class GlobalOperationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest].
+  ///     [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -255,13 +254,13 @@ class GlobalOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L188}
+  /// [google.cloud.cpp.compute.global_operations.v1.GetGlobalOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L188}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperation(
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request,
+          GetGlobalOperationRequest const& request,
       Options opts = {});
 
   // clang-format off

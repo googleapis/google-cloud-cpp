@@ -34,38 +34,38 @@ HttpsHealthChecksTracingConnection::HttpsHealthChecksTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksTracingConnection::DeleteHttpsHealthChecks(
+HttpsHealthChecksTracingConnection::DeleteHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        DeleteHttpsHealthChecksRequest const& request) {
+        DeleteHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
-      "DeleteHttpsHealthChecks");
+      "DeleteHttpsHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteHttpsHealthChecks(request));
+                           child_->DeleteHttpsHealthCheck(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-HttpsHealthChecksTracingConnection::GetHttpsHealthChecks(
+HttpsHealthChecksTracingConnection::GetHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        GetHttpsHealthChecksRequest const& request) {
+        GetHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
-      "GetHttpsHealthChecks");
+      "GetHttpsHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetHttpsHealthChecks(request));
+  return internal::EndSpan(*span, child_->GetHttpsHealthCheck(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksTracingConnection::InsertHttpsHealthChecks(
+HttpsHealthChecksTracingConnection::InsertHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        InsertHttpsHealthChecksRequest const& request) {
+        InsertHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
-      "InsertHttpsHealthChecks");
+      "InsertHttpsHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertHttpsHealthChecks(request));
+                           child_->InsertHttpsHealthCheck(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
@@ -83,27 +83,27 @@ HttpsHealthChecksTracingConnection::ListHttpsHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksTracingConnection::PatchHttpsHealthChecks(
+HttpsHealthChecksTracingConnection::PatchHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        PatchHttpsHealthChecksRequest const& request) {
+        PatchHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
-      "PatchHttpsHealthChecks");
+      "PatchHttpsHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchHttpsHealthChecks(request));
+                           child_->PatchHttpsHealthCheck(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksTracingConnection::UpdateHttpsHealthChecks(
+HttpsHealthChecksTracingConnection::UpdateHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        UpdateHttpsHealthChecksRequest const& request) {
+        UpdateHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
-      "UpdateHttpsHealthChecks");
+      "UpdateHttpsHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateHttpsHealthChecks(request));
+                           child_->UpdateHttpsHealthCheck(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

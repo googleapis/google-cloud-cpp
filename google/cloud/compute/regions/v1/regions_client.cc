@@ -32,20 +32,20 @@ RegionsClient::RegionsClient(ExperimentalTag,
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionsClient::~RegionsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Region> RegionsClient::GetRegions(
+StatusOr<google::cloud::cpp::compute::v1::Region> RegionsClient::GetRegion(
     std::string const& project, std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::regions::v1::GetRegionsRequest request;
+  google::cloud::cpp::compute::regions::v1::GetRegionRequest request;
   request.set_project(project);
   request.set_region(region);
-  return connection_->GetRegions(request);
+  return connection_->GetRegion(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Region> RegionsClient::GetRegions(
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request,
+StatusOr<google::cloud::cpp::compute::v1::Region> RegionsClient::GetRegion(
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegions(request);
+  return connection_->GetRegion(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Region> RegionsClient::ListRegions(

@@ -41,16 +41,16 @@ class GlobalOrganizationOperationsRestMetadata
       std::shared_ptr<GlobalOrganizationOperationsRestStub> child,
       std::string api_client_header = "");
 
-  Status DeleteGlobalOrganizationOperations(
+  Status DeleteGlobalOrganizationOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationsRequest const& request) override;
+          DeleteGlobalOrganizationOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOrganizationOperations(
+  GetGlobalOrganizationOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationsRequest const& request) override;
+          GetGlobalOrganizationOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListGlobalOrganizationOperations(

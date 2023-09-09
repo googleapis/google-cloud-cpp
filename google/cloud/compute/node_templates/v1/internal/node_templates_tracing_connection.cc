@@ -44,25 +44,24 @@ NodeTemplatesTracingConnection::AggregatedListNodeTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesTracingConnection::DeleteNodeTemplates(
+NodeTemplatesTracingConnection::DeleteNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplatesRequest const& request) {
+        DeleteNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_node_templates_v1::NodeTemplatesConnection::"
-      "DeleteNodeTemplates");
+      "compute_node_templates_v1::NodeTemplatesConnection::DeleteNodeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteNodeTemplates(request));
+                           child_->DeleteNodeTemplate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesTracingConnection::GetNodeTemplates(
+NodeTemplatesTracingConnection::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        GetNodeTemplatesRequest const& request) {
+        GetNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_node_templates_v1::NodeTemplatesConnection::GetNodeTemplates");
+      "compute_node_templates_v1::NodeTemplatesConnection::GetNodeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetNodeTemplates(request));
+  return internal::EndSpan(*span, child_->GetNodeTemplate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -76,15 +75,14 @@ NodeTemplatesTracingConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesTracingConnection::InsertNodeTemplates(
+NodeTemplatesTracingConnection::InsertNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplatesRequest const& request) {
+        InsertNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_node_templates_v1::NodeTemplatesConnection::"
-      "InsertNodeTemplates");
+      "compute_node_templates_v1::NodeTemplatesConnection::InsertNodeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertNodeTemplates(request));
+                           child_->InsertNodeTemplate(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>

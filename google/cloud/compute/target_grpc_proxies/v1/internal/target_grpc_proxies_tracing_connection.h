@@ -43,27 +43,26 @@ class TargetGrpcProxiesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxies(
+  DeleteTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
-          DeleteTargetGrpcProxiesRequest const& request) override;
+          DeleteTargetGrpcProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  GetTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                           GetTargetGrpcProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          GetTargetGrpcProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxies(
+  InsertTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
-          InsertTargetGrpcProxiesRequest const& request) override;
+          InsertTargetGrpcProxyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
                             ListTargetGrpcProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxies(
-      google::cloud::cpp::compute::target_grpc_proxies::v1::
-          PatchTargetGrpcProxiesRequest const& request) override;
+  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                           PatchTargetGrpcProxyRequest const& request) override;
 
  private:
   std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>

@@ -40,21 +40,21 @@ ZoneOperationsRestMetadata::ZoneOperationsRestMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status ZoneOperationsRestMetadata::DeleteZoneOperations(
+Status ZoneOperationsRestMetadata::DeleteZoneOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteZoneOperationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->DeleteZoneOperations(rest_context, request);
+  return child_->DeleteZoneOperation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsRestMetadata::GetZoneOperations(
+ZoneOperationsRestMetadata::GetZoneOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+        GetZoneOperationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetZoneOperations(rest_context, request);
+  return child_->GetZoneOperation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>

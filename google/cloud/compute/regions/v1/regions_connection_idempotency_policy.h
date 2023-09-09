@@ -36,8 +36,8 @@ class RegionsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RegionsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetRegions(
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+  virtual google::cloud::Idempotency GetRegion(
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
           request);
 
   virtual google::cloud::Idempotency ListRegions(

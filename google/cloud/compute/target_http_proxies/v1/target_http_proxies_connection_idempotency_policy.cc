@@ -41,23 +41,21 @@ TargetHttpProxiesConnectionIdempotencyPolicy::AggregatedListTargetHttpProxies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TargetHttpProxiesConnectionIdempotencyPolicy::DeleteTargetHttpProxies(
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::DeleteTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        DeleteTargetHttpProxiesRequest const&) {
+        DeleteTargetHttpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::GetTargetHttpProxies(
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::GetTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        GetTargetHttpProxiesRequest const&) {
+        GetTargetHttpProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TargetHttpProxiesConnectionIdempotencyPolicy::InsertTargetHttpProxies(
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::InsertTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        InsertTargetHttpProxiesRequest const&) {
+        InsertTargetHttpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -67,10 +65,9 @@ Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::ListTargetHttpProxies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TargetHttpProxiesConnectionIdempotencyPolicy::PatchTargetHttpProxies(
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::PatchTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        PatchTargetHttpProxiesRequest const&) {
+        PatchTargetHttpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

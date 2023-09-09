@@ -65,10 +65,10 @@ DefaultUrlMapsRestStub::AggregatedListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultUrlMapsRestStub::AsyncDeleteUrlMaps(
+DefaultUrlMapsRestStub::AsyncDeleteUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -90,9 +90,9 @@ DefaultUrlMapsRestStub::AsyncDeleteUrlMaps(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-DefaultUrlMapsRestStub::GetUrlMaps(
+DefaultUrlMapsRestStub::GetUrlMap(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request,
@@ -103,10 +103,10 @@ DefaultUrlMapsRestStub::GetUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultUrlMapsRestStub::AsyncInsertUrlMaps(
+DefaultUrlMapsRestStub::AsyncInsertUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -171,10 +171,10 @@ DefaultUrlMapsRestStub::ListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultUrlMapsRestStub::AsyncPatchUrlMaps(
+DefaultUrlMapsRestStub::AsyncPatchUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -196,10 +196,10 @@ DefaultUrlMapsRestStub::AsyncPatchUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultUrlMapsRestStub::AsyncUpdateUrlMaps(
+DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -237,7 +237,7 @@ DefaultUrlMapsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -260,7 +260,7 @@ future<Status> DefaultUrlMapsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

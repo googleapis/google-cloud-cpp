@@ -56,17 +56,17 @@ class SslPoliciesRestConnectionImpl
       google::cloud::cpp::compute::ssl_policies::v1::
           AggregatedListSslPoliciesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
-                        DeleteSslPoliciesRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
-          GetSslPoliciesRequest const& request) override;
+          DeleteSslPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
-                        InsertSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          InsertSslPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
       google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
@@ -78,9 +78,9 @@ class SslPoliciesRestConnectionImpl
       google::cloud::cpp::compute::ssl_policies::v1::
           ListAvailableFeaturesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
-          PatchSslPoliciesRequest const& request) override;
+          PatchSslPolicyRequest const& request) override;
 
  private:
   static std::unique_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>

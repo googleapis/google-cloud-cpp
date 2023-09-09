@@ -47,7 +47,7 @@ service NodeTypes {
 
   // Returns the specified node type.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTypes/get
-  rpc GetNodeTypes(GetNodeTypesRequest)
+  rpc GetNodeType(GetNodeTypeRequest)
       returns (google.cloud.cpp.compute.v1.NodeType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/nodeTypes/{node_type}"
@@ -140,8 +140,8 @@ message AggregatedListNodeTypesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for GetNodeTypes.
-message GetNodeTypesRequest {
+// Request message for GetNodeType.
+message GetNodeTypeRequest {
   // Name of the node type to return.
   string node_type = 1 [(google.api.field_behavior) = REQUIRED];
 

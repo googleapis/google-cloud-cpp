@@ -71,10 +71,10 @@ DefaultNetworksRestStub::AsyncAddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNetworksRestStub::AsyncDeleteNetworks(
+DefaultNetworksRestStub::AsyncDeleteNetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -96,9 +96,9 @@ DefaultNetworksRestStub::AsyncDeleteNetworks(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
-DefaultNetworksRestStub::GetNetworks(
+DefaultNetworksRestStub::GetNetwork(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+    google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Network>(
       *service_, rest_context, request,
@@ -123,10 +123,10 @@ DefaultNetworksRestStub::GetEffectiveFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNetworksRestStub::AsyncInsertNetworks(
+DefaultNetworksRestStub::AsyncInsertNetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -187,10 +187,10 @@ DefaultNetworksRestStub::ListPeeringRoutes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNetworksRestStub::AsyncPatchNetworks(
+DefaultNetworksRestStub::AsyncPatchNetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -294,7 +294,7 @@ DefaultNetworksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -317,7 +317,7 @@ future<Status> DefaultNetworksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

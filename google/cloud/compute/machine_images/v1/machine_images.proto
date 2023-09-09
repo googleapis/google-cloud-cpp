@@ -43,7 +43,7 @@ service MachineImages {
   // Deletes the specified machine image. Deleting a machine image is permanent
   // and cannot be undone.
   // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/delete
-  rpc DeleteMachineImages(DeleteMachineImagesRequest)
+  rpc DeleteMachineImage(DeleteMachineImageRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/machineImages/{machine_image}"
@@ -54,7 +54,7 @@ service MachineImages {
 
   // Returns the specified machine image.
   // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/get
-  rpc GetMachineImages(GetMachineImagesRequest)
+  rpc GetMachineImage(GetMachineImageRequest)
       returns (google.cloud.cpp.compute.v1.MachineImage) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/machineImages/{machine_image}"
@@ -78,7 +78,7 @@ service MachineImages {
   // an existing instance, your new machine image should use the same network
   // or, if applicable, the same subnetwork as the original instance.
   // https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/insert
-  rpc InsertMachineImages(InsertMachineImagesRequest)
+  rpc InsertMachineImage(InsertMachineImageRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/machineImages"
@@ -125,8 +125,8 @@ service MachineImages {
   }
 }
 
-// Request message for DeleteMachineImages.
-message DeleteMachineImagesRequest {
+// Request message for DeleteMachineImage.
+message DeleteMachineImageRequest {
   // The name of the machine image to delete.
   string machine_image = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -161,8 +161,8 @@ message GetIamPolicyRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetMachineImages.
-message GetMachineImagesRequest {
+// Request message for GetMachineImage.
+message GetMachineImageRequest {
   // The name of the machine image.
   string machine_image = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -170,8 +170,8 @@ message GetMachineImagesRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertMachineImages.
-message InsertMachineImagesRequest {
+// Request message for InsertMachineImage.
+message InsertMachineImageRequest {
   // The MachineImage for this request.
   optional google.cloud.cpp.compute.v1.MachineImage machine_image_resource = 1
       [json_name = "__json_request_body"];

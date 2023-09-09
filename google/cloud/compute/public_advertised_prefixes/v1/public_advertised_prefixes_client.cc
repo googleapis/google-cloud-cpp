@@ -35,69 +35,69 @@ PublicAdvertisedPrefixesClient::PublicAdvertisedPrefixesClient(
 PublicAdvertisedPrefixesClient::~PublicAdvertisedPrefixesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
     std::string const& project, std::string const& public_advertised_prefix,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::
-      DeletePublicAdvertisedPrefixesRequest request;
+      DeletePublicAdvertisedPrefixRequest request;
   request.set_project(project);
   request.set_public_advertised_prefix(public_advertised_prefix);
-  return connection_->DeletePublicAdvertisedPrefixes(request);
+  return connection_->DeletePublicAdvertisedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixesRequest const& request,
+        DeletePublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePublicAdvertisedPrefixes(request);
+  return connection_->DeletePublicAdvertisedPrefix(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-PublicAdvertisedPrefixesClient::GetPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::GetPublicAdvertisedPrefix(
     std::string const& project, std::string const& public_advertised_prefix,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::
-      GetPublicAdvertisedPrefixesRequest request;
+      GetPublicAdvertisedPrefixRequest request;
   request.set_project(project);
   request.set_public_advertised_prefix(public_advertised_prefix);
-  return connection_->GetPublicAdvertisedPrefixes(request);
+  return connection_->GetPublicAdvertisedPrefix(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-PublicAdvertisedPrefixesClient::GetPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::GetPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        GetPublicAdvertisedPrefixesRequest const& request,
+        GetPublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetPublicAdvertisedPrefixes(request);
+  return connection_->GetPublicAdvertisedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
     std::string const& project,
     google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
         public_advertised_prefix_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::
-      InsertPublicAdvertisedPrefixesRequest request;
+      InsertPublicAdvertisedPrefixRequest request;
   request.set_project(project);
   *request.mutable_public_advertised_prefix_resource() =
       public_advertised_prefix_resource;
-  return connection_->InsertPublicAdvertisedPrefixes(request);
+  return connection_->InsertPublicAdvertisedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixesRequest const& request,
+        InsertPublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertPublicAdvertisedPrefixes(request);
+  return connection_->InsertPublicAdvertisedPrefix(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -120,28 +120,28 @@ PublicAdvertisedPrefixesClient::ListPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
     std::string const& project, std::string const& public_advertised_prefix,
     google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
         public_advertised_prefix_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::
-      PatchPublicAdvertisedPrefixesRequest request;
+      PatchPublicAdvertisedPrefixRequest request;
   request.set_project(project);
   request.set_public_advertised_prefix(public_advertised_prefix);
   *request.mutable_public_advertised_prefix_resource() =
       public_advertised_prefix_resource;
-  return connection_->PatchPublicAdvertisedPrefixes(request);
+  return connection_->PatchPublicAdvertisedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixesRequest const& request,
+        PatchPublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPublicAdvertisedPrefixes(request);
+  return connection_->PatchPublicAdvertisedPrefix(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

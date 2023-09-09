@@ -40,9 +40,9 @@ Idempotency SubnetworksConnectionIdempotencyPolicy::AggregatedListSubnetworks(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::DeleteSubnetworks(
+Idempotency SubnetworksConnectionIdempotencyPolicy::DeleteSubnetwork(
     google::cloud::cpp::compute::subnetworks::v1::
-        DeleteSubnetworksRequest const&) {
+        DeleteSubnetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -52,9 +52,8 @@ Idempotency SubnetworksConnectionIdempotencyPolicy::ExpandIpCidrRange(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::GetSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::
-        GetSubnetworksRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::GetSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -63,9 +62,9 @@ Idempotency SubnetworksConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::InsertSubnetworks(
+Idempotency SubnetworksConnectionIdempotencyPolicy::InsertSubnetwork(
     google::cloud::cpp::compute::subnetworks::v1::
-        InsertSubnetworksRequest const&) {
+        InsertSubnetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -81,9 +80,9 @@ Idempotency SubnetworksConnectionIdempotencyPolicy::ListUsable(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::PatchSubnetworks(
+Idempotency SubnetworksConnectionIdempotencyPolicy::PatchSubnetwork(
     google::cloud::cpp::compute::subnetworks::v1::
-        PatchSubnetworksRequest const&) {
+        PatchSubnetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

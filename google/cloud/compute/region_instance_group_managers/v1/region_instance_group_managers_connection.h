@@ -219,9 +219,9 @@ class RegionInstanceGroupManagersConnection {
                       v1::CreateInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceGroupManagers(
+  DeleteRegionInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          DeleteRegionInstanceGroupManagersRequest const& request);
+          DeleteRegionInstanceGroupManagerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstances(google::cloud::cpp::compute::region_instance_group_managers::
@@ -233,14 +233,14 @@ class RegionInstanceGroupManagersConnection {
           DeletePerInstanceConfigsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetRegionInstanceGroupManagers(
+  GetRegionInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          GetRegionInstanceGroupManagersRequest const& request);
+          GetRegionInstanceGroupManagerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceGroupManagers(
+  InsertRegionInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          InsertRegionInstanceGroupManagersRequest const& request);
+          InsertRegionInstanceGroupManagerRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListRegionInstanceGroupManagers(
@@ -264,9 +264,9 @@ class RegionInstanceGroupManagersConnection {
           ListPerInstanceConfigsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionInstanceGroupManagers(
+  PatchRegionInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          PatchRegionInstanceGroupManagersRequest const& request);
+          PatchRegionInstanceGroupManagerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(

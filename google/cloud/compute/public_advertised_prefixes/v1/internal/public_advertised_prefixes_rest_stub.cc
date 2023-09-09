@@ -48,11 +48,11 @@ DefaultPublicAdvertisedPrefixesRestStub::
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefixes(
+DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixesRequest const& request) {
+        DeletePublicAdvertisedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -74,10 +74,10 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefixes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefixes(
+DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefix(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        GetPublicAdvertisedPrefixesRequest const& request) {
+        GetPublicAdvertisedPrefixRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>(
       *service_, rest_context, request,
@@ -89,11 +89,11 @@ DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultPublicAdvertisedPrefixesRestStub::AsyncInsertPublicAdvertisedPrefixes(
+DefaultPublicAdvertisedPrefixesRestStub::AsyncInsertPublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixesRequest const& request) {
+        InsertPublicAdvertisedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -134,11 +134,11 @@ DefaultPublicAdvertisedPrefixesRestStub::ListPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultPublicAdvertisedPrefixesRestStub::AsyncPatchPublicAdvertisedPrefixes(
+DefaultPublicAdvertisedPrefixesRestStub::AsyncPatchPublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixesRequest const& request) {
+        PatchPublicAdvertisedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -165,7 +165,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -188,7 +188,7 @@ future<Status> DefaultPublicAdvertisedPrefixesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

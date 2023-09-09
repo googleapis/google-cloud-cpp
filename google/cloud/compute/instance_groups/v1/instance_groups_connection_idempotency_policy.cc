@@ -47,21 +47,21 @@ InstanceGroupsConnectionIdempotencyPolicy::AggregatedListInstanceGroups(
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::DeleteInstanceGroups(
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::DeleteInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupsRequest const&) {
+        DeleteInstanceGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::GetInstanceGroups(
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::GetInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        GetInstanceGroupsRequest const&) {
+        GetInstanceGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceGroupsConnectionIdempotencyPolicy::InsertInstanceGroups(
+Idempotency InstanceGroupsConnectionIdempotencyPolicy::InsertInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupsRequest const&) {
+        InsertInstanceGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

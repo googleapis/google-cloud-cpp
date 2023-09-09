@@ -67,11 +67,11 @@ class InstanceGroupManagersRestStub {
           CreateInstancesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstanceGroupManagers(
+  AsyncDeleteInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          DeleteInstanceGroupManagersRequest const& request) = 0;
+          DeleteInstanceGroupManagerRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteInstances(
@@ -88,17 +88,17 @@ class InstanceGroupManagersRestStub {
           DeletePerInstanceConfigsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetInstanceGroupManagers(
+  GetInstanceGroupManager(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          GetInstanceGroupManagersRequest const& request) = 0;
+          GetInstanceGroupManagerRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstanceGroupManagers(
+  AsyncInsertInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          InsertInstanceGroupManagersRequest const& request) = 0;
+          InsertInstanceGroupManagerRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerList>
   ListInstanceGroupManagers(
@@ -126,11 +126,11 @@ class InstanceGroupManagersRestStub {
           ListPerInstanceConfigsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInstanceGroupManagers(
+  AsyncPatchInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          PatchInstanceGroupManagersRequest const& request) = 0;
+          PatchInstanceGroupManagerRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchPerInstanceConfigs(
@@ -179,13 +179,13 @@ class InstanceGroupManagersRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) = 0;
+          GetZoneOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) = 0;
+          DeleteZoneOperationRequest const& request) = 0;
 };
 
 class DefaultInstanceGroupManagersRestStub
@@ -226,11 +226,11 @@ class DefaultInstanceGroupManagersRestStub
           CreateInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstanceGroupManagers(
+  AsyncDeleteInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          DeleteInstanceGroupManagersRequest const& request) override;
+          DeleteInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteInstances(
@@ -247,17 +247,17 @@ class DefaultInstanceGroupManagersRestStub
           DeletePerInstanceConfigsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetInstanceGroupManagers(
+  GetInstanceGroupManager(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          GetInstanceGroupManagersRequest const& request) override;
+          GetInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstanceGroupManagers(
+  AsyncInsertInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          InsertInstanceGroupManagersRequest const& request) override;
+          InsertInstanceGroupManagerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerList>
   ListInstanceGroupManagers(
@@ -286,11 +286,11 @@ class DefaultInstanceGroupManagersRestStub
           ListPerInstanceConfigsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInstanceGroupManagers(
+  AsyncPatchInstanceGroupManager(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::instance_group_managers::v1::
-          PatchInstanceGroupManagersRequest const& request) override;
+          PatchInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPatchPerInstanceConfigs(
@@ -338,13 +338,13 @@ class DefaultInstanceGroupManagersRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

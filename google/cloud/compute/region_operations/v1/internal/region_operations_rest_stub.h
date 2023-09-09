@@ -36,15 +36,15 @@ class RegionOperationsRestStub {
  public:
   virtual ~RegionOperationsRestStub() = default;
 
-  virtual Status DeleteRegionOperations(
+  virtual Status DeleteRegionOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteRegionOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetRegionOperations(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::region_operations::v1::
-                          GetRegionOperationsRequest const& request) = 0;
+  GetRegionOperation(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::region_operations::v1::
+                         GetRegionOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListRegionOperations(google::cloud::rest_internal::RestContext& rest_context,
@@ -65,15 +65,15 @@ class DefaultRegionOperationsRestStub : public RegionOperationsRestStub {
   DefaultRegionOperationsRestStub(
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  Status DeleteRegionOperations(
+  Status DeleteRegionOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteRegionOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetRegionOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,

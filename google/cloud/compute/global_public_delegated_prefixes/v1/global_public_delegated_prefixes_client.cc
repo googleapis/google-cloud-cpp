@@ -36,69 +36,69 @@ GlobalPublicDelegatedPrefixesClient::~GlobalPublicDelegatedPrefixesClient() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesClient::DeleteGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::DeleteGlobalPublicDelegatedPrefix(
     std::string const& project, std::string const& public_delegated_prefix,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-      DeleteGlobalPublicDelegatedPrefixesRequest request;
+      DeleteGlobalPublicDelegatedPrefixRequest request;
   request.set_project(project);
   request.set_public_delegated_prefix(public_delegated_prefix);
-  return connection_->DeleteGlobalPublicDelegatedPrefixes(request);
+  return connection_->DeleteGlobalPublicDelegatedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesClient::DeleteGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::DeleteGlobalPublicDelegatedPrefix(
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        DeleteGlobalPublicDelegatedPrefixesRequest const& request,
+        DeleteGlobalPublicDelegatedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGlobalPublicDelegatedPrefixes(request);
+  return connection_->DeleteGlobalPublicDelegatedPrefix(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-GlobalPublicDelegatedPrefixesClient::GetGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::GetGlobalPublicDelegatedPrefix(
     std::string const& project, std::string const& public_delegated_prefix,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-      GetGlobalPublicDelegatedPrefixesRequest request;
+      GetGlobalPublicDelegatedPrefixRequest request;
   request.set_project(project);
   request.set_public_delegated_prefix(public_delegated_prefix);
-  return connection_->GetGlobalPublicDelegatedPrefixes(request);
+  return connection_->GetGlobalPublicDelegatedPrefix(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-GlobalPublicDelegatedPrefixesClient::GetGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::GetGlobalPublicDelegatedPrefix(
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        GetGlobalPublicDelegatedPrefixesRequest const& request,
+        GetGlobalPublicDelegatedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetGlobalPublicDelegatedPrefixes(request);
+  return connection_->GetGlobalPublicDelegatedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesClient::InsertGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::InsertGlobalPublicDelegatedPrefix(
     std::string const& project,
     google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
         public_delegated_prefix_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-      InsertGlobalPublicDelegatedPrefixesRequest request;
+      InsertGlobalPublicDelegatedPrefixRequest request;
   request.set_project(project);
   *request.mutable_public_delegated_prefix_resource() =
       public_delegated_prefix_resource;
-  return connection_->InsertGlobalPublicDelegatedPrefixes(request);
+  return connection_->InsertGlobalPublicDelegatedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesClient::InsertGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::InsertGlobalPublicDelegatedPrefix(
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        InsertGlobalPublicDelegatedPrefixesRequest const& request,
+        InsertGlobalPublicDelegatedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertGlobalPublicDelegatedPrefixes(request);
+  return connection_->InsertGlobalPublicDelegatedPrefix(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -121,28 +121,28 @@ GlobalPublicDelegatedPrefixesClient::ListGlobalPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesClient::PatchGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::PatchGlobalPublicDelegatedPrefix(
     std::string const& project, std::string const& public_delegated_prefix,
     google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
         public_delegated_prefix_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-      PatchGlobalPublicDelegatedPrefixesRequest request;
+      PatchGlobalPublicDelegatedPrefixRequest request;
   request.set_project(project);
   request.set_public_delegated_prefix(public_delegated_prefix);
   *request.mutable_public_delegated_prefix_resource() =
       public_delegated_prefix_resource;
-  return connection_->PatchGlobalPublicDelegatedPrefixes(request);
+  return connection_->PatchGlobalPublicDelegatedPrefix(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesClient::PatchGlobalPublicDelegatedPrefixes(
+GlobalPublicDelegatedPrefixesClient::PatchGlobalPublicDelegatedPrefix(
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        PatchGlobalPublicDelegatedPrefixesRequest const& request,
+        PatchGlobalPublicDelegatedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchGlobalPublicDelegatedPrefixes(request);
+  return connection_->PatchGlobalPublicDelegatedPrefix(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

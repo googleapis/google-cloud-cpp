@@ -360,12 +360,12 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L367}
+  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L367}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisks(std::string const& project, std::string const& region,
-                    std::string const& disk, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRegionDisk(
+      std::string const& project, std::string const& region,
+      std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -378,7 +378,7 @@ class RegionDisksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest].
+  ///     [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDiskRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -401,13 +401,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L367}
+  /// [google.cloud.cpp.compute.region_disks.v1.DeleteRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L367}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::
-                        DeleteRegionDisksRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::
+          DeleteRegionDiskRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -430,11 +430,11 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L412}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L412}
   /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisk(
       std::string const& project, std::string const& region,
       std::string const& disk, Options opts = {});
 
@@ -446,7 +446,7 @@ class RegionDisksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest].
+  ///     [google.cloud.cpp.compute.region_disks.v1.GetRegionDiskRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -462,13 +462,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L412}
+  /// [google.cloud.cpp.compute.region_disks.v1.GetRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L412}
   /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
-      google::cloud::cpp::compute::region_disks::v1::
-          GetRegionDisksRequest const& request,
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -564,13 +564,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisks(std::string const& project, std::string const& region,
-                    google::cloud::cpp::compute::v1::Disk const& disk_resource,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRegionDisk(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::Disk const& disk_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -581,7 +581,7 @@ class RegionDisksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest].
+  ///     [google.cloud.cpp.compute.region_disks.v1.InsertRegionDiskRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -604,13 +604,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// [google.cloud.cpp.compute.region_disks.v1.InsertRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::
-                        InsertRegionDisksRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::
+          InsertRegionDiskRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1331,14 +1331,14 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L762}
+  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L762}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisks(std::string const& project, std::string const& region,
-                    std::string const& disk,
-                    google::cloud::cpp::compute::v1::Disk const& disk_resource,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRegionDisk(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::Disk const& disk_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1350,7 +1350,7 @@ class RegionDisksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest].
+  ///     [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDiskRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1373,13 +1373,13 @@ class RegionDisksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L762}
+  /// [google.cloud.cpp.compute.region_disks.v1.UpdateRegionDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L762}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::
-                        UpdateRegionDisksRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::
+          UpdateRegionDiskRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionDisksConnection> connection_;

@@ -42,25 +42,25 @@ ForwardingRulesConnection::AggregatedListForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ForwardingRulesConnection::DeleteForwardingRules(
+ForwardingRulesConnection::DeleteForwardingRule(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        DeleteForwardingRulesRequest const&) {
+        DeleteForwardingRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-ForwardingRulesConnection::GetForwardingRules(
+ForwardingRulesConnection::GetForwardingRule(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        GetForwardingRulesRequest const&) {
+        GetForwardingRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ForwardingRulesConnection::InsertForwardingRules(
+ForwardingRulesConnection::InsertForwardingRule(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        InsertForwardingRulesRequest const&) {
+        InsertForwardingRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -75,9 +75,9 @@ ForwardingRulesConnection::ListForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ForwardingRulesConnection::PatchForwardingRules(
+ForwardingRulesConnection::PatchForwardingRule(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        PatchForwardingRulesRequest const&) {
+        PatchForwardingRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

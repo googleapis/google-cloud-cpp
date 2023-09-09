@@ -40,9 +40,9 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::AddSignedUrlKey(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteBackendBuckets(
+Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        DeleteBackendBucketsRequest const&) {
+        DeleteBackendBucketRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -52,15 +52,15 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteSignedUrlKey(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::GetBackendBuckets(
+Idempotency BackendBucketsConnectionIdempotencyPolicy::GetBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        GetBackendBucketsRequest const&) {
+        GetBackendBucketRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::InsertBackendBuckets(
+Idempotency BackendBucketsConnectionIdempotencyPolicy::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        InsertBackendBucketsRequest const&) {
+        InsertBackendBucketRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -70,9 +70,9 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::ListBackendBuckets(
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::PatchBackendBuckets(
+Idempotency BackendBucketsConnectionIdempotencyPolicy::PatchBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        PatchBackendBucketsRequest const&) {
+        PatchBackendBucketRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -82,9 +82,9 @@ Idempotency BackendBucketsConnectionIdempotencyPolicy::SetEdgeSecurityPolicy(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::UpdateBackendBuckets(
+Idempotency BackendBucketsConnectionIdempotencyPolicy::UpdateBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        UpdateBackendBucketsRequest const&) {
+        UpdateBackendBucketRequest const&) {
   return Idempotency::kIdempotent;
 }
 

@@ -43,10 +43,10 @@ class InterconnectLocationsRestLogging : public InterconnectLocationsRestStub {
       TracingOptions tracing_options, std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-  GetInterconnectLocations(
+  GetInterconnectLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnect_locations::v1::
-          GetInterconnectLocationsRequest const& request) override;
+          GetInterconnectLocationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
   ListInterconnectLocations(

@@ -33,13 +33,12 @@ RegionsTracingConnection::RegionsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsTracingConnection::GetRegions(
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-        request) {
+RegionsTracingConnection::GetRegion(
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   auto span =
-      internal::MakeSpan("compute_regions_v1::RegionsConnection::GetRegions");
+      internal::MakeSpan("compute_regions_v1::RegionsConnection::GetRegion");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegions(request));
+  return internal::EndSpan(*span, child_->GetRegion(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Region>

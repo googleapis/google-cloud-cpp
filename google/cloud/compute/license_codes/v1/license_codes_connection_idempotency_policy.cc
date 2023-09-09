@@ -34,9 +34,9 @@ LicenseCodesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LicenseCodesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LicenseCodesConnectionIdempotencyPolicy::GetLicenseCodes(
+Idempotency LicenseCodesConnectionIdempotencyPolicy::GetLicenseCode(
     google::cloud::cpp::compute::license_codes::v1::
-        GetLicenseCodesRequest const&) {
+        GetLicenseCodeRequest const&) {
   return Idempotency::kIdempotent;
 }
 

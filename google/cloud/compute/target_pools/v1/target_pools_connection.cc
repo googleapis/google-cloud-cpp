@@ -59,18 +59,17 @@ TargetPoolsConnection::AggregatedListTargetPools(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsConnection::DeleteTargetPools(
+TargetPoolsConnection::DeleteTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        DeleteTargetPoolsRequest const&) {
+        DeleteTargetPoolRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsConnection::GetTargetPools(
-    google::cloud::cpp::compute::target_pools::v1::
-        GetTargetPoolsRequest const&) {
+TargetPoolsConnection::GetTargetPool(google::cloud::cpp::compute::target_pools::
+                                         v1::GetTargetPoolRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -81,9 +80,9 @@ TargetPoolsConnection::GetHealth(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsConnection::InsertTargetPools(
+TargetPoolsConnection::InsertTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        InsertTargetPoolsRequest const&) {
+        InsertTargetPoolRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -34,71 +34,71 @@ RegionSslCertificatesClient::RegionSslCertificatesClient(
 RegionSslCertificatesClient::~RegionSslCertificatesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::DeleteRegionSslCertificates(
+RegionSslCertificatesClient::DeleteRegionSslCertificate(
     std::string const& project, std::string const& region,
     std::string const& ssl_certificate, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_ssl_certificates::v1::
-      DeleteRegionSslCertificatesRequest request;
+      DeleteRegionSslCertificateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_certificate(ssl_certificate);
-  return connection_->DeleteRegionSslCertificates(request);
+  return connection_->DeleteRegionSslCertificate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::DeleteRegionSslCertificates(
+RegionSslCertificatesClient::DeleteRegionSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteRegionSslCertificatesRequest const& request,
+        DeleteRegionSslCertificateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionSslCertificates(request);
+  return connection_->DeleteRegionSslCertificate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesClient::GetRegionSslCertificates(
+RegionSslCertificatesClient::GetRegionSslCertificate(
     std::string const& project, std::string const& region,
     std::string const& ssl_certificate, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_ssl_certificates::v1::
-      GetRegionSslCertificatesRequest request;
+      GetRegionSslCertificateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_certificate(ssl_certificate);
-  return connection_->GetRegionSslCertificates(request);
+  return connection_->GetRegionSslCertificate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesClient::GetRegionSslCertificates(
+RegionSslCertificatesClient::GetRegionSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        GetRegionSslCertificatesRequest const& request,
+        GetRegionSslCertificateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionSslCertificates(request);
+  return connection_->GetRegionSslCertificate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::InsertRegionSslCertificates(
+RegionSslCertificatesClient::InsertRegionSslCertificate(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::SslCertificate const&
         ssl_certificate_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_ssl_certificates::v1::
-      InsertRegionSslCertificatesRequest request;
+      InsertRegionSslCertificateRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_ssl_certificate_resource() = ssl_certificate_resource;
-  return connection_->InsertRegionSslCertificates(request);
+  return connection_->InsertRegionSslCertificate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::InsertRegionSslCertificates(
+RegionSslCertificatesClient::InsertRegionSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertRegionSslCertificatesRequest const& request,
+        InsertRegionSslCertificateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionSslCertificates(request);
+  return connection_->InsertRegionSslCertificate(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

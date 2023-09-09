@@ -54,8 +54,8 @@ class MockNodeTypesConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::NodeType>, GetNodeTypes,
-      (google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::NodeType>, GetNodeType,
+      (google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
            request),
       (override));
 

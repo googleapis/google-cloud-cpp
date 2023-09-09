@@ -43,21 +43,21 @@ class NetworkEdgeSecurityServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_edge_security_services::v1::
           AggregatedListNetworkEdgeSecurityServicesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNetworkEdgeSecurityServices(
+  virtual google::cloud::Idempotency DeleteNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          DeleteNetworkEdgeSecurityServicesRequest const& request);
+          DeleteNetworkEdgeSecurityServiceRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetworkEdgeSecurityServices(
+  virtual google::cloud::Idempotency GetNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          GetNetworkEdgeSecurityServicesRequest const& request);
+          GetNetworkEdgeSecurityServiceRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworkEdgeSecurityServices(
+  virtual google::cloud::Idempotency InsertNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          InsertNetworkEdgeSecurityServicesRequest const& request);
+          InsertNetworkEdgeSecurityServiceRequest const& request);
 
-  virtual google::cloud::Idempotency PatchNetworkEdgeSecurityServices(
+  virtual google::cloud::Idempotency PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          PatchNetworkEdgeSecurityServicesRequest const& request);
+          PatchNetworkEdgeSecurityServiceRequest const& request);
 };
 
 std::unique_ptr<NetworkEdgeSecurityServicesConnectionIdempotencyPolicy>

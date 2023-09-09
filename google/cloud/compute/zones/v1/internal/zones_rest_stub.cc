@@ -38,9 +38,9 @@ DefaultZonesRestStub::DefaultZonesRestStub(
     std::shared_ptr<rest_internal::RestClient> service, Options options)
     : service_(std::move(service)), options_(std::move(options)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZones(
+StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZone(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Zone>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

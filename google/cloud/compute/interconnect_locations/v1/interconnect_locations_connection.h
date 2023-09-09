@@ -194,9 +194,9 @@ class InterconnectLocationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-  GetInterconnectLocations(
+  GetInterconnectLocation(
       google::cloud::cpp::compute::interconnect_locations::v1::
-          GetInterconnectLocationsRequest const& request);
+          GetInterconnectLocationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>
   ListInterconnectLocations(

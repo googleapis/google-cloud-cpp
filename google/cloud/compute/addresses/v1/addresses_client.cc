@@ -52,67 +52,65 @@ AddressesClient::AggregatedListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesClient::DeleteAddresses(std::string const& project,
-                                 std::string const& region,
-                                 std::string const& address, Options opts) {
+AddressesClient::DeleteAddress(std::string const& project,
+                               std::string const& region,
+                               std::string const& address, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest request;
+  google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_address(address);
-  return connection_->DeleteAddresses(request);
+  return connection_->DeleteAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesClient::DeleteAddresses(
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+AddressesClient::DeleteAddress(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAddresses(request);
+  return connection_->DeleteAddress(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesClient::GetAddresses(std::string const& project,
-                              std::string const& region,
-                              std::string const& address, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Address> AddressesClient::GetAddress(
+    std::string const& project, std::string const& region,
+    std::string const& address, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::addresses::v1::GetAddressesRequest request;
+  google::cloud::cpp::compute::addresses::v1::GetAddressRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_address(address);
-  return connection_->GetAddresses(request);
+  return connection_->GetAddress(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesClient::GetAddresses(
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+StatusOr<google::cloud::cpp::compute::v1::Address> AddressesClient::GetAddress(
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetAddresses(request);
+  return connection_->GetAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesClient::InsertAddresses(
+AddressesClient::InsertAddress(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::Address const& address_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest request;
+  google::cloud::cpp::compute::addresses::v1::InsertAddressRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_address_resource() = address_resource;
-  return connection_->InsertAddresses(request);
+  return connection_->InsertAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesClient::InsertAddresses(
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+AddressesClient::InsertAddress(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertAddresses(request);
+  return connection_->InsertAddress(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>

@@ -49,12 +49,12 @@ DiskTypesRestMetadata::AggregatedListDiskTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesRestMetadata::GetDiskTypes(
+DiskTypesRestMetadata::GetDiskType(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetDiskTypes(rest_context, request);
+  return child_->GetDiskType(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeList>

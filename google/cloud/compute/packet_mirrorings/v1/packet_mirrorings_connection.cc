@@ -42,25 +42,25 @@ PacketMirroringsConnection::AggregatedListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsConnection::DeletePacketMirrorings(
+PacketMirroringsConnection::DeletePacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringsRequest const&) {
+        DeletePacketMirroringRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-PacketMirroringsConnection::GetPacketMirrorings(
+PacketMirroringsConnection::GetPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        GetPacketMirroringsRequest const&) {
+        GetPacketMirroringRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsConnection::InsertPacketMirrorings(
+PacketMirroringsConnection::InsertPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringsRequest const&) {
+        InsertPacketMirroringRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -75,9 +75,9 @@ PacketMirroringsConnection::ListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsConnection::PatchPacketMirrorings(
+PacketMirroringsConnection::PatchPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringsRequest const&) {
+        PatchPacketMirroringRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -52,7 +52,7 @@ service NodeTemplates {
 
   // Deletes the specified NodeTemplate resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/delete
-  rpc DeleteNodeTemplates(DeleteNodeTemplatesRequest)
+  rpc DeleteNodeTemplate(DeleteNodeTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{node_template}"
@@ -63,7 +63,7 @@ service NodeTemplates {
 
   // Returns the specified node template.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/get
-  rpc GetNodeTemplates(GetNodeTemplatesRequest)
+  rpc GetNodeTemplate(GetNodeTemplateRequest)
       returns (google.cloud.cpp.compute.v1.NodeTemplate) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{node_template}"
@@ -85,7 +85,7 @@ service NodeTemplates {
   // Creates a NodeTemplate resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeTemplates/insert
-  rpc InsertNodeTemplates(InsertNodeTemplatesRequest)
+  rpc InsertNodeTemplate(InsertNodeTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/nodeTemplates"
@@ -206,8 +206,8 @@ message AggregatedListNodeTemplatesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteNodeTemplates.
-message DeleteNodeTemplatesRequest {
+// Request message for DeleteNodeTemplate.
+message DeleteNodeTemplateRequest {
   // Name of the NodeTemplate resource to delete.
   string node_template = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -251,8 +251,8 @@ message GetIamPolicyRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetNodeTemplates.
-message GetNodeTemplatesRequest {
+// Request message for GetNodeTemplate.
+message GetNodeTemplateRequest {
   // Name of the node template to return.
   string node_template = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -263,8 +263,8 @@ message GetNodeTemplatesRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertNodeTemplates.
-message InsertNodeTemplatesRequest {
+// Request message for InsertNodeTemplate.
+message InsertNodeTemplateRequest {
   // The NodeTemplate for this request.
   optional google.cloud.cpp.compute.v1.NodeTemplate node_template_resource = 1
       [json_name = "__json_request_body"];

@@ -52,17 +52,17 @@ GlobalNetworkEndpointGroupsRestLogging::AsyncAttachNetworkEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsRestLogging::AsyncDeleteGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsRestLogging::AsyncDeleteGlobalNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        DeleteGlobalNetworkEndpointGroupsRequest const& request) {
+        DeleteGlobalNetworkEndpointGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-                 DeleteGlobalNetworkEndpointGroupsRequest const& request) {
-        return child_->AsyncDeleteGlobalNetworkEndpointGroups(
+                 DeleteGlobalNetworkEndpointGroupRequest const& request) {
+        return child_->AsyncDeleteGlobalNetworkEndpointGroup(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -86,31 +86,31 @@ GlobalNetworkEndpointGroupsRestLogging::AsyncDetachNetworkEndpoints(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-GlobalNetworkEndpointGroupsRestLogging::GetGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsRestLogging::GetGlobalNetworkEndpointGroup(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        GetGlobalNetworkEndpointGroupsRequest const& request) {
+        GetGlobalNetworkEndpointGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-                 GetGlobalNetworkEndpointGroupsRequest const& request) {
-        return child_->GetGlobalNetworkEndpointGroups(rest_context, request);
+                 GetGlobalNetworkEndpointGroupRequest const& request) {
+        return child_->GetGlobalNetworkEndpointGroup(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsRestLogging::AsyncInsertGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsRestLogging::AsyncInsertGlobalNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        InsertGlobalNetworkEndpointGroupsRequest const& request) {
+        InsertGlobalNetworkEndpointGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-                 InsertGlobalNetworkEndpointGroupsRequest const& request) {
-        return child_->AsyncInsertGlobalNetworkEndpointGroups(
+                 InsertGlobalNetworkEndpointGroupRequest const& request) {
+        return child_->AsyncInsertGlobalNetworkEndpointGroup(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -150,12 +150,12 @@ GlobalNetworkEndpointGroupsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -165,12 +165,12 @@ future<Status> GlobalNetworkEndpointGroupsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

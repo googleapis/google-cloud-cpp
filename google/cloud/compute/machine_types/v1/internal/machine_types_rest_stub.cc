@@ -59,10 +59,10 @@ DefaultMachineTypesRestStub::AggregatedListMachineTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-DefaultMachineTypesRestStub::GetMachineTypes(
+DefaultMachineTypesRestStub::GetMachineType(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const& request) {
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineType>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

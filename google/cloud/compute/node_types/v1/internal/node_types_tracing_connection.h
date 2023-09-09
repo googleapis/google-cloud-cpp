@@ -45,8 +45,8 @@ class NodeTypesTracingConnection
       google::cloud::cpp::compute::node_types::v1::
           AggregatedListNodeTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(

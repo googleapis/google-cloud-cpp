@@ -65,56 +65,56 @@ PublicDelegatedPrefixesRestConnectionImpl::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixesRequest const& request) {
+        DeletePublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
+          GetRegionOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteRegionOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::public_delegated_prefixes::v1::
-              DeletePublicDelegatedPrefixesRequest const& request) {
-        return stub->AsyncDeletePublicDelegatedPrefixes(cq, std::move(context),
-                                                        request);
+              DeletePublicDelegatedPrefixRequest const& request) {
+        return stub->AsyncDeletePublicDelegatedPrefix(cq, std::move(context),
+                                                      request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetRegionOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteRegionOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePublicDelegatedPrefixes(request),
+      idempotency_policy(*current)->DeletePublicDelegatedPrefix(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -122,72 +122,72 @@ PublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefixes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-PublicDelegatedPrefixesRestConnectionImpl::GetPublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestConnectionImpl::GetPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        GetPublicDelegatedPrefixesRequest const& request) {
+        GetPublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetPublicDelegatedPrefixes(request),
+      idempotency_policy(*current)->GetPublicDelegatedPrefix(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::public_delegated_prefixes::v1::
-                 GetPublicDelegatedPrefixesRequest const& request) {
-        return stub_->GetPublicDelegatedPrefixes(rest_context, request);
+                 GetPublicDelegatedPrefixRequest const& request) {
+        return stub_->GetPublicDelegatedPrefix(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesRestConnectionImpl::InsertPublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestConnectionImpl::InsertPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixesRequest const& request) {
+        InsertPublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
+          GetRegionOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteRegionOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::public_delegated_prefixes::v1::
-              InsertPublicDelegatedPrefixesRequest const& request) {
-        return stub->AsyncInsertPublicDelegatedPrefixes(cq, std::move(context),
-                                                        request);
+              InsertPublicDelegatedPrefixRequest const& request) {
+        return stub->AsyncInsertPublicDelegatedPrefix(cq, std::move(context),
+                                                      request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetRegionOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteRegionOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertPublicDelegatedPrefixes(request),
+      idempotency_policy(*current)->InsertPublicDelegatedPrefix(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -232,56 +232,55 @@ PublicDelegatedPrefixesRestConnectionImpl::ListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesRestConnectionImpl::PatchPublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestConnectionImpl::PatchPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixesRequest const& request) {
+        PatchPublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
+          GetRegionOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteRegionOperationRequest>(
       background_->cq(), request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::public_delegated_prefixes::v1::
-              PatchPublicDelegatedPrefixesRequest const& request) {
-        return stub->AsyncPatchPublicDelegatedPrefixes(cq, std::move(context),
-                                                       request);
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::public_delegated_prefixes::
+                         v1::PatchPublicDelegatedPrefixRequest const& request) {
+        return stub->AsyncPatchPublicDelegatedPrefix(cq, std::move(context),
+                                                     request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetRegionOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteRegionOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchPublicDelegatedPrefixes(request),
+      idempotency_policy(*current)->PatchPublicDelegatedPrefix(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteRegionOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

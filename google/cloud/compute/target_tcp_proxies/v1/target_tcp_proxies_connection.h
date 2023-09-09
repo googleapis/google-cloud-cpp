@@ -194,16 +194,16 @@ class TargetTcpProxiesConnection {
           AggregatedListTargetTcpProxiesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                             DeleteTargetTcpProxiesRequest const& request);
+  DeleteTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           DeleteTargetTcpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                          GetTargetTcpProxiesRequest const& request);
+  GetTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                        GetTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                             InsertTargetTcpProxiesRequest const& request);
+  InsertTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           InsertTargetTcpProxyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
   ListTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::

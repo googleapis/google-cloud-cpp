@@ -57,21 +57,21 @@ class MockInterconnectAttachmentsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteInterconnectAttachments,
+              DeleteInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
-                   DeleteInterconnectAttachmentsRequest const& request),
+                   DeleteInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>,
-              GetInterconnectAttachments,
+              GetInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
-                   GetInterconnectAttachmentsRequest const& request),
+                   GetInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertInterconnectAttachments,
+              InsertInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
-                   InsertInterconnectAttachmentsRequest const& request),
+                   InsertInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -82,9 +82,9 @@ class MockInterconnectAttachmentsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchInterconnectAttachments,
+              PatchInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
-                   PatchInterconnectAttachmentsRequest const& request),
+                   PatchInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

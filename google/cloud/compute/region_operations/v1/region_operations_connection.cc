@@ -34,16 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionOperationsConnection::~RegionOperationsConnection() = default;
 
-Status RegionOperationsConnection::DeleteRegionOperations(
+Status RegionOperationsConnection::DeleteRegionOperation(
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const&) {
+        DeleteRegionOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsConnection::GetRegionOperations(
+RegionOperationsConnection::GetRegionOperation(
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const&) {
+        GetRegionOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

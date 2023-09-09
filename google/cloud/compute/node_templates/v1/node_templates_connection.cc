@@ -42,18 +42,18 @@ NodeTemplatesConnection::AggregatedListNodeTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesConnection::DeleteNodeTemplates(
+NodeTemplatesConnection::DeleteNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplatesRequest const&) {
+        DeleteNodeTemplateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesConnection::GetNodeTemplates(
+NodeTemplatesConnection::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        GetNodeTemplatesRequest const&) {
+        GetNodeTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -65,9 +65,9 @@ NodeTemplatesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesConnection::InsertNodeTemplates(
+NodeTemplatesConnection::InsertNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplatesRequest const&) {
+        InsertNodeTemplateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

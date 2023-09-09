@@ -67,14 +67,14 @@ class RegionNetworkFirewallPoliciesRestConnectionImpl
           CloneRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNetworkFirewallPolicies(
+  DeleteRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          DeleteRegionNetworkFirewallPoliciesRequest const& request) override;
+          DeleteRegionNetworkFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetRegionNetworkFirewallPolicies(
+  GetRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          GetRegionNetworkFirewallPoliciesRequest const& request) override;
+          GetRegionNetworkFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
   GetAssociation(google::cloud::cpp::compute::region_network_firewall_policies::
@@ -95,9 +95,9 @@ class RegionNetworkFirewallPoliciesRestConnectionImpl
           GetRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNetworkFirewallPolicies(
+  InsertRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          InsertRegionNetworkFirewallPoliciesRequest const& request) override;
+          InsertRegionNetworkFirewallPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
   ListRegionNetworkFirewallPolicies(
@@ -105,9 +105,9 @@ class RegionNetworkFirewallPoliciesRestConnectionImpl
           ListRegionNetworkFirewallPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionNetworkFirewallPolicies(
+  PatchRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          PatchRegionNetworkFirewallPoliciesRequest const& request) override;
+          PatchRegionNetworkFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::

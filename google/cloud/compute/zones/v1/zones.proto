@@ -37,7 +37,7 @@ service Zones {
 
   // Returns the specified Zone resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/zones/get
-  rpc GetZones(GetZonesRequest) returns (google.cloud.cpp.compute.v1.Zone) {
+  rpc GetZone(GetZoneRequest) returns (google.cloud.cpp.compute.v1.Zone) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}"
     };
@@ -55,8 +55,8 @@ service Zones {
   }
 }
 
-// Request message for GetZones.
-message GetZonesRequest {
+// Request message for GetZone.
+message GetZoneRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 

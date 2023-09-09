@@ -55,16 +55,16 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
           AggregatedListSecurityPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteSecurityPolicies(
+  AsyncDeleteSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::security_policies::v1::
-          DeleteSecurityPoliciesRequest const& request) override;
+          DeleteSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::security_policies::v1::
-          GetSecurityPoliciesRequest const& request) override;
+          GetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -72,11 +72,11 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertSecurityPolicies(
+  AsyncInsertSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::security_policies::v1::
-          InsertSecurityPoliciesRequest const& request) override;
+          InsertSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
   ListSecurityPolicies(google::cloud::rest_internal::RestContext& rest_context,
@@ -91,11 +91,11 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
           ListPreconfiguredExpressionSetsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchSecurityPolicies(
+  AsyncPatchSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::security_policies::v1::
-          PatchSecurityPoliciesRequest const& request) override;
+          PatchSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
@@ -120,13 +120,13 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   std::shared_ptr<SecurityPoliciesRestStub> child_;
