@@ -623,11 +623,11 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCGlobal) {
   EXPECT_THAT(vars,
               Contains(Pair("longrunning_get_operation_request_type",
                             "google::cloud::cpp::compute::global_"
-                            "operations::v1::GetGlobalOperationsRequest")));
+                            "operations::v1::GetGlobalOperationRequest")));
   EXPECT_THAT(
       vars, Contains(Pair("longrunning_cancel_operation_request_type",
                           "google::cloud::cpp::compute::global_operations::v1::"
-                          "DeleteGlobalOperationsRequest")));
+                          "DeleteGlobalOperationRequest")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_project(request.project());
       r.set_operation(op);
@@ -660,13 +660,13 @@ TEST_F(LongrunningVarsTest,
   EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_request_type",
                                   "google::cloud::cpp::compute::global_"
                                   "organization_operations::v1::"
-                                  "GetGlobalOrganizationOperationsRequest")));
+                                  "GetGlobalOrganizationOperationRequest")));
   EXPECT_THAT(
       vars,
       Contains(Pair(
           "longrunning_cancel_operation_request_type",
           "google::cloud::cpp::compute::global_organization_operations::v1::"
-          "DeleteGlobalOrganizationOperationsRequest")));
+          "DeleteGlobalOrganizationOperationRequest")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_operation(op);
 )""")));
@@ -696,11 +696,11 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCRegion) {
   EXPECT_THAT(vars,
               Contains(Pair("longrunning_get_operation_request_type",
                             "google::cloud::cpp::compute::region_"
-                            "operations::v1::GetRegionOperationsRequest")));
+                            "operations::v1::GetRegionOperationRequest")));
   EXPECT_THAT(
       vars, Contains(Pair("longrunning_cancel_operation_request_type",
                           "google::cloud::cpp::compute::region_operations::v1::"
-                          "DeleteRegionOperationsRequest")));
+                          "DeleteRegionOperationRequest")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_project(request.project());
       r.set_region(request.region());
@@ -733,11 +733,11 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCZone) {
           "google/cloud/compute/zone_operations/v1/zone_operations.pb.h")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_request_type",
                                   "google::cloud::cpp::compute::zone_"
-                                  "operations::v1::GetZoneOperationsRequest")));
+                                  "operations::v1::GetZoneOperationRequest")));
   EXPECT_THAT(vars,
               Contains(Pair("longrunning_cancel_operation_request_type",
                             "google::cloud::cpp::compute::zone_operations::v1::"
-                            "DeleteZoneOperationsRequest")));
+                            "DeleteZoneOperationRequest")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_project(request.project());
       r.set_zone(request.zone());
