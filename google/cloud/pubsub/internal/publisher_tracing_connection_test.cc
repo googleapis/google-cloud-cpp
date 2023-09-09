@@ -80,9 +80,9 @@ TEST(MakePublisherTracingConnectionTest, CreateTracingConnection) {
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
   });
-  auto connection_ = MakePublisherTracingConnection(std::move(mock));
+  auto connection = MakePublisherTracingConnection(std::move(mock));
 
-  connection_->Flush(PublisherConnection::FlushParams{});
+  connection->Flush(PublisherConnection::FlushParams{});
 }
 
 }  // namespace
