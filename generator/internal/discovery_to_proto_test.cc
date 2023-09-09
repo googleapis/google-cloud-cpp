@@ -449,8 +449,8 @@ TEST_F(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
   auto constexpr kExpectedRequestTypeJson = R"""({
-"description":"Request message for GetFoos.",
-"id":"GetFoosRequest",
+"description":"Request message for GetFoo.",
+"id":"GetFooRequest",
 "method":"get",
 "properties":{
   "fooId":{
@@ -2243,9 +2243,9 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   //    import: google/cloud/product_name/version/internal/common_000.proto
   //    import: google/cloud/product_name/version/internal/common_001.proto
   //    type: CreateSnapshotRequest
-  //    type: DeleteDisksRequest
-  //    type: GetDisksRequest
-  //    type: InsertDisksRequest
+  //    type: DeleteDiskRequest
+  //    type: GetDiskRequest
+  //    type: InsertDiskRequest
   //    type: TestIamPermissionsRequest
   //  file: google/cloud/product_name/foos/version/foos.proto
   //    package: google.cloud.cpp.product_name.foos.version
@@ -2358,9 +2358,9 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
               Eq("google.cloud.cpp.product_name.disks.version"));
   EXPECT_THAT(disks_file->types(),
               UnorderedElementsAre(type_named("CreateSnapshotRequest"),
-                                   type_named("DeleteDisksRequest"),
-                                   type_named("GetDisksRequest"),
-                                   type_named("InsertDisksRequest"),
+                                   type_named("DeleteDiskRequest"),
+                                   type_named("GetDiskRequest"),
+                                   type_named("InsertDiskRequest"),
                                    type_named("TestIamPermissionsRequest")));
   EXPECT_THAT(disks_file->import_paths(),
               UnorderedElementsAre(
