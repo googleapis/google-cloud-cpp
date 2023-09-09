@@ -34,18 +34,18 @@ RoutesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RoutesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::DeleteRoutes(
-    google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&) {
+Idempotency RoutesConnectionIdempotencyPolicy::DeleteRoute(
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::GetRoutes(
-    google::cloud::cpp::compute::routes::v1::GetRoutesRequest const&) {
+Idempotency RoutesConnectionIdempotencyPolicy::GetRoute(
+    google::cloud::cpp::compute::routes::v1::GetRouteRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutesConnectionIdempotencyPolicy::InsertRoutes(
-    google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&) {
+Idempotency RoutesConnectionIdempotencyPolicy::InsertRoute(
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

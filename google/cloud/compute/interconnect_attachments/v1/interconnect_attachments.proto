@@ -52,7 +52,7 @@ service InterconnectAttachments {
 
   // Deletes the specified interconnect attachment.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/delete
-  rpc DeleteInterconnectAttachments(DeleteInterconnectAttachmentsRequest)
+  rpc DeleteInterconnectAttachment(DeleteInterconnectAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
@@ -64,7 +64,7 @@ service InterconnectAttachments {
 
   // Returns the specified interconnect attachment.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/get
-  rpc GetInterconnectAttachments(GetInterconnectAttachmentsRequest)
+  rpc GetInterconnectAttachment(GetInterconnectAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectAttachment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
@@ -76,7 +76,7 @@ service InterconnectAttachments {
   // Creates an InterconnectAttachment in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/insert
-  rpc InsertInterconnectAttachments(InsertInterconnectAttachmentsRequest)
+  rpc InsertInterconnectAttachment(InsertInterconnectAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments"
@@ -102,7 +102,7 @@ service InterconnectAttachments {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectAttachments/patch
-  rpc PatchInterconnectAttachments(PatchInterconnectAttachmentsRequest)
+  rpc PatchInterconnectAttachment(PatchInterconnectAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
@@ -202,8 +202,8 @@ message AggregatedListInterconnectAttachmentsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteInterconnectAttachments.
-message DeleteInterconnectAttachmentsRequest {
+// Request message for DeleteInterconnectAttachment.
+message DeleteInterconnectAttachmentRequest {
   // Name of the interconnect attachment to delete.
   string interconnect_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -232,8 +232,8 @@ message DeleteInterconnectAttachmentsRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetInterconnectAttachments.
-message GetInterconnectAttachmentsRequest {
+// Request message for GetInterconnectAttachment.
+message GetInterconnectAttachmentRequest {
   // Name of the interconnect attachment to return.
   string interconnect_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -244,8 +244,8 @@ message GetInterconnectAttachmentsRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertInterconnectAttachments.
-message InsertInterconnectAttachmentsRequest {
+// Request message for InsertInterconnectAttachment.
+message InsertInterconnectAttachmentRequest {
   // The InterconnectAttachment for this request.
   optional google.cloud.cpp.compute.v1.InterconnectAttachment
       interconnect_attachment_resource = 1 [json_name = "__json_request_body"];
@@ -346,8 +346,8 @@ message ListInterconnectAttachmentsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchInterconnectAttachments.
-message PatchInterconnectAttachmentsRequest {
+// Request message for PatchInterconnectAttachment.
+message PatchInterconnectAttachmentRequest {
   // Name of the interconnect attachment to patch.
   string interconnect_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 

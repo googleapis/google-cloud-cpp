@@ -96,8 +96,7 @@ service RegionInstanceGroupManagers {
   // Deletes the specified managed instance group and all of the instances in
   // that group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/delete
-  rpc DeleteRegionInstanceGroupManagers(
-      DeleteRegionInstanceGroupManagersRequest)
+  rpc DeleteRegionInstanceGroupManager(DeleteRegionInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}"
@@ -147,7 +146,7 @@ service RegionInstanceGroupManagers {
 
   // Returns all of the details about the specified managed instance group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/get
-  rpc GetRegionInstanceGroupManagers(GetRegionInstanceGroupManagersRequest)
+  rpc GetRegionInstanceGroupManager(GetRegionInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}"
@@ -164,8 +163,7 @@ service RegionInstanceGroupManagers {
   // instances with the listmanagedinstances method. A regional managed instance
   // group can contain up to 2000 instances.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/insert
-  rpc InsertRegionInstanceGroupManagers(
-      InsertRegionInstanceGroupManagersRequest)
+  rpc InsertRegionInstanceGroupManager(InsertRegionInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers"
@@ -244,7 +242,7 @@ service RegionInstanceGroupManagers {
   // different from the current state of that VM. To learn how to apply an
   // updated configuration to the VMs in a MIG, see Updating instances in a MIG.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroupManagers/patch
-  rpc PatchRegionInstanceGroupManagers(PatchRegionInstanceGroupManagersRequest)
+  rpc PatchRegionInstanceGroupManager(PatchRegionInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/instanceGroupManagers/{instance_group_manager}"
@@ -513,8 +511,8 @@ message DeletePerInstanceConfigsRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for DeleteRegionInstanceGroupManagers.
-message DeleteRegionInstanceGroupManagersRequest {
+// Request message for DeleteRegionInstanceGroupManager.
+message DeleteRegionInstanceGroupManagerRequest {
   // Name of the managed instance group to delete.
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -543,8 +541,8 @@ message DeleteRegionInstanceGroupManagersRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetRegionInstanceGroupManagers.
-message GetRegionInstanceGroupManagersRequest {
+// Request message for GetRegionInstanceGroupManager.
+message GetRegionInstanceGroupManagerRequest {
   // Name of the managed instance group to return.
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -555,8 +553,8 @@ message GetRegionInstanceGroupManagersRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionInstanceGroupManagers.
-message InsertRegionInstanceGroupManagersRequest {
+// Request message for InsertRegionInstanceGroupManager.
+message InsertRegionInstanceGroupManagerRequest {
   // The InstanceGroupManager for this request.
   optional google.cloud.cpp.compute.v1.InstanceGroupManager
       instance_group_manager_resource = 1 [json_name = "__json_request_body"];
@@ -905,8 +903,8 @@ message PatchPerInstanceConfigsRequest {
   optional string request_id = 5;
 }
 
-// Request message for PatchRegionInstanceGroupManagers.
-message PatchRegionInstanceGroupManagersRequest {
+// Request message for PatchRegionInstanceGroupManager.
+message PatchRegionInstanceGroupManagerRequest {
   // The name of the instance group manager.
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 

@@ -180,14 +180,13 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L226}
+  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachments(std::string const& project,
-                           std::string const& region,
-                           std::string const& service_attachment,
-                           Options opts = {});
+  DeleteServiceAttachment(std::string const& project, std::string const& region,
+                          std::string const& service_attachment,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -197,7 +196,7 @@ class ServiceAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -220,14 +219,13 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L226}
+  /// [google.cloud.cpp.compute.service_attachments.v1.DeleteServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentsRequest const& request,
-      Options opts = {});
+  DeleteServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                              DeleteServiceAttachmentRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -250,14 +248,14 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L271}
+  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L271}
   /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_108.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(std::string const& project, std::string const& region,
-                        std::string const& service_attachment,
-                        Options opts = {});
+  GetServiceAttachment(std::string const& project, std::string const& region,
+                       std::string const& service_attachment,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -267,7 +265,7 @@ class ServiceAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -283,14 +281,14 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L271}
+  /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L271}
   /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_108.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
-                            GetServiceAttachmentsRequest const& request,
-                        Options opts = {});
+  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                           GetServiceAttachmentRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -385,11 +383,11 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L283}
+  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachments(
+  InsertServiceAttachment(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::ServiceAttachment const&
           service_attachment_resource,
@@ -404,7 +402,7 @@ class ServiceAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -427,14 +425,13 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L283}
+  /// [google.cloud.cpp.compute.service_attachments.v1.InsertServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentsRequest const& request,
-      Options opts = {});
+  InsertServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                              InsertServiceAttachmentRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -547,11 +544,11 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L382}
+  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachments(
+  PatchServiceAttachment(
       std::string const& project, std::string const& region,
       std::string const& service_attachment,
       google::cloud::cpp::compute::v1::ServiceAttachment const&
@@ -568,7 +565,7 @@ class ServiceAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -591,13 +588,13 @@ class ServiceAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L382}
+  /// [google.cloud.cpp.compute.service_attachments.v1.PatchServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L382}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
-                              PatchServiceAttachmentsRequest const& request,
-                          Options opts = {});
+  PatchServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                             PatchServiceAttachmentRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///

@@ -40,22 +40,22 @@ MachineImagesRestMetadata::MachineImagesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesRestMetadata::AsyncDeleteMachineImages(
+MachineImagesRestMetadata::AsyncDeleteMachineImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImagesRequest const& request) {
+        DeleteMachineImageRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteMachineImages(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteMachineImage(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesRestMetadata::GetMachineImages(
+MachineImagesRestMetadata::GetMachineImage(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::
-        GetMachineImagesRequest const& request) {
+        GetMachineImageRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetMachineImages(rest_context, request);
+  return child_->GetMachineImage(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -68,13 +68,13 @@ MachineImagesRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesRestMetadata::AsyncInsertMachineImages(
+MachineImagesRestMetadata::AsyncInsertMachineImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImagesRequest const& request) {
+        InsertMachineImageRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertMachineImages(cq, std::move(rest_context), request);
+  return child_->AsyncInsertMachineImage(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
@@ -109,7 +109,7 @@ MachineImagesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -118,7 +118,7 @@ future<Status> MachineImagesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

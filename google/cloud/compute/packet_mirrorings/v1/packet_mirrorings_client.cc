@@ -52,72 +52,72 @@ PacketMirroringsClient::AggregatedListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsClient::DeletePacketMirrorings(
+PacketMirroringsClient::DeletePacketMirroring(
     std::string const& project, std::string const& region,
     std::string const& packet_mirroring, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::packet_mirrorings::v1::
-      DeletePacketMirroringsRequest request;
+      DeletePacketMirroringRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_packet_mirroring(packet_mirroring);
-  return connection_->DeletePacketMirrorings(request);
+  return connection_->DeletePacketMirroring(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsClient::DeletePacketMirrorings(
+PacketMirroringsClient::DeletePacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringsRequest const& request,
+        DeletePacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePacketMirrorings(request);
+  return connection_->DeletePacketMirroring(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-PacketMirroringsClient::GetPacketMirrorings(std::string const& project,
-                                            std::string const& region,
-                                            std::string const& packet_mirroring,
-                                            Options opts) {
+PacketMirroringsClient::GetPacketMirroring(std::string const& project,
+                                           std::string const& region,
+                                           std::string const& packet_mirroring,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringsRequest
+  google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringRequest
       request;
   request.set_project(project);
   request.set_region(region);
   request.set_packet_mirroring(packet_mirroring);
-  return connection_->GetPacketMirrorings(request);
+  return connection_->GetPacketMirroring(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-PacketMirroringsClient::GetPacketMirrorings(
+PacketMirroringsClient::GetPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        GetPacketMirroringsRequest const& request,
+        GetPacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetPacketMirrorings(request);
+  return connection_->GetPacketMirroring(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsClient::InsertPacketMirrorings(
+PacketMirroringsClient::InsertPacketMirroring(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::PacketMirroring const&
         packet_mirroring_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::packet_mirrorings::v1::
-      InsertPacketMirroringsRequest request;
+      InsertPacketMirroringRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_packet_mirroring_resource() = packet_mirroring_resource;
-  return connection_->InsertPacketMirrorings(request);
+  return connection_->InsertPacketMirroring(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsClient::InsertPacketMirrorings(
+PacketMirroringsClient::InsertPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringsRequest const& request,
+        InsertPacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertPacketMirrorings(request);
+  return connection_->InsertPacketMirroring(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -142,7 +142,7 @@ PacketMirroringsClient::ListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsClient::PatchPacketMirrorings(
+PacketMirroringsClient::PatchPacketMirroring(
     std::string const& project, std::string const& region,
     std::string const& packet_mirroring,
     google::cloud::cpp::compute::v1::PacketMirroring const&
@@ -150,21 +150,21 @@ PacketMirroringsClient::PatchPacketMirrorings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::packet_mirrorings::v1::
-      PatchPacketMirroringsRequest request;
+      PatchPacketMirroringRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_packet_mirroring(packet_mirroring);
   *request.mutable_packet_mirroring_resource() = packet_mirroring_resource;
-  return connection_->PatchPacketMirrorings(request);
+  return connection_->PatchPacketMirroring(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsClient::PatchPacketMirrorings(
+PacketMirroringsClient::PatchPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringsRequest const& request,
+        PatchPacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPacketMirrorings(request);
+  return connection_->PatchPacketMirroring(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -34,49 +34,49 @@ RegionAutoscalersRestLogging::RegionAutoscalersRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestLogging::AsyncDeleteRegionAutoscalers(
+RegionAutoscalersRestLogging::AsyncDeleteRegionAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalersRequest const& request) {
+        DeleteRegionAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_autoscalers::v1::
-                 DeleteRegionAutoscalersRequest const& request) {
-        return child_->AsyncDeleteRegionAutoscalers(cq, std::move(rest_context),
-                                                    request);
+                 DeleteRegionAutoscalerRequest const& request) {
+        return child_->AsyncDeleteRegionAutoscaler(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersRestLogging::GetRegionAutoscalers(
+RegionAutoscalersRestLogging::GetRegionAutoscaler(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalersRequest const& request) {
+        GetRegionAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_autoscalers::v1::
-                 GetRegionAutoscalersRequest const& request) {
-        return child_->GetRegionAutoscalers(rest_context, request);
+                 GetRegionAutoscalerRequest const& request) {
+        return child_->GetRegionAutoscaler(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestLogging::AsyncInsertRegionAutoscalers(
+RegionAutoscalersRestLogging::AsyncInsertRegionAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalersRequest const& request) {
+        InsertRegionAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_autoscalers::v1::
-                 InsertRegionAutoscalersRequest const& request) {
-        return child_->AsyncInsertRegionAutoscalers(cq, std::move(rest_context),
-                                                    request);
+                 InsertRegionAutoscalerRequest const& request) {
+        return child_->AsyncInsertRegionAutoscaler(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -96,35 +96,35 @@ RegionAutoscalersRestLogging::ListRegionAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestLogging::AsyncPatchRegionAutoscalers(
+RegionAutoscalersRestLogging::AsyncPatchRegionAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalersRequest const& request) {
+        PatchRegionAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_autoscalers::v1::
-                 PatchRegionAutoscalersRequest const& request) {
-        return child_->AsyncPatchRegionAutoscalers(cq, std::move(rest_context),
-                                                   request);
+                 PatchRegionAutoscalerRequest const& request) {
+        return child_->AsyncPatchRegionAutoscaler(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestLogging::AsyncUpdateRegionAutoscalers(
+RegionAutoscalersRestLogging::AsyncUpdateRegionAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalersRequest const& request) {
+        UpdateRegionAutoscalerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_autoscalers::v1::
-                 UpdateRegionAutoscalersRequest const& request) {
-        return child_->AsyncUpdateRegionAutoscalers(cq, std::move(rest_context),
-                                                    request);
+                 UpdateRegionAutoscalerRequest const& request) {
+        return child_->AsyncUpdateRegionAutoscaler(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -134,12 +134,12 @@ RegionAutoscalersRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetRegionOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -149,12 +149,12 @@ future<Status> RegionAutoscalersRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteRegionOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

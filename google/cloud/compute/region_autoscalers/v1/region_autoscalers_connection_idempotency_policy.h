@@ -37,29 +37,29 @@ class RegionAutoscalersConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionAutoscalersConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteRegionAutoscalers(
+  virtual google::cloud::Idempotency DeleteRegionAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteRegionAutoscalersRequest const& request);
+          DeleteRegionAutoscalerRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionAutoscalers(
+  virtual google::cloud::Idempotency GetRegionAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          GetRegionAutoscalersRequest const& request);
+          GetRegionAutoscalerRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionAutoscalers(
+  virtual google::cloud::Idempotency InsertRegionAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertRegionAutoscalersRequest const& request);
+          InsertRegionAutoscalerRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionAutoscalers(
       google::cloud::cpp::compute::region_autoscalers::v1::
           ListRegionAutoscalersRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionAutoscalers(
+  virtual google::cloud::Idempotency PatchRegionAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchRegionAutoscalersRequest const& request);
+          PatchRegionAutoscalerRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRegionAutoscalers(
+  virtual google::cloud::Idempotency UpdateRegionAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateRegionAutoscalersRequest const& request);
+          UpdateRegionAutoscalerRequest const& request);
 };
 
 std::unique_ptr<RegionAutoscalersConnectionIdempotencyPolicy>

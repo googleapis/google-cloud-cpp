@@ -45,9 +45,9 @@ class InterconnectRemoteLocationsTracingConnection
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-  GetInterconnectRemoteLocations(
+  GetInterconnectRemoteLocation(
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
-          GetInterconnectRemoteLocationsRequest const& request) override;
+          GetInterconnectRemoteLocationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
   ListInterconnectRemoteLocations(

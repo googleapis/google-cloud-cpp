@@ -34,8 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionsConnection::~RegionsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Region> RegionsConnection::GetRegions(
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Region> RegionsConnection::GetRegion(
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

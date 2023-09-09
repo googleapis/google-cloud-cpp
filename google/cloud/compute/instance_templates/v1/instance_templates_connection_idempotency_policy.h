@@ -41,21 +41,21 @@ class InstanceTemplatesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instance_templates::v1::
           AggregatedListInstanceTemplatesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInstanceTemplates(
+  virtual google::cloud::Idempotency DeleteInstanceTemplate(
       google::cloud::cpp::compute::instance_templates::v1::
-          DeleteInstanceTemplatesRequest const& request);
+          DeleteInstanceTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetInstanceTemplates(
+  virtual google::cloud::Idempotency GetInstanceTemplate(
       google::cloud::cpp::compute::instance_templates::v1::
-          GetInstanceTemplatesRequest const& request);
+          GetInstanceTemplateRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::instance_templates::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInstanceTemplates(
+  virtual google::cloud::Idempotency InsertInstanceTemplate(
       google::cloud::cpp::compute::instance_templates::v1::
-          InsertInstanceTemplatesRequest const& request);
+          InsertInstanceTemplateRequest const& request);
 
   virtual google::cloud::Idempotency ListInstanceTemplates(
       google::cloud::cpp::compute::instance_templates::v1::

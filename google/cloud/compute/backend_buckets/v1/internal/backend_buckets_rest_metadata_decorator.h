@@ -48,11 +48,11 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
           AddSignedUrlKeyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteBackendBuckets(
+  AsyncDeleteBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_buckets::v1::
-          DeleteBackendBucketsRequest const& request) override;
+          DeleteBackendBucketRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteSignedUrlKey(
@@ -61,17 +61,17 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBucket(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::backend_buckets::v1::
-          GetBackendBucketsRequest const& request) override;
+          GetBackendBucketRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertBackendBuckets(
+  AsyncInsertBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_buckets::v1::
-          InsertBackendBucketsRequest const& request) override;
+          InsertBackendBucketRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
   ListBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
@@ -79,11 +79,11 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
                          ListBackendBucketsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchBackendBuckets(
+  AsyncPatchBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_buckets::v1::
-          PatchBackendBucketsRequest const& request) override;
+          PatchBackendBucketRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetEdgeSecurityPolicy(
@@ -93,24 +93,24 @@ class BackendBucketsRestMetadata : public BackendBucketsRestStub {
           SetEdgeSecurityPolicyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateBackendBuckets(
+  AsyncUpdateBackendBucket(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_buckets::v1::
-          UpdateBackendBucketsRequest const& request) override;
+          UpdateBackendBucketRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

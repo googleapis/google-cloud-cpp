@@ -35,25 +35,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetGrpcProxiesConnection::~TargetGrpcProxiesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesConnection::DeleteTargetGrpcProxies(
+TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxiesRequest const&) {
+        DeleteTargetGrpcProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-TargetGrpcProxiesConnection::GetTargetGrpcProxies(
+TargetGrpcProxiesConnection::GetTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        GetTargetGrpcProxiesRequest const&) {
+        GetTargetGrpcProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesConnection::InsertTargetGrpcProxies(
+TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxiesRequest const&) {
+        InsertTargetGrpcProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -68,9 +68,9 @@ TargetGrpcProxiesConnection::ListTargetGrpcProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesConnection::PatchTargetGrpcProxies(
+TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxiesRequest const&) {
+        PatchTargetGrpcProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -47,7 +47,7 @@ service AcceleratorTypes {
 
   // Returns the specified accelerator type.
   // https://cloud.google.com/compute/docs/reference/rest/v1/acceleratorTypes/get
-  rpc GetAcceleratorTypes(GetAcceleratorTypesRequest)
+  rpc GetAcceleratorType(GetAcceleratorTypeRequest)
       returns (google.cloud.cpp.compute.v1.AcceleratorType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes/{accelerator_type}"
@@ -141,8 +141,8 @@ message AggregatedListAcceleratorTypesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for GetAcceleratorTypes.
-message GetAcceleratorTypesRequest {
+// Request message for GetAcceleratorType.
+message GetAcceleratorTypeRequest {
   // Name of the accelerator type to return.
   string accelerator_type = 1 [(google.api.field_behavior) = REQUIRED];
 

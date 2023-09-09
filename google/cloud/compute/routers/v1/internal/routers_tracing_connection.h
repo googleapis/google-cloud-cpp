@@ -44,13 +44,13 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
       google::cloud::cpp::compute::routers::v1::
           AggregatedListRoutersRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouters(
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
+      google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
@@ -62,24 +62,24 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
       google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouters(
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouters(
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
       google::cloud::cpp::compute::routers::v1::PreviewRequest const& request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouters(
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request) override;
 
  private:

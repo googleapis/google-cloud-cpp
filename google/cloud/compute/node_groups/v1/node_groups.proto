@@ -66,7 +66,7 @@ service NodeGroups {
 
   // Deletes the specified NodeGroup resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/delete
-  rpc DeleteNodeGroups(DeleteNodeGroupsRequest)
+  rpc DeleteNodeGroup(DeleteNodeGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}"
@@ -92,7 +92,7 @@ service NodeGroups {
   // making a list() request. Note: the "nodes" field should not be used. Use
   // nodeGroups.listNodes instead.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/get
-  rpc GetNodeGroups(GetNodeGroupsRequest)
+  rpc GetNodeGroup(GetNodeGroupRequest)
       returns (google.cloud.cpp.compute.v1.NodeGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}"
@@ -114,7 +114,7 @@ service NodeGroups {
   // Creates a NodeGroup resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/insert
-  rpc InsertNodeGroups(InsertNodeGroupsRequest)
+  rpc InsertNodeGroup(InsertNodeGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups"
@@ -149,7 +149,7 @@ service NodeGroups {
 
   // Updates the specified node group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups/patch
-  rpc PatchNodeGroups(PatchNodeGroupsRequest)
+  rpc PatchNodeGroup(PatchNodeGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}"
@@ -321,8 +321,8 @@ message AggregatedListNodeGroupsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteNodeGroups.
-message DeleteNodeGroupsRequest {
+// Request message for DeleteNodeGroup.
+message DeleteNodeGroupRequest {
   // Name of the NodeGroup resource to delete.
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -401,8 +401,8 @@ message GetIamPolicyRequest {
   string zone = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetNodeGroups.
-message GetNodeGroupsRequest {
+// Request message for GetNodeGroup.
+message GetNodeGroupRequest {
   // Name of the node group to return.
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -413,8 +413,8 @@ message GetNodeGroupsRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertNodeGroups.
-message InsertNodeGroupsRequest {
+// Request message for InsertNodeGroup.
+message InsertNodeGroupRequest {
   // Initial count of nodes in the node group.
   int32 initial_node_count = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -586,8 +586,8 @@ message ListNodesRequest {
   string zone = 8 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for PatchNodeGroups.
-message PatchNodeGroupsRequest {
+// Request message for PatchNodeGroup.
+message PatchNodeGroupRequest {
   // Name of the NodeGroup resource to update.
   string node_group = 1 [(google.api.field_behavior) = REQUIRED];
 

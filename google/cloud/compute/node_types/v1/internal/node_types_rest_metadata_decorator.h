@@ -44,9 +44,9 @@ class NodeTypesRestMetadata : public NodeTypesRestStub {
       google::cloud::cpp::compute::node_types::v1::
           AggregatedListNodeTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeList> ListNodeTypes(

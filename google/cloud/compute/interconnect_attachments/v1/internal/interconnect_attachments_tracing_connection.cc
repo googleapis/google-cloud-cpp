@@ -49,38 +49,38 @@ InterconnectAttachmentsTracingConnection::AggregatedListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachments(
+InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        DeleteInterconnectAttachmentsRequest const& request) {
+        DeleteInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
-      "DeleteInterconnectAttachments");
+      "DeleteInterconnectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteInterconnectAttachments(request));
+                           child_->DeleteInterconnectAttachment(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-InterconnectAttachmentsTracingConnection::GetInterconnectAttachments(
+InterconnectAttachmentsTracingConnection::GetInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const& request) {
+        GetInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
-      "GetInterconnectAttachments");
+      "GetInterconnectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetInterconnectAttachments(request));
+  return internal::EndSpan(*span, child_->GetInterconnectAttachment(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsTracingConnection::InsertInterconnectAttachments(
+InterconnectAttachmentsTracingConnection::InsertInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        InsertInterconnectAttachmentsRequest const& request) {
+        InsertInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
-      "InsertInterconnectAttachments");
+      "InsertInterconnectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertInterconnectAttachments(request));
+                           child_->InsertInterconnectAttachment(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -98,15 +98,15 @@ InterconnectAttachmentsTracingConnection::ListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsTracingConnection::PatchInterconnectAttachments(
+InterconnectAttachmentsTracingConnection::PatchInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        PatchInterconnectAttachmentsRequest const& request) {
+        PatchInterconnectAttachmentRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
-      "PatchInterconnectAttachments");
+      "PatchInterconnectAttachment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchInterconnectAttachments(request));
+                           child_->PatchInterconnectAttachment(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

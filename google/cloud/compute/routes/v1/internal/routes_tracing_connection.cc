@@ -33,32 +33,32 @@ RoutesTracingConnection::RoutesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesTracingConnection::DeleteRoutes(
-    google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+RoutesTracingConnection::DeleteRoute(
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
         request) {
   auto span =
-      internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoutes");
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoute");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteRoutes(request));
+  return internal::EndSpan(std::move(span), child_->DeleteRoute(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Route>
-RoutesTracingConnection::GetRoutes(
-    google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) {
+RoutesTracingConnection::GetRoute(
+    google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
   auto span =
-      internal::MakeSpan("compute_routes_v1::RoutesConnection::GetRoutes");
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::GetRoute");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRoutes(request));
+  return internal::EndSpan(*span, child_->GetRoute(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutesTracingConnection::InsertRoutes(
-    google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+RoutesTracingConnection::InsertRoute(
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
         request) {
   auto span =
-      internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoutes");
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoute");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertRoutes(request));
+  return internal::EndSpan(std::move(span), child_->InsertRoute(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Route>

@@ -188,16 +188,16 @@ class GlobalAddressesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
-                            DeleteGlobalAddressesRequest const& request);
+  DeleteGlobalAddress(google::cloud::cpp::compute::global_addresses::v1::
+                          DeleteGlobalAddressRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          GetGlobalAddressesRequest const& request);
+          GetGlobalAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
-                            InsertGlobalAddressesRequest const& request);
+  InsertGlobalAddress(google::cloud::cpp::compute::global_addresses::v1::
+                          InsertGlobalAddressRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Address>
   ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::

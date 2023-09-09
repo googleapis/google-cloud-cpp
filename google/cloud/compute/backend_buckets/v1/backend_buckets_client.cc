@@ -57,24 +57,24 @@ BackendBucketsClient::AddSignedUrlKey(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::DeleteBackendBuckets(std::string const& project,
-                                           std::string const& backend_bucket,
-                                           Options opts) {
+BackendBucketsClient::DeleteBackendBucket(std::string const& project,
+                                          std::string const& backend_bucket,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketsRequest
+  google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketRequest
       request;
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
-  return connection_->DeleteBackendBuckets(request);
+  return connection_->DeleteBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::DeleteBackendBuckets(
+BackendBucketsClient::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        DeleteBackendBucketsRequest const& request,
+        DeleteBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackendBuckets(request);
+  return connection_->DeleteBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -101,47 +101,47 @@ BackendBucketsClient::DeleteSignedUrlKey(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsClient::GetBackendBuckets(std::string const& project,
-                                        std::string const& backend_bucket,
-                                        Options opts) {
+BackendBucketsClient::GetBackendBucket(std::string const& project,
+                                       std::string const& backend_bucket,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketsRequest
+  google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketRequest
       request;
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
-  return connection_->GetBackendBuckets(request);
+  return connection_->GetBackendBucket(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsClient::GetBackendBuckets(
+BackendBucketsClient::GetBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        GetBackendBucketsRequest const& request,
+        GetBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetBackendBuckets(request);
+  return connection_->GetBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::InsertBackendBuckets(
+BackendBucketsClient::InsertBackendBucket(
     std::string const& project,
     google::cloud::cpp::compute::v1::BackendBucket const&
         backend_bucket_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketsRequest
+  google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketRequest
       request;
   request.set_project(project);
   *request.mutable_backend_bucket_resource() = backend_bucket_resource;
-  return connection_->InsertBackendBuckets(request);
+  return connection_->InsertBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::InsertBackendBuckets(
+BackendBucketsClient::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        InsertBackendBucketsRequest const& request,
+        InsertBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertBackendBuckets(request);
+  return connection_->InsertBackendBucket(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
@@ -164,27 +164,27 @@ BackendBucketsClient::ListBackendBuckets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::PatchBackendBuckets(
+BackendBucketsClient::PatchBackendBucket(
     std::string const& project, std::string const& backend_bucket,
     google::cloud::cpp::compute::v1::BackendBucket const&
         backend_bucket_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketsRequest
+  google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketRequest
       request;
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
   *request.mutable_backend_bucket_resource() = backend_bucket_resource;
-  return connection_->PatchBackendBuckets(request);
+  return connection_->PatchBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::PatchBackendBuckets(
+BackendBucketsClient::PatchBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        PatchBackendBucketsRequest const& request,
+        PatchBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchBackendBuckets(request);
+  return connection_->PatchBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -213,27 +213,27 @@ BackendBucketsClient::SetEdgeSecurityPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::UpdateBackendBuckets(
+BackendBucketsClient::UpdateBackendBucket(
     std::string const& project, std::string const& backend_bucket,
     google::cloud::cpp::compute::v1::BackendBucket const&
         backend_bucket_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketsRequest
+  google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketRequest
       request;
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
   *request.mutable_backend_bucket_resource() = backend_bucket_resource;
-  return connection_->UpdateBackendBuckets(request);
+  return connection_->UpdateBackendBucket(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsClient::UpdateBackendBuckets(
+BackendBucketsClient::UpdateBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        UpdateBackendBucketsRequest const& request,
+        UpdateBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackendBuckets(request);
+  return connection_->UpdateBackendBucket(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

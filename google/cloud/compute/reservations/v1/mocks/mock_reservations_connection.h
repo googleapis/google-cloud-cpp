@@ -55,15 +55,15 @@ class MockReservationsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteReservations,
+              DeleteReservation,
               (google::cloud::cpp::compute::reservations::v1::
-                   DeleteReservationsRequest const& request),
+                   DeleteReservationRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Reservation>,
-              GetReservations,
+              GetReservation,
               (google::cloud::cpp::compute::reservations::v1::
-                   GetReservationsRequest const& request),
+                   GetReservationRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -73,9 +73,9 @@ class MockReservationsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertReservations,
+              InsertReservation,
               (google::cloud::cpp::compute::reservations::v1::
-                   InsertReservationsRequest const& request),
+                   InsertReservationRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -105,9 +105,9 @@ class MockReservationsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateReservations,
+              UpdateReservation,
               (google::cloud::cpp::compute::reservations::v1::
-                   UpdateReservationsRequest const& request),
+                   UpdateReservationRequest const& request),
               (override));
 };
 

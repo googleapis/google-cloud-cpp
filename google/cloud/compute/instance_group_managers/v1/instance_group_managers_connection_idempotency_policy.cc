@@ -63,9 +63,9 @@ Idempotency InstanceGroupManagersConnectionIdempotencyPolicy::CreateInstances(
 }
 
 Idempotency
-InstanceGroupManagersConnectionIdempotencyPolicy::DeleteInstanceGroupManagers(
+InstanceGroupManagersConnectionIdempotencyPolicy::DeleteInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        DeleteInstanceGroupManagersRequest const&) {
+        DeleteInstanceGroupManagerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -83,16 +83,16 @@ InstanceGroupManagersConnectionIdempotencyPolicy::DeletePerInstanceConfigs(
 }
 
 Idempotency
-InstanceGroupManagersConnectionIdempotencyPolicy::GetInstanceGroupManagers(
+InstanceGroupManagersConnectionIdempotencyPolicy::GetInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        GetInstanceGroupManagersRequest const&) {
+        GetInstanceGroupManagerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-InstanceGroupManagersConnectionIdempotencyPolicy::InsertInstanceGroupManagers(
+InstanceGroupManagersConnectionIdempotencyPolicy::InsertInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        InsertInstanceGroupManagersRequest const&) {
+        InsertInstanceGroupManagerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -124,9 +124,9 @@ InstanceGroupManagersConnectionIdempotencyPolicy::ListPerInstanceConfigs(
 }
 
 Idempotency
-InstanceGroupManagersConnectionIdempotencyPolicy::PatchInstanceGroupManagers(
+InstanceGroupManagersConnectionIdempotencyPolicy::PatchInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        PatchInstanceGroupManagersRequest const&) {
+        PatchInstanceGroupManagerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -48,32 +48,32 @@ ServiceAttachmentsRestLogging::AggregatedListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestLogging::AsyncDeleteServiceAttachments(
+ServiceAttachmentsRestLogging::AsyncDeleteServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const& request) {
+        DeleteServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::service_attachments::v1::
-                 DeleteServiceAttachmentsRequest const& request) {
-        return child_->AsyncDeleteServiceAttachments(
-            cq, std::move(rest_context), request);
+                 DeleteServiceAttachmentRequest const& request) {
+        return child_->AsyncDeleteServiceAttachment(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsRestLogging::GetServiceAttachments(
+ServiceAttachmentsRestLogging::GetServiceAttachment(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const& request) {
+        GetServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::service_attachments::v1::
-                 GetServiceAttachmentsRequest const& request) {
-        return child_->GetServiceAttachments(rest_context, request);
+                 GetServiceAttachmentRequest const& request) {
+        return child_->GetServiceAttachment(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -93,18 +93,18 @@ ServiceAttachmentsRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestLogging::AsyncInsertServiceAttachments(
+ServiceAttachmentsRestLogging::AsyncInsertServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const& request) {
+        InsertServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::service_attachments::v1::
-                 InsertServiceAttachmentsRequest const& request) {
-        return child_->AsyncInsertServiceAttachments(
-            cq, std::move(rest_context), request);
+                 InsertServiceAttachmentRequest const& request) {
+        return child_->AsyncInsertServiceAttachment(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -124,18 +124,18 @@ ServiceAttachmentsRestLogging::ListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestLogging::AsyncPatchServiceAttachments(
+ServiceAttachmentsRestLogging::AsyncPatchServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const& request) {
+        PatchServiceAttachmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::service_attachments::v1::
-                 PatchServiceAttachmentsRequest const& request) {
-        return child_->AsyncPatchServiceAttachments(cq, std::move(rest_context),
-                                                    request);
+                 PatchServiceAttachmentRequest const& request) {
+        return child_->AsyncPatchServiceAttachment(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -173,12 +173,12 @@ ServiceAttachmentsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetRegionOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -188,12 +188,12 @@ future<Status> ServiceAttachmentsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteRegionOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

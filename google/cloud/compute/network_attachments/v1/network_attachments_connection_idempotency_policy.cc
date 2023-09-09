@@ -42,16 +42,15 @@ NetworkAttachmentsConnectionIdempotencyPolicy::AggregatedListNetworkAttachments(
 }
 
 Idempotency
-NetworkAttachmentsConnectionIdempotencyPolicy::DeleteNetworkAttachments(
+NetworkAttachmentsConnectionIdempotencyPolicy::DeleteNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentsRequest const&) {
+        DeleteNetworkAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-NetworkAttachmentsConnectionIdempotencyPolicy::GetNetworkAttachments(
+Idempotency NetworkAttachmentsConnectionIdempotencyPolicy::GetNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
-        GetNetworkAttachmentsRequest const&) {
+        GetNetworkAttachmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -62,9 +61,9 @@ Idempotency NetworkAttachmentsConnectionIdempotencyPolicy::GetIamPolicy(
 }
 
 Idempotency
-NetworkAttachmentsConnectionIdempotencyPolicy::InsertNetworkAttachments(
+NetworkAttachmentsConnectionIdempotencyPolicy::InsertNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentsRequest const&) {
+        InsertNetworkAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

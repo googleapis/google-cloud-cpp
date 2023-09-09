@@ -34,13 +34,13 @@ SnapshotsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SnapshotsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SnapshotsConnectionIdempotencyPolicy::DeleteSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&) {
+Idempotency SnapshotsConnectionIdempotencyPolicy::DeleteSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SnapshotsConnectionIdempotencyPolicy::GetSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&) {
+Idempotency SnapshotsConnectionIdempotencyPolicy::GetSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -49,8 +49,8 @@ Idempotency SnapshotsConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SnapshotsConnectionIdempotencyPolicy::InsertSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&) {
+Idempotency SnapshotsConnectionIdempotencyPolicy::InsertSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -208,8 +208,8 @@ class InstancesConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstances(
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+  DeleteInstance(
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -221,8 +221,8 @@ class InstancesConnection {
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
+      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
           request);
 
   virtual StatusOr<
@@ -252,8 +252,8 @@ class InstancesConnection {
           GetShieldedInstanceIdentityRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstances(
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+  InsertInstance(
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
@@ -355,8 +355,8 @@ class InstancesConnection {
                          TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateInstances(
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+  UpdateInstance(
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

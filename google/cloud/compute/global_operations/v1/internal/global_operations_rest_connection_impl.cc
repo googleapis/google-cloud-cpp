@@ -57,33 +57,33 @@ GlobalOperationsRestConnectionImpl::AggregatedListGlobalOperations(
       request, __func__);
 }
 
-Status GlobalOperationsRestConnectionImpl::DeleteGlobalOperations(
+Status GlobalOperationsRestConnectionImpl::DeleteGlobalOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGlobalOperations(request),
+      idempotency_policy(*current)->DeleteGlobalOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
-        return stub_->DeleteGlobalOperations(rest_context, request);
+                 DeleteGlobalOperationRequest const& request) {
+        return stub_->DeleteGlobalOperation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsRestConnectionImpl::GetGlobalOperations(
+GlobalOperationsRestConnectionImpl::GetGlobalOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetGlobalOperations(request),
+      idempotency_policy(*current)->GetGlobalOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
-        return stub_->GetGlobalOperations(rest_context, request);
+                 GetGlobalOperationRequest const& request) {
+        return stub_->GetGlobalOperation(rest_context, request);
       },
       request, __func__);
 }

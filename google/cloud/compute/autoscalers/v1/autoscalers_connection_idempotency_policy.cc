@@ -40,21 +40,20 @@ Idempotency AutoscalersConnectionIdempotencyPolicy::AggregatedListAutoscalers(
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::DeleteAutoscalers(
+Idempotency AutoscalersConnectionIdempotencyPolicy::DeleteAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        DeleteAutoscalersRequest const&) {
+        DeleteAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::GetAutoscalers(
-    google::cloud::cpp::compute::autoscalers::v1::
-        GetAutoscalersRequest const&) {
+Idempotency AutoscalersConnectionIdempotencyPolicy::GetAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::InsertAutoscalers(
+Idempotency AutoscalersConnectionIdempotencyPolicy::InsertAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        InsertAutoscalersRequest const&) {
+        InsertAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -64,15 +63,15 @@ Idempotency AutoscalersConnectionIdempotencyPolicy::ListAutoscalers(
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::PatchAutoscalers(
+Idempotency AutoscalersConnectionIdempotencyPolicy::PatchAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        PatchAutoscalersRequest const&) {
+        PatchAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::UpdateAutoscalers(
+Idempotency AutoscalersConnectionIdempotencyPolicy::UpdateAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::
-        UpdateAutoscalersRequest const&) {
+        UpdateAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 

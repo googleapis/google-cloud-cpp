@@ -37,25 +37,25 @@ PublicAdvertisedPrefixesConnection::~PublicAdvertisedPrefixesConnection() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesConnection::DeletePublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesConnection::DeletePublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixesRequest const&) {
+        DeletePublicAdvertisedPrefixRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-PublicAdvertisedPrefixesConnection::GetPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesConnection::GetPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        GetPublicAdvertisedPrefixesRequest const&) {
+        GetPublicAdvertisedPrefixRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesConnection::InsertPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesConnection::InsertPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixesRequest const&) {
+        InsertPublicAdvertisedPrefixRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,9 +70,9 @@ PublicAdvertisedPrefixesConnection::ListPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesConnection::PatchPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesConnection::PatchPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixesRequest const&) {
+        PatchPublicAdvertisedPrefixRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

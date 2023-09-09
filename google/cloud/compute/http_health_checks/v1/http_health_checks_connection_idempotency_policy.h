@@ -37,29 +37,29 @@ class HttpHealthChecksConnectionIdempotencyPolicy {
   virtual std::unique_ptr<HttpHealthChecksConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteHttpHealthChecks(
+  virtual google::cloud::Idempotency DeleteHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          DeleteHttpHealthChecksRequest const& request);
+          DeleteHttpHealthCheckRequest const& request);
 
-  virtual google::cloud::Idempotency GetHttpHealthChecks(
+  virtual google::cloud::Idempotency GetHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          GetHttpHealthChecksRequest const& request);
+          GetHttpHealthCheckRequest const& request);
 
-  virtual google::cloud::Idempotency InsertHttpHealthChecks(
+  virtual google::cloud::Idempotency InsertHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          InsertHttpHealthChecksRequest const& request);
+          InsertHttpHealthCheckRequest const& request);
 
   virtual google::cloud::Idempotency ListHttpHealthChecks(
       google::cloud::cpp::compute::http_health_checks::v1::
           ListHttpHealthChecksRequest request);
 
-  virtual google::cloud::Idempotency PatchHttpHealthChecks(
+  virtual google::cloud::Idempotency PatchHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          PatchHttpHealthChecksRequest const& request);
+          PatchHttpHealthCheckRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateHttpHealthChecks(
+  virtual google::cloud::Idempotency UpdateHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          UpdateHttpHealthChecksRequest const& request);
+          UpdateHttpHealthCheckRequest const& request);
 };
 
 std::unique_ptr<HttpHealthChecksConnectionIdempotencyPolicy>

@@ -45,19 +45,19 @@ class RegionInstanceTemplatesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceTemplates(
+  DeleteRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplatesRequest const& request) override;
+          DeleteRegionInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(
+  GetRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplatesRequest const& request) override;
+          GetRegionInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceTemplates(
+  InsertRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplatesRequest const& request) override;
+          InsertRegionInstanceTemplateRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListRegionInstanceTemplates(

@@ -38,9 +38,9 @@ class InterconnectLocationsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<InterconnectLocationsConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency GetInterconnectLocations(
+  virtual google::cloud::Idempotency GetInterconnectLocation(
       google::cloud::cpp::compute::interconnect_locations::v1::
-          GetInterconnectLocationsRequest const& request);
+          GetInterconnectLocationRequest const& request);
 
   virtual google::cloud::Idempotency ListInterconnectLocations(
       google::cloud::cpp::compute::interconnect_locations::v1::

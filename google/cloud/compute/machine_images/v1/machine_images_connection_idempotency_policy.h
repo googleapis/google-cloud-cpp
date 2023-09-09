@@ -37,21 +37,21 @@ class MachineImagesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<MachineImagesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteMachineImages(
+  virtual google::cloud::Idempotency DeleteMachineImage(
       google::cloud::cpp::compute::machine_images::v1::
-          DeleteMachineImagesRequest const& request);
+          DeleteMachineImageRequest const& request);
 
-  virtual google::cloud::Idempotency GetMachineImages(
+  virtual google::cloud::Idempotency GetMachineImage(
       google::cloud::cpp::compute::machine_images::v1::
-          GetMachineImagesRequest const& request);
+          GetMachineImageRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::machine_images::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertMachineImages(
+  virtual google::cloud::Idempotency InsertMachineImage(
       google::cloud::cpp::compute::machine_images::v1::
-          InsertMachineImagesRequest const& request);
+          InsertMachineImageRequest const& request);
 
   virtual google::cloud::Idempotency ListMachineImages(
       google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest

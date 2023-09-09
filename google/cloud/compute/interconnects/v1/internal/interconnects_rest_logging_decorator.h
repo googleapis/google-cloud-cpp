@@ -43,16 +43,16 @@ class InterconnectsRestLogging : public InterconnectsRestStub {
                            std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInterconnects(
+  AsyncDeleteInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnects::v1::
-          DeleteInterconnectsRequest const& request) override;
+          DeleteInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnects::v1::
-          GetInterconnectsRequest const& request) override;
+          GetInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
   GetDiagnostics(google::cloud::rest_internal::RestContext& rest_context,
@@ -60,11 +60,11 @@ class InterconnectsRestLogging : public InterconnectsRestStub {
                      GetDiagnosticsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInterconnects(
+  AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnects::v1::
-          InsertInterconnectsRequest const& request) override;
+          InsertInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectList> ListInterconnects(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -72,11 +72,11 @@ class InterconnectsRestLogging : public InterconnectsRestStub {
           ListInterconnectsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInterconnects(
+  AsyncPatchInterconnect(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnects::v1::
-          PatchInterconnectsRequest const& request) override;
+          PatchInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
@@ -89,13 +89,13 @@ class InterconnectsRestLogging : public InterconnectsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   std::shared_ptr<InterconnectsRestStub> child_;

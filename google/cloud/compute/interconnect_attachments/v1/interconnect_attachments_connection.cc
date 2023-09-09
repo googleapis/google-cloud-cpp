@@ -44,25 +44,25 @@ InterconnectAttachmentsConnection::AggregatedListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsConnection::DeleteInterconnectAttachments(
+InterconnectAttachmentsConnection::DeleteInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        DeleteInterconnectAttachmentsRequest const&) {
+        DeleteInterconnectAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-InterconnectAttachmentsConnection::GetInterconnectAttachments(
+InterconnectAttachmentsConnection::GetInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const&) {
+        GetInterconnectAttachmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsConnection::InsertInterconnectAttachments(
+InterconnectAttachmentsConnection::InsertInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        InsertInterconnectAttachmentsRequest const&) {
+        InsertInterconnectAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -77,9 +77,9 @@ InterconnectAttachmentsConnection::ListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsConnection::PatchInterconnectAttachments(
+InterconnectAttachmentsConnection::PatchInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        PatchInterconnectAttachmentsRequest const&) {
+        PatchInterconnectAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

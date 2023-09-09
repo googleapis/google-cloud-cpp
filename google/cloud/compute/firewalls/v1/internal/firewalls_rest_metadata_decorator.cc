@@ -40,32 +40,32 @@ FirewallsRestMetadata::FirewallsRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestMetadata::AsyncDeleteFirewalls(
+FirewallsRestMetadata::AsyncDeleteFirewall(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteFirewalls(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteFirewall(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsRestMetadata::GetFirewalls(
+FirewallsRestMetadata::GetFirewall(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetFirewalls(rest_context, request);
+  return child_->GetFirewall(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestMetadata::AsyncInsertFirewalls(
+FirewallsRestMetadata::AsyncInsertFirewall(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertFirewalls(cq, std::move(rest_context), request);
+  return child_->AsyncInsertFirewall(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
@@ -78,23 +78,23 @@ FirewallsRestMetadata::ListFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestMetadata::AsyncPatchFirewalls(
+FirewallsRestMetadata::AsyncPatchFirewall(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchFirewalls(cq, std::move(rest_context), request);
+  return child_->AsyncPatchFirewall(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestMetadata::AsyncUpdateFirewalls(
+FirewallsRestMetadata::AsyncUpdateFirewall(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateFirewalls(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateFirewall(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -102,7 +102,7 @@ FirewallsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -111,7 +111,7 @@ future<Status> FirewallsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

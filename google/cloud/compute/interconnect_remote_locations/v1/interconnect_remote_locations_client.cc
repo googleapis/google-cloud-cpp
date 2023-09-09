@@ -36,24 +36,24 @@ InterconnectRemoteLocationsClient::~InterconnectRemoteLocationsClient() =
     default;
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsClient::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsClient::GetInterconnectRemoteLocation(
     std::string const& project, std::string const& interconnect_remote_location,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_remote_locations::v1::
-      GetInterconnectRemoteLocationsRequest request;
+      GetInterconnectRemoteLocationRequest request;
   request.set_project(project);
   request.set_interconnect_remote_location(interconnect_remote_location);
-  return connection_->GetInterconnectRemoteLocations(request);
+  return connection_->GetInterconnectRemoteLocation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsClient::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsClient::GetInterconnectRemoteLocation(
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
-        GetInterconnectRemoteLocationsRequest const& request,
+        GetInterconnectRemoteLocationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetInterconnectRemoteLocations(request);
+  return connection_->GetInterconnectRemoteLocation(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>

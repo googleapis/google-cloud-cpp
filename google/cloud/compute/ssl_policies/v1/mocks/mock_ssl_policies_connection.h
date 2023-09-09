@@ -55,21 +55,21 @@ class MockSslPoliciesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteSslPolicies,
+              DeleteSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
-                   DeleteSslPoliciesRequest const& request),
+                   DeleteSslPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPolicy>,
-              GetSslPolicies,
-              (google::cloud::cpp::compute::ssl_policies::v1::
-                   GetSslPoliciesRequest const& request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::SslPolicy>, GetSslPolicy,
+      (google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertSslPolicies,
+              InsertSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
-                   InsertSslPoliciesRequest const& request),
+                   InsertSslPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -86,9 +86,9 @@ class MockSslPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSslPolicies,
+              PatchSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
-                   PatchSslPoliciesRequest const& request),
+                   PatchSslPolicyRequest const& request),
               (override));
 };
 

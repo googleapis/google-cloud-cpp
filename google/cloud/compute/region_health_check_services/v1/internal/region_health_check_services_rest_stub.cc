@@ -48,11 +48,11 @@ DefaultRegionHealthCheckServicesRestStub::
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionHealthCheckServicesRestStub::AsyncDeleteRegionHealthCheckServices(
+DefaultRegionHealthCheckServicesRestStub::AsyncDeleteRegionHealthCheckService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteRegionHealthCheckServicesRequest const& request) {
+        DeleteRegionHealthCheckServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -74,10 +74,10 @@ DefaultRegionHealthCheckServicesRestStub::AsyncDeleteRegionHealthCheckServices(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-DefaultRegionHealthCheckServicesRestStub::GetRegionHealthCheckServices(
+DefaultRegionHealthCheckServicesRestStub::GetRegionHealthCheckService(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        GetRegionHealthCheckServicesRequest const& request) {
+        GetRegionHealthCheckServiceRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthCheckService>(
       *service_, rest_context, request,
@@ -89,11 +89,11 @@ DefaultRegionHealthCheckServicesRestStub::GetRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionHealthCheckServicesRestStub::AsyncInsertRegionHealthCheckServices(
+DefaultRegionHealthCheckServicesRestStub::AsyncInsertRegionHealthCheckService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertRegionHealthCheckServicesRequest const& request) {
+        InsertRegionHealthCheckServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -134,11 +134,11 @@ DefaultRegionHealthCheckServicesRestStub::ListRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionHealthCheckServicesRestStub::AsyncPatchRegionHealthCheckServices(
+DefaultRegionHealthCheckServicesRestStub::AsyncPatchRegionHealthCheckService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchRegionHealthCheckServicesRequest const& request) {
+        PatchRegionHealthCheckServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -165,7 +165,7 @@ DefaultRegionHealthCheckServicesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -189,7 +189,7 @@ future<Status> DefaultRegionHealthCheckServicesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

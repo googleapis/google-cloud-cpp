@@ -51,25 +51,25 @@ InstanceGroupsConnection::AggregatedListInstanceGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsConnection::DeleteInstanceGroups(
+InstanceGroupsConnection::DeleteInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupsRequest const&) {
+        DeleteInstanceGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsConnection::GetInstanceGroups(
+InstanceGroupsConnection::GetInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        GetInstanceGroupsRequest const&) {
+        GetInstanceGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsConnection::InsertInstanceGroups(
+InstanceGroupsConnection::InsertInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupsRequest const&) {
+        InsertInstanceGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

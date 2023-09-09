@@ -32,13 +32,13 @@ LicenseCodesTracingConnection::LicenseCodesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesTracingConnection::GetLicenseCodes(
-    google::cloud::cpp::compute::license_codes::v1::
-        GetLicenseCodesRequest const& request) {
+LicenseCodesTracingConnection::GetLicenseCode(
+    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_license_codes_v1::LicenseCodesConnection::GetLicenseCodes");
+      "compute_license_codes_v1::LicenseCodesConnection::GetLicenseCode");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetLicenseCodes(request));
+  return internal::EndSpan(*span, child_->GetLicenseCode(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -55,15 +55,15 @@ class MockResourcePoliciesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteResourcePolicies,
+              DeleteResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
-                   DeleteResourcePoliciesRequest const& request),
+                   DeleteResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>,
-              GetResourcePolicies,
+              GetResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
-                   GetResourcePoliciesRequest const& request),
+                   GetResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
@@ -72,9 +72,9 @@ class MockResourcePoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertResourcePolicies,
+              InsertResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
-                   InsertResourcePoliciesRequest const& request),
+                   InsertResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>,
@@ -84,9 +84,9 @@ class MockResourcePoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchResourcePolicies,
+              PatchResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
-                   PatchResourcePoliciesRequest const& request),
+                   PatchResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

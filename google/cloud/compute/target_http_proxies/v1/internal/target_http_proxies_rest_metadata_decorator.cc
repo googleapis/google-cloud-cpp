@@ -50,34 +50,34 @@ TargetHttpProxiesRestMetadata::AggregatedListTargetHttpProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesRestMetadata::AsyncDeleteTargetHttpProxies(
+TargetHttpProxiesRestMetadata::AsyncDeleteTargetHttpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_http_proxies::v1::
-        DeleteTargetHttpProxiesRequest const& request) {
+        DeleteTargetHttpProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteTargetHttpProxies(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncDeleteTargetHttpProxy(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-TargetHttpProxiesRestMetadata::GetTargetHttpProxies(
+TargetHttpProxiesRestMetadata::GetTargetHttpProxy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_http_proxies::v1::
-        GetTargetHttpProxiesRequest const& request) {
+        GetTargetHttpProxyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetTargetHttpProxies(rest_context, request);
+  return child_->GetTargetHttpProxy(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesRestMetadata::AsyncInsertTargetHttpProxies(
+TargetHttpProxiesRestMetadata::AsyncInsertTargetHttpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_http_proxies::v1::
-        InsertTargetHttpProxiesRequest const& request) {
+        InsertTargetHttpProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertTargetHttpProxies(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncInsertTargetHttpProxy(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
@@ -90,14 +90,14 @@ TargetHttpProxiesRestMetadata::ListTargetHttpProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesRestMetadata::AsyncPatchTargetHttpProxies(
+TargetHttpProxiesRestMetadata::AsyncPatchTargetHttpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_http_proxies::v1::
-        PatchTargetHttpProxiesRequest const& request) {
+        PatchTargetHttpProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchTargetHttpProxies(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncPatchTargetHttpProxy(cq, std::move(rest_context),
+                                           request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -115,7 +115,7 @@ TargetHttpProxiesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -124,7 +124,7 @@ future<Status> TargetHttpProxiesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

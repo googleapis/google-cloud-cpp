@@ -334,11 +334,11 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L323}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewallPolicies(std::string const& firewall_policy, Options opts = {});
+  DeleteFirewallPolicy(std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -348,7 +348,7 @@ class FirewallPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPoliciesRequest].
+  ///     [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -371,13 +371,13 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L323}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.DeleteFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L323}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
-                             DeleteFirewallPoliciesRequest const& request,
-                         Options opts = {});
+  DeleteFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                           DeleteFirewallPolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -398,11 +398,11 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L350}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L350}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
       std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
@@ -413,7 +413,7 @@ class FirewallPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPoliciesRequest].
+  ///     [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -429,13 +429,13 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L350}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.GetFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L350}
   /// [google.cloud.cpp.compute.v1.FirewallPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::
-          GetFirewallPoliciesRequest const& request,
+          GetFirewallPolicyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -626,7 +626,7 @@ class FirewallPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.firewall_policies.v1.InsertFirewallPoliciesRequest].
+  ///     [google.cloud.cpp.compute.firewall_policies.v1.InsertFirewallPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -649,13 +649,13 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.InsertFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L374}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.InsertFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L374}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
-                             InsertFirewallPoliciesRequest const& request,
-                         Options opts = {});
+  InsertFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                           InsertFirewallPolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -832,14 +832,14 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L495}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewallPolicies(std::string const& firewall_policy,
-                        google::cloud::cpp::compute::v1::FirewallPolicy const&
-                            firewall_policy_resource,
-                        Options opts = {});
+  PatchFirewallPolicy(std::string const& firewall_policy,
+                      google::cloud::cpp::compute::v1::FirewallPolicy const&
+                          firewall_policy_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -849,7 +849,7 @@ class FirewallPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPoliciesRequest].
+  ///     [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -872,13 +872,13 @@ class FirewallPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L495}
+  /// [google.cloud.cpp.compute.firewall_policies.v1.PatchFirewallPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L495}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
-                            PatchFirewallPoliciesRequest const& request,
-                        Options opts = {});
+  PatchFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                          PatchFirewallPolicyRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///

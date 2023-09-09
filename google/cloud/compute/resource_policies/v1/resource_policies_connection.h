@@ -194,28 +194,28 @@ class ResourcePoliciesConnection {
           AggregatedListResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                             DeleteResourcePoliciesRequest const& request);
+  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           DeleteResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                          GetResourcePoliciesRequest const& request);
+  GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                        GetResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                             InsertResourcePoliciesRequest const& request);
+  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           InsertResourcePolicyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
   ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                            PatchResourcePoliciesRequest const& request);
+  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                          PatchResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::

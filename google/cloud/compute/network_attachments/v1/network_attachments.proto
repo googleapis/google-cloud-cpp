@@ -53,7 +53,7 @@ service NetworkAttachments {
 
   // Deletes the specified NetworkAttachment in the given scope
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/delete
-  rpc DeleteNetworkAttachments(DeleteNetworkAttachmentsRequest)
+  rpc DeleteNetworkAttachment(DeleteNetworkAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{network_attachment}"
@@ -64,7 +64,7 @@ service NetworkAttachments {
 
   // Returns the specified NetworkAttachment resource in the given scope.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/get
-  rpc GetNetworkAttachments(GetNetworkAttachmentsRequest)
+  rpc GetNetworkAttachment(GetNetworkAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.NetworkAttachment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{network_attachment}"
@@ -86,7 +86,7 @@ service NetworkAttachments {
   // Creates a NetworkAttachment in the specified project in the given scope
   // using the parameters that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkAttachments/insert
-  rpc InsertNetworkAttachments(InsertNetworkAttachmentsRequest)
+  rpc InsertNetworkAttachment(InsertNetworkAttachmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkAttachments"
@@ -207,8 +207,8 @@ message AggregatedListNetworkAttachmentsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteNetworkAttachments.
-message DeleteNetworkAttachmentsRequest {
+// Request message for DeleteNetworkAttachment.
+message DeleteNetworkAttachmentRequest {
   // Name of the NetworkAttachment resource to delete.
   string network_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -253,8 +253,8 @@ message GetIamPolicyRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetNetworkAttachments.
-message GetNetworkAttachmentsRequest {
+// Request message for GetNetworkAttachment.
+message GetNetworkAttachmentRequest {
   // Name of the NetworkAttachment resource to return.
   string network_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -265,8 +265,8 @@ message GetNetworkAttachmentsRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertNetworkAttachments.
-message InsertNetworkAttachmentsRequest {
+// Request message for InsertNetworkAttachment.
+message InsertNetworkAttachmentRequest {
   // The NetworkAttachment for this request.
   optional google.cloud.cpp.compute.v1.NetworkAttachment
       network_attachment_resource = 1 [json_name = "__json_request_body"];

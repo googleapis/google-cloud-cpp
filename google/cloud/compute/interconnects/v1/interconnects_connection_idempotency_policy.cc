@@ -34,15 +34,15 @@ InterconnectsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InterconnectsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency InterconnectsConnectionIdempotencyPolicy::DeleteInterconnects(
+Idempotency InterconnectsConnectionIdempotencyPolicy::DeleteInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectsRequest const&) {
+        DeleteInterconnectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InterconnectsConnectionIdempotencyPolicy::GetInterconnects(
+Idempotency InterconnectsConnectionIdempotencyPolicy::GetInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectsRequest const&) {
+        GetInterconnectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -52,9 +52,9 @@ Idempotency InterconnectsConnectionIdempotencyPolicy::GetDiagnostics(
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectsConnectionIdempotencyPolicy::InsertInterconnects(
+Idempotency InterconnectsConnectionIdempotencyPolicy::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectsRequest const&) {
+        InsertInterconnectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -64,9 +64,9 @@ Idempotency InterconnectsConnectionIdempotencyPolicy::ListInterconnects(
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectsConnectionIdempotencyPolicy::PatchInterconnects(
+Idempotency InterconnectsConnectionIdempotencyPolicy::PatchInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectsRequest const&) {
+        PatchInterconnectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

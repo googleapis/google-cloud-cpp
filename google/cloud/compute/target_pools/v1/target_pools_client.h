@@ -331,12 +331,12 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L322}
+  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L322}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPools(std::string const& project, std::string const& region,
-                    std::string const& target_pool, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
+      std::string const& project, std::string const& region,
+      std::string const& target_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -346,7 +346,7 @@ class TargetPoolsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest].
+  ///     [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -369,13 +369,13 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L322}
+  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L322}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                        DeleteTargetPoolsRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::
+          DeleteTargetPoolRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -398,11 +398,11 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L368}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L368}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
       std::string const& project, std::string const& region,
       std::string const& target_pool, Options opts = {});
 
@@ -414,7 +414,7 @@ class TargetPoolsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest].
+  ///     [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -430,13 +430,13 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L368}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L368}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_124.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request,
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -536,11 +536,10 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
+  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPools(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource,
       Options opts = {});
@@ -554,7 +553,7 @@ class TargetPoolsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest].
+  ///     [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -577,13 +576,13 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
+  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                        InsertTargetPoolsRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::
+          InsertTargetPoolRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///

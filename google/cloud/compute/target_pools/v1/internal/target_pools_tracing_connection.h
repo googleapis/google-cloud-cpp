@@ -53,21 +53,21 @@ class TargetPoolsTracingConnection
       google::cloud::cpp::compute::target_pools::v1::
           AggregatedListTargetPoolsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                        DeleteTargetPoolsRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
       google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request) override;
+          DeleteTargetPoolRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                        InsertTargetPoolsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::
+          InsertTargetPoolRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
       google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest

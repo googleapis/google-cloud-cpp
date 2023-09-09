@@ -56,29 +56,29 @@ class AutoscalersRestConnectionImpl
       google::cloud::cpp::compute::autoscalers::v1::
           AggregatedListAutoscalersRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                        DeleteAutoscalersRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                        InsertAutoscalersRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalerRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
       google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::
-          PatchAutoscalersRequest const& request) override;
+          PatchAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                        UpdateAutoscalersRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalerRequest const& request) override;
 
  private:
   static std::unique_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy>

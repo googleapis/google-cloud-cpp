@@ -57,8 +57,8 @@ class ProjectsTracingConnection
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
+      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(

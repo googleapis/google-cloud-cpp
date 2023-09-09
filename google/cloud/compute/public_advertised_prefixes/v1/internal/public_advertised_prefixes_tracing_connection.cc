@@ -37,38 +37,38 @@ PublicAdvertisedPrefixesTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesTracingConnection::DeletePublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesTracingConnection::DeletePublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixesRequest const& request) {
+        DeletePublicAdvertisedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
-      "PublicAdvertisedPrefixesConnection::DeletePublicAdvertisedPrefixes");
+      "PublicAdvertisedPrefixesConnection::DeletePublicAdvertisedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeletePublicAdvertisedPrefixes(request));
+                           child_->DeletePublicAdvertisedPrefix(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-PublicAdvertisedPrefixesTracingConnection::GetPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesTracingConnection::GetPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        GetPublicAdvertisedPrefixesRequest const& request) {
+        GetPublicAdvertisedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
-      "PublicAdvertisedPrefixesConnection::GetPublicAdvertisedPrefixes");
+      "PublicAdvertisedPrefixesConnection::GetPublicAdvertisedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetPublicAdvertisedPrefixes(request));
+  return internal::EndSpan(*span, child_->GetPublicAdvertisedPrefix(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesTracingConnection::InsertPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesTracingConnection::InsertPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixesRequest const& request) {
+        InsertPublicAdvertisedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
-      "PublicAdvertisedPrefixesConnection::InsertPublicAdvertisedPrefixes");
+      "PublicAdvertisedPrefixesConnection::InsertPublicAdvertisedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertPublicAdvertisedPrefixes(request));
+                           child_->InsertPublicAdvertisedPrefix(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -86,15 +86,15 @@ PublicAdvertisedPrefixesTracingConnection::ListPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesTracingConnection::PatchPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesTracingConnection::PatchPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixesRequest const& request) {
+        PatchPublicAdvertisedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
-      "PublicAdvertisedPrefixesConnection::PatchPublicAdvertisedPrefixes");
+      "PublicAdvertisedPrefixesConnection::PatchPublicAdvertisedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchPublicAdvertisedPrefixes(request));
+                           child_->PatchPublicAdvertisedPrefix(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

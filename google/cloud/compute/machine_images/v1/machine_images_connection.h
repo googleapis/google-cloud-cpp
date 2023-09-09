@@ -187,20 +187,20 @@ class MachineImagesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::
-                          DeleteMachineImagesRequest const& request);
+  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         DeleteMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImages(google::cloud::cpp::compute::machine_images::v1::
-                       GetMachineImagesRequest const& request);
+  GetMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                      GetMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::machine_images::v1::
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::
-                          InsertMachineImagesRequest const& request);
+  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         InsertMachineImageRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineImage>
   ListMachineImages(

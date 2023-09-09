@@ -51,7 +51,7 @@ service HealthChecks {
 
   // Deletes the specified HealthCheck resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks/delete
-  rpc DeleteHealthChecks(DeleteHealthChecksRequest)
+  rpc DeleteHealthCheck(DeleteHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/healthChecks/{health_check}"
@@ -62,7 +62,7 @@ service HealthChecks {
 
   // Returns the specified HealthCheck resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks/get
-  rpc GetHealthChecks(GetHealthChecksRequest)
+  rpc GetHealthCheck(GetHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheck) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/healthChecks/{health_check}"
@@ -73,7 +73,7 @@ service HealthChecks {
   // Creates a HealthCheck resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks/insert
-  rpc InsertHealthChecks(InsertHealthChecksRequest)
+  rpc InsertHealthCheck(InsertHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/healthChecks"
@@ -98,7 +98,7 @@ service HealthChecks {
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks/patch
-  rpc PatchHealthChecks(PatchHealthChecksRequest)
+  rpc PatchHealthCheck(PatchHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/healthChecks/{health_check}"
@@ -112,7 +112,7 @@ service HealthChecks {
   // Updates a HealthCheck resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/healthChecks/update
-  rpc UpdateHealthChecks(UpdateHealthChecksRequest)
+  rpc UpdateHealthCheck(UpdateHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/global/healthChecks/{health_check}"
@@ -198,8 +198,8 @@ message AggregatedListHealthChecksRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteHealthChecks.
-message DeleteHealthChecksRequest {
+// Request message for DeleteHealthCheck.
+message DeleteHealthCheckRequest {
   // Name of the HealthCheck resource to delete.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -222,8 +222,8 @@ message DeleteHealthChecksRequest {
   optional string request_id = 3;
 }
 
-// Request message for GetHealthChecks.
-message GetHealthChecksRequest {
+// Request message for GetHealthCheck.
+message GetHealthCheckRequest {
   // Name of the HealthCheck resource to return.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -231,8 +231,8 @@ message GetHealthChecksRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertHealthChecks.
-message InsertHealthChecksRequest {
+// Request message for InsertHealthCheck.
+message InsertHealthCheckRequest {
   // The HealthCheck for this request.
   optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 1
       [json_name = "__json_request_body"];
@@ -321,8 +321,8 @@ message ListHealthChecksRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchHealthChecks.
-message PatchHealthChecksRequest {
+// Request message for PatchHealthCheck.
+message PatchHealthCheckRequest {
   // Name of the HealthCheck resource to patch.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -349,8 +349,8 @@ message PatchHealthChecksRequest {
   optional string request_id = 4;
 }
 
-// Request message for UpdateHealthChecks.
-message UpdateHealthChecksRequest {
+// Request message for UpdateHealthCheck.
+message UpdateHealthCheckRequest {
   // Name of the HealthCheck resource to update.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 

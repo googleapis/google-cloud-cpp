@@ -42,21 +42,21 @@ UrlMapsConnection::AggregatedListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsConnection::DeleteUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&) {
+UrlMapsConnection::DeleteUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::UrlMap> UrlMapsConnection::GetUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::UrlMap> UrlMapsConnection::GetUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsConnection::InsertUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&) {
+UrlMapsConnection::InsertUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -79,16 +79,16 @@ UrlMapsConnection::ListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsConnection::PatchUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&) {
+UrlMapsConnection::PatchUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsConnection::UpdateUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&) {
+UrlMapsConnection::UpdateUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

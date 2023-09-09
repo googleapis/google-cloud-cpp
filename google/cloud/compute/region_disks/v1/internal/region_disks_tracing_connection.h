@@ -52,21 +52,21 @@ class RegionDisksTracingConnection
       google::cloud::cpp::compute::region_disks::v1::
           CreateSnapshotRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisks(google::cloud::cpp::compute::region_disks::v1::
-                        DeleteRegionDisksRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRegionDisk(
       google::cloud::cpp::compute::region_disks::v1::
-          GetRegionDisksRequest const& request) override;
+          DeleteRegionDiskRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisks(google::cloud::cpp::compute::region_disks::v1::
-                        InsertRegionDisksRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::
+          InsertRegionDiskRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
       google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
@@ -107,9 +107,9 @@ class RegionDisksTracingConnection
   TestIamPermissions(google::cloud::cpp::compute::region_disks::v1::
                          TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisks(google::cloud::cpp::compute::region_disks::v1::
-                        UpdateRegionDisksRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::
+          UpdateRegionDiskRequest const& request) override;
 
  private:
   std::shared_ptr<compute_region_disks_v1::RegionDisksConnection> child_;

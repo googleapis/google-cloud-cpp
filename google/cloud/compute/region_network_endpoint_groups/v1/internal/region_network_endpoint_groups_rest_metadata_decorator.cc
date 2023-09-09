@@ -43,33 +43,33 @@ RegionNetworkEndpointGroupsRestMetadata::
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsRestMetadata::AsyncDeleteRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsRestMetadata::AsyncDeleteRegionNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        DeleteRegionNetworkEndpointGroupsRequest const& request) {
+        DeleteRegionNetworkEndpointGroupRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionNetworkEndpointGroups(
+  return child_->AsyncDeleteRegionNetworkEndpointGroup(
       cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-RegionNetworkEndpointGroupsRestMetadata::GetRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsRestMetadata::GetRegionNetworkEndpointGroup(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        GetRegionNetworkEndpointGroupsRequest const& request) {
+        GetRegionNetworkEndpointGroupRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionNetworkEndpointGroups(rest_context, request);
+  return child_->GetRegionNetworkEndpointGroup(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsRestMetadata::AsyncInsertRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsRestMetadata::AsyncInsertRegionNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        InsertRegionNetworkEndpointGroupsRequest const& request) {
+        InsertRegionNetworkEndpointGroupRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionNetworkEndpointGroups(
+  return child_->AsyncInsertRegionNetworkEndpointGroup(
       cq, std::move(rest_context), request);
 }
 
@@ -87,7 +87,7 @@ RegionNetworkEndpointGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -96,7 +96,7 @@ future<Status> RegionNetworkEndpointGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

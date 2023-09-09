@@ -48,15 +48,15 @@ class MockInterconnectsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteInterconnects,
+              DeleteInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
-                   DeleteInterconnectsRequest const& request),
+                   DeleteInterconnectRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Interconnect>,
-              GetInterconnects,
+              GetInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
-                   GetInterconnectsRequest const& request),
+                   GetInterconnectRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -68,9 +68,9 @@ class MockInterconnectsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertInterconnects,
+              InsertInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
-                   InsertInterconnectsRequest const& request),
+                   InsertInterconnectRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -81,9 +81,9 @@ class MockInterconnectsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchInterconnects,
+              PatchInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
-                   PatchInterconnectsRequest const& request),
+                   PatchInterconnectRequest const& request),
               (override));
 
   MOCK_METHOD(

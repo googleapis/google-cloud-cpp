@@ -56,7 +56,7 @@ service InstanceTemplates {
   // permanent and cannot be undone. It is not possible to delete templates that
   // are already in use by a managed instance group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/delete
-  rpc DeleteInstanceTemplates(DeleteInstanceTemplatesRequest)
+  rpc DeleteInstanceTemplate(DeleteInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/instanceTemplates/{instance_template}"
@@ -67,7 +67,7 @@ service InstanceTemplates {
 
   // Returns the specified instance template.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/get
-  rpc GetInstanceTemplates(GetInstanceTemplatesRequest)
+  rpc GetInstanceTemplate(GetInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/instanceTemplates/{instance_template}"
@@ -91,7 +91,7 @@ service InstanceTemplates {
   // existing instance group, your new instance template must use the same
   // network or, if applicable, the same subnetwork as the original template.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates/insert
-  rpc InsertInstanceTemplates(InsertInstanceTemplatesRequest)
+  rpc InsertInstanceTemplate(InsertInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/instanceTemplates"
@@ -212,8 +212,8 @@ message AggregatedListInstanceTemplatesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteInstanceTemplates.
-message DeleteInstanceTemplatesRequest {
+// Request message for DeleteInstanceTemplate.
+message DeleteInstanceTemplateRequest {
   // The name of the instance template to delete.
   string instance_template = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -248,8 +248,8 @@ message GetIamPolicyRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetInstanceTemplates.
-message GetInstanceTemplatesRequest {
+// Request message for GetInstanceTemplate.
+message GetInstanceTemplateRequest {
   // The name of the instance template.
   string instance_template = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -257,8 +257,8 @@ message GetInstanceTemplatesRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertInstanceTemplates.
-message InsertInstanceTemplatesRequest {
+// Request message for InsertInstanceTemplate.
+message InsertInstanceTemplateRequest {
   // The InstanceTemplate for this request.
   optional google.cloud.cpp.compute.v1.InstanceTemplate
       instance_template_resource = 1 [json_name = "__json_request_body"];

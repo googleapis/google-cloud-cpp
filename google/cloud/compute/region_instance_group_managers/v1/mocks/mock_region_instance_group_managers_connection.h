@@ -68,9 +68,9 @@ class MockRegionInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionInstanceGroupManagers,
+              DeleteRegionInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
-                   DeleteRegionInstanceGroupManagersRequest const& request),
+                   DeleteRegionInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -86,15 +86,15 @@ class MockRegionInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>,
-              GetRegionInstanceGroupManagers,
+              GetRegionInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
-                   GetRegionInstanceGroupManagersRequest const& request),
+                   GetRegionInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionInstanceGroupManagers,
+              InsertRegionInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
-                   InsertRegionInstanceGroupManagersRequest const& request),
+                   InsertRegionInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -125,9 +125,9 @@ class MockRegionInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionInstanceGroupManagers,
+              PatchRegionInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
-                   PatchRegionInstanceGroupManagersRequest const& request),
+                   PatchRegionInstanceGroupManagerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

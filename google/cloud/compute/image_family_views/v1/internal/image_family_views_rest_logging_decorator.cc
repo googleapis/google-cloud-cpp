@@ -34,15 +34,15 @@ ImageFamilyViewsRestLogging::ImageFamilyViewsRestLogging(
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsRestLogging::GetImageFamilyViews(
+ImageFamilyViewsRestLogging::GetImageFamilyView(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const& request) {
+        GetImageFamilyViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::image_family_views::v1::
-                 GetImageFamilyViewsRequest const& request) {
-        return child_->GetImageFamilyViews(rest_context, request);
+                 GetImageFamilyViewRequest const& request) {
+        return child_->GetImageFamilyView(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

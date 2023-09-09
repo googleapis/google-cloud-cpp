@@ -53,32 +53,31 @@ class HttpHealthChecksRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthChecks(
+  DeleteHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          DeleteHttpHealthChecksRequest const& request) override;
+          DeleteHttpHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                          GetHttpHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck> GetHttpHealthCheck(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          GetHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthChecks(
+  InsertHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          InsertHttpHealthChecksRequest const& request) override;
+          InsertHttpHealthCheckRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
   ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
                            ListHttpHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthChecks(
-      google::cloud::cpp::compute::http_health_checks::v1::
-          PatchHttpHealthChecksRequest const& request) override;
+  PatchHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                           PatchHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthChecks(
+  UpdateHttpHealthCheck(
       google::cloud::cpp::compute::http_health_checks::v1::
-          UpdateHttpHealthChecksRequest const& request) override;
+          UpdateHttpHealthCheckRequest const& request) override;
 
  private:
   static std::unique_ptr<

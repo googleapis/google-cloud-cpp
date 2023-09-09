@@ -65,15 +65,15 @@ DisksConnection::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::DeleteDisks(
-    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&) {
+DisksConnection::DeleteDisk(
+    google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Disk> DisksConnection::GetDisks(
-    google::cloud::cpp::compute::disks::v1::GetDisksRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Disk> DisksConnection::GetDisk(
+    google::cloud::cpp::compute::disks::v1::GetDiskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -83,8 +83,8 @@ StatusOr<google::cloud::cpp::compute::v1::Policy> DisksConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::InsertDisks(
-    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&) {
+DisksConnection::InsertDisk(
+    google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -160,8 +160,8 @@ DisksConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::UpdateDisks(
-    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&) {
+DisksConnection::UpdateDisk(
+    google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

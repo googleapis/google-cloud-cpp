@@ -37,23 +37,23 @@ RegionSecurityPoliciesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionSecurityPoliciesConnectionIdempotencyPolicy::DeleteRegionSecurityPolicies(
+RegionSecurityPoliciesConnectionIdempotencyPolicy::DeleteRegionSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        DeleteRegionSecurityPoliciesRequest const&) {
+        DeleteRegionSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-RegionSecurityPoliciesConnectionIdempotencyPolicy::GetRegionSecurityPolicies(
+RegionSecurityPoliciesConnectionIdempotencyPolicy::GetRegionSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        GetRegionSecurityPoliciesRequest const&) {
+        GetRegionSecurityPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-RegionSecurityPoliciesConnectionIdempotencyPolicy::InsertRegionSecurityPolicies(
+RegionSecurityPoliciesConnectionIdempotencyPolicy::InsertRegionSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        InsertRegionSecurityPoliciesRequest const&) {
+        InsertRegionSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,9 +65,9 @@ RegionSecurityPoliciesConnectionIdempotencyPolicy::ListRegionSecurityPolicies(
 }
 
 Idempotency
-RegionSecurityPoliciesConnectionIdempotencyPolicy::PatchRegionSecurityPolicies(
+RegionSecurityPoliciesConnectionIdempotencyPolicy::PatchRegionSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        PatchRegionSecurityPoliciesRequest const&) {
+        PatchRegionSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

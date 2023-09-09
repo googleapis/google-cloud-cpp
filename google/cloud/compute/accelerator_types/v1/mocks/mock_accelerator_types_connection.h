@@ -55,9 +55,9 @@ class MockAcceleratorTypesConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>,
-              GetAcceleratorTypes,
+              GetAcceleratorType,
               (google::cloud::cpp::compute::accelerator_types::v1::
-                   GetAcceleratorTypesRequest const& request),
+                   GetAcceleratorTypeRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>,

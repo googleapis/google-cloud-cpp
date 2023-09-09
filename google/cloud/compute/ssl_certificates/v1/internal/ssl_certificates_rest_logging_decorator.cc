@@ -48,49 +48,49 @@ SslCertificatesRestLogging::AggregatedListSslCertificates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesRestLogging::AsyncDeleteSslCertificates(
+SslCertificatesRestLogging::AsyncDeleteSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificatesRequest const& request) {
+        DeleteSslCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::ssl_certificates::v1::
-                 DeleteSslCertificatesRequest const& request) {
-        return child_->AsyncDeleteSslCertificates(cq, std::move(rest_context),
-                                                  request);
+                 DeleteSslCertificateRequest const& request) {
+        return child_->AsyncDeleteSslCertificate(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesRestLogging::GetSslCertificates(
+SslCertificatesRestLogging::GetSslCertificate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificatesRequest const& request) {
+        GetSslCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::ssl_certificates::v1::
-                 GetSslCertificatesRequest const& request) {
-        return child_->GetSslCertificates(rest_context, request);
+                 GetSslCertificateRequest const& request) {
+        return child_->GetSslCertificate(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesRestLogging::AsyncInsertSslCertificates(
+SslCertificatesRestLogging::AsyncInsertSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificatesRequest const& request) {
+        InsertSslCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::ssl_certificates::v1::
-                 InsertSslCertificatesRequest const& request) {
-        return child_->AsyncInsertSslCertificates(cq, std::move(rest_context),
-                                                  request);
+                 InsertSslCertificateRequest const& request) {
+        return child_->AsyncInsertSslCertificate(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -114,12 +114,12 @@ SslCertificatesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -129,12 +129,12 @@ future<Status> SslCertificatesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

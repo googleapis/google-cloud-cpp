@@ -40,8 +40,8 @@ Idempotency NodeTypesConnectionIdempotencyPolicy::AggregatedListNodeTypes(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTypesConnectionIdempotencyPolicy::GetNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&) {
+Idempotency NodeTypesConnectionIdempotencyPolicy::GetNodeType(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 

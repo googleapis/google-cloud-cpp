@@ -42,10 +42,10 @@ class MachineTypesRestStub {
       google::cloud::cpp::compute::machine_types::v1::
           AggregatedListMachineTypesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineTypes(google::cloud::rest_internal::RestContext& rest_context,
-                  google::cloud::cpp::compute::machine_types::v1::
-                      GetMachineTypesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
   ListMachineTypes(google::cloud::rest_internal::RestContext& rest_context,
@@ -67,10 +67,10 @@ class DefaultMachineTypesRestStub : public MachineTypesRestStub {
       google::cloud::cpp::compute::machine_types::v1::
           AggregatedListMachineTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::machine_types::v1::
-          GetMachineTypesRequest const& request) override;
+          GetMachineTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeList> ListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,

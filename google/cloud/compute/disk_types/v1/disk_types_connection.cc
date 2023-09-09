@@ -42,8 +42,8 @@ DiskTypesConnection::AggregatedListDiskTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesConnection::GetDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&) {
+DiskTypesConnection::GetDiskType(
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

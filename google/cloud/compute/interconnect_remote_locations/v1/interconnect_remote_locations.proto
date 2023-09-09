@@ -38,7 +38,7 @@ service InterconnectRemoteLocations {
   // Returns the details for the specified interconnect remote location. Gets a
   // list of available interconnect remote locations by making a list() request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnectRemoteLocations/get
-  rpc GetInterconnectRemoteLocations(GetInterconnectRemoteLocationsRequest)
+  rpc GetInterconnectRemoteLocation(GetInterconnectRemoteLocationRequest)
       returns (google.cloud.cpp.compute.v1.InterconnectRemoteLocation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnectRemoteLocations/{interconnect_remote_location}"
@@ -59,8 +59,8 @@ service InterconnectRemoteLocations {
   }
 }
 
-// Request message for GetInterconnectRemoteLocations.
-message GetInterconnectRemoteLocationsRequest {
+// Request message for GetInterconnectRemoteLocation.
+message GetInterconnectRemoteLocationRequest {
   // Name of the interconnect remote location to return.
   string interconnect_remote_location = 1
       [(google.api.field_behavior) = REQUIRED];

@@ -34,32 +34,31 @@ LicensesRestLogging::LicensesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesRestLogging::AsyncDeleteLicenses(
+LicensesRestLogging::AsyncDeleteLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::licenses::v1::
-                 DeleteLicensesRequest const& request) {
-        return child_->AsyncDeleteLicenses(cq, std::move(rest_context),
-                                           request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+              request) {
+        return child_->AsyncDeleteLicense(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesRestLogging::GetLicenses(
+LicensesRestLogging::GetLicense(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
-              request) { return child_->GetLicenses(rest_context, request); },
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
+                 request) { return child_->GetLicense(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
@@ -77,18 +76,18 @@ LicensesRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesRestLogging::AsyncInsertLicenses(
+LicensesRestLogging::AsyncInsertLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::licenses::v1::
-                 InsertLicensesRequest const& request) {
-        return child_->AsyncInsertLicenses(cq, std::move(rest_context),
-                                           request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+              request) {
+        return child_->AsyncInsertLicense(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -138,12 +137,12 @@ LicensesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -153,12 +152,12 @@ future<Status> LicensesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

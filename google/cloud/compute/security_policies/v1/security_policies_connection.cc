@@ -50,18 +50,18 @@ SecurityPoliciesConnection::AggregatedListSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesConnection::DeleteSecurityPolicies(
+SecurityPoliciesConnection::DeleteSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPoliciesRequest const&) {
+        DeleteSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesConnection::GetSecurityPolicies(
+SecurityPoliciesConnection::GetSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPoliciesRequest const&) {
+        GetSecurityPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -72,9 +72,9 @@ SecurityPoliciesConnection::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesConnection::InsertSecurityPolicies(
+SecurityPoliciesConnection::InsertSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPoliciesRequest const&) {
+        InsertSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,9 +97,9 @@ SecurityPoliciesConnection::ListPreconfiguredExpressionSets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesConnection::PatchSecurityPolicies(
+SecurityPoliciesConnection::PatchSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPoliciesRequest const&) {
+        PatchSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

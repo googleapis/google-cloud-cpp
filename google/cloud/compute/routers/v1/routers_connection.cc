@@ -42,15 +42,15 @@ RoutersConnection::AggregatedListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersConnection::DeleteRouters(
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&) {
+RoutersConnection::DeleteRouter(
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Router> RoutersConnection::GetRouters(
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Router> RoutersConnection::GetRouter(
+    google::cloud::cpp::compute::routers::v1::GetRouterRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -67,8 +67,8 @@ RoutersConnection::GetRouterStatus(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersConnection::InsertRouters(
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&) {
+RoutersConnection::InsertRouter(
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,8 +83,8 @@ RoutersConnection::ListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersConnection::PatchRouters(
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&) {
+RoutersConnection::PatchRouter(
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,8 +97,8 @@ RoutersConnection::Preview(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersConnection::UpdateRouters(
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&) {
+RoutersConnection::UpdateRouter(
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

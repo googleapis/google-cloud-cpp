@@ -50,23 +50,23 @@ ServiceAttachmentsRestMetadata::AggregatedListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestMetadata::AsyncDeleteServiceAttachments(
+ServiceAttachmentsRestMetadata::AsyncDeleteServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const& request) {
+        DeleteServiceAttachmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteServiceAttachments(cq, std::move(rest_context),
-                                               request);
+  return child_->AsyncDeleteServiceAttachment(cq, std::move(rest_context),
+                                              request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsRestMetadata::GetServiceAttachments(
+ServiceAttachmentsRestMetadata::GetServiceAttachment(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const& request) {
+        GetServiceAttachmentRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetServiceAttachments(rest_context, request);
+  return child_->GetServiceAttachment(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -79,14 +79,14 @@ ServiceAttachmentsRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestMetadata::AsyncInsertServiceAttachments(
+ServiceAttachmentsRestMetadata::AsyncInsertServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const& request) {
+        InsertServiceAttachmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertServiceAttachments(cq, std::move(rest_context),
-                                               request);
+  return child_->AsyncInsertServiceAttachment(cq, std::move(rest_context),
+                                              request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
@@ -99,14 +99,14 @@ ServiceAttachmentsRestMetadata::ListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestMetadata::AsyncPatchServiceAttachments(
+ServiceAttachmentsRestMetadata::AsyncPatchServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const& request) {
+        PatchServiceAttachmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchServiceAttachments(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncPatchServiceAttachment(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -132,7 +132,7 @@ ServiceAttachmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -141,7 +141,7 @@ future<Status> ServiceAttachmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

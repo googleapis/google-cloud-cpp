@@ -36,10 +36,10 @@ class LicenseCodesRestStub {
  public:
   virtual ~LicenseCodesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-  GetLicenseCodes(google::cloud::rest_internal::RestContext& rest_context,
-                  google::cloud::cpp::compute::license_codes::v1::
-                      GetLicenseCodesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::license_codes::v1::
+          GetLicenseCodeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
@@ -55,10 +55,10 @@ class DefaultLicenseCodesRestStub : public LicenseCodesRestStub {
   DefaultLicenseCodesRestStub(
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodesRequest const& request) override;
+          GetLicenseCodeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,

@@ -55,21 +55,21 @@ class MockHealthChecksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteHealthChecks,
+              DeleteHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
-                   DeleteHealthChecksRequest const& request),
+                   DeleteHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheck>,
-              GetHealthChecks,
+              GetHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
-                   GetHealthChecksRequest const& request),
+                   GetHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertHealthChecks,
+              InsertHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
-                   InsertHealthChecksRequest const& request),
+                   InsertHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -80,15 +80,15 @@ class MockHealthChecksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchHealthChecks,
+              PatchHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
-                   PatchHealthChecksRequest const& request),
+                   PatchHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateHealthChecks,
+              UpdateHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
-                   UpdateHealthChecksRequest const& request),
+                   UpdateHealthCheckRequest const& request),
               (override));
 };
 

@@ -68,11 +68,11 @@ DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachments(
+DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        DeleteInterconnectAttachmentsRequest const& request) {
+        DeleteInterconnectAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -94,10 +94,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachments(
+DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const& request) {
+        GetInterconnectAttachmentRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(
       *service_, rest_context, request,
@@ -109,11 +109,11 @@ DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachments(
+DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        InsertInterconnectAttachmentsRequest const& request) {
+        InsertInterconnectAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -155,11 +155,11 @@ DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachments(
+DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        PatchInterconnectAttachmentsRequest const& request) {
+        PatchInterconnectAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -213,7 +213,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -237,7 +237,7 @@ future<Status> DefaultInterconnectAttachmentsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

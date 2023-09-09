@@ -47,18 +47,16 @@ class TargetInstancesTracingConnection
           AggregatedListTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(
-      google::cloud::cpp::compute::target_instances::v1::
-          DeleteTargetInstancesRequest const& request) override;
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::cpp::compute::target_instances::v1::
-          GetTargetInstancesRequest const& request) override;
+          GetTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(
-      google::cloud::cpp::compute::target_instances::v1::
-          InsertTargetInstancesRequest const& request) override;
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
   ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::

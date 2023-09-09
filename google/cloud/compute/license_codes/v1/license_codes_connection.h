@@ -183,9 +183,9 @@ class LicenseCodesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-  GetLicenseCodes(google::cloud::cpp::compute::license_codes::v1::
-                      GetLicenseCodesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
+      google::cloud::cpp::compute::license_codes::v1::
+          GetLicenseCodeRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::

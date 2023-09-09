@@ -143,9 +143,9 @@ DefaultProjectsRestStub::AsyncEnableXpnResource(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
-DefaultProjectsRestStub::GetProjects(
+DefaultProjectsRestStub::GetProject(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request,
@@ -324,7 +324,7 @@ DefaultProjectsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -347,7 +347,7 @@ future<Status> DefaultProjectsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

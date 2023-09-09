@@ -43,24 +43,24 @@ Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
-Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    DeletePublicDelegatedPrefixes(
-        google::cloud::cpp::compute::public_delegated_prefixes::v1::
-            DeletePublicDelegatedPrefixesRequest const&) {
+Idempotency
+PublicDelegatedPrefixesConnectionIdempotencyPolicy::DeletePublicDelegatedPrefix(
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-PublicDelegatedPrefixesConnectionIdempotencyPolicy::GetPublicDelegatedPrefixes(
+PublicDelegatedPrefixesConnectionIdempotencyPolicy::GetPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        GetPublicDelegatedPrefixesRequest const&) {
+        GetPublicDelegatedPrefixRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    InsertPublicDelegatedPrefixes(
-        google::cloud::cpp::compute::public_delegated_prefixes::v1::
-            InsertPublicDelegatedPrefixesRequest const&) {
+Idempotency
+PublicDelegatedPrefixesConnectionIdempotencyPolicy::InsertPublicDelegatedPrefix(
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,10 +71,10 @@ PublicDelegatedPrefixesConnectionIdempotencyPolicy::ListPublicDelegatedPrefixes(
   return Idempotency::kIdempotent;
 }
 
-Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    PatchPublicDelegatedPrefixes(
-        google::cloud::cpp::compute::public_delegated_prefixes::v1::
-            PatchPublicDelegatedPrefixesRequest const&) {
+Idempotency
+PublicDelegatedPrefixesConnectionIdempotencyPolicy::PatchPublicDelegatedPrefix(
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -34,23 +34,21 @@ TargetGrpcProxiesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetGrpcProxiesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-TargetGrpcProxiesConnectionIdempotencyPolicy::DeleteTargetGrpcProxies(
+Idempotency TargetGrpcProxiesConnectionIdempotencyPolicy::DeleteTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxiesRequest const&) {
+        DeleteTargetGrpcProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetGrpcProxiesConnectionIdempotencyPolicy::GetTargetGrpcProxies(
+Idempotency TargetGrpcProxiesConnectionIdempotencyPolicy::GetTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        GetTargetGrpcProxiesRequest const&) {
+        GetTargetGrpcProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TargetGrpcProxiesConnectionIdempotencyPolicy::InsertTargetGrpcProxies(
+Idempotency TargetGrpcProxiesConnectionIdempotencyPolicy::InsertTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxiesRequest const&) {
+        InsertTargetGrpcProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -60,10 +58,9 @@ Idempotency TargetGrpcProxiesConnectionIdempotencyPolicy::ListTargetGrpcProxies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-TargetGrpcProxiesConnectionIdempotencyPolicy::PatchTargetGrpcProxies(
+Idempotency TargetGrpcProxiesConnectionIdempotencyPolicy::PatchTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxiesRequest const&) {
+        PatchTargetGrpcProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

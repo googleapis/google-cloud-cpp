@@ -44,9 +44,9 @@ class RegionInstanceGroupsTracingConnection
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroups(
+  GetRegionInstanceGroup(
       google::cloud::cpp::compute::region_instance_groups::v1::
-          GetRegionInstanceGroupsRequest const& request) override;
+          GetRegionInstanceGroupRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListRegionInstanceGroups(

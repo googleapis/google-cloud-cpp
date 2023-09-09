@@ -33,25 +33,25 @@ RegionOperationsTracingConnection::RegionOperationsTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-Status RegionOperationsTracingConnection::DeleteRegionOperations(
+Status RegionOperationsTracingConnection::DeleteRegionOperation(
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_operations_v1::RegionOperationsConnection::"
-      "DeleteRegionOperations");
+      "DeleteRegionOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->DeleteRegionOperations(request));
+  return internal::EndSpan(*span, child_->DeleteRegionOperation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsTracingConnection::GetRegionOperations(
+RegionOperationsTracingConnection::GetRegionOperation(
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_operations_v1::RegionOperationsConnection::"
-      "GetRegionOperations");
+      "GetRegionOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionOperations(request));
+  return internal::EndSpan(*span, child_->GetRegionOperation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>

@@ -49,15 +49,15 @@ class MockGlobalOrganizationOperationsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status, DeleteGlobalOrganizationOperations,
+  MOCK_METHOD(Status, DeleteGlobalOrganizationOperation,
               (google::cloud::cpp::compute::global_organization_operations::v1::
-                   DeleteGlobalOrganizationOperationsRequest const& request),
+                   DeleteGlobalOrganizationOperationRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              GetGlobalOrganizationOperations,
+              GetGlobalOrganizationOperation,
               (google::cloud::cpp::compute::global_organization_operations::v1::
-                   GetGlobalOrganizationOperationsRequest const& request),
+                   GetGlobalOrganizationOperationRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,

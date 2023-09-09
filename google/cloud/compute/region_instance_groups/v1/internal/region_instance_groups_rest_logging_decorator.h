@@ -44,10 +44,10 @@ class RegionInstanceGroupsRestLogging : public RegionInstanceGroupsRestStub {
       TracingOptions tracing_options, std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroups(
+  GetRegionInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_instance_groups::v1::
-          GetRegionInstanceGroupsRequest const& request) override;
+          GetRegionInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
   ListRegionInstanceGroups(
@@ -72,13 +72,13 @@ class RegionInstanceGroupsRestLogging : public RegionInstanceGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetRegionOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteRegionOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionInstanceGroupsRestStub> child_;

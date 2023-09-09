@@ -46,24 +46,24 @@ class InterconnectAttachmentsRestStub {
           AggregatedListInterconnectAttachmentsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInterconnectAttachments(
+  AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          DeleteInterconnectAttachmentsRequest const& request) = 0;
+          DeleteInterconnectAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-  GetInterconnectAttachments(
+  GetInterconnectAttachment(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          GetInterconnectAttachmentsRequest const& request) = 0;
+          GetInterconnectAttachmentRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInterconnectAttachments(
+  AsyncInsertInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          InsertInterconnectAttachmentsRequest const& request) = 0;
+          InsertInterconnectAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
   ListInterconnectAttachments(
@@ -72,11 +72,11 @@ class InterconnectAttachmentsRestStub {
           ListInterconnectAttachmentsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInterconnectAttachments(
+  AsyncPatchInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          PatchInterconnectAttachmentsRequest const& request) = 0;
+          PatchInterconnectAttachmentRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
@@ -90,13 +90,13 @@ class InterconnectAttachmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetRegionOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteRegionOperationRequest const& request) = 0;
 };
 
 class DefaultInterconnectAttachmentsRestStub
@@ -117,24 +117,24 @@ class DefaultInterconnectAttachmentsRestStub
           AggregatedListInterconnectAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInterconnectAttachments(
+  AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          DeleteInterconnectAttachmentsRequest const& request) override;
+          DeleteInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-  GetInterconnectAttachments(
+  GetInterconnectAttachment(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          GetInterconnectAttachmentsRequest const& request) override;
+          GetInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInterconnectAttachments(
+  AsyncInsertInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          InsertInterconnectAttachmentsRequest const& request) override;
+          InsertInterconnectAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
   ListInterconnectAttachments(
@@ -143,11 +143,11 @@ class DefaultInterconnectAttachmentsRestStub
           ListInterconnectAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchInterconnectAttachments(
+  AsyncPatchInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          PatchInterconnectAttachmentsRequest const& request) override;
+          PatchInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
@@ -160,13 +160,13 @@ class DefaultInterconnectAttachmentsRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetRegionOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteRegionOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

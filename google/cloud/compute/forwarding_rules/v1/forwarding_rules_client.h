@@ -176,12 +176,12 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L219}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRules(std::string const& project, std::string const& region,
-                        std::string const& forwarding_rule, Options opts = {});
+  DeleteForwardingRule(std::string const& project, std::string const& region,
+                       std::string const& forwarding_rule, Options opts = {});
 
   // clang-format off
   ///
@@ -191,7 +191,7 @@ class ForwardingRulesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest].
+  ///     [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRuleRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -214,13 +214,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L219}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.DeleteForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L219}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
-                            DeleteForwardingRulesRequest const& request,
-                        Options opts = {});
+  DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                           DeleteForwardingRuleRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -243,11 +243,11 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L249}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L249}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       std::string const& project, std::string const& region,
       std::string const& forwarding_rule, Options opts = {});
 
@@ -259,7 +259,7 @@ class ForwardingRulesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest].
+  ///     [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRuleRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,13 +275,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L249}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.GetForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L249}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          GetForwardingRulesRequest const& request,
+          GetForwardingRuleRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -313,14 +313,14 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L261}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRules(std::string const& project, std::string const& region,
-                        google::cloud::cpp::compute::v1::ForwardingRule const&
-                            forwarding_rule_resource,
-                        Options opts = {});
+  InsertForwardingRule(std::string const& project, std::string const& region,
+                       google::cloud::cpp::compute::v1::ForwardingRule const&
+                           forwarding_rule_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -331,7 +331,7 @@ class ForwardingRulesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest].
+  ///     [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRuleRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -354,13 +354,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L261}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.InsertForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
-                            InsertForwardingRulesRequest const& request,
-                        Options opts = {});
+  InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                           InsertForwardingRuleRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -475,15 +475,15 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L360}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L360}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRules(std::string const& project, std::string const& region,
-                       std::string const& forwarding_rule,
-                       google::cloud::cpp::compute::v1::ForwardingRule const&
-                           forwarding_rule_resource,
-                       Options opts = {});
+  PatchForwardingRule(std::string const& project, std::string const& region,
+                      std::string const& forwarding_rule,
+                      google::cloud::cpp::compute::v1::ForwardingRule const&
+                          forwarding_rule_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -496,7 +496,7 @@ class ForwardingRulesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest].
+  ///     [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRuleRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -519,13 +519,13 @@ class ForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L360}
+  /// [google.cloud.cpp.compute.forwarding_rules.v1.PatchForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L360}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
-                           PatchForwardingRulesRequest const& request,
-                       Options opts = {});
+  PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                          PatchForwardingRuleRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///

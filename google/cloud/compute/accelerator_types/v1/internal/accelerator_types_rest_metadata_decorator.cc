@@ -50,12 +50,12 @@ AcceleratorTypesRestMetadata::AggregatedListAcceleratorTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesRestMetadata::GetAcceleratorTypes(
+AcceleratorTypesRestMetadata::GetAcceleratorType(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypesRequest const& request) {
+        GetAcceleratorTypeRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetAcceleratorTypes(rest_context, request);
+  return child_->GetAcceleratorType(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>

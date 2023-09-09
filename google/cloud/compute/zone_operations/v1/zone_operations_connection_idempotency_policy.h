@@ -37,13 +37,13 @@ class ZoneOperationsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ZoneOperationsConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteZoneOperations(
+  virtual google::cloud::Idempotency DeleteZoneOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request);
+          DeleteZoneOperationRequest const& request);
 
-  virtual google::cloud::Idempotency GetZoneOperations(
+  virtual google::cloud::Idempotency GetZoneOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request);
+          GetZoneOperationRequest const& request);
 
   virtual google::cloud::Idempotency ListZoneOperations(
       google::cloud::cpp::compute::zone_operations::v1::

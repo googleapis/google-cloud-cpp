@@ -40,17 +40,17 @@ LicenseCodesRestConnectionImpl::LicenseCodesRestConnectionImpl(
                                       LicenseCodesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesRestConnectionImpl::GetLicenseCodes(
-    google::cloud::cpp::compute::license_codes::v1::
-        GetLicenseCodesRequest const& request) {
+LicenseCodesRestConnectionImpl::GetLicenseCode(
+    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetLicenseCodes(request),
+      idempotency_policy(*current)->GetLicenseCode(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::license_codes::v1::
-                 GetLicenseCodesRequest const& request) {
-        return stub_->GetLicenseCodes(rest_context, request);
+                 GetLicenseCodeRequest const& request) {
+        return stub_->GetLicenseCode(rest_context, request);
       },
       request, __func__);
 }

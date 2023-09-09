@@ -47,23 +47,23 @@ class RegionCommitmentsTracingConnection
       google::cloud::cpp::compute::region_commitments::v1::
           AggregatedListRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          GetRegionCommitmentsRequest const& request) override;
+          GetRegionCommitmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionCommitments(
+  InsertRegionCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          InsertRegionCommitmentsRequest const& request) override;
+          InsertRegionCommitmentRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
                             ListRegionCommitmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionCommitments(
+  UpdateRegionCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          UpdateRegionCommitmentsRequest const& request) override;
+          UpdateRegionCommitmentRequest const& request) override;
 
  private:
   std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>

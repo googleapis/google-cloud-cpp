@@ -55,38 +55,37 @@ InstanceGroupsTracingConnection::AggregatedListInstanceGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::DeleteInstanceGroups(
+InstanceGroupsTracingConnection::DeleteInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupsRequest const& request) {
+        DeleteInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::"
-      "DeleteInstanceGroups");
+      "DeleteInstanceGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteInstanceGroups(request));
+                           child_->DeleteInstanceGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsTracingConnection::GetInstanceGroups(
+InstanceGroupsTracingConnection::GetInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        GetInstanceGroupsRequest const& request) {
+        GetInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::"
-      "GetInstanceGroups");
+      "compute_instance_groups_v1::InstanceGroupsConnection::GetInstanceGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetInstanceGroups(request));
+  return internal::EndSpan(*span, child_->GetInstanceGroup(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::InsertInstanceGroups(
+InstanceGroupsTracingConnection::InsertInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupsRequest const& request) {
+        InsertInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::"
-      "InsertInstanceGroups");
+      "InsertInstanceGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertInstanceGroups(request));
+                           child_->InsertInstanceGroup(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>

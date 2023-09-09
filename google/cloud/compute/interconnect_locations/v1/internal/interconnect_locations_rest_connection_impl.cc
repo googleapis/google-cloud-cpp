@@ -44,17 +44,17 @@ InterconnectLocationsRestConnectionImpl::
           std::move(options), InterconnectLocationsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-InterconnectLocationsRestConnectionImpl::GetInterconnectLocations(
+InterconnectLocationsRestConnectionImpl::GetInterconnectLocation(
     google::cloud::cpp::compute::interconnect_locations::v1::
-        GetInterconnectLocationsRequest const& request) {
+        GetInterconnectLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetInterconnectLocations(request),
+      idempotency_policy(*current)->GetInterconnectLocation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnect_locations::v1::
-                 GetInterconnectLocationsRequest const& request) {
-        return stub_->GetInterconnectLocations(rest_context, request);
+                 GetInterconnectLocationRequest const& request) {
+        return stub_->GetInterconnectLocation(rest_context, request);
       },
       request, __func__);
 }

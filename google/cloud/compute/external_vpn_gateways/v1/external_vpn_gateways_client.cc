@@ -34,69 +34,69 @@ ExternalVpnGatewaysClient::ExternalVpnGatewaysClient(
 ExternalVpnGatewaysClient::~ExternalVpnGatewaysClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ExternalVpnGatewaysClient::DeleteExternalVpnGateways(
+ExternalVpnGatewaysClient::DeleteExternalVpnGateway(
     std::string const& project, std::string const& external_vpn_gateway,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::external_vpn_gateways::v1::
-      DeleteExternalVpnGatewaysRequest request;
+      DeleteExternalVpnGatewayRequest request;
   request.set_project(project);
   request.set_external_vpn_gateway(external_vpn_gateway);
-  return connection_->DeleteExternalVpnGateways(request);
+  return connection_->DeleteExternalVpnGateway(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ExternalVpnGatewaysClient::DeleteExternalVpnGateways(
+ExternalVpnGatewaysClient::DeleteExternalVpnGateway(
     google::cloud::cpp::compute::external_vpn_gateways::v1::
-        DeleteExternalVpnGatewaysRequest const& request,
+        DeleteExternalVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteExternalVpnGateways(request);
+  return connection_->DeleteExternalVpnGateway(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-ExternalVpnGatewaysClient::GetExternalVpnGateways(
+ExternalVpnGatewaysClient::GetExternalVpnGateway(
     std::string const& project, std::string const& external_vpn_gateway,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::external_vpn_gateways::v1::
-      GetExternalVpnGatewaysRequest request;
+      GetExternalVpnGatewayRequest request;
   request.set_project(project);
   request.set_external_vpn_gateway(external_vpn_gateway);
-  return connection_->GetExternalVpnGateways(request);
+  return connection_->GetExternalVpnGateway(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-ExternalVpnGatewaysClient::GetExternalVpnGateways(
+ExternalVpnGatewaysClient::GetExternalVpnGateway(
     google::cloud::cpp::compute::external_vpn_gateways::v1::
-        GetExternalVpnGatewaysRequest const& request,
+        GetExternalVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetExternalVpnGateways(request);
+  return connection_->GetExternalVpnGateway(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ExternalVpnGatewaysClient::InsertExternalVpnGateways(
+ExternalVpnGatewaysClient::InsertExternalVpnGateway(
     std::string const& project,
     google::cloud::cpp::compute::v1::ExternalVpnGateway const&
         external_vpn_gateway_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::external_vpn_gateways::v1::
-      InsertExternalVpnGatewaysRequest request;
+      InsertExternalVpnGatewayRequest request;
   request.set_project(project);
   *request.mutable_external_vpn_gateway_resource() =
       external_vpn_gateway_resource;
-  return connection_->InsertExternalVpnGateways(request);
+  return connection_->InsertExternalVpnGateway(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ExternalVpnGatewaysClient::InsertExternalVpnGateways(
+ExternalVpnGatewaysClient::InsertExternalVpnGateway(
     google::cloud::cpp::compute::external_vpn_gateways::v1::
-        InsertExternalVpnGatewaysRequest const& request,
+        InsertExternalVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertExternalVpnGateways(request);
+  return connection_->InsertExternalVpnGateway(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>

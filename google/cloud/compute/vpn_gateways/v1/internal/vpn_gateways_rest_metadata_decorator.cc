@@ -49,22 +49,22 @@ VpnGatewaysRestMetadata::AggregatedListVpnGateways(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnGatewaysRestMetadata::AsyncDeleteVpnGateways(
+VpnGatewaysRestMetadata::AsyncDeleteVpnGateway(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::
-        DeleteVpnGatewaysRequest const& request) {
+        DeleteVpnGatewayRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteVpnGateways(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteVpnGateway(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
-VpnGatewaysRestMetadata::GetVpnGateways(
+VpnGatewaysRestMetadata::GetVpnGateway(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewaysRequest const&
+    google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetVpnGateways(rest_context, request);
+  return child_->GetVpnGateway(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
@@ -77,13 +77,13 @@ VpnGatewaysRestMetadata::GetStatus(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnGatewaysRestMetadata::AsyncInsertVpnGateways(
+VpnGatewaysRestMetadata::AsyncInsertVpnGateway(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::
-        InsertVpnGatewaysRequest const& request) {
+        InsertVpnGatewayRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertVpnGateways(cq, std::move(rest_context), request);
+  return child_->AsyncInsertVpnGateway(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
@@ -119,7 +119,7 @@ VpnGatewaysRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -128,7 +128,7 @@ future<Status> VpnGatewaysRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

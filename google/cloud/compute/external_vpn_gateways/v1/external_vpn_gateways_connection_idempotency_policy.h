@@ -38,17 +38,17 @@ class ExternalVpnGatewaysConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ExternalVpnGatewaysConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteExternalVpnGateways(
+  virtual google::cloud::Idempotency DeleteExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          DeleteExternalVpnGatewaysRequest const& request);
+          DeleteExternalVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency GetExternalVpnGateways(
+  virtual google::cloud::Idempotency GetExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          GetExternalVpnGatewaysRequest const& request);
+          GetExternalVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency InsertExternalVpnGateways(
+  virtual google::cloud::Idempotency InsertExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          InsertExternalVpnGatewaysRequest const& request);
+          InsertExternalVpnGatewayRequest const& request);
 
   virtual google::cloud::Idempotency ListExternalVpnGateways(
       google::cloud::cpp::compute::external_vpn_gateways::v1::

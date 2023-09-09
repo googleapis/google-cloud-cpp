@@ -42,25 +42,25 @@ TargetInstancesConnection::AggregatedListTargetInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesConnection::DeleteTargetInstances(
+TargetInstancesConnection::DeleteTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
-        DeleteTargetInstancesRequest const&) {
+        DeleteTargetInstanceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesConnection::GetTargetInstances(
+TargetInstancesConnection::GetTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
-        GetTargetInstancesRequest const&) {
+        GetTargetInstanceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetInstancesConnection::InsertTargetInstances(
+TargetInstancesConnection::InsertTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
-        InsertTargetInstancesRequest const&) {
+        InsertTargetInstanceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

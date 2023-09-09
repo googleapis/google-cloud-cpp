@@ -56,18 +56,17 @@ DiskTypesRestConnectionImpl::AggregatedListDiskTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesRestConnectionImpl::GetDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+DiskTypesRestConnectionImpl::GetDiskType(
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetDiskTypes(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::disk_types::v1::
-                 GetDiskTypesRequest const& request) {
-        return stub_->GetDiskTypes(rest_context, request);
-      },
+      idempotency_policy(*current)->GetDiskType(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
+              request) { return stub_->GetDiskType(rest_context, request); },
       request, __func__);
 }
 

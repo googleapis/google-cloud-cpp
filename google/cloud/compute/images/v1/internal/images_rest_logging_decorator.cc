@@ -34,17 +34,17 @@ ImagesRestLogging::ImagesRestLogging(std::shared_ptr<ImagesRestStub> child,
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesRestLogging::AsyncDeleteImages(
+ImagesRestLogging::AsyncDeleteImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+             google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
                  request) {
-        return child_->AsyncDeleteImages(cq, std::move(rest_context), request);
+        return child_->AsyncDeleteImage(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -64,13 +64,13 @@ ImagesRestLogging::AsyncDeprecate(
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestLogging::GetImages(
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestLogging::GetImage(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
+    google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::GetImagesRequest const&
-                 request) { return child_->GetImages(rest_context, request); },
+             google::cloud::cpp::compute::images::v1::GetImageRequest const&
+                 request) { return child_->GetImage(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
@@ -102,17 +102,17 @@ ImagesRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesRestLogging::AsyncInsertImages(
+ImagesRestLogging::AsyncInsertImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+             google::cloud::cpp::compute::images::v1::InsertImageRequest const&
                  request) {
-        return child_->AsyncInsertImages(cq, std::move(rest_context), request);
+        return child_->AsyncInsertImage(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -129,17 +129,16 @@ ImagesRestLogging::ListImages(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesRestLogging::AsyncPatchImages(
+ImagesRestLogging::AsyncPatchImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-        request) {
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+             google::cloud::cpp::compute::images::v1::PatchImageRequest const&
                  request) {
-        return child_->AsyncPatchImages(cq, std::move(rest_context), request);
+        return child_->AsyncPatchImage(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -192,12 +191,12 @@ ImagesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -207,12 +206,12 @@ future<Status> ImagesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

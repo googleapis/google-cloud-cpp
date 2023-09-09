@@ -188,24 +188,24 @@ class TargetGrpcProxiesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                              DeleteTargetGrpcProxiesRequest const& request);
+  DeleteTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            DeleteTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  GetTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                           GetTargetGrpcProxiesRequest const& request);
+  GetTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                         GetTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                              InsertTargetGrpcProxiesRequest const& request);
+  InsertTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            InsertTargetGrpcProxyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
                             ListTargetGrpcProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
-                             PatchTargetGrpcProxiesRequest const& request);
+  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                           PatchTargetGrpcProxyRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

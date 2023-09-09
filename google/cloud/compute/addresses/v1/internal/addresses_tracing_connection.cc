@@ -43,33 +43,33 @@ AddressesTracingConnection::AggregatedListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesTracingConnection::DeleteAddresses(
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+AddressesTracingConnection::DeleteAddress(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_addresses_v1::AddressesConnection::DeleteAddresses");
+      "compute_addresses_v1::AddressesConnection::DeleteAddress");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteAddresses(request));
+  return internal::EndSpan(std::move(span), child_->DeleteAddress(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesTracingConnection::GetAddresses(
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+AddressesTracingConnection::GetAddress(
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_addresses_v1::AddressesConnection::GetAddresses");
+      "compute_addresses_v1::AddressesConnection::GetAddress");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetAddresses(request));
+  return internal::EndSpan(*span, child_->GetAddress(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesTracingConnection::InsertAddresses(
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+AddressesTracingConnection::InsertAddress(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_addresses_v1::AddressesConnection::InsertAddresses");
+      "compute_addresses_v1::AddressesConnection::InsertAddress");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertAddresses(request));
+  return internal::EndSpan(std::move(span), child_->InsertAddress(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>

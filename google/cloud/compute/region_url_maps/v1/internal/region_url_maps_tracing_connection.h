@@ -42,28 +42,28 @@ class RegionUrlMapsTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          DeleteRegionUrlMapsRequest const& request) override;
+  DeleteRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                         DeleteRegionUrlMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
-          GetRegionUrlMapsRequest const& request) override;
+          GetRegionUrlMapRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          InsertRegionUrlMapsRequest const& request) override;
+  InsertRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                         InsertRegionUrlMapRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
       google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                         PatchRegionUrlMapsRequest const& request) override;
+  PatchRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                        PatchRegionUrlMapRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          UpdateRegionUrlMapsRequest const& request) override;
+  UpdateRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                         UpdateRegionUrlMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&

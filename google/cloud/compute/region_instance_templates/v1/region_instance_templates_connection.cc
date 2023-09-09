@@ -37,25 +37,25 @@ RegionInstanceTemplatesConnection::~RegionInstanceTemplatesConnection() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesConnection::DeleteRegionInstanceTemplates(
+RegionInstanceTemplatesConnection::DeleteRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteRegionInstanceTemplatesRequest const&) {
+        DeleteRegionInstanceTemplateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesConnection::GetRegionInstanceTemplates(
+RegionInstanceTemplatesConnection::GetRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplatesRequest const&) {
+        GetRegionInstanceTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesConnection::InsertRegionInstanceTemplates(
+RegionInstanceTemplatesConnection::InsertRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertRegionInstanceTemplatesRequest const&) {
+        InsertRegionInstanceTemplateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

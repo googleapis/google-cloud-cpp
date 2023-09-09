@@ -42,18 +42,18 @@ ReservationsConnection::AggregatedListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsConnection::DeleteReservations(
+ReservationsConnection::DeleteReservation(
     google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationsRequest const&) {
+        DeleteReservationRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-ReservationsConnection::GetReservations(
+ReservationsConnection::GetReservation(
     google::cloud::cpp::compute::reservations::v1::
-        GetReservationsRequest const&) {
+        GetReservationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -64,9 +64,9 @@ ReservationsConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsConnection::InsertReservations(
+ReservationsConnection::InsertReservation(
     google::cloud::cpp::compute::reservations::v1::
-        InsertReservationsRequest const&) {
+        InsertReservationRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -102,9 +102,9 @@ ReservationsConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsConnection::UpdateReservations(
+ReservationsConnection::UpdateReservation(
     google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationsRequest const&) {
+        UpdateReservationRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

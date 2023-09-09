@@ -58,17 +58,17 @@ AcceleratorTypesRestConnectionImpl::AggregatedListAcceleratorTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesRestConnectionImpl::GetAcceleratorTypes(
+AcceleratorTypesRestConnectionImpl::GetAcceleratorType(
     google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypesRequest const& request) {
+        GetAcceleratorTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetAcceleratorTypes(request),
+      idempotency_policy(*current)->GetAcceleratorType(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::accelerator_types::v1::
-                 GetAcceleratorTypesRequest const& request) {
-        return stub_->GetAcceleratorTypes(rest_context, request);
+                 GetAcceleratorTypeRequest const& request) {
+        return stub_->GetAcceleratorType(rest_context, request);
       },
       request, __func__);
 }

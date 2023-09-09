@@ -81,8 +81,8 @@ service RegionNetworkFirewallPolicies {
 
   // Deletes the specified network firewall policy.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/delete
-  rpc DeleteRegionNetworkFirewallPolicies(
-      DeleteRegionNetworkFirewallPoliciesRequest)
+  rpc DeleteRegionNetworkFirewallPolicy(
+      DeleteRegionNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
@@ -93,7 +93,7 @@ service RegionNetworkFirewallPolicies {
 
   // Returns the specified network firewall policy.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/get
-  rpc GetRegionNetworkFirewallPolicies(GetRegionNetworkFirewallPoliciesRequest)
+  rpc GetRegionNetworkFirewallPolicy(GetRegionNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
@@ -145,8 +145,8 @@ service RegionNetworkFirewallPolicies {
 
   // Creates a new network firewall policy in the specified project and region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/insert
-  rpc InsertRegionNetworkFirewallPolicies(
-      InsertRegionNetworkFirewallPoliciesRequest)
+  rpc InsertRegionNetworkFirewallPolicy(
+      InsertRegionNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies"
@@ -171,8 +171,7 @@ service RegionNetworkFirewallPolicies {
 
   // Patches the specified network firewall policy.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies/patch
-  rpc PatchRegionNetworkFirewallPolicies(
-      PatchRegionNetworkFirewallPoliciesRequest)
+  rpc PatchRegionNetworkFirewallPolicy(PatchRegionNetworkFirewallPolicyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
@@ -361,8 +360,8 @@ message CloneRulesRequest {
   optional string source_firewall_policy = 5;
 }
 
-// Request message for DeleteRegionNetworkFirewallPolicies.
-message DeleteRegionNetworkFirewallPoliciesRequest {
+// Request message for DeleteRegionNetworkFirewallPolicy.
+message DeleteRegionNetworkFirewallPolicyRequest {
   // Name of the firewall policy to delete.
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -433,8 +432,8 @@ message GetIamPolicyRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionNetworkFirewallPolicies.
-message GetRegionNetworkFirewallPoliciesRequest {
+// Request message for GetRegionNetworkFirewallPolicy.
+message GetRegionNetworkFirewallPolicyRequest {
   // Name of the firewall policy to get.
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -460,8 +459,8 @@ message GetRuleRequest {
   string region = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionNetworkFirewallPolicies.
-message InsertRegionNetworkFirewallPoliciesRequest {
+// Request message for InsertRegionNetworkFirewallPolicy.
+message InsertRegionNetworkFirewallPolicyRequest {
   // The FirewallPolicy for this request.
   optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource =
       1 [json_name = "__json_request_body"];
@@ -559,8 +558,8 @@ message ListRegionNetworkFirewallPoliciesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionNetworkFirewallPolicies.
-message PatchRegionNetworkFirewallPoliciesRequest {
+// Request message for PatchRegionNetworkFirewallPolicy.
+message PatchRegionNetworkFirewallPolicyRequest {
   // Name of the firewall policy to update.
   string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
 

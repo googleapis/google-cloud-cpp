@@ -186,8 +186,8 @@ class NodeTypesConnection {
   AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
                               AggregatedListNodeTypesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(

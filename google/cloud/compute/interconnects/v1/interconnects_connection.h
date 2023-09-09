@@ -187,12 +187,12 @@ class InterconnectsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                          DeleteInterconnectsRequest const& request);
+  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         DeleteInterconnectRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                       GetInterconnectsRequest const& request);
+  GetInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                      GetInterconnectRequest const& request);
 
   virtual StatusOr<
       google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -200,8 +200,8 @@ class InterconnectsConnection {
                      GetDiagnosticsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                          InsertInterconnectsRequest const& request);
+  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         InsertInterconnectRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Interconnect>
   ListInterconnects(
@@ -209,8 +209,8 @@ class InterconnectsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                         PatchInterconnectsRequest const& request);
+  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                        PatchInterconnectRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(

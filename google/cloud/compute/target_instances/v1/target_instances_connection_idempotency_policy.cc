@@ -41,21 +41,21 @@ TargetInstancesConnectionIdempotencyPolicy::AggregatedListTargetInstances(
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::DeleteTargetInstances(
+Idempotency TargetInstancesConnectionIdempotencyPolicy::DeleteTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
-        DeleteTargetInstancesRequest const&) {
+        DeleteTargetInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::GetTargetInstances(
+Idempotency TargetInstancesConnectionIdempotencyPolicy::GetTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
-        GetTargetInstancesRequest const&) {
+        GetTargetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetInstancesConnectionIdempotencyPolicy::InsertTargetInstances(
+Idempotency TargetInstancesConnectionIdempotencyPolicy::InsertTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
-        InsertTargetInstancesRequest const&) {
+        InsertTargetInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

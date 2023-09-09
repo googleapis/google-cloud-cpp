@@ -80,12 +80,12 @@ ProjectsRestMetadata::AsyncEnableXpnResource(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
-ProjectsRestMetadata::GetProjects(
+ProjectsRestMetadata::GetProject(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetProjects(rest_context, request);
+  return child_->GetProject(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
@@ -172,7 +172,7 @@ ProjectsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -181,7 +181,7 @@ future<Status> ProjectsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

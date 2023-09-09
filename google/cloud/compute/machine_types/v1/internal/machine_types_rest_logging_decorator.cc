@@ -48,15 +48,15 @@ MachineTypesRestLogging::AggregatedListMachineTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesRestLogging::GetMachineTypes(
+MachineTypesRestLogging::GetMachineType(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const& request) {
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::machine_types::v1::
-                 GetMachineTypesRequest const& request) {
-        return child_->GetMachineTypes(rest_context, request);
+                 GetMachineTypeRequest const& request) {
+        return child_->GetMachineType(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

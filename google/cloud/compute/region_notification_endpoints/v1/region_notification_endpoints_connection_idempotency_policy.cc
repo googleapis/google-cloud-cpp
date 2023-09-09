@@ -37,23 +37,23 @@ RegionNotificationEndpointsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RegionNotificationEndpointsConnectionIdempotencyPolicy::
-    DeleteRegionNotificationEndpoints(
+    DeleteRegionNotificationEndpoint(
         google::cloud::cpp::compute::region_notification_endpoints::v1::
-            DeleteRegionNotificationEndpointsRequest const&) {
+            DeleteRegionNotificationEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency RegionNotificationEndpointsConnectionIdempotencyPolicy::
-    GetRegionNotificationEndpoints(
+    GetRegionNotificationEndpoint(
         google::cloud::cpp::compute::region_notification_endpoints::v1::
-            GetRegionNotificationEndpointsRequest const&) {
+            GetRegionNotificationEndpointRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency RegionNotificationEndpointsConnectionIdempotencyPolicy::
-    InsertRegionNotificationEndpoints(
+    InsertRegionNotificationEndpoint(
         google::cloud::cpp::compute::region_notification_endpoints::v1::
-            InsertRegionNotificationEndpointsRequest const&) {
+            InsertRegionNotificationEndpointRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

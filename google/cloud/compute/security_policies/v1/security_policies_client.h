@@ -253,12 +253,12 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
+  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicies(std::string const& project,
-                         std::string const& security_policy, Options opts = {});
+  DeleteSecurityPolicy(std::string const& project,
+                       std::string const& security_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -268,7 +268,7 @@ class SecurityPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest].
+  ///     [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -291,13 +291,13 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
+  /// [google.cloud.cpp.compute.security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L283}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
-                             DeleteSecurityPoliciesRequest const& request,
-                         Options opts = {});
+  DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
+                           DeleteSecurityPolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -319,11 +319,11 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       std::string const& project, std::string const& security_policy,
       Options opts = {});
 
@@ -335,7 +335,7 @@ class SecurityPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest].
+  ///     [google.cloud.cpp.compute.security_policies.v1.GetSecurityPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -351,13 +351,13 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
+  /// [google.cloud.cpp.compute.security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L319}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::security_policies::v1::
-          GetSecurityPoliciesRequest const& request,
+          GetSecurityPolicyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -449,14 +449,14 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
+  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicies(std::string const& project,
-                         google::cloud::cpp::compute::v1::SecurityPolicy const&
-                             security_policy_resource,
-                         Options opts = {});
+  InsertSecurityPolicy(std::string const& project,
+                       google::cloud::cpp::compute::v1::SecurityPolicy const&
+                           security_policy_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -467,7 +467,7 @@ class SecurityPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest].
+  ///     [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -490,13 +490,13 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
+  /// [google.cloud.cpp.compute.security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L328}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
-                             InsertSecurityPoliciesRequest const& request,
-                         Options opts = {});
+  InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
+                           InsertSecurityPolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -672,15 +672,15 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicies(std::string const& project,
-                        std::string const& security_policy,
-                        google::cloud::cpp::compute::v1::SecurityPolicy const&
-                            security_policy_resource,
-                        Options opts = {});
+  PatchSecurityPolicy(std::string const& project,
+                      std::string const& security_policy,
+                      google::cloud::cpp::compute::v1::SecurityPolicy const&
+                          security_policy_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -694,7 +694,7 @@ class SecurityPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest].
+  ///     [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -717,13 +717,13 @@ class SecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
+  /// [google.cloud.cpp.compute.security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L508}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
-                            PatchSecurityPoliciesRequest const& request,
-                        Options opts = {});
+  PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
+                          PatchSecurityPolicyRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///

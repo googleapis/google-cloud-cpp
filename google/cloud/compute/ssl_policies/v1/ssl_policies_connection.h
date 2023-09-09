@@ -190,16 +190,16 @@ class SslPoliciesConnection {
           AggregatedListSslPoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
-                        DeleteSslPoliciesRequest const& request);
+  DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::
+                      DeleteSslPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
-      google::cloud::cpp::compute::ssl_policies::v1::
-          GetSslPoliciesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
-                        InsertSslPoliciesRequest const& request);
+  InsertSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::
+                      InsertSslPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
   ListSslPolicies(
@@ -212,8 +212,8 @@ class SslPoliciesConnection {
                             ListAvailableFeaturesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
-                       PatchSslPoliciesRequest const& request);
+  PatchSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::
+                     PatchSslPolicyRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,16 +40,15 @@ RegionsRestConnectionImpl::RegionsRestConnectionImpl(
                                       RegionsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsRestConnectionImpl::GetRegions(
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-        request) {
+RegionsRestConnectionImpl::GetRegion(
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegions(request),
+      idempotency_policy(*current)->GetRegion(request),
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-                 request) { return stub_->GetRegions(rest_context, request); },
+             google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
+                 request) { return stub_->GetRegion(rest_context, request); },
       request, __func__);
 }
 

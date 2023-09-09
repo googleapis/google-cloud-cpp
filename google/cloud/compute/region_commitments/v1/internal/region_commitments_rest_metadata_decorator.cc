@@ -50,23 +50,23 @@ RegionCommitmentsRestMetadata::AggregatedListRegionCommitments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsRestMetadata::GetRegionCommitments(
+RegionCommitmentsRestMetadata::GetRegionCommitment(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
-        GetRegionCommitmentsRequest const& request) {
+        GetRegionCommitmentRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionCommitments(rest_context, request);
+  return child_->GetRegionCommitment(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsRestMetadata::AsyncInsertRegionCommitments(
+RegionCommitmentsRestMetadata::AsyncInsertRegionCommitment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
-        InsertRegionCommitmentsRequest const& request) {
+        InsertRegionCommitmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionCommitments(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncInsertRegionCommitment(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
@@ -79,14 +79,14 @@ RegionCommitmentsRestMetadata::ListRegionCommitments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsRestMetadata::AsyncUpdateRegionCommitments(
+RegionCommitmentsRestMetadata::AsyncUpdateRegionCommitment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
-        UpdateRegionCommitmentsRequest const& request) {
+        UpdateRegionCommitmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateRegionCommitments(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncUpdateRegionCommitment(cq, std::move(rest_context),
+                                             request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,7 +94,7 @@ RegionCommitmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -103,7 +103,7 @@ future<Status> RegionCommitmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -38,10 +38,10 @@ class InterconnectLocationsRestStub {
   virtual ~InterconnectLocationsRestStub() = default;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-  GetInterconnectLocations(
+  GetInterconnectLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnect_locations::v1::
-          GetInterconnectLocationsRequest const& request) = 0;
+          GetInterconnectLocationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
   ListInterconnectLocations(
@@ -60,10 +60,10 @@ class DefaultInterconnectLocationsRestStub
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-  GetInterconnectLocations(
+  GetInterconnectLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::interconnect_locations::v1::
-          GetInterconnectLocationsRequest const& request) override;
+          GetInterconnectLocationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
   ListInterconnectLocations(

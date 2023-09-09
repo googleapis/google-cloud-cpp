@@ -40,18 +40,18 @@ Idempotency AddressesConnectionIdempotencyPolicy::AggregatedListAddresses(
   return Idempotency::kIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::DeleteAddresses(
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::DeleteAddress(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::GetAddresses(
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::GetAddress(
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::InsertAddresses(
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::InsertAddress(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

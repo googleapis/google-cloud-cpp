@@ -57,76 +57,76 @@ NetworkEdgeSecurityServicesClient::AggregatedListNetworkEdgeSecurityServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
     std::string const& project, std::string const& region,
     std::string const& network_edge_security_service, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::network_edge_security_services::v1::
-      DeleteNetworkEdgeSecurityServicesRequest request;
+      DeleteNetworkEdgeSecurityServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_edge_security_service(network_edge_security_service);
-  return connection_->DeleteNetworkEdgeSecurityServices(request);
+  return connection_->DeleteNetworkEdgeSecurityService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        DeleteNetworkEdgeSecurityServicesRequest const& request,
+        DeleteNetworkEdgeSecurityServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNetworkEdgeSecurityServices(request);
+  return connection_->DeleteNetworkEdgeSecurityService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-NetworkEdgeSecurityServicesClient::GetNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::GetNetworkEdgeSecurityService(
     std::string const& project, std::string const& region,
     std::string const& network_edge_security_service, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::network_edge_security_services::v1::
-      GetNetworkEdgeSecurityServicesRequest request;
+      GetNetworkEdgeSecurityServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_edge_security_service(network_edge_security_service);
-  return connection_->GetNetworkEdgeSecurityServices(request);
+  return connection_->GetNetworkEdgeSecurityService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-NetworkEdgeSecurityServicesClient::GetNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::GetNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        GetNetworkEdgeSecurityServicesRequest const& request,
+        GetNetworkEdgeSecurityServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetNetworkEdgeSecurityServices(request);
+  return connection_->GetNetworkEdgeSecurityService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
         network_edge_security_service_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::network_edge_security_services::v1::
-      InsertNetworkEdgeSecurityServicesRequest request;
+      InsertNetworkEdgeSecurityServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_network_edge_security_service_resource() =
       network_edge_security_service_resource;
-  return connection_->InsertNetworkEdgeSecurityServices(request);
+  return connection_->InsertNetworkEdgeSecurityService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        InsertNetworkEdgeSecurityServicesRequest const& request,
+        InsertNetworkEdgeSecurityServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNetworkEdgeSecurityServices(request);
+  return connection_->InsertNetworkEdgeSecurityService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
     std::string const& project, std::string const& region,
     std::string const& network_edge_security_service,
     google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
@@ -134,22 +134,22 @@ NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityServices(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::network_edge_security_services::v1::
-      PatchNetworkEdgeSecurityServicesRequest request;
+      PatchNetworkEdgeSecurityServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_edge_security_service(network_edge_security_service);
   *request.mutable_network_edge_security_service_resource() =
       network_edge_security_service_resource;
-  return connection_->PatchNetworkEdgeSecurityServices(request);
+  return connection_->PatchNetworkEdgeSecurityService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        PatchNetworkEdgeSecurityServicesRequest const& request,
+        PatchNetworkEdgeSecurityServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchNetworkEdgeSecurityServices(request);
+  return connection_->PatchNetworkEdgeSecurityService(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

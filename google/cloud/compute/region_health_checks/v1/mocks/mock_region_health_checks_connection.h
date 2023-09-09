@@ -49,21 +49,21 @@ class MockRegionHealthChecksConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionHealthChecks,
+              DeleteRegionHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   DeleteRegionHealthChecksRequest const& request),
+                   DeleteRegionHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheck>,
-              GetRegionHealthChecks,
+              GetRegionHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   GetRegionHealthChecksRequest const& request),
+                   GetRegionHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionHealthChecks,
+              InsertRegionHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   InsertRegionHealthChecksRequest const& request),
+                   InsertRegionHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::HealthCheck>,
@@ -73,15 +73,15 @@ class MockRegionHealthChecksConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionHealthChecks,
+              PatchRegionHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   PatchRegionHealthChecksRequest const& request),
+                   PatchRegionHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionHealthChecks,
+              UpdateRegionHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   UpdateRegionHealthChecksRequest const& request),
+                   UpdateRegionHealthCheckRequest const& request),
               (override));
 };
 

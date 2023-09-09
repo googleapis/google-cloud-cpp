@@ -46,9 +46,9 @@ GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsConnection::DeleteGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsConnection::DeleteGlobalNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        DeleteGlobalNetworkEndpointGroupsRequest const&) {
+        DeleteGlobalNetworkEndpointGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -64,16 +64,16 @@ GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-GlobalNetworkEndpointGroupsConnection::GetGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsConnection::GetGlobalNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        GetGlobalNetworkEndpointGroupsRequest const&) {
+        GetGlobalNetworkEndpointGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsConnection::InsertGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsConnection::InsertGlobalNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        InsertGlobalNetworkEndpointGroupsRequest const&) {
+        InsertGlobalNetworkEndpointGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

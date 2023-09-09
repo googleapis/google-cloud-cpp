@@ -84,32 +84,32 @@ NetworkFirewallPoliciesRestLogging::AsyncCloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesRestLogging::AsyncDeleteNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestLogging::AsyncDeleteNetworkFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        DeleteNetworkFirewallPoliciesRequest const& request) {
+        DeleteNetworkFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::network_firewall_policies::v1::
-                 DeleteNetworkFirewallPoliciesRequest const& request) {
-        return child_->AsyncDeleteNetworkFirewallPolicies(
+                 DeleteNetworkFirewallPolicyRequest const& request) {
+        return child_->AsyncDeleteNetworkFirewallPolicy(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-NetworkFirewallPoliciesRestLogging::GetNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestLogging::GetNetworkFirewallPolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        GetNetworkFirewallPoliciesRequest const& request) {
+        GetNetworkFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_firewall_policies::v1::
-                 GetNetworkFirewallPoliciesRequest const& request) {
-        return child_->GetNetworkFirewallPolicies(rest_context, request);
+                 GetNetworkFirewallPolicyRequest const& request) {
+        return child_->GetNetworkFirewallPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -157,17 +157,17 @@ NetworkFirewallPoliciesRestLogging::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesRestLogging::AsyncInsertNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestLogging::AsyncInsertNetworkFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        InsertNetworkFirewallPoliciesRequest const& request) {
+        InsertNetworkFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::network_firewall_policies::v1::
-                 InsertNetworkFirewallPoliciesRequest const& request) {
-        return child_->AsyncInsertNetworkFirewallPolicies(
+                 InsertNetworkFirewallPolicyRequest const& request) {
+        return child_->AsyncInsertNetworkFirewallPolicy(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -188,17 +188,17 @@ NetworkFirewallPoliciesRestLogging::ListNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesRestLogging::AsyncPatchNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestLogging::AsyncPatchNetworkFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        PatchNetworkFirewallPoliciesRequest const& request) {
+        PatchNetworkFirewallPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::network_firewall_policies::v1::
-                 PatchNetworkFirewallPoliciesRequest const& request) {
-        return child_->AsyncPatchNetworkFirewallPolicies(
+                 PatchNetworkFirewallPolicyRequest const& request) {
+        return child_->AsyncPatchNetworkFirewallPolicy(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -286,12 +286,12 @@ NetworkFirewallPoliciesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -301,12 +301,12 @@ future<Status> NetworkFirewallPoliciesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -45,10 +45,10 @@ DefaultSnapshotsRestStub::DefaultSnapshotsRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSnapshotsRestStub::AsyncDeleteSnapshots(
+DefaultSnapshotsRestStub::AsyncDeleteSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -70,9 +70,9 @@ DefaultSnapshotsRestStub::AsyncDeleteSnapshots(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-DefaultSnapshotsRestStub::GetSnapshots(
+DefaultSnapshotsRestStub::GetSnapshot(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Snapshot>(
       *service_, rest_context, request,
@@ -98,10 +98,10 @@ DefaultSnapshotsRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSnapshotsRestStub::AsyncInsertSnapshots(
+DefaultSnapshotsRestStub::AsyncInsertSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -195,7 +195,7 @@ DefaultSnapshotsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -218,7 +218,7 @@ future<Status> DefaultSnapshotsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

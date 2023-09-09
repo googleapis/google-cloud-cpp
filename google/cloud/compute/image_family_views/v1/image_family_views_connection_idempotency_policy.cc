@@ -34,9 +34,9 @@ ImageFamilyViewsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ImageFamilyViewsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ImageFamilyViewsConnectionIdempotencyPolicy::GetImageFamilyViews(
+Idempotency ImageFamilyViewsConnectionIdempotencyPolicy::GetImageFamilyView(
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const&) {
+        GetImageFamilyViewRequest const&) {
   return Idempotency::kIdempotent;
 }
 

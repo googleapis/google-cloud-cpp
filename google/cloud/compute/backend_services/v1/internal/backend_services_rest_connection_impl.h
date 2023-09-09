@@ -62,17 +62,16 @@ class BackendServicesRestConnectionImpl
           AggregatedListBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendServices(
-      google::cloud::cpp::compute::backend_services::v1::
-          DeleteBackendServicesRequest const& request) override;
+  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           DeleteBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
                          DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::cpp::compute::backend_services::v1::
-          GetBackendServicesRequest const& request) override;
+          GetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(
@@ -84,17 +83,16 @@ class BackendServicesRestConnectionImpl
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendServices(
-      google::cloud::cpp::compute::backend_services::v1::
-          InsertBackendServicesRequest const& request) override;
+  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           InsertBackendServiceRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
                           ListBackendServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                           PatchBackendServicesRequest const& request) override;
+  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
+                          PatchBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
@@ -110,9 +108,8 @@ class BackendServicesRestConnectionImpl
                         SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendServices(
-      google::cloud::cpp::compute::backend_services::v1::
-          UpdateBackendServicesRequest const& request) override;
+  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           UpdateBackendServiceRequest const& request) override;
 
  private:
   static std::unique_ptr<

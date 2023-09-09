@@ -37,29 +37,29 @@ class InterconnectsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<InterconnectsConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteInterconnects(
+  virtual google::cloud::Idempotency DeleteInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
-          DeleteInterconnectsRequest const& request);
+          DeleteInterconnectRequest const& request);
 
-  virtual google::cloud::Idempotency GetInterconnects(
+  virtual google::cloud::Idempotency GetInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
-          GetInterconnectsRequest const& request);
+          GetInterconnectRequest const& request);
 
   virtual google::cloud::Idempotency GetDiagnostics(
       google::cloud::cpp::compute::interconnects::v1::
           GetDiagnosticsRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInterconnects(
+  virtual google::cloud::Idempotency InsertInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
-          InsertInterconnectsRequest const& request);
+          InsertInterconnectRequest const& request);
 
   virtual google::cloud::Idempotency ListInterconnects(
       google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
           request);
 
-  virtual google::cloud::Idempotency PatchInterconnects(
+  virtual google::cloud::Idempotency PatchInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
-          PatchInterconnectsRequest const& request);
+          PatchInterconnectRequest const& request);
 
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&

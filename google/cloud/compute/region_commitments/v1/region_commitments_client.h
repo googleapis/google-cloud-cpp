@@ -170,11 +170,11 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
+  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitment(
       std::string const& project, std::string const& region,
       std::string const& commitment, Options opts = {});
 
@@ -186,7 +186,7 @@ class RegionCommitmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest].
+  ///     [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -202,13 +202,13 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
+  /// [google.cloud.cpp.compute.region_commitments.v1.GetRegionCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L174}
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          GetRegionCommitmentsRequest const& request,
+          GetRegionCommitmentRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -240,11 +240,11 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
+  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionCommitments(
+  InsertRegionCommitment(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
       Options opts = {});
@@ -258,7 +258,7 @@ class RegionCommitmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest].
+  ///     [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -281,13 +281,13 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
+  /// [google.cloud.cpp.compute.region_commitments.v1.InsertRegionCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L186}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
-                              InsertRegionCommitmentsRequest const& request,
-                          Options opts = {});
+  InsertRegionCommitment(google::cloud::cpp::compute::region_commitments::v1::
+                             InsertRegionCommitmentRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -399,11 +399,11 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
+  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionCommitments(
+  UpdateRegionCommitment(
       std::string const& project, std::string const& region,
       std::string const& commitment,
       google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
@@ -419,7 +419,7 @@ class RegionCommitmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest].
+  ///     [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -442,13 +442,13 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
+  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateRegionCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L285}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
-                              UpdateRegionCommitmentsRequest const& request,
-                          Options opts = {});
+  UpdateRegionCommitment(google::cloud::cpp::compute::region_commitments::v1::
+                             UpdateRegionCommitmentRequest const& request,
+                         Options opts = {});
 
  private:
   std::shared_ptr<RegionCommitmentsConnection> connection_;

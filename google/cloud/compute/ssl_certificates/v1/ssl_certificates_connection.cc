@@ -42,25 +42,25 @@ SslCertificatesConnection::AggregatedListSslCertificates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesConnection::DeleteSslCertificates(
+SslCertificatesConnection::DeleteSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificatesRequest const&) {
+        DeleteSslCertificateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesConnection::GetSslCertificates(
+SslCertificatesConnection::GetSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificatesRequest const&) {
+        GetSslCertificateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SslCertificatesConnection::InsertSslCertificates(
+SslCertificatesConnection::InsertSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificatesRequest const&) {
+        InsertSslCertificateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

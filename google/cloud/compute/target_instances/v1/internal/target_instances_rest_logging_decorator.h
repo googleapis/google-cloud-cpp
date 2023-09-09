@@ -49,23 +49,23 @@ class TargetInstancesRestLogging : public TargetInstancesRestStub {
           AggregatedListTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetInstances(
+  AsyncDeleteTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          DeleteTargetInstancesRequest const& request) override;
+          DeleteTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          GetTargetInstancesRequest const& request) override;
+          GetTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetInstances(
+  AsyncInsertTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          InsertTargetInstancesRequest const& request) override;
+          InsertTargetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
   ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
@@ -77,13 +77,13 @@ class TargetInstancesRestLogging : public TargetInstancesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
  private:
   std::shared_ptr<TargetInstancesRestStub> child_;

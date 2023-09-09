@@ -117,10 +117,10 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
       std::string const& project, std::string const& snapshot,
       Options opts = {});
 
@@ -136,7 +136,7 @@ class SnapshotsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest].
+  ///     [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -159,11 +159,11 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request,
       Options opts = {});
 
@@ -187,11 +187,11 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
       std::string const& project, std::string const& snapshot,
       Options opts = {});
 
@@ -203,7 +203,7 @@ class SnapshotsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest].
+  ///     [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -219,12 +219,12 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L184}
   /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_110.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
           request,
       Options opts = {});
 
@@ -321,10 +321,10 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
       std::string const& project,
       google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
       Options opts = {});
@@ -340,7 +340,7 @@ class SnapshotsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest].
+  ///     [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -363,11 +363,11 @@ class SnapshotsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L193}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request,
       Options opts = {});
 

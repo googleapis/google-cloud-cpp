@@ -65,10 +65,10 @@ DefaultRoutersRestStub::AggregatedListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRoutersRestStub::AsyncDeleteRouters(
+DefaultRoutersRestStub::AsyncDeleteRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -91,10 +91,9 @@ DefaultRoutersRestStub::AsyncDeleteRouters(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
-DefaultRoutersRestStub::GetRouters(
+DefaultRoutersRestStub::GetRouter(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-        request) {
+    google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -140,10 +139,10 @@ DefaultRoutersRestStub::GetRouterStatus(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRoutersRestStub::AsyncInsertRouters(
+DefaultRoutersRestStub::AsyncInsertRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -183,10 +182,10 @@ DefaultRoutersRestStub::ListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRoutersRestStub::AsyncPatchRouters(
+DefaultRoutersRestStub::AsyncPatchRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -221,10 +220,10 @@ DefaultRoutersRestStub::Preview(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRoutersRestStub::AsyncUpdateRouters(
+DefaultRoutersRestStub::AsyncUpdateRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -251,7 +250,7 @@ DefaultRoutersRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -275,7 +274,7 @@ future<Status> DefaultRoutersRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

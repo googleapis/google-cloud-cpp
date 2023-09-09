@@ -65,9 +65,9 @@ class NetworkEndpointGroupsRestConnectionImpl
           AttachNetworkEndpointsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkEndpointGroups(
+  DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          DeleteNetworkEndpointGroupsRequest const& request) override;
+          DeleteNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DetachNetworkEndpoints(
@@ -75,14 +75,14 @@ class NetworkEndpointGroupsRestConnectionImpl
           DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetNetworkEndpointGroups(
+  GetNetworkEndpointGroup(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          GetNetworkEndpointGroupsRequest const& request) override;
+          GetNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkEndpointGroups(
+  InsertNetworkEndpointGroup(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          InsertNetworkEndpointGroupsRequest const& request) override;
+          InsertNetworkEndpointGroupRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListNetworkEndpointGroups(

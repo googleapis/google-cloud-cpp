@@ -35,16 +35,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SnapshotsConnection::~SnapshotsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsConnection::DeleteSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&) {
+SnapshotsConnection::DeleteSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsConnection::GetSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&) {
+SnapshotsConnection::GetSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -55,8 +55,8 @@ SnapshotsConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsConnection::InsertSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&) {
+SnapshotsConnection::InsertSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

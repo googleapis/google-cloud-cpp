@@ -40,7 +40,7 @@ service Interconnects {
 
   // Deletes the specified Interconnect.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/delete
-  rpc DeleteInterconnects(DeleteInterconnectsRequest)
+  rpc DeleteInterconnect(DeleteInterconnectRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
@@ -52,7 +52,7 @@ service Interconnects {
   // Returns the specified Interconnect. Get a list of available Interconnects
   // by making a list() request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/get
-  rpc GetInterconnects(GetInterconnectsRequest)
+  rpc GetInterconnect(GetInterconnectRequest)
       returns (google.cloud.cpp.compute.v1.Interconnect) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
@@ -73,7 +73,7 @@ service Interconnects {
   // Creates an Interconnect in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/insert
-  rpc InsertInterconnects(InsertInterconnectsRequest)
+  rpc InsertInterconnect(InsertInterconnectRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/interconnects"
@@ -97,7 +97,7 @@ service Interconnects {
   // This method supports PATCH semantics and uses the JSON merge patch format
   // and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/interconnects/patch
-  rpc PatchInterconnects(PatchInterconnectsRequest)
+  rpc PatchInterconnect(PatchInterconnectRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
@@ -123,8 +123,8 @@ service Interconnects {
   }
 }
 
-// Request message for DeleteInterconnects.
-message DeleteInterconnectsRequest {
+// Request message for DeleteInterconnect.
+message DeleteInterconnectRequest {
   // Name of the interconnect to delete.
   string interconnect = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -156,8 +156,8 @@ message GetDiagnosticsRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetInterconnects.
-message GetInterconnectsRequest {
+// Request message for GetInterconnect.
+message GetInterconnectRequest {
   // Name of the interconnect to return.
   string interconnect = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -165,8 +165,8 @@ message GetInterconnectsRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertInterconnects.
-message InsertInterconnectsRequest {
+// Request message for InsertInterconnect.
+message InsertInterconnectRequest {
   // The Interconnect for this request.
   optional google.cloud.cpp.compute.v1.Interconnect interconnect_resource = 1
       [json_name = "__json_request_body"];
@@ -255,8 +255,8 @@ message ListInterconnectsRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchInterconnects.
-message PatchInterconnectsRequest {
+// Request message for PatchInterconnect.
+message PatchInterconnectRequest {
   // Name of the interconnect to update.
   string interconnect = 1 [(google.api.field_behavior) = REQUIRED];
 

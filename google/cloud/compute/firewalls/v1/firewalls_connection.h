@@ -185,30 +185,30 @@ class FirewallsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewalls(
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+  DeleteFirewall(
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
-      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
+      google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewalls(
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+  InsertFirewall(
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
       google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewalls(
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+  PatchFirewall(
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateFirewalls(
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+  UpdateFirewall(
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request);
 };
 

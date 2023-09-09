@@ -55,9 +55,9 @@ class MockSubnetworksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteSubnetworks,
+              DeleteSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
-                   DeleteSubnetworksRequest const& request),
+                   DeleteSubnetworkRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -66,11 +66,11 @@ class MockSubnetworksConnection
                    ExpandIpCidrRangeRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Subnetwork>,
-              GetSubnetworks,
-              (google::cloud::cpp::compute::subnetworks::v1::
-                   GetSubnetworksRequest const& request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Subnetwork>, GetSubnetwork,
+      (google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
@@ -79,9 +79,9 @@ class MockSubnetworksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertSubnetworks,
+              InsertSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
-                   InsertSubnetworksRequest const& request),
+                   InsertSubnetworkRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -97,9 +97,9 @@ class MockSubnetworksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchSubnetworks,
+              PatchSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
-                   PatchSubnetworksRequest const& request),
+                   PatchSubnetworkRequest const& request),
               (override));
 
   MOCK_METHOD(

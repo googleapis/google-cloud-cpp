@@ -39,16 +39,16 @@ class RoutesTracingConnection : public compute_routes_v1::RoutesConnection {
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoutes(
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request)
+  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
+      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoutes(
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(

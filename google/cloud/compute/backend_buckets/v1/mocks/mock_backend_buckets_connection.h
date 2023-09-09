@@ -54,9 +54,9 @@ class MockBackendBucketsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteBackendBuckets,
+              DeleteBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
-                   DeleteBackendBucketsRequest const& request),
+                   DeleteBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -66,15 +66,15 @@ class MockBackendBucketsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendBucket>,
-              GetBackendBuckets,
+              GetBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
-                   GetBackendBucketsRequest const& request),
+                   GetBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertBackendBuckets,
+              InsertBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
-                   InsertBackendBucketsRequest const& request),
+                   InsertBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendBucket>,
@@ -84,9 +84,9 @@ class MockBackendBucketsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchBackendBuckets,
+              PatchBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
-                   PatchBackendBucketsRequest const& request),
+                   PatchBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -96,9 +96,9 @@ class MockBackendBucketsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateBackendBuckets,
+              UpdateBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
-                   UpdateBackendBucketsRequest const& request),
+                   UpdateBackendBucketRequest const& request),
               (override));
 };
 

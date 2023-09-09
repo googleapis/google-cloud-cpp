@@ -52,28 +52,28 @@ class InterconnectsRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                          DeleteInterconnectsRequest const& request) override;
+  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         DeleteInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
-          GetInterconnectsRequest const& request) override;
+          GetInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
   GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
                      GetDiagnosticsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                          InsertInterconnectsRequest const& request) override;
+  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         InsertInterconnectRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
       google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::
-                         PatchInterconnectsRequest const& request) override;
+  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                        PatchInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&

@@ -41,7 +41,7 @@ service LicenseCodes {
   // resource is intended for use only by third-party partners who are creating
   // Cloud Marketplace images.
   // https://cloud.google.com/compute/docs/reference/rest/v1/licenseCodes/get
-  rpc GetLicenseCodes(GetLicenseCodesRequest)
+  rpc GetLicenseCode(GetLicenseCodeRequest)
       returns (google.cloud.cpp.compute.v1.LicenseCode) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/licenseCodes/{license_code}"
@@ -64,8 +64,8 @@ service LicenseCodes {
   }
 }
 
-// Request message for GetLicenseCodes.
-message GetLicenseCodesRequest {
+// Request message for GetLicenseCode.
+message GetLicenseCodeRequest {
   // Number corresponding to the License code resource to return.
   string license_code = 1 [(google.api.field_behavior) = REQUIRED];
 

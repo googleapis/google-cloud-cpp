@@ -67,11 +67,11 @@ DefaultServiceAttachmentsRestStub::AggregatedListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultServiceAttachmentsRestStub::AsyncDeleteServiceAttachments(
+DefaultServiceAttachmentsRestStub::AsyncDeleteServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const& request) {
+        DeleteServiceAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -93,10 +93,10 @@ DefaultServiceAttachmentsRestStub::AsyncDeleteServiceAttachments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-DefaultServiceAttachmentsRestStub::GetServiceAttachments(
+DefaultServiceAttachmentsRestStub::GetServiceAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const& request) {
+        GetServiceAttachmentRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachment>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -123,11 +123,11 @@ DefaultServiceAttachmentsRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultServiceAttachmentsRestStub::AsyncInsertServiceAttachments(
+DefaultServiceAttachmentsRestStub::AsyncInsertServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const& request) {
+        InsertServiceAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -167,11 +167,11 @@ DefaultServiceAttachmentsRestStub::ListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultServiceAttachmentsRestStub::AsyncPatchServiceAttachments(
+DefaultServiceAttachmentsRestStub::AsyncPatchServiceAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const& request) {
+        PatchServiceAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -224,7 +224,7 @@ DefaultServiceAttachmentsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -248,7 +248,7 @@ future<Status> DefaultServiceAttachmentsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

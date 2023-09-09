@@ -33,29 +33,29 @@ RegionOperationsRestLogging::RegionOperationsRestLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-Status RegionOperationsRestLogging::DeleteRegionOperations(
+Status RegionOperationsRestLogging::DeleteRegionOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
-        return child_->DeleteRegionOperations(rest_context, request);
+                 DeleteRegionOperationRequest const& request) {
+        return child_->DeleteRegionOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsRestLogging::GetRegionOperations(
+RegionOperationsRestLogging::GetRegionOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
-        return child_->GetRegionOperations(rest_context, request);
+                 GetRegionOperationRequest const& request) {
+        return child_->GetRegionOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

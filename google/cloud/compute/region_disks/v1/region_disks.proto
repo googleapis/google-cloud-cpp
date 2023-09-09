@@ -91,7 +91,7 @@ service RegionDisks {
   // However, deleting a disk does not delete any snapshots previously made from
   // the disk. You must separately delete snapshots.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/delete
-  rpc DeleteRegionDisks(DeleteRegionDisksRequest)
+  rpc DeleteRegionDisk(DeleteRegionDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
@@ -102,7 +102,7 @@ service RegionDisks {
 
   // Returns a specified regional persistent disk.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/get
-  rpc GetRegionDisks(GetRegionDisksRequest)
+  rpc GetRegionDisk(GetRegionDiskRequest)
       returns (google.cloud.cpp.compute.v1.Disk) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
@@ -124,7 +124,7 @@ service RegionDisks {
   // Creates a persistent regional disk in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/insert
-  rpc InsertRegionDisks(InsertRegionDisksRequest)
+  rpc InsertRegionDisk(InsertRegionDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks"
@@ -252,7 +252,7 @@ service RegionDisks {
   // performed only on selected fields included as part of update-mask. Only the
   // following fields can be modified: user_license.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks/update
-  rpc UpdateRegionDisks(UpdateRegionDisksRequest)
+  rpc UpdateRegionDisk(UpdateRegionDiskRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
@@ -363,8 +363,8 @@ message CreateSnapshotRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for DeleteRegionDisks.
-message DeleteRegionDisksRequest {
+// Request message for DeleteRegionDisk.
+message DeleteRegionDiskRequest {
   // Name of the regional persistent disk to delete.
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -408,8 +408,8 @@ message GetIamPolicyRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionDisks.
-message GetRegionDisksRequest {
+// Request message for GetRegionDisk.
+message GetRegionDiskRequest {
   // Name of the regional persistent disk to return.
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -420,8 +420,8 @@ message GetRegionDisksRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionDisks.
-message InsertRegionDisksRequest {
+// Request message for InsertRegionDisk.
+message InsertRegionDiskRequest {
   // The Disk for this request.
   optional google.cloud.cpp.compute.v1.Disk disk_resource = 1
       [json_name = "__json_request_body"];
@@ -758,8 +758,8 @@ message TestIamPermissionsRequest {
       test_permissions_request_resource = 4 [json_name = "__json_request_body"];
 }
 
-// Request message for UpdateRegionDisks.
-message UpdateRegionDisksRequest {
+// Request message for UpdateRegionDisk.
+message UpdateRegionDiskRequest {
   // The disk name for this request.
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 

@@ -68,15 +68,15 @@ class MockNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNetworkFirewallPolicies,
+              DeleteNetworkFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   DeleteNetworkFirewallPoliciesRequest const& request),
+                   DeleteNetworkFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
-              GetNetworkFirewallPolicies,
+              GetNetworkFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   GetNetworkFirewallPoliciesRequest const& request),
+                   GetNetworkFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -98,9 +98,9 @@ class MockNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNetworkFirewallPolicies,
+              InsertNetworkFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   InsertNetworkFirewallPoliciesRequest const& request),
+                   InsertNetworkFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>,
@@ -110,9 +110,9 @@ class MockNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchNetworkFirewallPolicies,
+              PatchNetworkFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   PatchNetworkFirewallPoliciesRequest const& request),
+                   PatchNetworkFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

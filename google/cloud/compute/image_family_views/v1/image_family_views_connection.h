@@ -185,8 +185,8 @@ class ImageFamilyViewsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request);
+  GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::
+                         GetImageFamilyViewRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

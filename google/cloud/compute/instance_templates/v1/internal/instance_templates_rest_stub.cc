@@ -67,11 +67,11 @@ DefaultInstanceTemplatesRestStub::AggregatedListInstanceTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInstanceTemplatesRestStub::AsyncDeleteInstanceTemplates(
+DefaultInstanceTemplatesRestStub::AsyncDeleteInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
-        DeleteInstanceTemplatesRequest const& request) {
+        DeleteInstanceTemplateRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -93,10 +93,10 @@ DefaultInstanceTemplatesRestStub::AsyncDeleteInstanceTemplates(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-DefaultInstanceTemplatesRestStub::GetInstanceTemplates(
+DefaultInstanceTemplatesRestStub::GetInstanceTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
-        GetInstanceTemplatesRequest const& request) {
+        GetInstanceTemplateRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -121,11 +121,11 @@ DefaultInstanceTemplatesRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInstanceTemplatesRestStub::AsyncInsertInstanceTemplates(
+DefaultInstanceTemplatesRestStub::AsyncInsertInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
-        InsertInstanceTemplatesRequest const& request) {
+        InsertInstanceTemplateRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -193,7 +193,7 @@ DefaultInstanceTemplatesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -216,7 +216,7 @@ future<Status> DefaultInstanceTemplatesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

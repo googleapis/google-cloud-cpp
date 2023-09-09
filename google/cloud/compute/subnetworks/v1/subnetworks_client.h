@@ -175,12 +175,12 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L262}
+  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L262}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetworks(std::string const& project, std::string const& region,
-                    std::string const& subnetwork, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
+      std::string const& project, std::string const& region,
+      std::string const& subnetwork, Options opts = {});
 
   // clang-format off
   ///
@@ -190,7 +190,7 @@ class SubnetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest].
+  ///     [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -213,13 +213,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L262}
+  /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L262}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                        DeleteSubnetworksRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::
+          DeleteSubnetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,11 +321,11 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
       std::string const& project, std::string const& region,
       std::string const& subnetwork, Options opts = {});
 
@@ -337,7 +337,7 @@ class SubnetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest].
+  ///     [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -353,12 +353,12 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
+  /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L342}
   /// [google.cloud.cpp.compute.v1.Subnetwork]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_117.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
           request,
       Options opts = {});
 
@@ -455,11 +455,10 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L354}
+  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L354}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSubnetwork(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource,
       Options opts = {});
@@ -473,7 +472,7 @@ class SubnetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest].
+  ///     [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -496,13 +495,13 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L354}
+  /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L354}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                        InsertSubnetworksRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::
+          InsertSubnetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -690,10 +689,10 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L518}
+  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L518}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetwork(
       std::string const& project, std::string const& region,
       std::string const& subnetwork,
       google::cloud::cpp::compute::v1::Subnetwork const& subnetwork_resource,
@@ -710,7 +709,7 @@ class SubnetworksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest].
+  ///     [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworkRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -733,12 +732,12 @@ class SubnetworksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L518}
+  /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworkRequest]: @cloud_cpp_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L518}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::
-          PatchSubnetworksRequest const& request,
+          PatchSubnetworkRequest const& request,
       Options opts = {});
 
   // clang-format off

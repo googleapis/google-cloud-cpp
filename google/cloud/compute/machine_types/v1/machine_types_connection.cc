@@ -42,9 +42,9 @@ MachineTypesConnection::AggregatedListMachineTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesConnection::GetMachineTypes(
+MachineTypesConnection::GetMachineType(
     google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const&) {
+        GetMachineTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -33,13 +33,13 @@ ZonesRestLogging::ZonesRestLogging(std::shared_ptr<ZonesRestStub> child,
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestLogging::GetZones(
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestLogging::GetZone(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::zones::v1::GetZonesRequest const&
-                 request) { return child_->GetZones(rest_context, request); },
+             google::cloud::cpp::compute::zones::v1::GetZoneRequest const&
+                 request) { return child_->GetZone(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

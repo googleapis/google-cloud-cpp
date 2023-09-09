@@ -44,13 +44,13 @@ MachineTypesTracingConnection::AggregatedListMachineTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesTracingConnection::GetMachineTypes(
-    google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const& request) {
+MachineTypesTracingConnection::GetMachineType(
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_machine_types_v1::MachineTypesConnection::GetMachineTypes");
+      "compute_machine_types_v1::MachineTypesConnection::GetMachineType");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetMachineTypes(request));
+  return internal::EndSpan(*span, child_->GetMachineType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineType>

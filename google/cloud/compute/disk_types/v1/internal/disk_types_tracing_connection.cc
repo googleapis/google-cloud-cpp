@@ -43,13 +43,13 @@ DiskTypesTracingConnection::AggregatedListDiskTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesTracingConnection::GetDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+DiskTypesTracingConnection::GetDiskType(
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_disk_types_v1::DiskTypesConnection::GetDiskTypes");
+      "compute_disk_types_v1::DiskTypesConnection::GetDiskType");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetDiskTypes(request));
+  return internal::EndSpan(*span, child_->GetDiskType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>

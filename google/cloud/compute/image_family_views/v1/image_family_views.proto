@@ -38,7 +38,7 @@ service ImageFamilyViews {
   // Returns the latest image that is part of an image family, is not deprecated
   // and is rolled out in the specified zone.
   // https://cloud.google.com/compute/docs/reference/rest/v1/imageFamilyViews/get
-  rpc GetImageFamilyViews(GetImageFamilyViewsRequest)
+  rpc GetImageFamilyView(GetImageFamilyViewRequest)
       returns (google.cloud.cpp.compute.v1.ImageFamilyView) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/imageFamilyViews/{family}"
@@ -47,8 +47,8 @@ service ImageFamilyViews {
   }
 }
 
-// Request message for GetImageFamilyViews.
-message GetImageFamilyViewsRequest {
+// Request message for GetImageFamilyView.
+message GetImageFamilyViewRequest {
   // Name of the image family to search for.
   string family = 1 [(google.api.field_behavior) = REQUIRED];
 

@@ -42,33 +42,33 @@ RegionHealthCheckServicesRestMetadata::RegionHealthCheckServicesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesRestMetadata::AsyncDeleteRegionHealthCheckServices(
+RegionHealthCheckServicesRestMetadata::AsyncDeleteRegionHealthCheckService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteRegionHealthCheckServicesRequest const& request) {
+        DeleteRegionHealthCheckServiceRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionHealthCheckServices(
+  return child_->AsyncDeleteRegionHealthCheckService(
       cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-RegionHealthCheckServicesRestMetadata::GetRegionHealthCheckServices(
+RegionHealthCheckServicesRestMetadata::GetRegionHealthCheckService(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        GetRegionHealthCheckServicesRequest const& request) {
+        GetRegionHealthCheckServiceRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionHealthCheckServices(rest_context, request);
+  return child_->GetRegionHealthCheckService(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesRestMetadata::AsyncInsertRegionHealthCheckServices(
+RegionHealthCheckServicesRestMetadata::AsyncInsertRegionHealthCheckService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertRegionHealthCheckServicesRequest const& request) {
+        InsertRegionHealthCheckServiceRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionHealthCheckServices(
+  return child_->AsyncInsertRegionHealthCheckService(
       cq, std::move(rest_context), request);
 }
 
@@ -82,14 +82,14 @@ RegionHealthCheckServicesRestMetadata::ListRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesRestMetadata::AsyncPatchRegionHealthCheckServices(
+RegionHealthCheckServicesRestMetadata::AsyncPatchRegionHealthCheckService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchRegionHealthCheckServicesRequest const& request) {
+        PatchRegionHealthCheckServiceRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRegionHealthCheckServices(
-      cq, std::move(rest_context), request);
+  return child_->AsyncPatchRegionHealthCheckService(cq, std::move(rest_context),
+                                                    request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -97,7 +97,7 @@ RegionHealthCheckServicesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -106,7 +106,7 @@ future<Status> RegionHealthCheckServicesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

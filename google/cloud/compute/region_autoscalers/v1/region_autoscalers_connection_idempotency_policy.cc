@@ -35,22 +35,22 @@ RegionAutoscalersConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::DeleteRegionAutoscalers(
+RegionAutoscalersConnectionIdempotencyPolicy::DeleteRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalersRequest const&) {
+        DeleteRegionAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionAutoscalersConnectionIdempotencyPolicy::GetRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::GetRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalersRequest const&) {
+        GetRegionAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::InsertRegionAutoscalers(
+RegionAutoscalersConnectionIdempotencyPolicy::InsertRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalersRequest const&) {
+        InsertRegionAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -60,17 +60,16 @@ Idempotency RegionAutoscalersConnectionIdempotencyPolicy::ListRegionAutoscalers(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::PatchRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::PatchRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalersRequest const&) {
+        PatchRegionAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::UpdateRegionAutoscalers(
+RegionAutoscalersConnectionIdempotencyPolicy::UpdateRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalersRequest const&) {
+        UpdateRegionAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 

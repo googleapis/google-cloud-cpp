@@ -50,9 +50,8 @@ NodeGroupsConnection::AggregatedListNodeGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeGroupsConnection::DeleteNodeGroups(
-    google::cloud::cpp::compute::node_groups::v1::
-        DeleteNodeGroupsRequest const&) {
+NodeGroupsConnection::DeleteNodeGroup(google::cloud::cpp::compute::node_groups::
+                                          v1::DeleteNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -67,8 +66,8 @@ NodeGroupsConnection::DeleteNodes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsConnection::GetNodeGroups(
-    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&) {
+NodeGroupsConnection::GetNodeGroup(
+    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -79,9 +78,8 @@ NodeGroupsConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeGroupsConnection::InsertNodeGroups(
-    google::cloud::cpp::compute::node_groups::v1::
-        InsertNodeGroupsRequest const&) {
+NodeGroupsConnection::InsertNodeGroup(google::cloud::cpp::compute::node_groups::
+                                          v1::InsertNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -104,8 +102,8 @@ NodeGroupsConnection::ListNodes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeGroupsConnection::PatchNodeGroups(google::cloud::cpp::compute::node_groups::
-                                          v1::PatchNodeGroupsRequest const&) {
+NodeGroupsConnection::PatchNodeGroup(google::cloud::cpp::compute::node_groups::
+                                         v1::PatchNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

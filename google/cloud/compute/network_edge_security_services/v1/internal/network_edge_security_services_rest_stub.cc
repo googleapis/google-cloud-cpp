@@ -72,11 +72,11 @@ DefaultNetworkEdgeSecurityServicesRestStub::
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEdgeSecurityServicesRestStub::
-    AsyncDeleteNetworkEdgeSecurityServices(
+    AsyncDeleteNetworkEdgeSecurityService(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            DeleteNetworkEdgeSecurityServicesRequest const& request) {
+            DeleteNetworkEdgeSecurityServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -99,10 +99,10 @@ DefaultNetworkEdgeSecurityServicesRestStub::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityServices(
+DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityService(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        GetNetworkEdgeSecurityServicesRequest const& request) {
+        GetNetworkEdgeSecurityServiceRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>(
       *service_, rest_context, request,
@@ -115,11 +115,11 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityServices(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEdgeSecurityServicesRestStub::
-    AsyncInsertNetworkEdgeSecurityServices(
+    AsyncInsertNetworkEdgeSecurityService(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            InsertNetworkEdgeSecurityServicesRequest const& request) {
+            InsertNetworkEdgeSecurityServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -143,11 +143,11 @@ DefaultNetworkEdgeSecurityServicesRestStub::
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEdgeSecurityServicesRestStub::
-    AsyncPatchNetworkEdgeSecurityServices(
+    AsyncPatchNetworkEdgeSecurityService(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            PatchNetworkEdgeSecurityServicesRequest const& request) {
+            PatchNetworkEdgeSecurityServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -175,7 +175,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -199,7 +199,7 @@ future<Status> DefaultNetworkEdgeSecurityServicesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

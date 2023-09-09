@@ -41,7 +41,7 @@ service GlobalForwardingRules {
 
   // Deletes the specified GlobalForwardingRule resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/delete
-  rpc DeleteGlobalForwardingRules(DeleteGlobalForwardingRulesRequest)
+  rpc DeleteGlobalForwardingRule(DeleteGlobalForwardingRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/forwardingRules/{forwarding_rule}"
@@ -53,7 +53,7 @@ service GlobalForwardingRules {
   // Returns the specified GlobalForwardingRule resource. Gets a list of
   // available forwarding rules by making a list() request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/get
-  rpc GetGlobalForwardingRules(GetGlobalForwardingRulesRequest)
+  rpc GetGlobalForwardingRule(GetGlobalForwardingRuleRequest)
       returns (google.cloud.cpp.compute.v1.ForwardingRule) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/forwardingRules/{forwarding_rule}"
@@ -64,7 +64,7 @@ service GlobalForwardingRules {
   // Creates a GlobalForwardingRule resource in the specified project using the
   // data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/insert
-  rpc InsertGlobalForwardingRules(InsertGlobalForwardingRulesRequest)
+  rpc InsertGlobalForwardingRule(InsertGlobalForwardingRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/forwardingRules"
@@ -90,7 +90,7 @@ service GlobalForwardingRules {
   // format and processing rules. Currently, you can only patch the network_tier
   // field.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalForwardingRules/patch
-  rpc PatchGlobalForwardingRules(PatchGlobalForwardingRulesRequest)
+  rpc PatchGlobalForwardingRule(PatchGlobalForwardingRuleRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/forwardingRules/{forwarding_rule}"
@@ -130,8 +130,8 @@ service GlobalForwardingRules {
   }
 }
 
-// Request message for DeleteGlobalForwardingRules.
-message DeleteGlobalForwardingRulesRequest {
+// Request message for DeleteGlobalForwardingRule.
+message DeleteGlobalForwardingRuleRequest {
   // Name of the ForwardingRule resource to delete.
   string forwarding_rule = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -154,8 +154,8 @@ message DeleteGlobalForwardingRulesRequest {
   optional string request_id = 3;
 }
 
-// Request message for GetGlobalForwardingRules.
-message GetGlobalForwardingRulesRequest {
+// Request message for GetGlobalForwardingRule.
+message GetGlobalForwardingRuleRequest {
   // Name of the ForwardingRule resource to return.
   string forwarding_rule = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -163,8 +163,8 @@ message GetGlobalForwardingRulesRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertGlobalForwardingRules.
-message InsertGlobalForwardingRulesRequest {
+// Request message for InsertGlobalForwardingRule.
+message InsertGlobalForwardingRuleRequest {
   // The ForwardingRule for this request.
   optional google.cloud.cpp.compute.v1.ForwardingRule forwarding_rule_resource =
       1 [json_name = "__json_request_body"];
@@ -253,8 +253,8 @@ message ListGlobalForwardingRulesRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchGlobalForwardingRules.
-message PatchGlobalForwardingRulesRequest {
+// Request message for PatchGlobalForwardingRule.
+message PatchGlobalForwardingRuleRequest {
   // Name of the ForwardingRule resource to patch.
   string forwarding_rule = 1 [(google.api.field_behavior) = REQUIRED];
 

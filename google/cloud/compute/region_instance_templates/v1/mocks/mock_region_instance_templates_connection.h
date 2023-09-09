@@ -50,21 +50,21 @@ class MockRegionInstanceTemplatesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionInstanceTemplates,
+              DeleteRegionInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::
-                   DeleteRegionInstanceTemplatesRequest const& request),
+                   DeleteRegionInstanceTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>,
-              GetRegionInstanceTemplates,
+              GetRegionInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::
-                   GetRegionInstanceTemplatesRequest const& request),
+                   GetRegionInstanceTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionInstanceTemplates,
+              InsertRegionInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::
-                   InsertRegionInstanceTemplatesRequest const& request),
+                   InsertRegionInstanceTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>,

@@ -36,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InterconnectLocationsConnection::~InterconnectLocationsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-InterconnectLocationsConnection::GetInterconnectLocations(
+InterconnectLocationsConnection::GetInterconnectLocation(
     google::cloud::cpp::compute::interconnect_locations::v1::
-        GetInterconnectLocationsRequest const&) {
+        GetInterconnectLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

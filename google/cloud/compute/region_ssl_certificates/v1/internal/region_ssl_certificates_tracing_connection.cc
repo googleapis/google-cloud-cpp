@@ -36,38 +36,38 @@ RegionSslCertificatesTracingConnection::RegionSslCertificatesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesTracingConnection::DeleteRegionSslCertificates(
+RegionSslCertificatesTracingConnection::DeleteRegionSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteRegionSslCertificatesRequest const& request) {
+        DeleteRegionSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
-      "DeleteRegionSslCertificates");
+      "DeleteRegionSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionSslCertificates(request));
+                           child_->DeleteRegionSslCertificate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesTracingConnection::GetRegionSslCertificates(
+RegionSslCertificatesTracingConnection::GetRegionSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        GetRegionSslCertificatesRequest const& request) {
+        GetRegionSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
-      "GetRegionSslCertificates");
+      "GetRegionSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionSslCertificates(request));
+  return internal::EndSpan(*span, child_->GetRegionSslCertificate(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesTracingConnection::InsertRegionSslCertificates(
+RegionSslCertificatesTracingConnection::InsertRegionSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertRegionSslCertificatesRequest const& request) {
+        InsertRegionSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
-      "InsertRegionSslCertificates");
+      "InsertRegionSslCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionSslCertificates(request));
+                           child_->InsertRegionSslCertificate(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

@@ -43,15 +43,15 @@ BackendBucketsTracingConnection::AddSignedUrlKey(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsTracingConnection::DeleteBackendBuckets(
+BackendBucketsTracingConnection::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        DeleteBackendBucketsRequest const& request) {
+        DeleteBackendBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
-      "DeleteBackendBuckets");
+      "DeleteBackendBucket");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteBackendBuckets(request));
+                           child_->DeleteBackendBucket(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -67,26 +67,25 @@ BackendBucketsTracingConnection::DeleteSignedUrlKey(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsTracingConnection::GetBackendBuckets(
+BackendBucketsTracingConnection::GetBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        GetBackendBucketsRequest const& request) {
+        GetBackendBucketRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_backend_buckets_v1::BackendBucketsConnection::"
-      "GetBackendBuckets");
+      "compute_backend_buckets_v1::BackendBucketsConnection::GetBackendBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetBackendBuckets(request));
+  return internal::EndSpan(*span, child_->GetBackendBucket(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsTracingConnection::InsertBackendBuckets(
+BackendBucketsTracingConnection::InsertBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        InsertBackendBucketsRequest const& request) {
+        InsertBackendBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
-      "InsertBackendBuckets");
+      "InsertBackendBucket");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertBackendBuckets(request));
+                           child_->InsertBackendBucket(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
@@ -104,15 +103,15 @@ BackendBucketsTracingConnection::ListBackendBuckets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsTracingConnection::PatchBackendBuckets(
+BackendBucketsTracingConnection::PatchBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        PatchBackendBucketsRequest const& request) {
+        PatchBackendBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
-      "PatchBackendBuckets");
+      "PatchBackendBucket");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchBackendBuckets(request));
+                           child_->PatchBackendBucket(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -128,15 +127,15 @@ BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsTracingConnection::UpdateBackendBuckets(
+BackendBucketsTracingConnection::UpdateBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
-        UpdateBackendBucketsRequest const& request) {
+        UpdateBackendBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
-      "UpdateBackendBuckets");
+      "UpdateBackendBucket");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateBackendBuckets(request));
+                           child_->UpdateBackendBucket(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
