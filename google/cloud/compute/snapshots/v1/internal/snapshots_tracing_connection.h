@@ -40,20 +40,20 @@ class SnapshotsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(

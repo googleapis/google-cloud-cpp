@@ -47,20 +47,20 @@ class NodeTemplatesTracingConnection
           AggregatedListNodeTemplatesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                          DeleteNodeTemplatesRequest const& request) override;
+  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         DeleteNodeTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
       google::cloud::cpp::compute::node_templates::v1::
-          GetNodeTemplatesRequest const& request) override;
+          GetNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::node_templates::v1::
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
-                          InsertNodeTemplatesRequest const& request) override;
+  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         InsertNodeTemplateRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
       google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest

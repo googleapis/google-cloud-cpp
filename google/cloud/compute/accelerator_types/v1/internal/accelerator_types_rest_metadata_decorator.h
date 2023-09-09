@@ -45,10 +45,10 @@ class AcceleratorTypesRestMetadata : public AcceleratorTypesRestStub {
       google::cloud::cpp::compute::accelerator_types::v1::
           AggregatedListAcceleratorTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::accelerator_types::v1::
-                          GetAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
   ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,

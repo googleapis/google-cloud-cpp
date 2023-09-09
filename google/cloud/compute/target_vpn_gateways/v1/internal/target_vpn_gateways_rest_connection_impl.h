@@ -58,18 +58,18 @@ class TargetVpnGatewaysRestConnectionImpl
           AggregatedListTargetVpnGatewaysRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateways(
+  DeleteTargetVpnGateway(
       google::cloud::cpp::compute::target_vpn_gateways::v1::
-          DeleteTargetVpnGatewaysRequest const& request) override;
+          DeleteTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
-                           GetTargetVpnGatewaysRequest const& request) override;
+  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                          GetTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateways(
+  InsertTargetVpnGateway(
       google::cloud::cpp::compute::target_vpn_gateways::v1::
-          InsertTargetVpnGatewaysRequest const& request) override;
+          InsertTargetVpnGatewayRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
   ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::

@@ -74,13 +74,13 @@ ProjectsTracingConnection::EnableXpnResource(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
-ProjectsTracingConnection::GetProjects(
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+ProjectsTracingConnection::GetProject(
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
         request) {
-  auto span = internal::MakeSpan(
-      "compute_projects_v1::ProjectsConnection::GetProjects");
+  auto span =
+      internal::MakeSpan("compute_projects_v1::ProjectsConnection::GetProject");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetProjects(request));
+  return internal::EndSpan(*span, child_->GetProject(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>

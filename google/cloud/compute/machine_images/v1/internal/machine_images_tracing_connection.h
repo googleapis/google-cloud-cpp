@@ -42,20 +42,20 @@ class MachineImagesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImages(google::cloud::cpp::compute::machine_images::v1::
-                          DeleteMachineImagesRequest const& request) override;
+  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         DeleteMachineImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
+  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
       google::cloud::cpp::compute::machine_images::v1::
-          GetMachineImagesRequest const& request) override;
+          GetMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::machine_images::v1::
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImages(google::cloud::cpp::compute::machine_images::v1::
-                          InsertMachineImagesRequest const& request) override;
+  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         InsertMachineImageRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
       google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest

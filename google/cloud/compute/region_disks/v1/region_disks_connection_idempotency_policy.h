@@ -48,21 +48,21 @@ class RegionDisksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_disks::v1::
           CreateSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRegionDisks(
+  virtual google::cloud::Idempotency DeleteRegionDisk(
       google::cloud::cpp::compute::region_disks::v1::
-          DeleteRegionDisksRequest const& request);
+          DeleteRegionDiskRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionDisks(
-      google::cloud::cpp::compute::region_disks::v1::
-          GetRegionDisksRequest const& request);
+  virtual google::cloud::Idempotency GetRegionDisk(
+      google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+          request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertRegionDisks(
+  virtual google::cloud::Idempotency InsertRegionDisk(
       google::cloud::cpp::compute::region_disks::v1::
-          InsertRegionDisksRequest const& request);
+          InsertRegionDiskRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionDisks(
       google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
@@ -100,9 +100,9 @@ class RegionDisksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_disks::v1::
           TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRegionDisks(
+  virtual google::cloud::Idempotency UpdateRegionDisk(
       google::cloud::cpp::compute::region_disks::v1::
-          UpdateRegionDisksRequest const& request);
+          UpdateRegionDiskRequest const& request);
 };
 
 std::unique_ptr<RegionDisksConnectionIdempotencyPolicy>

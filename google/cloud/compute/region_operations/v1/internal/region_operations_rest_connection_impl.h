@@ -51,13 +51,13 @@ class RegionOperationsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  Status DeleteRegionOperations(
+  Status DeleteRegionOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteRegionOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetRegionOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
       google::cloud::cpp::compute::region_operations::v1::

@@ -45,10 +45,10 @@ DefaultRoutesRestStub::DefaultRoutesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRoutesRestStub::AsyncDeleteRoutes(
+DefaultRoutesRestStub::AsyncDeleteRoute(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -70,9 +70,9 @@ DefaultRoutesRestStub::AsyncDeleteRoutes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Route>
-DefaultRoutesRestStub::GetRoutes(
+DefaultRoutesRestStub::GetRoute(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) {
+    google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Route>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -82,10 +82,10 @@ DefaultRoutesRestStub::GetRoutes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRoutesRestStub::AsyncInsertRoutes(
+DefaultRoutesRestStub::AsyncInsertRoute(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -126,7 +126,7 @@ DefaultRoutesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -149,7 +149,7 @@ future<Status> DefaultRoutesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

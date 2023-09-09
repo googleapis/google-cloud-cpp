@@ -38,25 +38,25 @@ class GlobalForwardingRulesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<GlobalForwardingRulesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteGlobalForwardingRules(
+  virtual google::cloud::Idempotency DeleteGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          DeleteGlobalForwardingRulesRequest const& request);
+          DeleteGlobalForwardingRuleRequest const& request);
 
-  virtual google::cloud::Idempotency GetGlobalForwardingRules(
+  virtual google::cloud::Idempotency GetGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          GetGlobalForwardingRulesRequest const& request);
+          GetGlobalForwardingRuleRequest const& request);
 
-  virtual google::cloud::Idempotency InsertGlobalForwardingRules(
+  virtual google::cloud::Idempotency InsertGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          InsertGlobalForwardingRulesRequest const& request);
+          InsertGlobalForwardingRuleRequest const& request);
 
   virtual google::cloud::Idempotency ListGlobalForwardingRules(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
           ListGlobalForwardingRulesRequest request);
 
-  virtual google::cloud::Idempotency PatchGlobalForwardingRules(
+  virtual google::cloud::Idempotency PatchGlobalForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          PatchGlobalForwardingRulesRequest const& request);
+          PatchGlobalForwardingRuleRequest const& request);
 
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::global_forwarding_rules::v1::

@@ -189,9 +189,9 @@ class MachineTypesConnection {
       google::cloud::cpp::compute::machine_types::v1::
           AggregatedListMachineTypesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineTypes(google::cloud::cpp::compute::machine_types::v1::
-                      GetMachineTypesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypeRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineType>
   ListMachineTypes(

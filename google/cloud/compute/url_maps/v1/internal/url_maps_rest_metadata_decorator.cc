@@ -49,32 +49,32 @@ UrlMapsRestMetadata::AggregatedListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestMetadata::AsyncDeleteUrlMaps(
+UrlMapsRestMetadata::AsyncDeleteUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteUrlMaps(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteUrlMap(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-UrlMapsRestMetadata::GetUrlMaps(
+UrlMapsRestMetadata::GetUrlMap(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetUrlMaps(rest_context, request);
+  return child_->GetUrlMap(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestMetadata::AsyncInsertUrlMaps(
+UrlMapsRestMetadata::AsyncInsertUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertUrlMaps(cq, std::move(rest_context), request);
+  return child_->AsyncInsertUrlMap(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -97,23 +97,23 @@ UrlMapsRestMetadata::ListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestMetadata::AsyncPatchUrlMaps(
+UrlMapsRestMetadata::AsyncPatchUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchUrlMaps(cq, std::move(rest_context), request);
+  return child_->AsyncPatchUrlMap(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestMetadata::AsyncUpdateUrlMaps(
+UrlMapsRestMetadata::AsyncUpdateUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateUrlMaps(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateUrlMap(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
@@ -129,7 +129,7 @@ UrlMapsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -138,7 +138,7 @@ future<Status> UrlMapsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

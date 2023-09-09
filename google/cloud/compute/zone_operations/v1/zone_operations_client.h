@@ -106,12 +106,12 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L93}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L93}
   ///
   // clang-format on
-  Status DeleteZoneOperations(std::string const& project,
-                              std::string const& zone,
-                              std::string const& operation, Options opts = {});
+  Status DeleteZoneOperation(std::string const& project,
+                             std::string const& zone,
+                             std::string const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -121,7 +121,7 @@ class ZoneOperationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest].
+  ///     [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -135,12 +135,12 @@ class ZoneOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L93}
+  /// [google.cloud.cpp.compute.zone_operations.v1.DeleteZoneOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L93}
   ///
   // clang-format on
-  Status DeleteZoneOperations(google::cloud::cpp::compute::zone_operations::v1::
-                                  DeleteZoneOperationsRequest const& request,
-                              Options opts = {});
+  Status DeleteZoneOperation(google::cloud::cpp::compute::zone_operations::v1::
+                                 DeleteZoneOperationRequest const& request,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -164,10 +164,10 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L105}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L105}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
       std::string const& project, std::string const& zone,
       std::string const& operation, Options opts = {});
 
@@ -179,7 +179,7 @@ class ZoneOperationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest].
+  ///     [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -196,12 +196,12 @@ class ZoneOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
-  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L105}
+  /// [google.cloud.cpp.compute.zone_operations.v1.GetZoneOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L105}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request,
+          GetZoneOperationRequest const& request,
       Options opts = {});
 
   // clang-format off

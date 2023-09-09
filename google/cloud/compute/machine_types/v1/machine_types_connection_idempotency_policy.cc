@@ -40,9 +40,9 @@ Idempotency MachineTypesConnectionIdempotencyPolicy::AggregatedListMachineTypes(
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineTypesConnectionIdempotencyPolicy::GetMachineTypes(
+Idempotency MachineTypesConnectionIdempotencyPolicy::GetMachineType(
     google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const&) {
+        GetMachineTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 

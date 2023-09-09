@@ -40,18 +40,18 @@ Idempotency UrlMapsConnectionIdempotencyPolicy::AggregatedListUrlMaps(
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::DeleteUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::DeleteUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::GetUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::GetUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::InsertUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::InsertUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,13 +65,13 @@ Idempotency UrlMapsConnectionIdempotencyPolicy::ListUrlMaps(
   return Idempotency::kIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::PatchUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::PatchUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UrlMapsConnectionIdempotencyPolicy::UpdateUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&) {
+Idempotency UrlMapsConnectionIdempotencyPolicy::UpdateUrlMap(
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&) {
   return Idempotency::kIdempotent;
 }
 

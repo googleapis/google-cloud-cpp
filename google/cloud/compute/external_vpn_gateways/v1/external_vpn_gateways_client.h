@@ -118,13 +118,13 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L117}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteExternalVpnGateways(std::string const& project,
-                            std::string const& external_vpn_gateway,
-                            Options opts = {});
+  DeleteExternalVpnGateway(std::string const& project,
+                           std::string const& external_vpn_gateway,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -134,7 +134,7 @@ class ExternalVpnGatewaysClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest].
+  ///     [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewayRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -157,13 +157,13 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L117}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.DeleteExternalVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L117}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteExternalVpnGateways(
+  DeleteExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          DeleteExternalVpnGatewaysRequest const& request,
+          DeleteExternalVpnGatewayRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -187,14 +187,14 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L141}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L141}
   /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_032.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-  GetExternalVpnGateways(std::string const& project,
-                         std::string const& external_vpn_gateway,
-                         Options opts = {});
+  GetExternalVpnGateway(std::string const& project,
+                        std::string const& external_vpn_gateway,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -205,7 +205,7 @@ class ExternalVpnGatewaysClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest].
+  ///     [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewayRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -221,14 +221,14 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L141}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.GetExternalVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L141}
   /// [google.cloud.cpp.compute.v1.ExternalVpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_032.proto#L31}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-  GetExternalVpnGateways(google::cloud::cpp::compute::external_vpn_gateways::
-                             v1::GetExternalVpnGatewaysRequest const& request,
-                         Options opts = {});
+  GetExternalVpnGateway(google::cloud::cpp::compute::external_vpn_gateways::v1::
+                            GetExternalVpnGatewayRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -258,11 +258,11 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L150}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertExternalVpnGateways(
+  InsertExternalVpnGateway(
       std::string const& project,
       google::cloud::cpp::compute::v1::ExternalVpnGateway const&
           external_vpn_gateway_resource,
@@ -277,7 +277,7 @@ class ExternalVpnGatewaysClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest].
+  ///     [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewayRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -300,13 +300,13 @@ class ExternalVpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L150}
+  /// [google.cloud.cpp.compute.external_vpn_gateways.v1.InsertExternalVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto#L150}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertExternalVpnGateways(
+  InsertExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          InsertExternalVpnGatewaysRequest const& request,
+          InsertExternalVpnGatewayRequest const& request,
       Options opts = {});
 
   // clang-format off

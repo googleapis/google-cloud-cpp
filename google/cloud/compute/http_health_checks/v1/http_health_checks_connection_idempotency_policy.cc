@@ -34,21 +34,21 @@ HttpHealthChecksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<HttpHealthChecksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency HttpHealthChecksConnectionIdempotencyPolicy::DeleteHttpHealthChecks(
+Idempotency HttpHealthChecksConnectionIdempotencyPolicy::DeleteHttpHealthCheck(
     google::cloud::cpp::compute::http_health_checks::v1::
-        DeleteHttpHealthChecksRequest const&) {
+        DeleteHttpHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency HttpHealthChecksConnectionIdempotencyPolicy::GetHttpHealthChecks(
+Idempotency HttpHealthChecksConnectionIdempotencyPolicy::GetHttpHealthCheck(
     google::cloud::cpp::compute::http_health_checks::v1::
-        GetHttpHealthChecksRequest const&) {
+        GetHttpHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency HttpHealthChecksConnectionIdempotencyPolicy::InsertHttpHealthChecks(
+Idempotency HttpHealthChecksConnectionIdempotencyPolicy::InsertHttpHealthCheck(
     google::cloud::cpp::compute::http_health_checks::v1::
-        InsertHttpHealthChecksRequest const&) {
+        InsertHttpHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -58,15 +58,15 @@ Idempotency HttpHealthChecksConnectionIdempotencyPolicy::ListHttpHealthChecks(
   return Idempotency::kIdempotent;
 }
 
-Idempotency HttpHealthChecksConnectionIdempotencyPolicy::PatchHttpHealthChecks(
+Idempotency HttpHealthChecksConnectionIdempotencyPolicy::PatchHttpHealthCheck(
     google::cloud::cpp::compute::http_health_checks::v1::
-        PatchHttpHealthChecksRequest const&) {
+        PatchHttpHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency HttpHealthChecksConnectionIdempotencyPolicy::UpdateHttpHealthChecks(
+Idempotency HttpHealthChecksConnectionIdempotencyPolicy::UpdateHttpHealthCheck(
     google::cloud::cpp::compute::http_health_checks::v1::
-        UpdateHttpHealthChecksRequest const&) {
+        UpdateHttpHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 

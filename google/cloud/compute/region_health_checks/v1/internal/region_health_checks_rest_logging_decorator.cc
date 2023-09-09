@@ -35,49 +35,49 @@ RegionHealthChecksRestLogging::RegionHealthChecksRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksRestLogging::AsyncDeleteRegionHealthChecks(
+RegionHealthChecksRestLogging::AsyncDeleteRegionHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_checks::v1::
-        DeleteRegionHealthChecksRequest const& request) {
+        DeleteRegionHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_health_checks::v1::
-                 DeleteRegionHealthChecksRequest const& request) {
-        return child_->AsyncDeleteRegionHealthChecks(
-            cq, std::move(rest_context), request);
+                 DeleteRegionHealthCheckRequest const& request) {
+        return child_->AsyncDeleteRegionHealthCheck(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-RegionHealthChecksRestLogging::GetRegionHealthChecks(
+RegionHealthChecksRestLogging::GetRegionHealthCheck(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_health_checks::v1::
-        GetRegionHealthChecksRequest const& request) {
+        GetRegionHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_health_checks::v1::
-                 GetRegionHealthChecksRequest const& request) {
-        return child_->GetRegionHealthChecks(rest_context, request);
+                 GetRegionHealthCheckRequest const& request) {
+        return child_->GetRegionHealthCheck(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksRestLogging::AsyncInsertRegionHealthChecks(
+RegionHealthChecksRestLogging::AsyncInsertRegionHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_checks::v1::
-        InsertRegionHealthChecksRequest const& request) {
+        InsertRegionHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_health_checks::v1::
-                 InsertRegionHealthChecksRequest const& request) {
-        return child_->AsyncInsertRegionHealthChecks(
-            cq, std::move(rest_context), request);
+                 InsertRegionHealthCheckRequest const& request) {
+        return child_->AsyncInsertRegionHealthCheck(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -97,35 +97,35 @@ RegionHealthChecksRestLogging::ListRegionHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksRestLogging::AsyncPatchRegionHealthChecks(
+RegionHealthChecksRestLogging::AsyncPatchRegionHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_checks::v1::
-        PatchRegionHealthChecksRequest const& request) {
+        PatchRegionHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_health_checks::v1::
-                 PatchRegionHealthChecksRequest const& request) {
-        return child_->AsyncPatchRegionHealthChecks(cq, std::move(rest_context),
-                                                    request);
+                 PatchRegionHealthCheckRequest const& request) {
+        return child_->AsyncPatchRegionHealthCheck(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksRestLogging::AsyncUpdateRegionHealthChecks(
+RegionHealthChecksRestLogging::AsyncUpdateRegionHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_health_checks::v1::
-        UpdateRegionHealthChecksRequest const& request) {
+        UpdateRegionHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_health_checks::v1::
-                 UpdateRegionHealthChecksRequest const& request) {
-        return child_->AsyncUpdateRegionHealthChecks(
-            cq, std::move(rest_context), request);
+                 UpdateRegionHealthCheckRequest const& request) {
+        return child_->AsyncUpdateRegionHealthCheck(cq, std::move(rest_context),
+                                                    request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -135,12 +135,12 @@ RegionHealthChecksRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetRegionOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -150,12 +150,12 @@ future<Status> RegionHealthChecksRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteRegionOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -48,16 +48,15 @@ DiskTypesRestLogging::AggregatedListDiskTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesRestLogging::GetDiskTypes(
+DiskTypesRestLogging::GetDiskType(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::disk_types::v1::
-                 GetDiskTypesRequest const& request) {
-        return child_->GetDiskTypes(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
+              request) { return child_->GetDiskType(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

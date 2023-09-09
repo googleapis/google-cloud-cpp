@@ -40,20 +40,20 @@ class NetworksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request);
 
-  virtual google::cloud::Idempotency DeleteNetworks(
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+  virtual google::cloud::Idempotency DeleteNetwork(
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetNetworks(
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+  virtual google::cloud::Idempotency GetNetwork(
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request);
 
   virtual google::cloud::Idempotency GetEffectiveFirewalls(
       google::cloud::cpp::compute::networks::v1::
           GetEffectiveFirewallsRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworks(
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+  virtual google::cloud::Idempotency InsertNetwork(
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request);
 
   virtual google::cloud::Idempotency ListNetworks(
@@ -63,8 +63,8 @@ class NetworksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
           request);
 
-  virtual google::cloud::Idempotency PatchNetworks(
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+  virtual google::cloud::Idempotency PatchNetwork(
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request);
 
   virtual google::cloud::Idempotency RemovePeering(

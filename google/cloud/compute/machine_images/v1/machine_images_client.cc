@@ -33,45 +33,45 @@ MachineImagesClient::MachineImagesClient(
 MachineImagesClient::~MachineImagesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesClient::DeleteMachineImages(std::string const& project,
-                                         std::string const& machine_image,
-                                         Options opts) {
+MachineImagesClient::DeleteMachineImage(std::string const& project,
+                                        std::string const& machine_image,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::machine_images::v1::DeleteMachineImagesRequest
+  google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest
       request;
   request.set_project(project);
   request.set_machine_image(machine_image);
-  return connection_->DeleteMachineImages(request);
+  return connection_->DeleteMachineImage(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesClient::DeleteMachineImages(
+MachineImagesClient::DeleteMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImagesRequest const& request,
+        DeleteMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMachineImages(request);
+  return connection_->DeleteMachineImage(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesClient::GetMachineImages(std::string const& project,
-                                      std::string const& machine_image,
-                                      Options opts) {
+MachineImagesClient::GetMachineImage(std::string const& project,
+                                     std::string const& machine_image,
+                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::machine_images::v1::GetMachineImagesRequest
+  google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest
       request;
   request.set_project(project);
   request.set_machine_image(machine_image);
-  return connection_->GetMachineImages(request);
+  return connection_->GetMachineImage(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesClient::GetMachineImages(
+MachineImagesClient::GetMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        GetMachineImagesRequest const& request,
+        GetMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetMachineImages(request);
+  return connection_->GetMachineImage(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -94,25 +94,25 @@ MachineImagesClient::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesClient::InsertMachineImages(
+MachineImagesClient::InsertMachineImage(
     std::string const& project,
     google::cloud::cpp::compute::v1::MachineImage const& machine_image_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::machine_images::v1::InsertMachineImagesRequest
+  google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest
       request;
   request.set_project(project);
   *request.mutable_machine_image_resource() = machine_image_resource;
-  return connection_->InsertMachineImages(request);
+  return connection_->InsertMachineImage(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesClient::InsertMachineImages(
+MachineImagesClient::InsertMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImagesRequest const& request,
+        InsertMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertMachineImages(request);
+  return connection_->InsertMachineImage(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineImage>

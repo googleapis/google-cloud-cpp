@@ -47,9 +47,8 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteImages,
-      (google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteImage,
+      (google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
            request),
       (override));
 
@@ -59,10 +58,10 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
                    request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Image>, GetImages,
-              (google::cloud::cpp::compute::images::v1::GetImagesRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Image>, GetImage,
+      (google::cloud::cpp::compute::images::v1::GetImageRequest const& request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Image>, GetFromFamily,
@@ -77,9 +76,8 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertImages,
-      (google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, InsertImage,
+      (google::cloud::cpp::compute::images::v1::InsertImageRequest const&
            request),
       (override));
 
@@ -88,11 +86,11 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
       (google::cloud::cpp::compute::images::v1::ListImagesRequest request),
       (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, PatchImages,
-      (google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-           request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchImage,
+              (google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

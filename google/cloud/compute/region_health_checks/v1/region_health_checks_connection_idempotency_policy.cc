@@ -36,23 +36,22 @@ RegionHealthChecksConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::DeleteRegionHealthChecks(
+RegionHealthChecksConnectionIdempotencyPolicy::DeleteRegionHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        DeleteRegionHealthChecksRequest const&) {
+        DeleteRegionHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::GetRegionHealthChecks(
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::GetRegionHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        GetRegionHealthChecksRequest const&) {
+        GetRegionHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::InsertRegionHealthChecks(
+RegionHealthChecksConnectionIdempotencyPolicy::InsertRegionHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        InsertRegionHealthChecksRequest const&) {
+        InsertRegionHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -64,16 +63,16 @@ RegionHealthChecksConnectionIdempotencyPolicy::ListRegionHealthChecks(
 }
 
 Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::PatchRegionHealthChecks(
+RegionHealthChecksConnectionIdempotencyPolicy::PatchRegionHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        PatchRegionHealthChecksRequest const&) {
+        PatchRegionHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::UpdateRegionHealthChecks(
+RegionHealthChecksConnectionIdempotencyPolicy::UpdateRegionHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        UpdateRegionHealthChecksRequest const&) {
+        UpdateRegionHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 

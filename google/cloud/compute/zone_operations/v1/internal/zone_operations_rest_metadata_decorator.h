@@ -39,15 +39,15 @@ class ZoneOperationsRestMetadata : public ZoneOperationsRestStub {
       std::shared_ptr<ZoneOperationsRestStub> child,
       std::string api_client_header = "");
 
-  Status DeleteZoneOperations(
+  Status DeleteZoneOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,

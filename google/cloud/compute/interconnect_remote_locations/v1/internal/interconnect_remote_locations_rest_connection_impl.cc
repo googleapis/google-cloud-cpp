@@ -45,17 +45,17 @@ InterconnectRemoteLocationsRestConnectionImpl::
           InterconnectRemoteLocationsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsRestConnectionImpl::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsRestConnectionImpl::GetInterconnectRemoteLocation(
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
-        GetInterconnectRemoteLocationsRequest const& request) {
+        GetInterconnectRemoteLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetInterconnectRemoteLocations(request),
+      idempotency_policy(*current)->GetInterconnectRemoteLocation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnect_remote_locations::v1::
-                 GetInterconnectRemoteLocationsRequest const& request) {
-        return stub_->GetInterconnectRemoteLocations(rest_context, request);
+                 GetInterconnectRemoteLocationRequest const& request) {
+        return stub_->GetInterconnectRemoteLocation(rest_context, request);
       },
       request, __func__);
 }

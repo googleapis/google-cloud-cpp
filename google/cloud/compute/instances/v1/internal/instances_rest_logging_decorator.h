@@ -75,10 +75,10 @@ class InstancesRestLogging : public InstancesRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteInstances(
+  AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,9 +94,9 @@ class InstancesRestLogging : public InstancesRestStub {
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
           request) override;
 
   StatusOr<
@@ -133,10 +133,10 @@ class InstancesRestLogging : public InstancesRestStub {
           GetShieldedInstanceIdentityRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertInstances(
+  AsyncInsertInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceList> ListInstances(
@@ -297,10 +297,10 @@ class InstancesRestLogging : public InstancesRestStub {
                          TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateInstances(
+  AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -336,13 +336,13 @@ class InstancesRestLogging : public InstancesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
  private:
   std::shared_ptr<InstancesRestStub> child_;

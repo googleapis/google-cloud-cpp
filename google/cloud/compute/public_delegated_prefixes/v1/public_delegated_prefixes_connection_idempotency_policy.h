@@ -42,25 +42,25 @@ class PublicDelegatedPrefixesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AggregatedListPublicDelegatedPrefixesRequest const& request);
 
-  virtual google::cloud::Idempotency DeletePublicDelegatedPrefixes(
+  virtual google::cloud::Idempotency DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          DeletePublicDelegatedPrefixesRequest const& request);
+          DeletePublicDelegatedPrefixRequest const& request);
 
-  virtual google::cloud::Idempotency GetPublicDelegatedPrefixes(
+  virtual google::cloud::Idempotency GetPublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          GetPublicDelegatedPrefixesRequest const& request);
+          GetPublicDelegatedPrefixRequest const& request);
 
-  virtual google::cloud::Idempotency InsertPublicDelegatedPrefixes(
+  virtual google::cloud::Idempotency InsertPublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          InsertPublicDelegatedPrefixesRequest const& request);
+          InsertPublicDelegatedPrefixRequest const& request);
 
   virtual google::cloud::Idempotency ListPublicDelegatedPrefixes(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           ListPublicDelegatedPrefixesRequest request);
 
-  virtual google::cloud::Idempotency PatchPublicDelegatedPrefixes(
+  virtual google::cloud::Idempotency PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          PatchPublicDelegatedPrefixesRequest const& request);
+          PatchPublicDelegatedPrefixRequest const& request);
 };
 
 std::unique_ptr<PublicDelegatedPrefixesConnectionIdempotencyPolicy>

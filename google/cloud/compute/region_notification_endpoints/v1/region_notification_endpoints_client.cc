@@ -36,72 +36,72 @@ RegionNotificationEndpointsClient::~RegionNotificationEndpointsClient() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsClient::DeleteRegionNotificationEndpoints(
+RegionNotificationEndpointsClient::DeleteRegionNotificationEndpoint(
     std::string const& project, std::string const& region,
     std::string const& notification_endpoint, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_notification_endpoints::v1::
-      DeleteRegionNotificationEndpointsRequest request;
+      DeleteRegionNotificationEndpointRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_notification_endpoint(notification_endpoint);
-  return connection_->DeleteRegionNotificationEndpoints(request);
+  return connection_->DeleteRegionNotificationEndpoint(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsClient::DeleteRegionNotificationEndpoints(
+RegionNotificationEndpointsClient::DeleteRegionNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        DeleteRegionNotificationEndpointsRequest const& request,
+        DeleteRegionNotificationEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionNotificationEndpoints(request);
+  return connection_->DeleteRegionNotificationEndpoint(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-RegionNotificationEndpointsClient::GetRegionNotificationEndpoints(
+RegionNotificationEndpointsClient::GetRegionNotificationEndpoint(
     std::string const& project, std::string const& region,
     std::string const& notification_endpoint, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_notification_endpoints::v1::
-      GetRegionNotificationEndpointsRequest request;
+      GetRegionNotificationEndpointRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_notification_endpoint(notification_endpoint);
-  return connection_->GetRegionNotificationEndpoints(request);
+  return connection_->GetRegionNotificationEndpoint(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-RegionNotificationEndpointsClient::GetRegionNotificationEndpoints(
+RegionNotificationEndpointsClient::GetRegionNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        GetRegionNotificationEndpointsRequest const& request,
+        GetRegionNotificationEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionNotificationEndpoints(request);
+  return connection_->GetRegionNotificationEndpoint(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsClient::InsertRegionNotificationEndpoints(
+RegionNotificationEndpointsClient::InsertRegionNotificationEndpoint(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::NotificationEndpoint const&
         notification_endpoint_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_notification_endpoints::v1::
-      InsertRegionNotificationEndpointsRequest request;
+      InsertRegionNotificationEndpointRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_notification_endpoint_resource() =
       notification_endpoint_resource;
-  return connection_->InsertRegionNotificationEndpoints(request);
+  return connection_->InsertRegionNotificationEndpoint(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsClient::InsertRegionNotificationEndpoints(
+RegionNotificationEndpointsClient::InsertRegionNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        InsertRegionNotificationEndpointsRequest const& request,
+        InsertRegionNotificationEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionNotificationEndpoints(request);
+  return connection_->InsertRegionNotificationEndpoint(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>

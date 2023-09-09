@@ -38,10 +38,10 @@ class RegionsRestMetadata : public RegionsRestStub {
   explicit RegionsRestMetadata(std::shared_ptr<RegionsRestStub> child,
                                std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-          request) override;
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionList> ListRegions(
       google::cloud::rest_internal::RestContext& rest_context,

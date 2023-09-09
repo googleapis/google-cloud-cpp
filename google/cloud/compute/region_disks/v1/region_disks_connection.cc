@@ -61,18 +61,17 @@ RegionDisksConnection::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::DeleteRegionDisks(
+RegionDisksConnection::DeleteRegionDisk(
     google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDisksRequest const&) {
+        DeleteRegionDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksConnection::GetRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        GetRegionDisksRequest const&) {
+RegionDisksConnection::GetRegionDisk(google::cloud::cpp::compute::region_disks::
+                                         v1::GetRegionDiskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -83,9 +82,9 @@ RegionDisksConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::InsertRegionDisks(
+RegionDisksConnection::InsertRegionDisk(
     google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDisksRequest const&) {
+        InsertRegionDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -165,9 +164,9 @@ RegionDisksConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::UpdateRegionDisks(
+RegionDisksConnection::UpdateRegionDisk(
     google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDisksRequest const&) {
+        UpdateRegionDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

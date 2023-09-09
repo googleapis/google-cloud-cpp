@@ -35,8 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImagesConnection::~ImagesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesConnection::DeleteImages(
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&) {
+ImagesConnection::DeleteImage(
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -50,8 +50,8 @@ ImagesConnection::Deprecate(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image> ImagesConnection::GetImages(
-    google::cloud::cpp::compute::images::v1::GetImagesRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesConnection::GetImage(
+    google::cloud::cpp::compute::images::v1::GetImageRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -68,8 +68,8 @@ ImagesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesConnection::InsertImages(
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&) {
+ImagesConnection::InsertImage(
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -84,8 +84,8 @@ ImagesConnection::ListImages(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesConnection::PatchImages(
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&) {
+ImagesConnection::PatchImage(
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

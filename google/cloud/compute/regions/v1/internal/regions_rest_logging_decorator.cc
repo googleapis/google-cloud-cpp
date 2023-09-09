@@ -33,15 +33,13 @@ RegionsRestLogging::RegionsRestLogging(std::shared_ptr<RegionsRestStub> child,
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsRestLogging::GetRegions(
+StatusOr<google::cloud::cpp::compute::v1::Region> RegionsRestLogging::GetRegion(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-        request) {
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-                 request) { return child_->GetRegions(rest_context, request); },
+             google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
+                 request) { return child_->GetRegion(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

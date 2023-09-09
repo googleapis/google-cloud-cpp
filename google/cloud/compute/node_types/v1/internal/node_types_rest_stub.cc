@@ -59,9 +59,9 @@ DefaultNodeTypesRestStub::AggregatedListNodeTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-DefaultNodeTypesRestStub::GetNodeTypes(
+DefaultNodeTypesRestStub::GetNodeType(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeType>(
       *service_, rest_context, request,

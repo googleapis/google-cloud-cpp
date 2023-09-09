@@ -42,9 +42,9 @@ AcceleratorTypesConnection::AggregatedListAcceleratorTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesConnection::GetAcceleratorTypes(
+AcceleratorTypesConnection::GetAcceleratorType(
     google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypesRequest const&) {
+        GetAcceleratorTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -42,18 +42,18 @@ ServiceAttachmentsConnection::AggregatedListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsConnection::DeleteServiceAttachments(
+ServiceAttachmentsConnection::DeleteServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const&) {
+        DeleteServiceAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsConnection::GetServiceAttachments(
+ServiceAttachmentsConnection::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const&) {
+        GetServiceAttachmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -65,9 +65,9 @@ ServiceAttachmentsConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsConnection::InsertServiceAttachments(
+ServiceAttachmentsConnection::InsertServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const&) {
+        InsertServiceAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,9 +82,9 @@ ServiceAttachmentsConnection::ListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsConnection::PatchServiceAttachments(
+ServiceAttachmentsConnection::PatchServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const&) {
+        PatchServiceAttachmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

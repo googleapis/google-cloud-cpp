@@ -51,7 +51,7 @@ service Addresses {
 
   // Deletes the specified address resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/delete
-  rpc DeleteAddresses(DeleteAddressesRequest)
+  rpc DeleteAddress(DeleteAddressRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}"
@@ -62,7 +62,7 @@ service Addresses {
 
   // Returns the specified address resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/get
-  rpc GetAddresses(GetAddressesRequest)
+  rpc GetAddress(GetAddressRequest)
       returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/addresses/{address}"
@@ -73,7 +73,7 @@ service Addresses {
   // Creates an address resource in the specified project by using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/addresses/insert
-  rpc InsertAddresses(InsertAddressesRequest)
+  rpc InsertAddress(InsertAddressRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/addresses"
@@ -194,8 +194,8 @@ message AggregatedListAddressesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteAddresses.
-message DeleteAddressesRequest {
+// Request message for DeleteAddress.
+message DeleteAddressRequest {
   // Name of the address resource to delete.
   string address = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -224,8 +224,8 @@ message DeleteAddressesRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetAddresses.
-message GetAddressesRequest {
+// Request message for GetAddress.
+message GetAddressRequest {
   // Name of the address resource to return.
   string address = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -236,8 +236,8 @@ message GetAddressesRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertAddresses.
-message InsertAddressesRequest {
+// Request message for InsertAddress.
+message InsertAddressRequest {
   // The Address for this request.
   optional google.cloud.cpp.compute.v1.Address address_resource = 1
       [json_name = "__json_request_body"];

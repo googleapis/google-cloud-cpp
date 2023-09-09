@@ -50,20 +50,20 @@ class LicensesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicenses(
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicenses(
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(

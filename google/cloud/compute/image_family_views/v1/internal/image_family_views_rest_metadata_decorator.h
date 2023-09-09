@@ -39,10 +39,10 @@ class ImageFamilyViewsRestMetadata : public ImageFamilyViewsRestStub {
       std::shared_ptr<ImageFamilyViewsRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::image_family_views::v1::
+          GetImageFamilyViewRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

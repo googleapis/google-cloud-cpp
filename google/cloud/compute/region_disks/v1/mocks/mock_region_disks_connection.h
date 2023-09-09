@@ -66,14 +66,14 @@ class MockRegionDisksConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionDisks,
+              DeleteRegionDisk,
               (google::cloud::cpp::compute::region_disks::v1::
-                   DeleteRegionDisksRequest const& request),
+                   DeleteRegionDiskRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Disk>, GetRegionDisks,
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Disk>, GetRegionDisk,
               (google::cloud::cpp::compute::region_disks::v1::
-                   GetRegionDisksRequest const& request),
+                   GetRegionDiskRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -83,9 +83,9 @@ class MockRegionDisksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionDisks,
+              InsertRegionDisk,
               (google::cloud::cpp::compute::region_disks::v1::
-                   InsertRegionDisksRequest const& request),
+                   InsertRegionDiskRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -144,9 +144,9 @@ class MockRegionDisksConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionDisks,
+              UpdateRegionDisk,
               (google::cloud::cpp::compute::region_disks::v1::
-                   UpdateRegionDisksRequest const& request),
+                   UpdateRegionDiskRequest const& request),
               (override));
 };
 

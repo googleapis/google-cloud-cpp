@@ -120,14 +120,14 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceTemplates(std::string const& project,
-                                std::string const& region,
-                                std::string const& instance_template,
-                                Options opts = {});
+  DeleteRegionInstanceTemplate(std::string const& project,
+                               std::string const& region,
+                               std::string const& instance_template,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -138,7 +138,7 @@ class RegionInstanceTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest].
+  ///     [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -161,13 +161,13 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.DeleteRegionInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceTemplates(
+  DeleteRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplatesRequest const& request,
+          DeleteRegionInstanceTemplateRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -191,15 +191,15 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L119}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L119}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(std::string const& project,
-                             std::string const& region,
-                             std::string const& instance_template,
-                             Options opts = {});
+  GetRegionInstanceTemplate(std::string const& project,
+                            std::string const& region,
+                            std::string const& instance_template,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -209,7 +209,7 @@ class RegionInstanceTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest].
+  ///     [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -225,14 +225,14 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L119}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.GetRegionInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L119}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(
+  GetRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplatesRequest const& request,
+          GetRegionInstanceTemplateRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -264,11 +264,11 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L131}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceTemplates(
+  InsertRegionInstanceTemplate(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::InstanceTemplate const&
           instance_template_resource,
@@ -283,7 +283,7 @@ class RegionInstanceTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest].
+  ///     [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -306,13 +306,13 @@ class RegionInstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L131}
+  /// [google.cloud.cpp.compute.region_instance_templates.v1.InsertRegionInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceTemplates(
+  InsertRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplatesRequest const& request,
+          InsertRegionInstanceTemplateRequest const& request,
       Options opts = {});
 
   // clang-format off

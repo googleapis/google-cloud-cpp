@@ -49,32 +49,32 @@ AutoscalersRestMetadata::AggregatedListAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersRestMetadata::AsyncDeleteAutoscalers(
+AutoscalersRestMetadata::AsyncDeleteAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::autoscalers::v1::
-        DeleteAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteAutoscalers(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteAutoscaler(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-AutoscalersRestMetadata::GetAutoscalers(
+AutoscalersRestMetadata::GetAutoscaler(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetAutoscalers(rest_context, request);
+  return child_->GetAutoscaler(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersRestMetadata::AsyncInsertAutoscalers(
+AutoscalersRestMetadata::AsyncInsertAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::autoscalers::v1::
-        InsertAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertAutoscalers(cq, std::move(rest_context), request);
+  return child_->AsyncInsertAutoscaler(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
@@ -87,23 +87,23 @@ AutoscalersRestMetadata::ListAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersRestMetadata::AsyncPatchAutoscalers(
+AutoscalersRestMetadata::AsyncPatchAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const&
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchAutoscalers(cq, std::move(rest_context), request);
+  return child_->AsyncPatchAutoscaler(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AutoscalersRestMetadata::AsyncUpdateAutoscalers(
+AutoscalersRestMetadata::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::autoscalers::v1::
-        UpdateAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateAutoscalers(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateAutoscaler(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -111,7 +111,7 @@ AutoscalersRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+        GetZoneOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -120,7 +120,7 @@ future<Status> AutoscalersRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteZoneOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

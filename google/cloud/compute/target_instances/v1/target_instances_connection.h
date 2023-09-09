@@ -194,16 +194,16 @@ class TargetInstancesConnection {
           AggregatedListTargetInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::
-                            DeleteTargetInstancesRequest const& request);
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(google::cloud::cpp::compute::target_instances::v1::
-                         GetTargetInstancesRequest const& request);
+  GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                        GetTargetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::
-                            InsertTargetInstancesRequest const& request);
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
   ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::

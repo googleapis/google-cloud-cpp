@@ -65,13 +65,12 @@ class FirewallPoliciesRestConnectionImpl
           CloneRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewallPolicies(
-      google::cloud::cpp::compute::firewall_policies::v1::
-          DeleteFirewallPoliciesRequest const& request) override;
+  DeleteFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                           DeleteFirewallPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::
-          GetFirewallPoliciesRequest const& request) override;
+          GetFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
   GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::
@@ -86,9 +85,8 @@ class FirewallPoliciesRestConnectionImpl
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewallPolicies(
-      google::cloud::cpp::compute::firewall_policies::v1::
-          InsertFirewallPoliciesRequest const& request) override;
+  InsertFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                           InsertFirewallPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
   ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
@@ -104,9 +102,8 @@ class FirewallPoliciesRestConnectionImpl
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewallPolicies(
-      google::cloud::cpp::compute::firewall_policies::v1::
-          PatchFirewallPoliciesRequest const& request) override;
+  PatchFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                          PatchFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::firewall_policies::v1::

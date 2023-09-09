@@ -61,8 +61,8 @@ Idempotency InstancesConnectionIdempotencyPolicy::BulkInsert(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::DeleteInstances(
-    google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::DeleteInstance(
+    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -77,8 +77,8 @@ Idempotency InstancesConnectionIdempotencyPolicy::DetachDisk(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::GetInstances(
-    google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -116,8 +116,8 @@ Idempotency InstancesConnectionIdempotencyPolicy::GetShieldedInstanceIdentity(
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::InsertInstances(
-    google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::InsertInstance(
+    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -260,8 +260,8 @@ Idempotency InstancesConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstancesConnectionIdempotencyPolicy::UpdateInstances(
-    google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&) {
+Idempotency InstancesConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 

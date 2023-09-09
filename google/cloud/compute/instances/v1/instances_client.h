@@ -502,10 +502,10 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L906}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L906}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -518,7 +518,7 @@ class InstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest].
+  ///     [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -541,11 +541,11 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L906}
+  /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L906}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request,
       Options opts = {});
 
@@ -725,11 +725,11 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1018}
+  /// [google.cloud.cpp.compute.instances.v1.GetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1018}
   /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_020.proto#L91}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -741,7 +741,7 @@ class InstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instances.v1.GetInstancesRequest].
+  ///     [google.cloud.cpp.compute.instances.v1.GetInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -757,12 +757,12 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1018}
+  /// [google.cloud.cpp.compute.instances.v1.GetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1018}
   /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_020.proto#L91}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
+      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
           request,
       Options opts = {});
 
@@ -1176,10 +1176,10 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1083}
+  /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1083}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
       std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::Instance const& instance_resource,
       Options opts = {});
@@ -1193,7 +1193,7 @@ class InstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest].
+  ///     [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1216,11 +1216,11 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1083}
+  /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1083}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstances(
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request,
       Options opts = {});
 
@@ -3201,10 +3201,10 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2062}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2062}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstances(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::Instance const& instance_resource,
@@ -3220,7 +3220,7 @@ class InstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest].
+  ///     [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -3243,11 +3243,11 @@ class InstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2062}
+  /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2062}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstances(
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request,
       Options opts = {});
 

@@ -197,19 +197,19 @@ class RegionInstanceTemplatesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceTemplates(
+  DeleteRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplatesRequest const& request);
+          DeleteRegionInstanceTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(
+  GetRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplatesRequest const& request);
+          GetRegionInstanceTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceTemplates(
+  InsertRegionInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplatesRequest const& request);
+          InsertRegionInstanceTemplateRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListRegionInstanceTemplates(

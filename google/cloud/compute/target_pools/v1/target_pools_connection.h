@@ -199,12 +199,12 @@ class TargetPoolsConnection {
           AggregatedListTargetPoolsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                        DeleteTargetPoolsRequest const& request);
+  DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::
+                       DeleteTargetPoolRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
   GetHealth(
@@ -212,8 +212,8 @@ class TargetPoolsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPools(google::cloud::cpp::compute::target_pools::v1::
-                        InsertTargetPoolsRequest const& request);
+  InsertTargetPool(google::cloud::cpp::compute::target_pools::v1::
+                       InsertTargetPoolRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetPool>
   ListTargetPools(

@@ -35,16 +35,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LicensesConnection::~LicensesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesConnection::DeleteLicenses(
-    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&) {
+LicensesConnection::DeleteLicense(
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesConnection::GetLicenses(
-    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&) {
+LicensesConnection::GetLicense(
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -55,8 +55,8 @@ LicensesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesConnection::InsertLicenses(
-    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&) {
+LicensesConnection::InsertLicense(
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -32,12 +32,11 @@ ZonesTracingConnection::ZonesTracingConnection(
     std::shared_ptr<compute_zones_v1::ZonesConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesTracingConnection::GetZones(
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
-  auto span = internal::MakeSpan("compute_zones_v1::ZonesConnection::GetZones");
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesTracingConnection::GetZone(
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
+  auto span = internal::MakeSpan("compute_zones_v1::ZonesConnection::GetZone");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetZones(request));
+  return internal::EndSpan(*span, child_->GetZone(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone>

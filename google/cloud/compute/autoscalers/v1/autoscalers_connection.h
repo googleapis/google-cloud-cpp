@@ -190,16 +190,16 @@ class AutoscalersConnection {
           AggregatedListAutoscalersRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                        DeleteAutoscalersRequest const& request);
+  DeleteAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
+                       DeleteAutoscalerRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                        InsertAutoscalersRequest const& request);
+  InsertAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
+                       InsertAutoscalerRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
   ListAutoscalers(
@@ -207,12 +207,12 @@ class AutoscalersConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                       PatchAutoscalersRequest const& request);
+  PatchAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
+                      PatchAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
-                        UpdateAutoscalersRequest const& request);
+  UpdateAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
+                       UpdateAutoscalerRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

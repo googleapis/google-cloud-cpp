@@ -34,23 +34,21 @@ RegionSslPoliciesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionSslPoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-RegionSslPoliciesConnectionIdempotencyPolicy::DeleteRegionSslPolicies(
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::DeleteRegionSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteRegionSslPoliciesRequest const&) {
+        DeleteRegionSslPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::GetRegionSslPolicies(
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::GetRegionSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetRegionSslPoliciesRequest const&) {
+        GetRegionSslPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionSslPoliciesConnectionIdempotencyPolicy::InsertRegionSslPolicies(
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::InsertRegionSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertRegionSslPoliciesRequest const&) {
+        InsertRegionSslPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -66,10 +64,9 @@ Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::ListAvailableFeatures(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionSslPoliciesConnectionIdempotencyPolicy::PatchRegionSslPolicies(
+Idempotency RegionSslPoliciesConnectionIdempotencyPolicy::PatchRegionSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchRegionSslPoliciesRequest const&) {
+        PatchRegionSslPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -41,13 +41,13 @@ class ZoneOperationsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  Status DeleteZoneOperations(
+  Status DeleteZoneOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
       google::cloud::cpp::compute::zone_operations::v1::

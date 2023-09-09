@@ -44,24 +44,23 @@ ReservationsTracingConnection::AggregatedListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsTracingConnection::DeleteReservations(
+ReservationsTracingConnection::DeleteReservation(
     google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationsRequest const& request) {
+        DeleteReservationRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_reservations_v1::ReservationsConnection::DeleteReservations");
+      "compute_reservations_v1::ReservationsConnection::DeleteReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteReservations(request));
+  return internal::EndSpan(std::move(span), child_->DeleteReservation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-ReservationsTracingConnection::GetReservations(
-    google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const&
+ReservationsTracingConnection::GetReservation(
+    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_reservations_v1::ReservationsConnection::GetReservations");
+      "compute_reservations_v1::ReservationsConnection::GetReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetReservations(request));
+  return internal::EndSpan(*span, child_->GetReservation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -75,14 +74,13 @@ ReservationsTracingConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsTracingConnection::InsertReservations(
+ReservationsTracingConnection::InsertReservation(
     google::cloud::cpp::compute::reservations::v1::
-        InsertReservationsRequest const& request) {
+        InsertReservationRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_reservations_v1::ReservationsConnection::InsertReservations");
+      "compute_reservations_v1::ReservationsConnection::InsertReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertReservations(request));
+  return internal::EndSpan(std::move(span), child_->InsertReservation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Reservation>
@@ -129,14 +127,13 @@ ReservationsTracingConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsTracingConnection::UpdateReservations(
+ReservationsTracingConnection::UpdateReservation(
     google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationsRequest const& request) {
+        UpdateReservationRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_reservations_v1::ReservationsConnection::UpdateReservations");
+      "compute_reservations_v1::ReservationsConnection::UpdateReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateReservations(request));
+  return internal::EndSpan(std::move(span), child_->UpdateReservation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

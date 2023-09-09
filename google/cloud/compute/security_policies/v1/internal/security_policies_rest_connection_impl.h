@@ -62,22 +62,20 @@ class SecurityPoliciesRestConnectionImpl
           AggregatedListSecurityPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSecurityPolicies(
-      google::cloud::cpp::compute::security_policies::v1::
-          DeleteSecurityPoliciesRequest const& request) override;
+  DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
+                           DeleteSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::security_policies::v1::
-          GetSecurityPoliciesRequest const& request) override;
+          GetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSecurityPolicies(
-      google::cloud::cpp::compute::security_policies::v1::
-          InsertSecurityPoliciesRequest const& request) override;
+  InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
+                           InsertSecurityPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
@@ -90,9 +88,8 @@ class SecurityPoliciesRestConnectionImpl
           ListPreconfiguredExpressionSetsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSecurityPolicies(
-      google::cloud::cpp::compute::security_policies::v1::
-          PatchSecurityPoliciesRequest const& request) override;
+  PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
+                          PatchSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::security_policies::v1::

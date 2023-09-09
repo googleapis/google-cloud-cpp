@@ -49,22 +49,22 @@ NodeTemplatesRestMetadata::AggregatedListNodeTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesRestMetadata::AsyncDeleteNodeTemplates(
+NodeTemplatesRestMetadata::AsyncDeleteNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplatesRequest const& request) {
+        DeleteNodeTemplateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteNodeTemplates(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteNodeTemplate(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesRestMetadata::GetNodeTemplates(
+NodeTemplatesRestMetadata::GetNodeTemplate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
-        GetNodeTemplatesRequest const& request) {
+        GetNodeTemplateRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetNodeTemplates(rest_context, request);
+  return child_->GetNodeTemplate(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -77,13 +77,13 @@ NodeTemplatesRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesRestMetadata::AsyncInsertNodeTemplates(
+NodeTemplatesRestMetadata::AsyncInsertNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplatesRequest const& request) {
+        InsertNodeTemplateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertNodeTemplates(cq, std::move(rest_context), request);
+  return child_->AsyncInsertNodeTemplate(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>
@@ -118,7 +118,7 @@ NodeTemplatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -127,7 +127,7 @@ future<Status> NodeTemplatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

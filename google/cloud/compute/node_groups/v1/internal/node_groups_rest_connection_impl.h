@@ -59,25 +59,25 @@ class NodeGroupsRestConnectionImpl
       google::cloud::cpp::compute::node_groups::v1::
           AggregatedListNodeGroupsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupsRequest const& request) override;
+          DeleteNodeGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupsRequest const& request) override;
+          InsertNodeGroupRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
       google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
@@ -87,9 +87,9 @@ class NodeGroupsRestConnectionImpl
       google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::
-          PatchNodeGroupsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&

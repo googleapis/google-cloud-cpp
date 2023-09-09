@@ -41,37 +41,37 @@ class BackendBucketsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::backend_buckets::v1::
           AddSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBackendBuckets(
+  virtual google::cloud::Idempotency DeleteBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
-          DeleteBackendBucketsRequest const& request);
+          DeleteBackendBucketRequest const& request);
 
   virtual google::cloud::Idempotency DeleteSignedUrlKey(
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency GetBackendBuckets(
+  virtual google::cloud::Idempotency GetBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
-          GetBackendBucketsRequest const& request);
+          GetBackendBucketRequest const& request);
 
-  virtual google::cloud::Idempotency InsertBackendBuckets(
+  virtual google::cloud::Idempotency InsertBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
-          InsertBackendBucketsRequest const& request);
+          InsertBackendBucketRequest const& request);
 
   virtual google::cloud::Idempotency ListBackendBuckets(
       google::cloud::cpp::compute::backend_buckets::v1::
           ListBackendBucketsRequest request);
 
-  virtual google::cloud::Idempotency PatchBackendBuckets(
+  virtual google::cloud::Idempotency PatchBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
-          PatchBackendBucketsRequest const& request);
+          PatchBackendBucketRequest const& request);
 
   virtual google::cloud::Idempotency SetEdgeSecurityPolicy(
       google::cloud::cpp::compute::backend_buckets::v1::
           SetEdgeSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBackendBuckets(
+  virtual google::cloud::Idempotency UpdateBackendBucket(
       google::cloud::cpp::compute::backend_buckets::v1::
-          UpdateBackendBucketsRequest const& request);
+          UpdateBackendBucketRequest const& request);
 };
 
 std::unique_ptr<BackendBucketsConnectionIdempotencyPolicy>

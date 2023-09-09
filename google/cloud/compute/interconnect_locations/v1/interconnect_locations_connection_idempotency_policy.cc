@@ -37,9 +37,9 @@ InterconnectLocationsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-InterconnectLocationsConnectionIdempotencyPolicy::GetInterconnectLocations(
+InterconnectLocationsConnectionIdempotencyPolicy::GetInterconnectLocation(
     google::cloud::cpp::compute::interconnect_locations::v1::
-        GetInterconnectLocationsRequest const&) {
+        GetInterconnectLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

@@ -67,11 +67,11 @@ DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicies(
+DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePoliciesRequest const& request) {
+        DeleteResourcePolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -93,10 +93,10 @@ DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-DefaultResourcePoliciesRestStub::GetResourcePolicies(
+DefaultResourcePoliciesRestStub::GetResourcePolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePoliciesRequest const& request) {
+        GetResourcePolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -122,11 +122,11 @@ DefaultResourcePoliciesRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicies(
+DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePoliciesRequest const& request) {
+        InsertResourcePolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -166,11 +166,11 @@ DefaultResourcePoliciesRestStub::ListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicies(
+DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePoliciesRequest const& request) {
+        PatchResourcePolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -223,7 +223,7 @@ DefaultResourcePoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -247,7 +247,7 @@ future<Status> DefaultResourcePoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

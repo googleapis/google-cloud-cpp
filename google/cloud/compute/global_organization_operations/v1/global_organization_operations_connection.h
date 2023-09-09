@@ -203,14 +203,14 @@ class GlobalOrganizationOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status DeleteGlobalOrganizationOperations(
+  virtual Status DeleteGlobalOrganizationOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationsRequest const& request);
+          DeleteGlobalOrganizationOperationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOrganizationOperations(
+  GetGlobalOrganizationOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationsRequest const& request);
+          GetGlobalOrganizationOperationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
   ListGlobalOrganizationOperations(

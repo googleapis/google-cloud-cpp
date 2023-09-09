@@ -51,20 +51,18 @@ class DisksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request);
 
-  virtual google::cloud::Idempotency DeleteDisks(
-      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
-          request);
+  virtual google::cloud::Idempotency DeleteDisk(
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request);
 
-  virtual google::cloud::Idempotency GetDisks(
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request);
+  virtual google::cloud::Idempotency GetDisk(
+      google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertDisks(
-      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
-          request);
+  virtual google::cloud::Idempotency InsertDisk(
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request);
 
   virtual google::cloud::Idempotency ListDisks(
       google::cloud::cpp::compute::disks::v1::ListDisksRequest request);
@@ -99,9 +97,8 @@ class DisksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
           request);
 
-  virtual google::cloud::Idempotency UpdateDisks(
-      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
-          request);
+  virtual google::cloud::Idempotency UpdateDisk(
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request);
 };
 
 std::unique_ptr<DisksConnectionIdempotencyPolicy>

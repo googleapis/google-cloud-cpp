@@ -52,68 +52,67 @@ VpnTunnelsClient::AggregatedListVpnTunnels(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsClient::DeleteVpnTunnels(std::string const& project,
-                                   std::string const& region,
-                                   std::string const& vpn_tunnel,
-                                   Options opts) {
+VpnTunnelsClient::DeleteVpnTunnel(std::string const& project,
+                                  std::string const& region,
+                                  std::string const& vpn_tunnel, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest request;
+  google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_vpn_tunnel(vpn_tunnel);
-  return connection_->DeleteVpnTunnels(request);
+  return connection_->DeleteVpnTunnel(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsClient::DeleteVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const&
+VpnTunnelsClient::DeleteVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteVpnTunnels(request);
+  return connection_->DeleteVpnTunnel(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-VpnTunnelsClient::GetVpnTunnels(std::string const& project,
-                                std::string const& region,
-                                std::string const& vpn_tunnel, Options opts) {
+VpnTunnelsClient::GetVpnTunnel(std::string const& project,
+                               std::string const& region,
+                               std::string const& vpn_tunnel, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest request;
+  google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_vpn_tunnel(vpn_tunnel);
-  return connection_->GetVpnTunnels(request);
+  return connection_->GetVpnTunnel(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-VpnTunnelsClient::GetVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+VpnTunnelsClient::GetVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetVpnTunnels(request);
+  return connection_->GetVpnTunnel(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsClient::InsertVpnTunnels(
+VpnTunnelsClient::InsertVpnTunnel(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest request;
+  google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_vpn_tunnel_resource() = vpn_tunnel_resource;
-  return connection_->InsertVpnTunnels(request);
+  return connection_->InsertVpnTunnel(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsClient::InsertVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const&
+VpnTunnelsClient::InsertVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertVpnTunnels(request);
+  return connection_->InsertVpnTunnel(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>

@@ -38,9 +38,9 @@ class ZonesRestMetadata : public ZonesRestStub {
   explicit ZonesRestMetadata(std::shared_ptr<ZonesRestStub> child,
                              std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request)
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(

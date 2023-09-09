@@ -203,19 +203,19 @@ class InterconnectAttachmentsConnection {
           AggregatedListInterconnectAttachmentsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectAttachments(
+  DeleteInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          DeleteInterconnectAttachmentsRequest const& request);
+          DeleteInterconnectAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-  GetInterconnectAttachments(
+  GetInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          GetInterconnectAttachmentsRequest const& request);
+          GetInterconnectAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectAttachments(
+  InsertInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          InsertInterconnectAttachmentsRequest const& request);
+          InsertInterconnectAttachmentRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
   ListInterconnectAttachments(
@@ -223,9 +223,9 @@ class InterconnectAttachmentsConnection {
           ListInterconnectAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectAttachments(
+  PatchInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          PatchInterconnectAttachmentsRequest const& request);
+          PatchInterconnectAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::interconnect_attachments::v1::

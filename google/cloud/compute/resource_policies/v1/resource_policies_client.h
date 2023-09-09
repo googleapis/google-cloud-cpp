@@ -176,12 +176,12 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
+  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicies(std::string const& project, std::string const& region,
-                         std::string const& resource_policy, Options opts = {});
+  DeleteResourcePolicy(std::string const& project, std::string const& region,
+                       std::string const& resource_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -191,7 +191,7 @@ class ResourcePoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest].
+  ///     [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -214,13 +214,13 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
+  /// [google.cloud.cpp.compute.resource_policies.v1.DeleteResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                             DeleteResourcePoliciesRequest const& request,
-                         Options opts = {});
+  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           DeleteResourcePolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -243,11 +243,11 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L268}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L268}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_103.proto#L117}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
       std::string const& project, std::string const& region,
       std::string const& resource_policy, Options opts = {});
 
@@ -259,7 +259,7 @@ class ResourcePoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest].
+  ///     [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,13 +275,13 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L268}
+  /// [google.cloud.cpp.compute.resource_policies.v1.GetResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L268}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_103.proto#L117}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::
-          GetResourcePoliciesRequest const& request,
+          GetResourcePolicyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -376,14 +376,14 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L280}
+  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L280}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicies(std::string const& project, std::string const& region,
-                         google::cloud::cpp::compute::v1::ResourcePolicy const&
-                             resource_policy_resource,
-                         Options opts = {});
+  InsertResourcePolicy(std::string const& project, std::string const& region,
+                       google::cloud::cpp::compute::v1::ResourcePolicy const&
+                           resource_policy_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -393,7 +393,7 @@ class ResourcePoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest].
+  ///     [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -416,13 +416,13 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L280}
+  /// [google.cloud.cpp.compute.resource_policies.v1.InsertResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L280}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                             InsertResourcePoliciesRequest const& request,
-                         Options opts = {});
+  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           InsertResourcePolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -534,15 +534,15 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L379}
+  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicies(std::string const& project, std::string const& region,
-                        std::string const& resource_policy,
-                        google::cloud::cpp::compute::v1::ResourcePolicy const&
-                            resource_policy_resource,
-                        Options opts = {});
+  PatchResourcePolicy(std::string const& project, std::string const& region,
+                      std::string const& resource_policy,
+                      google::cloud::cpp::compute::v1::ResourcePolicy const&
+                          resource_policy_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -552,7 +552,7 @@ class ResourcePoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest].
+  ///     [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -575,13 +575,13 @@ class ResourcePoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L379}
+  /// [google.cloud.cpp.compute.resource_policies.v1.PatchResourcePolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L379}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
-                            PatchResourcePoliciesRequest const& request,
-                        Options opts = {});
+  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                          PatchResourcePolicyRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///

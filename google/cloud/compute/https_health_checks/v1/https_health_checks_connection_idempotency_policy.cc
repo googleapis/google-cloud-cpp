@@ -35,22 +35,22 @@ HttpsHealthChecksConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-HttpsHealthChecksConnectionIdempotencyPolicy::DeleteHttpsHealthChecks(
+HttpsHealthChecksConnectionIdempotencyPolicy::DeleteHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        DeleteHttpsHealthChecksRequest const&) {
+        DeleteHttpsHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::GetHttpsHealthChecks(
+Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::GetHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        GetHttpsHealthChecksRequest const&) {
+        GetHttpsHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-HttpsHealthChecksConnectionIdempotencyPolicy::InsertHttpsHealthChecks(
+HttpsHealthChecksConnectionIdempotencyPolicy::InsertHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        InsertHttpsHealthChecksRequest const&) {
+        InsertHttpsHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -60,17 +60,16 @@ Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::ListHttpsHealthChecks(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-HttpsHealthChecksConnectionIdempotencyPolicy::PatchHttpsHealthChecks(
+Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::PatchHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        PatchHttpsHealthChecksRequest const&) {
+        PatchHttpsHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-HttpsHealthChecksConnectionIdempotencyPolicy::UpdateHttpsHealthChecks(
+HttpsHealthChecksConnectionIdempotencyPolicy::UpdateHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
-        UpdateHttpsHealthChecksRequest const&) {
+        UpdateHttpsHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 

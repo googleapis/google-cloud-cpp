@@ -36,10 +36,10 @@ class RegionDiskTypesRestStub {
  public:
   virtual ~RegionDiskTypesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(google::cloud::rest_internal::RestContext& rest_context,
-                     google::cloud::cpp::compute::region_disk_types::v1::
-                         GetRegionDiskTypesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskType(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::region_disk_types::v1::
+          GetRegionDiskTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
   ListRegionDiskTypes(google::cloud::rest_internal::RestContext& rest_context,
@@ -55,10 +55,10 @@ class DefaultRegionDiskTypesRestStub : public RegionDiskTypesRestStub {
   DefaultRegionDiskTypesRestStub(
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_disk_types::v1::
-          GetRegionDiskTypesRequest const& request) override;
+          GetRegionDiskTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
   ListRegionDiskTypes(google::cloud::rest_internal::RestContext& rest_context,

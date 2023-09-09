@@ -182,16 +182,15 @@ class ImagesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteImages(
-      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
-          request);
+  DeleteImage(google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+                  request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   Deprecate(
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
-      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
+      google::cloud::cpp::compute::images::v1::GetImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
       google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
@@ -202,16 +201,15 @@ class ImagesConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertImages(
-      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
-          request);
+  InsertImage(google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+                  request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
       google::cloud::cpp::compute::images::v1::ListImagesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchImages(google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-                  request);
+  PatchImage(google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+                 request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&

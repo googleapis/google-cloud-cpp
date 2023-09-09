@@ -42,18 +42,18 @@ InstanceTemplatesConnection::AggregatedListInstanceTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesConnection::DeleteInstanceTemplates(
+InstanceTemplatesConnection::DeleteInstanceTemplate(
     google::cloud::cpp::compute::instance_templates::v1::
-        DeleteInstanceTemplatesRequest const&) {
+        DeleteInstanceTemplateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesConnection::GetInstanceTemplates(
+InstanceTemplatesConnection::GetInstanceTemplate(
     google::cloud::cpp::compute::instance_templates::v1::
-        GetInstanceTemplatesRequest const&) {
+        GetInstanceTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -65,9 +65,9 @@ InstanceTemplatesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesConnection::InsertInstanceTemplates(
+InstanceTemplatesConnection::InsertInstanceTemplate(
     google::cloud::cpp::compute::instance_templates::v1::
-        InsertInstanceTemplatesRequest const&) {
+        InsertInstanceTemplateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

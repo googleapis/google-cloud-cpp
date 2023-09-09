@@ -46,28 +46,28 @@ class HealthChecksTracingConnection
           AggregatedListHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         DeleteHealthChecksRequest const& request) override;
+  DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        DeleteHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       google::cloud::cpp::compute::health_checks::v1::
-          GetHealthChecksRequest const& request) override;
+          GetHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         InsertHealthChecksRequest const& request) override;
+  InsertHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        InsertHealthCheckRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck> ListHealthChecks(
       google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                        PatchHealthChecksRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
+      google::cloud::cpp::compute::health_checks::v1::
+          PatchHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         UpdateHealthChecksRequest const& request) override;
+  UpdateHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        UpdateHealthCheckRequest const& request) override;
 
  private:
   std::shared_ptr<compute_health_checks_v1::HealthChecksConnection> child_;

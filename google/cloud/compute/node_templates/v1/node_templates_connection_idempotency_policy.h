@@ -41,21 +41,21 @@ class NodeTemplatesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::node_templates::v1::
           AggregatedListNodeTemplatesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNodeTemplates(
+  virtual google::cloud::Idempotency DeleteNodeTemplate(
       google::cloud::cpp::compute::node_templates::v1::
-          DeleteNodeTemplatesRequest const& request);
+          DeleteNodeTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetNodeTemplates(
+  virtual google::cloud::Idempotency GetNodeTemplate(
       google::cloud::cpp::compute::node_templates::v1::
-          GetNodeTemplatesRequest const& request);
+          GetNodeTemplateRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::node_templates::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNodeTemplates(
+  virtual google::cloud::Idempotency InsertNodeTemplate(
       google::cloud::cpp::compute::node_templates::v1::
-          InsertNodeTemplatesRequest const& request);
+          InsertNodeTemplateRequest const& request);
 
   virtual google::cloud::Idempotency ListNodeTemplates(
       google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest

@@ -43,21 +43,21 @@ GlobalOrganizationOperationsRestMetadata::
               : std::move(api_client_header)) {}
 
 Status
-GlobalOrganizationOperationsRestMetadata::DeleteGlobalOrganizationOperations(
+GlobalOrganizationOperationsRestMetadata::DeleteGlobalOrganizationOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationsRequest const& request) {
+        DeleteGlobalOrganizationOperationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->DeleteGlobalOrganizationOperations(rest_context, request);
+  return child_->DeleteGlobalOrganizationOperation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsRestMetadata::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsRestMetadata::GetGlobalOrganizationOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const& request) {
+        GetGlobalOrganizationOperationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetGlobalOrganizationOperations(rest_context, request);
+  return child_->GetGlobalOrganizationOperation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>

@@ -36,15 +36,15 @@ class RoutesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RoutesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency DeleteRoutes(
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+  virtual google::cloud::Idempotency DeleteRoute(
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetRoutes(
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request);
+  virtual google::cloud::Idempotency GetRoute(
+      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRoutes(
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+  virtual google::cloud::Idempotency InsertRoute(
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request);
 
   virtual google::cloud::Idempotency ListRoutes(

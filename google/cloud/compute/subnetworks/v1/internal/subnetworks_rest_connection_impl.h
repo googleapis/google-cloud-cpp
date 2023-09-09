@@ -56,25 +56,25 @@ class SubnetworksRestConnectionImpl
       google::cloud::cpp::compute::subnetworks::v1::
           AggregatedListSubnetworksRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                        DeleteSubnetworksRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::
+          DeleteSubnetworkRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::
                         ExpandIpCidrRangeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                        InsertSubnetworksRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::
+          InsertSubnetworkRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
@@ -84,9 +84,9 @@ class SubnetworksRestConnectionImpl
       google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetworks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::
-          PatchSubnetworksRequest const& request) override;
+          PatchSubnetworkRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&

@@ -187,16 +187,16 @@ class RegionUrlMapsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          DeleteRegionUrlMapsRequest const& request);
+  DeleteRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                         DeleteRegionUrlMapRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
-          GetRegionUrlMapsRequest const& request);
+          GetRegionUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          InsertRegionUrlMapsRequest const& request);
+  InsertRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                         InsertRegionUrlMapRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap>
   ListRegionUrlMaps(
@@ -204,12 +204,12 @@ class RegionUrlMapsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                         PatchRegionUrlMapsRequest const& request);
+  PatchRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                        PatchRegionUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          UpdateRegionUrlMapsRequest const& request);
+  UpdateRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                         UpdateRegionUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
   Validate(

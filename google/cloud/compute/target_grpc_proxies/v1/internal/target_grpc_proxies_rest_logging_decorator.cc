@@ -34,49 +34,49 @@ TargetGrpcProxiesRestLogging::TargetGrpcProxiesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesRestLogging::AsyncDeleteTargetGrpcProxies(
+TargetGrpcProxiesRestLogging::AsyncDeleteTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxiesRequest const& request) {
+        DeleteTargetGrpcProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::target_grpc_proxies::v1::
-                 DeleteTargetGrpcProxiesRequest const& request) {
-        return child_->AsyncDeleteTargetGrpcProxies(cq, std::move(rest_context),
-                                                    request);
+                 DeleteTargetGrpcProxyRequest const& request) {
+        return child_->AsyncDeleteTargetGrpcProxy(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-TargetGrpcProxiesRestLogging::GetTargetGrpcProxies(
+TargetGrpcProxiesRestLogging::GetTargetGrpcProxy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        GetTargetGrpcProxiesRequest const& request) {
+        GetTargetGrpcProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::target_grpc_proxies::v1::
-                 GetTargetGrpcProxiesRequest const& request) {
-        return child_->GetTargetGrpcProxies(rest_context, request);
+                 GetTargetGrpcProxyRequest const& request) {
+        return child_->GetTargetGrpcProxy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesRestLogging::AsyncInsertTargetGrpcProxies(
+TargetGrpcProxiesRestLogging::AsyncInsertTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxiesRequest const& request) {
+        InsertTargetGrpcProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::target_grpc_proxies::v1::
-                 InsertTargetGrpcProxiesRequest const& request) {
-        return child_->AsyncInsertTargetGrpcProxies(cq, std::move(rest_context),
-                                                    request);
+                 InsertTargetGrpcProxyRequest const& request) {
+        return child_->AsyncInsertTargetGrpcProxy(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -96,18 +96,18 @@ TargetGrpcProxiesRestLogging::ListTargetGrpcProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesRestLogging::AsyncPatchTargetGrpcProxies(
+TargetGrpcProxiesRestLogging::AsyncPatchTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxiesRequest const& request) {
+        PatchTargetGrpcProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::target_grpc_proxies::v1::
-                 PatchTargetGrpcProxiesRequest const& request) {
-        return child_->AsyncPatchTargetGrpcProxies(cq, std::move(rest_context),
-                                                   request);
+                 PatchTargetGrpcProxyRequest const& request) {
+        return child_->AsyncPatchTargetGrpcProxy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -117,12 +117,12 @@ TargetGrpcProxiesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -132,12 +132,12 @@ future<Status> TargetGrpcProxiesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

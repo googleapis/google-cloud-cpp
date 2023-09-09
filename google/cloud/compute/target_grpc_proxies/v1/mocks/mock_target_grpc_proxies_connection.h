@@ -48,21 +48,21 @@ class MockTargetGrpcProxiesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteTargetGrpcProxies,
+              DeleteTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   DeleteTargetGrpcProxiesRequest const& request),
+                   DeleteTargetGrpcProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
-              GetTargetGrpcProxies,
+              GetTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   GetTargetGrpcProxiesRequest const& request),
+                   GetTargetGrpcProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertTargetGrpcProxies,
+              InsertTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   InsertTargetGrpcProxiesRequest const& request),
+                   InsertTargetGrpcProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
@@ -72,9 +72,9 @@ class MockTargetGrpcProxiesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchTargetGrpcProxies,
+              PatchTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   PatchTargetGrpcProxiesRequest const& request),
+                   PatchTargetGrpcProxyRequest const& request),
               (override));
 };
 

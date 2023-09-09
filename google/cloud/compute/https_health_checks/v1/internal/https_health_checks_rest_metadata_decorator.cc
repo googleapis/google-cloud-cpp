@@ -41,34 +41,34 @@ HttpsHealthChecksRestMetadata::HttpsHealthChecksRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestMetadata::AsyncDeleteHttpsHealthChecks(
+HttpsHealthChecksRestMetadata::AsyncDeleteHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        DeleteHttpsHealthChecksRequest const& request) {
+        DeleteHttpsHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteHttpsHealthChecks(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncDeleteHttpsHealthCheck(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-HttpsHealthChecksRestMetadata::GetHttpsHealthChecks(
+HttpsHealthChecksRestMetadata::GetHttpsHealthCheck(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        GetHttpsHealthChecksRequest const& request) {
+        GetHttpsHealthCheckRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetHttpsHealthChecks(rest_context, request);
+  return child_->GetHttpsHealthCheck(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestMetadata::AsyncInsertHttpsHealthChecks(
+HttpsHealthChecksRestMetadata::AsyncInsertHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        InsertHttpsHealthChecksRequest const& request) {
+        InsertHttpsHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertHttpsHealthChecks(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncInsertHttpsHealthCheck(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheckList>
@@ -81,25 +81,25 @@ HttpsHealthChecksRestMetadata::ListHttpsHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestMetadata::AsyncPatchHttpsHealthChecks(
+HttpsHealthChecksRestMetadata::AsyncPatchHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        PatchHttpsHealthChecksRequest const& request) {
+        PatchHttpsHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchHttpsHealthChecks(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncPatchHttpsHealthCheck(cq, std::move(rest_context),
+                                            request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestMetadata::AsyncUpdateHttpsHealthChecks(
+HttpsHealthChecksRestMetadata::AsyncUpdateHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        UpdateHttpsHealthChecksRequest const& request) {
+        UpdateHttpsHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateHttpsHealthChecks(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncUpdateHttpsHealthCheck(cq, std::move(rest_context),
+                                             request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -107,7 +107,7 @@ HttpsHealthChecksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -116,7 +116,7 @@ future<Status> HttpsHealthChecksRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

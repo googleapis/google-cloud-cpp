@@ -50,9 +50,9 @@ class ImageFamilyViewsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      google::cloud::cpp::compute::image_family_views::v1::
+          GetImageFamilyViewRequest const& request) override;
 
  private:
   static std::unique_ptr<

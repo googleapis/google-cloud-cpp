@@ -41,23 +41,23 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteGlobalAddresses(
+  AsyncDeleteGlobalAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_addresses::v1::
-          DeleteGlobalAddressesRequest const& request) override;
+          DeleteGlobalAddressRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddress(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_addresses::v1::
-          GetGlobalAddressesRequest const& request) override;
+          GetGlobalAddressRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertGlobalAddresses(
+  AsyncInsertGlobalAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_addresses::v1::
-          InsertGlobalAddressesRequest const& request) override;
+          InsertGlobalAddressRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListGlobalAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -83,13 +83,13 @@ class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

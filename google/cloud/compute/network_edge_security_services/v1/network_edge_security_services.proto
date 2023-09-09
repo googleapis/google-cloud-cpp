@@ -52,8 +52,7 @@ service NetworkEdgeSecurityServices {
 
   // Deletes the specified service.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/delete
-  rpc DeleteNetworkEdgeSecurityServices(
-      DeleteNetworkEdgeSecurityServicesRequest)
+  rpc DeleteNetworkEdgeSecurityService(DeleteNetworkEdgeSecurityServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices/{network_edge_security_service}"
@@ -65,7 +64,7 @@ service NetworkEdgeSecurityServices {
 
   // Gets a specified NetworkEdgeSecurityService.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/get
-  rpc GetNetworkEdgeSecurityServices(GetNetworkEdgeSecurityServicesRequest)
+  rpc GetNetworkEdgeSecurityService(GetNetworkEdgeSecurityServiceRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEdgeSecurityService) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices/{network_edge_security_service}"
@@ -77,8 +76,7 @@ service NetworkEdgeSecurityServices {
   // Creates a new service in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/insert
-  rpc InsertNetworkEdgeSecurityServices(
-      InsertNetworkEdgeSecurityServicesRequest)
+  rpc InsertNetworkEdgeSecurityService(InsertNetworkEdgeSecurityServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices"
@@ -91,7 +89,7 @@ service NetworkEdgeSecurityServices {
 
   // Patches the specified policy with the data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEdgeSecurityServices/patch
-  rpc PatchNetworkEdgeSecurityServices(PatchNetworkEdgeSecurityServicesRequest)
+  rpc PatchNetworkEdgeSecurityService(PatchNetworkEdgeSecurityServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/networkEdgeSecurityServices/{network_edge_security_service}"
@@ -177,8 +175,8 @@ message AggregatedListNetworkEdgeSecurityServicesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteNetworkEdgeSecurityServices.
-message DeleteNetworkEdgeSecurityServicesRequest {
+// Request message for DeleteNetworkEdgeSecurityService.
+message DeleteNetworkEdgeSecurityServiceRequest {
   // Name of the network edge security service to delete.
   string network_edge_security_service = 1
       [(google.api.field_behavior) = REQUIRED];
@@ -208,8 +206,8 @@ message DeleteNetworkEdgeSecurityServicesRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetNetworkEdgeSecurityServices.
-message GetNetworkEdgeSecurityServicesRequest {
+// Request message for GetNetworkEdgeSecurityService.
+message GetNetworkEdgeSecurityServiceRequest {
   // Name of the network edge security service to get.
   string network_edge_security_service = 1
       [(google.api.field_behavior) = REQUIRED];
@@ -221,8 +219,8 @@ message GetNetworkEdgeSecurityServicesRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertNetworkEdgeSecurityServices.
-message InsertNetworkEdgeSecurityServicesRequest {
+// Request message for InsertNetworkEdgeSecurityService.
+message InsertNetworkEdgeSecurityServiceRequest {
   // The NetworkEdgeSecurityService for this request.
   optional google.cloud.cpp.compute.v1.NetworkEdgeSecurityService
       network_edge_security_service_resource = 1
@@ -256,8 +254,8 @@ message InsertNetworkEdgeSecurityServicesRequest {
   optional bool validate_only = 5;
 }
 
-// Request message for PatchNetworkEdgeSecurityServices.
-message PatchNetworkEdgeSecurityServicesRequest {
+// Request message for PatchNetworkEdgeSecurityService.
+message PatchNetworkEdgeSecurityServiceRequest {
   // Name of the network edge security service to update.
   string network_edge_security_service = 1
       [(google.api.field_behavior) = REQUIRED];

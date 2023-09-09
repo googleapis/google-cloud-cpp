@@ -61,9 +61,9 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNodeGroups,
+              DeleteNodeGroup,
               (google::cloud::cpp::compute::node_groups::v1::
-                   DeleteNodeGroupsRequest const& request),
+                   DeleteNodeGroupRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -73,8 +73,8 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::NodeGroup>, GetNodeGroups,
-      (google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::NodeGroup>, GetNodeGroup,
+      (google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
            request),
       (override));
 
@@ -85,9 +85,9 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNodeGroups,
+              InsertNodeGroup,
               (google::cloud::cpp::compute::node_groups::v1::
-                   InsertNodeGroupsRequest const& request),
+                   InsertNodeGroupRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -102,9 +102,9 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchNodeGroups,
+              PatchNodeGroup,
               (google::cloud::cpp::compute::node_groups::v1::
-                   PatchNodeGroupsRequest const& request),
+                   PatchNodeGroupRequest const& request),
               (override));
 
   MOCK_METHOD(

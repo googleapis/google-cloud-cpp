@@ -187,12 +187,12 @@ class NetworksConnection {
                  request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworks(
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+  DeleteNetwork(
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request);
 
   virtual StatusOr<
@@ -201,8 +201,8 @@ class NetworksConnection {
                             GetEffectiveFirewallsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworks(
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+  InsertNetwork(
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -214,8 +214,8 @@ class NetworksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworks(
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+  PatchNetwork(
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

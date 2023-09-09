@@ -190,15 +190,15 @@ class SubnetworksConnection {
           AggregatedListSubnetworksRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                        DeleteSubnetworksRequest const& request);
+  DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
+                       DeleteSubnetworkRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::
                         ExpandIpCidrRangeRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -206,8 +206,8 @@ class SubnetworksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                        InsertSubnetworksRequest const& request);
+  InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
+                       InsertSubnetworkRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
   ListSubnetworks(
@@ -219,8 +219,8 @@ class SubnetworksConnection {
       google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
-                       PatchSubnetworksRequest const& request);
+  PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
+                      PatchSubnetworkRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&

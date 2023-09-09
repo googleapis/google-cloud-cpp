@@ -53,14 +53,14 @@ class GlobalOrganizationOperationsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  Status DeleteGlobalOrganizationOperations(
+  Status DeleteGlobalOrganizationOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationsRequest const& request) override;
+          DeleteGlobalOrganizationOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOrganizationOperations(
+  GetGlobalOrganizationOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationsRequest const& request) override;
+          GetGlobalOrganizationOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation>
   ListGlobalOrganizationOperations(

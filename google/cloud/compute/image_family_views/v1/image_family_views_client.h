@@ -109,13 +109,13 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(std::string const& project, std::string const& zone,
-                      std::string const& family, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      std::string const& project, std::string const& zone,
+      std::string const& family, Options opts = {});
 
   // clang-format off
   ///
@@ -126,7 +126,7 @@ class ImageFamilyViewsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest].
+  ///     [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -142,14 +142,14 @@ class ImageFamilyViewsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewsRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
+  /// [google.cloud.cpp.compute.image_family_views.v1.GetImageFamilyViewRequest]: @cloud_cpp_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L51}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_055.proto#L26}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request,
-                      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      google::cloud::cpp::compute::image_family_views::v1::
+          GetImageFamilyViewRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ImageFamilyViewsConnection> connection_;

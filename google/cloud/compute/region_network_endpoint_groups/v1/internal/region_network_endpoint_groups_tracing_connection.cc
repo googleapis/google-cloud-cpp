@@ -37,41 +37,41 @@ RegionNetworkEndpointGroupsTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsTracingConnection::DeleteRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsTracingConnection::DeleteRegionNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        DeleteRegionNetworkEndpointGroupsRequest const& request) {
+        DeleteRegionNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
       "RegionNetworkEndpointGroupsConnection::"
-      "DeleteRegionNetworkEndpointGroups");
+      "DeleteRegionNetworkEndpointGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionNetworkEndpointGroups(request));
+                           child_->DeleteRegionNetworkEndpointGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-RegionNetworkEndpointGroupsTracingConnection::GetRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsTracingConnection::GetRegionNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        GetRegionNetworkEndpointGroupsRequest const& request) {
+        GetRegionNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
-      "RegionNetworkEndpointGroupsConnection::GetRegionNetworkEndpointGroups");
+      "RegionNetworkEndpointGroupsConnection::GetRegionNetworkEndpointGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->GetRegionNetworkEndpointGroups(request));
+                           child_->GetRegionNetworkEndpointGroup(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsTracingConnection::InsertRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsTracingConnection::InsertRegionNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        InsertRegionNetworkEndpointGroupsRequest const& request) {
+        InsertRegionNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
       "RegionNetworkEndpointGroupsConnection::"
-      "InsertRegionNetworkEndpointGroups");
+      "InsertRegionNetworkEndpointGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionNetworkEndpointGroups(request));
+                           child_->InsertRegionNetworkEndpointGroup(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

@@ -45,16 +45,16 @@ class AddressesTracingConnection
       google::cloud::cpp::compute::addresses::v1::
           AggregatedListAddressesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddresses(
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddresses(
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(

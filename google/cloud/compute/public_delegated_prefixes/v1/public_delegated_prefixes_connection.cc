@@ -44,25 +44,25 @@ PublicDelegatedPrefixesConnection::AggregatedListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefixes(
+PublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixesRequest const&) {
+        DeletePublicDelegatedPrefixRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-PublicDelegatedPrefixesConnection::GetPublicDelegatedPrefixes(
+PublicDelegatedPrefixesConnection::GetPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        GetPublicDelegatedPrefixesRequest const&) {
+        GetPublicDelegatedPrefixRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefixes(
+PublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixesRequest const&) {
+        InsertPublicDelegatedPrefixRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -77,9 +77,9 @@ PublicDelegatedPrefixesConnection::ListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefixes(
+PublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixesRequest const&) {
+        PatchPublicDelegatedPrefixRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

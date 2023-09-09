@@ -39,7 +39,7 @@ service RegionHealthChecks {
 
   // Deletes the specified HealthCheck resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/delete
-  rpc DeleteRegionHealthChecks(DeleteRegionHealthChecksRequest)
+  rpc DeleteRegionHealthCheck(DeleteRegionHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/healthChecks/{health_check}"
@@ -50,7 +50,7 @@ service RegionHealthChecks {
 
   // Returns the specified HealthCheck resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/get
-  rpc GetRegionHealthChecks(GetRegionHealthChecksRequest)
+  rpc GetRegionHealthCheck(GetRegionHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheck) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/healthChecks/{health_check}"
@@ -61,7 +61,7 @@ service RegionHealthChecks {
   // Creates a HealthCheck resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/insert
-  rpc InsertRegionHealthChecks(InsertRegionHealthChecksRequest)
+  rpc InsertRegionHealthCheck(InsertRegionHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/healthChecks"
@@ -87,7 +87,7 @@ service RegionHealthChecks {
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/patch
-  rpc PatchRegionHealthChecks(PatchRegionHealthChecksRequest)
+  rpc PatchRegionHealthCheck(PatchRegionHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/healthChecks/{health_check}"
@@ -101,7 +101,7 @@ service RegionHealthChecks {
   // Updates a HealthCheck resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthChecks/update
-  rpc UpdateRegionHealthChecks(UpdateRegionHealthChecksRequest)
+  rpc UpdateRegionHealthCheck(UpdateRegionHealthCheckRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/regions/{region}/healthChecks/{health_check}"
@@ -113,8 +113,8 @@ service RegionHealthChecks {
   }
 }
 
-// Request message for DeleteRegionHealthChecks.
-message DeleteRegionHealthChecksRequest {
+// Request message for DeleteRegionHealthCheck.
+message DeleteRegionHealthCheckRequest {
   // Name of the HealthCheck resource to delete.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -143,8 +143,8 @@ message DeleteRegionHealthChecksRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetRegionHealthChecks.
-message GetRegionHealthChecksRequest {
+// Request message for GetRegionHealthCheck.
+message GetRegionHealthCheckRequest {
   // Name of the HealthCheck resource to return.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -155,8 +155,8 @@ message GetRegionHealthChecksRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionHealthChecks.
-message InsertRegionHealthChecksRequest {
+// Request message for InsertRegionHealthCheck.
+message InsertRegionHealthCheckRequest {
   // The HealthCheck for this request.
   optional google.cloud.cpp.compute.v1.HealthCheck health_check_resource = 1
       [json_name = "__json_request_body"];
@@ -254,8 +254,8 @@ message ListRegionHealthChecksRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionHealthChecks.
-message PatchRegionHealthChecksRequest {
+// Request message for PatchRegionHealthCheck.
+message PatchRegionHealthCheckRequest {
   // Name of the HealthCheck resource to patch.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -288,8 +288,8 @@ message PatchRegionHealthChecksRequest {
   optional string request_id = 5;
 }
 
-// Request message for UpdateRegionHealthChecks.
-message UpdateRegionHealthChecksRequest {
+// Request message for UpdateRegionHealthCheck.
+message UpdateRegionHealthCheckRequest {
   // Name of the HealthCheck resource to update.
   string health_check = 1 [(google.api.field_behavior) = REQUIRED];
 

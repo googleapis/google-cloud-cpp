@@ -33,68 +33,68 @@ TargetGrpcProxiesClient::TargetGrpcProxiesClient(
 TargetGrpcProxiesClient::~TargetGrpcProxiesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesClient::DeleteTargetGrpcProxies(
+TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
     std::string const& project, std::string const& target_grpc_proxy,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_grpc_proxies::v1::
-      DeleteTargetGrpcProxiesRequest request;
+      DeleteTargetGrpcProxyRequest request;
   request.set_project(project);
   request.set_target_grpc_proxy(target_grpc_proxy);
-  return connection_->DeleteTargetGrpcProxies(request);
+  return connection_->DeleteTargetGrpcProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesClient::DeleteTargetGrpcProxies(
+TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxiesRequest const& request,
+        DeleteTargetGrpcProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetGrpcProxies(request);
+  return connection_->DeleteTargetGrpcProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-TargetGrpcProxiesClient::GetTargetGrpcProxies(
+TargetGrpcProxiesClient::GetTargetGrpcProxy(
     std::string const& project, std::string const& target_grpc_proxy,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_grpc_proxies::v1::
-      GetTargetGrpcProxiesRequest request;
+      GetTargetGrpcProxyRequest request;
   request.set_project(project);
   request.set_target_grpc_proxy(target_grpc_proxy);
-  return connection_->GetTargetGrpcProxies(request);
+  return connection_->GetTargetGrpcProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-TargetGrpcProxiesClient::GetTargetGrpcProxies(
+TargetGrpcProxiesClient::GetTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        GetTargetGrpcProxiesRequest const& request,
+        GetTargetGrpcProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetTargetGrpcProxies(request);
+  return connection_->GetTargetGrpcProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesClient::InsertTargetGrpcProxies(
+TargetGrpcProxiesClient::InsertTargetGrpcProxy(
     std::string const& project,
     google::cloud::cpp::compute::v1::TargetGrpcProxy const&
         target_grpc_proxy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_grpc_proxies::v1::
-      InsertTargetGrpcProxiesRequest request;
+      InsertTargetGrpcProxyRequest request;
   request.set_project(project);
   *request.mutable_target_grpc_proxy_resource() = target_grpc_proxy_resource;
-  return connection_->InsertTargetGrpcProxies(request);
+  return connection_->InsertTargetGrpcProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesClient::InsertTargetGrpcProxies(
+TargetGrpcProxiesClient::InsertTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxiesRequest const& request,
+        InsertTargetGrpcProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertTargetGrpcProxies(request);
+  return connection_->InsertTargetGrpcProxy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -117,27 +117,27 @@ TargetGrpcProxiesClient::ListTargetGrpcProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesClient::PatchTargetGrpcProxies(
+TargetGrpcProxiesClient::PatchTargetGrpcProxy(
     std::string const& project, std::string const& target_grpc_proxy,
     google::cloud::cpp::compute::v1::TargetGrpcProxy const&
         target_grpc_proxy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_grpc_proxies::v1::
-      PatchTargetGrpcProxiesRequest request;
+      PatchTargetGrpcProxyRequest request;
   request.set_project(project);
   request.set_target_grpc_proxy(target_grpc_proxy);
   *request.mutable_target_grpc_proxy_resource() = target_grpc_proxy_resource;
-  return connection_->PatchTargetGrpcProxies(request);
+  return connection_->PatchTargetGrpcProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesClient::PatchTargetGrpcProxies(
+TargetGrpcProxiesClient::PatchTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxiesRequest const& request,
+        PatchTargetGrpcProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchTargetGrpcProxies(request);
+  return connection_->PatchTargetGrpcProxy(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

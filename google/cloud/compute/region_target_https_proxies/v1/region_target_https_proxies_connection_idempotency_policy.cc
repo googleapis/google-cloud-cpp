@@ -37,23 +37,23 @@ RegionTargetHttpsProxiesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    DeleteRegionTargetHttpsProxies(
+    DeleteRegionTargetHttpsProxy(
         google::cloud::cpp::compute::region_target_https_proxies::v1::
-            DeleteRegionTargetHttpsProxiesRequest const&) {
+            DeleteRegionTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    GetRegionTargetHttpsProxies(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            GetRegionTargetHttpsProxiesRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::GetRegionTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        GetRegionTargetHttpsProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    InsertRegionTargetHttpsProxies(
+    InsertRegionTargetHttpsProxy(
         google::cloud::cpp::compute::region_target_https_proxies::v1::
-            InsertRegionTargetHttpsProxiesRequest const&) {
+            InsertRegionTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,9 +65,9 @@ Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
 }
 
 Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    PatchRegionTargetHttpsProxies(
+    PatchRegionTargetHttpsProxy(
         google::cloud::cpp::compute::region_target_https_proxies::v1::
-            PatchRegionTargetHttpsProxiesRequest const&) {
+            PatchRegionTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

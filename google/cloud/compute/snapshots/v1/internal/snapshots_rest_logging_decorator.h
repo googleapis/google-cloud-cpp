@@ -43,15 +43,15 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
                        std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteSnapshots(
+  AsyncDeleteSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -60,10 +60,10 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertSnapshots(
+  AsyncInsertSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotList> ListSnapshots(
@@ -92,13 +92,13 @@ class SnapshotsRestLogging : public SnapshotsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   std::shared_ptr<SnapshotsRestStub> child_;

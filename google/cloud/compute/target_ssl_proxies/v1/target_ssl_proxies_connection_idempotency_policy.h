@@ -37,17 +37,17 @@ class TargetSslProxiesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<TargetSslProxiesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteTargetSslProxies(
+  virtual google::cloud::Idempotency DeleteTargetSslProxy(
       google::cloud::cpp::compute::target_ssl_proxies::v1::
-          DeleteTargetSslProxiesRequest const& request);
+          DeleteTargetSslProxyRequest const& request);
 
-  virtual google::cloud::Idempotency GetTargetSslProxies(
+  virtual google::cloud::Idempotency GetTargetSslProxy(
       google::cloud::cpp::compute::target_ssl_proxies::v1::
-          GetTargetSslProxiesRequest const& request);
+          GetTargetSslProxyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertTargetSslProxies(
+  virtual google::cloud::Idempotency InsertTargetSslProxy(
       google::cloud::cpp::compute::target_ssl_proxies::v1::
-          InsertTargetSslProxiesRequest const& request);
+          InsertTargetSslProxyRequest const& request);
 
   virtual google::cloud::Idempotency ListTargetSslProxies(
       google::cloud::cpp::compute::target_ssl_proxies::v1::

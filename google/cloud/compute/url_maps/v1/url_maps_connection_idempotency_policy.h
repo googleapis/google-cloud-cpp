@@ -40,16 +40,16 @@ class UrlMapsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::url_maps::v1::
           AggregatedListUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+  virtual google::cloud::Idempotency DeleteUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+  virtual google::cloud::Idempotency GetUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+  virtual google::cloud::Idempotency InsertUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
           request);
 
   virtual google::cloud::Idempotency InvalidateCache(
@@ -59,12 +59,12 @@ class UrlMapsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListUrlMaps(
       google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request);
 
-  virtual google::cloud::Idempotency PatchUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+  virtual google::cloud::Idempotency PatchUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request);
 
-  virtual google::cloud::Idempotency UpdateUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+  virtual google::cloud::Idempotency UpdateUrlMap(
+      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
           request);
 
   virtual google::cloud::Idempotency Validate(

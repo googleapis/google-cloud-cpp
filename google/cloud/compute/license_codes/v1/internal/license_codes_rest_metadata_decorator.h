@@ -38,10 +38,10 @@ class LicenseCodesRestMetadata : public LicenseCodesRestStub {
   explicit LicenseCodesRestMetadata(std::shared_ptr<LicenseCodesRestStub> child,
                                     std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodesRequest const& request) override;
+          GetLicenseCodeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,

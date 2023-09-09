@@ -191,18 +191,18 @@ class ExternalVpnGatewaysConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteExternalVpnGateways(
+  DeleteExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          DeleteExternalVpnGatewaysRequest const& request);
+          DeleteExternalVpnGatewayRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-  GetExternalVpnGateways(google::cloud::cpp::compute::external_vpn_gateways::
-                             v1::GetExternalVpnGatewaysRequest const& request);
+  GetExternalVpnGateway(google::cloud::cpp::compute::external_vpn_gateways::v1::
+                            GetExternalVpnGatewayRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertExternalVpnGateways(
+  InsertExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          InsertExternalVpnGatewaysRequest const& request);
+          InsertExternalVpnGatewayRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
   ListExternalVpnGateways(google::cloud::cpp::compute::external_vpn_gateways::

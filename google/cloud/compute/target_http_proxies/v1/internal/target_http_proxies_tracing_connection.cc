@@ -46,38 +46,38 @@ TargetHttpProxiesTracingConnection::AggregatedListTargetHttpProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesTracingConnection::DeleteTargetHttpProxies(
+TargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        DeleteTargetHttpProxiesRequest const& request) {
+        DeleteTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
-      "DeleteTargetHttpProxies");
+      "DeleteTargetHttpProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteTargetHttpProxies(request));
+                           child_->DeleteTargetHttpProxy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-TargetHttpProxiesTracingConnection::GetTargetHttpProxies(
+TargetHttpProxiesTracingConnection::GetTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        GetTargetHttpProxiesRequest const& request) {
+        GetTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
-      "GetTargetHttpProxies");
+      "GetTargetHttpProxy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetTargetHttpProxies(request));
+  return internal::EndSpan(*span, child_->GetTargetHttpProxy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesTracingConnection::InsertTargetHttpProxies(
+TargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        InsertTargetHttpProxiesRequest const& request) {
+        InsertTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
-      "InsertTargetHttpProxies");
+      "InsertTargetHttpProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertTargetHttpProxies(request));
+                           child_->InsertTargetHttpProxy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -95,15 +95,15 @@ TargetHttpProxiesTracingConnection::ListTargetHttpProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesTracingConnection::PatchTargetHttpProxies(
+TargetHttpProxiesTracingConnection::PatchTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        PatchTargetHttpProxiesRequest const& request) {
+        PatchTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
-      "PatchTargetHttpProxies");
+      "PatchTargetHttpProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchTargetHttpProxies(request));
+                           child_->PatchTargetHttpProxy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -48,47 +48,46 @@ UrlMapsRestLogging::AggregatedListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestLogging::AsyncDeleteUrlMaps(
+UrlMapsRestLogging::AsyncDeleteUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapsRequest const&
+          google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
               request) {
-        return child_->AsyncDeleteUrlMaps(cq, std::move(rest_context), request);
+        return child_->AsyncDeleteUrlMap(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-UrlMapsRestLogging::GetUrlMaps(
+StatusOr<google::cloud::cpp::compute::v1::UrlMap> UrlMapsRestLogging::GetUrlMap(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::url_maps::v1::GetUrlMapsRequest const&
-                 request) { return child_->GetUrlMaps(rest_context, request); },
+             google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
+                 request) { return child_->GetUrlMap(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestLogging::AsyncInsertUrlMaps(
+UrlMapsRestLogging::AsyncInsertUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::cpp::compute::url_maps::v1::InsertUrlMapsRequest const&
+          google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
               request) {
-        return child_->AsyncInsertUrlMaps(cq, std::move(rest_context), request);
+        return child_->AsyncInsertUrlMap(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -124,35 +123,35 @@ UrlMapsRestLogging::ListUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestLogging::AsyncPatchUrlMaps(
+UrlMapsRestLogging::AsyncPatchUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::cpp::compute::url_maps::v1::PatchUrlMapsRequest const&
+          google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
               request) {
-        return child_->AsyncPatchUrlMaps(cq, std::move(rest_context), request);
+        return child_->AsyncPatchUrlMap(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-UrlMapsRestLogging::AsyncUpdateUrlMaps(
+UrlMapsRestLogging::AsyncUpdateUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> rest_context,
-          google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapsRequest const&
+          google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
               request) {
-        return child_->AsyncUpdateUrlMaps(cq, std::move(rest_context), request);
+        return child_->AsyncUpdateUrlMap(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -173,12 +172,12 @@ UrlMapsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -188,12 +187,12 @@ future<Status> UrlMapsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

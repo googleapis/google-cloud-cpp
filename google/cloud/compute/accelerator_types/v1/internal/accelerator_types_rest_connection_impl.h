@@ -56,9 +56,9 @@ class AcceleratorTypesRestConnectionImpl
       google::cloud::cpp::compute::accelerator_types::v1::
           AggregatedListAcceleratorTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::
-                          GetAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
   ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::

@@ -47,15 +47,15 @@ class MockRegionOperationsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status, DeleteRegionOperations,
+  MOCK_METHOD(Status, DeleteRegionOperation,
               (google::cloud::cpp::compute::region_operations::v1::
-                   DeleteRegionOperationsRequest const& request),
+                   DeleteRegionOperationRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-              GetRegionOperations,
+              GetRegionOperation,
               (google::cloud::cpp::compute::region_operations::v1::
-                   GetRegionOperationsRequest const& request),
+                   GetRegionOperationRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,

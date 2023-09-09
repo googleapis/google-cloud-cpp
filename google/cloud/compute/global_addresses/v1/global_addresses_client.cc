@@ -33,67 +33,67 @@ GlobalAddressesClient::GlobalAddressesClient(
 GlobalAddressesClient::~GlobalAddressesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::DeleteGlobalAddresses(std::string const& project,
-                                             std::string const& address,
-                                             Options opts) {
+GlobalAddressesClient::DeleteGlobalAddress(std::string const& project,
+                                           std::string const& address,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::global_addresses::v1::
-      DeleteGlobalAddressesRequest request;
-  request.set_project(project);
-  request.set_address(address);
-  return connection_->DeleteGlobalAddresses(request);
-}
-
-future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::DeleteGlobalAddresses(
-    google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressesRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGlobalAddresses(request);
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesClient::GetGlobalAddresses(std::string const& project,
-                                          std::string const& address,
-                                          Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressesRequest
+  google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressRequest
       request;
   request.set_project(project);
   request.set_address(address);
-  return connection_->GetGlobalAddresses(request);
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesClient::GetGlobalAddresses(
-    google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressesRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetGlobalAddresses(request);
+  return connection_->DeleteGlobalAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::InsertGlobalAddresses(
+GlobalAddressesClient::DeleteGlobalAddress(
+    google::cloud::cpp::compute::global_addresses::v1::
+        DeleteGlobalAddressRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGlobalAddress(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Address>
+GlobalAddressesClient::GetGlobalAddress(std::string const& project,
+                                        std::string const& address,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressRequest
+      request;
+  request.set_project(project);
+  request.set_address(address);
+  return connection_->GetGlobalAddress(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Address>
+GlobalAddressesClient::GetGlobalAddress(
+    google::cloud::cpp::compute::global_addresses::v1::
+        GetGlobalAddressRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGlobalAddress(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::InsertGlobalAddress(
     std::string const& project,
     google::cloud::cpp::compute::v1::Address const& address_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::global_addresses::v1::
-      InsertGlobalAddressesRequest request;
+  google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressRequest
+      request;
   request.set_project(project);
   *request.mutable_address_resource() = address_resource;
-  return connection_->InsertGlobalAddresses(request);
+  return connection_->InsertGlobalAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::InsertGlobalAddresses(
+GlobalAddressesClient::InsertGlobalAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressesRequest const& request,
+        InsertGlobalAddressRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertGlobalAddresses(request);
+  return connection_->InsertGlobalAddress(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>

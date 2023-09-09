@@ -42,18 +42,18 @@ ResourcePoliciesConnection::AggregatedListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesConnection::DeleteResourcePolicies(
+ResourcePoliciesConnection::DeleteResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePoliciesRequest const&) {
+        DeleteResourcePolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesConnection::GetResourcePolicies(
+ResourcePoliciesConnection::GetResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePoliciesRequest const&) {
+        GetResourcePolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -65,9 +65,9 @@ ResourcePoliciesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesConnection::InsertResourcePolicies(
+ResourcePoliciesConnection::InsertResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePoliciesRequest const&) {
+        InsertResourcePolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,9 +82,9 @@ ResourcePoliciesConnection::ListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesConnection::PatchResourcePolicies(
+ResourcePoliciesConnection::PatchResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePoliciesRequest const&) {
+        PatchResourcePolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

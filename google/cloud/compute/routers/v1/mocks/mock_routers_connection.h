@@ -54,16 +54,15 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteRouters,
-      (google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+      DeleteRouter,
+      (google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
            request),
       (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Router>, GetRouters,
-      (google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Router>, GetRouter,
+              (google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>,
@@ -81,8 +80,8 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertRouters,
-      (google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+      InsertRouter,
+      (google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
            request),
       (override));
 
@@ -92,9 +91,8 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      PatchRouters,
-      (google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, PatchRouter,
+      (google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
            request),
       (override));
 
@@ -106,8 +104,8 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      UpdateRouters,
-      (google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+      UpdateRouter,
+      (google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
            request),
       (override));
 };

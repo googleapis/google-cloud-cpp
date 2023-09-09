@@ -175,12 +175,12 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_gateways.v1.DeleteVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L210}
+  /// [google.cloud.cpp.compute.vpn_gateways.v1.DeleteVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L210}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnGateways(std::string const& project, std::string const& region,
-                    std::string const& vpn_gateway, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnGateway(
+      std::string const& project, std::string const& region,
+      std::string const& vpn_gateway, Options opts = {});
 
   // clang-format off
   ///
@@ -190,7 +190,7 @@ class VpnGatewaysClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.vpn_gateways.v1.DeleteVpnGatewaysRequest].
+  ///     [google.cloud.cpp.compute.vpn_gateways.v1.DeleteVpnGatewayRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -213,13 +213,13 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_gateways.v1.DeleteVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L210}
+  /// [google.cloud.cpp.compute.vpn_gateways.v1.DeleteVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L210}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::
-                        DeleteVpnGatewaysRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnGateway(
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          DeleteVpnGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -243,10 +243,10 @@ class VpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L29}
-  /// [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L252}
+  /// [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L252}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
+  StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateway(
       std::string const& project, std::string const& region,
       std::string const& vpn_gateway, Options opts = {});
 
@@ -258,7 +258,7 @@ class VpnGatewaysClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewaysRequest].
+  ///     [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewayRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,12 +275,12 @@ class VpnGatewaysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.v1.VpnGateway]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L29}
-  /// [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L252}
+  /// [google.cloud.cpp.compute.vpn_gateways.v1.GetVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L252}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          GetVpnGatewaysRequest const& request,
+  StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateway(
+      google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -375,11 +375,10 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_gateways.v1.InsertVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L264}
+  /// [google.cloud.cpp.compute.vpn_gateways.v1.InsertVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L264}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnGateways(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnGateway(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::VpnGateway const& vpn_gateway_resource,
       Options opts = {});
@@ -393,7 +392,7 @@ class VpnGatewaysClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.vpn_gateways.v1.InsertVpnGatewaysRequest].
+  ///     [google.cloud.cpp.compute.vpn_gateways.v1.InsertVpnGatewayRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -416,13 +415,13 @@ class VpnGatewaysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.vpn_gateways.v1.InsertVpnGatewaysRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L264}
+  /// [google.cloud.cpp.compute.vpn_gateways.v1.InsertVpnGatewayRequest]: @cloud_cpp_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L264}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::
-                        InsertVpnGatewaysRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnGateway(
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          InsertVpnGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///

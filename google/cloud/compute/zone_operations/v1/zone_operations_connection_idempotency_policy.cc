@@ -34,15 +34,15 @@ ZoneOperationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ZoneOperationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ZoneOperationsConnectionIdempotencyPolicy::DeleteZoneOperations(
+Idempotency ZoneOperationsConnectionIdempotencyPolicy::DeleteZoneOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const&) {
+        DeleteZoneOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ZoneOperationsConnectionIdempotencyPolicy::GetZoneOperations(
+Idempotency ZoneOperationsConnectionIdempotencyPolicy::GetZoneOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const&) {
+        GetZoneOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

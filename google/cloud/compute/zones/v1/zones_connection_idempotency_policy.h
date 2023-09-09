@@ -36,8 +36,8 @@ class ZonesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ZonesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency GetZones(
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request);
+  virtual google::cloud::Idempotency GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request);
 
   virtual google::cloud::Idempotency ListZones(
       google::cloud::cpp::compute::zones::v1::ListZonesRequest request);

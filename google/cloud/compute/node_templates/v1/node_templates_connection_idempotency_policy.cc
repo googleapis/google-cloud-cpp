@@ -41,15 +41,15 @@ NodeTemplatesConnectionIdempotencyPolicy::AggregatedListNodeTemplates(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::DeleteNodeTemplates(
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::DeleteNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplatesRequest const&) {
+        DeleteNodeTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetNodeTemplates(
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        GetNodeTemplatesRequest const&) {
+        GetNodeTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -59,9 +59,9 @@ Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::InsertNodeTemplates(
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::InsertNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplatesRequest const&) {
+        InsertNodeTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

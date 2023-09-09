@@ -65,15 +65,15 @@ class DisksRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteDisks(
+  AsyncDeleteDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const&
+      google::cloud::cpp::compute::disks::v1::GetDiskRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -82,10 +82,10 @@ class DisksRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertDisks(
+  AsyncInsertDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskList> ListDisks(
@@ -146,10 +146,10 @@ class DisksRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateDisks(
+  AsyncUpdateDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,13 +157,13 @@ class DisksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) = 0;
+          GetZoneOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) = 0;
+          DeleteZoneOperationRequest const& request) = 0;
 };
 
 class DefaultDisksRestStub : public DisksRestStub {
@@ -201,15 +201,15 @@ class DefaultDisksRestStub : public DisksRestStub {
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request)
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request)
       override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request)
+      google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -217,10 +217,10 @@ class DefaultDisksRestStub : public DisksRestStub {
       google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request)
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskList> ListDisks(
@@ -279,10 +279,10 @@ class DefaultDisksRestStub : public DisksRestStub {
       google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request)
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -290,13 +290,13 @@ class DefaultDisksRestStub : public DisksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetZoneOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteZoneOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

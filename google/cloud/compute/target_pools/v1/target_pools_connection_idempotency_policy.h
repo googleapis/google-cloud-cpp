@@ -48,21 +48,21 @@ class TargetPoolsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::target_pools::v1::
           AggregatedListTargetPoolsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTargetPools(
+  virtual google::cloud::Idempotency DeleteTargetPool(
       google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolsRequest const& request);
+          DeleteTargetPoolRequest const& request);
 
-  virtual google::cloud::Idempotency GetTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request);
+  virtual google::cloud::Idempotency GetTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request);
 
   virtual google::cloud::Idempotency GetHealth(
       google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertTargetPools(
+  virtual google::cloud::Idempotency InsertTargetPool(
       google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolsRequest const& request);
+          InsertTargetPoolRequest const& request);
 
   virtual google::cloud::Idempotency ListTargetPools(
       google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest

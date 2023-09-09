@@ -55,19 +55,19 @@ class PublicAdvertisedPrefixesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePublicAdvertisedPrefixes(
+  DeletePublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          DeletePublicAdvertisedPrefixesRequest const& request) override;
+          DeletePublicAdvertisedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-  GetPublicAdvertisedPrefixes(
+  GetPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          GetPublicAdvertisedPrefixesRequest const& request) override;
+          GetPublicAdvertisedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPublicAdvertisedPrefixes(
+  InsertPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          InsertPublicAdvertisedPrefixesRequest const& request) override;
+          InsertPublicAdvertisedPrefixRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
   ListPublicAdvertisedPrefixes(
@@ -75,9 +75,9 @@ class PublicAdvertisedPrefixesRestConnectionImpl
           ListPublicAdvertisedPrefixesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPublicAdvertisedPrefixes(
+  PatchPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          PatchPublicAdvertisedPrefixesRequest const& request) override;
+          PatchPublicAdvertisedPrefixRequest const& request) override;
 
  private:
   static std::unique_ptr<compute_public_advertised_prefixes_v1::

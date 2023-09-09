@@ -44,30 +44,30 @@ Idempotency NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::
 }
 
 Idempotency NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::
-    DeleteNetworkEdgeSecurityServices(
+    DeleteNetworkEdgeSecurityService(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            DeleteNetworkEdgeSecurityServicesRequest const&) {
+            DeleteNetworkEdgeSecurityServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::
-    GetNetworkEdgeSecurityServices(
+    GetNetworkEdgeSecurityService(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            GetNetworkEdgeSecurityServicesRequest const&) {
+            GetNetworkEdgeSecurityServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::
-    InsertNetworkEdgeSecurityServices(
+    InsertNetworkEdgeSecurityService(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            InsertNetworkEdgeSecurityServicesRequest const&) {
+            InsertNetworkEdgeSecurityServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::
-    PatchNetworkEdgeSecurityServices(
+    PatchNetworkEdgeSecurityService(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            PatchNetworkEdgeSecurityServicesRequest const&) {
+            PatchNetworkEdgeSecurityServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

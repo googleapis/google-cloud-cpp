@@ -37,16 +37,16 @@ GlobalOrganizationOperationsConnection::
     ~GlobalOrganizationOperationsConnection() = default;
 
 Status
-GlobalOrganizationOperationsConnection::DeleteGlobalOrganizationOperations(
+GlobalOrganizationOperationsConnection::DeleteGlobalOrganizationOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationsRequest const&) {
+        DeleteGlobalOrganizationOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsConnection::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsConnection::GetGlobalOrganizationOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const&) {
+        GetGlobalOrganizationOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

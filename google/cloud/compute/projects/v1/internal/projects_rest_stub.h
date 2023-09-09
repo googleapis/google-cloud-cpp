@@ -65,9 +65,9 @@ class ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -126,13 +126,13 @@ class ProjectsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetGlobalOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteGlobalOperationRequest const& request) = 0;
 };
 
 class DefaultProjectsRestStub : public ProjectsRestStub {
@@ -172,9 +172,9 @@ class DefaultProjectsRestStub : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -232,13 +232,13 @@ class DefaultProjectsRestStub : public ProjectsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

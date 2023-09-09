@@ -37,15 +37,15 @@ InterconnectRemoteLocationsTracingConnection::
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-InterconnectRemoteLocationsTracingConnection::GetInterconnectRemoteLocations(
+InterconnectRemoteLocationsTracingConnection::GetInterconnectRemoteLocation(
     google::cloud::cpp::compute::interconnect_remote_locations::v1::
-        GetInterconnectRemoteLocationsRequest const& request) {
+        GetInterconnectRemoteLocationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnect_remote_locations_v1::"
-      "InterconnectRemoteLocationsConnection::GetInterconnectRemoteLocations");
+      "InterconnectRemoteLocationsConnection::GetInterconnectRemoteLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->GetInterconnectRemoteLocations(request));
+                           child_->GetInterconnectRemoteLocation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>

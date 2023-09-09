@@ -47,18 +47,16 @@ class SslCertificatesTracingConnection
           AggregatedListSslCertificatesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslCertificates(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          DeleteSslCertificatesRequest const& request) override;
+  DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
+                           DeleteSslCertificateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
       google::cloud::cpp::compute::ssl_certificates::v1::
-          GetSslCertificatesRequest const& request) override;
+          GetSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslCertificates(
-      google::cloud::cpp::compute::ssl_certificates::v1::
-          InsertSslCertificatesRequest const& request) override;
+  InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
+                           InsertSslCertificateRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::

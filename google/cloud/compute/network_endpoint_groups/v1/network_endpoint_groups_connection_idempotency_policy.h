@@ -46,21 +46,21 @@ class NetworkEndpointGroupsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNetworkEndpointGroups(
+  virtual google::cloud::Idempotency DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          DeleteNetworkEndpointGroupsRequest const& request);
+          DeleteNetworkEndpointGroupRequest const& request);
 
   virtual google::cloud::Idempotency DetachNetworkEndpoints(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetworkEndpointGroups(
+  virtual google::cloud::Idempotency GetNetworkEndpointGroup(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          GetNetworkEndpointGroupsRequest const& request);
+          GetNetworkEndpointGroupRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworkEndpointGroups(
+  virtual google::cloud::Idempotency InsertNetworkEndpointGroup(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          InsertNetworkEndpointGroupsRequest const& request);
+          InsertNetworkEndpointGroupRequest const& request);
 
   virtual google::cloud::Idempotency ListNetworkEndpointGroups(
       google::cloud::cpp::compute::network_endpoint_groups::v1::

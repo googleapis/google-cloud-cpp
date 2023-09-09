@@ -53,72 +53,72 @@ InterconnectAttachmentsClient::AggregatedListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsClient::DeleteInterconnectAttachments(
+InterconnectAttachmentsClient::DeleteInterconnectAttachment(
     std::string const& project, std::string const& region,
     std::string const& interconnect_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_attachments::v1::
-      DeleteInterconnectAttachmentsRequest request;
+      DeleteInterconnectAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_interconnect_attachment(interconnect_attachment);
-  return connection_->DeleteInterconnectAttachments(request);
+  return connection_->DeleteInterconnectAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsClient::DeleteInterconnectAttachments(
+InterconnectAttachmentsClient::DeleteInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        DeleteInterconnectAttachmentsRequest const& request,
+        DeleteInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInterconnectAttachments(request);
+  return connection_->DeleteInterconnectAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-InterconnectAttachmentsClient::GetInterconnectAttachments(
+InterconnectAttachmentsClient::GetInterconnectAttachment(
     std::string const& project, std::string const& region,
     std::string const& interconnect_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_attachments::v1::
-      GetInterconnectAttachmentsRequest request;
+      GetInterconnectAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_interconnect_attachment(interconnect_attachment);
-  return connection_->GetInterconnectAttachments(request);
+  return connection_->GetInterconnectAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-InterconnectAttachmentsClient::GetInterconnectAttachments(
+InterconnectAttachmentsClient::GetInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const& request,
+        GetInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetInterconnectAttachments(request);
+  return connection_->GetInterconnectAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsClient::InsertInterconnectAttachments(
+InterconnectAttachmentsClient::InsertInterconnectAttachment(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::InterconnectAttachment const&
         interconnect_attachment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_attachments::v1::
-      InsertInterconnectAttachmentsRequest request;
+      InsertInterconnectAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_interconnect_attachment_resource() =
       interconnect_attachment_resource;
-  return connection_->InsertInterconnectAttachments(request);
+  return connection_->InsertInterconnectAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsClient::InsertInterconnectAttachments(
+InterconnectAttachmentsClient::InsertInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        InsertInterconnectAttachmentsRequest const& request,
+        InsertInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInterconnectAttachments(request);
+  return connection_->InsertInterconnectAttachment(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -142,7 +142,7 @@ InterconnectAttachmentsClient::ListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsClient::PatchInterconnectAttachments(
+InterconnectAttachmentsClient::PatchInterconnectAttachment(
     std::string const& project, std::string const& region,
     std::string const& interconnect_attachment,
     google::cloud::cpp::compute::v1::InterconnectAttachment const&
@@ -150,22 +150,22 @@ InterconnectAttachmentsClient::PatchInterconnectAttachments(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_attachments::v1::
-      PatchInterconnectAttachmentsRequest request;
+      PatchInterconnectAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_interconnect_attachment(interconnect_attachment);
   *request.mutable_interconnect_attachment_resource() =
       interconnect_attachment_resource;
-  return connection_->PatchInterconnectAttachments(request);
+  return connection_->PatchInterconnectAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsClient::PatchInterconnectAttachments(
+InterconnectAttachmentsClient::PatchInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        PatchInterconnectAttachmentsRequest const& request,
+        PatchInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInterconnectAttachments(request);
+  return connection_->PatchInterconnectAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

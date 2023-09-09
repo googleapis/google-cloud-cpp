@@ -40,7 +40,7 @@ service RegionAutoscalers {
 
   // Deletes the specified autoscaler.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionAutoscalers/delete
-  rpc DeleteRegionAutoscalers(DeleteRegionAutoscalersRequest)
+  rpc DeleteRegionAutoscaler(DeleteRegionAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/autoscalers/{autoscaler}"
@@ -51,7 +51,7 @@ service RegionAutoscalers {
 
   // Returns the specified autoscaler.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionAutoscalers/get
-  rpc GetRegionAutoscalers(GetRegionAutoscalersRequest)
+  rpc GetRegionAutoscaler(GetRegionAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/autoscalers/{autoscaler}"
@@ -62,7 +62,7 @@ service RegionAutoscalers {
   // Creates an autoscaler in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionAutoscalers/insert
-  rpc InsertRegionAutoscalers(InsertRegionAutoscalersRequest)
+  rpc InsertRegionAutoscaler(InsertRegionAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
@@ -86,7 +86,7 @@ service RegionAutoscalers {
   // the request. This method supports PATCH semantics and uses the JSON merge
   // patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionAutoscalers/patch
-  rpc PatchRegionAutoscalers(PatchRegionAutoscalersRequest)
+  rpc PatchRegionAutoscaler(PatchRegionAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
@@ -99,7 +99,7 @@ service RegionAutoscalers {
   // Updates an autoscaler in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionAutoscalers/update
-  rpc UpdateRegionAutoscalers(UpdateRegionAutoscalersRequest)
+  rpc UpdateRegionAutoscaler(UpdateRegionAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/regions/{region}/autoscalers"
@@ -110,8 +110,8 @@ service RegionAutoscalers {
   }
 }
 
-// Request message for DeleteRegionAutoscalers.
-message DeleteRegionAutoscalersRequest {
+// Request message for DeleteRegionAutoscaler.
+message DeleteRegionAutoscalerRequest {
   // Name of the autoscaler to delete.
   string autoscaler = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -140,8 +140,8 @@ message DeleteRegionAutoscalersRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetRegionAutoscalers.
-message GetRegionAutoscalersRequest {
+// Request message for GetRegionAutoscaler.
+message GetRegionAutoscalerRequest {
   // Name of the autoscaler to return.
   string autoscaler = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -152,8 +152,8 @@ message GetRegionAutoscalersRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionAutoscalers.
-message InsertRegionAutoscalersRequest {
+// Request message for InsertRegionAutoscaler.
+message InsertRegionAutoscalerRequest {
   // The Autoscaler for this request.
   optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 1
       [json_name = "__json_request_body"];
@@ -251,8 +251,8 @@ message ListRegionAutoscalersRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionAutoscalers.
-message PatchRegionAutoscalersRequest {
+// Request message for PatchRegionAutoscaler.
+message PatchRegionAutoscalerRequest {
   // Name of the autoscaler to patch.
   optional string autoscaler = 1;
 
@@ -285,8 +285,8 @@ message PatchRegionAutoscalersRequest {
   optional string request_id = 5;
 }
 
-// Request message for UpdateRegionAutoscalers.
-message UpdateRegionAutoscalersRequest {
+// Request message for UpdateRegionAutoscaler.
+message UpdateRegionAutoscalerRequest {
   // Name of the autoscaler to update.
   optional string autoscaler = 1;
 

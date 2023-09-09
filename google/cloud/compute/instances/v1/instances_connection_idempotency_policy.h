@@ -56,8 +56,8 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
           request);
 
-  virtual google::cloud::Idempotency DeleteInstances(
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+  virtual google::cloud::Idempotency DeleteInstance(
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request);
 
   virtual google::cloud::Idempotency DeleteAccessConfig(
@@ -68,8 +68,8 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetInstances(
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+  virtual google::cloud::Idempotency GetInstance(
+      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
           request);
 
   virtual google::cloud::Idempotency GetEffectiveFirewalls(
@@ -96,8 +96,8 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::
           GetShieldedInstanceIdentityRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInstances(
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+  virtual google::cloud::Idempotency InsertInstance(
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request);
 
   virtual google::cloud::Idempotency ListInstances(
@@ -194,8 +194,8 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::
           TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateInstances(
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request);
 
   virtual google::cloud::Idempotency UpdateAccessConfig(

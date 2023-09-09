@@ -42,24 +42,22 @@ VpnTunnelsConnection::AggregatedListVpnTunnels(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsConnection::DeleteVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::
-        DeleteVpnTunnelsRequest const&) {
+VpnTunnelsConnection::DeleteVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::
+                                          v1::DeleteVpnTunnelRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-VpnTunnelsConnection::GetVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&) {
+VpnTunnelsConnection::GetVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsConnection::InsertVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::
-        InsertVpnTunnelsRequest const&) {
+VpnTunnelsConnection::InsertVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::
+                                          v1::InsertVpnTunnelRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -188,28 +188,28 @@ class HttpHealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                             DeleteHttpHealthChecksRequest const& request);
+  DeleteHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                            DeleteHttpHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                          GetHttpHealthChecksRequest const& request);
+  GetHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                         GetHttpHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                             InsertHttpHealthChecksRequest const& request);
+  InsertHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                            InsertHttpHealthCheckRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
   ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
                            ListHttpHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                            PatchHttpHealthChecksRequest const& request);
+  PatchHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                           PatchHttpHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
-                             UpdateHttpHealthChecksRequest const& request);
+  UpdateHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                            UpdateHttpHealthCheckRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

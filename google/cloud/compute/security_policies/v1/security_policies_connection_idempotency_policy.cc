@@ -46,15 +46,15 @@ SecurityPoliciesConnectionIdempotencyPolicy::AggregatedListSecurityPolicies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::DeleteSecurityPolicies(
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::DeleteSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPoliciesRequest const&) {
+        DeleteSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetSecurityPolicies(
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPoliciesRequest const&) {
+        GetSecurityPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -63,9 +63,9 @@ Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetRule(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::InsertSecurityPolicies(
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::InsertSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPoliciesRequest const&) {
+        InsertSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -82,9 +82,9 @@ SecurityPoliciesConnectionIdempotencyPolicy::ListPreconfiguredExpressionSets(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::PatchSecurityPolicies(
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::PatchSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPoliciesRequest const&) {
+        PatchSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

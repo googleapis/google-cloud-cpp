@@ -48,18 +48,18 @@ SubnetworksRestLogging::AggregatedListSubnetworks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksRestLogging::AsyncDeleteSubnetworks(
+SubnetworksRestLogging::AsyncDeleteSubnetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::
-        DeleteSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::subnetworks::v1::
-                 DeleteSubnetworksRequest const& request) {
-        return child_->AsyncDeleteSubnetworks(cq, std::move(rest_context),
-                                              request);
+                 DeleteSubnetworkRequest const& request) {
+        return child_->AsyncDeleteSubnetwork(cq, std::move(rest_context),
+                                             request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -82,15 +82,15 @@ SubnetworksRestLogging::AsyncExpandIpCidrRange(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksRestLogging::GetSubnetworks(
+SubnetworksRestLogging::GetSubnetwork(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::subnetworks::v1::
-                 GetSubnetworksRequest const& request) {
-        return child_->GetSubnetworks(rest_context, request);
+                 GetSubnetworkRequest const& request) {
+        return child_->GetSubnetwork(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -110,18 +110,18 @@ SubnetworksRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksRestLogging::AsyncInsertSubnetworks(
+SubnetworksRestLogging::AsyncInsertSubnetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::
-        InsertSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::subnetworks::v1::
-                 InsertSubnetworksRequest const& request) {
-        return child_->AsyncInsertSubnetworks(cq, std::move(rest_context),
-                                              request);
+                 InsertSubnetworkRequest const& request) {
+        return child_->AsyncInsertSubnetwork(cq, std::move(rest_context),
+                                             request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -154,18 +154,18 @@ SubnetworksRestLogging::ListUsable(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksRestLogging::AsyncPatchSubnetworks(
+SubnetworksRestLogging::AsyncPatchSubnetwork(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::subnetworks::v1::
-                 PatchSubnetworksRequest const& request) {
-        return child_->AsyncPatchSubnetworks(cq, std::move(rest_context),
-                                             request);
+                 PatchSubnetworkRequest const& request) {
+        return child_->AsyncPatchSubnetwork(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -220,12 +220,12 @@ SubnetworksRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetRegionOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -235,12 +235,12 @@ future<Status> SubnetworksRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteRegionOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteRegionOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -138,25 +138,25 @@ InstanceGroupManagersClient::CreateInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupManagersClient::DeleteInstanceGroupManagers(
+InstanceGroupManagersClient::DeleteInstanceGroupManager(
     std::string const& project, std::string const& zone,
     std::string const& instance_group_manager, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_group_managers::v1::
-      DeleteInstanceGroupManagersRequest request;
+      DeleteInstanceGroupManagerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group_manager(instance_group_manager);
-  return connection_->DeleteInstanceGroupManagers(request);
+  return connection_->DeleteInstanceGroupManager(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupManagersClient::DeleteInstanceGroupManagers(
+InstanceGroupManagersClient::DeleteInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        DeleteInstanceGroupManagersRequest const& request,
+        DeleteInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceGroupManagers(request);
+  return connection_->DeleteInstanceGroupManager(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -217,50 +217,50 @@ InstanceGroupManagersClient::DeletePerInstanceConfigs(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-InstanceGroupManagersClient::GetInstanceGroupManagers(
+InstanceGroupManagersClient::GetInstanceGroupManager(
     std::string const& project, std::string const& zone,
     std::string const& instance_group_manager, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_group_managers::v1::
-      GetInstanceGroupManagersRequest request;
+      GetInstanceGroupManagerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group_manager(instance_group_manager);
-  return connection_->GetInstanceGroupManagers(request);
+  return connection_->GetInstanceGroupManager(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-InstanceGroupManagersClient::GetInstanceGroupManagers(
+InstanceGroupManagersClient::GetInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        GetInstanceGroupManagersRequest const& request,
+        GetInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetInstanceGroupManagers(request);
+  return connection_->GetInstanceGroupManager(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupManagersClient::InsertInstanceGroupManagers(
+InstanceGroupManagersClient::InsertInstanceGroupManager(
     std::string const& project, std::string const& zone,
     google::cloud::cpp::compute::v1::InstanceGroupManager const&
         instance_group_manager_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_group_managers::v1::
-      InsertInstanceGroupManagersRequest request;
+      InsertInstanceGroupManagerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   *request.mutable_instance_group_manager_resource() =
       instance_group_manager_resource;
-  return connection_->InsertInstanceGroupManagers(request);
+  return connection_->InsertInstanceGroupManager(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupManagersClient::InsertInstanceGroupManagers(
+InstanceGroupManagersClient::InsertInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        InsertInstanceGroupManagersRequest const& request,
+        InsertInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceGroupManagers(request);
+  return connection_->InsertInstanceGroupManager(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -352,7 +352,7 @@ InstanceGroupManagersClient::ListPerInstanceConfigs(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupManagersClient::PatchInstanceGroupManagers(
+InstanceGroupManagersClient::PatchInstanceGroupManager(
     std::string const& project, std::string const& zone,
     std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::InstanceGroupManager const&
@@ -360,22 +360,22 @@ InstanceGroupManagersClient::PatchInstanceGroupManagers(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_group_managers::v1::
-      PatchInstanceGroupManagersRequest request;
+      PatchInstanceGroupManagerRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_instance_group_manager(instance_group_manager);
   *request.mutable_instance_group_manager_resource() =
       instance_group_manager_resource;
-  return connection_->PatchInstanceGroupManagers(request);
+  return connection_->PatchInstanceGroupManager(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupManagersClient::PatchInstanceGroupManagers(
+InstanceGroupManagersClient::PatchInstanceGroupManager(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        PatchInstanceGroupManagersRequest const& request,
+        PatchInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInstanceGroupManagers(request);
+  return connection_->PatchInstanceGroupManager(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

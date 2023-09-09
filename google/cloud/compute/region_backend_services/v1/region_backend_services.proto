@@ -41,7 +41,7 @@ service RegionBackendServices {
 
   // Deletes the specified regional BackendService resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/delete
-  rpc DeleteRegionBackendServices(DeleteRegionBackendServicesRequest)
+  rpc DeleteRegionBackendService(DeleteRegionBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
@@ -52,7 +52,7 @@ service RegionBackendServices {
 
   // Returns the specified regional BackendService resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/get
-  rpc GetRegionBackendServices(GetRegionBackendServicesRequest)
+  rpc GetRegionBackendService(GetRegionBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.BackendService) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
@@ -87,7 +87,7 @@ service RegionBackendServices {
   // the data included in the request. For more information, see Backend
   // services overview.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/insert
-  rpc InsertRegionBackendServices(InsertRegionBackendServicesRequest)
+  rpc InsertRegionBackendService(InsertRegionBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/backendServices"
@@ -114,7 +114,7 @@ service RegionBackendServices {
   // services This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/patch
-  rpc PatchRegionBackendServices(PatchRegionBackendServicesRequest)
+  rpc PatchRegionBackendService(PatchRegionBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
@@ -142,7 +142,7 @@ service RegionBackendServices {
   // included in the request. For more information, see Backend services
   // overview .
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/update
-  rpc UpdateRegionBackendServices(UpdateRegionBackendServicesRequest)
+  rpc UpdateRegionBackendService(UpdateRegionBackendServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/regions/{region}/backendServices/{backend_service}"
@@ -154,8 +154,8 @@ service RegionBackendServices {
   }
 }
 
-// Request message for DeleteRegionBackendServices.
-message DeleteRegionBackendServicesRequest {
+// Request message for DeleteRegionBackendService.
+message DeleteRegionBackendServiceRequest {
   // Name of the BackendService resource to delete.
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -214,8 +214,8 @@ message GetIamPolicyRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionBackendServices.
-message GetRegionBackendServicesRequest {
+// Request message for GetRegionBackendService.
+message GetRegionBackendServiceRequest {
   // Name of the BackendService resource to return.
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -226,8 +226,8 @@ message GetRegionBackendServicesRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionBackendServices.
-message InsertRegionBackendServicesRequest {
+// Request message for InsertRegionBackendService.
+message InsertRegionBackendServiceRequest {
   // The BackendService for this request.
   optional google.cloud.cpp.compute.v1.BackendService backend_service_resource =
       1 [json_name = "__json_request_body"];
@@ -325,8 +325,8 @@ message ListRegionBackendServicesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionBackendServices.
-message PatchRegionBackendServicesRequest {
+// Request message for PatchRegionBackendService.
+message PatchRegionBackendServiceRequest {
   // Name of the BackendService resource to patch.
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -376,8 +376,8 @@ message SetIamPolicyRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for UpdateRegionBackendServices.
-message UpdateRegionBackendServicesRequest {
+// Request message for UpdateRegionBackendService.
+message UpdateRegionBackendServiceRequest {
   // Name of the BackendService resource to update.
   string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
 

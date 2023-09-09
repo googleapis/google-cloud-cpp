@@ -34,18 +34,18 @@ FirewallsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<FirewallsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::DeleteFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::DeleteFirewall(
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::GetFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::GetFirewall(
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::InsertFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::InsertFirewall(
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -55,13 +55,13 @@ Idempotency FirewallsConnectionIdempotencyPolicy::ListFirewalls(
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::PatchFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::PatchFirewall(
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::UpdateFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::UpdateFirewall(
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&) {
   return Idempotency::kIdempotent;
 }
 

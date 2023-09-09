@@ -52,71 +52,71 @@ TargetVpnGatewaysClient::AggregatedListTargetVpnGateways(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::DeleteTargetVpnGateways(
+TargetVpnGatewaysClient::DeleteTargetVpnGateway(
     std::string const& project, std::string const& region,
     std::string const& target_vpn_gateway, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_vpn_gateways::v1::
-      DeleteTargetVpnGatewaysRequest request;
+      DeleteTargetVpnGatewayRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_vpn_gateway(target_vpn_gateway);
-  return connection_->DeleteTargetVpnGateways(request);
+  return connection_->DeleteTargetVpnGateway(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::DeleteTargetVpnGateways(
+TargetVpnGatewaysClient::DeleteTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        DeleteTargetVpnGatewaysRequest const& request,
+        DeleteTargetVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetVpnGateways(request);
+  return connection_->DeleteTargetVpnGateway(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysClient::GetTargetVpnGateways(
+TargetVpnGatewaysClient::GetTargetVpnGateway(
     std::string const& project, std::string const& region,
     std::string const& target_vpn_gateway, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_vpn_gateways::v1::
-      GetTargetVpnGatewaysRequest request;
+      GetTargetVpnGatewayRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_vpn_gateway(target_vpn_gateway);
-  return connection_->GetTargetVpnGateways(request);
+  return connection_->GetTargetVpnGateway(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysClient::GetTargetVpnGateways(
+TargetVpnGatewaysClient::GetTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        GetTargetVpnGatewaysRequest const& request,
+        GetTargetVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetTargetVpnGateways(request);
+  return connection_->GetTargetVpnGateway(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::InsertTargetVpnGateways(
+TargetVpnGatewaysClient::InsertTargetVpnGateway(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::TargetVpnGateway const&
         target_vpn_gateway_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_vpn_gateways::v1::
-      InsertTargetVpnGatewaysRequest request;
+      InsertTargetVpnGatewayRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_target_vpn_gateway_resource() = target_vpn_gateway_resource;
-  return connection_->InsertTargetVpnGateways(request);
+  return connection_->InsertTargetVpnGateway(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysClient::InsertTargetVpnGateways(
+TargetVpnGatewaysClient::InsertTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        InsertTargetVpnGatewaysRequest const& request,
+        InsertTargetVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertTargetVpnGateways(request);
+  return connection_->InsertTargetVpnGateway(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>

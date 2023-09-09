@@ -73,9 +73,9 @@ class InstanceGroupManagersRestConnectionImpl
           CreateInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroupManagers(
+  DeleteInstanceGroupManager(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          DeleteInstanceGroupManagersRequest const& request) override;
+          DeleteInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
       google::cloud::cpp::compute::instance_group_managers::v1::
@@ -87,14 +87,14 @@ class InstanceGroupManagersRestConnectionImpl
           DeletePerInstanceConfigsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetInstanceGroupManagers(
+  GetInstanceGroupManager(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          GetInstanceGroupManagersRequest const& request) override;
+          GetInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroupManagers(
+  InsertInstanceGroupManager(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          InsertInstanceGroupManagersRequest const& request) override;
+          InsertInstanceGroupManagerRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListInstanceGroupManagers(
@@ -117,9 +117,9 @@ class InstanceGroupManagersRestConnectionImpl
           ListPerInstanceConfigsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceGroupManagers(
+  PatchInstanceGroupManager(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          PatchInstanceGroupManagersRequest const& request) override;
+          PatchInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(

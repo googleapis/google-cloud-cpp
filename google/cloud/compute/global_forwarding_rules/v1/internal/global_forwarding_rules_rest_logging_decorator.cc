@@ -35,48 +35,48 @@ GlobalForwardingRulesRestLogging::GlobalForwardingRulesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestLogging::AsyncDeleteGlobalForwardingRules(
+GlobalForwardingRulesRestLogging::AsyncDeleteGlobalForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRulesRequest const& request) {
+        DeleteGlobalForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 DeleteGlobalForwardingRulesRequest const& request) {
-        return child_->AsyncDeleteGlobalForwardingRules(
+                 DeleteGlobalForwardingRuleRequest const& request) {
+        return child_->AsyncDeleteGlobalForwardingRule(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesRestLogging::GetGlobalForwardingRules(
+GlobalForwardingRulesRestLogging::GetGlobalForwardingRule(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRulesRequest const& request) {
+        GetGlobalForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 GetGlobalForwardingRulesRequest const& request) {
-        return child_->GetGlobalForwardingRules(rest_context, request);
+                 GetGlobalForwardingRuleRequest const& request) {
+        return child_->GetGlobalForwardingRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestLogging::AsyncInsertGlobalForwardingRules(
+GlobalForwardingRulesRestLogging::AsyncInsertGlobalForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRulesRequest const& request) {
+        InsertGlobalForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 InsertGlobalForwardingRulesRequest const& request) {
-        return child_->AsyncInsertGlobalForwardingRules(
+                 InsertGlobalForwardingRuleRequest const& request) {
+        return child_->AsyncInsertGlobalForwardingRule(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -97,17 +97,17 @@ GlobalForwardingRulesRestLogging::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestLogging::AsyncPatchGlobalForwardingRules(
+GlobalForwardingRulesRestLogging::AsyncPatchGlobalForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRulesRequest const& request) {
+        PatchGlobalForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 PatchGlobalForwardingRulesRequest const& request) {
-        return child_->AsyncPatchGlobalForwardingRules(
+                 PatchGlobalForwardingRuleRequest const& request) {
+        return child_->AsyncPatchGlobalForwardingRule(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -150,12 +150,12 @@ GlobalForwardingRulesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetGlobalOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -165,12 +165,12 @@ future<Status> GlobalForwardingRulesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteGlobalOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

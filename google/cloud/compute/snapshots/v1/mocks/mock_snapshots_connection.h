@@ -49,14 +49,14 @@ class MockSnapshotsConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteSnapshots,
-      (google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+      DeleteSnapshot,
+      (google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Snapshot>, GetSnapshots,
-      (google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::Snapshot>, GetSnapshot,
+      (google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
            request),
       (override));
 
@@ -68,8 +68,8 @@ class MockSnapshotsConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertSnapshots,
-      (google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+      InsertSnapshot,
+      (google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
            request),
       (override));
 

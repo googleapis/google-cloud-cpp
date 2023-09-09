@@ -191,32 +191,31 @@ class RegionHealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthChecks(
+  DeleteRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          DeleteRegionHealthChecksRequest const& request);
+          DeleteRegionHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetRegionHealthChecks(google::cloud::cpp::compute::region_health_checks::v1::
-                            GetRegionHealthChecksRequest const& request);
+  GetRegionHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                           GetRegionHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthChecks(
+  InsertRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          InsertRegionHealthChecksRequest const& request);
+          InsertRegionHealthCheckRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(google::cloud::cpp::compute::region_health_checks::v1::
                              ListRegionHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthChecks(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          PatchRegionHealthChecksRequest const& request);
+  PatchRegionHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                             PatchRegionHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionHealthChecks(
+  UpdateRegionHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          UpdateRegionHealthChecksRequest const& request);
+          UpdateRegionHealthCheckRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

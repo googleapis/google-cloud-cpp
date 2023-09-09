@@ -182,17 +182,15 @@ class RoutesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoutes(
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
-          request);
+  DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+                  request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
+      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRoutes(
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
-          request);
+  InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+                  request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);

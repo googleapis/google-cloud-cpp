@@ -55,9 +55,9 @@ class MachineTypesRestConnectionImpl
       google::cloud::cpp::compute::machine_types::v1::
           AggregatedListMachineTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::cpp::compute::machine_types::v1::
-          GetMachineTypesRequest const& request) override;
+          GetMachineTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
       google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest

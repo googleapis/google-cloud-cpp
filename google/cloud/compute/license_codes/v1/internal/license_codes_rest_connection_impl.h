@@ -49,9 +49,9 @@ class LicenseCodesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
+  StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodesRequest const& request) override;
+          GetLicenseCodeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::

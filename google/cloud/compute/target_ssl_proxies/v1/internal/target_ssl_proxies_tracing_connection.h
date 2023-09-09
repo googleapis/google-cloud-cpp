@@ -42,18 +42,16 @@ class TargetSslProxiesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetSslProxies(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          DeleteTargetSslProxiesRequest const& request) override;
+  DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           DeleteTargetSslProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxy(
       google::cloud::cpp::compute::target_ssl_proxies::v1::
-          GetTargetSslProxiesRequest const& request) override;
+          GetTargetSslProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetSslProxies(
-      google::cloud::cpp::compute::target_ssl_proxies::v1::
-          InsertTargetSslProxiesRequest const& request) override;
+  InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           InsertTargetSslProxyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
   ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::

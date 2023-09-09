@@ -50,23 +50,23 @@ InstanceTemplatesRestMetadata::AggregatedListInstanceTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesRestMetadata::AsyncDeleteInstanceTemplates(
+InstanceTemplatesRestMetadata::AsyncDeleteInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
-        DeleteInstanceTemplatesRequest const& request) {
+        DeleteInstanceTemplateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteInstanceTemplates(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncDeleteInstanceTemplate(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-InstanceTemplatesRestMetadata::GetInstanceTemplates(
+InstanceTemplatesRestMetadata::GetInstanceTemplate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
-        GetInstanceTemplatesRequest const& request) {
+        GetInstanceTemplateRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetInstanceTemplates(rest_context, request);
+  return child_->GetInstanceTemplate(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -79,14 +79,14 @@ InstanceTemplatesRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceTemplatesRestMetadata::AsyncInsertInstanceTemplates(
+InstanceTemplatesRestMetadata::AsyncInsertInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
-        InsertInstanceTemplatesRequest const& request) {
+        InsertInstanceTemplateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertInstanceTemplates(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncInsertInstanceTemplate(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
@@ -121,7 +121,7 @@ InstanceTemplatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -130,7 +130,7 @@ future<Status> InstanceTemplatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -36,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionInstanceGroupsConnection::~RegionInstanceGroupsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-RegionInstanceGroupsConnection::GetRegionInstanceGroups(
+RegionInstanceGroupsConnection::GetRegionInstanceGroup(
     google::cloud::cpp::compute::region_instance_groups::v1::
-        GetRegionInstanceGroupsRequest const&) {
+        GetRegionInstanceGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

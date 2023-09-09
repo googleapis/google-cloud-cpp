@@ -40,7 +40,7 @@ service RegionOperations {
 
   // Deletes the specified region-specific Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/delete
-  rpc DeleteRegionOperations(DeleteRegionOperationsRequest)
+  rpc DeleteRegionOperation(DeleteRegionOperationRequest)
       returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}"
@@ -50,7 +50,7 @@ service RegionOperations {
 
   // Retrieves the specified region-specific Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionOperations/get
-  rpc GetRegionOperations(GetRegionOperationsRequest)
+  rpc GetRegionOperation(GetRegionOperationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/operations/{operation}"
@@ -90,8 +90,8 @@ service RegionOperations {
   }
 }
 
-// Request message for DeleteRegionOperations.
-message DeleteRegionOperationsRequest {
+// Request message for DeleteRegionOperation.
+message DeleteRegionOperationRequest {
   // Name of the Operations resource to delete.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -102,8 +102,8 @@ message DeleteRegionOperationsRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionOperations.
-message GetRegionOperationsRequest {
+// Request message for GetRegionOperation.
+message GetRegionOperationRequest {
   // Name of the Operations resource to return.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 

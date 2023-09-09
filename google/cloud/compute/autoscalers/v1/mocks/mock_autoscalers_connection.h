@@ -55,21 +55,21 @@ class MockAutoscalersConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteAutoscalers,
+              DeleteAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
-                   DeleteAutoscalersRequest const& request),
+                   DeleteAutoscalerRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
-              GetAutoscalers,
-              (google::cloud::cpp::compute::autoscalers::v1::
-                   GetAutoscalersRequest const& request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Autoscaler>, GetAutoscaler,
+      (google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertAutoscalers,
+              InsertAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
-                   InsertAutoscalersRequest const& request),
+                   InsertAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -79,15 +79,15 @@ class MockAutoscalersConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchAutoscalers,
+              PatchAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
-                   PatchAutoscalersRequest const& request),
+                   PatchAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateAutoscalers,
+              UpdateAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
-                   UpdateAutoscalersRequest const& request),
+                   UpdateAutoscalerRequest const& request),
               (override));
 };
 

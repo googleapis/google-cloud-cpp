@@ -41,21 +41,21 @@ SslCertificatesConnectionIdempotencyPolicy::AggregatedListSslCertificates(
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::DeleteSslCertificates(
+Idempotency SslCertificatesConnectionIdempotencyPolicy::DeleteSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificatesRequest const&) {
+        DeleteSslCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::GetSslCertificates(
+Idempotency SslCertificatesConnectionIdempotencyPolicy::GetSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificatesRequest const&) {
+        GetSslCertificateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslCertificatesConnectionIdempotencyPolicy::InsertSslCertificates(
+Idempotency SslCertificatesConnectionIdempotencyPolicy::InsertSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificatesRequest const&) {
+        InsertSslCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -39,13 +39,13 @@ Idempotency NetworksConnectionIdempotencyPolicy::AddPeering(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::DeleteNetworks(
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::DeleteNetwork(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::GetNetworks(
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::GetNetwork(
+    google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -55,8 +55,8 @@ Idempotency NetworksConnectionIdempotencyPolicy::GetEffectiveFirewalls(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::InsertNetworks(
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::InsertNetwork(
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,8 +71,8 @@ Idempotency NetworksConnectionIdempotencyPolicy::ListPeeringRoutes(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::PatchNetworks(
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::PatchNetwork(
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -47,9 +47,9 @@ BackendServicesConnectionIdempotencyPolicy::AggregatedListBackendServices(
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteBackendServices(
+Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteBackendService(
     google::cloud::cpp::compute::backend_services::v1::
-        DeleteBackendServicesRequest const&) {
+        DeleteBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -59,9 +59,9 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteSignedUrlKey(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::GetBackendServices(
+Idempotency BackendServicesConnectionIdempotencyPolicy::GetBackendService(
     google::cloud::cpp::compute::backend_services::v1::
-        GetBackendServicesRequest const&) {
+        GetBackendServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -77,9 +77,9 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::InsertBackendServices(
+Idempotency BackendServicesConnectionIdempotencyPolicy::InsertBackendService(
     google::cloud::cpp::compute::backend_services::v1::
-        InsertBackendServicesRequest const&) {
+        InsertBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -89,9 +89,9 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::ListBackendServices(
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::PatchBackendServices(
+Idempotency BackendServicesConnectionIdempotencyPolicy::PatchBackendService(
     google::cloud::cpp::compute::backend_services::v1::
-        PatchBackendServicesRequest const&) {
+        PatchBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -113,9 +113,9 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::SetSecurityPolicy(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::UpdateBackendServices(
+Idempotency BackendServicesConnectionIdempotencyPolicy::UpdateBackendService(
     google::cloud::cpp::compute::backend_services::v1::
-        UpdateBackendServicesRequest const&) {
+        UpdateBackendServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 

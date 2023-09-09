@@ -180,8 +180,8 @@ class RegionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(

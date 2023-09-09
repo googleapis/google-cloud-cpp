@@ -45,23 +45,23 @@ class ForwardingRulesRestStub {
           AggregatedListForwardingRulesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteForwardingRules(
+  AsyncDeleteForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          DeleteForwardingRulesRequest const& request) = 0;
+          DeleteForwardingRuleRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
-                     google::cloud::cpp::compute::forwarding_rules::v1::
-                         GetForwardingRulesRequest const& request) = 0;
+  GetForwardingRule(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::forwarding_rules::v1::
+                        GetForwardingRuleRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertForwardingRules(
+  AsyncInsertForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          InsertForwardingRulesRequest const& request) = 0;
+          InsertForwardingRuleRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
   ListForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
@@ -69,11 +69,11 @@ class ForwardingRulesRestStub {
                           ListForwardingRulesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchForwardingRules(
+  AsyncPatchForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          PatchForwardingRulesRequest const& request) = 0;
+          PatchForwardingRuleRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
@@ -94,13 +94,13 @@ class ForwardingRulesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetRegionOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteRegionOperationRequest const& request) = 0;
 };
 
 class DefaultForwardingRulesRestStub : public ForwardingRulesRestStub {
@@ -119,23 +119,23 @@ class DefaultForwardingRulesRestStub : public ForwardingRulesRestStub {
           AggregatedListForwardingRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteForwardingRules(
+  AsyncDeleteForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          DeleteForwardingRulesRequest const& request) override;
+          DeleteForwardingRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          GetForwardingRulesRequest const& request) override;
+          GetForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertForwardingRules(
+  AsyncInsertForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          InsertForwardingRulesRequest const& request) override;
+          InsertForwardingRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
   ListForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
@@ -143,11 +143,11 @@ class DefaultForwardingRulesRestStub : public ForwardingRulesRestStub {
                           ListForwardingRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchForwardingRules(
+  AsyncPatchForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::forwarding_rules::v1::
-          PatchForwardingRulesRequest const& request) override;
+          PatchForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
@@ -166,13 +166,13 @@ class DefaultForwardingRulesRestStub : public ForwardingRulesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetRegionOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteRegionOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

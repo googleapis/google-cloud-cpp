@@ -69,7 +69,7 @@ service NetworkEndpointGroups {
   // deleted. Note that the NEG cannot be deleted if there are backend services
   // referencing it.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/delete
-  rpc DeleteNetworkEndpointGroups(DeleteNetworkEndpointGroupsRequest)
+  rpc DeleteNetworkEndpointGroup(DeleteNetworkEndpointGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/networkEndpointGroups/{network_endpoint_group}"
@@ -95,7 +95,7 @@ service NetworkEndpointGroups {
 
   // Returns the specified network endpoint group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/get
-  rpc GetNetworkEndpointGroups(GetNetworkEndpointGroupsRequest)
+  rpc GetNetworkEndpointGroup(GetNetworkEndpointGroupRequest)
       returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/networkEndpointGroups/{network_endpoint_group}"
@@ -107,7 +107,7 @@ service NetworkEndpointGroups {
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/networkEndpointGroups/insert
-  rpc InsertNetworkEndpointGroups(InsertNetworkEndpointGroupsRequest)
+  rpc InsertNetworkEndpointGroup(InsertNetworkEndpointGroupRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/networkEndpointGroups"
@@ -266,8 +266,8 @@ message AttachNetworkEndpointsRequest {
   ];
 }
 
-// Request message for DeleteNetworkEndpointGroups.
-message DeleteNetworkEndpointGroupsRequest {
+// Request message for DeleteNetworkEndpointGroup.
+message DeleteNetworkEndpointGroupRequest {
   // The name of the network endpoint group to delete. It should comply with
   // RFC1035.
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
@@ -336,8 +336,8 @@ message DetachNetworkEndpointsRequest {
   ];
 }
 
-// Request message for GetNetworkEndpointGroups.
-message GetNetworkEndpointGroupsRequest {
+// Request message for GetNetworkEndpointGroup.
+message GetNetworkEndpointGroupRequest {
   // The name of the network endpoint group. It should comply with RFC1035.
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -349,8 +349,8 @@ message GetNetworkEndpointGroupsRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertNetworkEndpointGroups.
-message InsertNetworkEndpointGroupsRequest {
+// Request message for InsertNetworkEndpointGroup.
+message InsertNetworkEndpointGroupRequest {
   // The NetworkEndpointGroup for this request.
   optional google.cloud.cpp.compute.v1.NetworkEndpointGroup
       network_endpoint_group_resource = 1 [json_name = "__json_request_body"];

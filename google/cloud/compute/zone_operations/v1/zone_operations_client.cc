@@ -32,48 +32,48 @@ ZoneOperationsClient::ZoneOperationsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 ZoneOperationsClient::~ZoneOperationsClient() = default;
 
-Status ZoneOperationsClient::DeleteZoneOperations(std::string const& project,
-                                                  std::string const& zone,
-                                                  std::string const& operation,
-                                                  Options opts) {
+Status ZoneOperationsClient::DeleteZoneOperation(std::string const& project,
+                                                 std::string const& zone,
+                                                 std::string const& operation,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationsRequest
+  google::cloud::cpp::compute::zone_operations::v1::DeleteZoneOperationRequest
       request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_operation(operation);
-  return connection_->DeleteZoneOperations(request);
+  return connection_->DeleteZoneOperation(request);
 }
 
-Status ZoneOperationsClient::DeleteZoneOperations(
+Status ZoneOperationsClient::DeleteZoneOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request,
+        DeleteZoneOperationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteZoneOperations(request);
+  return connection_->DeleteZoneOperation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsClient::GetZoneOperations(std::string const& project,
-                                        std::string const& zone,
-                                        std::string const& operation,
-                                        Options opts) {
+ZoneOperationsClient::GetZoneOperation(std::string const& project,
+                                       std::string const& zone,
+                                       std::string const& operation,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationsRequest
+  google::cloud::cpp::compute::zone_operations::v1::GetZoneOperationRequest
       request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_operation(operation);
-  return connection_->GetZoneOperations(request);
+  return connection_->GetZoneOperation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsClient::GetZoneOperations(
+ZoneOperationsClient::GetZoneOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request,
+        GetZoneOperationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetZoneOperations(request);
+  return connection_->GetZoneOperation(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>

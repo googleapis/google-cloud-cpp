@@ -36,20 +36,20 @@ class LicensesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<LicensesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency DeleteLicenses(
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+  virtual google::cloud::Idempotency DeleteLicense(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetLicenses(
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+  virtual google::cloud::Idempotency GetLicense(
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertLicenses(
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+  virtual google::cloud::Idempotency InsertLicense(
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request);
 
   virtual google::cloud::Idempotency ListLicenses(

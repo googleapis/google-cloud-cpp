@@ -33,26 +33,26 @@ ImageFamilyViewsClient::ImageFamilyViewsClient(
 ImageFamilyViewsClient::~ImageFamilyViewsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsClient::GetImageFamilyViews(std::string const& project,
-                                            std::string const& zone,
-                                            std::string const& family,
-                                            Options opts) {
+ImageFamilyViewsClient::GetImageFamilyView(std::string const& project,
+                                           std::string const& zone,
+                                           std::string const& family,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::image_family_views::v1::
-      GetImageFamilyViewsRequest request;
+  google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest
+      request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_family(family);
-  return connection_->GetImageFamilyViews(request);
+  return connection_->GetImageFamilyView(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsClient::GetImageFamilyViews(
+ImageFamilyViewsClient::GetImageFamilyView(
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const& request,
+        GetImageFamilyViewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetImageFamilyViews(request);
+  return connection_->GetImageFamilyView(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

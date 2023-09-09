@@ -33,45 +33,45 @@ InterconnectsClient::InterconnectsClient(
 InterconnectsClient::~InterconnectsClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::DeleteInterconnects(std::string const& project,
-                                         std::string const& interconnect,
-                                         Options opts) {
+InterconnectsClient::DeleteInterconnect(std::string const& project,
+                                        std::string const& interconnect,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest
+  google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest
       request;
   request.set_project(project);
   request.set_interconnect(interconnect);
-  return connection_->DeleteInterconnects(request);
+  return connection_->DeleteInterconnect(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::DeleteInterconnects(
+InterconnectsClient::DeleteInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectsRequest const& request,
+        DeleteInterconnectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInterconnects(request);
+  return connection_->DeleteInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsClient::GetInterconnects(std::string const& project,
-                                      std::string const& interconnect,
-                                      Options opts) {
+InterconnectsClient::GetInterconnect(std::string const& project,
+                                     std::string const& interconnect,
+                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest
+  google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest
       request;
   request.set_project(project);
   request.set_interconnect(interconnect);
-  return connection_->GetInterconnects(request);
+  return connection_->GetInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsClient::GetInterconnects(
+InterconnectsClient::GetInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectsRequest const& request,
+        GetInterconnectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetInterconnects(request);
+  return connection_->GetInterconnect(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -95,25 +95,25 @@ InterconnectsClient::GetDiagnostics(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::InsertInterconnects(
+InterconnectsClient::InsertInterconnect(
     std::string const& project,
     google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest
+  google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest
       request;
   request.set_project(project);
   *request.mutable_interconnect_resource() = interconnect_resource;
-  return connection_->InsertInterconnects(request);
+  return connection_->InsertInterconnect(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::InsertInterconnects(
+InterconnectsClient::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectsRequest const& request,
+        InsertInterconnectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInterconnects(request);
+  return connection_->InsertInterconnect(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Interconnect>
@@ -136,26 +136,26 @@ InterconnectsClient::ListInterconnects(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::PatchInterconnects(
+InterconnectsClient::PatchInterconnect(
     std::string const& project, std::string const& interconnect,
     google::cloud::cpp::compute::v1::Interconnect const& interconnect_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest
+  google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest
       request;
   request.set_project(project);
   request.set_interconnect(interconnect);
   *request.mutable_interconnect_resource() = interconnect_resource;
-  return connection_->PatchInterconnects(request);
+  return connection_->PatchInterconnect(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsClient::PatchInterconnects(
+InterconnectsClient::PatchInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectsRequest const& request,
+        PatchInterconnectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInterconnects(request);
+  return connection_->PatchInterconnect(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

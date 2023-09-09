@@ -47,7 +47,7 @@ service MachineTypes {
 
   // Returns the specified machine type.
   // https://cloud.google.com/compute/docs/reference/rest/v1/machineTypes/get
-  rpc GetMachineTypes(GetMachineTypesRequest)
+  rpc GetMachineType(GetMachineTypeRequest)
       returns (google.cloud.cpp.compute.v1.MachineType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/machineTypes/{machine_type}"
@@ -140,8 +140,8 @@ message AggregatedListMachineTypesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for GetMachineTypes.
-message GetMachineTypesRequest {
+// Request message for GetMachineType.
+message GetMachineTypeRequest {
   // Name of the machine type to return.
   string machine_type = 1 [(google.api.field_behavior) = REQUIRED];
 

@@ -188,16 +188,16 @@ class RegionSslPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                              DeleteRegionSslPoliciesRequest const& request);
+  DeleteRegionSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
+                            DeleteRegionSslPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                           GetRegionSslPoliciesRequest const& request);
+  GetRegionSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
+                         GetRegionSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                              InsertRegionSslPoliciesRequest const& request);
+  InsertRegionSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
+                            InsertRegionSslPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
   ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -209,8 +209,8 @@ class RegionSslPoliciesConnection {
                             ListAvailableFeaturesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                             PatchRegionSslPoliciesRequest const& request);
+  PatchRegionSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::
+                           PatchRegionSslPolicyRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

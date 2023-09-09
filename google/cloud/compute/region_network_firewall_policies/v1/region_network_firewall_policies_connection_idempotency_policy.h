@@ -51,13 +51,13 @@ class RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           CloneRulesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRegionNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency DeleteRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          DeleteRegionNetworkFirewallPoliciesRequest const& request);
+          DeleteRegionNetworkFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency GetRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          GetRegionNetworkFirewallPoliciesRequest const& request);
+          GetRegionNetworkFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetAssociation(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -75,17 +75,17 @@ class RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           GetRuleRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency InsertRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          InsertRegionNetworkFirewallPoliciesRequest const& request);
+          InsertRegionNetworkFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionNetworkFirewallPolicies(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
           ListRegionNetworkFirewallPoliciesRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency PatchRegionNetworkFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          PatchRegionNetworkFirewallPoliciesRequest const& request);
+          PatchRegionNetworkFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency PatchRule(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::

@@ -72,23 +72,23 @@ NetworkFirewallPoliciesRestMetadata::AsyncCloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesRestMetadata::AsyncDeleteNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestMetadata::AsyncDeleteNetworkFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        DeleteNetworkFirewallPoliciesRequest const& request) {
+        DeleteNetworkFirewallPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteNetworkFirewallPolicies(cq, std::move(rest_context),
-                                                    request);
+  return child_->AsyncDeleteNetworkFirewallPolicy(cq, std::move(rest_context),
+                                                  request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-NetworkFirewallPoliciesRestMetadata::GetNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestMetadata::GetNetworkFirewallPolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        GetNetworkFirewallPoliciesRequest const& request) {
+        GetNetworkFirewallPolicyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetNetworkFirewallPolicies(rest_context, request);
+  return child_->GetNetworkFirewallPolicy(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -119,14 +119,14 @@ NetworkFirewallPoliciesRestMetadata::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesRestMetadata::AsyncInsertNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestMetadata::AsyncInsertNetworkFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        InsertNetworkFirewallPoliciesRequest const& request) {
+        InsertNetworkFirewallPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertNetworkFirewallPolicies(cq, std::move(rest_context),
-                                                    request);
+  return child_->AsyncInsertNetworkFirewallPolicy(cq, std::move(rest_context),
+                                                  request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
@@ -139,14 +139,14 @@ NetworkFirewallPoliciesRestMetadata::ListNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesRestMetadata::AsyncPatchNetworkFirewallPolicies(
+NetworkFirewallPoliciesRestMetadata::AsyncPatchNetworkFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        PatchNetworkFirewallPoliciesRequest const& request) {
+        PatchNetworkFirewallPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchNetworkFirewallPolicies(cq, std::move(rest_context),
-                                                   request);
+  return child_->AsyncPatchNetworkFirewallPolicy(cq, std::move(rest_context),
+                                                 request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -202,7 +202,7 @@ NetworkFirewallPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -211,7 +211,7 @@ future<Status> NetworkFirewallPoliciesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

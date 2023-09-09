@@ -37,38 +37,38 @@ RegionInstanceTemplatesTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesTracingConnection::DeleteRegionInstanceTemplates(
+RegionInstanceTemplatesTracingConnection::DeleteRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteRegionInstanceTemplatesRequest const& request) {
+        DeleteRegionInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
-      ":DeleteRegionInstanceTemplates");
+      ":DeleteRegionInstanceTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionInstanceTemplates(request));
+                           child_->DeleteRegionInstanceTemplate(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesTracingConnection::GetRegionInstanceTemplates(
+RegionInstanceTemplatesTracingConnection::GetRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplatesRequest const& request) {
+        GetRegionInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
-      ":GetRegionInstanceTemplates");
+      ":GetRegionInstanceTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionInstanceTemplates(request));
+  return internal::EndSpan(*span, child_->GetRegionInstanceTemplate(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesTracingConnection::InsertRegionInstanceTemplates(
+RegionInstanceTemplatesTracingConnection::InsertRegionInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertRegionInstanceTemplatesRequest const& request) {
+        InsertRegionInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
-      ":InsertRegionInstanceTemplates");
+      ":InsertRegionInstanceTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionInstanceTemplates(request));
+                           child_->InsertRegionInstanceTemplate(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>

@@ -113,10 +113,10 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.DeleteImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L188}
+  /// [google.cloud.cpp.compute.images.v1.DeleteImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L188}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
       std::string const& project, std::string const& image, Options opts = {});
 
   // clang-format off
@@ -127,7 +127,7 @@ class ImagesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.images.v1.DeleteImagesRequest].
+  ///     [google.cloud.cpp.compute.images.v1.DeleteImageRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -150,11 +150,11 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.DeleteImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L188}
+  /// [google.cloud.cpp.compute.images.v1.DeleteImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L188}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImages(
-      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request,
       Options opts = {});
 
@@ -255,11 +255,11 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L262}
+  /// [google.cloud.cpp.compute.images.v1.GetImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L262}
   /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
       std::string const& project, std::string const& image, Options opts = {});
 
   // clang-format off
@@ -270,7 +270,7 @@ class ImagesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.images.v1.GetImagesRequest].
+  ///     [google.cloud.cpp.compute.images.v1.GetImageRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -286,12 +286,12 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.GetImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L262}
+  /// [google.cloud.cpp.compute.images.v1.GetImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L262}
   /// [google.cloud.cpp.compute.v1.Image]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_054.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
-      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request,
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
+      google::cloud::cpp::compute::images::v1::GetImageRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -450,10 +450,10 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.InsertImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L271}
+  /// [google.cloud.cpp.compute.images.v1.InsertImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L271}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
       std::string const& project,
       google::cloud::cpp::compute::v1::Image const& image_resource,
       Options opts = {});
@@ -467,7 +467,7 @@ class ImagesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.images.v1.InsertImagesRequest].
+  ///     [google.cloud.cpp.compute.images.v1.InsertImageRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -490,11 +490,11 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.InsertImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L271}
+  /// [google.cloud.cpp.compute.images.v1.InsertImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L271}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImages(
-      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request,
       Options opts = {});
 
@@ -613,10 +613,10 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.PatchImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L364}
+  /// [google.cloud.cpp.compute.images.v1.PatchImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L364}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
       std::string const& project, std::string const& image,
       google::cloud::cpp::compute::v1::Image const& image_resource,
       Options opts = {});
@@ -630,7 +630,7 @@ class ImagesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.images.v1.PatchImagesRequest].
+  ///     [google.cloud.cpp.compute.images.v1.PatchImageRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -653,12 +653,11 @@ class ImagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.images.v1.PatchImagesRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L364}
+  /// [google.cloud.cpp.compute.images.v1.PatchImageRequest]: @cloud_cpp_reference_link{google/cloud/compute/images/v1/images.proto#L364}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImages(
-      google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-          request,
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request,
       Options opts = {});
 
   // clang-format off

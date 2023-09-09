@@ -42,22 +42,22 @@ AddressesConnection::AggregatedListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesConnection::DeleteAddresses(
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&) {
+AddressesConnection::DeleteAddress(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesConnection::GetAddresses(
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&) {
+AddressesConnection::GetAddress(
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesConnection::InsertAddresses(
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&) {
+AddressesConnection::InsertAddress(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

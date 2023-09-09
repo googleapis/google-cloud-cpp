@@ -40,15 +40,15 @@ ZonesRestConnectionImpl::ZonesRestConnectionImpl(
                                       ZonesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesRestConnectionImpl::GetZones(
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
+ZonesRestConnectionImpl::GetZone(
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetZones(request),
+      idempotency_policy(*current)->GetZone(request),
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::zones::v1::GetZonesRequest const&
-                 request) { return stub_->GetZones(rest_context, request); },
+             google::cloud::cpp::compute::zones::v1::GetZoneRequest const&
+                 request) { return stub_->GetZone(rest_context, request); },
       request, __func__);
 }
 

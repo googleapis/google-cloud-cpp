@@ -39,8 +39,8 @@ class ZonesTracingConnection : public compute_zones_v1::ZonesConnection {
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request)
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
       override;
 
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(

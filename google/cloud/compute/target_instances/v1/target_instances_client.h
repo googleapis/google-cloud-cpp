@@ -176,12 +176,12 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L172}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(std::string const& project, std::string const& zone,
-                        std::string const& target_instance, Options opts = {});
+  DeleteTargetInstance(std::string const& project, std::string const& zone,
+                       std::string const& target_instance, Options opts = {});
 
   // clang-format off
   ///
@@ -191,7 +191,7 @@ class TargetInstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest].
+  ///     [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -214,13 +214,13 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L172}
+  /// [google.cloud.cpp.compute.target_instances.v1.DeleteTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L172}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstances(google::cloud::cpp::compute::target_instances::v1::
-                            DeleteTargetInstancesRequest const& request,
-                        Options opts = {});
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -243,11 +243,11 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L202}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L202}
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       std::string const& project, std::string const& zone,
       std::string const& target_instance, Options opts = {});
 
@@ -259,7 +259,7 @@ class TargetInstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest].
+  ///     [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,13 +275,13 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L202}
+  /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L202}
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::cpp::compute::target_instances::v1::
-          GetTargetInstancesRequest const& request,
+          GetTargetInstanceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -313,14 +313,14 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L214}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L214}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(std::string const& project, std::string const& zone,
-                        google::cloud::cpp::compute::v1::TargetInstance const&
-                            target_instance_resource,
-                        Options opts = {});
+  InsertTargetInstance(std::string const& project, std::string const& zone,
+                       google::cloud::cpp::compute::v1::TargetInstance const&
+                           target_instance_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -331,7 +331,7 @@ class TargetInstancesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest].
+  ///     [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -354,13 +354,13 @@ class TargetInstancesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L214}
+  /// [google.cloud.cpp.compute.target_instances.v1.InsertTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L214}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstances(google::cloud::cpp::compute::target_instances::v1::
-                            InsertTargetInstancesRequest const& request,
-                        Options opts = {});
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///

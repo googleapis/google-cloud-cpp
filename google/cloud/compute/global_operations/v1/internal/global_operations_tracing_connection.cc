@@ -45,25 +45,25 @@ GlobalOperationsTracingConnection::AggregatedListGlobalOperations(
                            child_->AggregatedListGlobalOperations(request));
 }
 
-Status GlobalOperationsTracingConnection::DeleteGlobalOperations(
+Status GlobalOperationsTracingConnection::DeleteGlobalOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteGlobalOperationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_operations_v1::GlobalOperationsConnection::"
-      "DeleteGlobalOperations");
+      "DeleteGlobalOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->DeleteGlobalOperations(request));
+  return internal::EndSpan(*span, child_->DeleteGlobalOperation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsTracingConnection::GetGlobalOperations(
+GlobalOperationsTracingConnection::GetGlobalOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetGlobalOperationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_operations_v1::GlobalOperationsConnection::"
-      "GetGlobalOperations");
+      "GetGlobalOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetGlobalOperations(request));
+  return internal::EndSpan(*span, child_->GetGlobalOperation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>

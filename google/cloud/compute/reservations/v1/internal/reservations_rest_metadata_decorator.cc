@@ -49,22 +49,22 @@ ReservationsRestMetadata::AggregatedListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestMetadata::AsyncDeleteReservations(
+ReservationsRestMetadata::AsyncDeleteReservation(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationsRequest const& request) {
+        DeleteReservationRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteReservations(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteReservation(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-ReservationsRestMetadata::GetReservations(
+ReservationsRestMetadata::GetReservation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const&
+    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetReservations(rest_context, request);
+  return child_->GetReservation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -77,13 +77,13 @@ ReservationsRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestMetadata::AsyncInsertReservations(
+ReservationsRestMetadata::AsyncInsertReservation(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::reservations::v1::
-        InsertReservationsRequest const& request) {
+        InsertReservationRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertReservations(cq, std::move(rest_context), request);
+  return child_->AsyncInsertReservation(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationList>
@@ -124,13 +124,13 @@ ReservationsRestMetadata::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ReservationsRestMetadata::AsyncUpdateReservations(
+ReservationsRestMetadata::AsyncUpdateReservation(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationsRequest const& request) {
+        UpdateReservationRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateReservations(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateReservation(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -138,7 +138,7 @@ ReservationsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+        GetZoneOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -147,7 +147,7 @@ future<Status> ReservationsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteZoneOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

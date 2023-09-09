@@ -71,16 +71,16 @@ RegionInstanceGroupManagersTracingConnection::CreateInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersTracingConnection::DeleteRegionInstanceGroupManagers(
+RegionInstanceGroupManagersTracingConnection::DeleteRegionInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        DeleteRegionInstanceGroupManagersRequest const& request) {
+        DeleteRegionInstanceGroupManagerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::"
-      "DeleteRegionInstanceGroupManagers");
+      "DeleteRegionInstanceGroupManager");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionInstanceGroupManagers(request));
+                           child_->DeleteRegionInstanceGroupManager(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -107,28 +107,28 @@ RegionInstanceGroupManagersTracingConnection::DeletePerInstanceConfigs(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-RegionInstanceGroupManagersTracingConnection::GetRegionInstanceGroupManagers(
+RegionInstanceGroupManagersTracingConnection::GetRegionInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        GetRegionInstanceGroupManagersRequest const& request) {
+        GetRegionInstanceGroupManagerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
-      "RegionInstanceGroupManagersConnection::GetRegionInstanceGroupManagers");
+      "RegionInstanceGroupManagersConnection::GetRegionInstanceGroupManager");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->GetRegionInstanceGroupManagers(request));
+                           child_->GetRegionInstanceGroupManager(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersTracingConnection::InsertRegionInstanceGroupManagers(
+RegionInstanceGroupManagersTracingConnection::InsertRegionInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        InsertRegionInstanceGroupManagersRequest const& request) {
+        InsertRegionInstanceGroupManagerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
       "RegionInstanceGroupManagersConnection::"
-      "InsertRegionInstanceGroupManagers");
+      "InsertRegionInstanceGroupManager");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionInstanceGroupManagers(request));
+                           child_->InsertRegionInstanceGroupManager(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -186,16 +186,15 @@ RegionInstanceGroupManagersTracingConnection::ListPerInstanceConfigs(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersTracingConnection::PatchRegionInstanceGroupManagers(
+RegionInstanceGroupManagersTracingConnection::PatchRegionInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        PatchRegionInstanceGroupManagersRequest const& request) {
+        PatchRegionInstanceGroupManagerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_group_managers_v1::"
-      "RegionInstanceGroupManagersConnection::"
-      "PatchRegionInstanceGroupManagers");
+      "RegionInstanceGroupManagersConnection::PatchRegionInstanceGroupManager");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchRegionInstanceGroupManagers(request));
+                           child_->PatchRegionInstanceGroupManager(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -33,29 +33,29 @@ ZoneOperationsRestLogging::ZoneOperationsRestLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-Status ZoneOperationsRestLogging::DeleteZoneOperations(
+Status ZoneOperationsRestLogging::DeleteZoneOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteZoneOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::zone_operations::v1::
-                 DeleteZoneOperationsRequest const& request) {
-        return child_->DeleteZoneOperations(rest_context, request);
+                 DeleteZoneOperationRequest const& request) {
+        return child_->DeleteZoneOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsRestLogging::GetZoneOperations(
+ZoneOperationsRestLogging::GetZoneOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+        GetZoneOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::zone_operations::v1::
-                 GetZoneOperationsRequest const& request) {
-        return child_->GetZoneOperations(rest_context, request);
+                 GetZoneOperationRequest const& request) {
+        return child_->GetZoneOperation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

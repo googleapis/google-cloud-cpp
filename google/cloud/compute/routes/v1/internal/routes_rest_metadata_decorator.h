@@ -40,22 +40,22 @@ class RoutesRestMetadata : public RoutesRestStub {
                               std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRoutes(
+  AsyncDeleteRoute(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
+  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request)
+      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
       override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRoutes(
+  AsyncInsertRoute(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouteList> ListRoutes(
@@ -68,13 +68,13 @@ class RoutesRestMetadata : public RoutesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetGlobalOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteGlobalOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -211,24 +211,24 @@ class NetworkEdgeSecurityServicesConnection {
           AggregatedListNetworkEdgeSecurityServicesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkEdgeSecurityServices(
+  DeleteNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          DeleteNetworkEdgeSecurityServicesRequest const& request);
+          DeleteNetworkEdgeSecurityServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-  GetNetworkEdgeSecurityServices(
+  GetNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          GetNetworkEdgeSecurityServicesRequest const& request);
+          GetNetworkEdgeSecurityServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkEdgeSecurityServices(
+  InsertNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          InsertNetworkEdgeSecurityServicesRequest const& request);
+          InsertNetworkEdgeSecurityServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkEdgeSecurityServices(
+  PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          PatchNetworkEdgeSecurityServicesRequest const& request);
+          PatchNetworkEdgeSecurityServiceRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

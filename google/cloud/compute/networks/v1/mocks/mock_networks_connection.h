@@ -54,14 +54,14 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteNetworks,
-      (google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+      DeleteNetwork,
+      (google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Network>, GetNetworks,
-      (google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::Network>, GetNetwork,
+      (google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
            request),
       (override));
 
@@ -74,8 +74,8 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertNetworks,
-      (google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+      InsertNetwork,
+      (google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
            request),
       (override));
 
@@ -93,8 +93,8 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      PatchNetworks,
-      (google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+      PatchNetwork,
+      (google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
            request),
       (override));
 

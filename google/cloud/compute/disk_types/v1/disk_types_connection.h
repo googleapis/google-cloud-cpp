@@ -186,8 +186,8 @@ class DiskTypesConnection {
   AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::
                               AggregatedListDiskTypesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
-      google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
+      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(

@@ -34,38 +34,38 @@ RegionAutoscalersTracingConnection::RegionAutoscalersTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::DeleteRegionAutoscalers(
+RegionAutoscalersTracingConnection::DeleteRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalersRequest const& request) {
+        DeleteRegionAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
-      "DeleteRegionAutoscalers");
+      "DeleteRegionAutoscaler");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionAutoscalers(request));
+                           child_->DeleteRegionAutoscaler(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersTracingConnection::GetRegionAutoscalers(
+RegionAutoscalersTracingConnection::GetRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalersRequest const& request) {
+        GetRegionAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
-      "GetRegionAutoscalers");
+      "GetRegionAutoscaler");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionAutoscalers(request));
+  return internal::EndSpan(*span, child_->GetRegionAutoscaler(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::InsertRegionAutoscalers(
+RegionAutoscalersTracingConnection::InsertRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalersRequest const& request) {
+        InsertRegionAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
-      "InsertRegionAutoscalers");
+      "InsertRegionAutoscaler");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionAutoscalers(request));
+                           child_->InsertRegionAutoscaler(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -83,27 +83,27 @@ RegionAutoscalersTracingConnection::ListRegionAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::PatchRegionAutoscalers(
+RegionAutoscalersTracingConnection::PatchRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalersRequest const& request) {
+        PatchRegionAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
-      "PatchRegionAutoscalers");
+      "PatchRegionAutoscaler");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchRegionAutoscalers(request));
+                           child_->PatchRegionAutoscaler(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersTracingConnection::UpdateRegionAutoscalers(
+RegionAutoscalersTracingConnection::UpdateRegionAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalersRequest const& request) {
+        UpdateRegionAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
-      "UpdateRegionAutoscalers");
+      "UpdateRegionAutoscaler");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->UpdateRegionAutoscalers(request));
+                           child_->UpdateRegionAutoscaler(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

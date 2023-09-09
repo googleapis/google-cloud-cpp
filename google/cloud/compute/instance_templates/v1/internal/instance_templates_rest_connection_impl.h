@@ -58,22 +58,22 @@ class InstanceTemplatesRestConnectionImpl
           AggregatedListInstanceTemplatesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(
+  DeleteInstanceTemplate(
       google::cloud::cpp::compute::instance_templates::v1::
-          DeleteInstanceTemplatesRequest const& request) override;
+          DeleteInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                           GetInstanceTemplatesRequest const& request) override;
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                          GetInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::instance_templates::v1::
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(
+  InsertInstanceTemplate(
       google::cloud::cpp::compute::instance_templates::v1::
-          InsertInstanceTemplatesRequest const& request) override;
+          InsertInstanceTemplateRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::

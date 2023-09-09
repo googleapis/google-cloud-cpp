@@ -40,7 +40,7 @@ service Firewalls {
 
   // Deletes the specified firewall.
   // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/delete
-  rpc DeleteFirewalls(DeleteFirewallsRequest)
+  rpc DeleteFirewall(DeleteFirewallRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
@@ -51,7 +51,7 @@ service Firewalls {
 
   // Returns the specified firewall.
   // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/get
-  rpc GetFirewalls(GetFirewallsRequest)
+  rpc GetFirewall(GetFirewallRequest)
       returns (google.cloud.cpp.compute.v1.Firewall) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
@@ -62,7 +62,7 @@ service Firewalls {
   // Creates a firewall rule in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/insert
-  rpc InsertFirewalls(InsertFirewallsRequest)
+  rpc InsertFirewall(InsertFirewallRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/firewalls"
@@ -86,7 +86,7 @@ service Firewalls {
   // This method supports PATCH semantics and uses the JSON merge patch format
   // and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/patch
-  rpc PatchFirewalls(PatchFirewallsRequest)
+  rpc PatchFirewall(PatchFirewallRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
@@ -100,7 +100,7 @@ service Firewalls {
   // Note that all fields will be updated if using PUT, even fields that are not
   // specified. To update individual fields, please use PATCH instead.
   // https://cloud.google.com/compute/docs/reference/rest/v1/firewalls/update
-  rpc UpdateFirewalls(UpdateFirewallsRequest)
+  rpc UpdateFirewall(UpdateFirewallRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/global/firewalls/{firewall}"
@@ -111,8 +111,8 @@ service Firewalls {
   }
 }
 
-// Request message for DeleteFirewalls.
-message DeleteFirewallsRequest {
+// Request message for DeleteFirewall.
+message DeleteFirewallRequest {
   // Name of the firewall rule to delete.
   string firewall = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -135,8 +135,8 @@ message DeleteFirewallsRequest {
   optional string request_id = 3;
 }
 
-// Request message for GetFirewalls.
-message GetFirewallsRequest {
+// Request message for GetFirewall.
+message GetFirewallRequest {
   // Name of the firewall rule to return.
   string firewall = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -144,8 +144,8 @@ message GetFirewallsRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertFirewalls.
-message InsertFirewallsRequest {
+// Request message for InsertFirewall.
+message InsertFirewallRequest {
   // The Firewall for this request.
   optional google.cloud.cpp.compute.v1.Firewall firewall_resource = 1
       [json_name = "__json_request_body"];
@@ -234,8 +234,8 @@ message ListFirewallsRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchFirewalls.
-message PatchFirewallsRequest {
+// Request message for PatchFirewall.
+message PatchFirewallRequest {
   // Name of the firewall rule to patch.
   string firewall = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -262,8 +262,8 @@ message PatchFirewallsRequest {
   optional string request_id = 4;
 }
 
-// Request message for UpdateFirewalls.
-message UpdateFirewallsRequest {
+// Request message for UpdateFirewall.
+message UpdateFirewallRequest {
   // Name of the firewall rule to update.
   string firewall = 1 [(google.api.field_behavior) = REQUIRED];
 
