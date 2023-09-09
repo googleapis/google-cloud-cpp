@@ -58,6 +58,42 @@ absl::optional<std::string> DetermineLongRunningOperationService(
   return absl::nullopt;
 }
 
+// Discovery Document resource names are always specified in the plural form.
+// This function removes the trailing "s" from the name unless the resource
+// appears in the special cases dictionary with both its plural and singular
+// forms. Failure to add a new special case resource name will result in a spell
+// checker error.
+std::string MakeResourceNameSingular(std::string const& resource_name) {
+  static auto const* const kSpecialCaseNames =
+      new std::unordered_map<std::string, std::string>{
+          {"addresses", "address"},
+          {"firewallPolicies", "firewallPolicy"},
+          {"globalAddresses", "globalAddress"},
+          {"globalPublicDelegatedPrefixes", "globalPublicDelegatedPrefix"},
+          {"networkFirewallPolicies", "networkFirewallPolicy"},
+          {"publicAdvertisedPrefixes", "publicAdvertisedPrefix"},
+          {"publicDelegatedPrefixes", "publicDelegatedPrefix"},
+          {"regionNetworkFirewallPolicies", "regionNetworkFirewallPolicy"},
+          {"regionSecurityPolicies", "regionSecurityPolicy"},
+          {"regionSslPolicies", "regionSslPolicy"},
+          {"regionTargetHttpProxies", "regionTargetHttpProxy"},
+          {"regionTargetHttpsProxies", "regionTargetHttpsProxy"},
+          {"regionTargetTcpProxies", "regionTargetTcpProxy"},
+          {"resourcePolicies", "resourcePolicy"},
+          {"securityPolicies", "securityPolicy"},
+          {"sslPolicies", "sslPolicy"},
+          {"targetGrpcProxies", "targetGrpcProxy"},
+          {"targetHttpProxies", "targetHttpProxy"},
+          {"targetHttpsProxies", "targetHttpsProxy"},
+          {"targetSslProxies", "targetSslProxy"},
+          {"targetTcpProxies", "targetTcpProxy"}};
+  auto iter = kSpecialCaseNames->find(resource_name);
+  if (iter != kSpecialCaseNames->end()) {
+    return iter->second;
+  }
+  return std::string{absl::StripSuffix(resource_name, "s")};
+}
+
 }  // namespace
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
@@ -195,15 +231,19 @@ std::string DiscoveryResource::FormatFilePath(
                        "/");
 }
 
-// TODO(#11138): Add logic to keep resource name plural for aggregatedList and
-// list, but change resource name to singular for remaining primitive methods.
 std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
-  constexpr char const* kPrimitives[] = {
-      "AggregatedList", "Delete", "Get", "Insert", "List", "Patch", "Update"};
+  constexpr char const* kPluralPrimitives[] = {"AggregatedList", "List"};
+  constexpr char const* kSingularPrimitives[] = {"Delete", "Get", "Insert",
+                                                 "Patch", "Update"};
   method_name = CapitalizeFirstLetter(method_name);
-  if (internal::Contains(kPrimitives, method_name)) {
+  if (internal::Contains(kPluralPrimitives, method_name)) {
     return absl::StrCat(method_name, CapitalizeFirstLetter(name_));
   }
+  if (internal::Contains(kSingularPrimitives, method_name)) {
+    return absl::StrCat(method_name,
+                        CapitalizeFirstLetter(MakeResourceNameSingular(name_)));
+  }
+
   return method_name;
 }
 
