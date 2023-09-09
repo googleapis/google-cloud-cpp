@@ -40,25 +40,16 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 
-class PublisherTracingConnectionTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    span_catcher_ = InstallSpanCatcher();
-    mock_ = std::make_shared<MockPublisherConnection>();
-  }
-
-  std::shared_ptr<SpanCatcher> span_catcher_;
-  std::shared_ptr<MockPublisherConnection> mock_;
-};
-
-TEST_F(PublisherTracingConnectionTest, FlushSpan) {
-  EXPECT_CALL(*mock_, Flush).Times(1);
-  auto connection = MakePublisherTracingConnection(std::move(mock_));
+TEST(PublisherTracingConnectionTest, FlushSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockPublisherConnection>();
+  EXPECT_CALL(*mock, Flush).Times(1);
+  auto connection = MakePublisherTracingConnection(std::move(mock));
 
   connection->Flush(PublisherConnection::FlushParams{});
 
   EXPECT_THAT(
-      span_catcher_->GetSpans(),
+      span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::Publisher::Flush"),
@@ -66,14 +57,16 @@ TEST_F(PublisherTracingConnectionTest, FlushSpan) {
           SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST_F(PublisherTracingConnectionTest, ResumePublishSpan) {
-  EXPECT_CALL(*mock_, ResumePublish).Times(1);
-  auto connection = MakePublisherTracingConnection(std::move(mock_));
+TEST(PublisherTracingConnectionTest, ResumePublishSpan) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockPublisherConnection>();
+  EXPECT_CALL(*mock, ResumePublish).Times(1);
+  auto connection = MakePublisherTracingConnection(std::move(mock));
 
   connection->ResumePublish(PublisherConnection::ResumePublishParams{});
 
   EXPECT_THAT(
-      span_catcher_->GetSpans(),
+      span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::Publisher::ResumePublish"),
@@ -81,7 +74,7 @@ TEST_F(PublisherTracingConnectionTest, ResumePublishSpan) {
           SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST(MakePublisherTracingConnectionTest, CreatesTracingConnection) {
+TEST(MakePublisherTracingConnectionTest, CreateTracingConnection) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
