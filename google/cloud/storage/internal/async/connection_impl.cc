@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/connection_impl.h"
+#include "google/cloud/storage/async_reader_connection.h"
 #include "google/cloud/storage/internal/async/accumulate_read_object.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
+#include "google/cloud/storage/internal/async/read_payload_impl.h"
+#include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc/channel_refresh.h"
@@ -27,6 +30,7 @@
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
 #include <memory>
 
 namespace google {
@@ -101,6 +105,56 @@ AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency, cq_,
       std::move(call), current, *std::move(proto), __func__);
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
+AsyncConnectionImpl::AsyncReadObject(ReadObjectParams p) {
+  using StreamingRpc = google::cloud::internal::AsyncStreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>;
+
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto proto = ToProto(p.request.impl_);
+  if (!proto) {
+    return make_ready_future(
+        StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>(
+            std::move(proto).status()));
+  }
+
+  auto call = [stub = stub_, current, request = std::move(p.request)](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::storage::v2::ReadObjectRequest const& proto)
+      -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
+    ApplyQueryParameters(*context, *current, request);
+    // TODO(#12359) - pass the `options` parameter
+    google::cloud::internal::OptionsSpan span(current);
+
+    auto rpc = stub->AsyncReadObject(cq, std::move(context), proto);
+    auto start = rpc->Start();
+    return start.then([rpc = std::move(rpc)](auto f) mutable {
+      if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
+      auto r = std::move(rpc);
+      return r->Finish().then([](auto f) {
+        auto status = f.get();
+        return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
+      });
+    });
+  };
+
+  auto transform = [current](auto f) mutable
+      -> StatusOr<
+          std::unique_ptr<storage_experimental::AsyncReaderConnection>> {
+    auto rpc = f.get();
+    if (!rpc) return std::move(rpc).status();
+    return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+        std::make_unique<AsyncReaderConnectionImpl>(current, *std::move(rpc)));
+  };
+
+  return google::cloud::internal::AsyncRetryLoop(
+             retry_policy(*current), backoff_policy(*current),
+             Idempotency::kIdempotent, cq_, std::move(call), *std::move(proto),
+             __func__)
+      .then(std::move(transform));
 }
 
 future<storage_experimental::AsyncReadObjectRangeResponse>
