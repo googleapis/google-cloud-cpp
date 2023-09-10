@@ -72,7 +72,7 @@ class WritePayload {
  * must be in an owning type, such as `WritePayload`. For blocking request, a
  * non-owning type (such as `absl::string_view`) can reduce data copying.
  *
- * This class is the public API for the library because it is required for
+ * This class in in the public API for the library because it is required for
  * mocking.
  */
 class InsertObjectRequest {
@@ -84,23 +84,23 @@ class InsertObjectRequest {
   std::string const& bucket_name() const { return impl_.bucket_name(); }
   std::string const& object_name() const { return impl_.object_name(); }
 
-  template <typename... O>
-  InsertObjectRequest& set_multiple_options(O&&... o) & {
-    impl_.set_multiple_options(std::forward<O>(o)...);
+  template <typename... T>
+  InsertObjectRequest& set_multiple_options(T&&... o) & {
+    impl_.set_multiple_options(std::forward<T>(o)...);
     return *this;
   }
-  template <typename... O>
-  InsertObjectRequest&& set_multiple_options(O&&... o) && {
-    return std::move(set_multiple_options(std::forward<O>(o)...));
+  template <typename... T>
+  InsertObjectRequest&& set_multiple_options(T&&... o) && {
+    return std::move(set_multiple_options(std::forward<T>(o)...));
   }
 
-  template <typename O>
+  template <typename T>
   bool HasOption() const {
-    return impl_.HasOption<O>();
+    return impl_.HasOption<T>();
   }
-  template <typename O>
-  O GetOption() const {
-    return impl_.GetOption<O>();
+  template <typename T>
+  T GetOption() const {
+    return impl_.GetOption<T>();
   }
 
  protected:
@@ -117,7 +117,7 @@ class InsertObjectRequest {
  * This class can hold all the mandatory and optional parameters to read an
  * object.
  *
- * This class is the public API for the library because it is required for
+ * This class in in the public API for the library because it is required for
  * mocking.
  */
 class ReadObjectRequest {
@@ -129,23 +129,23 @@ class ReadObjectRequest {
   std::string const& bucket_name() const { return impl_.bucket_name(); }
   std::string const& object_name() const { return impl_.object_name(); }
 
-  template <typename... O>
-  ReadObjectRequest& set_multiple_options(O&&... o) & {
-    impl_.set_multiple_options(std::forward<O>(o)...);
+  template <typename... T>
+  ReadObjectRequest& set_multiple_options(T&&... o) & {
+    impl_.set_multiple_options(std::forward<T>(o)...);
     return *this;
   }
-  template <typename... O>
-  ReadObjectRequest&& set_multiple_options(O&&... o) && {
-    return std::move(set_multiple_options(std::forward<O>(o)...));
+  template <typename... T>
+  ReadObjectRequest&& set_multiple_options(T&&... o) && {
+    return std::move(set_multiple_options(std::forward<T>(o)...));
   }
 
-  template <typename O>
+  template <typename T>
   bool HasOption() const {
-    return impl_.HasOption<O>();
+    return impl_.HasOption<T>();
   }
-  template <typename O>
-  O GetOption() const {
-    return impl_.GetOption<O>();
+  template <typename T>
+  T GetOption() const {
+    return impl_.GetOption<T>();
   }
 
  protected:
@@ -157,7 +157,7 @@ class ReadObjectRequest {
  * A request to delete an object.
  *
  * This class can hold all the mandatory and optional parameters to delete an
- * object. This class is the public API because it is required for mocking.
+ * object. This class in in the public API because it is required for mocking.
  */
 class DeleteObjectRequest {
  public:
@@ -168,23 +168,23 @@ class DeleteObjectRequest {
   std::string const& bucket_name() const { return impl_.bucket_name(); }
   std::string const& object_name() const { return impl_.object_name(); }
 
-  template <typename... O>
-  DeleteObjectRequest& set_multiple_options(O&&... o) & {
-    impl_.set_multiple_options(std::forward<O>(o)...);
+  template <typename... T>
+  DeleteObjectRequest& set_multiple_options(T&&... o) & {
+    impl_.set_multiple_options(std::forward<T>(o)...);
     return *this;
   }
-  template <typename... O>
-  DeleteObjectRequest&& set_multiple_options(O&&... o) && {
-    return std::move(set_multiple_options(std::forward<O>(o)...));
+  template <typename... T>
+  DeleteObjectRequest&& set_multiple_options(T&&... o) && {
+    return std::move(set_multiple_options(std::forward<T>(o)...));
   }
 
-  template <typename O>
+  template <typename T>
   bool HasOption() const {
-    return impl_.HasOption<O>();
+    return impl_.HasOption<T>();
   }
-  template <typename O>
-  O GetOption() const {
-    return impl_.GetOption<O>();
+  template <typename T>
+  T GetOption() const {
+    return impl_.GetOption<T>();
   }
 
  protected:
@@ -196,7 +196,7 @@ class DeleteObjectRequest {
  * A request to compose multiple objects into a single object.
  *
  * This class can hold all the mandatory and optional parameters to compose
- * objects. This class is the public API because it is required for mocking.
+ * objects. This class in in the public API because it is required for mocking.
  */
 class ComposeObjectRequest {
  public:
@@ -213,23 +213,23 @@ class ComposeObjectRequest {
     return impl_.source_objects();
   }
 
-  template <typename... O>
-  ComposeObjectRequest& set_multiple_options(O&&... o) & {
-    impl_.set_multiple_options(std::forward<O>(o)...);
+  template <typename... T>
+  ComposeObjectRequest& set_multiple_options(T&&... o) & {
+    impl_.set_multiple_options(std::forward<T>(o)...);
     return *this;
   }
-  template <typename... O>
-  ComposeObjectRequest&& set_multiple_options(O&&... o) && {
-    return std::move(set_multiple_options(std::forward<O>(o)...));
+  template <typename... T>
+  ComposeObjectRequest&& set_multiple_options(T&&... o) && {
+    return std::move(set_multiple_options(std::forward<T>(o)...));
   }
 
-  template <typename O>
+  template <typename T>
   bool HasOption() const {
-    return impl_.HasOption<O>();
+    return impl_.HasOption<T>();
   }
-  template <typename O>
-  O GetOption() const {
-    return impl_.GetOption<O>();
+  template <typename T>
+  T GetOption() const {
+    return impl_.GetOption<T>();
   }
 
  protected:
