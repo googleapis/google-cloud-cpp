@@ -203,12 +203,12 @@ next 24 hours.
 This package manager uses CMake, but ignores the library and target definitions
 exported by our CMake files. It reimplement the library definitions and
 dependencies in Python code. The recipes for each package does this for every
-package (gRPC, Protobuf, Boost, etc.) not just for our package recipe. For
-most packages, where there are only a handful of libraries, this is trivial,
-but our package has about 240 libraries (including the `*_protos` libraries).
+package (gRPC, Protobuf, Boost, etc.) not just for our package recipe. For most
+packages, where there are only a handful of libraries, this is trivial, but our
+package has about 240 libraries (including the `*_protos` libraries).
 
-We use a helper script to automatically generate the Python data structures
-that describe the libraries in each of our versions.
+We use a helper script to automatically generate the Python data structures that
+describe the libraries in each of our versions.
 
 This package manager requires patches to our code. These patches need to be
 updated on each release. Package management systems tend to apply patches with
@@ -267,7 +267,7 @@ update the patches.
   conan config install https://github.com/conan-io/hooks.git -sf hooks -tf hooks
   conan profile detect
   ```
-- Test the recipe.  This may fail due to timeouts reaching 
+- Test the recipe. This may fail due to timeouts reaching
   https://center.conan.io. Run the command agan if needed.
   ```shell
   conan create --build missing  --build-require  --version ${TAG} recipes/google-cloud-cpp/2.x
