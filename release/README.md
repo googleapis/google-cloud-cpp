@@ -201,14 +201,13 @@ next 24 hours.
 [Conan](https://conan.io). These PRs are more involved.
 
 This package manager uses CMake, but ignores the library and target definitions
-exported by our CMake files. It reimplement the library definitions and
-dependencies in Python code. The recipes for each package does this for every
-package (gRPC, Protobuf, Boost, etc.) not just for our package recipe. For most
-packages, where there are only a handful of libraries, this is trivial, but our
-package has about 240 libraries (including the `*_protos` libraries).
-
-We use a helper script to automatically generate the Python data structures that
-describe the libraries in each of our versions.
+exported by our CMake files. It reimplements the library definitions and
+dependencies in Python code. The recipes do this for every package (gRPC,
+Protobuf, Boost, etc.), not just for `google-cloud-cpp`. For most packages,
+where there are only a handful of libraries, this is trivial. `google-cloud-cpp`
+has about 240 libraries (including the `*_protos` libraries). So we use a helper
+script to automatically generate the Python data structures that describe the
+libraries in each of our versions.
 
 This package manager requires patches to our code. These patches need to be
 updated on each release. Package management systems tend to apply patches with
