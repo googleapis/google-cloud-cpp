@@ -161,7 +161,7 @@ class AsyncClient {
    * @param offset where to begin reading from the object, results in an error
    *     if the offset is larger than the object
    * @param limit how much data to read starting at @p offset
-   * @param options a list of optional query parameters and/or request headers.
+   * @param args a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
    *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
@@ -170,19 +170,21 @@ class AsyncClient {
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    */
-  template <typename... RequestOptions>
-  future<AsyncReadObjectRangeResponse> ReadObject(
-      std::string const& bucket_name, std::string const& object_name,
-      std::int64_t offset, std::int64_t limit, RequestOptions&&... options) {
+  template <typename... Args>
+  future<AsyncReadObjectRangeResponse> ReadObject(std::string bucket_name,
+                                                  std::string object_name,
+                                                  std::int64_t offset,
+                                                  std::int64_t limit,
+                                                  Args&&... args) {
     struct HasReadRange
         : public absl::disjunction<
-              std::is_same<storage::ReadRange, RequestOptions>...> {};
+              std::is_same<storage::ReadRange, std::decay_t<Args>>...> {};
     struct HasReadFromOffset
         : public absl::disjunction<
-              std::is_same<storage::ReadFromOffset, RequestOptions>...> {};
+              std::is_same<storage::ReadFromOffset, std::decay_t<Args>>...> {};
     struct HasReadLast
         : public absl::disjunction<
-              std::is_same<storage::ReadLast, RequestOptions>...> {};
+              std::is_same<storage::ReadLast, std::decay_t<Args>>...> {};
 
     static_assert(!HasReadRange::value,
                   "Cannot use `ReadRange()` as a request option in "
@@ -197,12 +199,12 @@ class AsyncClient {
                   "`AsyncClient::ReadObject()`, use the `offset` and `limit` "
                   "parameters instead.");
 
-    google::cloud::internal::OptionsSpan const span(
-        SpanOptions(std::forward<Options>(options)...));
-    storage::internal::ReadObjectRangeRequest request(bucket_name, object_name);
-    request.set_multiple_options(std::forward<Options>(options)...,
-                                 storage::ReadRange(offset, offset + limit));
-    return connection_->AsyncReadObjectRange(std::move(request));
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    return connection_->AsyncReadObjectRange(
+        {ReadObjectRequest(std::move(bucket_name), std::move(object_name))
+             .set_multiple_options(std::forward<Args>(args)...,
+                                   storage::ReadRange(offset, offset + limit)),
+         std::move(options)});
   }
 
   /**

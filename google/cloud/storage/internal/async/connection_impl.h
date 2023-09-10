@@ -50,8 +50,7 @@ class AsyncConnectionImpl : public AsyncConnection {
       InsertObjectParams p) override;
 
   future<storage_experimental::AsyncReadObjectRangeResponse>
-  AsyncReadObjectRange(
-      storage::internal::ReadObjectRangeRequest request) override;
+  AsyncReadObjectRange(ReadObjectParams p) override;
 
   future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
       ComposeObjectParams p) override;

@@ -59,18 +59,17 @@ AsyncConnectionImpl::AsyncConnectionImpl(
       options_(std::move(options)) {}
 
 future<storage_experimental::AsyncReadObjectRangeResponse>
-AsyncConnectionImpl::AsyncReadObjectRange(
-    storage::internal::ReadObjectRangeRequest request) {
-  auto current = google::cloud::internal::SaveCurrentOptions();
-  auto proto = ToProto(request);
+AsyncConnectionImpl::AsyncReadObjectRange(ReadObjectParams p) {
+  auto proto = ToProto(p.request.impl_);
   if (!proto) {
     auto response = storage_experimental::AsyncReadObjectRangeResponse{};
     response.status = std::move(proto).status();
     return make_ready_future(std::move(response));
   }
 
+  auto const current = internal::MakeImmutableOptions(std::move(p.options));
   auto context_factory = [options = internal::CurrentOptions(),
-                          request = std::move(request)]() {
+                          request = std::move(p.request)]() {
     auto context = std::make_shared<grpc::ClientContext>();
     ApplyQueryParameters(*context, options, request);
     return context;
