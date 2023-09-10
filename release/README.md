@@ -204,10 +204,10 @@ This package manager uses CMake, but ignores the library and target definitions
 exported by our CMake files. It reimplements the library definitions and
 dependencies in Python code. The recipes do this for every package (gRPC,
 Protobuf, Boost, etc.), not just for `google-cloud-cpp`. For most packages,
-where there are only a handful of libraries, this is trivial. `google-cloud-cpp`
-has about 240 libraries (including the `*_protos` libraries). So, we use a
-helper script to automatically generate the Python data structures that describe
-the libraries in each of our versions.
+where there are only a handful of libraries, this is trivial. But
+`google-cloud-cpp` has about 240 libraries (including the `*_protos` libraries).
+So, we use a helper script to automatically generate the Python data structures
+that describe the libraries in each of our versions.
 
 This package manager requires patches to our code. These patches need to be
 updated on each release. Package management systems tend to apply patches with
