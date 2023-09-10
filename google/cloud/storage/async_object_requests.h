@@ -72,7 +72,7 @@ class WritePayload {
  * must be in an owning type, such as `WritePayload`. For blocking request, a
  * non-owning type (such as `absl::string_view`) can reduce data copying.
  *
- * This class in in the public API for the library because it is required for
+ * This class is in the public API for the library because it is required for
  * mocking.
  */
 class InsertObjectRequest {
@@ -117,7 +117,7 @@ class InsertObjectRequest {
  * This class can hold all the mandatory and optional parameters to read an
  * object.
  *
- * This class in in the public API for the library because it is required for
+ * This class is in the public API for the library because it is required for
  * mocking.
  */
 class ReadObjectRequest {
@@ -157,7 +157,7 @@ class ReadObjectRequest {
  * A request to delete an object.
  *
  * This class can hold all the mandatory and optional parameters to delete an
- * object. This class in in the public API because it is required for mocking.
+ * object. This class is in the public API because it is required for mocking.
  */
 class DeleteObjectRequest {
  public:
@@ -196,7 +196,7 @@ class DeleteObjectRequest {
  * A request to compose multiple objects into a single object.
  *
  * This class can hold all the mandatory and optional parameters to compose
- * objects. This class in in the public API because it is required for mocking.
+ * objects. This class is in the public API because it is required for mocking.
  */
 class ComposeObjectRequest {
  public:
