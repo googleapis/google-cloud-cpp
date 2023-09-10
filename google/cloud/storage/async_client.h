@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 
-#include "google/cloud/storage/internal/async/connection.h"
+#include "google/cloud/storage/async_connection.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
@@ -105,6 +105,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class AsyncClient {
  public:
+  /// Create a new client configured with @p options.
+  explicit AsyncClient(Options options = {});
+  /// Create a new client using @p connection. This is often used for mocking.
+  explicit AsyncClient(std::shared_ptr<AsyncConnection> connection);
+
   ~AsyncClient() = default;
 
   /**
@@ -267,10 +272,9 @@ class AsyncClient {
   }
 
  private:
-  friend AsyncClient MakeAsyncClient(Options opts);
   explicit AsyncClient(
       std::shared_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<storage_internal::AsyncConnection> connection);
+      std::shared_ptr<AsyncConnection> connection);
 
   template <typename... RequestOptions>
   google::cloud::Options SpanOptions(RequestOptions&&... o) const {
@@ -279,13 +283,8 @@ class AsyncClient {
   }
 
   std::shared_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<storage_internal::AsyncConnection> connection_;
+  std::shared_ptr<AsyncConnection> connection_;
 };
-
-// TODO(#7142) - expose a factory function / constructor consuming
-//     std::shared_ptr<AsyncConnection> when we have a plan for mocking
-/// Creates a new GCS client exposing asynchronous APIs.
-AsyncClient MakeAsyncClient(Options opts = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental

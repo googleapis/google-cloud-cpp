@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H
 
 #include "google/cloud/storage/async_object_requests.h"
 #include "google/cloud/storage/async_object_responses.h"
@@ -27,17 +27,16 @@
 
 namespace google {
 namespace cloud {
-namespace storage_internal {
+namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// TODO(#7142) - move to the public API when we fix the mocking story for GCS
 /**
- * The `*Connection` object for `storage_experimental::AsyncClient`.
+ * The `*Connection` object for `AsyncClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `storage_experimental::AsyncClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `storage_experimental::AsyncClient`.
+ * sets in `AsyncClient`. This allows users to inject custom behavior (e.g.,
+ * with a Google Mock object) when writing tests that use objects of type
+ * `AsyncClient`.
  *
  * To create a concrete instance, see `MakeAsyncConnection()`.
  *
@@ -57,9 +56,9 @@ class AsyncConnection {
    */
   struct InsertObjectParams {
     /// The metadata attributes to create the object.
-    storage_experimental::InsertObjectRequest request;
+    InsertObjectRequest request;
     /// The bulk payload, sometimes called the "media" or "contents".
-    storage_experimental::WritePayload payload;
+    WritePayload payload;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;
@@ -77,13 +76,15 @@ class AsyncConnection {
    */
   struct ReadObjectParams {
     /// The metadata attributes to create the object.
-    storage_experimental::ReadObjectRequest request;
+    ReadObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;
   };
-  virtual future<storage_experimental::AsyncReadObjectRangeResponse>
-  AsyncReadObjectRange(ReadObjectParams p) = 0;
+
+  /// Read a range from an object returning all the contents.
+  virtual future<AsyncReadObjectRangeResponse> AsyncReadObjectRange(
+      ReadObjectParams p) = 0;
 
   /**
    * A thin wrapper around the `ComposeObject()` parameters.
@@ -93,7 +94,7 @@ class AsyncConnection {
    */
   struct ComposeObjectParams {
     /// The metadata attributes to create the object.
-    storage_experimental::ComposeObjectRequest request;
+    ComposeObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;
@@ -112,7 +113,7 @@ class AsyncConnection {
    */
   struct DeleteObjectParams {
     /// The metadata attributes to create the object.
-    storage_experimental::DeleteObjectRequest request;
+    DeleteObjectRequest request;
     /// Any options modifying the RPC behavior, including per-client and
     /// per-connection options.
     Options options;
@@ -123,8 +124,8 @@ class AsyncConnection {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage_internal
+}  // namespace storage_experimental
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CONNECTION_H

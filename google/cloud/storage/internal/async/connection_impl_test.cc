@@ -63,7 +63,7 @@ class AsyncConnectionImplTest : public ::testing::Test {
 
 auto constexpr kAuthority = "storage.googleapis.com";
 
-std::shared_ptr<AsyncConnection> MakeTestConnection(
+std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
     CompletionQueue cq, std::shared_ptr<storage::testing::MockStorageStub> mock,
     Options options = {}) {
   using ms = std::chrono::milliseconds;
