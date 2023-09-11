@@ -17,9 +17,11 @@
 """Automatically generated source lists for experimental_bigquery_rest_client_benchmarks - DO NOT EDIT."""
 
 experimental_bigquery_rest_client_benchmarks_hdrs = [
+    "benchmark.h",
     "benchmarks_config.h",
 ]
 
 experimental_bigquery_rest_client_benchmarks_srcs = [
+    "benchmark.cc",
     "benchmarks_config.cc",
 ]

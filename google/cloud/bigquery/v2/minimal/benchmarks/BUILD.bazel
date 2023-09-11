@@ -62,10 +62,8 @@ cc_library(
     deps = [
         ":experimental_bigquery_rest_client_benchmarks",
         "//:common",
-        "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/bigquery:bigquery_rest_testing",
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest",
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery_rest_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
     ],

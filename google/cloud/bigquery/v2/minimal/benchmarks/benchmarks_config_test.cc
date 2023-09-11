@@ -21,7 +21,6 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 
@@ -101,8 +100,8 @@ TEST(BenchmarkDatasetConfigTest, ParseAll) {
   auto config = c.ParseArgs(
       {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
        "--project=test-project", "--maximum-results=50",
-       "--connection-pool-size=10", "--filter=labels.department:receiving",
-       "--all=true"});
+       "--dataset=test-dataset", "--connection-pool-size=10",
+       "--filter=labels.department:receiving", "--all=true"});
   EXPECT_STATUS_OK(config);
 
   EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
@@ -110,7 +109,16 @@ TEST(BenchmarkDatasetConfigTest, ParseAll) {
   EXPECT_EQ(50, config->max_results);
   EXPECT_EQ(10, config->connection_pool_size);
   EXPECT_EQ(true, config->all);
+  EXPECT_EQ("test-dataset", config->dataset_id);
   EXPECT_EQ("labels.department:receiving", config->filter);
+}
+
+TEST(BenchmarkDatasetConfigTest, EmptyDataset) {
+  DatasetConfig c;
+  auto config =
+      c.ParseArgs({"placeholder", "--project=test-project",
+                   "--endpoint=https://private.bigquery.googleapis.com"});
+  EXPECT_STATUS_OK(config);
 }
 
 TEST(BenchmarkTableConfigTest, ParseAll) {
@@ -118,6 +126,7 @@ TEST(BenchmarkTableConfigTest, ParseAll) {
   auto config = c.ParseArgs(
       {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
        "--project=test-project", "--maximum-results=50",
+       "--dataset=test-dataset", "--table=test-table",
        "--connection-pool-size=10", "--selected-fields=FIELD-1,FIELD-2",
        "--view=STORAGE_STATS"});
   EXPECT_STATUS_OK(config);
@@ -126,18 +135,30 @@ TEST(BenchmarkTableConfigTest, ParseAll) {
   EXPECT_EQ("test-project", config->project_id);
   EXPECT_EQ(50, config->max_results);
   EXPECT_EQ(10, config->connection_pool_size);
+  EXPECT_EQ("test-dataset", config->dataset_id);
+  EXPECT_EQ("test-table", config->table_id);
   EXPECT_EQ("STORAGE_STATS", config->view.value);
   EXPECT_EQ("FIELD-1,FIELD-2", config->selected_fields);
+}
+
+TEST(BenchmarkTableConfigTest, EmptyDataset) {
+  TableConfig c;
+  auto config =
+      c.ParseArgs({"placeholder", "--project=test-project",
+                   "--endpoint=https://private.bigquery.googleapis.com"});
+  EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkJobConfigTest, ParseAll) {
   JobConfig c;
   auto config = c.ParseArgs(
       {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
-       "--project=test-project", "--maximum-results=50",
+       "--project=test-project", "--maximum-results=50", "--job=1234",
        "--connection-pool-size=10", "--location=useast", "--parent-job-id=123",
        "--min-creation-time=12345678", "--max-creation-time=12345678",
-       "--all-users=true", "--projection=FULL", "--state-filter=DONE"});
+       "--all-users=true", "--dry-run=true", "--query-create-replace=true",
+       "--use-int64-timestamp=true", "--timeout-ms=12345", "--start-index=1",
+       "--query-drop=true", "--projection=FULL", "--state-filter=DONE"});
   EXPECT_STATUS_OK(config);
 
   EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
@@ -147,13 +168,27 @@ TEST(BenchmarkJobConfigTest, ParseAll) {
   EXPECT_EQ("FULL", config->projection.value);
   EXPECT_EQ("DONE", config->state_filter.value);
   EXPECT_EQ(true, config->all_users);
+  EXPECT_EQ(true, config->dry_run);
+  EXPECT_EQ(true, config->query_create_replace);
+  EXPECT_EQ(true, config->query_drop);
+  EXPECT_EQ(true, config->use_int64_timestamp);
+  EXPECT_EQ("1234", config->job_id);
+  EXPECT_EQ(12345, config->timeout_ms);
+  EXPECT_EQ(1, config->start_index);
   EXPECT_EQ("useast", config->location);
   EXPECT_EQ("123", config->parent_job_id);
   EXPECT_EQ("12345678", config->min_creation_time);
   EXPECT_EQ("12345678", config->max_creation_time);
 }
 
-}  // namespace
+TEST(BenchmarkJobConfigTest, EmptyJob) {
+  JobConfig c;
+  auto config =
+      c.ParseArgs({"placeholder", "--project=test-project",
+                   "--endpoint=https://private.bigquery.googleapis.com"});
+  EXPECT_STATUS_OK(config);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_benchmarks
 }  // namespace cloud
