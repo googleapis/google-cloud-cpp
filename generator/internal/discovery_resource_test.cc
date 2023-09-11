@@ -460,7 +460,15 @@ TEST_F(DiscoveryResourceTest, FormatFilePathEmptyOutputPath) {
 }
 
 TEST_F(DiscoveryResourceTest, FormatMethodName) {
-  auto constexpr kResourceJson = R"""({})""";
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "get": {
+      "response": {
+        "$ref": "Address"
+      }
+    }
+  }
+})""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
   DiscoveryResource r("addresses", "", json);
@@ -494,6 +502,9 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufService) {
           "project": {
             "type": "string"
           }
+        },
+        "response": {
+          "$ref": "MyResource"
         },
         "parameterOrder": [
           "project",
@@ -543,7 +554,7 @@ service MyResources {
 
   // Description for the get method.
   // https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources/get
-  rpc GetMyResource(GetMyResourceRequest) returns (google.protobuf.Empty) {
+  rpc GetMyResource(GetMyResourceRequest) returns (MyResource) {
     option (google.api.http) = {
       get: "base/path/projects/{project}/regions/{region}/myResources/{foo}"
     };
@@ -567,8 +578,10 @@ service MyResources {
                         get_request_type_json, &pool());
   DiscoveryTypeVertex t2("DoFooRequest", "this.package",
                          do_foo_request_type_json, &pool());
+  DiscoveryTypeVertex response("MyResource", "this.package", {}, &pool());
   r.AddRequestType("GetMyResourceRequest", &t);
   r.AddRequestType("DoFooRequest", &t2);
+  r.AddResponseType("MyResource", &response);
   DiscoveryTypeVertex t3("Operation", "other.package", operation_type_json,
                          &pool());
   r.AddResponseType("Operation", &t3);

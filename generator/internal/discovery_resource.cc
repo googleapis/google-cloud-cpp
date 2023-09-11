@@ -58,42 +58,6 @@ absl::optional<std::string> DetermineLongRunningOperationService(
   return absl::nullopt;
 }
 
-// Discovery Document resource names are always specified in the plural form.
-// This function removes the trailing "s" from the name unless the resource
-// appears in the special cases dictionary with both its plural and singular
-// forms. Failure to add a new special case resource name will result in a spell
-// checker error.
-std::string MakeResourceNameSingular(std::string const& resource_name) {
-  static auto const* const kSpecialCaseNames =
-      new std::unordered_map<std::string, std::string>{
-          {"addresses", "address"},
-          {"firewallPolicies", "firewallPolicy"},
-          {"globalAddresses", "globalAddress"},
-          {"globalPublicDelegatedPrefixes", "globalPublicDelegatedPrefix"},
-          {"networkFirewallPolicies", "networkFirewallPolicy"},
-          {"publicAdvertisedPrefixes", "publicAdvertisedPrefix"},
-          {"publicDelegatedPrefixes", "publicDelegatedPrefix"},
-          {"regionNetworkFirewallPolicies", "regionNetworkFirewallPolicy"},
-          {"regionSecurityPolicies", "regionSecurityPolicy"},
-          {"regionSslPolicies", "regionSslPolicy"},
-          {"regionTargetHttpProxies", "regionTargetHttpProxy"},
-          {"regionTargetHttpsProxies", "regionTargetHttpsProxy"},
-          {"regionTargetTcpProxies", "regionTargetTcpProxy"},
-          {"resourcePolicies", "resourcePolicy"},
-          {"securityPolicies", "securityPolicy"},
-          {"sslPolicies", "sslPolicy"},
-          {"targetGrpcProxies", "targetGrpcProxy"},
-          {"targetHttpProxies", "targetHttpProxy"},
-          {"targetHttpsProxies", "targetHttpsProxy"},
-          {"targetSslProxies", "targetSslProxy"},
-          {"targetTcpProxies", "targetTcpProxy"}};
-  auto iter = kSpecialCaseNames->find(resource_name);
-  if (iter != kSpecialCaseNames->end()) {
-    return iter->second;
-  }
-  return std::string{absl::StripSuffix(resource_name, "s")};
-}
-
 }  // namespace
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
@@ -231,6 +195,22 @@ std::string DiscoveryResource::FormatFilePath(
                        "/");
 }
 
+std::string DiscoveryResource::GetMethodResponseTypeName() const {
+  std::string get_ref;
+  auto methods_iter = json_.find("methods");
+  if (methods_iter != json_.end()) {
+    auto get_method_iter = methods_iter->find("get");
+    if (get_method_iter != methods_iter->end()) {
+      auto response_iter = get_method_iter->find("response");
+      if (response_iter != get_method_iter->end()) {
+        get_ref = response_iter->value("$ref", "");
+      }
+    }
+  }
+
+  return get_ref;
+}
+
 std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
   constexpr char const* kPluralPrimitives[] = {"AggregatedList", "List"};
   constexpr char const* kSingularPrimitives[] = {"Delete", "Get", "Insert",
@@ -240,10 +220,13 @@ std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
     return absl::StrCat(method_name, CapitalizeFirstLetter(name_));
   }
   if (internal::Contains(kSingularPrimitives, method_name)) {
-    return absl::StrCat(method_name,
-                        CapitalizeFirstLetter(MakeResourceNameSingular(name_)));
+    std::string get_method_response_name = GetMethodResponseTypeName();
+    return absl::StrCat(
+        method_name,
+        CapitalizeFirstLetter(get_method_response_name.empty()
+                                  ? name_
+                                  : std::move(get_method_response_name)));
   }
-
   return method_name;
 }
 
