@@ -124,10 +124,7 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
-    pubsub::Topic topic,
-    std::shared_ptr<pubsub::PublisherConnection> connection) {
-  // Silence the unused parameter warnings.
-  (void)topic;
+    pubsub::Topic, std::shared_ptr<pubsub::PublisherConnection> connection) {
   return connection;
 }
 
