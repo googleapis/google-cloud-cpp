@@ -74,23 +74,24 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
   EXPECT_STATUS_OK(response);
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsProducer(),
-          SpanNamed("projects/test-project/topics/test-topic send"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(
-              OTelAttribute<std::string>(sc::kMessagingSystem, "pubsub"),
-              OTelAttribute<std::string>(
-                  sc::kMessagingDestinationName,
-                  "projects/test-project/topics/test-topic"),
-              OTelAttribute<std::string>(sc::kMessagingDestinationTemplate,
-                                         "topic"),
-              OTelAttribute<std::string>("messaging.pubsub.ordering_key",
-                                         "ordering-key-0"),
-              OTelAttribute<int>("gcloud.status_code", 0),
-              OTelAttribute<std::uint32_t>("messaging.message.total_size_bytes", 45),
-              OTelAttribute<std::string>("messaging.message_id",
-                                         "test-id-0")))));
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsProducer(),
+                SpanNamed("projects/test-project/topics/test-topic send"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>(sc::kMessagingSystem, "pubsub"),
+                    OTelAttribute<std::string>(
+                        sc::kMessagingDestinationName,
+                        "projects/test-project/topics/test-topic"),
+                    OTelAttribute<std::string>(
+                        sc::kMessagingDestinationTemplate, "topic"),
+                    OTelAttribute<std::string>("messaging.pubsub.ordering_key",
+                                               "ordering-key-0"),
+                    OTelAttribute<int>("gcloud.status_code", 0),
+                    OTelAttribute<std::uint32_t>(
+                        "messaging.message.total_size_bytes", 45),
+                    OTelAttribute<std::string>("messaging.message_id",
+                                               "test-id-0")))));
 }
 
 TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
