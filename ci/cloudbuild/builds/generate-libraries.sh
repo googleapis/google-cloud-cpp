@@ -83,6 +83,10 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
   git ls-files -z -- '*.h' '*.cc' '*.proto' |
     xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
+  # TODO(#12621): Remove this second execution of clang-format when this issue
+  # is resolved.
+  git ls-files -z -- '*.h' '*.cc' '*.proto' |
+    xargs -P "$(nproc)" -n 1 -0 clang-format -i
 else
   io::log_red "Only formatting generated golden code."
   git ls-files -z -- 'generator/integration_tests/golden/**/*.h' \
