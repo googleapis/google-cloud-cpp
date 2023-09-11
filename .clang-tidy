@@ -10,6 +10,14 @@
 #      `auto Foo() -> std::string { return ...; }`, we think the code is less
 #      readable in this form.
 #
+#  --modernize-concat-nested-namespaces: clang-tidy recommends
+#      `namespace google::cloud {}` over `namespace google { namespace cloud { } }`
+#      We need to support C++14, which does not supported nested namespaces.
+#
+#  --modernize-use-nodiscard: clang-tidy recommends adding a nodiscard annotation
+#      to functions where the return value should not be ignored.
+#      We need to support C++14, which does not supported the annotation.
+#
 #  -modernize-return-braced-init-list: We think removing typenames and using
 #      only braced-init can hurt readability.
 #
@@ -64,6 +72,8 @@ Checks: >
   -misc-const-correctness,
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
+  -modernize-concat-nested-namespaces,
+  -modernize-use-nodiscard,
   -modernize-avoid-c-arrays,
   -performance-move-const-arg,
   -readability-braces-around-statements,
