@@ -12,11 +12,11 @@
 #
 #  --modernize-concat-nested-namespaces: clang-tidy recommends
 #      `namespace google::cloud {}` over `namespace google { namespace cloud { } }`
-#      We think the code is more readable without nested namespaces.
+#      We need to support C++14, which does not supported nested namespaces.
 #
 #  --modernize-use-nodiscard: clang-tidy recommends adding a nodiscard annotation
 #      to functions where the return value should not be ignored.
-#      We think the code is more readable without the annotations.
+#      We need to support C++14, which does not supported the annotation.
 #
 #  -modernize-return-braced-init-list: We think removing typenames and using
 #      only braced-init can hurt readability.
