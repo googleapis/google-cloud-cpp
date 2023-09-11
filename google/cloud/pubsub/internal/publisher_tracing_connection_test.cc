@@ -60,8 +60,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
   EXPECT_CALL(*mock, Publish)
       .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
         EXPECT_TRUE(ThereIsAnActiveSpan());
-        return make_ready_future(
-            StatusOr<std::string>("test-id-0"));
+        return make_ready_future(StatusOr<std::string>("test-id-0"));
       });
   auto connection = MakePublisherTracingConnection(
       Topic("test-project", "test-topic"), std::move(mock));
@@ -103,8 +102,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
       .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
         EXPECT_TRUE(ThereIsAnActiveSpan());
         return make_ready_future(
-            StatusOr<std::string>(
-                internal::AbortedError("fail")));
+            StatusOr<std::string>(internal::AbortedError("fail")));
       });
   auto connection = MakePublisherTracingConnection(
       Topic("test-project", "test-topic"), std::move(mock));
