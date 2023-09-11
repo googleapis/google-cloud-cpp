@@ -48,12 +48,11 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalPublicDelegatedPrefixesRestStub::
-    AsyncDeleteGlobalPublicDelegatedPrefix(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            DeleteGlobalPublicDelegatedPrefixRequest const& request) {
+DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -75,10 +74,10 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-DefaultGlobalPublicDelegatedPrefixesRestStub::GetGlobalPublicDelegatedPrefix(
+DefaultGlobalPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        GetGlobalPublicDelegatedPrefixRequest const& request) {
+        GetPublicDelegatedPrefixRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix>(
       *service_, rest_context, request,
@@ -90,12 +89,11 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::GetGlobalPublicDelegatedPrefix(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalPublicDelegatedPrefixesRestStub::
-    AsyncInsertGlobalPublicDelegatedPrefix(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            InsertGlobalPublicDelegatedPrefixRequest const& request) {
+DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -136,12 +134,11 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::ListGlobalPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalPublicDelegatedPrefixesRestStub::
-    AsyncPatchGlobalPublicDelegatedPrefix(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            PatchGlobalPublicDelegatedPrefixRequest const& request) {
+DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -168,7 +165,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -192,7 +189,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

@@ -37,23 +37,22 @@ RegionSslCertificatesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionSslCertificatesConnectionIdempotencyPolicy::DeleteRegionSslCertificate(
+RegionSslCertificatesConnectionIdempotencyPolicy::DeleteSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteRegionSslCertificateRequest const&) {
+        DeleteSslCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionSslCertificatesConnectionIdempotencyPolicy::GetRegionSslCertificate(
+Idempotency RegionSslCertificatesConnectionIdempotencyPolicy::GetSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        GetRegionSslCertificateRequest const&) {
+        GetSslCertificateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-RegionSslCertificatesConnectionIdempotencyPolicy::InsertRegionSslCertificate(
+RegionSslCertificatesConnectionIdempotencyPolicy::InsertSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertRegionSslCertificateRequest const&) {
+        InsertSslCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

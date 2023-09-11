@@ -55,19 +55,19 @@ class RegionInstanceTemplatesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceTemplate(
+  DeleteInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplateRequest const& request) override;
+          DeleteInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplate(
+  GetInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplateRequest const& request) override;
+          GetInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceTemplate(
+  InsertInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplateRequest const& request) override;
+          InsertInstanceTemplateRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListRegionInstanceTemplates(

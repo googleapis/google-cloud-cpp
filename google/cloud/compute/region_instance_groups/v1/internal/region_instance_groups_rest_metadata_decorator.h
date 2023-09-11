@@ -41,11 +41,10 @@ class RegionInstanceGroupsRestMetadata : public RegionInstanceGroupsRestStub {
       std::shared_ptr<RegionInstanceGroupsRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroup(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_instance_groups::v1::
-          GetRegionInstanceGroupRequest const& request) override;
+          GetInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
   ListRegionInstanceGroups(
@@ -70,13 +69,13 @@ class RegionInstanceGroupsRestMetadata : public RegionInstanceGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

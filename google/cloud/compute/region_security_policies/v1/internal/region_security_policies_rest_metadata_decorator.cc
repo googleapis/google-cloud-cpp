@@ -42,34 +42,34 @@ RegionSecurityPoliciesRestMetadata::RegionSecurityPoliciesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesRestMetadata::AsyncDeleteRegionSecurityPolicy(
+RegionSecurityPoliciesRestMetadata::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        DeleteRegionSecurityPolicyRequest const& request) {
+        DeleteSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionSecurityPolicy(cq, std::move(rest_context),
-                                                 request);
+  return child_->AsyncDeleteSecurityPolicy(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-RegionSecurityPoliciesRestMetadata::GetRegionSecurityPolicy(
+RegionSecurityPoliciesRestMetadata::GetSecurityPolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        GetRegionSecurityPolicyRequest const& request) {
+        GetSecurityPolicyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionSecurityPolicy(rest_context, request);
+  return child_->GetSecurityPolicy(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesRestMetadata::AsyncInsertRegionSecurityPolicy(
+RegionSecurityPoliciesRestMetadata::AsyncInsertSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        InsertRegionSecurityPolicyRequest const& request) {
+        InsertSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionSecurityPolicy(cq, std::move(rest_context),
-                                                 request);
+  return child_->AsyncInsertSecurityPolicy(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
@@ -82,14 +82,13 @@ RegionSecurityPoliciesRestMetadata::ListRegionSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesRestMetadata::AsyncPatchRegionSecurityPolicy(
+RegionSecurityPoliciesRestMetadata::AsyncPatchSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        PatchRegionSecurityPolicyRequest const& request) {
+        PatchSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRegionSecurityPolicy(cq, std::move(rest_context),
-                                                request);
+  return child_->AsyncPatchSecurityPolicy(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -97,7 +96,7 @@ RegionSecurityPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -106,7 +105,7 @@ future<Status> RegionSecurityPoliciesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

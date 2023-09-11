@@ -35,71 +35,71 @@ RegionTargetHttpsProxiesClient::RegionTargetHttpsProxiesClient(
 RegionTargetHttpsProxiesClient::~RegionTargetHttpsProxiesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesClient::DeleteRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
     std::string const& project, std::string const& region,
     std::string const& target_https_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_https_proxies::v1::
-      DeleteRegionTargetHttpsProxyRequest request;
+      DeleteTargetHttpsProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_https_proxy(target_https_proxy);
-  return connection_->DeleteRegionTargetHttpsProxy(request);
+  return connection_->DeleteTargetHttpsProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesClient::DeleteRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        DeleteRegionTargetHttpsProxyRequest const& request,
+        DeleteTargetHttpsProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionTargetHttpsProxy(request);
+  return connection_->DeleteTargetHttpsProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-RegionTargetHttpsProxiesClient::GetRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::GetTargetHttpsProxy(
     std::string const& project, std::string const& region,
     std::string const& target_https_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_https_proxies::v1::
-      GetRegionTargetHttpsProxyRequest request;
+      GetTargetHttpsProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_https_proxy(target_https_proxy);
-  return connection_->GetRegionTargetHttpsProxy(request);
+  return connection_->GetTargetHttpsProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-RegionTargetHttpsProxiesClient::GetRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::GetTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        GetRegionTargetHttpsProxyRequest const& request,
+        GetTargetHttpsProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionTargetHttpsProxy(request);
+  return connection_->GetTargetHttpsProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesClient::InsertRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::TargetHttpsProxy const&
         target_https_proxy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_https_proxies::v1::
-      InsertRegionTargetHttpsProxyRequest request;
+      InsertTargetHttpsProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_target_https_proxy_resource() = target_https_proxy_resource;
-  return connection_->InsertRegionTargetHttpsProxy(request);
+  return connection_->InsertTargetHttpsProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesClient::InsertRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        InsertRegionTargetHttpsProxyRequest const& request,
+        InsertTargetHttpsProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionTargetHttpsProxy(request);
+  return connection_->InsertTargetHttpsProxy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -123,7 +123,7 @@ RegionTargetHttpsProxiesClient::ListRegionTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesClient::PatchRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
     std::string const& project, std::string const& region,
     std::string const& target_https_proxy,
     google::cloud::cpp::compute::v1::TargetHttpsProxy const&
@@ -131,21 +131,21 @@ RegionTargetHttpsProxiesClient::PatchRegionTargetHttpsProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_https_proxies::v1::
-      PatchRegionTargetHttpsProxyRequest request;
+      PatchTargetHttpsProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_https_proxy(target_https_proxy);
   *request.mutable_target_https_proxy_resource() = target_https_proxy_resource;
-  return connection_->PatchRegionTargetHttpsProxy(request);
+  return connection_->PatchTargetHttpsProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesClient::PatchRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        PatchRegionTargetHttpsProxyRequest const& request,
+        PatchTargetHttpsProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchRegionTargetHttpsProxy(request);
+  return connection_->PatchTargetHttpsProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

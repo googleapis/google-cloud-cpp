@@ -40,7 +40,7 @@ service RegionInstanceGroups {
 
   // Returns the specified instance group resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceGroups/get
-  rpc GetRegionInstanceGroup(GetRegionInstanceGroupRequest)
+  rpc GetInstanceGroup(GetInstanceGroupRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}"
@@ -88,8 +88,8 @@ service RegionInstanceGroups {
   }
 }
 
-// Request message for GetRegionInstanceGroup.
-message GetRegionInstanceGroupRequest {
+// Request message for GetInstanceGroup.
+message GetInstanceGroupRequest {
   // Name of the instance group resource to return.
   string instance_group = 1 [(google.api.field_behavior) = REQUIRED];
 

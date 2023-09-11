@@ -61,17 +61,15 @@ RegionDisksConnection::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::DeleteRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDiskRequest const&) {
+RegionDisksConnection::DeleteDisk(
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksConnection::GetRegionDisk(google::cloud::cpp::compute::region_disks::
-                                         v1::GetRegionDiskRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Disk> RegionDisksConnection::GetDisk(
+    google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -82,9 +80,8 @@ RegionDisksConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::InsertRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDiskRequest const&) {
+RegionDisksConnection::InsertDisk(
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -164,9 +161,8 @@ RegionDisksConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::UpdateRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDiskRequest const&) {
+RegionDisksConnection::UpdateDisk(
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

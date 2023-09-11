@@ -36,17 +36,17 @@ GlobalOrganizationOperationsConnectionIdempotencyPolicy::clone() const {
       GlobalOrganizationOperationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GlobalOrganizationOperationsConnectionIdempotencyPolicy::
-    DeleteGlobalOrganizationOperation(
-        google::cloud::cpp::compute::global_organization_operations::v1::
-            DeleteGlobalOrganizationOperationRequest const&) {
+Idempotency
+GlobalOrganizationOperationsConnectionIdempotencyPolicy::DeleteOperation(
+    google::cloud::cpp::compute::global_organization_operations::v1::
+        DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalOrganizationOperationsConnectionIdempotencyPolicy::
-    GetGlobalOrganizationOperation(
-        google::cloud::cpp::compute::global_organization_operations::v1::
-            GetGlobalOrganizationOperationRequest const&) {
+Idempotency
+GlobalOrganizationOperationsConnectionIdempotencyPolicy::GetOperation(
+    google::cloud::cpp::compute::global_organization_operations::v1::
+        GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

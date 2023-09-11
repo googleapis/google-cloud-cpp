@@ -42,16 +42,16 @@ RegionCommitmentsConnection::AggregatedListRegionCommitments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsConnection::GetRegionCommitment(
+RegionCommitmentsConnection::GetCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        GetRegionCommitmentRequest const&) {
+        GetCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsConnection::InsertRegionCommitment(
+RegionCommitmentsConnection::InsertCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        InsertRegionCommitmentRequest const&) {
+        InsertCommitmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -66,9 +66,9 @@ RegionCommitmentsConnection::ListRegionCommitments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsConnection::UpdateRegionCommitment(
+RegionCommitmentsConnection::UpdateCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        UpdateRegionCommitmentRequest const&) {
+        UpdateCommitmentRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -44,14 +44,13 @@ class GlobalOrganizationOperationsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  Status DeleteGlobalOrganizationOperation(
+  Status DeleteOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOrganizationOperation(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation>
   ListGlobalOrganizationOperations(

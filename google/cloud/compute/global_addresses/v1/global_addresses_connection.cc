@@ -35,25 +35,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GlobalAddressesConnection::~GlobalAddressesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesConnection::DeleteGlobalAddress(
+GlobalAddressesConnection::DeleteAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressRequest const&) {
+        DeleteAddressRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesConnection::GetGlobalAddress(
+GlobalAddressesConnection::GetAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressRequest const&) {
+        GetAddressRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesConnection::InsertGlobalAddress(
+GlobalAddressesConnection::InsertAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressRequest const&) {
+        InsertAddressRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

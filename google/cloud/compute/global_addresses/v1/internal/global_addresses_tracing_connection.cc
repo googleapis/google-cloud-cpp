@@ -34,38 +34,33 @@ GlobalAddressesTracingConnection::GlobalAddressesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesTracingConnection::DeleteGlobalAddress(
+GlobalAddressesTracingConnection::DeleteAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressRequest const& request) {
+        DeleteAddressRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_global_addresses_v1::GlobalAddressesConnection::"
-      "DeleteGlobalAddress");
+      "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteGlobalAddress(request));
+  return internal::EndSpan(std::move(span), child_->DeleteAddress(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesTracingConnection::GetGlobalAddress(
-    google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressRequest const& request) {
+GlobalAddressesTracingConnection::GetAddress(
+    google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_global_addresses_v1::GlobalAddressesConnection::"
-      "GetGlobalAddress");
+      "compute_global_addresses_v1::GlobalAddressesConnection::GetAddress");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetGlobalAddress(request));
+  return internal::EndSpan(*span, child_->GetAddress(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesTracingConnection::InsertGlobalAddress(
+GlobalAddressesTracingConnection::InsertAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressRequest const& request) {
+        InsertAddressRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_global_addresses_v1::GlobalAddressesConnection::"
-      "InsertGlobalAddress");
+      "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertGlobalAddress(request));
+  return internal::EndSpan(std::move(span), child_->InsertAddress(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>

@@ -33,26 +33,25 @@ RegionDiskTypesClient::RegionDiskTypesClient(
 RegionDiskTypesClient::~RegionDiskTypesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesClient::GetRegionDiskType(std::string const& project,
-                                         std::string const& region,
-                                         std::string const& disk_type,
-                                         Options opts) {
+RegionDiskTypesClient::GetDiskType(std::string const& project,
+                                   std::string const& region,
+                                   std::string const& disk_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_disk_types::v1::GetRegionDiskTypeRequest
+  google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest
       request;
   request.set_project(project);
   request.set_region(region);
   request.set_disk_type(disk_type);
-  return connection_->GetRegionDiskType(request);
+  return connection_->GetDiskType(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesClient::GetRegionDiskType(
+RegionDiskTypesClient::GetDiskType(
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypeRequest const& request,
+        GetDiskTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionDiskType(request);
+  return connection_->GetDiskType(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>

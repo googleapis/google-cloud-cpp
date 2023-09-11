@@ -42,34 +42,34 @@ RegionInstanceTemplatesRestMetadata::RegionInstanceTemplatesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesRestMetadata::AsyncDeleteRegionInstanceTemplate(
+RegionInstanceTemplatesRestMetadata::AsyncDeleteInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteRegionInstanceTemplateRequest const& request) {
+        DeleteInstanceTemplateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionInstanceTemplate(cq, std::move(rest_context),
-                                                   request);
+  return child_->AsyncDeleteInstanceTemplate(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesRestMetadata::GetRegionInstanceTemplate(
+RegionInstanceTemplatesRestMetadata::GetInstanceTemplate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplateRequest const& request) {
+        GetInstanceTemplateRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionInstanceTemplate(rest_context, request);
+  return child_->GetInstanceTemplate(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesRestMetadata::AsyncInsertRegionInstanceTemplate(
+RegionInstanceTemplatesRestMetadata::AsyncInsertInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertRegionInstanceTemplateRequest const& request) {
+        InsertInstanceTemplateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionInstanceTemplate(cq, std::move(rest_context),
-                                                   request);
+  return child_->AsyncInsertInstanceTemplate(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
@@ -86,7 +86,7 @@ RegionInstanceTemplatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -95,7 +95,7 @@ future<Status> RegionInstanceTemplatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -187,16 +187,16 @@ class RegionUrlMapsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                         DeleteRegionUrlMapRequest const& request);
+  DeleteUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   DeleteUrlMapRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMap(
-      google::cloud::cpp::compute::region_url_maps::v1::
-          GetRegionUrlMapRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                         InsertRegionUrlMapRequest const& request);
+  InsertUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   InsertUrlMapRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap>
   ListRegionUrlMaps(
@@ -204,12 +204,12 @@ class RegionUrlMapsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                        PatchRegionUrlMapRequest const& request);
+  PatchUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                  PatchUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                         UpdateRegionUrlMapRequest const& request);
+  UpdateUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   UpdateUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
   Validate(

@@ -37,44 +37,38 @@ GlobalPublicDelegatedPrefixesTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesTracingConnection::
-    DeleteGlobalPublicDelegatedPrefix(
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            DeleteGlobalPublicDelegatedPrefixRequest const& request) {
+GlobalPublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
-      "GlobalPublicDelegatedPrefixesConnection::"
-      "DeleteGlobalPublicDelegatedPrefix");
+      "GlobalPublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteGlobalPublicDelegatedPrefix(request));
+                           child_->DeletePublicDelegatedPrefix(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-GlobalPublicDelegatedPrefixesTracingConnection::GetGlobalPublicDelegatedPrefix(
+GlobalPublicDelegatedPrefixesTracingConnection::GetPublicDelegatedPrefix(
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        GetGlobalPublicDelegatedPrefixRequest const& request) {
+        GetPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
-      "GlobalPublicDelegatedPrefixesConnection::"
-      "GetGlobalPublicDelegatedPrefix");
+      "GlobalPublicDelegatedPrefixesConnection::GetPublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetGlobalPublicDelegatedPrefix(request));
+  return internal::EndSpan(*span, child_->GetPublicDelegatedPrefix(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesTracingConnection::
-    InsertGlobalPublicDelegatedPrefix(
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            InsertGlobalPublicDelegatedPrefixRequest const& request) {
+GlobalPublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
-      "GlobalPublicDelegatedPrefixesConnection::"
-      "InsertGlobalPublicDelegatedPrefix");
+      "GlobalPublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertGlobalPublicDelegatedPrefix(request));
+                           child_->InsertPublicDelegatedPrefix(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -94,17 +88,15 @@ GlobalPublicDelegatedPrefixesTracingConnection::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalPublicDelegatedPrefixesTracingConnection::
-    PatchGlobalPublicDelegatedPrefix(
-        google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            PatchGlobalPublicDelegatedPrefixRequest const& request) {
+GlobalPublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
+    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
-      "GlobalPublicDelegatedPrefixesConnection::"
-      "PatchGlobalPublicDelegatedPrefix");
+      "GlobalPublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchGlobalPublicDelegatedPrefix(request));
+                           child_->PatchPublicDelegatedPrefix(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

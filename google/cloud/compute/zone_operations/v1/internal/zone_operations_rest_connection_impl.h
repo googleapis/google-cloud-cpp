@@ -51,13 +51,12 @@ class ZoneOperationsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  Status DeleteZoneOperation(
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationRequest const& request) override;
+  Status DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::
+                             DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
       google::cloud::cpp::compute::zone_operations::v1::

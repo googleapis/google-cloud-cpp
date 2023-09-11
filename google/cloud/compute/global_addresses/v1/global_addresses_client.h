@@ -115,12 +115,12 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
+  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddress(std::string const& project, std::string const& address,
-                      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      std::string const& project, std::string const& address,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -130,7 +130,7 @@ class GlobalAddressesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressRequest].
+  ///     [google.cloud.cpp.compute.global_addresses.v1.DeleteAddressRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -153,13 +153,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteGlobalAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
+  /// [google.cloud.cpp.compute.global_addresses.v1.DeleteAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L114}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddress(google::cloud::cpp::compute::global_addresses::v1::
-                          DeleteGlobalAddressRequest const& request,
-                      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          DeleteAddressRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -181,11 +181,11 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
+  /// [google.cloud.cpp.compute.global_addresses.v1.GetAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
   /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddress(
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       std::string const& project, std::string const& address,
       Options opts = {});
 
@@ -197,7 +197,7 @@ class GlobalAddressesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressRequest].
+  ///     [google.cloud.cpp.compute.global_addresses.v1.GetAddressRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -213,13 +213,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.GetGlobalAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
+  /// [google.cloud.cpp.compute.global_addresses.v1.GetAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L138}
   /// [google.cloud.cpp.compute.v1.Address]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_003.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddress(
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          GetGlobalAddressRequest const& request,
+          GetAddressRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -250,11 +250,10 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
+  /// [google.cloud.cpp.compute.global_addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       std::string const& project,
       google::cloud::cpp::compute::v1::Address const& address_resource,
       Options opts = {});
@@ -268,7 +267,7 @@ class GlobalAddressesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressRequest].
+  ///     [google.cloud.cpp.compute.global_addresses.v1.InsertAddressRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -291,13 +290,13 @@ class GlobalAddressesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_addresses.v1.InsertGlobalAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
+  /// [google.cloud.cpp.compute.global_addresses.v1.InsertAddressRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L147}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddress(google::cloud::cpp::compute::global_addresses::v1::
-                          InsertGlobalAddressRequest const& request,
-                      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          InsertAddressRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///

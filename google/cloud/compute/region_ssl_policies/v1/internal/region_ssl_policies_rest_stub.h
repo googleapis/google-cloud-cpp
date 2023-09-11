@@ -38,23 +38,23 @@ class RegionSslPoliciesRestStub {
   virtual ~RegionSslPoliciesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionSslPolicy(
+  AsyncDeleteSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          DeleteRegionSslPolicyRequest const& request) = 0;
+          DeleteSslPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetRegionSslPolicy(google::cloud::rest_internal::RestContext& rest_context,
-                     google::cloud::cpp::compute::region_ssl_policies::v1::
-                         GetRegionSslPolicyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          GetSslPolicyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionSslPolicy(
+  AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          InsertRegionSslPolicyRequest const& request) = 0;
+          InsertSslPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
   ListRegionSslPolicies(google::cloud::rest_internal::RestContext& rest_context,
@@ -68,24 +68,24 @@ class RegionSslPoliciesRestStub {
                             ListAvailableFeaturesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionSslPolicy(
+  AsyncPatchSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          PatchRegionSslPolicyRequest const& request) = 0;
+          PatchSslPolicyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
@@ -98,23 +98,23 @@ class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionSslPolicy(
+  AsyncDeleteSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          DeleteRegionSslPolicyRequest const& request) override;
+          DeleteSslPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicy(
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          GetRegionSslPolicyRequest const& request) override;
+          GetSslPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionSslPolicy(
+  AsyncInsertSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          InsertRegionSslPolicyRequest const& request) override;
+          InsertSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
   ListRegionSslPolicies(
@@ -130,24 +130,24 @@ class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
           ListAvailableFeaturesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionSslPolicy(
+  AsyncPatchSslPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          PatchRegionSslPolicyRequest const& request) override;
+          PatchSslPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

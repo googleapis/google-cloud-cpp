@@ -41,13 +41,13 @@ class GlobalOperationsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::global_operations::v1::
           AggregatedListGlobalOperationsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteGlobalOperation(
+  virtual google::cloud::Idempotency DeleteOperation(
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest const& request);
+          DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency GetGlobalOperation(
+  virtual google::cloud::Idempotency GetOperation(
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest const& request);
+          GetOperationRequest const& request);
 
   virtual google::cloud::Idempotency ListGlobalOperations(
       google::cloud::cpp::compute::global_operations::v1::

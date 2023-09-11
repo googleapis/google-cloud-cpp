@@ -66,10 +66,10 @@ DefaultRegionCommitmentsRestStub::AggregatedListRegionCommitments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-DefaultRegionCommitmentsRestStub::GetRegionCommitment(
+DefaultRegionCommitmentsRestStub::GetCommitment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
-        GetRegionCommitmentRequest const& request) {
+        GetCommitmentRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -79,11 +79,11 @@ DefaultRegionCommitmentsRestStub::GetRegionCommitment(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionCommitmentsRestStub::AsyncInsertRegionCommitment(
+DefaultRegionCommitmentsRestStub::AsyncInsertCommitment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
-        InsertRegionCommitmentRequest const& request) {
+        InsertCommitmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -122,11 +122,11 @@ DefaultRegionCommitmentsRestStub::ListRegionCommitments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionCommitmentsRestStub::AsyncUpdateRegionCommitment(
+DefaultRegionCommitmentsRestStub::AsyncUpdateCommitment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
-        UpdateRegionCommitmentRequest const& request) {
+        UpdateCommitmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -152,7 +152,7 @@ DefaultRegionCommitmentsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -176,7 +176,7 @@ future<Status> DefaultRegionCommitmentsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

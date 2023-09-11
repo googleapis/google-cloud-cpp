@@ -34,68 +34,68 @@ GlobalForwardingRulesClient::GlobalForwardingRulesClient(
 GlobalForwardingRulesClient::~GlobalForwardingRulesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesClient::DeleteGlobalForwardingRule(
+GlobalForwardingRulesClient::DeleteForwardingRule(
     std::string const& project, std::string const& forwarding_rule,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_forwarding_rules::v1::
-      DeleteGlobalForwardingRuleRequest request;
+      DeleteForwardingRuleRequest request;
   request.set_project(project);
   request.set_forwarding_rule(forwarding_rule);
-  return connection_->DeleteGlobalForwardingRule(request);
+  return connection_->DeleteForwardingRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesClient::DeleteGlobalForwardingRule(
+GlobalForwardingRulesClient::DeleteForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRuleRequest const& request,
+        DeleteForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGlobalForwardingRule(request);
+  return connection_->DeleteForwardingRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesClient::GetGlobalForwardingRule(
+GlobalForwardingRulesClient::GetForwardingRule(
     std::string const& project, std::string const& forwarding_rule,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_forwarding_rules::v1::
-      GetGlobalForwardingRuleRequest request;
+      GetForwardingRuleRequest request;
   request.set_project(project);
   request.set_forwarding_rule(forwarding_rule);
-  return connection_->GetGlobalForwardingRule(request);
+  return connection_->GetForwardingRule(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesClient::GetGlobalForwardingRule(
+GlobalForwardingRulesClient::GetForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRuleRequest const& request,
+        GetForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetGlobalForwardingRule(request);
+  return connection_->GetForwardingRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesClient::InsertGlobalForwardingRule(
+GlobalForwardingRulesClient::InsertForwardingRule(
     std::string const& project,
     google::cloud::cpp::compute::v1::ForwardingRule const&
         forwarding_rule_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_forwarding_rules::v1::
-      InsertGlobalForwardingRuleRequest request;
+      InsertForwardingRuleRequest request;
   request.set_project(project);
   *request.mutable_forwarding_rule_resource() = forwarding_rule_resource;
-  return connection_->InsertGlobalForwardingRule(request);
+  return connection_->InsertForwardingRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesClient::InsertGlobalForwardingRule(
+GlobalForwardingRulesClient::InsertForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRuleRequest const& request,
+        InsertForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertGlobalForwardingRule(request);
+  return connection_->InsertForwardingRule(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -118,27 +118,27 @@ GlobalForwardingRulesClient::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesClient::PatchGlobalForwardingRule(
+GlobalForwardingRulesClient::PatchForwardingRule(
     std::string const& project, std::string const& forwarding_rule,
     google::cloud::cpp::compute::v1::ForwardingRule const&
         forwarding_rule_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::global_forwarding_rules::v1::
-      PatchGlobalForwardingRuleRequest request;
+      PatchForwardingRuleRequest request;
   request.set_project(project);
   request.set_forwarding_rule(forwarding_rule);
   *request.mutable_forwarding_rule_resource() = forwarding_rule_resource;
-  return connection_->PatchGlobalForwardingRule(request);
+  return connection_->PatchForwardingRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesClient::PatchGlobalForwardingRule(
+GlobalForwardingRulesClient::PatchForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRuleRequest const& request,
+        PatchForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchGlobalForwardingRule(request);
+  return connection_->PatchForwardingRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

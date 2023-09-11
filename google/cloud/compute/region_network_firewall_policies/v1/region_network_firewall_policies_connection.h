@@ -219,14 +219,14 @@ class RegionNetworkFirewallPoliciesConnection {
                  CloneRulesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNetworkFirewallPolicy(
+  DeleteFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          DeleteRegionNetworkFirewallPolicyRequest const& request);
+          DeleteFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetRegionNetworkFirewallPolicy(
+  GetFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          GetRegionNetworkFirewallPolicyRequest const& request);
+          GetFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
   GetAssociation(google::cloud::cpp::compute::region_network_firewall_policies::
@@ -248,9 +248,9 @@ class RegionNetworkFirewallPoliciesConnection {
           GetRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNetworkFirewallPolicy(
+  InsertFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          InsertRegionNetworkFirewallPolicyRequest const& request);
+          InsertFirewallPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
   ListRegionNetworkFirewallPolicies(
@@ -258,9 +258,9 @@ class RegionNetworkFirewallPoliciesConnection {
           ListRegionNetworkFirewallPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionNetworkFirewallPolicy(
+  PatchFirewallPolicy(
       google::cloud::cpp::compute::region_network_firewall_policies::v1::
-          PatchRegionNetworkFirewallPolicyRequest const& request);
+          PatchFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchRule(google::cloud::cpp::compute::region_network_firewall_policies::v1::

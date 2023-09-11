@@ -44,17 +44,16 @@ class RegionBackendServicesRestLogging : public RegionBackendServicesRestStub {
       TracingOptions tracing_options, std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionBackendService(
+  AsyncDeleteBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
-          DeleteRegionBackendServiceRequest const& request) override;
+          DeleteBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetRegionBackendService(
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
-          GetRegionBackendServiceRequest const& request) override;
+          GetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(google::cloud::rest_internal::RestContext& rest_context,
@@ -67,11 +66,11 @@ class RegionBackendServicesRestLogging : public RegionBackendServicesRestStub {
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionBackendService(
+  AsyncInsertBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
-          InsertRegionBackendServiceRequest const& request) override;
+          InsertBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
   ListRegionBackendServices(
@@ -80,11 +79,11 @@ class RegionBackendServicesRestLogging : public RegionBackendServicesRestStub {
           ListRegionBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionBackendService(
+  AsyncPatchBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
-          PatchRegionBackendServiceRequest const& request) override;
+          PatchBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -92,24 +91,24 @@ class RegionBackendServicesRestLogging : public RegionBackendServicesRestStub {
           SetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateRegionBackendService(
+  AsyncUpdateBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
-          UpdateRegionBackendServiceRequest const& request) override;
+          UpdateBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionBackendServicesRestStub> child_;

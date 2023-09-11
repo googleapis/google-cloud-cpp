@@ -206,19 +206,19 @@ class RegionNetworkEndpointGroupsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNetworkEndpointGroup(
+  DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          DeleteRegionNetworkEndpointGroupRequest const& request);
+          DeleteNetworkEndpointGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetRegionNetworkEndpointGroup(
+  GetNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          GetRegionNetworkEndpointGroupRequest const& request);
+          GetNetworkEndpointGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNetworkEndpointGroup(
+  InsertNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          InsertRegionNetworkEndpointGroupRequest const& request);
+          InsertNetworkEndpointGroupRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListRegionNetworkEndpointGroups(

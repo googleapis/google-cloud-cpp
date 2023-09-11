@@ -37,38 +37,38 @@ RegionHealthCheckServicesTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesTracingConnection::DeleteRegionHealthCheckService(
+RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteRegionHealthCheckServiceRequest const& request) {
+        DeleteHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
-      "RegionHealthCheckServicesConnection::DeleteRegionHealthCheckService");
+      "RegionHealthCheckServicesConnection::DeleteHealthCheckService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionHealthCheckService(request));
+                           child_->DeleteHealthCheckService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-RegionHealthCheckServicesTracingConnection::GetRegionHealthCheckService(
+RegionHealthCheckServicesTracingConnection::GetHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        GetRegionHealthCheckServiceRequest const& request) {
+        GetHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
-      "RegionHealthCheckServicesConnection::GetRegionHealthCheckService");
+      "RegionHealthCheckServicesConnection::GetHealthCheckService");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionHealthCheckService(request));
+  return internal::EndSpan(*span, child_->GetHealthCheckService(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesTracingConnection::InsertRegionHealthCheckService(
+RegionHealthCheckServicesTracingConnection::InsertHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertRegionHealthCheckServiceRequest const& request) {
+        InsertHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
-      "RegionHealthCheckServicesConnection::InsertRegionHealthCheckService");
+      "RegionHealthCheckServicesConnection::InsertHealthCheckService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionHealthCheckService(request));
+                           child_->InsertHealthCheckService(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>
@@ -86,15 +86,15 @@ RegionHealthCheckServicesTracingConnection::ListRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesTracingConnection::PatchRegionHealthCheckService(
+RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchRegionHealthCheckServiceRequest const& request) {
+        PatchHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
-      "RegionHealthCheckServicesConnection::PatchRegionHealthCheckService");
+      "RegionHealthCheckServicesConnection::PatchHealthCheckService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchRegionHealthCheckService(request));
+                           child_->PatchHealthCheckService(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

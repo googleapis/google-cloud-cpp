@@ -64,18 +64,18 @@ RegionNetworkFirewallPoliciesConnection::CloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesConnection::DeleteRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        DeleteRegionNetworkFirewallPolicyRequest const&) {
+        DeleteFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-RegionNetworkFirewallPoliciesConnection::GetRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesConnection::GetFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        GetRegionNetworkFirewallPolicyRequest const&) {
+        GetFirewallPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -109,9 +109,9 @@ RegionNetworkFirewallPoliciesConnection::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesConnection::InsertRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        InsertRegionNetworkFirewallPolicyRequest const&) {
+        InsertFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -126,9 +126,9 @@ RegionNetworkFirewallPoliciesConnection::ListRegionNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesConnection::PatchRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        PatchRegionNetworkFirewallPolicyRequest const&) {
+        PatchFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

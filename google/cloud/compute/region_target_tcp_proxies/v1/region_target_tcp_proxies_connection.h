@@ -196,19 +196,16 @@ class RegionTargetTcpProxiesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionTargetTcpProxy(
-      google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          DeleteRegionTargetTcpProxyRequest const& request);
+  DeleteTargetTcpProxy(google::cloud::cpp::compute::region_target_tcp_proxies::
+                           v1::DeleteTargetTcpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetRegionTargetTcpProxy(
-      google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          GetRegionTargetTcpProxyRequest const& request);
+  GetTargetTcpProxy(google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+                        GetTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionTargetTcpProxy(
-      google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          InsertRegionTargetTcpProxyRequest const& request);
+  InsertTargetTcpProxy(google::cloud::cpp::compute::region_target_tcp_proxies::
+                           v1::InsertTargetTcpProxyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
   ListRegionTargetTcpProxies(

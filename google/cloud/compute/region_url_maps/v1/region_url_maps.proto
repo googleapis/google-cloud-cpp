@@ -40,7 +40,7 @@ service RegionUrlMaps {
 
   // Deletes the specified UrlMap resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/delete
-  rpc DeleteRegionUrlMap(DeleteRegionUrlMapRequest)
+  rpc DeleteUrlMap(DeleteUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}"
@@ -51,8 +51,7 @@ service RegionUrlMaps {
 
   // Returns the specified UrlMap resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/get
-  rpc GetRegionUrlMap(GetRegionUrlMapRequest)
-      returns (google.cloud.cpp.compute.v1.UrlMap) {
+  rpc GetUrlMap(GetUrlMapRequest) returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}"
     };
@@ -62,7 +61,7 @@ service RegionUrlMaps {
   // Creates a UrlMap resource in the specified project using the data included
   // in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/insert
-  rpc InsertRegionUrlMap(InsertRegionUrlMapRequest)
+  rpc InsertUrlMap(InsertUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/urlMaps"
@@ -87,7 +86,7 @@ service RegionUrlMaps {
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/patch
-  rpc PatchRegionUrlMap(PatchRegionUrlMapRequest)
+  rpc PatchUrlMap(PatchUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}"
@@ -101,7 +100,7 @@ service RegionUrlMaps {
   // Updates the specified UrlMap resource with the data included in the
   // request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionUrlMaps/update
-  rpc UpdateRegionUrlMap(UpdateRegionUrlMapRequest)
+  rpc UpdateUrlMap(UpdateUrlMapRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}"
@@ -127,8 +126,8 @@ service RegionUrlMaps {
   }
 }
 
-// Request message for DeleteRegionUrlMap.
-message DeleteRegionUrlMapRequest {
+// Request message for DeleteUrlMap.
+message DeleteUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -149,8 +148,8 @@ message DeleteRegionUrlMapRequest {
   string url_map = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionUrlMap.
-message GetRegionUrlMapRequest {
+// Request message for GetUrlMap.
+message GetUrlMapRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -161,8 +160,8 @@ message GetRegionUrlMapRequest {
   string url_map = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionUrlMap.
-message InsertRegionUrlMapRequest {
+// Request message for InsertUrlMap.
+message InsertUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -252,8 +251,8 @@ message ListRegionUrlMapsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionUrlMap.
-message PatchRegionUrlMapRequest {
+// Request message for PatchUrlMap.
+message PatchUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -278,8 +277,8 @@ message PatchRegionUrlMapRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for UpdateRegionUrlMap.
-message UpdateRegionUrlMapRequest {
+// Request message for UpdateUrlMap.
+message UpdateUrlMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

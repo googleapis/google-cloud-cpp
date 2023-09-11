@@ -48,21 +48,21 @@ class MockRegionAutoscalersConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionAutoscaler,
+              DeleteAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
-                   DeleteRegionAutoscalerRequest const& request),
+                   DeleteAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
-              GetRegionAutoscaler,
+              GetAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
-                   GetRegionAutoscalerRequest const& request),
+                   GetAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionAutoscaler,
+              InsertAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
-                   InsertRegionAutoscalerRequest const& request),
+                   InsertAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Autoscaler>,
@@ -72,15 +72,15 @@ class MockRegionAutoscalersConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionAutoscaler,
+              PatchAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
-                   PatchRegionAutoscalerRequest const& request),
+                   PatchAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionAutoscaler,
+              UpdateAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
-                   UpdateRegionAutoscalerRequest const& request),
+                   UpdateAutoscalerRequest const& request),
               (override));
 };
 

@@ -70,22 +70,22 @@ RegionDisksRestMetadata::AsyncCreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksRestMetadata::AsyncDeleteRegionDisk(
+RegionDisksRestMetadata::AsyncDeleteDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDiskRequest const& request) {
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionDisk(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteDisk(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksRestMetadata::GetRegionDisk(
+RegionDisksRestMetadata::GetDisk(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+    google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetRegionDisk(rest_context, request);
+  return child_->GetDisk(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -98,13 +98,13 @@ RegionDisksRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksRestMetadata::AsyncInsertRegionDisk(
+RegionDisksRestMetadata::AsyncInsertDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDiskRequest const& request) {
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionDisk(cq, std::move(rest_context), request);
+  return child_->AsyncInsertDisk(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
@@ -199,13 +199,13 @@ RegionDisksRestMetadata::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksRestMetadata::AsyncUpdateRegionDisk(
+RegionDisksRestMetadata::AsyncUpdateDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDiskRequest const& request) {
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateRegionDisk(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateDisk(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -213,7 +213,7 @@ RegionDisksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -222,7 +222,7 @@ future<Status> RegionDisksRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

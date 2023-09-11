@@ -34,23 +34,21 @@ RegionAutoscalersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionAutoscalersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::DeleteRegionAutoscaler(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::DeleteAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalerRequest const&) {
+        DeleteAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionAutoscalersConnectionIdempotencyPolicy::GetRegionAutoscaler(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::GetAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalerRequest const&) {
+        GetAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::InsertRegionAutoscaler(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::InsertAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalerRequest const&) {
+        InsertAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -60,16 +58,15 @@ Idempotency RegionAutoscalersConnectionIdempotencyPolicy::ListRegionAutoscalers(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionAutoscalersConnectionIdempotencyPolicy::PatchRegionAutoscaler(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::PatchAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalerRequest const&) {
+        PatchAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::UpdateRegionAutoscaler(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::UpdateAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalerRequest const&) {
+        UpdateAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 

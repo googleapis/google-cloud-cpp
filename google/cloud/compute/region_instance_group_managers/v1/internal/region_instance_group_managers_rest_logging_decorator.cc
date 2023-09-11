@@ -86,17 +86,17 @@ RegionInstanceGroupManagersRestLogging::AsyncCreateInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersRestLogging::AsyncDeleteRegionInstanceGroupManager(
+RegionInstanceGroupManagersRestLogging::AsyncDeleteInstanceGroupManager(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        DeleteRegionInstanceGroupManagerRequest const& request) {
+        DeleteInstanceGroupManagerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_instance_group_managers::v1::
-                 DeleteRegionInstanceGroupManagerRequest const& request) {
-        return child_->AsyncDeleteRegionInstanceGroupManager(
+                 DeleteInstanceGroupManagerRequest const& request) {
+        return child_->AsyncDeleteInstanceGroupManager(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -137,31 +137,31 @@ RegionInstanceGroupManagersRestLogging::AsyncDeletePerInstanceConfigs(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-RegionInstanceGroupManagersRestLogging::GetRegionInstanceGroupManager(
+RegionInstanceGroupManagersRestLogging::GetInstanceGroupManager(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        GetRegionInstanceGroupManagerRequest const& request) {
+        GetInstanceGroupManagerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_instance_group_managers::v1::
-                 GetRegionInstanceGroupManagerRequest const& request) {
-        return child_->GetRegionInstanceGroupManager(rest_context, request);
+                 GetInstanceGroupManagerRequest const& request) {
+        return child_->GetInstanceGroupManager(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersRestLogging::AsyncInsertRegionInstanceGroupManager(
+RegionInstanceGroupManagersRestLogging::AsyncInsertInstanceGroupManager(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        InsertRegionInstanceGroupManagerRequest const& request) {
+        InsertInstanceGroupManagerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_instance_group_managers::v1::
-                 InsertRegionInstanceGroupManagerRequest const& request) {
-        return child_->AsyncInsertRegionInstanceGroupManager(
+                 InsertInstanceGroupManagerRequest const& request) {
+        return child_->AsyncInsertInstanceGroupManager(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -227,17 +227,17 @@ RegionInstanceGroupManagersRestLogging::ListPerInstanceConfigs(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersRestLogging::AsyncPatchRegionInstanceGroupManager(
+RegionInstanceGroupManagersRestLogging::AsyncPatchInstanceGroupManager(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        PatchRegionInstanceGroupManagerRequest const& request) {
+        PatchInstanceGroupManagerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_instance_group_managers::v1::
-                 PatchRegionInstanceGroupManagerRequest const& request) {
-        return child_->AsyncPatchRegionInstanceGroupManager(
+                 PatchInstanceGroupManagerRequest const& request) {
+        return child_->AsyncPatchInstanceGroupManager(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -349,12 +349,12 @@ RegionInstanceGroupManagersRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -364,12 +364,12 @@ future<Status> RegionInstanceGroupManagersRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

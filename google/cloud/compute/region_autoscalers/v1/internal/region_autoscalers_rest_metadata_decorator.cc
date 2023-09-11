@@ -41,34 +41,32 @@ RegionAutoscalersRestMetadata::RegionAutoscalersRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestMetadata::AsyncDeleteRegionAutoscaler(
+RegionAutoscalersRestMetadata::AsyncDeleteAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalerRequest const& request) {
+        DeleteAutoscalerRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionAutoscaler(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncDeleteAutoscaler(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersRestMetadata::GetRegionAutoscaler(
+RegionAutoscalersRestMetadata::GetAutoscaler(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalerRequest const& request) {
+        GetAutoscalerRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionAutoscaler(rest_context, request);
+  return child_->GetAutoscaler(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestMetadata::AsyncInsertRegionAutoscaler(
+RegionAutoscalersRestMetadata::AsyncInsertAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalerRequest const& request) {
+        InsertAutoscalerRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionAutoscaler(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncInsertAutoscaler(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
@@ -81,25 +79,23 @@ RegionAutoscalersRestMetadata::ListRegionAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestMetadata::AsyncPatchRegionAutoscaler(
+RegionAutoscalersRestMetadata::AsyncPatchAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalerRequest const& request) {
+        PatchAutoscalerRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRegionAutoscaler(cq, std::move(rest_context),
-                                            request);
+  return child_->AsyncPatchAutoscaler(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionAutoscalersRestMetadata::AsyncUpdateRegionAutoscaler(
+RegionAutoscalersRestMetadata::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalerRequest const& request) {
+        UpdateAutoscalerRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateRegionAutoscaler(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncUpdateAutoscaler(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -107,7 +103,7 @@ RegionAutoscalersRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -116,7 +112,7 @@ future<Status> RegionAutoscalersRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

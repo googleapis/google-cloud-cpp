@@ -211,9 +211,9 @@ class GlobalNetworkEndpointGroupsConnection {
           AttachNetworkEndpointsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalNetworkEndpointGroup(
+  DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-          DeleteGlobalNetworkEndpointGroupRequest const& request);
+          DeleteNetworkEndpointGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DetachNetworkEndpoints(
@@ -221,14 +221,14 @@ class GlobalNetworkEndpointGroupsConnection {
           DetachNetworkEndpointsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetGlobalNetworkEndpointGroup(
+  GetNetworkEndpointGroup(
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-          GetGlobalNetworkEndpointGroupRequest const& request);
+          GetNetworkEndpointGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalNetworkEndpointGroup(
+  InsertNetworkEndpointGroup(
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-          InsertGlobalNetworkEndpointGroupRequest const& request);
+          InsertNetworkEndpointGroupRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListGlobalNetworkEndpointGroups(

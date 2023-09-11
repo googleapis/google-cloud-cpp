@@ -41,12 +41,12 @@ RegionDiskTypesRestMetadata::RegionDiskTypesRestMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesRestMetadata::GetRegionDiskType(
+RegionDiskTypesRestMetadata::GetDiskType(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypeRequest const& request) {
+        GetDiskTypeRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionDiskType(rest_context, request);
+  return child_->GetDiskType(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>

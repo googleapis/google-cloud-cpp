@@ -50,21 +50,21 @@ class MockRegionNetworkEndpointGroupsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionNetworkEndpointGroup,
+              DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                   DeleteRegionNetworkEndpointGroupRequest const& request),
+                   DeleteNetworkEndpointGroupRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>,
-              GetRegionNetworkEndpointGroup,
+              GetNetworkEndpointGroup,
               (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                   GetRegionNetworkEndpointGroupRequest const& request),
+                   GetNetworkEndpointGroupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionNetworkEndpointGroup,
+              InsertNetworkEndpointGroup,
               (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-                   InsertRegionNetworkEndpointGroupRequest const& request),
+                   InsertNetworkEndpointGroupRequest const& request),
               (override));
 
   MOCK_METHOD(

@@ -36,14 +36,14 @@ RegionInstanceGroupsTracingConnection::RegionInstanceGroupsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-RegionInstanceGroupsTracingConnection::GetRegionInstanceGroup(
+RegionInstanceGroupsTracingConnection::GetInstanceGroup(
     google::cloud::cpp::compute::region_instance_groups::v1::
-        GetRegionInstanceGroupRequest const& request) {
+        GetInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
-      "GetRegionInstanceGroup");
+      "GetInstanceGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionInstanceGroup(request));
+  return internal::EndSpan(*span, child_->GetInstanceGroup(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>

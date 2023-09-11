@@ -37,17 +37,17 @@ class GlobalAddressesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteGlobalAddress(
+  virtual google::cloud::Idempotency DeleteAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          DeleteGlobalAddressRequest const& request);
+          DeleteAddressRequest const& request);
 
-  virtual google::cloud::Idempotency GetGlobalAddress(
+  virtual google::cloud::Idempotency GetAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          GetGlobalAddressRequest const& request);
+          GetAddressRequest const& request);
 
-  virtual google::cloud::Idempotency InsertGlobalAddress(
+  virtual google::cloud::Idempotency InsertAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          InsertGlobalAddressRequest const& request);
+          InsertAddressRequest const& request);
 
   virtual google::cloud::Idempotency ListGlobalAddresses(
       google::cloud::cpp::compute::global_addresses::v1::

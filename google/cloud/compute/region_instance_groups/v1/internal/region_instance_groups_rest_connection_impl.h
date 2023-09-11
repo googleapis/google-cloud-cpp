@@ -53,10 +53,9 @@ class RegionInstanceGroupsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroup(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::cpp::compute::region_instance_groups::v1::
-          GetRegionInstanceGroupRequest const& request) override;
+          GetInstanceGroupRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListRegionInstanceGroups(

@@ -219,9 +219,9 @@ class RegionInstanceGroupManagersConnection {
                       v1::CreateInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceGroupManager(
+  DeleteInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          DeleteRegionInstanceGroupManagerRequest const& request);
+          DeleteInstanceGroupManagerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstances(google::cloud::cpp::compute::region_instance_group_managers::
@@ -233,14 +233,14 @@ class RegionInstanceGroupManagersConnection {
           DeletePerInstanceConfigsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetRegionInstanceGroupManager(
+  GetInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          GetRegionInstanceGroupManagerRequest const& request);
+          GetInstanceGroupManagerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceGroupManager(
+  InsertInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          InsertRegionInstanceGroupManagerRequest const& request);
+          InsertInstanceGroupManagerRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListRegionInstanceGroupManagers(
@@ -264,9 +264,9 @@ class RegionInstanceGroupManagersConnection {
           ListPerInstanceConfigsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionInstanceGroupManager(
+  PatchInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          PatchRegionInstanceGroupManagerRequest const& request);
+          PatchInstanceGroupManagerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(

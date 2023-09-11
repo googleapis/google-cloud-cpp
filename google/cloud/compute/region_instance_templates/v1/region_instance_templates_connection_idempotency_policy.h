@@ -38,17 +38,17 @@ class RegionInstanceTemplatesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionInstanceTemplatesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionInstanceTemplate(
+  virtual google::cloud::Idempotency DeleteInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplateRequest const& request);
+          DeleteInstanceTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionInstanceTemplate(
+  virtual google::cloud::Idempotency GetInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplateRequest const& request);
+          GetInstanceTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionInstanceTemplate(
+  virtual google::cloud::Idempotency InsertInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplateRequest const& request);
+          InsertInstanceTemplateRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionInstanceTemplates(
       google::cloud::cpp::compute::region_instance_templates::v1::

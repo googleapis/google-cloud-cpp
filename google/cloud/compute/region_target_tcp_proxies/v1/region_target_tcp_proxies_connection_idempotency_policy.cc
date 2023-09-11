@@ -37,23 +37,23 @@ RegionTargetTcpProxiesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionTargetTcpProxiesConnectionIdempotencyPolicy::DeleteRegionTargetTcpProxy(
+RegionTargetTcpProxiesConnectionIdempotencyPolicy::DeleteTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        DeleteRegionTargetTcpProxyRequest const&) {
+        DeleteTargetTcpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-RegionTargetTcpProxiesConnectionIdempotencyPolicy::GetRegionTargetTcpProxy(
+RegionTargetTcpProxiesConnectionIdempotencyPolicy::GetTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        GetRegionTargetTcpProxyRequest const&) {
+        GetTargetTcpProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-RegionTargetTcpProxiesConnectionIdempotencyPolicy::InsertRegionTargetTcpProxy(
+RegionTargetTcpProxiesConnectionIdempotencyPolicy::InsertTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        InsertRegionTargetTcpProxyRequest const&) {
+        InsertTargetTcpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

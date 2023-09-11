@@ -36,72 +36,72 @@ RegionNetworkEndpointGroupsClient::~RegionNetworkEndpointGroupsClient() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsClient::DeleteRegionNetworkEndpointGroup(
+RegionNetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
     std::string const& project, std::string const& region,
     std::string const& network_endpoint_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-      DeleteRegionNetworkEndpointGroupRequest request;
+      DeleteNetworkEndpointGroupRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_endpoint_group(network_endpoint_group);
-  return connection_->DeleteRegionNetworkEndpointGroup(request);
+  return connection_->DeleteNetworkEndpointGroup(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsClient::DeleteRegionNetworkEndpointGroup(
+RegionNetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        DeleteRegionNetworkEndpointGroupRequest const& request,
+        DeleteNetworkEndpointGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionNetworkEndpointGroup(request);
+  return connection_->DeleteNetworkEndpointGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-RegionNetworkEndpointGroupsClient::GetRegionNetworkEndpointGroup(
+RegionNetworkEndpointGroupsClient::GetNetworkEndpointGroup(
     std::string const& project, std::string const& region,
     std::string const& network_endpoint_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-      GetRegionNetworkEndpointGroupRequest request;
+      GetNetworkEndpointGroupRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_network_endpoint_group(network_endpoint_group);
-  return connection_->GetRegionNetworkEndpointGroup(request);
+  return connection_->GetNetworkEndpointGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-RegionNetworkEndpointGroupsClient::GetRegionNetworkEndpointGroup(
+RegionNetworkEndpointGroupsClient::GetNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        GetRegionNetworkEndpointGroupRequest const& request,
+        GetNetworkEndpointGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionNetworkEndpointGroup(request);
+  return connection_->GetNetworkEndpointGroup(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsClient::InsertRegionNetworkEndpointGroup(
+RegionNetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::NetworkEndpointGroup const&
         network_endpoint_group_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-      InsertRegionNetworkEndpointGroupRequest request;
+      InsertNetworkEndpointGroupRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_network_endpoint_group_resource() =
       network_endpoint_group_resource;
-  return connection_->InsertRegionNetworkEndpointGroup(request);
+  return connection_->InsertNetworkEndpointGroup(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsClient::InsertRegionNetworkEndpointGroup(
+RegionNetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        InsertRegionNetworkEndpointGroupRequest const& request,
+        InsertNetworkEndpointGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionNetworkEndpointGroup(request);
+  return connection_->InsertNetworkEndpointGroup(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

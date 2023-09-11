@@ -115,12 +115,12 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L131}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L130}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMap(std::string const& project, std::string const& region,
-                     std::string const& url_map, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
+      std::string const& project, std::string const& region,
+      std::string const& url_map, Options opts = {});
 
   // clang-format off
   ///
@@ -130,7 +130,7 @@ class RegionUrlMapsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapRequest].
+  ///     [google.cloud.cpp.compute.region_url_maps.v1.DeleteUrlMapRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -153,13 +153,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L131}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.DeleteUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L130}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                         DeleteRegionUrlMapRequest const& request,
-                     Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteUrlMapRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -182,11 +182,11 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L153}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.GetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L152}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMap(
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
       std::string const& project, std::string const& region,
       std::string const& url_map, Options opts = {});
 
@@ -198,7 +198,7 @@ class RegionUrlMapsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapRequest].
+  ///     [google.cloud.cpp.compute.region_url_maps.v1.GetUrlMapRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -214,13 +214,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.GetRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L153}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.GetUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L152}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMap(
-      google::cloud::cpp::compute::region_url_maps::v1::
-          GetRegionUrlMapRequest const& request,
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+          request,
       Options opts = {});
 
   // clang-format off
@@ -252,11 +252,10 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L165}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L164}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
       Options opts = {});
@@ -270,7 +269,7 @@ class RegionUrlMapsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapRequest].
+  ///     [google.cloud.cpp.compute.region_url_maps.v1.InsertUrlMapRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -293,13 +292,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L165}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.InsertUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L164}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                         InsertRegionUrlMapRequest const& request,
-                     Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertUrlMapRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -331,7 +330,7 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L188}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L187}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
@@ -372,7 +371,7 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L188}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ListRegionUrlMapsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L187}
   /// [google.cloud.cpp.compute.v1.UrlMap]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L713}
   ///
   // clang-format on
@@ -412,11 +411,10 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L256}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L255}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
       std::string const& project, std::string const& region,
       std::string const& url_map,
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
@@ -432,7 +430,7 @@ class RegionUrlMapsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapRequest].
+  ///     [google.cloud.cpp.compute.region_url_maps.v1.PatchUrlMapRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -455,13 +453,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L256}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.PatchUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L255}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                        PatchRegionUrlMapRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchUrlMapRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -493,11 +491,10 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L282}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L281}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
       std::string const& project, std::string const& region,
       std::string const& url_map,
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
@@ -512,7 +509,7 @@ class RegionUrlMapsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapRequest].
+  ///     [google.cloud.cpp.compute.region_url_maps.v1.UpdateUrlMapRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -535,13 +532,13 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateRegionUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L282}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.UpdateUrlMapRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L281}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
-                         UpdateRegionUrlMapRequest const& request,
-                     Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateUrlMapRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -567,7 +564,7 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L308}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L307}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
   ///
   // clang-format on
@@ -604,7 +601,7 @@ class RegionUrlMapsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L308}
+  /// [google.cloud.cpp.compute.region_url_maps.v1.ValidateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L307}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L979}
   ///
   // clang-format on

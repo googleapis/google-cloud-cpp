@@ -38,17 +38,17 @@ class RegionSslCertificatesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionSslCertificatesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionSslCertificate(
+  virtual google::cloud::Idempotency DeleteSslCertificate(
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          DeleteRegionSslCertificateRequest const& request);
+          DeleteSslCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionSslCertificate(
+  virtual google::cloud::Idempotency GetSslCertificate(
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          GetRegionSslCertificateRequest const& request);
+          GetSslCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionSslCertificate(
+  virtual google::cloud::Idempotency InsertSslCertificate(
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          InsertRegionSslCertificateRequest const& request);
+          InsertSslCertificateRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionSslCertificates(
       google::cloud::cpp::compute::region_ssl_certificates::v1::

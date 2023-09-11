@@ -41,15 +41,15 @@ GlobalOperationsConnectionIdempotencyPolicy::AggregatedListGlobalOperations(
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::DeleteGlobalOperation(
+Idempotency GlobalOperationsConnectionIdempotencyPolicy::DeleteOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationRequest const&) {
+        DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalOperationsConnectionIdempotencyPolicy::GetGlobalOperation(
+Idempotency GlobalOperationsConnectionIdempotencyPolicy::GetOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationRequest const&) {
+        GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 

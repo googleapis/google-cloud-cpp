@@ -64,23 +64,23 @@ RegionDisksTracingConnection::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksTracingConnection::DeleteRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDiskRequest const& request) {
+RegionDisksTracingConnection::DeleteDisk(
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_region_disks_v1::RegionDisksConnection::DeleteRegionDisk");
+      "compute_region_disks_v1::RegionDisksConnection::DeleteDisk");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteRegionDisk(request));
+  return internal::EndSpan(std::move(span), child_->DeleteDisk(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksTracingConnection::GetRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+RegionDisksTracingConnection::GetDisk(
+    google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_region_disks_v1::RegionDisksConnection::GetRegionDisk");
+      "compute_region_disks_v1::RegionDisksConnection::GetDisk");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionDisk(request));
+  return internal::EndSpan(*span, child_->GetDisk(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -94,13 +94,13 @@ RegionDisksTracingConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksTracingConnection::InsertRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDiskRequest const& request) {
+RegionDisksTracingConnection::InsertDisk(
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_region_disks_v1::RegionDisksConnection::InsertRegionDisk");
+      "compute_region_disks_v1::RegionDisksConnection::InsertDisk");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertRegionDisk(request));
+  return internal::EndSpan(std::move(span), child_->InsertDisk(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk>
@@ -201,13 +201,13 @@ RegionDisksTracingConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksTracingConnection::UpdateRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDiskRequest const& request) {
+RegionDisksTracingConnection::UpdateDisk(
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_region_disks_v1::RegionDisksConnection::UpdateRegionDisk");
+      "compute_region_disks_v1::RegionDisksConnection::UpdateDisk");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateRegionDisk(request));
+  return internal::EndSpan(std::move(span), child_->UpdateDisk(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -45,14 +45,13 @@ class RegionBackendServicesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionBackendService(
+  DeleteBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          DeleteRegionBackendServiceRequest const& request) override;
+          DeleteBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetRegionBackendService(
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          GetRegionBackendServiceRequest const& request) override;
+          GetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(google::cloud::cpp::compute::region_backend_services::v1::
@@ -63,9 +62,9 @@ class RegionBackendServicesTracingConnection
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionBackendService(
+  InsertBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          InsertRegionBackendServiceRequest const& request) override;
+          InsertBackendServiceRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListRegionBackendServices(
@@ -73,18 +72,17 @@ class RegionBackendServicesTracingConnection
           ListRegionBackendServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionBackendService(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          PatchRegionBackendServiceRequest const& request) override;
+  PatchBackendService(google::cloud::cpp::compute::region_backend_services::v1::
+                          PatchBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::region_backend_services::v1::
           SetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionBackendService(
+  UpdateBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          UpdateRegionBackendServiceRequest const& request) override;
+          UpdateBackendServiceRequest const& request) override;
 
  private:
   std::shared_ptr<

@@ -41,16 +41,15 @@ RegionCommitmentsConnectionIdempotencyPolicy::AggregatedListRegionCommitments(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionCommitmentsConnectionIdempotencyPolicy::GetRegionCommitment(
+Idempotency RegionCommitmentsConnectionIdempotencyPolicy::GetCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        GetRegionCommitmentRequest const&) {
+        GetCommitmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionCommitmentsConnectionIdempotencyPolicy::InsertRegionCommitment(
+Idempotency RegionCommitmentsConnectionIdempotencyPolicy::InsertCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        InsertRegionCommitmentRequest const&) {
+        InsertCommitmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -60,10 +59,9 @@ Idempotency RegionCommitmentsConnectionIdempotencyPolicy::ListRegionCommitments(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionCommitmentsConnectionIdempotencyPolicy::UpdateRegionCommitment(
+Idempotency RegionCommitmentsConnectionIdempotencyPolicy::UpdateCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        UpdateRegionCommitmentRequest const&) {
+        UpdateCommitmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

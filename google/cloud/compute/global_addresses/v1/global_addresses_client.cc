@@ -33,67 +33,64 @@ GlobalAddressesClient::GlobalAddressesClient(
 GlobalAddressesClient::~GlobalAddressesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::DeleteGlobalAddress(std::string const& project,
-                                           std::string const& address,
-                                           Options opts) {
+GlobalAddressesClient::DeleteAddress(std::string const& project,
+                                     std::string const& address, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::global_addresses::v1::DeleteGlobalAddressRequest
+  google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest
       request;
   request.set_project(project);
   request.set_address(address);
-  return connection_->DeleteGlobalAddress(request);
+  return connection_->DeleteAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::DeleteGlobalAddress(
+GlobalAddressesClient::DeleteAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressRequest const& request,
+        DeleteAddressRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGlobalAddress(request);
+  return connection_->DeleteAddress(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesClient::GetGlobalAddress(std::string const& project,
-                                        std::string const& address,
-                                        Options opts) {
+GlobalAddressesClient::GetAddress(std::string const& project,
+                                  std::string const& address, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::global_addresses::v1::GetGlobalAddressRequest
-      request;
+  google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest request;
   request.set_project(project);
   request.set_address(address);
-  return connection_->GetGlobalAddress(request);
+  return connection_->GetAddress(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesClient::GetGlobalAddress(
-    google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressRequest const& request,
+GlobalAddressesClient::GetAddress(
+    google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetGlobalAddress(request);
+  return connection_->GetAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::InsertGlobalAddress(
+GlobalAddressesClient::InsertAddress(
     std::string const& project,
     google::cloud::cpp::compute::v1::Address const& address_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::global_addresses::v1::InsertGlobalAddressRequest
+  google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest
       request;
   request.set_project(project);
   *request.mutable_address_resource() = address_resource;
-  return connection_->InsertGlobalAddress(request);
+  return connection_->InsertAddress(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesClient::InsertGlobalAddress(
+GlobalAddressesClient::InsertAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressRequest const& request,
+        InsertAddressRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertGlobalAddress(request);
+  return connection_->InsertAddress(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>

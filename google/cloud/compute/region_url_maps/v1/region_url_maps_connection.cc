@@ -35,25 +35,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionUrlMapsConnection::~RegionUrlMapsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsConnection::DeleteRegionUrlMap(
+RegionUrlMapsConnection::DeleteUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        DeleteRegionUrlMapRequest const&) {
+        DeleteUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsConnection::GetRegionUrlMap(
-    google::cloud::cpp::compute::region_url_maps::v1::
-        GetRegionUrlMapRequest const&) {
+RegionUrlMapsConnection::GetUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsConnection::InsertRegionUrlMap(
+RegionUrlMapsConnection::InsertUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        InsertRegionUrlMapRequest const&) {
+        InsertUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -68,18 +67,18 @@ RegionUrlMapsConnection::ListRegionUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsConnection::PatchRegionUrlMap(
+RegionUrlMapsConnection::PatchUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        PatchRegionUrlMapRequest const&) {
+        PatchUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsConnection::UpdateRegionUrlMap(
+RegionUrlMapsConnection::UpdateUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        UpdateRegionUrlMapRequest const&) {
+        UpdateUrlMapRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

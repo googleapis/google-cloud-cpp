@@ -120,13 +120,13 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L105}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeletePublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L103}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalPublicDelegatedPrefix(std::string const& project,
-                                    std::string const& public_delegated_prefix,
-                                    Options opts = {});
+  DeletePublicDelegatedPrefix(std::string const& project,
+                              std::string const& public_delegated_prefix,
+                              Options opts = {});
 
   // clang-format off
   ///
@@ -136,7 +136,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixRequest].
+  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeletePublicDelegatedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -159,13 +159,13 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeleteGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L105}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.DeletePublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L103}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalPublicDelegatedPrefix(
+  DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          DeleteGlobalPublicDelegatedPrefixRequest const& request,
+          DeletePublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -188,14 +188,14 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L129}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L127}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-  GetGlobalPublicDelegatedPrefix(std::string const& project,
-                                 std::string const& public_delegated_prefix,
-                                 Options opts = {});
+  GetPublicDelegatedPrefix(std::string const& project,
+                           std::string const& public_delegated_prefix,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -205,7 +205,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixRequest].
+  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -221,14 +221,14 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L129}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L127}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-  GetGlobalPublicDelegatedPrefix(
+  GetPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          GetGlobalPublicDelegatedPrefixRequest const& request,
+          GetPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -259,11 +259,11 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L138}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L136}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalPublicDelegatedPrefix(
+  InsertPublicDelegatedPrefix(
       std::string const& project,
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
           public_delegated_prefix_resource,
@@ -278,7 +278,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixRequest].
+  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertPublicDelegatedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -301,13 +301,13 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L138}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.InsertPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L136}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalPublicDelegatedPrefix(
+  InsertPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          InsertGlobalPublicDelegatedPrefixRequest const& request,
+          InsertPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -338,7 +338,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L163}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L161}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
@@ -379,7 +379,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L163}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.ListGlobalPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L161}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L29}
   ///
   // clang-format on
@@ -419,11 +419,11 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L228}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchGlobalPublicDelegatedPrefix(
+  PatchPublicDelegatedPrefix(
       std::string const& project, std::string const& public_delegated_prefix,
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
           public_delegated_prefix_resource,
@@ -439,7 +439,7 @@ class GlobalPublicDelegatedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixRequest].
+  ///     [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -462,13 +462,13 @@ class GlobalPublicDelegatedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchGlobalPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L228}
+  /// [google.cloud.cpp.compute.global_public_delegated_prefixes.v1.PatchPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchGlobalPublicDelegatedPrefix(
+  PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          PatchGlobalPublicDelegatedPrefixRequest const& request,
+          PatchPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
  private:

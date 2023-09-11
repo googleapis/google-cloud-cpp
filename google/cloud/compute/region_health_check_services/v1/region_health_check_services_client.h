@@ -121,14 +121,14 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.DeleteRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L105}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.DeleteHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L105}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthCheckService(std::string const& project,
-                                 std::string const& region,
-                                 std::string const& health_check_service,
-                                 Options opts = {});
+  DeleteHealthCheckService(std::string const& project,
+                           std::string const& region,
+                           std::string const& health_check_service,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -138,7 +138,7 @@ class RegionHealthCheckServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_health_check_services.v1.DeleteRegionHealthCheckServiceRequest].
+  ///     [google.cloud.cpp.compute.region_health_check_services.v1.DeleteHealthCheckServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -161,13 +161,13 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.DeleteRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L105}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.DeleteHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L105}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthCheckService(
+  DeleteHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          DeleteRegionHealthCheckServiceRequest const& request,
+          DeleteHealthCheckServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -192,15 +192,14 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.GetRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L136}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.GetHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L136}
   /// [google.cloud.cpp.compute.v1.HealthCheckService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_049.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-  GetRegionHealthCheckService(std::string const& project,
-                              std::string const& region,
-                              std::string const& health_check_service,
-                              Options opts = {});
+  GetHealthCheckService(std::string const& project, std::string const& region,
+                        std::string const& health_check_service,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -210,7 +209,7 @@ class RegionHealthCheckServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_health_check_services.v1.GetRegionHealthCheckServiceRequest].
+  ///     [google.cloud.cpp.compute.region_health_check_services.v1.GetHealthCheckServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -226,14 +225,14 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.GetRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L136}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.GetHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L136}
   /// [google.cloud.cpp.compute.v1.HealthCheckService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_049.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-  GetRegionHealthCheckService(
+  GetHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          GetRegionHealthCheckServiceRequest const& request,
+          GetHealthCheckServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -265,11 +264,11 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.InsertRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L149}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.InsertHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L149}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthCheckService(
+  InsertHealthCheckService(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::HealthCheckService const&
           health_check_service_resource,
@@ -284,7 +283,7 @@ class RegionHealthCheckServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_health_check_services.v1.InsertRegionHealthCheckServiceRequest].
+  ///     [google.cloud.cpp.compute.region_health_check_services.v1.InsertHealthCheckServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -307,13 +306,13 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.InsertRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L149}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.InsertHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L149}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthCheckService(
+  InsertHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          InsertRegionHealthCheckServiceRequest const& request,
+          InsertHealthCheckServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -430,11 +429,11 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.PatchRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L248}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.PatchHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L248}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthCheckService(
+  PatchHealthCheckService(
       std::string const& project, std::string const& region,
       std::string const& health_check_service,
       google::cloud::cpp::compute::v1::HealthCheckService const&
@@ -451,7 +450,7 @@ class RegionHealthCheckServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_health_check_services.v1.PatchRegionHealthCheckServiceRequest].
+  ///     [google.cloud.cpp.compute.region_health_check_services.v1.PatchHealthCheckServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -474,13 +473,13 @@ class RegionHealthCheckServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_health_check_services.v1.PatchRegionHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L248}
+  /// [google.cloud.cpp.compute.region_health_check_services.v1.PatchHealthCheckServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto#L248}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthCheckService(
+  PatchHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          PatchRegionHealthCheckServiceRequest const& request,
+          PatchHealthCheckServiceRequest const& request,
       Options opts = {});
 
  private:

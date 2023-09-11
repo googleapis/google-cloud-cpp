@@ -39,10 +39,10 @@ DefaultRegionDiskTypesRestStub::DefaultRegionDiskTypesRestStub(
     : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DefaultRegionDiskTypesRestStub::GetRegionDiskType(
+DefaultRegionDiskTypesRestStub::GetDiskType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypeRequest const& request) {
+        GetDiskTypeRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

@@ -34,21 +34,21 @@ GlobalAddressesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<GlobalAddressesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::DeleteGlobalAddress(
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::DeleteAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressRequest const&) {
+        DeleteAddressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::GetGlobalAddress(
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::GetAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressRequest const&) {
+        GetAddressRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GlobalAddressesConnectionIdempotencyPolicy::InsertGlobalAddress(
+Idempotency GlobalAddressesConnectionIdempotencyPolicy::InsertAddress(
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressRequest const&) {
+        InsertAddressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

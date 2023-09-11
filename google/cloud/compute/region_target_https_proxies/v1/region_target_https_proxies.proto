@@ -41,7 +41,7 @@ service RegionTargetHttpsProxies {
 
   // Deletes the specified TargetHttpsProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/delete
-  rpc DeleteRegionTargetHttpsProxy(DeleteRegionTargetHttpsProxyRequest)
+  rpc DeleteTargetHttpsProxy(DeleteTargetHttpsProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}"
@@ -52,7 +52,7 @@ service RegionTargetHttpsProxies {
 
   // Returns the specified TargetHttpsProxy resource in the specified region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/get
-  rpc GetRegionTargetHttpsProxy(GetRegionTargetHttpsProxyRequest)
+  rpc GetTargetHttpsProxy(GetTargetHttpsProxyRequest)
       returns (google.cloud.cpp.compute.v1.TargetHttpsProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}"
@@ -63,7 +63,7 @@ service RegionTargetHttpsProxies {
   // Creates a TargetHttpsProxy resource in the specified project and region
   // using the data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/insert
-  rpc InsertRegionTargetHttpsProxy(InsertRegionTargetHttpsProxyRequest)
+  rpc InsertTargetHttpsProxy(InsertTargetHttpsProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies"
@@ -89,7 +89,7 @@ service RegionTargetHttpsProxies {
   // included in the request. This method supports PATCH semantics and uses JSON
   // merge patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionTargetHttpsProxies/patch
-  rpc PatchRegionTargetHttpsProxy(PatchRegionTargetHttpsProxyRequest)
+  rpc PatchTargetHttpsProxy(PatchTargetHttpsProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/targetHttpsProxies/{target_https_proxy}"
@@ -127,8 +127,8 @@ service RegionTargetHttpsProxies {
   }
 }
 
-// Request message for DeleteRegionTargetHttpsProxy.
-message DeleteRegionTargetHttpsProxyRequest {
+// Request message for DeleteTargetHttpsProxy.
+message DeleteTargetHttpsProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -157,8 +157,8 @@ message DeleteRegionTargetHttpsProxyRequest {
   string target_https_proxy = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRegionTargetHttpsProxy.
-message GetRegionTargetHttpsProxyRequest {
+// Request message for GetTargetHttpsProxy.
+message GetTargetHttpsProxyRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -169,8 +169,8 @@ message GetRegionTargetHttpsProxyRequest {
   string target_https_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionTargetHttpsProxy.
-message InsertRegionTargetHttpsProxyRequest {
+// Request message for InsertTargetHttpsProxy.
+message InsertTargetHttpsProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -268,8 +268,8 @@ message ListRegionTargetHttpsProxiesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionTargetHttpsProxy.
-message PatchRegionTargetHttpsProxyRequest {
+// Request message for PatchTargetHttpsProxy.
+message PatchTargetHttpsProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

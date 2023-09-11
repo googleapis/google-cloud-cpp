@@ -43,23 +43,23 @@ class RegionAutoscalersRestLogging : public RegionAutoscalersRestStub {
                                std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionAutoscaler(
+  AsyncDeleteAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteRegionAutoscalerRequest const& request) override;
+          DeleteAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscaler(
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_autoscalers::v1::
-          GetRegionAutoscalerRequest const& request) override;
+          GetAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionAutoscaler(
+  AsyncInsertAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertRegionAutoscalerRequest const& request) override;
+          InsertAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
   ListRegionAutoscalers(
@@ -68,31 +68,31 @@ class RegionAutoscalersRestLogging : public RegionAutoscalersRestStub {
           ListRegionAutoscalersRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionAutoscaler(
+  AsyncPatchAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchRegionAutoscalerRequest const& request) override;
+          PatchAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateRegionAutoscaler(
+  AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateRegionAutoscalerRequest const& request) override;
+          UpdateAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionAutoscalersRestStub> child_;

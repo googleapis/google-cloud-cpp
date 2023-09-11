@@ -119,14 +119,12 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslCertificate(std::string const& project,
-                             std::string const& region,
-                             std::string const& ssl_certificate,
-                             Options opts = {});
+  DeleteSslCertificate(std::string const& project, std::string const& region,
+                       std::string const& ssl_certificate, Options opts = {});
 
   // clang-format off
   ///
@@ -136,7 +134,7 @@ class RegionSslCertificatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificateRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -159,14 +157,13 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteRegionSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.DeleteSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslCertificate(
-      google::cloud::cpp::compute::region_ssl_certificates::v1::
-          DeleteRegionSslCertificateRequest const& request,
-      Options opts = {});
+  DeleteSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
+                           v1::DeleteSslCertificateRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -190,14 +187,13 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetRegionSslCertificate(std::string const& project, std::string const& region,
-                          std::string const& ssl_certificate,
-                          Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
+      std::string const& project, std::string const& region,
+      std::string const& ssl_certificate, Options opts = {});
 
   // clang-format off
   ///
@@ -208,7 +204,7 @@ class RegionSslCertificatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificateRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -224,14 +220,14 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetRegionSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.GetSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L119}
   /// [google.cloud.cpp.compute.v1.SslCertificate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_112.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetRegionSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
-                              v1::GetRegionSslCertificateRequest const& request,
-                          Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
+      google::cloud::cpp::compute::region_ssl_certificates::v1::
+          GetSslCertificateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -262,15 +258,14 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslCertificate(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::SslCertificate const&
-          ssl_certificate_resource,
-      Options opts = {});
+  InsertSslCertificate(std::string const& project, std::string const& region,
+                       google::cloud::cpp::compute::v1::SslCertificate const&
+                           ssl_certificate_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -281,7 +276,7 @@ class RegionSslCertificatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificateRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -304,14 +299,13 @@ class RegionSslCertificatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertRegionSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
+  /// [google.cloud.cpp.compute.region_ssl_certificates.v1.InsertSslCertificateRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslCertificate(
-      google::cloud::cpp::compute::region_ssl_certificates::v1::
-          InsertRegionSslCertificateRequest const& request,
-      Options opts = {});
+  InsertSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
+                           v1::InsertSslCertificateRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///

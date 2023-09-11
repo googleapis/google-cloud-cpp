@@ -112,47 +112,47 @@ RegionNetworkFirewallPoliciesClient::CloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesClient::DeleteRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
     std::string const& project, std::string const& region,
     std::string const& firewall_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_firewall_policies::v1::
-      DeleteRegionNetworkFirewallPolicyRequest request;
+      DeleteFirewallPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_firewall_policy(firewall_policy);
-  return connection_->DeleteRegionNetworkFirewallPolicy(request);
+  return connection_->DeleteFirewallPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesClient::DeleteRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        DeleteRegionNetworkFirewallPolicyRequest const& request,
+        DeleteFirewallPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionNetworkFirewallPolicy(request);
+  return connection_->DeleteFirewallPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-RegionNetworkFirewallPoliciesClient::GetRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::GetFirewallPolicy(
     std::string const& project, std::string const& region,
     std::string const& firewall_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_firewall_policies::v1::
-      GetRegionNetworkFirewallPolicyRequest request;
+      GetFirewallPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_firewall_policy(firewall_policy);
-  return connection_->GetRegionNetworkFirewallPolicy(request);
+  return connection_->GetFirewallPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-RegionNetworkFirewallPoliciesClient::GetRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::GetFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        GetRegionNetworkFirewallPolicyRequest const& request,
+        GetFirewallPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionNetworkFirewallPolicy(request);
+  return connection_->GetFirewallPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -248,27 +248,27 @@ RegionNetworkFirewallPoliciesClient::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesClient::InsertRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::FirewallPolicy const&
         firewall_policy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_firewall_policies::v1::
-      InsertRegionNetworkFirewallPolicyRequest request;
+      InsertFirewallPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_firewall_policy_resource() = firewall_policy_resource;
-  return connection_->InsertRegionNetworkFirewallPolicy(request);
+  return connection_->InsertFirewallPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesClient::InsertRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        InsertRegionNetworkFirewallPolicyRequest const& request,
+        InsertFirewallPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionNetworkFirewallPolicy(request);
+  return connection_->InsertFirewallPolicy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -292,7 +292,7 @@ RegionNetworkFirewallPoliciesClient::ListRegionNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesClient::PatchRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
     std::string const& project, std::string const& region,
     std::string const& firewall_policy,
     google::cloud::cpp::compute::v1::FirewallPolicy const&
@@ -300,21 +300,21 @@ RegionNetworkFirewallPoliciesClient::PatchRegionNetworkFirewallPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_network_firewall_policies::v1::
-      PatchRegionNetworkFirewallPolicyRequest request;
+      PatchFirewallPolicyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_firewall_policy(firewall_policy);
   *request.mutable_firewall_policy_resource() = firewall_policy_resource;
-  return connection_->PatchRegionNetworkFirewallPolicy(request);
+  return connection_->PatchFirewallPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesClient::PatchRegionNetworkFirewallPolicy(
+RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        PatchRegionNetworkFirewallPolicyRequest const& request,
+        PatchFirewallPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchRegionNetworkFirewallPolicy(request);
+  return connection_->PatchFirewallPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

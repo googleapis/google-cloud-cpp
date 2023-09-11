@@ -34,71 +34,71 @@ RegionTargetHttpProxiesClient::RegionTargetHttpProxiesClient(
 RegionTargetHttpProxiesClient::~RegionTargetHttpProxiesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpProxiesClient::DeleteRegionTargetHttpProxy(
+RegionTargetHttpProxiesClient::DeleteTargetHttpProxy(
     std::string const& project, std::string const& region,
     std::string const& target_http_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_http_proxies::v1::
-      DeleteRegionTargetHttpProxyRequest request;
+      DeleteTargetHttpProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_http_proxy(target_http_proxy);
-  return connection_->DeleteRegionTargetHttpProxy(request);
+  return connection_->DeleteTargetHttpProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpProxiesClient::DeleteRegionTargetHttpProxy(
+RegionTargetHttpProxiesClient::DeleteTargetHttpProxy(
     google::cloud::cpp::compute::region_target_http_proxies::v1::
-        DeleteRegionTargetHttpProxyRequest const& request,
+        DeleteTargetHttpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionTargetHttpProxy(request);
+  return connection_->DeleteTargetHttpProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-RegionTargetHttpProxiesClient::GetRegionTargetHttpProxy(
+RegionTargetHttpProxiesClient::GetTargetHttpProxy(
     std::string const& project, std::string const& region,
     std::string const& target_http_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_http_proxies::v1::
-      GetRegionTargetHttpProxyRequest request;
+      GetTargetHttpProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_http_proxy(target_http_proxy);
-  return connection_->GetRegionTargetHttpProxy(request);
+  return connection_->GetTargetHttpProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-RegionTargetHttpProxiesClient::GetRegionTargetHttpProxy(
+RegionTargetHttpProxiesClient::GetTargetHttpProxy(
     google::cloud::cpp::compute::region_target_http_proxies::v1::
-        GetRegionTargetHttpProxyRequest const& request,
+        GetTargetHttpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionTargetHttpProxy(request);
+  return connection_->GetTargetHttpProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpProxiesClient::InsertRegionTargetHttpProxy(
+RegionTargetHttpProxiesClient::InsertTargetHttpProxy(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::TargetHttpProxy const&
         target_http_proxy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_http_proxies::v1::
-      InsertRegionTargetHttpProxyRequest request;
+      InsertTargetHttpProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_target_http_proxy_resource() = target_http_proxy_resource;
-  return connection_->InsertRegionTargetHttpProxy(request);
+  return connection_->InsertTargetHttpProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpProxiesClient::InsertRegionTargetHttpProxy(
+RegionTargetHttpProxiesClient::InsertTargetHttpProxy(
     google::cloud::cpp::compute::region_target_http_proxies::v1::
-        InsertRegionTargetHttpProxyRequest const& request,
+        InsertTargetHttpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionTargetHttpProxy(request);
+  return connection_->InsertTargetHttpProxy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>

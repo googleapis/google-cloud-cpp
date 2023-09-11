@@ -55,19 +55,18 @@ class RegionSslCertificatesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslCertificate(
+  DeleteSslCertificate(
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          DeleteRegionSslCertificateRequest const& request) override;
+          DeleteSslCertificateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetRegionSslCertificate(
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          GetRegionSslCertificateRequest const& request) override;
+          GetSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslCertificate(
+  InsertSslCertificate(
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          InsertRegionSslCertificateRequest const& request) override;
+          InsertSslCertificateRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListRegionSslCertificates(

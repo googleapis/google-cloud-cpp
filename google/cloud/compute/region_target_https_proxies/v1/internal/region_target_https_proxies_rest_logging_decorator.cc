@@ -35,49 +35,49 @@ RegionTargetHttpsProxiesRestLogging::RegionTargetHttpsProxiesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesRestLogging::AsyncDeleteRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesRestLogging::AsyncDeleteTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        DeleteRegionTargetHttpsProxyRequest const& request) {
+        DeleteTargetHttpsProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_target_https_proxies::v1::
-                 DeleteRegionTargetHttpsProxyRequest const& request) {
-        return child_->AsyncDeleteRegionTargetHttpsProxy(
-            cq, std::move(rest_context), request);
+                 DeleteTargetHttpsProxyRequest const& request) {
+        return child_->AsyncDeleteTargetHttpsProxy(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-RegionTargetHttpsProxiesRestLogging::GetRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesRestLogging::GetTargetHttpsProxy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        GetRegionTargetHttpsProxyRequest const& request) {
+        GetTargetHttpsProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_target_https_proxies::v1::
-                 GetRegionTargetHttpsProxyRequest const& request) {
-        return child_->GetRegionTargetHttpsProxy(rest_context, request);
+                 GetTargetHttpsProxyRequest const& request) {
+        return child_->GetTargetHttpsProxy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesRestLogging::AsyncInsertRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesRestLogging::AsyncInsertTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        InsertRegionTargetHttpsProxyRequest const& request) {
+        InsertTargetHttpsProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_target_https_proxies::v1::
-                 InsertRegionTargetHttpsProxyRequest const& request) {
-        return child_->AsyncInsertRegionTargetHttpsProxy(
-            cq, std::move(rest_context), request);
+                 InsertTargetHttpsProxyRequest const& request) {
+        return child_->AsyncInsertTargetHttpsProxy(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -97,18 +97,18 @@ RegionTargetHttpsProxiesRestLogging::ListRegionTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesRestLogging::AsyncPatchRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesRestLogging::AsyncPatchTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        PatchRegionTargetHttpsProxyRequest const& request) {
+        PatchTargetHttpsProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_target_https_proxies::v1::
-                 PatchRegionTargetHttpsProxyRequest const& request) {
-        return child_->AsyncPatchRegionTargetHttpsProxy(
-            cq, std::move(rest_context), request);
+                 PatchTargetHttpsProxyRequest const& request) {
+        return child_->AsyncPatchTargetHttpsProxy(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -151,12 +151,12 @@ RegionTargetHttpsProxiesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -166,12 +166,12 @@ future<Status> RegionTargetHttpsProxiesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },
