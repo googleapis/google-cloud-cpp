@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/future_generic.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -91,28 +91,43 @@ future<StatusOr<std::string>> EndPublishSpan(
   });
 }
 
+/**
+ * A decorator that adds tracing for the PublisherConnection.
+ */
+class PublisherTracingConnection : public pubsub::PublisherConnection {
+ public:
+  explicit PublisherTracingConnection(
+      pubsub::Topic topic, std::shared_ptr<pubsub::PublisherConnection> child)
+      : topic_(std::move(topic)), child_(std::move(child)) {}
+
+  ~PublisherTracingConnection() override = default;
+
+  future<StatusOr<std::string>> Publish(PublishParams p) override {
+    auto span = StartPublishSpan(topic_.FullName(), p.message);
+    auto scope = opentelemetry::trace::Scope(span);
+    return EndPublishSpan(std::move(span), child_->Publish(std::move(p)));
+  };
+
+  void Flush(FlushParams p) override {
+    auto span = internal::MakeSpan("pubsub::Publisher::Flush");
+    auto scope = opentelemetry::trace::Scope(span);
+    child_->Flush(std::move(p));
+    internal::EndSpan(*span);
+  }
+
+  void ResumePublish(ResumePublishParams p) override {
+    auto span = internal::MakeSpan("pubsub::Publisher::ResumePublish");
+    auto scope = opentelemetry::trace::Scope(span);
+    child_->ResumePublish(std::move(p));
+    internal::EndSpan(*span);
+  };
+
+ private:
+  pubsub::Topic const topic_;
+  std::shared_ptr<pubsub::PublisherConnection> child_;
+};
+
 }  // namespace
-
-future<StatusOr<std::string>> PublisherTracingConnection::Publish(
-    PublishParams p) {
-  auto span = StartPublishSpan(topic_.FullName(), p.message);
-  auto scope = opentelemetry::trace::Scope(span);
-  return EndPublishSpan(std::move(span), child_->Publish(std::move(p)));
-}
-
-void PublisherTracingConnection::Flush(FlushParams p) {
-  auto span = internal::MakeSpan("pubsub::Publisher::Flush");
-  auto scope = opentelemetry::trace::Scope(span);
-  child_->Flush(std::move(p));
-  internal::EndSpan(*span);
-}
-
-void PublisherTracingConnection::ResumePublish(ResumePublishParams p) {
-  auto span = internal::MakeSpan("pubsub::Publisher::ResumePublish");
-  auto scope = opentelemetry::trace::Scope(span);
-  child_->ResumePublish(std::move(p));
-  internal::EndSpan(*span);
-}
 
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
     pubsub::Topic topic,
