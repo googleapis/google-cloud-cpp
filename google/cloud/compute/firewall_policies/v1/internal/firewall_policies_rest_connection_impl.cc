@@ -86,10 +86,14 @@ FirewallPoliciesRestConnectionImpl::AddAssociation(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -135,10 +139,14 @@ FirewallPoliciesRestConnectionImpl::AddRule(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -184,10 +192,14 @@ FirewallPoliciesRestConnectionImpl::CloneRules(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -233,10 +245,14 @@ FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicy(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -346,10 +362,14 @@ FirewallPoliciesRestConnectionImpl::InsertFirewallPolicy(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -450,10 +470,14 @@ FirewallPoliciesRestConnectionImpl::Move(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -499,10 +523,14 @@ FirewallPoliciesRestConnectionImpl::PatchFirewallPolicy(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -548,10 +576,14 @@ FirewallPoliciesRestConnectionImpl::PatchRule(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -597,10 +629,14 @@ FirewallPoliciesRestConnectionImpl::RemoveAssociation(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -646,10 +682,14 @@ FirewallPoliciesRestConnectionImpl::RemoveRule(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::GetOperationRequest& r) { r.set_operation(op); },
+                    v1::GetOperationRequest& r) {
+        r.set_operation(op);
+      },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_organization_operations::
-                    v1::DeleteOperationRequest& r) { r.set_operation(op); });
+                    v1::DeleteOperationRequest& r) {
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
