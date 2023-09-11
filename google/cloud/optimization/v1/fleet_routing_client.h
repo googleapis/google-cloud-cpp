@@ -138,7 +138,7 @@ class FleetRoutingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.optimization.v1.OptimizeToursRequest]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L109}
-  /// [google.cloud.optimization.v1.OptimizeToursResponse]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L358}
+  /// [google.cloud.optimization.v1.OptimizeToursResponse]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L366}
   ///
   // clang-format on
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
@@ -185,8 +185,8 @@ class FleetRoutingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.optimization.v1.BatchOptimizeToursRequest]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L434}
-  /// [google.cloud.optimization.v1.BatchOptimizeToursResponse]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L473}
+  /// [google.cloud.optimization.v1.BatchOptimizeToursRequest]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L442}
+  /// [google.cloud.optimization.v1.BatchOptimizeToursResponse]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L481}
   ///
   // clang-format on
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>

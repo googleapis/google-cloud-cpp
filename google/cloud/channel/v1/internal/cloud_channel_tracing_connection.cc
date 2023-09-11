@@ -499,6 +499,18 @@ CloudChannelServiceTracingConnection::ListPurchasableOffers(
                                                     std::move(sr));
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceTracingConnection::QueryEligibleBillingAccounts(
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelServiceConnection::"
+      "QueryEligibleBillingAccounts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->QueryEligibleBillingAccounts(request));
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceTracingConnection::RegisterSubscriber(
     google::cloud::channel::v1::RegisterSubscriberRequest const& request) {

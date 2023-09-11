@@ -284,6 +284,12 @@ CloudChannelServiceConnectionIdempotencyPolicy::ListPurchasableOffers(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::QueryEligibleBillingAccounts(
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency CloudChannelServiceConnectionIdempotencyPolicy::RegisterSubscriber(
     google::cloud::channel::v1::RegisterSubscriberRequest const&) {
   return Idempotency::kNonIdempotent;

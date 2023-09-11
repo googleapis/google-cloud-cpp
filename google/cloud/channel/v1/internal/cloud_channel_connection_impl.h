@@ -233,6 +233,11 @@ class CloudChannelServiceConnectionImpl
   ListPurchasableOffers(google::cloud::channel::v1::ListPurchasableOffersRequest
                             request) override;
 
+  StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+  QueryEligibleBillingAccounts(
+      google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+          request) override;
+
   StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
   RegisterSubscriber(
       google::cloud::channel::v1::RegisterSubscriberRequest const& request)

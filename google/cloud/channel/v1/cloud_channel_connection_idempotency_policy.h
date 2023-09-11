@@ -182,6 +182,10 @@ class CloudChannelServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListPurchasableOffers(
       google::cloud::channel::v1::ListPurchasableOffersRequest request);
 
+  virtual google::cloud::Idempotency QueryEligibleBillingAccounts(
+      google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+          request);
+
   virtual google::cloud::Idempotency RegisterSubscriber(
       google::cloud::channel::v1::RegisterSubscriberRequest const& request);
 
