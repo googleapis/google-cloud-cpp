@@ -83,6 +83,7 @@ class Message {
   PubsubMessageDataType&& data() && {
     return std::move(*proto_.mutable_data());
   }
+  size_t data_size() const { return proto_.data().size(); }
   std::string const& message_id() const { return proto_.message_id(); }
   std::string const& ordering_key() const { return proto_.ordering_key(); }
   std::chrono::system_clock::time_point publish_time() const;

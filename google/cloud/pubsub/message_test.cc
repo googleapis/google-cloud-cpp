@@ -69,6 +69,12 @@ TEST(Message, SetOrderingKey) {
   EXPECT_EQ(m0, move);
 }
 
+TEST(Message, GetDataSize) {
+  auto const m = MessageBuilder{}.SetData("four").Build();
+
+  EXPECT_EQ(m.data_size(), 4);
+}
+
 TEST(Message, InsertAttributeSimple) {
   auto const m0 = MessageBuilder{}
                       .InsertAttribute("k1", "v1")
