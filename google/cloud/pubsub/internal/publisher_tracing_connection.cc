@@ -126,6 +126,8 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
     pubsub::Topic topic,
     std::shared_ptr<pubsub::PublisherConnection> connection) {
+  // Silence the unused parameter warnings.
+  (void)topic;
   return connection;
 }
 
