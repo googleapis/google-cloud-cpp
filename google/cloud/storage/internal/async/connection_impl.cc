@@ -58,31 +58,6 @@ AsyncConnectionImpl::AsyncConnectionImpl(
       stub_(std::move(stub)),
       options_(std::move(options)) {}
 
-future<storage_experimental::AsyncReadObjectRangeResponse>
-AsyncConnectionImpl::AsyncReadObjectRange(ReadObjectParams p) {
-  auto proto = ToProto(p.request.impl_);
-  if (!proto) {
-    auto response = storage_experimental::AsyncReadObjectRangeResponse{};
-    response.status = std::move(proto).status();
-    return make_ready_future(std::move(response));
-  }
-
-  auto const current = internal::MakeImmutableOptions(std::move(p.options));
-  auto context_factory = [options = internal::CurrentOptions(),
-                          request = std::move(p.request)]() {
-    auto context = std::make_shared<grpc::ClientContext>();
-    ApplyQueryParameters(*context, options, request);
-    return context;
-  };
-  return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), *std::move(proto),
-             *current)
-      .then([current](
-                future<storage_internal::AsyncAccumulateReadObjectResult> f) {
-        return ToResponse(f.get(), *current);
-      });
-}
-
 future<StatusOr<storage::ObjectMetadata>>
 AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
   auto proto = ToProto(p.request);
@@ -125,6 +100,31 @@ AsyncConnectionImpl::AsyncInsertObject(InsertObjectParams p) {
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency, cq_,
       std::move(call), current, *std::move(proto), __func__);
+}
+
+future<storage_experimental::AsyncReadObjectRangeResponse>
+AsyncConnectionImpl::AsyncReadObjectRange(ReadObjectParams p) {
+  auto proto = ToProto(p.request.impl_);
+  if (!proto) {
+    auto response = storage_experimental::AsyncReadObjectRangeResponse{};
+    response.status = std::move(proto).status();
+    return make_ready_future(std::move(response));
+  }
+
+  auto const current = internal::MakeImmutableOptions(std::move(p.options));
+  auto context_factory = [options = internal::CurrentOptions(),
+                          request = std::move(p.request)]() {
+    auto context = std::make_shared<grpc::ClientContext>();
+    ApplyQueryParameters(*context, options, request);
+    return context;
+  };
+  return storage_internal::AsyncAccumulateReadObjectFull(
+             cq_, stub_, std::move(context_factory), *std::move(proto),
+             *current)
+      .then([current](
+                future<storage_internal::AsyncAccumulateReadObjectResult> f) {
+        return ToResponse(f.get(), *current);
+      });
 }
 
 future<StatusOr<storage::ObjectMetadata>>
