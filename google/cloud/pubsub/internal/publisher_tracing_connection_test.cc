@@ -66,11 +66,13 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
   auto connection = MakePublisherTracingConnection(
       Topic("test-project", "test-topic"), std::move(mock));
 
-  auto response = connection->Publish({pubsub::MessageBuilder{}
+  auto response = connection
+                      ->Publish({pubsub::MessageBuilder{}
                                      .SetData("test-data-0")
                                      .SetOrderingKey("ordering-key-0")
-                                     .Build()}).get();
-                                    
+                                     .Build()})
+                      .get();
+
   EXPECT_THAT(response, StatusIs(StatusCode::kOk));
   EXPECT_THAT(
       span_catcher->GetSpans(),
@@ -114,7 +116,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                                      .SetOrderingKey("ordering-key-0")
                                      .Build()})
                       .get();
-                    
+
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
   EXPECT_THAT(
       span_catcher->GetSpans(),
