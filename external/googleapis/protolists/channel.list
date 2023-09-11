@@ -1,3 +1,4 @@
+@com_google_googleapis//google/cloud/channel/v1:billing_accounts.proto
 @com_google_googleapis//google/cloud/channel/v1:channel_partner_links.proto
 @com_google_googleapis//google/cloud/channel/v1:common.proto
 @com_google_googleapis//google/cloud/channel/v1:customers.proto
