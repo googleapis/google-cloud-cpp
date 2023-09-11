@@ -23,31 +23,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * A decorator that adds tracing for the PublisherConnection
- */
-class PublisherTracingConnection : public pubsub::PublisherConnection {
- public:
-  explicit PublisherTracingConnection(
-      std::shared_ptr<pubsub::PublisherConnection> child)
-      : child_(std::move(child)) {}
-
-  ~PublisherTracingConnection() override = default;
-
-  future<StatusOr<std::string>> Publish(PublishParams p) override;
-
-  void Flush(FlushParams p) override;
-
-  void ResumePublish(ResumePublishParams p) override;
-
- private:
-  std::shared_ptr<pubsub::PublisherConnection> child_;
-};
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /**
  * Applies the tracing decorator to the @p connection.
  *
@@ -55,6 +30,7 @@ class PublisherTracingConnection : public pubsub::PublisherConnection {
  * OpenTelemetry.
  */
 std::shared_ptr<pubsub::PublisherConnection> MakePublisherTracingConnection(
+    pubsub::Topic topic,
     std::shared_ptr<pubsub::PublisherConnection> connection);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
