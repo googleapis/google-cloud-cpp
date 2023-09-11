@@ -198,11 +198,12 @@ class RegionDisksConnection {
                      CreateSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionDisk(google::cloud::cpp::compute::region_disks::v1::
-                       DeleteRegionDiskRequest const& request);
+  DeleteDisk(
+      google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisk(
-      google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
+      google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -210,8 +211,9 @@ class RegionDisksConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionDisk(google::cloud::cpp::compute::region_disks::v1::
-                       InsertRegionDiskRequest const& request);
+  InsertDisk(
+      google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+          request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
       google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
@@ -252,8 +254,9 @@ class RegionDisksConnection {
                          TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionDisk(google::cloud::cpp::compute::region_disks::v1::
-                       UpdateRegionDiskRequest const& request);
+  UpdateDisk(
+      google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

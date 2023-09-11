@@ -41,11 +41,10 @@ DefaultGlobalOrganizationOperationsRestStub::
         std::shared_ptr<rest_internal::RestClient> service, Options options)
     : service_(std::move(service)), options_(std::move(options)) {}
 
-Status
-DefaultGlobalOrganizationOperationsRestStub::DeleteGlobalOrganizationOperation(
+Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
@@ -53,10 +52,10 @@ DefaultGlobalOrganizationOperationsRestStub::DeleteGlobalOrganizationOperation(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DefaultGlobalOrganizationOperationsRestStub::GetGlobalOrganizationOperation(
+DefaultGlobalOrganizationOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",

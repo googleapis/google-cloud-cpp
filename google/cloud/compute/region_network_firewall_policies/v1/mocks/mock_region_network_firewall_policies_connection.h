@@ -68,15 +68,15 @@ class MockRegionNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionNetworkFirewallPolicy,
+              DeleteFirewallPolicy,
               (google::cloud::cpp::compute::region_network_firewall_policies::
-                   v1::DeleteRegionNetworkFirewallPolicyRequest const& request),
+                   v1::DeleteFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
-              GetRegionNetworkFirewallPolicy,
+              GetFirewallPolicy,
               (google::cloud::cpp::compute::region_network_firewall_policies::
-                   v1::GetRegionNetworkFirewallPolicyRequest const& request),
+                   v1::GetFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -106,9 +106,9 @@ class MockRegionNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionNetworkFirewallPolicy,
+              InsertFirewallPolicy,
               (google::cloud::cpp::compute::region_network_firewall_policies::
-                   v1::InsertRegionNetworkFirewallPolicyRequest const& request),
+                   v1::InsertFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>,
@@ -118,9 +118,9 @@ class MockRegionNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionNetworkFirewallPolicy,
+              PatchFirewallPolicy,
               (google::cloud::cpp::compute::region_network_firewall_policies::
-                   v1::PatchRegionNetworkFirewallPolicyRequest const& request),
+                   v1::PatchFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

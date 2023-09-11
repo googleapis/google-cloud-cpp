@@ -42,17 +42,17 @@ RegionDiskTypesRestConnectionImpl::RegionDiskTypesRestConnectionImpl(
                                       RegionDiskTypesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesRestConnectionImpl::GetRegionDiskType(
+RegionDiskTypesRestConnectionImpl::GetDiskType(
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypeRequest const& request) {
+        GetDiskTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionDiskType(request),
+      idempotency_policy(*current)->GetDiskType(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_disk_types::v1::
-                 GetRegionDiskTypeRequest const& request) {
-        return stub_->GetRegionDiskType(rest_context, request);
+                 GetDiskTypeRequest const& request) {
+        return stub_->GetDiskType(rest_context, request);
       },
       request, __func__);
 }

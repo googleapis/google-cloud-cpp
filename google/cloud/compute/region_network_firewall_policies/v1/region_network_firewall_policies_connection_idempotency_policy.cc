@@ -56,17 +56,17 @@ RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::CloneRules(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    DeleteRegionNetworkFirewallPolicy(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            DeleteRegionNetworkFirewallPolicyRequest const&) {
+Idempotency
+RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::DeleteFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    GetRegionNetworkFirewallPolicy(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            GetRegionNetworkFirewallPolicyRequest const&) {
+Idempotency
+RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::GetFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        GetFirewallPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -97,10 +97,10 @@ Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::GetRule(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    InsertRegionNetworkFirewallPolicy(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            InsertRegionNetworkFirewallPolicyRequest const&) {
+Idempotency
+RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::InsertFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -111,10 +111,10 @@ Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    PatchRegionNetworkFirewallPolicy(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            PatchRegionNetworkFirewallPolicyRequest const&) {
+Idempotency
+RegionNetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

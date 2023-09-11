@@ -40,32 +40,32 @@ RegionUrlMapsRestMetadata::RegionUrlMapsRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsRestMetadata::AsyncDeleteRegionUrlMap(
+RegionUrlMapsRestMetadata::AsyncDeleteUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        DeleteRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionUrlMap(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteUrlMap(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsRestMetadata::GetRegionUrlMap(
+RegionUrlMapsRestMetadata::GetUrlMap(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        GetRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+        request) {
   SetMetadata(rest_context);
-  return child_->GetRegionUrlMap(rest_context, request);
+  return child_->GetUrlMap(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsRestMetadata::AsyncInsertRegionUrlMap(
+RegionUrlMapsRestMetadata::AsyncInsertUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        InsertRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionUrlMap(cq, std::move(rest_context), request);
+  return child_->AsyncInsertUrlMap(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
@@ -78,23 +78,23 @@ RegionUrlMapsRestMetadata::ListRegionUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsRestMetadata::AsyncPatchRegionUrlMap(
+RegionUrlMapsRestMetadata::AsyncPatchUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        PatchRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRegionUrlMap(cq, std::move(rest_context), request);
+  return child_->AsyncPatchUrlMap(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsRestMetadata::AsyncUpdateRegionUrlMap(
+RegionUrlMapsRestMetadata::AsyncUpdateUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        UpdateRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
+        request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateRegionUrlMap(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateUrlMap(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
@@ -111,7 +111,7 @@ RegionUrlMapsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -120,7 +120,7 @@ future<Status> RegionUrlMapsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

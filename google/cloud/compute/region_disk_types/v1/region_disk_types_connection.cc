@@ -35,9 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionDiskTypesConnection::~RegionDiskTypesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesConnection::GetRegionDiskType(
+RegionDiskTypesConnection::GetDiskType(
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypeRequest const&) {
+        GetDiskTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

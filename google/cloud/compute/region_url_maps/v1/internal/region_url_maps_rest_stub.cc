@@ -45,11 +45,11 @@ DefaultRegionUrlMapsRestStub::DefaultRegionUrlMapsRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionUrlMapsRestStub::AsyncDeleteRegionUrlMap(
+DefaultRegionUrlMapsRestStub::AsyncDeleteUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        DeleteRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -71,10 +71,10 @@ DefaultRegionUrlMapsRestStub::AsyncDeleteRegionUrlMap(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-DefaultRegionUrlMapsRestStub::GetRegionUrlMap(
+DefaultRegionUrlMapsRestStub::GetUrlMap(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        GetRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -84,11 +84,11 @@ DefaultRegionUrlMapsRestStub::GetRegionUrlMap(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionUrlMapsRestStub::AsyncInsertRegionUrlMap(
+DefaultRegionUrlMapsRestStub::AsyncInsertUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        InsertRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -127,11 +127,11 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionUrlMapsRestStub::AsyncPatchRegionUrlMap(
+DefaultRegionUrlMapsRestStub::AsyncPatchUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        PatchRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -153,11 +153,11 @@ DefaultRegionUrlMapsRestStub::AsyncPatchRegionUrlMap(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionUrlMapsRestStub::AsyncUpdateRegionUrlMap(
+DefaultRegionUrlMapsRestStub::AsyncUpdateUrlMap(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::region_url_maps::v1::
-        UpdateRegionUrlMapRequest const& request) {
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -197,7 +197,7 @@ DefaultRegionUrlMapsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -221,7 +221,7 @@ future<Status> DefaultRegionUrlMapsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

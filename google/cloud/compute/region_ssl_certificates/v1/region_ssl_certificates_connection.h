@@ -196,19 +196,16 @@ class RegionSslCertificatesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslCertificate(
-      google::cloud::cpp::compute::region_ssl_certificates::v1::
-          DeleteRegionSslCertificateRequest const& request);
+  DeleteSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
+                           v1::DeleteSslCertificateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetRegionSslCertificate(
-      google::cloud::cpp::compute::region_ssl_certificates::v1::
-          GetRegionSslCertificateRequest const& request);
+  GetSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::v1::
+                        GetSslCertificateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslCertificate(
-      google::cloud::cpp::compute::region_ssl_certificates::v1::
-          InsertRegionSslCertificateRequest const& request);
+  InsertSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
+                           v1::InsertSslCertificateRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListRegionSslCertificates(

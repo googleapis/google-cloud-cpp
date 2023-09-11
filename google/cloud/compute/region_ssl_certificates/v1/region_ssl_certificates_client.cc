@@ -34,71 +34,71 @@ RegionSslCertificatesClient::RegionSslCertificatesClient(
 RegionSslCertificatesClient::~RegionSslCertificatesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::DeleteRegionSslCertificate(
+RegionSslCertificatesClient::DeleteSslCertificate(
     std::string const& project, std::string const& region,
     std::string const& ssl_certificate, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_ssl_certificates::v1::
-      DeleteRegionSslCertificateRequest request;
+      DeleteSslCertificateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_certificate(ssl_certificate);
-  return connection_->DeleteRegionSslCertificate(request);
+  return connection_->DeleteSslCertificate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::DeleteRegionSslCertificate(
+RegionSslCertificatesClient::DeleteSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteRegionSslCertificateRequest const& request,
+        DeleteSslCertificateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionSslCertificate(request);
+  return connection_->DeleteSslCertificate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesClient::GetRegionSslCertificate(
+RegionSslCertificatesClient::GetSslCertificate(
     std::string const& project, std::string const& region,
     std::string const& ssl_certificate, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_ssl_certificates::v1::
-      GetRegionSslCertificateRequest request;
+      GetSslCertificateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_ssl_certificate(ssl_certificate);
-  return connection_->GetRegionSslCertificate(request);
+  return connection_->GetSslCertificate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesClient::GetRegionSslCertificate(
+RegionSslCertificatesClient::GetSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        GetRegionSslCertificateRequest const& request,
+        GetSslCertificateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionSslCertificate(request);
+  return connection_->GetSslCertificate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::InsertRegionSslCertificate(
+RegionSslCertificatesClient::InsertSslCertificate(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::SslCertificate const&
         ssl_certificate_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_ssl_certificates::v1::
-      InsertRegionSslCertificateRequest request;
+      InsertSslCertificateRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_ssl_certificate_resource() = ssl_certificate_resource;
-  return connection_->InsertRegionSslCertificate(request);
+  return connection_->InsertSslCertificate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesClient::InsertRegionSslCertificate(
+RegionSslCertificatesClient::InsertSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertRegionSslCertificateRequest const& request,
+        InsertSslCertificateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionSslCertificate(request);
+  return connection_->InsertSslCertificate(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

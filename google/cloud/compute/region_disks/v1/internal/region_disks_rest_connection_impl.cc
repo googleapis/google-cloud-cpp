@@ -49,10 +49,9 @@ RegionDisksRestConnectionImpl::AddResourcePolicies(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -63,13 +62,13 @@ RegionDisksRestConnectionImpl::AddResourcePolicies(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -82,14 +81,14 @@ RegionDisksRestConnectionImpl::AddResourcePolicies(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -104,10 +103,9 @@ RegionDisksRestConnectionImpl::BulkInsert(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -118,13 +116,13 @@ RegionDisksRestConnectionImpl::BulkInsert(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -137,14 +135,14 @@ RegionDisksRestConnectionImpl::BulkInsert(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -159,10 +157,9 @@ RegionDisksRestConnectionImpl::CreateSnapshot(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -173,13 +170,13 @@ RegionDisksRestConnectionImpl::CreateSnapshot(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -192,14 +189,14 @@ RegionDisksRestConnectionImpl::CreateSnapshot(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -207,54 +204,53 @@ RegionDisksRestConnectionImpl::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksRestConnectionImpl::DeleteRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDiskRequest const& request) {
+RegionDisksRestConnectionImpl::DeleteDisk(
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_disks::v1::
-                         DeleteRegionDiskRequest const& request) {
-        return stub->AsyncDeleteRegionDisk(cq, std::move(context), request);
+                         DeleteDiskRequest const& request) {
+        return stub->AsyncDeleteDisk(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionDisk(request),
+      idempotency_policy(*current)->DeleteDisk(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -262,18 +258,17 @@ RegionDisksRestConnectionImpl::DeleteRegionDisk(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksRestConnectionImpl::GetRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::GetRegionDiskRequest const&
+RegionDisksRestConnectionImpl::GetDisk(
+    google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionDisk(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::region_disks::v1::
-                 GetRegionDiskRequest const& request) {
-        return stub_->GetRegionDisk(rest_context, request);
-      },
+      idempotency_policy(*current)->GetDisk(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
+              request) { return stub_->GetDisk(rest_context, request); },
       request, __func__);
 }
 
@@ -294,54 +289,53 @@ RegionDisksRestConnectionImpl::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksRestConnectionImpl::InsertRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDiskRequest const& request) {
+RegionDisksRestConnectionImpl::InsertDisk(
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_disks::v1::
-                         InsertRegionDiskRequest const& request) {
-        return stub->AsyncInsertRegionDisk(cq, std::move(context), request);
+                         InsertDiskRequest const& request) {
+        return stub->AsyncInsertDisk(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionDisk(request),
+      idempotency_policy(*current)->InsertDisk(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -391,10 +385,9 @@ RegionDisksRestConnectionImpl::RemoveResourcePolicies(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -406,13 +399,13 @@ RegionDisksRestConnectionImpl::RemoveResourcePolicies(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -425,14 +418,14 @@ RegionDisksRestConnectionImpl::RemoveResourcePolicies(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -447,10 +440,9 @@ RegionDisksRestConnectionImpl::Resize(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -462,13 +454,13 @@ RegionDisksRestConnectionImpl::Resize(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -481,14 +473,14 @@ RegionDisksRestConnectionImpl::Resize(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -519,10 +511,9 @@ RegionDisksRestConnectionImpl::SetLabels(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -534,13 +525,13 @@ RegionDisksRestConnectionImpl::SetLabels(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -553,14 +544,14 @@ RegionDisksRestConnectionImpl::SetLabels(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -575,10 +566,9 @@ RegionDisksRestConnectionImpl::StartAsyncReplication(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -590,13 +580,13 @@ RegionDisksRestConnectionImpl::StartAsyncReplication(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -609,14 +599,14 @@ RegionDisksRestConnectionImpl::StartAsyncReplication(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -631,10 +621,9 @@ RegionDisksRestConnectionImpl::StopAsyncReplication(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -645,13 +634,13 @@ RegionDisksRestConnectionImpl::StopAsyncReplication(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -664,14 +653,14 @@ RegionDisksRestConnectionImpl::StopAsyncReplication(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -686,10 +675,9 @@ RegionDisksRestConnectionImpl::StopGroupAsyncReplication(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -701,13 +689,13 @@ RegionDisksRestConnectionImpl::StopGroupAsyncReplication(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -720,14 +708,14 @@ RegionDisksRestConnectionImpl::StopGroupAsyncReplication(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -751,54 +739,53 @@ RegionDisksRestConnectionImpl::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksRestConnectionImpl::UpdateRegionDisk(
-    google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDiskRequest const& request) {
+RegionDisksRestConnectionImpl::UpdateDisk(
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_disks::v1::
-                         UpdateRegionDiskRequest const& request) {
-        return stub->AsyncUpdateRegionDisk(cq, std::move(context), request);
+                         UpdateDiskRequest const& request) {
+        return stub->AsyncUpdateDisk(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRegionDisk(request),
+      idempotency_policy(*current)->UpdateDisk(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

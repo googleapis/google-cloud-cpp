@@ -36,24 +36,24 @@ RegionTargetHttpsProxiesConnectionIdempotencyPolicy::clone() const {
       *this);
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    DeleteRegionTargetHttpsProxy(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            DeleteRegionTargetHttpsProxyRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::DeleteTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        DeleteTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-RegionTargetHttpsProxiesConnectionIdempotencyPolicy::GetRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::GetTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        GetRegionTargetHttpsProxyRequest const&) {
+        GetTargetHttpsProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    InsertRegionTargetHttpsProxy(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            InsertRegionTargetHttpsProxyRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::InsertTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        InsertTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -64,10 +64,10 @@ Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    PatchRegionTargetHttpsProxy(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            PatchRegionTargetHttpsProxyRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::PatchTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        PatchTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

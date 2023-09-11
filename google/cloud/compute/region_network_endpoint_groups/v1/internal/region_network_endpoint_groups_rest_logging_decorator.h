@@ -45,24 +45,24 @@ class RegionNetworkEndpointGroupsRestLogging
       TracingOptions tracing_options, std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionNetworkEndpointGroup(
+  AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          DeleteRegionNetworkEndpointGroupRequest const& request) override;
+          DeleteNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetRegionNetworkEndpointGroup(
+  GetNetworkEndpointGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          GetRegionNetworkEndpointGroupRequest const& request) override;
+          GetNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionNetworkEndpointGroup(
+  AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          InsertRegionNetworkEndpointGroupRequest const& request) override;
+          InsertNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
   ListRegionNetworkEndpointGroups(
@@ -75,13 +75,13 @@ class RegionNetworkEndpointGroupsRestLogging
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionNetworkEndpointGroupsRestStub> child_;

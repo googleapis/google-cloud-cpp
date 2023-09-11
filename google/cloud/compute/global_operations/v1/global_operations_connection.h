@@ -190,13 +190,13 @@ class GlobalOperationsConnection {
       google::cloud::cpp::compute::global_operations::v1::
           AggregatedListGlobalOperationsRequest const& request);
 
-  virtual Status DeleteGlobalOperation(
+  virtual Status DeleteOperation(
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest const& request);
+          DeleteOperationRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOperation(google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
+      google::cloud::cpp::compute::global_operations::v1::
+          GetOperationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
   ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::

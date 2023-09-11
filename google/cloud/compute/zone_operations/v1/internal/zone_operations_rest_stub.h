@@ -36,15 +36,15 @@ class ZoneOperationsRestStub {
  public:
   virtual ~ZoneOperationsRestStub() = default;
 
-  virtual Status DeleteZoneOperation(
+  virtual Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListZoneOperations(google::cloud::rest_internal::RestContext& rest_context,
@@ -65,15 +65,15 @@ class DefaultZoneOperationsRestStub : public ZoneOperationsRestStub {
   DefaultZoneOperationsRestStub(
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  Status DeleteZoneOperation(
+  Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,

@@ -57,23 +57,21 @@ class RegionCommitmentsRestConnectionImpl
       google::cloud::cpp::compute::region_commitments::v1::
           AggregatedListRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitment(
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          GetRegionCommitmentRequest const& request) override;
+          GetCommitmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionCommitment(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          InsertRegionCommitmentRequest const& request) override;
+          InsertCommitmentRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
                             ListRegionCommitmentsRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionCommitment(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          UpdateRegionCommitmentRequest const& request) override;
+          UpdateCommitmentRequest const& request) override;
 
  private:
   static std::unique_ptr<

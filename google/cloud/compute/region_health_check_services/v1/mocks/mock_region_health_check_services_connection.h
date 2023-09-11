@@ -50,21 +50,21 @@ class MockRegionHealthCheckServicesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionHealthCheckService,
+              DeleteHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::
-                   DeleteRegionHealthCheckServiceRequest const& request),
+                   DeleteHealthCheckServiceRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>,
-              GetRegionHealthCheckService,
+              GetHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::
-                   GetRegionHealthCheckServiceRequest const& request),
+                   GetHealthCheckServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionHealthCheckService,
+              InsertHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::
-                   InsertRegionHealthCheckServiceRequest const& request),
+                   InsertHealthCheckServiceRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>,
@@ -74,9 +74,9 @@ class MockRegionHealthCheckServicesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionHealthCheckService,
+              PatchHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::
-                   PatchRegionHealthCheckServiceRequest const& request),
+                   PatchHealthCheckServiceRequest const& request),
               (override));
 };
 

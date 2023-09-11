@@ -129,12 +129,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncCloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionNetworkFirewallPoliciesRestStub::
-    AsyncDeleteRegionNetworkFirewallPolicy(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            DeleteRegionNetworkFirewallPolicyRequest const& request) {
+DefaultRegionNetworkFirewallPoliciesRestStub::AsyncDeleteFirewallPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -156,10 +155,10 @@ DefaultRegionNetworkFirewallPoliciesRestStub::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-DefaultRegionNetworkFirewallPoliciesRestStub::GetRegionNetworkFirewallPolicy(
+DefaultRegionNetworkFirewallPoliciesRestStub::GetFirewallPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
-        GetRegionNetworkFirewallPolicyRequest const& request) {
+        GetFirewallPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -231,12 +230,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionNetworkFirewallPoliciesRestStub::
-    AsyncInsertRegionNetworkFirewallPolicy(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            InsertRegionNetworkFirewallPolicyRequest const& request) {
+DefaultRegionNetworkFirewallPoliciesRestStub::AsyncInsertFirewallPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -276,12 +274,11 @@ DefaultRegionNetworkFirewallPoliciesRestStub::ListRegionNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionNetworkFirewallPoliciesRestStub::
-    AsyncPatchRegionNetworkFirewallPolicy(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            PatchRegionNetworkFirewallPolicyRequest const& request) {
+DefaultRegionNetworkFirewallPoliciesRestStub::AsyncPatchFirewallPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -414,7 +411,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -439,7 +436,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

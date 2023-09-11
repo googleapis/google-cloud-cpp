@@ -173,12 +173,12 @@ ServiceAttachmentsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -188,12 +188,12 @@ future<Status> ServiceAttachmentsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

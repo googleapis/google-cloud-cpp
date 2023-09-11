@@ -58,9 +58,9 @@ class RegionInstanceGroupManagersTracingConnection
           CreateInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceGroupManager(
+  DeleteInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          DeleteRegionInstanceGroupManagerRequest const& request) override;
+          DeleteInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
@@ -72,14 +72,14 @@ class RegionInstanceGroupManagersTracingConnection
           DeletePerInstanceConfigsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetRegionInstanceGroupManager(
+  GetInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          GetRegionInstanceGroupManagerRequest const& request) override;
+          GetInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceGroupManager(
+  InsertInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          InsertRegionInstanceGroupManagerRequest const& request) override;
+          InsertInstanceGroupManagerRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListRegionInstanceGroupManagers(
@@ -102,9 +102,9 @@ class RegionInstanceGroupManagersTracingConnection
           ListPerInstanceConfigsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionInstanceGroupManager(
+  PatchInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          PatchRegionInstanceGroupManagerRequest const& request) override;
+          PatchInstanceGroupManagerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(

@@ -44,55 +44,53 @@ RegionSslPoliciesRestConnectionImpl::RegionSslPoliciesRestConnectionImpl(
           std::move(options), RegionSslPoliciesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesRestConnectionImpl::DeleteRegionSslPolicy(
+RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteRegionSslPolicyRequest const& request) {
+        DeleteSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_ssl_policies::v1::
-                         DeleteRegionSslPolicyRequest const& request) {
-        return stub->AsyncDeleteRegionSslPolicy(cq, std::move(context),
-                                                request);
+                         DeleteSslPolicyRequest const& request) {
+        return stub->AsyncDeleteSslPolicy(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionSslPolicy(request),
+      idempotency_policy(*current)->DeleteSslPolicy(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -100,71 +98,69 @@ RegionSslPoliciesRestConnectionImpl::DeleteRegionSslPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesRestConnectionImpl::GetRegionSslPolicy(
+RegionSslPoliciesRestConnectionImpl::GetSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetRegionSslPolicyRequest const& request) {
+        GetSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionSslPolicy(request),
+      idempotency_policy(*current)->GetSslPolicy(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_ssl_policies::v1::
-                 GetRegionSslPolicyRequest const& request) {
-        return stub_->GetRegionSslPolicy(rest_context, request);
+                 GetSslPolicyRequest const& request) {
+        return stub_->GetSslPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesRestConnectionImpl::InsertRegionSslPolicy(
+RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertRegionSslPolicyRequest const& request) {
+        InsertSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_ssl_policies::v1::
-                         InsertRegionSslPolicyRequest const& request) {
-        return stub->AsyncInsertRegionSslPolicy(cq, std::move(context),
-                                                request);
+                         InsertSslPolicyRequest const& request) {
+        return stub->AsyncInsertSslPolicy(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionSslPolicy(request),
+      idempotency_policy(*current)->InsertSslPolicy(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -226,54 +222,53 @@ RegionSslPoliciesRestConnectionImpl::ListAvailableFeatures(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesRestConnectionImpl::PatchRegionSslPolicy(
+RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchRegionSslPolicyRequest const& request) {
+        PatchSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_ssl_policies::v1::
-                         PatchRegionSslPolicyRequest const& request) {
-        return stub->AsyncPatchRegionSslPolicy(cq, std::move(context), request);
+                         PatchSslPolicyRequest const& request) {
+        return stub->AsyncPatchSslPolicy(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchRegionSslPolicy(request),
+      idempotency_policy(*current)->PatchSslPolicy(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

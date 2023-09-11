@@ -46,55 +46,53 @@ RegionBackendServicesRestConnectionImpl::
           std::move(options), RegionBackendServicesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestConnectionImpl::DeleteRegionBackendService(
+RegionBackendServicesRestConnectionImpl::DeleteBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteRegionBackendServiceRequest const& request) {
+        DeleteBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_backend_services::v1::
-                         DeleteRegionBackendServiceRequest const& request) {
-        return stub->AsyncDeleteRegionBackendService(cq, std::move(context),
-                                                     request);
+                         DeleteBackendServiceRequest const& request) {
+        return stub->AsyncDeleteBackendService(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionBackendService(request),
+      idempotency_policy(*current)->DeleteBackendService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -102,17 +100,17 @@ RegionBackendServicesRestConnectionImpl::DeleteRegionBackendService(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-RegionBackendServicesRestConnectionImpl::GetRegionBackendService(
+RegionBackendServicesRestConnectionImpl::GetBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        GetRegionBackendServiceRequest const& request) {
+        GetBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionBackendService(request),
+      idempotency_policy(*current)->GetBackendService(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_backend_services::v1::
-                 GetRegionBackendServiceRequest const& request) {
-        return stub_->GetRegionBackendService(rest_context, request);
+                 GetBackendServiceRequest const& request) {
+        return stub_->GetBackendService(rest_context, request);
       },
       request, __func__);
 }
@@ -150,55 +148,53 @@ RegionBackendServicesRestConnectionImpl::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestConnectionImpl::InsertRegionBackendService(
+RegionBackendServicesRestConnectionImpl::InsertBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        InsertRegionBackendServiceRequest const& request) {
+        InsertBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_backend_services::v1::
-                         InsertRegionBackendServiceRequest const& request) {
-        return stub->AsyncInsertRegionBackendService(cq, std::move(context),
-                                                     request);
+                         InsertBackendServiceRequest const& request) {
+        return stub->AsyncInsertBackendService(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionBackendService(request),
+      idempotency_policy(*current)->InsertBackendService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -243,55 +239,53 @@ RegionBackendServicesRestConnectionImpl::ListRegionBackendServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestConnectionImpl::PatchRegionBackendService(
+RegionBackendServicesRestConnectionImpl::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        PatchRegionBackendServiceRequest const& request) {
+        PatchBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_backend_services::v1::
-                         PatchRegionBackendServiceRequest const& request) {
-        return stub->AsyncPatchRegionBackendService(cq, std::move(context),
-                                                    request);
+                         PatchBackendServiceRequest const& request) {
+        return stub->AsyncPatchBackendService(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchRegionBackendService(request),
+      idempotency_policy(*current)->PatchBackendService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -315,55 +309,53 @@ RegionBackendServicesRestConnectionImpl::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestConnectionImpl::UpdateRegionBackendService(
+RegionBackendServicesRestConnectionImpl::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateRegionBackendServiceRequest const& request) {
+        UpdateBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_backend_services::v1::
-                         UpdateRegionBackendServiceRequest const& request) {
-        return stub->AsyncUpdateRegionBackendService(cq, std::move(context),
-                                                     request);
+                         UpdateBackendServiceRequest const& request) {
+        return stub->AsyncUpdateBackendService(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRegionBackendService(request),
+      idempotency_policy(*current)->UpdateBackendService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

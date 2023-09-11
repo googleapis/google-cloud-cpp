@@ -394,14 +394,14 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L515}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L455}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceGroupManager(std::string const& project,
-                                   std::string const& region,
-                                   std::string const& instance_group_manager,
-                                   Options opts = {});
+  DeleteInstanceGroupManager(std::string const& project,
+                             std::string const& region,
+                             std::string const& instance_group_manager,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -412,7 +412,7 @@ class RegionInstanceGroupManagersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteRegionInstanceGroupManagerRequest].
+  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstanceGroupManagerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -435,13 +435,13 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L515}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L455}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionInstanceGroupManager(
+  DeleteInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          DeleteRegionInstanceGroupManagerRequest const& request,
+          DeleteInstanceGroupManagerRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -484,7 +484,7 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L455}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L485}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -537,7 +537,7 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L455}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeleteInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L485}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
@@ -575,7 +575,7 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L491}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L521}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -619,7 +619,7 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L491}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.DeletePerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L521}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -649,15 +649,14 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.GetRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L545}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L545}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_027.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetRegionInstanceGroupManager(std::string const& project,
-                                std::string const& region,
-                                std::string const& instance_group_manager,
-                                Options opts = {});
+  GetInstanceGroupManager(std::string const& project, std::string const& region,
+                          std::string const& instance_group_manager,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -667,7 +666,7 @@ class RegionInstanceGroupManagersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.GetRegionInstanceGroupManagerRequest].
+  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.GetInstanceGroupManagerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -683,14 +682,14 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.GetRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L545}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L545}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_027.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-  GetRegionInstanceGroupManager(
+  GetInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          GetRegionInstanceGroupManagerRequest const& request,
+          GetInstanceGroupManagerRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -727,11 +726,11 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.InsertRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L557}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.InsertInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceGroupManager(
+  InsertInstanceGroupManager(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::InstanceGroupManager const&
           instance_group_manager_resource,
@@ -751,7 +750,7 @@ class RegionInstanceGroupManagersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.InsertRegionInstanceGroupManagerRequest].
+  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.InsertInstanceGroupManagerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -774,13 +773,13 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.InsertRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L557}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.InsertInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L557}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionInstanceGroupManager(
+  InsertInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          InsertRegionInstanceGroupManagerRequest const& request,
+          InsertInstanceGroupManagerRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1149,11 +1148,11 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L907}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L871}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionInstanceGroupManager(
+  PatchInstanceGroupManager(
       std::string const& project, std::string const& region,
       std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::InstanceGroupManager const&
@@ -1177,7 +1176,7 @@ class RegionInstanceGroupManagersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchRegionInstanceGroupManagerRequest].
+  ///     [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchInstanceGroupManagerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1200,13 +1199,13 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchRegionInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L907}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L871}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionInstanceGroupManager(
+  PatchInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          PatchRegionInstanceGroupManagerRequest const& request,
+          PatchInstanceGroupManagerRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1240,7 +1239,7 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L871}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L905}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1285,7 +1284,7 @@ class RegionInstanceGroupManagersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L871}
+  /// [google.cloud.cpp.compute.region_instance_group_managers.v1.PatchPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L905}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

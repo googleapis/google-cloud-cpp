@@ -490,8 +490,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -500,7 +500,7 @@ future<Status> InstancesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -41,17 +41,17 @@ class GlobalAddressesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddress(google::cloud::cpp::compute::global_addresses::v1::
-                          DeleteGlobalAddressRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          GetGlobalAddressRequest const& request) override;
+          DeleteAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddress(google::cloud::cpp::compute::global_addresses::v1::
-                          InsertGlobalAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          GetAddressRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          InsertAddressRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
       google::cloud::cpp::compute::global_addresses::v1::

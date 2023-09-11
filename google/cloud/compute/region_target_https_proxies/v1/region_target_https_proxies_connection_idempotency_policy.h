@@ -38,25 +38,25 @@ class RegionTargetHttpsProxiesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionTargetHttpsProxiesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionTargetHttpsProxy(
+  virtual google::cloud::Idempotency DeleteTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          DeleteRegionTargetHttpsProxyRequest const& request);
+          DeleteTargetHttpsProxyRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionTargetHttpsProxy(
+  virtual google::cloud::Idempotency GetTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          GetRegionTargetHttpsProxyRequest const& request);
+          GetTargetHttpsProxyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionTargetHttpsProxy(
+  virtual google::cloud::Idempotency InsertTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          InsertRegionTargetHttpsProxyRequest const& request);
+          InsertTargetHttpsProxyRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionTargetHttpsProxies(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           ListRegionTargetHttpsProxiesRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionTargetHttpsProxy(
+  virtual google::cloud::Idempotency PatchTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          PatchRegionTargetHttpsProxyRequest const& request);
+          PatchTargetHttpsProxyRequest const& request);
 
   virtual google::cloud::Idempotency SetSslCertificates(
       google::cloud::cpp::compute::region_target_https_proxies::v1::

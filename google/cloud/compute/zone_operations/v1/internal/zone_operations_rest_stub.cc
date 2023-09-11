@@ -38,10 +38,10 @@ DefaultZoneOperationsRestStub::DefaultZoneOperationsRestStub(
     std::shared_ptr<rest_internal::RestClient> service, Options options)
     : service_(std::move(service)), options_(std::move(options)) {}
 
-Status DefaultZoneOperationsRestStub::DeleteZoneOperation(
+Status DefaultZoneOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -50,10 +50,10 @@ Status DefaultZoneOperationsRestStub::DeleteZoneOperation(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DefaultZoneOperationsRestStub::GetZoneOperation(
+DefaultZoneOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

@@ -48,21 +48,21 @@ class MockRegionUrlMapsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionUrlMap,
+              DeleteUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   DeleteRegionUrlMapRequest const& request),
+                   DeleteUrlMapRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMap>,
-              GetRegionUrlMap,
-              (google::cloud::cpp::compute::region_url_maps::v1::
-                   GetRegionUrlMapRequest const& request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::UrlMap>, GetUrlMap,
+      (google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionUrlMap,
+              InsertUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   InsertRegionUrlMapRequest const& request),
+                   InsertUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::UrlMap>,
@@ -72,15 +72,15 @@ class MockRegionUrlMapsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionUrlMap,
+              PatchUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   PatchRegionUrlMapRequest const& request),
+                   PatchUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionUrlMap,
+              UpdateUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
-                   UpdateRegionUrlMapRequest const& request),
+                   UpdateUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(

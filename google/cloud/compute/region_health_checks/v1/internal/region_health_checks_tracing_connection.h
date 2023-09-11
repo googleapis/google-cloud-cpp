@@ -44,32 +44,28 @@ class RegionHealthChecksTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthCheck(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          DeleteRegionHealthCheckRequest const& request) override;
+  DeleteHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                        DeleteHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetRegionHealthCheck(
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          GetRegionHealthCheckRequest const& request) override;
+          GetHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthCheck(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          InsertRegionHealthCheckRequest const& request) override;
+  InsertHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                        InsertHealthCheckRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(google::cloud::cpp::compute::region_health_checks::v1::
                              ListRegionHealthChecksRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthCheck(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
-          PatchRegionHealthCheckRequest const& request) override;
+          PatchHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionHealthCheck(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          UpdateRegionHealthCheckRequest const& request) override;
+  UpdateHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                        UpdateHealthCheckRequest const& request) override;
 
  private:
   std::shared_ptr<compute_region_health_checks_v1::RegionHealthChecksConnection>

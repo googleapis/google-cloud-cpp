@@ -41,13 +41,12 @@ class RegionOperationsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  Status DeleteRegionOperation(
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+  Status DeleteOperation(google::cloud::cpp::compute::region_operations::v1::
+                             DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperation(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
       google::cloud::cpp::compute::region_operations::v1::

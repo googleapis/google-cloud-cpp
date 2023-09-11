@@ -44,9 +44,9 @@ GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy::AttachNetworkEndpoints(
 }
 
 Idempotency GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy::
-    DeleteGlobalNetworkEndpointGroup(
+    DeleteNetworkEndpointGroup(
         google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            DeleteGlobalNetworkEndpointGroupRequest const&) {
+            DeleteNetworkEndpointGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -57,17 +57,17 @@ GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy::DetachNetworkEndpoints(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy::
-    GetGlobalNetworkEndpointGroup(
-        google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            GetGlobalNetworkEndpointGroupRequest const&) {
+Idempotency
+GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy::GetNetworkEndpointGroup(
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        GetNetworkEndpointGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency GlobalNetworkEndpointGroupsConnectionIdempotencyPolicy::
-    InsertGlobalNetworkEndpointGroup(
+    InsertNetworkEndpointGroup(
         google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            InsertGlobalNetworkEndpointGroupRequest const&) {
+            InsertNetworkEndpointGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

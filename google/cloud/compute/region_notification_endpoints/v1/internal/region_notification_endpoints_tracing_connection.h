@@ -45,19 +45,19 @@ class RegionNotificationEndpointsTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNotificationEndpoint(
+  DeleteNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteRegionNotificationEndpointRequest const& request) override;
+          DeleteNotificationEndpointRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-  GetRegionNotificationEndpoint(
+  GetNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          GetRegionNotificationEndpointRequest const& request) override;
+          GetNotificationEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNotificationEndpoint(
+  InsertNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertRegionNotificationEndpointRequest const& request) override;
+          InsertNotificationEndpointRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
   ListRegionNotificationEndpoints(

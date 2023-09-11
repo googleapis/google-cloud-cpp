@@ -37,23 +37,23 @@ RegionNetworkEndpointGroupsConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency RegionNetworkEndpointGroupsConnectionIdempotencyPolicy::
-    DeleteRegionNetworkEndpointGroup(
+    DeleteNetworkEndpointGroup(
         google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-            DeleteRegionNetworkEndpointGroupRequest const&) {
+            DeleteNetworkEndpointGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionNetworkEndpointGroupsConnectionIdempotencyPolicy::
-    GetRegionNetworkEndpointGroup(
-        google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-            GetRegionNetworkEndpointGroupRequest const&) {
+Idempotency
+RegionNetworkEndpointGroupsConnectionIdempotencyPolicy::GetNetworkEndpointGroup(
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        GetNetworkEndpointGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency RegionNetworkEndpointGroupsConnectionIdempotencyPolicy::
-    InsertRegionNetworkEndpointGroup(
+    InsertNetworkEndpointGroup(
         google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-            InsertRegionNetworkEndpointGroupRequest const&) {
+            InsertNetworkEndpointGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

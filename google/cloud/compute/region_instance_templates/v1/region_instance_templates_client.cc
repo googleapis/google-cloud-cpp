@@ -34,71 +34,71 @@ RegionInstanceTemplatesClient::RegionInstanceTemplatesClient(
 RegionInstanceTemplatesClient::~RegionInstanceTemplatesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesClient::DeleteRegionInstanceTemplate(
+RegionInstanceTemplatesClient::DeleteInstanceTemplate(
     std::string const& project, std::string const& region,
     std::string const& instance_template, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_templates::v1::
-      DeleteRegionInstanceTemplateRequest request;
+      DeleteInstanceTemplateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_instance_template(instance_template);
-  return connection_->DeleteRegionInstanceTemplate(request);
+  return connection_->DeleteInstanceTemplate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesClient::DeleteRegionInstanceTemplate(
+RegionInstanceTemplatesClient::DeleteInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteRegionInstanceTemplateRequest const& request,
+        DeleteInstanceTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionInstanceTemplate(request);
+  return connection_->DeleteInstanceTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesClient::GetRegionInstanceTemplate(
+RegionInstanceTemplatesClient::GetInstanceTemplate(
     std::string const& project, std::string const& region,
     std::string const& instance_template, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_templates::v1::
-      GetRegionInstanceTemplateRequest request;
+      GetInstanceTemplateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_instance_template(instance_template);
-  return connection_->GetRegionInstanceTemplate(request);
+  return connection_->GetInstanceTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesClient::GetRegionInstanceTemplate(
+RegionInstanceTemplatesClient::GetInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplateRequest const& request,
+        GetInstanceTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionInstanceTemplate(request);
+  return connection_->GetInstanceTemplate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesClient::InsertRegionInstanceTemplate(
+RegionInstanceTemplatesClient::InsertInstanceTemplate(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::InstanceTemplate const&
         instance_template_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_templates::v1::
-      InsertRegionInstanceTemplateRequest request;
+      InsertInstanceTemplateRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_instance_template_resource() = instance_template_resource;
-  return connection_->InsertRegionInstanceTemplate(request);
+  return connection_->InsertInstanceTemplate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesClient::InsertRegionInstanceTemplate(
+RegionInstanceTemplatesClient::InsertInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertRegionInstanceTemplateRequest const& request,
+        InsertInstanceTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionInstanceTemplate(request);
+  return connection_->InsertInstanceTemplate(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>

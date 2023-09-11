@@ -45,19 +45,18 @@ class RegionTargetHttpProxiesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionTargetHttpProxy(
+  DeleteTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          DeleteRegionTargetHttpProxyRequest const& request) override;
+          DeleteTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetRegionTargetHttpProxy(
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          GetRegionTargetHttpProxyRequest const& request) override;
+          GetTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionTargetHttpProxy(
+  InsertTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          InsertRegionTargetHttpProxyRequest const& request) override;
+          InsertTargetHttpProxyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
   ListRegionTargetHttpProxies(

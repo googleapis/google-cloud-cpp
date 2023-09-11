@@ -50,15 +50,15 @@ class MockRegionBackendServicesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionBackendService,
+              DeleteBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
-                   DeleteRegionBackendServiceRequest const& request),
+                   DeleteBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendService>,
-              GetRegionBackendService,
+              GetBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
-                   GetRegionBackendServiceRequest const& request),
+                   GetBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -74,9 +74,9 @@ class MockRegionBackendServicesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionBackendService,
+              InsertBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
-                   InsertRegionBackendServiceRequest const& request),
+                   InsertBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendService>,
@@ -86,9 +86,9 @@ class MockRegionBackendServicesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionBackendService,
+              PatchBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
-                   PatchRegionBackendServiceRequest const& request),
+                   PatchBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
@@ -97,9 +97,9 @@ class MockRegionBackendServicesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionBackendService,
+              UpdateBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
-                   UpdateRegionBackendServiceRequest const& request),
+                   UpdateBackendServiceRequest const& request),
               (override));
 };
 

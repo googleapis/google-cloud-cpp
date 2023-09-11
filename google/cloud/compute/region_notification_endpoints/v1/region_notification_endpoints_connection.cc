@@ -37,25 +37,25 @@ RegionNotificationEndpointsConnection::
     ~RegionNotificationEndpointsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsConnection::DeleteRegionNotificationEndpoint(
+RegionNotificationEndpointsConnection::DeleteNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        DeleteRegionNotificationEndpointRequest const&) {
+        DeleteNotificationEndpointRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-RegionNotificationEndpointsConnection::GetRegionNotificationEndpoint(
+RegionNotificationEndpointsConnection::GetNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        GetRegionNotificationEndpointRequest const&) {
+        GetNotificationEndpointRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsConnection::InsertRegionNotificationEndpoint(
+RegionNotificationEndpointsConnection::InsertNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        InsertRegionNotificationEndpointRequest const&) {
+        InsertNotificationEndpointRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

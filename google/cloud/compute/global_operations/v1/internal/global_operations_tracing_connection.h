@@ -46,13 +46,12 @@ class GlobalOperationsTracingConnection
       google::cloud::cpp::compute::global_operations::v1::
           AggregatedListGlobalOperationsRequest const& request) override;
 
-  Status DeleteGlobalOperation(
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest const& request) override;
+  Status DeleteOperation(google::cloud::cpp::compute::global_operations::v1::
+                             DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperation(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
       google::cloud::cpp::compute::global_operations::v1::

@@ -34,16 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ZoneOperationsConnection::~ZoneOperationsConnection() = default;
 
-Status ZoneOperationsConnection::DeleteZoneOperation(
+Status ZoneOperationsConnection::DeleteOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationRequest const&) {
+        DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsConnection::GetZoneOperation(
+ZoneOperationsConnection::GetOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationRequest const&) {
+        GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

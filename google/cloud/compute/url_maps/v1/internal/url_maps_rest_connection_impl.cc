@@ -65,10 +65,9 @@ UrlMapsRestConnectionImpl::DeleteUrlMap(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -80,13 +79,13 @@ UrlMapsRestConnectionImpl::DeleteUrlMap(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -99,13 +98,13 @@ UrlMapsRestConnectionImpl::DeleteUrlMap(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -133,10 +132,9 @@ UrlMapsRestConnectionImpl::InsertUrlMap(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -148,13 +146,13 @@ UrlMapsRestConnectionImpl::InsertUrlMap(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -167,13 +165,13 @@ UrlMapsRestConnectionImpl::InsertUrlMap(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -187,10 +185,9 @@ UrlMapsRestConnectionImpl::InvalidateCache(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -201,13 +198,13 @@ UrlMapsRestConnectionImpl::InvalidateCache(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -220,13 +217,13 @@ UrlMapsRestConnectionImpl::InvalidateCache(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -274,10 +271,9 @@ UrlMapsRestConnectionImpl::PatchUrlMap(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -289,13 +285,13 @@ UrlMapsRestConnectionImpl::PatchUrlMap(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -308,13 +304,13 @@ UrlMapsRestConnectionImpl::PatchUrlMap(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -328,10 +324,9 @@ UrlMapsRestConnectionImpl::UpdateUrlMap(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -343,13 +338,13 @@ UrlMapsRestConnectionImpl::UpdateUrlMap(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -362,13 +357,13 @@ UrlMapsRestConnectionImpl::UpdateUrlMap(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });

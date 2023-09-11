@@ -43,24 +43,24 @@ class RegionTargetHttpsProxiesRestMetadata
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionTargetHttpsProxy(
+  AsyncDeleteTargetHttpsProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          DeleteRegionTargetHttpsProxyRequest const& request) override;
+          DeleteTargetHttpsProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-  GetRegionTargetHttpsProxy(
+  GetTargetHttpsProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          GetRegionTargetHttpsProxyRequest const& request) override;
+          GetTargetHttpsProxyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionTargetHttpsProxy(
+  AsyncInsertTargetHttpsProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          InsertRegionTargetHttpsProxyRequest const& request) override;
+          InsertTargetHttpsProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyList>
   ListRegionTargetHttpsProxies(
@@ -69,11 +69,11 @@ class RegionTargetHttpsProxiesRestMetadata
           ListRegionTargetHttpsProxiesRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionTargetHttpsProxy(
+  AsyncPatchTargetHttpsProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          PatchRegionTargetHttpsProxyRequest const& request) override;
+          PatchTargetHttpsProxyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetSslCertificates(
@@ -94,13 +94,13 @@ class RegionTargetHttpsProxiesRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

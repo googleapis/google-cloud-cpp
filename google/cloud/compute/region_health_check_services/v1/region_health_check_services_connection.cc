@@ -37,25 +37,25 @@ RegionHealthCheckServicesConnection::~RegionHealthCheckServicesConnection() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesConnection::DeleteRegionHealthCheckService(
+RegionHealthCheckServicesConnection::DeleteHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteRegionHealthCheckServiceRequest const&) {
+        DeleteHealthCheckServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-RegionHealthCheckServicesConnection::GetRegionHealthCheckService(
+RegionHealthCheckServicesConnection::GetHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        GetRegionHealthCheckServiceRequest const&) {
+        GetHealthCheckServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesConnection::InsertRegionHealthCheckService(
+RegionHealthCheckServicesConnection::InsertHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertRegionHealthCheckServiceRequest const&) {
+        InsertHealthCheckServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,9 +70,9 @@ RegionHealthCheckServicesConnection::ListRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesConnection::PatchRegionHealthCheckService(
+RegionHealthCheckServicesConnection::PatchHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchRegionHealthCheckServiceRequest const&) {
+        PatchHealthCheckServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

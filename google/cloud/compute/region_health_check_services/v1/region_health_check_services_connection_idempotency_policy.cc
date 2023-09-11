@@ -36,24 +36,24 @@ RegionHealthCheckServicesConnectionIdempotencyPolicy::clone() const {
       *this);
 }
 
-Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    DeleteRegionHealthCheckService(
-        google::cloud::cpp::compute::region_health_check_services::v1::
-            DeleteRegionHealthCheckServiceRequest const&) {
+Idempotency
+RegionHealthCheckServicesConnectionIdempotencyPolicy::DeleteHealthCheckService(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        DeleteHealthCheckServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    GetRegionHealthCheckService(
-        google::cloud::cpp::compute::region_health_check_services::v1::
-            GetRegionHealthCheckServiceRequest const&) {
+Idempotency
+RegionHealthCheckServicesConnectionIdempotencyPolicy::GetHealthCheckService(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        GetHealthCheckServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    InsertRegionHealthCheckService(
-        google::cloud::cpp::compute::region_health_check_services::v1::
-            InsertRegionHealthCheckServiceRequest const&) {
+Idempotency
+RegionHealthCheckServicesConnectionIdempotencyPolicy::InsertHealthCheckService(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        InsertHealthCheckServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -64,10 +64,10 @@ Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionHealthCheckServicesConnectionIdempotencyPolicy::
-    PatchRegionHealthCheckService(
-        google::cloud::cpp::compute::region_health_check_services::v1::
-            PatchRegionHealthCheckServiceRequest const&) {
+Idempotency
+RegionHealthCheckServicesConnectionIdempotencyPolicy::PatchHealthCheckService(
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        PatchHealthCheckServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

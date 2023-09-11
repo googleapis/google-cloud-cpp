@@ -42,12 +42,12 @@ RegionInstanceGroupsRestMetadata::RegionInstanceGroupsRestMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-RegionInstanceGroupsRestMetadata::GetRegionInstanceGroup(
+RegionInstanceGroupsRestMetadata::GetInstanceGroup(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_groups::v1::
-        GetRegionInstanceGroupRequest const& request) {
+        GetInstanceGroupRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionInstanceGroup(rest_context, request);
+  return child_->GetInstanceGroup(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
@@ -83,7 +83,7 @@ RegionInstanceGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -92,7 +92,7 @@ future<Status> RegionInstanceGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

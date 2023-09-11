@@ -58,9 +58,9 @@ RegionInstanceGroupManagersConnectionIdempotencyPolicy::CreateInstances(
 }
 
 Idempotency RegionInstanceGroupManagersConnectionIdempotencyPolicy::
-    DeleteRegionInstanceGroupManager(
+    DeleteInstanceGroupManager(
         google::cloud::cpp::compute::region_instance_group_managers::v1::
-            DeleteRegionInstanceGroupManagerRequest const&) {
+            DeleteInstanceGroupManagerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -78,17 +78,17 @@ Idempotency RegionInstanceGroupManagersConnectionIdempotencyPolicy::
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionInstanceGroupManagersConnectionIdempotencyPolicy::
-    GetRegionInstanceGroupManager(
-        google::cloud::cpp::compute::region_instance_group_managers::v1::
-            GetRegionInstanceGroupManagerRequest const&) {
+Idempotency
+RegionInstanceGroupManagersConnectionIdempotencyPolicy::GetInstanceGroupManager(
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        GetInstanceGroupManagerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency RegionInstanceGroupManagersConnectionIdempotencyPolicy::
-    InsertRegionInstanceGroupManager(
+    InsertInstanceGroupManager(
         google::cloud::cpp::compute::region_instance_group_managers::v1::
-            InsertRegionInstanceGroupManagerRequest const&) {
+            InsertInstanceGroupManagerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -120,9 +120,9 @@ RegionInstanceGroupManagersConnectionIdempotencyPolicy::ListPerInstanceConfigs(
 }
 
 Idempotency RegionInstanceGroupManagersConnectionIdempotencyPolicy::
-    PatchRegionInstanceGroupManager(
+    PatchInstanceGroupManager(
         google::cloud::cpp::compute::region_instance_group_managers::v1::
-            PatchRegionInstanceGroupManagerRequest const&) {
+            PatchInstanceGroupManagerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

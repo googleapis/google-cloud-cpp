@@ -37,25 +37,25 @@ RegionTargetHttpsProxiesConnection::~RegionTargetHttpsProxiesConnection() =
     default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesConnection::DeleteRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesConnection::DeleteTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        DeleteRegionTargetHttpsProxyRequest const&) {
+        DeleteTargetHttpsProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-RegionTargetHttpsProxiesConnection::GetRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesConnection::GetTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        GetRegionTargetHttpsProxyRequest const&) {
+        GetTargetHttpsProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesConnection::InsertRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesConnection::InsertTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        InsertRegionTargetHttpsProxyRequest const&) {
+        InsertTargetHttpsProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,9 +70,9 @@ RegionTargetHttpsProxiesConnection::ListRegionTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpsProxiesConnection::PatchRegionTargetHttpsProxy(
+RegionTargetHttpsProxiesConnection::PatchTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        PatchRegionTargetHttpsProxyRequest const&) {
+        PatchTargetHttpsProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

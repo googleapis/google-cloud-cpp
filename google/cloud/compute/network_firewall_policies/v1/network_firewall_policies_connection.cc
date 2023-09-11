@@ -64,18 +64,18 @@ NetworkFirewallPoliciesConnection::CloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesConnection::DeleteNetworkFirewallPolicy(
+NetworkFirewallPoliciesConnection::DeleteFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        DeleteNetworkFirewallPolicyRequest const&) {
+        DeleteFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-NetworkFirewallPoliciesConnection::GetNetworkFirewallPolicy(
+NetworkFirewallPoliciesConnection::GetFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        GetNetworkFirewallPolicyRequest const&) {
+        GetFirewallPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -101,9 +101,9 @@ NetworkFirewallPoliciesConnection::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesConnection::InsertNetworkFirewallPolicy(
+NetworkFirewallPoliciesConnection::InsertFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        InsertNetworkFirewallPolicyRequest const&) {
+        InsertFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,9 +118,9 @@ NetworkFirewallPoliciesConnection::ListNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesConnection::PatchNetworkFirewallPolicy(
+NetworkFirewallPoliciesConnection::PatchFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        PatchNetworkFirewallPolicyRequest const&) {
+        PatchFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

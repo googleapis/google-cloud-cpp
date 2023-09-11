@@ -48,11 +48,11 @@ DefaultRegionTargetHttpsProxiesRestStub::
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteRegionTargetHttpsProxy(
+DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        DeleteRegionTargetHttpsProxyRequest const& request) {
+        DeleteTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -74,10 +74,10 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncDeleteRegionTargetHttpsProxy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-DefaultRegionTargetHttpsProxiesRestStub::GetRegionTargetHttpsProxy(
+DefaultRegionTargetHttpsProxiesRestStub::GetTargetHttpsProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        GetRegionTargetHttpsProxyRequest const& request) {
+        GetTargetHttpsProxyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -88,11 +88,11 @@ DefaultRegionTargetHttpsProxiesRestStub::GetRegionTargetHttpsProxy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionTargetHttpsProxiesRestStub::AsyncInsertRegionTargetHttpsProxy(
+DefaultRegionTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        InsertRegionTargetHttpsProxyRequest const& request) {
+        InsertTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -132,11 +132,11 @@ DefaultRegionTargetHttpsProxiesRestStub::ListRegionTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionTargetHttpsProxiesRestStub::AsyncPatchRegionTargetHttpsProxy(
+DefaultRegionTargetHttpsProxiesRestStub::AsyncPatchTargetHttpsProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_https_proxies::v1::
-        PatchRegionTargetHttpsProxyRequest const& request) {
+        PatchTargetHttpsProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -217,7 +217,7 @@ DefaultRegionTargetHttpsProxiesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -241,7 +241,7 @@ future<Status> DefaultRegionTargetHttpsProxiesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

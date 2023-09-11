@@ -50,13 +50,13 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           CloneRulesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNetworkFirewallPolicy(
+  virtual google::cloud::Idempotency DeleteFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          DeleteNetworkFirewallPolicyRequest const& request);
+          DeleteFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetworkFirewallPolicy(
+  virtual google::cloud::Idempotency GetFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          GetNetworkFirewallPolicyRequest const& request);
+          GetFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetAssociation(
       google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -70,17 +70,17 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetRuleRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworkFirewallPolicy(
+  virtual google::cloud::Idempotency InsertFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          InsertNetworkFirewallPolicyRequest const& request);
+          InsertFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListNetworkFirewallPolicies(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           ListNetworkFirewallPoliciesRequest request);
 
-  virtual google::cloud::Idempotency PatchNetworkFirewallPolicy(
+  virtual google::cloud::Idempotency PatchFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          PatchNetworkFirewallPolicyRequest const& request);
+          PatchFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency PatchRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::

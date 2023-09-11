@@ -184,13 +184,12 @@ class ZoneOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status DeleteZoneOperation(
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationRequest const& request);
+  virtual Status DeleteOperation(google::cloud::cpp::compute::zone_operations::
+                                     v1::DeleteOperationRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperation(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationRequest const& request);
+          GetOperationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
   ListZoneOperations(google::cloud::cpp::compute::zone_operations::v1::

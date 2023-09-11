@@ -42,34 +42,34 @@ RegionTargetHttpProxiesRestMetadata::RegionTargetHttpProxiesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpProxiesRestMetadata::AsyncDeleteRegionTargetHttpProxy(
+RegionTargetHttpProxiesRestMetadata::AsyncDeleteTargetHttpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_http_proxies::v1::
-        DeleteRegionTargetHttpProxyRequest const& request) {
+        DeleteTargetHttpProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionTargetHttpProxy(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncDeleteTargetHttpProxy(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-RegionTargetHttpProxiesRestMetadata::GetRegionTargetHttpProxy(
+RegionTargetHttpProxiesRestMetadata::GetTargetHttpProxy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_target_http_proxies::v1::
-        GetRegionTargetHttpProxyRequest const& request) {
+        GetTargetHttpProxyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionTargetHttpProxy(rest_context, request);
+  return child_->GetTargetHttpProxy(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetHttpProxiesRestMetadata::AsyncInsertRegionTargetHttpProxy(
+RegionTargetHttpProxiesRestMetadata::AsyncInsertTargetHttpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_http_proxies::v1::
-        InsertRegionTargetHttpProxyRequest const& request) {
+        InsertTargetHttpProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionTargetHttpProxy(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncInsertTargetHttpProxy(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
@@ -96,7 +96,7 @@ RegionTargetHttpProxiesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -105,7 +105,7 @@ future<Status> RegionTargetHttpProxiesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

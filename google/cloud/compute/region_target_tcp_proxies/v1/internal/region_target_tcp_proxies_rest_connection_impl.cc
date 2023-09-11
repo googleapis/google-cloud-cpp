@@ -46,55 +46,53 @@ RegionTargetTcpProxiesRestConnectionImpl::
           std::move(options), RegionTargetTcpProxiesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesRestConnectionImpl::DeleteRegionTargetTcpProxy(
+RegionTargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        DeleteRegionTargetTcpProxyRequest const& request) {
+        DeleteTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_target_tcp_proxies::
-                         v1::DeleteRegionTargetTcpProxyRequest const& request) {
-        return stub->AsyncDeleteRegionTargetTcpProxy(cq, std::move(context),
-                                                     request);
+                         v1::DeleteTargetTcpProxyRequest const& request) {
+        return stub->AsyncDeleteTargetTcpProxy(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionTargetTcpProxy(request),
+      idempotency_policy(*current)->DeleteTargetTcpProxy(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -102,71 +100,69 @@ RegionTargetTcpProxiesRestConnectionImpl::DeleteRegionTargetTcpProxy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-RegionTargetTcpProxiesRestConnectionImpl::GetRegionTargetTcpProxy(
+RegionTargetTcpProxiesRestConnectionImpl::GetTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        GetRegionTargetTcpProxyRequest const& request) {
+        GetTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionTargetTcpProxy(request),
+      idempotency_policy(*current)->GetTargetTcpProxy(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-                 GetRegionTargetTcpProxyRequest const& request) {
-        return stub_->GetRegionTargetTcpProxy(rest_context, request);
+                 GetTargetTcpProxyRequest const& request) {
+        return stub_->GetTargetTcpProxy(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesRestConnectionImpl::InsertRegionTargetTcpProxy(
+RegionTargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        InsertRegionTargetTcpProxyRequest const& request) {
+        InsertTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_target_tcp_proxies::
-                         v1::InsertRegionTargetTcpProxyRequest const& request) {
-        return stub->AsyncInsertRegionTargetTcpProxy(cq, std::move(context),
-                                                     request);
+                         v1::InsertTargetTcpProxyRequest const& request) {
+        return stub->AsyncInsertTargetTcpProxy(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionTargetTcpProxy(request),
+      idempotency_policy(*current)->InsertTargetTcpProxy(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

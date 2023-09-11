@@ -40,33 +40,33 @@ ZoneOperationsRestConnectionImpl::ZoneOperationsRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       ZoneOperationsConnection::options())) {}
 
-Status ZoneOperationsRestConnectionImpl::DeleteZoneOperation(
+Status ZoneOperationsRestConnectionImpl::DeleteOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteZoneOperation(request),
+      idempotency_policy(*current)->DeleteOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::zone_operations::v1::
-                 DeleteZoneOperationRequest const& request) {
-        return stub_->DeleteZoneOperation(rest_context, request);
+                 DeleteOperationRequest const& request) {
+        return stub_->DeleteOperation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsRestConnectionImpl::GetZoneOperation(
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationRequest const& request) {
+ZoneOperationsRestConnectionImpl::GetOperation(
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetZoneOperation(request),
+      idempotency_policy(*current)->GetOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::zone_operations::v1::
-                 GetZoneOperationRequest const& request) {
-        return stub_->GetZoneOperation(rest_context, request);
+                 GetOperationRequest const& request) {
+        return stub_->GetOperation(rest_context, request);
       },
       request, __func__);
 }

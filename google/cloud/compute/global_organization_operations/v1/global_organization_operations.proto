@@ -40,9 +40,7 @@ service GlobalOrganizationOperations {
 
   // Deletes the specified Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/delete
-  rpc DeleteGlobalOrganizationOperation(
-      DeleteGlobalOrganizationOperationRequest)
-      returns (google.protobuf.Empty) {
+  rpc DeleteOperation(DeleteOperationRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/compute/v1/locations/global/operations/{operation}"
     };
@@ -52,7 +50,7 @@ service GlobalOrganizationOperations {
   // Retrieves the specified Operations resource. Gets a list of operations by
   // making a `list()` request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalOrganizationOperations/get
-  rpc GetGlobalOrganizationOperation(GetGlobalOrganizationOperationRequest)
+  rpc GetOperation(GetOperationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       get: "/compute/v1/locations/global/operations/{operation}"
@@ -71,8 +69,8 @@ service GlobalOrganizationOperations {
   }
 }
 
-// Request message for DeleteGlobalOrganizationOperation.
-message DeleteGlobalOrganizationOperationRequest {
+// Request message for DeleteOperation.
+message DeleteOperationRequest {
   // Name of the Operations resource to delete.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -80,8 +78,8 @@ message DeleteGlobalOrganizationOperationRequest {
   optional string parent_id = 2;
 }
 
-// Request message for GetGlobalOrganizationOperation.
-message GetGlobalOrganizationOperationRequest {
+// Request message for GetOperation.
+message GetOperationRequest {
   // Name of the Operations resource to return.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 

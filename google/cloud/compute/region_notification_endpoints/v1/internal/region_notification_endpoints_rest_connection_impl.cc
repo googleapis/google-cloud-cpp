@@ -47,56 +47,55 @@ RegionNotificationEndpointsRestConnectionImpl::
           RegionNotificationEndpointsConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsRestConnectionImpl::DeleteRegionNotificationEndpoint(
+RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        DeleteRegionNotificationEndpointRequest const& request) {
+        DeleteNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::region_notification_endpoints::v1::
-              DeleteRegionNotificationEndpointRequest const& request) {
-        return stub->AsyncDeleteRegionNotificationEndpoint(
-            cq, std::move(context), request);
+              DeleteNotificationEndpointRequest const& request) {
+        return stub->AsyncDeleteNotificationEndpoint(cq, std::move(context),
+                                                     request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionNotificationEndpoint(request),
+      idempotency_policy(*current)->DeleteNotificationEndpoint(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -104,72 +103,71 @@ RegionNotificationEndpointsRestConnectionImpl::DeleteRegionNotificationEndpoint(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-RegionNotificationEndpointsRestConnectionImpl::GetRegionNotificationEndpoint(
+RegionNotificationEndpointsRestConnectionImpl::GetNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        GetRegionNotificationEndpointRequest const& request) {
+        GetNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionNotificationEndpoint(request),
+      idempotency_policy(*current)->GetNotificationEndpoint(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_notification_endpoints::v1::
-                 GetRegionNotificationEndpointRequest const& request) {
-        return stub_->GetRegionNotificationEndpoint(rest_context, request);
+                 GetNotificationEndpointRequest const& request) {
+        return stub_->GetNotificationEndpoint(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsRestConnectionImpl::InsertRegionNotificationEndpoint(
+RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        InsertRegionNotificationEndpointRequest const& request) {
+        InsertNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::region_notification_endpoints::v1::
-              InsertRegionNotificationEndpointRequest const& request) {
-        return stub->AsyncInsertRegionNotificationEndpoint(
-            cq, std::move(context), request);
+              InsertNotificationEndpointRequest const& request) {
+        return stub->AsyncInsertNotificationEndpoint(cq, std::move(context),
+                                                     request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionNotificationEndpoint(request),
+      idempotency_policy(*current)->InsertNotificationEndpoint(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

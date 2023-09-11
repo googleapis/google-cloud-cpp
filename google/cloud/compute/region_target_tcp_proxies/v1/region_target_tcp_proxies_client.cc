@@ -34,71 +34,71 @@ RegionTargetTcpProxiesClient::RegionTargetTcpProxiesClient(
 RegionTargetTcpProxiesClient::~RegionTargetTcpProxiesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesClient::DeleteRegionTargetTcpProxy(
+RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
     std::string const& project, std::string const& region,
     std::string const& target_tcp_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-      DeleteRegionTargetTcpProxyRequest request;
+      DeleteTargetTcpProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_tcp_proxy(target_tcp_proxy);
-  return connection_->DeleteRegionTargetTcpProxy(request);
+  return connection_->DeleteTargetTcpProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesClient::DeleteRegionTargetTcpProxy(
+RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        DeleteRegionTargetTcpProxyRequest const& request,
+        DeleteTargetTcpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionTargetTcpProxy(request);
+  return connection_->DeleteTargetTcpProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-RegionTargetTcpProxiesClient::GetRegionTargetTcpProxy(
+RegionTargetTcpProxiesClient::GetTargetTcpProxy(
     std::string const& project, std::string const& region,
     std::string const& target_tcp_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-      GetRegionTargetTcpProxyRequest request;
+      GetTargetTcpProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_tcp_proxy(target_tcp_proxy);
-  return connection_->GetRegionTargetTcpProxy(request);
+  return connection_->GetTargetTcpProxy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-RegionTargetTcpProxiesClient::GetRegionTargetTcpProxy(
+RegionTargetTcpProxiesClient::GetTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        GetRegionTargetTcpProxyRequest const& request,
+        GetTargetTcpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionTargetTcpProxy(request);
+  return connection_->GetTargetTcpProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesClient::InsertRegionTargetTcpProxy(
+RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::TargetTcpProxy const&
         target_tcp_proxy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-      InsertRegionTargetTcpProxyRequest request;
+      InsertTargetTcpProxyRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_target_tcp_proxy_resource() = target_tcp_proxy_resource;
-  return connection_->InsertRegionTargetTcpProxy(request);
+  return connection_->InsertTargetTcpProxy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesClient::InsertRegionTargetTcpProxy(
+RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        InsertRegionTargetTcpProxyRequest const& request,
+        InsertTargetTcpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionTargetTcpProxy(request);
+  return connection_->InsertTargetTcpProxy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>

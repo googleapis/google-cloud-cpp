@@ -39,10 +39,10 @@ DefaultRegionOperationsRestStub::DefaultRegionOperationsRestStub(
     std::shared_ptr<rest_internal::RestClient> service, Options options)
     : service_(std::move(service)), options_(std::move(options)) {}
 
-Status DefaultRegionOperationsRestStub::DeleteRegionOperation(
+Status DefaultRegionOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -51,10 +51,10 @@ Status DefaultRegionOperationsRestStub::DeleteRegionOperation(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DefaultRegionOperationsRestStub::GetRegionOperation(
+DefaultRegionOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

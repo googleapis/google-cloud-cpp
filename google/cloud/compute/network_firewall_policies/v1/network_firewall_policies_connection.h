@@ -209,14 +209,12 @@ class NetworkFirewallPoliciesConnection {
                  CloneRulesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkFirewallPolicy(
-      google::cloud::cpp::compute::network_firewall_policies::v1::
-          DeleteNetworkFirewallPolicyRequest const& request);
+  DeleteFirewallPolicy(google::cloud::cpp::compute::network_firewall_policies::
+                           v1::DeleteFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetNetworkFirewallPolicy(
-      google::cloud::cpp::compute::network_firewall_policies::v1::
-          GetNetworkFirewallPolicyRequest const& request);
+  GetFirewallPolicy(google::cloud::cpp::compute::network_firewall_policies::v1::
+                        GetFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
   GetAssociation(google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -231,9 +229,8 @@ class NetworkFirewallPoliciesConnection {
           GetRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkFirewallPolicy(
-      google::cloud::cpp::compute::network_firewall_policies::v1::
-          InsertNetworkFirewallPolicyRequest const& request);
+  InsertFirewallPolicy(google::cloud::cpp::compute::network_firewall_policies::
+                           v1::InsertFirewallPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
   ListNetworkFirewallPolicies(
@@ -241,9 +238,8 @@ class NetworkFirewallPoliciesConnection {
           ListNetworkFirewallPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkFirewallPolicy(
-      google::cloud::cpp::compute::network_firewall_policies::v1::
-          PatchNetworkFirewallPolicyRequest const& request);
+  PatchFirewallPolicy(google::cloud::cpp::compute::network_firewall_policies::
+                          v1::PatchFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchRule(google::cloud::cpp::compute::network_firewall_policies::v1::

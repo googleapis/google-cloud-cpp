@@ -51,10 +51,9 @@ TargetSslProxiesRestConnectionImpl::DeleteTargetSslProxy(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -65,13 +64,13 @@ TargetSslProxiesRestConnectionImpl::DeleteTargetSslProxy(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -84,13 +83,13 @@ TargetSslProxiesRestConnectionImpl::DeleteTargetSslProxy(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -120,10 +119,9 @@ TargetSslProxiesRestConnectionImpl::InsertTargetSslProxy(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -134,13 +132,13 @@ TargetSslProxiesRestConnectionImpl::InsertTargetSslProxy(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -153,13 +151,13 @@ TargetSslProxiesRestConnectionImpl::InsertTargetSslProxy(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -210,10 +208,9 @@ TargetSslProxiesRestConnectionImpl::SetBackendService(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -224,13 +221,13 @@ TargetSslProxiesRestConnectionImpl::SetBackendService(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -243,13 +240,13 @@ TargetSslProxiesRestConnectionImpl::SetBackendService(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -263,10 +260,9 @@ TargetSslProxiesRestConnectionImpl::SetCertificateMap(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -277,13 +273,13 @@ TargetSslProxiesRestConnectionImpl::SetCertificateMap(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -296,13 +292,13 @@ TargetSslProxiesRestConnectionImpl::SetCertificateMap(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -316,10 +312,9 @@ TargetSslProxiesRestConnectionImpl::SetProxyHeader(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -330,13 +325,13 @@ TargetSslProxiesRestConnectionImpl::SetProxyHeader(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -349,13 +344,13 @@ TargetSslProxiesRestConnectionImpl::SetProxyHeader(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -369,10 +364,9 @@ TargetSslProxiesRestConnectionImpl::SetSslCertificates(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -383,13 +377,13 @@ TargetSslProxiesRestConnectionImpl::SetSslCertificates(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -402,13 +396,13 @@ TargetSslProxiesRestConnectionImpl::SetSslCertificates(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -422,10 +416,9 @@ TargetSslProxiesRestConnectionImpl::SetSslPolicy(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -436,13 +429,13 @@ TargetSslProxiesRestConnectionImpl::SetSslPolicy(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -455,13 +448,13 @@ TargetSslProxiesRestConnectionImpl::SetSslPolicy(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });

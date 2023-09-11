@@ -39,7 +39,7 @@ service RegionNotificationEndpoints {
 
   // Deletes the specified NotificationEndpoint in the given region
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/delete
-  rpc DeleteRegionNotificationEndpoint(DeleteRegionNotificationEndpointRequest)
+  rpc DeleteNotificationEndpoint(DeleteNotificationEndpointRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints/{notification_endpoint}"
@@ -51,7 +51,7 @@ service RegionNotificationEndpoints {
 
   // Returns the specified NotificationEndpoint resource in the given region.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/get
-  rpc GetRegionNotificationEndpoint(GetRegionNotificationEndpointRequest)
+  rpc GetNotificationEndpoint(GetNotificationEndpointRequest)
       returns (google.cloud.cpp.compute.v1.NotificationEndpoint) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints/{notification_endpoint}"
@@ -63,7 +63,7 @@ service RegionNotificationEndpoints {
   // Create a NotificationEndpoint in the specified project in the given region
   // using the parameters that are included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionNotificationEndpoints/insert
-  rpc InsertRegionNotificationEndpoint(InsertRegionNotificationEndpointRequest)
+  rpc InsertNotificationEndpoint(InsertNotificationEndpointRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/notificationEndpoints"
@@ -85,8 +85,8 @@ service RegionNotificationEndpoints {
   }
 }
 
-// Request message for DeleteRegionNotificationEndpoint.
-message DeleteRegionNotificationEndpointRequest {
+// Request message for DeleteNotificationEndpoint.
+message DeleteNotificationEndpointRequest {
   // Name of the NotificationEndpoint resource to delete.
   string notification_endpoint = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -115,8 +115,8 @@ message DeleteRegionNotificationEndpointRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetRegionNotificationEndpoint.
-message GetRegionNotificationEndpointRequest {
+// Request message for GetNotificationEndpoint.
+message GetNotificationEndpointRequest {
   // Name of the NotificationEndpoint resource to return.
   string notification_endpoint = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -127,8 +127,8 @@ message GetRegionNotificationEndpointRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionNotificationEndpoint.
-message InsertRegionNotificationEndpointRequest {
+// Request message for InsertNotificationEndpoint.
+message InsertNotificationEndpointRequest {
   // The NotificationEndpoint for this request.
   optional google.cloud.cpp.compute.v1.NotificationEndpoint
       notification_endpoint_resource = 1 [json_name = "__json_request_body"];

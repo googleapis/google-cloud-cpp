@@ -191,31 +191,28 @@ class RegionHealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthCheck(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          DeleteRegionHealthCheckRequest const& request);
+  DeleteHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                        DeleteHealthCheckRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetRegionHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
-                           GetRegionHealthCheckRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
+      google::cloud::cpp::compute::region_health_checks::v1::
+          GetHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthCheck(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          InsertRegionHealthCheckRequest const& request);
+  InsertHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                        InsertHealthCheckRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(google::cloud::cpp::compute::region_health_checks::v1::
                              ListRegionHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
-                             PatchRegionHealthCheckRequest const& request);
+  PatchHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                       PatchHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionHealthCheck(
-      google::cloud::cpp::compute::region_health_checks::v1::
-          UpdateRegionHealthCheckRequest const& request);
+  UpdateHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
+                        UpdateHealthCheckRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

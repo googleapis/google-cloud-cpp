@@ -121,14 +121,14 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L89}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNotificationEndpoint(std::string const& project,
-                                   std::string const& region,
-                                   std::string const& notification_endpoint,
-                                   Options opts = {});
+  DeleteNotificationEndpoint(std::string const& project,
+                             std::string const& region,
+                             std::string const& notification_endpoint,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -138,7 +138,7 @@ class RegionNotificationEndpointsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointRequest].
+  ///     [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteNotificationEndpointRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -161,13 +161,13 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteRegionNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L89}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.DeleteNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L89}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNotificationEndpoint(
+  DeleteNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteRegionNotificationEndpointRequest const& request,
+          DeleteNotificationEndpointRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -191,15 +191,14 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L119}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L119}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_082.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-  GetRegionNotificationEndpoint(std::string const& project,
-                                std::string const& region,
-                                std::string const& notification_endpoint,
-                                Options opts = {});
+  GetNotificationEndpoint(std::string const& project, std::string const& region,
+                          std::string const& notification_endpoint,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -209,7 +208,7 @@ class RegionNotificationEndpointsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointRequest].
+  ///     [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -225,14 +224,14 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetRegionNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L119}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L119}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_082.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-  GetRegionNotificationEndpoint(
+  GetNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          GetRegionNotificationEndpointRequest const& request,
+          GetNotificationEndpointRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -264,11 +263,11 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L131}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNotificationEndpoint(
+  InsertNotificationEndpoint(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::NotificationEndpoint const&
           notification_endpoint_resource,
@@ -283,7 +282,7 @@ class RegionNotificationEndpointsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointRequest].
+  ///     [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertNotificationEndpointRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -306,13 +305,13 @@ class RegionNotificationEndpointsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertRegionNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L131}
+  /// [google.cloud.cpp.compute.region_notification_endpoints.v1.InsertNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNotificationEndpoint(
+  InsertNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertRegionNotificationEndpointRequest const& request,
+          InsertNotificationEndpointRequest const& request,
       Options opts = {});
 
   // clang-format off

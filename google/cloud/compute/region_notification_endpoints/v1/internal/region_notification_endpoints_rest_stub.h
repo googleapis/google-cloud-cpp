@@ -39,24 +39,24 @@ class RegionNotificationEndpointsRestStub {
   virtual ~RegionNotificationEndpointsRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionNotificationEndpoint(
+  AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteRegionNotificationEndpointRequest const& request) = 0;
+          DeleteNotificationEndpointRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-  GetRegionNotificationEndpoint(
+  GetNotificationEndpoint(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          GetRegionNotificationEndpointRequest const& request) = 0;
+          GetNotificationEndpointRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionNotificationEndpoint(
+  AsyncInsertNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertRegionNotificationEndpointRequest const& request) = 0;
+          InsertNotificationEndpointRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>
   ListRegionNotificationEndpoints(
@@ -69,13 +69,13 @@ class RegionNotificationEndpointsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultRegionNotificationEndpointsRestStub
@@ -89,24 +89,24 @@ class DefaultRegionNotificationEndpointsRestStub
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionNotificationEndpoint(
+  AsyncDeleteNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteRegionNotificationEndpointRequest const& request) override;
+          DeleteNotificationEndpointRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-  GetRegionNotificationEndpoint(
+  GetNotificationEndpoint(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          GetRegionNotificationEndpointRequest const& request) override;
+          GetNotificationEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionNotificationEndpoint(
+  AsyncInsertNotificationEndpoint(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertRegionNotificationEndpointRequest const& request) override;
+          InsertNotificationEndpointRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>
   ListRegionNotificationEndpoints(
@@ -119,13 +119,13 @@ class DefaultRegionNotificationEndpointsRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

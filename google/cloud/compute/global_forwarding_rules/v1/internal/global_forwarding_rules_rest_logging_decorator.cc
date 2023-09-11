@@ -35,49 +35,49 @@ GlobalForwardingRulesRestLogging::GlobalForwardingRulesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestLogging::AsyncDeleteGlobalForwardingRule(
+GlobalForwardingRulesRestLogging::AsyncDeleteForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRuleRequest const& request) {
+        DeleteForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 DeleteGlobalForwardingRuleRequest const& request) {
-        return child_->AsyncDeleteGlobalForwardingRule(
-            cq, std::move(rest_context), request);
+                 DeleteForwardingRuleRequest const& request) {
+        return child_->AsyncDeleteForwardingRule(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesRestLogging::GetGlobalForwardingRule(
+GlobalForwardingRulesRestLogging::GetForwardingRule(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRuleRequest const& request) {
+        GetForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 GetGlobalForwardingRuleRequest const& request) {
-        return child_->GetGlobalForwardingRule(rest_context, request);
+                 GetForwardingRuleRequest const& request) {
+        return child_->GetForwardingRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestLogging::AsyncInsertGlobalForwardingRule(
+GlobalForwardingRulesRestLogging::AsyncInsertForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRuleRequest const& request) {
+        InsertForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 InsertGlobalForwardingRuleRequest const& request) {
-        return child_->AsyncInsertGlobalForwardingRule(
-            cq, std::move(rest_context), request);
+                 InsertForwardingRuleRequest const& request) {
+        return child_->AsyncInsertForwardingRule(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -97,18 +97,18 @@ GlobalForwardingRulesRestLogging::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesRestLogging::AsyncPatchGlobalForwardingRule(
+GlobalForwardingRulesRestLogging::AsyncPatchForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRuleRequest const& request) {
+        PatchForwardingRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_forwarding_rules::v1::
-                 PatchGlobalForwardingRuleRequest const& request) {
-        return child_->AsyncPatchGlobalForwardingRule(
-            cq, std::move(rest_context), request);
+                 PatchForwardingRuleRequest const& request) {
+        return child_->AsyncPatchForwardingRule(cq, std::move(rest_context),
+                                                request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -150,12 +150,12 @@ GlobalForwardingRulesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -165,12 +165,12 @@ future<Status> GlobalForwardingRulesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -39,13 +39,13 @@ class GlobalOrganizationOperationsConnectionIdempotencyPolicy {
       GlobalOrganizationOperationsConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteGlobalOrganizationOperation(
+  virtual google::cloud::Idempotency DeleteOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationRequest const& request);
+          DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency GetGlobalOrganizationOperation(
+  virtual google::cloud::Idempotency GetOperation(
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationRequest const& request);
+          GetOperationRequest const& request);
 
   virtual google::cloud::Idempotency ListGlobalOrganizationOperations(
       google::cloud::cpp::compute::global_organization_operations::v1::

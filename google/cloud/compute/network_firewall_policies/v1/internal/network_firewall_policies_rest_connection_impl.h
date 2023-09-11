@@ -67,14 +67,13 @@ class NetworkFirewallPoliciesRestConnectionImpl
           CloneRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkFirewallPolicy(
+  DeleteFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          DeleteNetworkFirewallPolicyRequest const& request) override;
+          DeleteFirewallPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetNetworkFirewallPolicy(
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          GetNetworkFirewallPolicyRequest const& request) override;
+          GetFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
   GetAssociation(google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -89,9 +88,9 @@ class NetworkFirewallPoliciesRestConnectionImpl
           GetRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkFirewallPolicy(
+  InsertFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          InsertNetworkFirewallPolicyRequest const& request) override;
+          InsertFirewallPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
   ListNetworkFirewallPolicies(
@@ -99,9 +98,9 @@ class NetworkFirewallPoliciesRestConnectionImpl
           ListNetworkFirewallPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkFirewallPolicy(
+  PatchFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          PatchNetworkFirewallPolicyRequest const& request) override;
+          PatchFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::

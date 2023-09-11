@@ -41,34 +41,32 @@ RegionSslPoliciesRestMetadata::RegionSslPoliciesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesRestMetadata::AsyncDeleteRegionSslPolicy(
+RegionSslPoliciesRestMetadata::AsyncDeleteSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteRegionSslPolicyRequest const& request) {
+        DeleteSslPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionSslPolicy(cq, std::move(rest_context),
-                                            request);
+  return child_->AsyncDeleteSslPolicy(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesRestMetadata::GetRegionSslPolicy(
+RegionSslPoliciesRestMetadata::GetSslPolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetRegionSslPolicyRequest const& request) {
+        GetSslPolicyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionSslPolicy(rest_context, request);
+  return child_->GetSslPolicy(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesRestMetadata::AsyncInsertRegionSslPolicy(
+RegionSslPoliciesRestMetadata::AsyncInsertSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertRegionSslPolicyRequest const& request) {
+        InsertSslPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionSslPolicy(cq, std::move(rest_context),
-                                            request);
+  return child_->AsyncInsertSslPolicy(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
@@ -91,14 +89,13 @@ RegionSslPoliciesRestMetadata::ListAvailableFeatures(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesRestMetadata::AsyncPatchRegionSslPolicy(
+RegionSslPoliciesRestMetadata::AsyncPatchSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchRegionSslPolicyRequest const& request) {
+        PatchSslPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRegionSslPolicy(cq, std::move(rest_context),
-                                           request);
+  return child_->AsyncPatchSslPolicy(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -106,7 +103,7 @@ RegionSslPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -115,7 +112,7 @@ future<Status> RegionSslPoliciesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -59,10 +59,10 @@ DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
                       request.return_partial_success() ? "1" : "0")});
 }
 
-Status DefaultGlobalOperationsRestStub::DeleteGlobalOperation(
+Status DefaultGlobalOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationRequest const& request) {
+        DeleteOperationRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -71,10 +71,10 @@ Status DefaultGlobalOperationsRestStub::DeleteGlobalOperation(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DefaultGlobalOperationsRestStub::GetGlobalOperation(
+DefaultGlobalOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationRequest const& request) {
+        GetOperationRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

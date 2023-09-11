@@ -55,19 +55,19 @@ class GlobalPublicDelegatedPrefixesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalPublicDelegatedPrefix(
+  DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          DeleteGlobalPublicDelegatedPrefixRequest const& request) override;
+          DeletePublicDelegatedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-  GetGlobalPublicDelegatedPrefix(
+  GetPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          GetGlobalPublicDelegatedPrefixRequest const& request) override;
+          GetPublicDelegatedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalPublicDelegatedPrefix(
+  InsertPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          InsertGlobalPublicDelegatedPrefixRequest const& request) override;
+          InsertPublicDelegatedPrefixRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   ListGlobalPublicDelegatedPrefixes(
@@ -75,9 +75,9 @@ class GlobalPublicDelegatedPrefixesRestConnectionImpl
           ListGlobalPublicDelegatedPrefixesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchGlobalPublicDelegatedPrefix(
+  PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-          PatchGlobalPublicDelegatedPrefixRequest const& request) override;
+          PatchPublicDelegatedPrefixRequest const& request) override;
 
  private:
   static std::unique_ptr<compute_global_public_delegated_prefixes_v1::
