@@ -524,6 +524,15 @@ CloudChannelServiceClient::ListPurchasableOffers(
   return connection_->ListPurchasableOffers(std::move(request));
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceClient::QueryEligibleBillingAccounts(
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryEligibleBillingAccounts(request);
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceClient::RegisterSubscriber(
     google::cloud::channel::v1::RegisterSubscriberRequest const& request,

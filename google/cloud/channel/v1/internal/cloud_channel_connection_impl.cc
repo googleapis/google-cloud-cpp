@@ -1183,6 +1183,23 @@ CloudChannelServiceConnectionImpl::ListPurchasableOffers(
       });
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceConnectionImpl::QueryEligibleBillingAccounts(
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryEligibleBillingAccounts(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+              request) {
+        return stub_->QueryEligibleBillingAccounts(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceConnectionImpl::RegisterSubscriber(
     google::cloud::channel::v1::RegisterSubscriberRequest const& request) {

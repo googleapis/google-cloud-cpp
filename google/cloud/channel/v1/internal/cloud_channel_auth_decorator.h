@@ -281,6 +281,12 @@ class CloudChannelServiceAuth : public CloudChannelServiceStub {
       google::cloud::channel::v1::ListPurchasableOffersRequest const& request)
       override;
 
+  StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+  QueryEligibleBillingAccounts(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+          request) override;
+
   StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
   RegisterSubscriber(
       grpc::ClientContext& context,

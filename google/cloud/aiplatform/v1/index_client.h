@@ -114,7 +114,7 @@ class IndexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L121}
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
@@ -152,7 +152,7 @@ class IndexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L121}
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
@@ -180,7 +180,7 @@ class IndexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L148}
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
@@ -210,7 +210,7 @@ class IndexServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L148}
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
@@ -245,7 +245,7 @@ class IndexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   /// [google.cloud.aiplatform.v1.ListIndexesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L162}
   ///
   // clang-format on
@@ -284,7 +284,7 @@ class IndexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   /// [google.cloud.aiplatform.v1.ListIndexesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L162}
   ///
   // clang-format on
@@ -320,7 +320,7 @@ class IndexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L205}
   ///
   // clang-format on
@@ -358,7 +358,7 @@ class IndexServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L35}
+  /// [google.cloud.aiplatform.v1.Index]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L205}
   ///
   // clang-format on
@@ -398,7 +398,7 @@ class IndexServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L228}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.Index.deployed_indexes]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L85}
+  /// [google.cloud.aiplatform.v1.Index.deployed_indexes]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L86}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -439,7 +439,7 @@ class IndexServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteIndexRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_service.proto#L228}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.Index.deployed_indexes]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L85}
+  /// [google.cloud.aiplatform.v1.Index.deployed_indexes]: @googleapis_reference_link{google/cloud/aiplatform/v1/index.proto#L86}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>

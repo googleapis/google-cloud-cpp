@@ -428,7 +428,7 @@ class VizierServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.SuggestTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L290}
-  /// [google.cloud.aiplatform.v1.SuggestTrialsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L313}
+  /// [google.cloud.aiplatform.v1.SuggestTrialsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L351}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
@@ -456,7 +456,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L342}
+  /// [google.cloud.aiplatform.v1.CreateTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L380}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -487,7 +487,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L342}
+  /// [google.cloud.aiplatform.v1.CreateTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L380}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -515,7 +515,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L358}
+  /// [google.cloud.aiplatform.v1.GetTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L396}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -545,7 +545,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L358}
+  /// [google.cloud.aiplatform.v1.GetTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L396}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -581,7 +581,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L372}
+  /// [google.cloud.aiplatform.v1.ListTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L410}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -620,7 +620,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L372}
+  /// [google.cloud.aiplatform.v1.ListTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L410}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -652,7 +652,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AddTrialMeasurementRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L405}
+  /// [google.cloud.aiplatform.v1.AddTrialMeasurementRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L443}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -683,7 +683,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CompleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L422}
+  /// [google.cloud.aiplatform.v1.CompleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L460}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -709,7 +709,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L449}
+  /// [google.cloud.aiplatform.v1.DeleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L487}
   ///
   // clang-format on
   Status DeleteTrial(std::string const& name, Options opts = {});
@@ -735,7 +735,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L449}
+  /// [google.cloud.aiplatform.v1.DeleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L487}
   ///
   // clang-format on
   Status DeleteTrial(
@@ -775,8 +775,8 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CheckTrialEarlyStoppingStateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L463}
-  /// [google.cloud.aiplatform.v1.CheckTrialEarlyStoppingStateResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L477}
+  /// [google.cloud.aiplatform.v1.CheckTrialEarlyStoppingStateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L501}
+  /// [google.cloud.aiplatform.v1.CheckTrialEarlyStoppingStateResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L515}
   ///
   // clang-format on
   future<StatusOr<
@@ -809,7 +809,7 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StopTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L498}
+  /// [google.cloud.aiplatform.v1.StopTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L536}
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L81}
   ///
   // clang-format on
@@ -838,8 +838,8 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListOptimalTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L512}
-  /// [google.cloud.aiplatform.v1.ListOptimalTrialsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L524}
+  /// [google.cloud.aiplatform.v1.ListOptimalTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L550}
+  /// [google.cloud.aiplatform.v1.ListOptimalTrialsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L562}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
@@ -871,8 +871,8 @@ class VizierServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListOptimalTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L512}
-  /// [google.cloud.aiplatform.v1.ListOptimalTrialsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L524}
+  /// [google.cloud.aiplatform.v1.ListOptimalTrialsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L550}
+  /// [google.cloud.aiplatform.v1.ListOptimalTrialsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L562}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>

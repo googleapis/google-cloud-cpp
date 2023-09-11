@@ -657,6 +657,20 @@ DefaultCloudChannelServiceStub::ListPurchasableOffers(
   return response;
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+DefaultCloudChannelServiceStub::QueryEligibleBillingAccounts(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  google::cloud::channel::v1::QueryEligibleBillingAccountsResponse response;
+  auto status = grpc_stub_->QueryEligibleBillingAccounts(&client_context,
+                                                         request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 DefaultCloudChannelServiceStub::RegisterSubscriber(
     grpc::ClientContext& client_context,

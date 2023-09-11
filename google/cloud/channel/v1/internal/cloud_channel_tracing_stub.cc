@@ -623,6 +623,20 @@ CloudChannelServiceTracingStub::ListPurchasableOffers(
                            child_->ListPurchasableOffers(context, request));
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceTracingStub::QueryEligibleBillingAccounts(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelService",
+                             "QueryEligibleBillingAccounts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->QueryEligibleBillingAccounts(context, request));
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceTracingStub::RegisterSubscriber(
     grpc::ClientContext& context,

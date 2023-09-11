@@ -635,6 +635,21 @@ CloudChannelServiceLogging::ListPurchasableOffers(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceLogging::QueryEligibleBillingAccounts(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+              request) {
+        return child_->QueryEligibleBillingAccounts(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceLogging::RegisterSubscriber(
     grpc::ClientContext& context,

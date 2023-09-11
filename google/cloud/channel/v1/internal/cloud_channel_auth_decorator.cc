@@ -553,6 +553,16 @@ CloudChannelServiceAuth::ListPurchasableOffers(
   return child_->ListPurchasableOffers(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceAuth::QueryEligibleBillingAccounts(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->QueryEligibleBillingAccounts(context, request);
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceAuth::RegisterSubscriber(
     grpc::ClientContext& context,

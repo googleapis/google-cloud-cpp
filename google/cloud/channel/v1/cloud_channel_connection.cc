@@ -351,6 +351,12 @@ CloudChannelServiceConnection::ListPurchasableOffers(
       StreamRange<google::cloud::channel::v1::PurchasableOffer>>();
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceConnection::QueryEligibleBillingAccounts(
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceConnection::RegisterSubscriber(
     google::cloud::channel::v1::RegisterSubscriberRequest const&) {

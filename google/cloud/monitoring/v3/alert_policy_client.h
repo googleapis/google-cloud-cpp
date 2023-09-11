@@ -99,8 +99,9 @@ class AlertPolicyServiceClient {
   ///
   /// Lists the existing alerting policies for the workspace.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name)
-  ///  whose alert policies are to be listed. The format is:
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) whose
+  ///  alert policies are to be listed. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///  @n
@@ -131,8 +132,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L138}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L153}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
@@ -170,8 +171,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L138}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.ListAlertPoliciesRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L153}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
@@ -198,8 +199,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L125}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L140}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
@@ -228,8 +229,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L125}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.GetAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L140}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
@@ -240,8 +241,13 @@ class AlertPolicyServiceClient {
   ///
   /// Creates a new alerting policy.
   ///
-  /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) in
-  ///  which to create the alerting policy. The format is:
+  /// Design your application to single-thread API calls that modify the state of
+  /// alerting policies in a single project. This includes calls to
+  /// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
+  ///
+  /// @param name  Required. The
+  ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) in which
+  ///  to create the alerting policy. The format is:
   ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///  @n
@@ -252,9 +258,9 @@ class AlertPolicyServiceClient {
   ///  a normalized representation of this name as a prefix but adds a suffix of
   ///  the form `/alertPolicies/[ALERT_POLICY_ID]`, identifying the policy in the
   ///  container.
-  /// @param alert_policy  Required. The requested alerting policy. You should omit the `name` field in this
-  ///  policy. The name will be returned in the new policy, including
-  ///  a new `[ALERT_POLICY_ID]` value.
+  /// @param alert_policy  Required. The requested alerting policy. You should omit the `name` field
+  ///  in this policy. The name will be returned in the new policy, including a
+  ///  new `[ALERT_POLICY_ID]` value.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -268,8 +274,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L98}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L112}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
@@ -280,6 +286,10 @@ class AlertPolicyServiceClient {
   // clang-format off
   ///
   /// Creates a new alerting policy.
+  ///
+  /// Design your application to single-thread API calls that modify the state of
+  /// alerting policies in a single project. This includes calls to
+  /// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -300,8 +310,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L98}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.CreateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L112}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
@@ -311,6 +321,10 @@ class AlertPolicyServiceClient {
   // clang-format off
   ///
   /// Deletes an alerting policy.
+  ///
+  /// Design your application to single-thread API calls that modify the state of
+  /// alerting policies in a single project. This includes calls to
+  /// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
   ///
   /// @param name  Required. The alerting policy to delete. The format is:
   ///  @n
@@ -328,7 +342,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L228}
+  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L244}
   ///
   // clang-format on
   Status DeleteAlertPolicy(std::string const& name, Options opts = {});
@@ -336,6 +350,10 @@ class AlertPolicyServiceClient {
   // clang-format off
   ///
   /// Deletes an alerting policy.
+  ///
+  /// Design your application to single-thread API calls that modify the state of
+  /// alerting policies in a single project. This includes calls to
+  /// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -354,7 +372,7 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L228}
+  /// [google.monitoring.v3.DeleteAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L244}
   ///
   // clang-format on
   Status DeleteAlertPolicy(
@@ -367,6 +385,10 @@ class AlertPolicyServiceClient {
   /// a new one or replace only certain fields in the current alerting policy by
   /// specifying the fields to be updated via `updateMask`. Returns the
   /// updated alerting policy.
+  ///
+  /// Design your application to single-thread API calls that modify the state of
+  /// alerting policies in a single project. This includes calls to
+  /// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
   ///
   /// @param update_mask  Optional. A list of alerting policy field names. If this field is not
   ///  empty, each listed field in the existing alerting policy is set to the
@@ -406,8 +428,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L196}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L212}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
@@ -421,6 +443,10 @@ class AlertPolicyServiceClient {
   /// a new one or replace only certain fields in the current alerting policy by
   /// specifying the fields to be updated via `updateMask`. Returns the
   /// updated alerting policy.
+  ///
+  /// Design your application to single-thread API calls that modify the state of
+  /// alerting policies in a single project. This includes calls to
+  /// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -441,8 +467,8 @@ class AlertPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
-  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L196}
+  /// [google.monitoring.v3.AlertPolicy]: @googleapis_reference_link{google/monitoring/v3/alert.proto#L40}
+  /// [google.monitoring.v3.UpdateAlertPolicyRequest]: @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L212}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(

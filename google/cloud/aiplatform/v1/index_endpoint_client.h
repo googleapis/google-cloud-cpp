@@ -116,7 +116,7 @@ class IndexEndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L143}
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
@@ -156,7 +156,7 @@ class IndexEndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L143}
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
@@ -185,7 +185,7 @@ class IndexEndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L166}
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
@@ -215,7 +215,7 @@ class IndexEndpointServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L166}
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
@@ -250,7 +250,7 @@ class IndexEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   /// [google.cloud.aiplatform.v1.ListIndexEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L180}
   ///
   // clang-format on
@@ -289,7 +289,7 @@ class IndexEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   /// [google.cloud.aiplatform.v1.ListIndexEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L180}
   ///
   // clang-format on
@@ -317,7 +317,7 @@ class IndexEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L241}
   ///
   // clang-format on
@@ -348,7 +348,7 @@ class IndexEndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L35}
+  /// [google.cloud.aiplatform.v1.IndexEndpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateIndexEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/index_endpoint_service.proto#L241}
   ///
   // clang-format on

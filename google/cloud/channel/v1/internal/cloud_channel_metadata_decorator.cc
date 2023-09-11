@@ -468,6 +468,16 @@ CloudChannelServiceMetadata::ListPurchasableOffers(
   return child_->ListPurchasableOffers(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
+CloudChannelServiceMetadata::QueryEligibleBillingAccounts(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  SetMetadata(context, absl::StrCat("customer=",
+                                    internal::UrlEncode(request.customer())));
+  return child_->QueryEligibleBillingAccounts(context, request);
+}
+
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceMetadata::RegisterSubscriber(
     grpc::ClientContext& context,
