@@ -1,4 +1,4 @@
-// Copyright 2023 Google Inc.
+// Copyright 2023 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,21 +31,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::bigquery_v2_minimal_internal::Dataset;
-using ::google::cloud::bigquery_v2_minimal_internal::DatasetClient;
-using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResults;
-using ::google::cloud::bigquery_v2_minimal_internal::Job;
-using ::google::cloud::bigquery_v2_minimal_internal::JobClient;
-using ::google::cloud::bigquery_v2_minimal_internal::ListFormatDataset;
-using ::google::cloud::bigquery_v2_minimal_internal::ListFormatJob;
-using ::google::cloud::bigquery_v2_minimal_internal::ListFormatTable;
-using ::google::cloud::bigquery_v2_minimal_internal::PostQueryResults;
-using ::google::cloud::bigquery_v2_minimal_internal::Project;
-using ::google::cloud::bigquery_v2_minimal_internal::ProjectClient;
-using ::google::cloud::bigquery_v2_minimal_internal::Table;
-using ::google::cloud::bigquery_v2_minimal_internal::TableClient;
-
-/// The result of a single operation.
+/**
+ *  The result of a single operation.
+ */
 struct OperationResult {
   google::cloud::Status status;
   std::chrono::microseconds latency;
@@ -101,15 +89,17 @@ class DatasetBenchmark : public Benchmark {
   explicit DatasetBenchmark(DatasetConfig config);
   ~DatasetBenchmark() = default;
 
-  StatusOr<Dataset> GetDataset();
-  StreamRange<ListFormatDataset> ListDatasets();
+  StatusOr<bigquery_v2_minimal_internal::Dataset> GetDataset();
+  StreamRange<bigquery_v2_minimal_internal::ListFormatDataset> ListDatasets();
 
   DatasetConfig GetConfig() { return config_; }
-  std::shared_ptr<DatasetClient> GetClient() { return dataset_client_; }
+  std::shared_ptr<bigquery_v2_minimal_internal::DatasetClient> GetClient() {
+    return dataset_client_;
+  }
 
  private:
   DatasetConfig config_;
-  std::shared_ptr<DatasetClient> dataset_client_;
+  std::shared_ptr<bigquery_v2_minimal_internal::DatasetClient> dataset_client_;
 };
 
 class JobBenchmark : public Benchmark {
@@ -117,18 +107,20 @@ class JobBenchmark : public Benchmark {
   explicit JobBenchmark(JobConfig config);
   ~JobBenchmark() = default;
 
-  StatusOr<Job> GetJob();
-  StreamRange<ListFormatJob> ListJobs();
-  StatusOr<Job> InsertJob();
-  StatusOr<PostQueryResults> Query();
-  StatusOr<GetQueryResults> QueryResults();
+  StatusOr<bigquery_v2_minimal_internal::Job> GetJob();
+  StreamRange<bigquery_v2_minimal_internal::ListFormatJob> ListJobs();
+  StatusOr<bigquery_v2_minimal_internal::Job> InsertJob();
+  StatusOr<bigquery_v2_minimal_internal::PostQueryResults> Query();
+  StatusOr<bigquery_v2_minimal_internal::GetQueryResults> QueryResults();
 
   JobConfig GetConfig() { return config_; }
-  std::shared_ptr<JobClient> GetClient() { return job_client_; }
+  std::shared_ptr<bigquery_v2_minimal_internal::JobClient> GetClient() {
+    return job_client_;
+  }
 
  private:
   JobConfig config_;
-  std::shared_ptr<JobClient> job_client_;
+  std::shared_ptr<bigquery_v2_minimal_internal::JobClient> job_client_;
 };
 
 class TableBenchmark : public Benchmark {
@@ -136,15 +128,17 @@ class TableBenchmark : public Benchmark {
   explicit TableBenchmark(TableConfig config);
   ~TableBenchmark() = default;
 
-  StatusOr<Table> GetTable();
-  StreamRange<ListFormatTable> ListTables();
+  StatusOr<bigquery_v2_minimal_internal::Table> GetTable();
+  StreamRange<bigquery_v2_minimal_internal::ListFormatTable> ListTables();
 
   TableConfig GetConfig() { return config_; }
-  std::shared_ptr<TableClient> GetClient() { return table_client_; }
+  std::shared_ptr<bigquery_v2_minimal_internal::TableClient> GetClient() {
+    return table_client_;
+  }
 
  private:
   TableConfig config_;
-  std::shared_ptr<TableClient> table_client_;
+  std::shared_ptr<bigquery_v2_minimal_internal::TableClient> table_client_;
 };
 
 class ProjectBenchmark : public Benchmark {
@@ -152,14 +146,16 @@ class ProjectBenchmark : public Benchmark {
   explicit ProjectBenchmark(Config config);
   ~ProjectBenchmark() = default;
 
-  StreamRange<Project> ListProjects();
+  StreamRange<bigquery_v2_minimal_internal::Project> ListProjects();
 
   Config GetConfig() { return config_; }
-  std::shared_ptr<ProjectClient> GetClient() { return project_client_; }
+  std::shared_ptr<bigquery_v2_minimal_internal::ProjectClient> GetClient() {
+    return project_client_;
+  }
 
  private:
   Config config_;
-  std::shared_ptr<ProjectClient> project_client_;
+  std::shared_ptr<bigquery_v2_minimal_internal::ProjectClient> project_client_;
 };
 
 /**

@@ -1,4 +1,4 @@
-// Copyright 2023 Google Inc.
+// Copyright 2023 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,6 +22,10 @@ namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_internal::DatasetClient;
+using ::google::cloud::bigquery_v2_minimal_internal::JobClient;
+using ::google::cloud::bigquery_v2_minimal_internal::ProjectClient;
+using ::google::cloud::bigquery_v2_minimal_internal::TableClient;
 using ::testing::HasSubstr;
 
 TEST(DatasetBenchmarkTest, Create) {
@@ -163,12 +167,13 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   Benchmark::PrintLatencyResult(os, "PrintLatencyResult", "Query", result);
   std::string output = os.str();
 
-  // The output includes "XX ops/s" where XX is the operations count.
-  EXPECT_THAT(output, HasSubstr("100 ops/s"));
-
-  EXPECT_THAT(output, HasSubstr("p0=100.000us"));
-  EXPECT_THAT(output, HasSubstr("p95=9.500ms"));
-  EXPECT_THAT(output, HasSubstr("p100=10.000ms"));
+  EXPECT_THAT(output, HasSubstr("Query Throughput = 100 ops/s"));
+  EXPECT_THAT(output, HasSubstr("Latency And Status: p0=100us"));
+  EXPECT_THAT(output, HasSubstr("p50=5.1ms"));
+  EXPECT_THAT(output, HasSubstr("p90=9ms"));
+  EXPECT_THAT(output, HasSubstr("p95=9.5ms"));
+  EXPECT_THAT(output, HasSubstr("p99=9.9ms"));
+  EXPECT_THAT(output, HasSubstr("p100=10ms"));
   EXPECT_THAT(output, HasSubstr("status=OK"));
 }
 

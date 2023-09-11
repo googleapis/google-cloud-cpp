@@ -1,4 +1,4 @@
-// Copyright 2023 Google Inc.
+// Copyright 2023 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,15 +15,56 @@
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/stream_range.h"
+#include "absl/time/time.h"
 #include <chrono>
 #include <future>
 #include <iomanip>
 #include <sstream>
 
+namespace google {
+namespace cloud {
+namespace bigquery_v2_minimal_benchmarks {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
+using ::google::cloud::bigquery_v2_minimal_internal::Dataset;
+using ::google::cloud::bigquery_v2_minimal_internal::DatasetClient;
+using ::google::cloud::bigquery_v2_minimal_internal::
+    DatasetConnectionPoolSizeOption;
+using ::google::cloud::bigquery_v2_minimal_internal::GetDatasetRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::GetJobRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResults;
+using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::GetTableRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::InsertJobRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::Job;
+using ::google::cloud::bigquery_v2_minimal_internal::JobClient;
+using ::google::cloud::bigquery_v2_minimal_internal::ListDatasetsRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::ListFormatDataset;
+using ::google::cloud::bigquery_v2_minimal_internal::ListFormatJob;
+using ::google::cloud::bigquery_v2_minimal_internal::ListFormatTable;
+using ::google::cloud::bigquery_v2_minimal_internal::ListJobsRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::ListProjectsRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::ListTablesRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::MakeBigQueryJobConnection;
+using ::google::cloud::bigquery_v2_minimal_internal::MakeDatasetConnection;
+using ::google::cloud::bigquery_v2_minimal_internal::MakeProjectConnection;
+using ::google::cloud::bigquery_v2_minimal_internal::MakeTableConnection;
+using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::PostQueryResults;
+using ::google::cloud::bigquery_v2_minimal_internal::Project;
+using ::google::cloud::bigquery_v2_minimal_internal::ProjectClient;
+using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::Table;
+using ::google::cloud::bigquery_v2_minimal_internal::TableClient;
+using ::google::cloud::internal::MakeStreamRange;
+
 namespace {
 double const kResultPercentiles[] = {0, 50, 90, 95, 99, 99.9, 100};
+
 std::vector<std::string> StrSplit(std::string const& str, char delimiter) {
   std::stringstream ss(str);
   std::vector<std::string> res;
@@ -33,6 +74,7 @@ std::vector<std::string> StrSplit(std::string const& str, char delimiter) {
   }
   return res;
 }
+
 std::chrono::system_clock::time_point StrToTimepoint(std::string const& str) {
   auto millis = std::stoi(str);
   std::chrono::system_clock::time_point tp =
@@ -40,40 +82,12 @@ std::chrono::system_clock::time_point StrToTimepoint(std::string const& str) {
       std::chrono::milliseconds(millis);
   return tp;
 }
+
 std::chrono::milliseconds ToChronoMillis(int m) {
   return std::chrono::milliseconds(m);
 }
+
 }  // anonymous namespace
-
-namespace google {
-namespace cloud {
-namespace bigquery_v2_minimal_benchmarks {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
-using ::google::cloud::bigquery_v2_minimal_internal::
-    DatasetConnectionPoolSizeOption;
-using ::google::cloud::bigquery_v2_minimal_internal::GetDatasetRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::GetJobRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::GetTableRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::InsertJobRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::ListDatasetsRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::ListJobsRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::ListProjectsRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::ListTablesRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::MakeBigQueryJobConnection;
-using ::google::cloud::bigquery_v2_minimal_internal::MakeDatasetConnection;
-using ::google::cloud::bigquery_v2_minimal_internal::MakeProjectConnection;
-using ::google::cloud::bigquery_v2_minimal_internal::MakeTableConnection;
-using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
-using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
-using ::google::cloud::internal::MakeStreamRange;
-
-auto invalid_argument = [](std::string msg) {
-  return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
-                               std::move(msg));
-};
 
 void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
                                       std::string const& phase,
@@ -99,7 +113,7 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
   auto const nsamples = result.operations.size();
   auto ops_throughput = 1000 * nsamples / result.elapsed.count();
   os << "# Test=" << test_name << ", " << operation
-     << " Throughput = " << ops_throughput << " ops/s, Latency And Status:: ";
+     << " Throughput = " << ops_throughput << " ops/s, Latency And Status: ";
   char const* sep = "";
   for (double p : kResultPercentiles) {
     auto index = static_cast<std::size_t>(
@@ -165,10 +179,12 @@ JobBenchmark::JobBenchmark(JobConfig config) : config_(std::move(config)) {
 StatusOr<Dataset> DatasetBenchmark::GetDataset() {
   GetDatasetRequest request;
   if (config_.project_id.empty()) {
-    return invalid_argument("project_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
   }
   if (config_.dataset_id.empty()) {
-    return invalid_argument("dataset_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "dataset_id config parameter is empty.", GCP_ERROR_INFO());
   }
   request.set_project_id(config_.project_id);
   request.set_dataset_id(config_.dataset_id);
@@ -179,13 +195,16 @@ StatusOr<Dataset> DatasetBenchmark::GetDataset() {
 StatusOr<Table> TableBenchmark::GetTable() {
   GetTableRequest request;
   if (config_.project_id.empty()) {
-    return invalid_argument("project_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
   }
   if (config_.dataset_id.empty()) {
-    return invalid_argument("dataset_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "dataset_id config parameter is empty.", GCP_ERROR_INFO());
   }
   if (config_.table_id.empty()) {
-    return invalid_argument("table_id config parameter is empty.");
+    return internal::InvalidArgumentError("table_id config parameter is empty.",
+                                          GCP_ERROR_INFO());
   }
   request.set_project_id(config_.project_id);
   request.set_dataset_id(config_.dataset_id);
@@ -205,10 +224,12 @@ StatusOr<Table> TableBenchmark::GetTable() {
 StatusOr<Job> JobBenchmark::GetJob() {
   GetJobRequest request;
   if (config_.project_id.empty()) {
-    return invalid_argument("project_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
   }
   if (config_.job_id.empty()) {
-    return invalid_argument("job_id config parameter is empty.");
+    return internal::InvalidArgumentError("job_id config parameter is empty.",
+                                          GCP_ERROR_INFO());
   }
   request.set_project_id(config_.project_id);
   request.set_job_id(config_.job_id);
@@ -315,7 +336,8 @@ StreamRange<ListFormatJob> JobBenchmark::ListJobs() {
 StatusOr<Job> JobBenchmark::InsertJob() {
   InsertJobRequest request;
   if (config_.project_id.empty()) {
-    return invalid_argument("project_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
   }
   request.set_project_id(config_.project_id);
 
@@ -337,7 +359,8 @@ StatusOr<Job> JobBenchmark::InsertJob() {
 StatusOr<PostQueryResults> JobBenchmark::Query() {
   PostQueryRequest request;
   if (config_.project_id.empty()) {
-    return invalid_argument("project_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
   }
   request.set_project_id(config_.project_id);
 
@@ -368,10 +391,12 @@ StatusOr<PostQueryResults> JobBenchmark::Query() {
 StatusOr<GetQueryResults> JobBenchmark::QueryResults() {
   GetQueryResultsRequest request;
   if (config_.project_id.empty()) {
-    return invalid_argument("project_id config parameter is empty.");
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
   }
   if (config_.job_id.empty()) {
-    return invalid_argument("job_id config parameter is empty.");
+    return internal::InvalidArgumentError("job_id config parameter is empty.",
+                                          GCP_ERROR_INFO());
   }
   request.set_project_id(config_.project_id);
   request.set_job_id(config_.job_id);
@@ -400,54 +425,8 @@ StatusOr<GetQueryResults> JobBenchmark::QueryResults() {
   return job_client_->QueryResults(request);
 }
 
-std::ostream& operator<<(std::ostream& os, FormatDuration duration) {
-  auto nanos = duration.ns;
-  // For sub-microsecond ranges just print the number of nanoseconds.
-  if (nanos < std::chrono::microseconds(1)) {
-    return os << nanos.count() << "ns";
-  }
-  // For sub-millisecond values print 123.456us, that is the number of
-  // microseconds.  Formatting with iostreams is not hard, but resetting them
-  // back is super tedious, so just use std::snprintf().
-  if (nanos < std::chrono::milliseconds(1)) {
-    char buf[32];
-    std::snprintf(buf, sizeof(buf), "%.03fus",
-                  static_cast<double>(nanos.count()) / 1000.0);
-    return os << buf;
-  }
-  // For sub-second values print 123.456ms, that is, the number of
-  // milliseconds.
-  if (nanos < std::chrono::seconds(1)) {
-    auto us = std::chrono::duration_cast<std::chrono::microseconds>(nanos);
-    char buf[32];
-    std::snprintf(buf, sizeof(buf), "%.03fms",
-                  static_cast<double>(us.count()) / 1000.0);
-    return os << buf;
-  }
-
-  // In general, print something like 12h34m56.789s, though we omit the hours,
-  // minutes, or seconds if they are 0.
-  auto hh = std::chrono::duration_cast<std::chrono::hours>(duration.ns);
-  if (hh.count() != 0) {
-    os << hh.count() << "h";
-  }
-  nanos = nanos - hh;
-  auto mm = std::chrono::duration_cast<std::chrono::minutes>(nanos);
-  if (mm.count() != 0) {
-    os << mm.count() << "m";
-  }
-  nanos = nanos - mm;
-  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(nanos);
-  if (ms.count() == 0) {
-    return os;
-  }
-  if (ms.count() % 1000 == 0) {
-    return os << ms.count() / 1000 << "s";
-  }
-  char buf[32];
-  std::snprintf(buf, sizeof(buf), "%.03fs",
-                static_cast<double>(ms.count()) / 1000.0);
-  return os << buf;
+std::ostream& operator<<(std::ostream& os, FormatDuration d) {
+  return os << absl::FormatDuration(absl::FromChrono(d.ns));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
