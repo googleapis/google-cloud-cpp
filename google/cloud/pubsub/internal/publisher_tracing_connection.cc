@@ -64,30 +64,8 @@ future<StatusOr<std::string>> EndPublishSpan(
     future<StatusOr<std::string>> f) {
   return f.then([span = std::move(span)](auto fut) {
     auto message_id = fut.get();
-    Status const& status = message_id.status();
-    if (status.ok()) {
-      span->SetStatus(opentelemetry::trace::StatusCode::kOk);
-      span->SetAttribute("gcloud.status_code", 0);
-      span->SetAttribute("messaging.message_id", message_id.value());
-      span->End();
-      return message_id;
-    }
-
-    span->SetStatus(opentelemetry::trace::StatusCode::kError, status.message());
-    span->SetAttribute("gcloud.status_code", static_cast<int>(status.code()));
-
-    auto const& ei = status.error_info();
-    if (!ei.reason().empty()) {
-      span->SetAttribute("gcloud.error.reason", ei.reason());
-    }
-    if (!ei.domain().empty()) {
-      span->SetAttribute("gcloud.error.domain", ei.domain());
-    }
-    for (auto const& kv : ei.metadata()) {
-      span->SetAttribute("gcloud.error.metadata." + kv.first, kv.second);
-    }
-    span->End();
-    return message_id;
+    if (message_id) span->SetAttribute("messaging.message_id", *message_id);
+    return internal::EndSpan(*span, std::move(message_id));
   });
 }
 

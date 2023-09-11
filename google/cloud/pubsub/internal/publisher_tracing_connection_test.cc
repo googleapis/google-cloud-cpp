@@ -25,7 +25,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "gtest/gtest.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 
@@ -72,7 +71,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
                                      .Build()})
                       .get();
 
-  EXPECT_THAT(response, StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(response);
   EXPECT_THAT(
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
