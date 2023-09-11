@@ -186,10 +186,10 @@ void SetLongrunningOperationServiceVars(
             "google/cloud/compute/global_operations/v1/global_operations.pb.h";
         service_vars["longrunning_get_operation_request_type"] =
             "google::cloud::cpp::compute::global_operations::v1::"
-            "GetGlobalOperationRequest";
+            "GetOperationRequest";
         service_vars["longrunning_cancel_operation_request_type"] =
             "google::cloud::cpp::compute::global_operations::v1::"
-            "DeleteGlobalOperationRequest";
+            "DeleteOperationRequest";
         service_vars["longrunning_set_operation_fields"] = R"""(
       r.set_project(request.project());
       r.set_operation(op);
@@ -209,10 +209,10 @@ void SetLongrunningOperationServiceVars(
             "global_organization_operations.pb.h";
         service_vars["longrunning_get_operation_request_type"] =
             "google::cloud::cpp::compute::global_organization_operations::v1::"
-            "GetGlobalOrganizationOperationRequest";
+            "GetOperationRequest";
         service_vars["longrunning_cancel_operation_request_type"] =
             "google::cloud::cpp::compute::global_organization_operations::v1::"
-            "DeleteGlobalOrganizationOperationRequest";
+            "DeleteOperationRequest";
         service_vars["longrunning_set_operation_fields"] = R"""(
       r.set_operation(op);
 )""";
@@ -227,10 +227,10 @@ void SetLongrunningOperationServiceVars(
             "google/cloud/compute/region_operations/v1/region_operations.pb.h";
         service_vars["longrunning_get_operation_request_type"] =
             "google::cloud::cpp::compute::region_operations::v1::"
-            "GetRegionOperationRequest";
+            "GetOperationRequest";
         service_vars["longrunning_cancel_operation_request_type"] =
             "google::cloud::cpp::compute::region_operations::v1::"
-            "DeleteRegionOperationRequest";
+            "DeleteOperationRequest";
         service_vars["longrunning_set_operation_fields"] = R"""(
       r.set_project(request.project());
       r.set_region(request.region());
@@ -249,10 +249,10 @@ void SetLongrunningOperationServiceVars(
             "google/cloud/compute/zone_operations/v1/zone_operations.pb.h";
         service_vars["longrunning_get_operation_request_type"] =
             "google::cloud::cpp::compute::zone_operations::v1::"
-            "GetZoneOperationRequest";
+            "GetOperationRequest";
         service_vars["longrunning_cancel_operation_request_type"] =
             "google::cloud::cpp::compute::zone_operations::v1::"
-            "DeleteZoneOperationRequest";
+            "DeleteOperationRequest";
         service_vars["longrunning_set_operation_fields"] = R"""(
       r.set_project(request.project());
       r.set_zone(request.zone());

@@ -417,7 +417,36 @@ TEST_F(SynthesizeRequestTypeTest,
 }
 
 TEST_F(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
-  auto constexpr kResourceJson = R"""({})""";
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "get": {
+    "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ],
+    "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+    "httpMethod": "GET",
+    "parameters": {
+      "project": {
+        "type": "string"
+      },
+      "zone": {
+        "type": "string"
+      },
+      "fooId": {
+        "type": "string"
+      }
+    },
+    "response": {
+      "$ref": "Foo"
+    },
+    "parameterOrder": [
+      "project",
+      "zone",
+      "fooId"
+    ]
+  }
+}
+})""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   auto constexpr kMethodJson = R"""({
