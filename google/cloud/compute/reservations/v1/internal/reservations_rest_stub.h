@@ -44,16 +44,16 @@ class ReservationsRestStub {
           AggregatedListReservationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteReservations(
+  AsyncDeleteReservation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          DeleteReservationsRequest const& request) = 0;
+          DeleteReservationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Reservation>
-  GetReservations(google::cloud::rest_internal::RestContext& rest_context,
-                  google::cloud::cpp::compute::reservations::v1::
-                      GetReservationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::reservations::v1::
+          GetReservationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -61,11 +61,11 @@ class ReservationsRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertReservations(
+  AsyncInsertReservation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          InsertReservationsRequest const& request) = 0;
+          InsertReservationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ReservationList>
   ListReservations(google::cloud::rest_internal::RestContext& rest_context,
@@ -90,24 +90,24 @@ class ReservationsRestStub {
                          TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateReservations(
+  AsyncUpdateReservation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          UpdateReservationsRequest const& request) = 0;
+          UpdateReservationRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultReservationsRestStub : public ReservationsRestStub {
@@ -126,16 +126,16 @@ class DefaultReservationsRestStub : public ReservationsRestStub {
           AggregatedListReservationsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteReservations(
+  AsyncDeleteReservation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          DeleteReservationsRequest const& request) override;
+          DeleteReservationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
+  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          GetReservationsRequest const& request) override;
+          GetReservationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -143,11 +143,11 @@ class DefaultReservationsRestStub : public ReservationsRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertReservations(
+  AsyncInsertReservation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          InsertReservationsRequest const& request) override;
+          InsertReservationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationList> ListReservations(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -171,24 +171,24 @@ class DefaultReservationsRestStub : public ReservationsRestStub {
                          TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateReservations(
+  AsyncUpdateReservation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::reservations::v1::
-          UpdateReservationsRequest const& request) override;
+          UpdateReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -45,19 +45,19 @@ class RegionNetworkEndpointGroupsTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionNetworkEndpointGroups(
+  DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          DeleteRegionNetworkEndpointGroupsRequest const& request) override;
+          DeleteNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetRegionNetworkEndpointGroups(
+  GetNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          GetRegionNetworkEndpointGroupsRequest const& request) override;
+          GetNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionNetworkEndpointGroups(
+  InsertNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          InsertRegionNetworkEndpointGroupsRequest const& request) override;
+          InsertNetworkEndpointGroupRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListRegionNetworkEndpointGroups(

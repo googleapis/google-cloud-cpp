@@ -35,49 +35,49 @@ RegionTargetTcpProxiesRestLogging::RegionTargetTcpProxiesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesRestLogging::AsyncDeleteRegionTargetTcpProxies(
+RegionTargetTcpProxiesRestLogging::AsyncDeleteTargetTcpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        DeleteRegionTargetTcpProxiesRequest const& request) {
+        DeleteTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-                 DeleteRegionTargetTcpProxiesRequest const& request) {
-        return child_->AsyncDeleteRegionTargetTcpProxies(
-            cq, std::move(rest_context), request);
+                 DeleteTargetTcpProxyRequest const& request) {
+        return child_->AsyncDeleteTargetTcpProxy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-RegionTargetTcpProxiesRestLogging::GetRegionTargetTcpProxies(
+RegionTargetTcpProxiesRestLogging::GetTargetTcpProxy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        GetRegionTargetTcpProxiesRequest const& request) {
+        GetTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-                 GetRegionTargetTcpProxiesRequest const& request) {
-        return child_->GetRegionTargetTcpProxies(rest_context, request);
+                 GetTargetTcpProxyRequest const& request) {
+        return child_->GetTargetTcpProxy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesRestLogging::AsyncInsertRegionTargetTcpProxies(
+RegionTargetTcpProxiesRestLogging::AsyncInsertTargetTcpProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        InsertRegionTargetTcpProxiesRequest const& request) {
+        InsertTargetTcpProxyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-                 InsertRegionTargetTcpProxiesRequest const& request) {
-        return child_->AsyncInsertRegionTargetTcpProxies(
-            cq, std::move(rest_context), request);
+                 InsertTargetTcpProxyRequest const& request) {
+        return child_->AsyncInsertTargetTcpProxy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -101,12 +101,12 @@ RegionTargetTcpProxiesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -116,12 +116,12 @@ future<Status> RegionTargetTcpProxiesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

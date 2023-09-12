@@ -52,19 +52,17 @@ class GlobalAddressesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalAddresses(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          DeleteGlobalAddressesRequest const& request) override;
+          DeleteAddressRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          GetGlobalAddressesRequest const& request) override;
+          GetAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalAddresses(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       google::cloud::cpp::compute::global_addresses::v1::
-          InsertGlobalAddressesRequest const& request) override;
+          InsertAddressRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
       google::cloud::cpp::compute::global_addresses::v1::

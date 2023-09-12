@@ -65,18 +65,18 @@ NodeGroupsRestLogging::AggregatedListNodeGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeGroupsRestLogging::AsyncDeleteNodeGroups(
+NodeGroupsRestLogging::AsyncDeleteNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::node_groups::v1::
-                 DeleteNodeGroupsRequest const& request) {
-        return child_->AsyncDeleteNodeGroups(cq, std::move(rest_context),
-                                             request);
+                 DeleteNodeGroupRequest const& request) {
+        return child_->AsyncDeleteNodeGroup(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -98,15 +98,15 @@ NodeGroupsRestLogging::AsyncDeleteNodes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsRestLogging::GetNodeGroups(
+NodeGroupsRestLogging::GetNodeGroup(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::node_groups::v1::
-                 GetNodeGroupsRequest const& request) {
-        return child_->GetNodeGroups(rest_context, request);
+                 GetNodeGroupRequest const& request) {
+        return child_->GetNodeGroup(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -126,18 +126,18 @@ NodeGroupsRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeGroupsRestLogging::AsyncInsertNodeGroups(
+NodeGroupsRestLogging::AsyncInsertNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::node_groups::v1::
-                 InsertNodeGroupsRequest const& request) {
-        return child_->AsyncInsertNodeGroups(cq, std::move(rest_context),
-                                             request);
+                 InsertNodeGroupRequest const& request) {
+        return child_->AsyncInsertNodeGroup(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -170,18 +170,18 @@ NodeGroupsRestLogging::ListNodes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeGroupsRestLogging::AsyncPatchNodeGroups(
+NodeGroupsRestLogging::AsyncPatchNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::node_groups::v1::
-                 PatchNodeGroupsRequest const& request) {
-        return child_->AsyncPatchNodeGroups(cq, std::move(rest_context),
-                                            request);
+                 PatchNodeGroupRequest const& request) {
+        return child_->AsyncPatchNodeGroup(cq, std::move(rest_context),
+                                           request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -252,13 +252,13 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::zone_operations::v1::
-                 GetZoneOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -268,12 +268,12 @@ future<Status> NodeGroupsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::zone_operations::v1::
-                 DeleteZoneOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

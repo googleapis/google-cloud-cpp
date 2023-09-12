@@ -46,20 +46,20 @@ class ReservationsTracingConnection
           AggregatedListReservationsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteReservations(google::cloud::cpp::compute::reservations::v1::
-                         DeleteReservationsRequest const& request) override;
+  DeleteReservation(google::cloud::cpp::compute::reservations::v1::
+                        DeleteReservationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
+  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
       google::cloud::cpp::compute::reservations::v1::
-          GetReservationsRequest const& request) override;
+          GetReservationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertReservations(google::cloud::cpp::compute::reservations::v1::
-                         InsertReservationsRequest const& request) override;
+  InsertReservation(google::cloud::cpp::compute::reservations::v1::
+                        InsertReservationRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
@@ -78,8 +78,8 @@ class ReservationsTracingConnection
                          TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateReservations(google::cloud::cpp::compute::reservations::v1::
-                         UpdateReservationsRequest const& request) override;
+  UpdateReservation(google::cloud::cpp::compute::reservations::v1::
+                        UpdateReservationRequest const& request) override;
 
  private:
   std::shared_ptr<compute_reservations_v1::ReservationsConnection> child_;

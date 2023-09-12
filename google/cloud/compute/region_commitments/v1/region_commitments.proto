@@ -49,7 +49,7 @@ service RegionCommitments {
 
   // Returns the specified commitment resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/get
-  rpc GetRegionCommitments(GetRegionCommitmentsRequest)
+  rpc GetCommitment(GetCommitmentRequest)
       returns (google.cloud.cpp.compute.v1.Commitment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
@@ -60,7 +60,7 @@ service RegionCommitments {
   // Creates a commitment in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/insert
-  rpc InsertRegionCommitments(InsertRegionCommitmentsRequest)
+  rpc InsertCommitment(InsertCommitmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/commitments"
@@ -84,7 +84,7 @@ service RegionCommitments {
   // Update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be modified: auto_renew.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionCommitments/update
-  rpc UpdateRegionCommitments(UpdateRegionCommitmentsRequest)
+  rpc UpdateCommitment(UpdateCommitmentRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
@@ -170,8 +170,8 @@ message AggregatedListRegionCommitmentsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for GetRegionCommitments.
-message GetRegionCommitmentsRequest {
+// Request message for GetCommitment.
+message GetCommitmentRequest {
   // Name of the commitment to return.
   string commitment = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -182,8 +182,8 @@ message GetRegionCommitmentsRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionCommitments.
-message InsertRegionCommitmentsRequest {
+// Request message for InsertCommitment.
+message InsertCommitmentRequest {
   // The Commitment for this request.
   optional google.cloud.cpp.compute.v1.Commitment commitment_resource = 1
       [json_name = "__json_request_body"];
@@ -281,8 +281,8 @@ message ListRegionCommitmentsRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for UpdateRegionCommitments.
-message UpdateRegionCommitmentsRequest {
+// Request message for UpdateCommitment.
+message UpdateCommitmentRequest {
   // Name of the commitment for which auto renew is being updated.
   string commitment = 1 [(google.api.field_behavior) = REQUIRED];
 

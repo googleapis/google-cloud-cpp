@@ -37,23 +37,23 @@ GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    DeleteGlobalPublicDelegatedPrefixes(
+    DeletePublicDelegatedPrefix(
         google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            DeleteGlobalPublicDelegatedPrefixesRequest const&) {
+            DeletePublicDelegatedPrefixRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    GetGlobalPublicDelegatedPrefixes(
+    GetPublicDelegatedPrefix(
         google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            GetGlobalPublicDelegatedPrefixesRequest const&) {
+            GetPublicDelegatedPrefixRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    InsertGlobalPublicDelegatedPrefixes(
+    InsertPublicDelegatedPrefix(
         google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            InsertGlobalPublicDelegatedPrefixesRequest const&) {
+            InsertPublicDelegatedPrefixRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,9 +65,9 @@ Idempotency GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy::
 }
 
 Idempotency GlobalPublicDelegatedPrefixesConnectionIdempotencyPolicy::
-    PatchGlobalPublicDelegatedPrefixes(
+    PatchPublicDelegatedPrefix(
         google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-            PatchGlobalPublicDelegatedPrefixesRequest const&) {
+            PatchPublicDelegatedPrefixRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

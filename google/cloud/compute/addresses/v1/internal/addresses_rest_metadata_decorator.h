@@ -46,22 +46,22 @@ class AddressesRestMetadata : public AddressesRestStub {
           AggregatedListAddressesRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteAddresses(
+  AsyncDeleteAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertAddresses(
+  AsyncInsertAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
@@ -88,13 +88,13 @@ class AddressesRestMetadata : public AddressesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

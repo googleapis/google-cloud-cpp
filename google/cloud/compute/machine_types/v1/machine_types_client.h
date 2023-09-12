@@ -169,11 +169,11 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       std::string const& project, std::string const& zone,
       std::string const& machine_type, Options opts = {});
 
@@ -185,7 +185,7 @@ class MachineTypesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest].
+  ///     [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -201,13 +201,13 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::cpp::compute::machine_types::v1::
-          GetMachineTypesRequest const& request,
+          GetMachineTypeRequest const& request,
       Options opts = {});
 
   // clang-format off

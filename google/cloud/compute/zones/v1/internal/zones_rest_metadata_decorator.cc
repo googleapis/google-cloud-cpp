@@ -39,11 +39,11 @@ ZonesRestMetadata::ZonesRestMetadata(std::shared_ptr<ZonesRestStub> child,
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestMetadata::GetZones(
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesRestMetadata::GetZone(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) {
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetZones(rest_context, request);
+  return child_->GetZone(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ZoneList>

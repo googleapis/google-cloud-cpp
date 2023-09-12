@@ -92,10 +92,10 @@ DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNodeGroupsRestStub::AsyncDeleteNodeGroups(
+DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -145,9 +145,9 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-DefaultNodeGroupsRestStub::GetNodeGroups(
+DefaultNodeGroupsRestStub::GetNodeGroup(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
       *service_, rest_context, request,
@@ -173,10 +173,10 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNodeGroupsRestStub::AsyncInsertNodeGroups(
+DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -229,10 +229,10 @@ DefaultNodeGroupsRestStub::ListNodes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNodeGroupsRestStub::AsyncPatchNodeGroups(
+DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupsRequest const&
+    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -340,8 +340,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNodeGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -365,7 +365,7 @@ future<Status> DefaultNodeGroupsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

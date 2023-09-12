@@ -48,12 +48,11 @@ DefaultRegionNotificationEndpointsRestStub::
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionNotificationEndpointsRestStub::
-    AsyncDeleteRegionNotificationEndpoints(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::region_notification_endpoints::v1::
-            DeleteRegionNotificationEndpointsRequest const& request) {
+DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        DeleteNotificationEndpointRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -75,10 +74,10 @@ DefaultRegionNotificationEndpointsRestStub::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-DefaultRegionNotificationEndpointsRestStub::GetRegionNotificationEndpoints(
+DefaultRegionNotificationEndpointsRestStub::GetNotificationEndpoint(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        GetRegionNotificationEndpointsRequest const& request) {
+        GetNotificationEndpointRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(
       *service_, rest_context, request,
@@ -90,12 +89,11 @@ DefaultRegionNotificationEndpointsRestStub::GetRegionNotificationEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionNotificationEndpointsRestStub::
-    AsyncInsertRegionNotificationEndpoints(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::region_notification_endpoints::v1::
-            InsertRegionNotificationEndpointsRequest const& request) {
+DefaultRegionNotificationEndpointsRestStub::AsyncInsertNotificationEndpoint(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        InsertNotificationEndpointRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -140,7 +138,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -164,7 +162,7 @@ future<Status> DefaultRegionNotificationEndpointsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

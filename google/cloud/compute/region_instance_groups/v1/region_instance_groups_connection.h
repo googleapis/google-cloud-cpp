@@ -194,9 +194,8 @@ class RegionInstanceGroupsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetRegionInstanceGroups(
-      google::cloud::cpp::compute::region_instance_groups::v1::
-          GetRegionInstanceGroupsRequest const& request);
+  GetInstanceGroup(google::cloud::cpp::compute::region_instance_groups::v1::
+                       GetInstanceGroupRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListRegionInstanceGroups(google::cloud::cpp::compute::region_instance_groups::

@@ -40,20 +40,20 @@ Idempotency VpnTunnelsConnectionIdempotencyPolicy::AggregatedListVpnTunnels(
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::DeleteVpnTunnels(
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::DeleteVpnTunnel(
     google::cloud::cpp::compute::vpn_tunnels::v1::
-        DeleteVpnTunnelsRequest const&) {
+        DeleteVpnTunnelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::GetVpnTunnels(
-    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&) {
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::GetVpnTunnel(
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnTunnelsConnectionIdempotencyPolicy::InsertVpnTunnels(
+Idempotency VpnTunnelsConnectionIdempotencyPolicy::InsertVpnTunnel(
     google::cloud::cpp::compute::vpn_tunnels::v1::
-        InsertVpnTunnelsRequest const&) {
+        InsertVpnTunnelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

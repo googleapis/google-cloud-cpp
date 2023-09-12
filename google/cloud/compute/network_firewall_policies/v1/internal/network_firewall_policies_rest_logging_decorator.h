@@ -64,17 +64,16 @@ class NetworkFirewallPoliciesRestLogging
           CloneRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNetworkFirewallPolicies(
+  AsyncDeleteFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          DeleteNetworkFirewallPoliciesRequest const& request) override;
+          DeleteFirewallPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetNetworkFirewallPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          GetNetworkFirewallPoliciesRequest const& request) override;
+          GetFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
   GetAssociation(google::cloud::rest_internal::RestContext& rest_context,
@@ -92,11 +91,11 @@ class NetworkFirewallPoliciesRestLogging
           GetRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNetworkFirewallPolicies(
+  AsyncInsertFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          InsertNetworkFirewallPoliciesRequest const& request) override;
+          InsertFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
   ListNetworkFirewallPolicies(
@@ -105,11 +104,11 @@ class NetworkFirewallPoliciesRestLogging
           ListNetworkFirewallPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNetworkFirewallPolicies(
+  AsyncPatchFirewallPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          PatchNetworkFirewallPoliciesRequest const& request) override;
+          PatchFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
@@ -145,13 +144,13 @@ class NetworkFirewallPoliciesRestLogging
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<NetworkFirewallPoliciesRestStub> child_;

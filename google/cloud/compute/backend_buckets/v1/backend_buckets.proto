@@ -54,7 +54,7 @@ service BackendBuckets {
 
   // Deletes the specified BackendBucket resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/delete
-  rpc DeleteBackendBuckets(DeleteBackendBucketsRequest)
+  rpc DeleteBackendBucket(DeleteBackendBucketRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
@@ -78,7 +78,7 @@ service BackendBuckets {
 
   // Returns the specified BackendBucket resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/get
-  rpc GetBackendBuckets(GetBackendBucketsRequest)
+  rpc GetBackendBucket(GetBackendBucketRequest)
       returns (google.cloud.cpp.compute.v1.BackendBucket) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
@@ -89,7 +89,7 @@ service BackendBuckets {
   // Creates a BackendBucket resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/insert
-  rpc InsertBackendBuckets(InsertBackendBucketsRequest)
+  rpc InsertBackendBucket(InsertBackendBucketRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/backendBuckets"
@@ -114,7 +114,7 @@ service BackendBuckets {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/patch
-  rpc PatchBackendBuckets(PatchBackendBucketsRequest)
+  rpc PatchBackendBucket(PatchBackendBucketRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
@@ -141,7 +141,7 @@ service BackendBuckets {
   // Updates the specified BackendBucket resource with the data included in the
   // request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/backendBuckets/update
-  rpc UpdateBackendBuckets(UpdateBackendBucketsRequest)
+  rpc UpdateBackendBucket(UpdateBackendBucketRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}"
@@ -182,8 +182,8 @@ message AddSignedUrlKeyRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for DeleteBackendBuckets.
-message DeleteBackendBucketsRequest {
+// Request message for DeleteBackendBucket.
+message DeleteBackendBucketRequest {
   // Name of the BackendBucket resource to delete.
   string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -234,8 +234,8 @@ message DeleteSignedUrlKeyRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetBackendBuckets.
-message GetBackendBucketsRequest {
+// Request message for GetBackendBucket.
+message GetBackendBucketRequest {
   // Name of the BackendBucket resource to return.
   string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -243,8 +243,8 @@ message GetBackendBucketsRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertBackendBuckets.
-message InsertBackendBucketsRequest {
+// Request message for InsertBackendBucket.
+message InsertBackendBucketRequest {
   // The BackendBucket for this request.
   optional google.cloud.cpp.compute.v1.BackendBucket backend_bucket_resource = 1
       [json_name = "__json_request_body"];
@@ -333,8 +333,8 @@ message ListBackendBucketsRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchBackendBuckets.
-message PatchBackendBucketsRequest {
+// Request message for PatchBackendBucket.
+message PatchBackendBucketRequest {
   // Name of the BackendBucket resource to patch.
   string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -391,8 +391,8 @@ message SetEdgeSecurityPolicyRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for UpdateBackendBuckets.
-message UpdateBackendBucketsRequest {
+// Request message for UpdateBackendBucket.
+message UpdateBackendBucketRequest {
   // Name of the BackendBucket resource to update.
   string backend_bucket = 1 [(google.api.field_behavior) = REQUIRED];
 

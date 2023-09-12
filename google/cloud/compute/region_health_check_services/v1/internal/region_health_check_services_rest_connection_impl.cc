@@ -47,56 +47,54 @@ RegionHealthCheckServicesRestConnectionImpl::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesRestConnectionImpl::DeleteRegionHealthCheckServices(
+RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteRegionHealthCheckServicesRequest const& request) {
+        DeleteHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_health_check_services::v1::
-              DeleteRegionHealthCheckServicesRequest const& request) {
-        return stub->AsyncDeleteRegionHealthCheckServices(
-            cq, std::move(context), request);
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::DeleteHealthCheckServiceRequest const& request) {
+        return stub->AsyncDeleteHealthCheckService(cq, std::move(context),
+                                                   request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionHealthCheckServices(request),
+      idempotency_policy(*current)->DeleteHealthCheckService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -104,72 +102,70 @@ RegionHealthCheckServicesRestConnectionImpl::DeleteRegionHealthCheckServices(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-RegionHealthCheckServicesRestConnectionImpl::GetRegionHealthCheckServices(
+RegionHealthCheckServicesRestConnectionImpl::GetHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        GetRegionHealthCheckServicesRequest const& request) {
+        GetHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionHealthCheckServices(request),
+      idempotency_policy(*current)->GetHealthCheckService(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_health_check_services::v1::
-                 GetRegionHealthCheckServicesRequest const& request) {
-        return stub_->GetRegionHealthCheckServices(rest_context, request);
+                 GetHealthCheckServiceRequest const& request) {
+        return stub_->GetHealthCheckService(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesRestConnectionImpl::InsertRegionHealthCheckServices(
+RegionHealthCheckServicesRestConnectionImpl::InsertHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertRegionHealthCheckServicesRequest const& request) {
+        InsertHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_health_check_services::v1::
-              InsertRegionHealthCheckServicesRequest const& request) {
-        return stub->AsyncInsertRegionHealthCheckServices(
-            cq, std::move(context), request);
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::InsertHealthCheckServiceRequest const& request) {
+        return stub->AsyncInsertHealthCheckService(cq, std::move(context),
+                                                   request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRegionHealthCheckServices(request),
+      idempotency_policy(*current)->InsertHealthCheckService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -215,56 +211,54 @@ RegionHealthCheckServicesRestConnectionImpl::ListRegionHealthCheckServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthCheckServicesRestConnectionImpl::PatchRegionHealthCheckServices(
+RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
     google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchRegionHealthCheckServicesRequest const& request) {
+        PatchHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
-      [stub = stub_](
-          CompletionQueue& cq,
-          std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::region_health_check_services::v1::
-              PatchRegionHealthCheckServicesRequest const& request) {
-        return stub->AsyncPatchRegionHealthCheckServices(cq, std::move(context),
-                                                         request);
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::cpp::compute::region_health_check_services::
+                         v1::PatchHealthCheckServiceRequest const& request) {
+        return stub->AsyncPatchHealthCheckService(cq, std::move(context),
+                                                  request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchRegionHealthCheckServices(request),
+      idempotency_policy(*current)->PatchHealthCheckService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

@@ -66,11 +66,11 @@ DefaultTargetInstancesRestStub::AggregatedListTargetInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetInstancesRestStub::AsyncDeleteTargetInstances(
+DefaultTargetInstancesRestStub::AsyncDeleteTargetInstance(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_instances::v1::
-        DeleteTargetInstancesRequest const& request) {
+        DeleteTargetInstanceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -92,10 +92,10 @@ DefaultTargetInstancesRestStub::AsyncDeleteTargetInstances(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-DefaultTargetInstancesRestStub::GetTargetInstances(
+DefaultTargetInstancesRestStub::GetTargetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_instances::v1::
-        GetTargetInstancesRequest const& request) {
+        GetTargetInstanceRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstance>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -105,11 +105,11 @@ DefaultTargetInstancesRestStub::GetTargetInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetInstancesRestStub::AsyncInsertTargetInstances(
+DefaultTargetInstancesRestStub::AsyncInsertTargetInstance(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_instances::v1::
-        InsertTargetInstancesRequest const& request) {
+        InsertTargetInstanceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -152,8 +152,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetInstancesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -177,7 +177,7 @@ future<Status> DefaultTargetInstancesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

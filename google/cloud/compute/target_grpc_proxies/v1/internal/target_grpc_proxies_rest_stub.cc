@@ -46,11 +46,11 @@ DefaultTargetGrpcProxiesRestStub::DefaultTargetGrpcProxiesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxies(
+DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxiesRequest const& request) {
+        DeleteTargetGrpcProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -72,10 +72,10 @@ DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxies(
+DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        GetTargetGrpcProxiesRequest const& request) {
+        GetTargetGrpcProxyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetGrpcProxy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -85,11 +85,11 @@ DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetGrpcProxiesRestStub::AsyncInsertTargetGrpcProxies(
+DefaultTargetGrpcProxiesRestStub::AsyncInsertTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxiesRequest const& request) {
+        InsertTargetGrpcProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -128,11 +128,11 @@ DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetGrpcProxiesRestStub::AsyncPatchTargetGrpcProxies(
+DefaultTargetGrpcProxiesRestStub::AsyncPatchTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxiesRequest const& request) {
+        PatchTargetGrpcProxyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -158,7 +158,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -181,7 +181,7 @@ future<Status> DefaultTargetGrpcProxiesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

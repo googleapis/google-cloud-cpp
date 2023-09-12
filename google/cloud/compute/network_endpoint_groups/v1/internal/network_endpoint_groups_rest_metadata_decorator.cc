@@ -62,14 +62,14 @@ NetworkEndpointGroupsRestMetadata::AsyncAttachNetworkEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroups(
+NetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        DeleteNetworkEndpointGroupsRequest const& request) {
+        DeleteNetworkEndpointGroupRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteNetworkEndpointGroups(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncDeleteNetworkEndpointGroup(cq, std::move(rest_context),
+                                                 request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -84,23 +84,23 @@ NetworkEndpointGroupsRestMetadata::AsyncDetachNetworkEndpoints(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-NetworkEndpointGroupsRestMetadata::GetNetworkEndpointGroups(
+NetworkEndpointGroupsRestMetadata::GetNetworkEndpointGroup(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        GetNetworkEndpointGroupsRequest const& request) {
+        GetNetworkEndpointGroupRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetNetworkEndpointGroups(rest_context, request);
+  return child_->GetNetworkEndpointGroup(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEndpointGroupsRestMetadata::AsyncInsertNetworkEndpointGroups(
+NetworkEndpointGroupsRestMetadata::AsyncInsertNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        InsertNetworkEndpointGroupsRequest const& request) {
+        InsertNetworkEndpointGroupRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertNetworkEndpointGroups(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncInsertNetworkEndpointGroup(cq, std::move(rest_context),
+                                                 request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
@@ -135,8 +135,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -145,7 +145,7 @@ future<Status> NetworkEndpointGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -51,15 +51,15 @@ Idempotency TargetPoolsConnectionIdempotencyPolicy::AggregatedListTargetPools(
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::DeleteTargetPools(
+Idempotency TargetPoolsConnectionIdempotencyPolicy::DeleteTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        DeleteTargetPoolsRequest const&) {
+        DeleteTargetPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::GetTargetPools(
+Idempotency TargetPoolsConnectionIdempotencyPolicy::GetTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        GetTargetPoolsRequest const&) {
+        GetTargetPoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -68,9 +68,9 @@ Idempotency TargetPoolsConnectionIdempotencyPolicy::GetHealth(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::InsertTargetPools(
+Idempotency TargetPoolsConnectionIdempotencyPolicy::InsertTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        InsertTargetPoolsRequest const&) {
+        InsertTargetPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

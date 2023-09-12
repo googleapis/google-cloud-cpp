@@ -70,31 +70,26 @@ RegionNetworkFirewallPoliciesTracingConnection::CloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesTracingConnection::
-    DeleteRegionNetworkFirewallPolicies(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            DeleteRegionNetworkFirewallPoliciesRequest const& request) {
+RegionNetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
-      "RegionNetworkFirewallPoliciesConnection::"
-      "DeleteRegionNetworkFirewallPolicies");
+      "RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteRegionNetworkFirewallPolicies(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFirewallPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-RegionNetworkFirewallPoliciesTracingConnection::
-    GetRegionNetworkFirewallPolicies(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            GetRegionNetworkFirewallPoliciesRequest const& request) {
+RegionNetworkFirewallPoliciesTracingConnection::GetFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        GetFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
-      "RegionNetworkFirewallPoliciesConnection::"
-      "GetRegionNetworkFirewallPolicies");
+      "RegionNetworkFirewallPoliciesConnection::GetFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetRegionNetworkFirewallPolicies(request));
+  return internal::EndSpan(*span, child_->GetFirewallPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -143,17 +138,15 @@ RegionNetworkFirewallPoliciesTracingConnection::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesTracingConnection::
-    InsertRegionNetworkFirewallPolicies(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            InsertRegionNetworkFirewallPoliciesRequest const& request) {
+RegionNetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
-      "RegionNetworkFirewallPoliciesConnection::"
-      "InsertRegionNetworkFirewallPolicies");
+      "RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->InsertRegionNetworkFirewallPolicies(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertFirewallPolicy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -173,17 +166,15 @@ RegionNetworkFirewallPoliciesTracingConnection::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkFirewallPoliciesTracingConnection::
-    PatchRegionNetworkFirewallPolicies(
-        google::cloud::cpp::compute::region_network_firewall_policies::v1::
-            PatchRegionNetworkFirewallPoliciesRequest const& request) {
+RegionNetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
-      "RegionNetworkFirewallPoliciesConnection::"
-      "PatchRegionNetworkFirewallPolicies");
+      "RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchRegionNetworkFirewallPolicies(request));
+                           child_->PatchFirewallPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

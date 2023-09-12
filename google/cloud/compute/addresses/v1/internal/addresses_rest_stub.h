@@ -44,22 +44,22 @@ class AddressesRestStub {
           AggregatedListAddressesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteAddresses(
+  AsyncDeleteAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertAddresses(
+  AsyncInsertAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
@@ -86,13 +86,13 @@ class AddressesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultAddressesRestStub : public AddressesRestStub {
@@ -111,22 +111,22 @@ class DefaultAddressesRestStub : public AddressesRestStub {
           AggregatedListAddressesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteAddresses(
+  AsyncDeleteAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertAddresses(
+  AsyncInsertAddress(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
@@ -151,13 +151,13 @@ class DefaultAddressesRestStub : public AddressesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

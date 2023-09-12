@@ -51,9 +51,9 @@ class RegionInstanceGroupManagersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           CreateInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRegionInstanceGroupManagers(
+  virtual google::cloud::Idempotency DeleteInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          DeleteRegionInstanceGroupManagersRequest const& request);
+          DeleteInstanceGroupManagerRequest const& request);
 
   virtual google::cloud::Idempotency DeleteInstances(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
@@ -63,13 +63,13 @@ class RegionInstanceGroupManagersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           DeletePerInstanceConfigsRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionInstanceGroupManagers(
+  virtual google::cloud::Idempotency GetInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          GetRegionInstanceGroupManagersRequest const& request);
+          GetInstanceGroupManagerRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionInstanceGroupManagers(
+  virtual google::cloud::Idempotency InsertInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          InsertRegionInstanceGroupManagersRequest const& request);
+          InsertInstanceGroupManagerRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionInstanceGroupManagers(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
@@ -87,9 +87,9 @@ class RegionInstanceGroupManagersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           ListPerInstanceConfigsRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionInstanceGroupManagers(
+  virtual google::cloud::Idempotency PatchInstanceGroupManager(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
-          PatchRegionInstanceGroupManagersRequest const& request);
+          PatchInstanceGroupManagerRequest const& request);
 
   virtual google::cloud::Idempotency PatchPerInstanceConfigs(
       google::cloud::cpp::compute::region_instance_group_managers::v1::

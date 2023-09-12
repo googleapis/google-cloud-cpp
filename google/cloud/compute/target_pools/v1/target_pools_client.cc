@@ -104,48 +104,47 @@ TargetPoolsClient::AggregatedListTargetPools(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsClient::DeleteTargetPools(std::string const& project,
-                                     std::string const& region,
-                                     std::string const& target_pool,
-                                     Options opts) {
+TargetPoolsClient::DeleteTargetPool(std::string const& project,
+                                    std::string const& region,
+                                    std::string const& target_pool,
+                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolsRequest
+  google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest
       request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_pool(target_pool);
-  return connection_->DeleteTargetPools(request);
+  return connection_->DeleteTargetPool(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsClient::DeleteTargetPools(
+TargetPoolsClient::DeleteTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        DeleteTargetPoolsRequest const& request,
+        DeleteTargetPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetPools(request);
+  return connection_->DeleteTargetPool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsClient::GetTargetPools(std::string const& project,
-                                  std::string const& region,
-                                  std::string const& target_pool,
-                                  Options opts) {
+TargetPoolsClient::GetTargetPool(std::string const& project,
+                                 std::string const& region,
+                                 std::string const& target_pool, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_pools::v1::GetTargetPoolsRequest request;
+  google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_target_pool(target_pool);
-  return connection_->GetTargetPools(request);
+  return connection_->GetTargetPool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsClient::GetTargetPools(
-    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolsRequest const&
+TargetPoolsClient::GetTargetPool(
+    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetTargetPools(request);
+  return connection_->GetTargetPool(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
@@ -174,26 +173,26 @@ TargetPoolsClient::GetHealth(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsClient::InsertTargetPools(
+TargetPoolsClient::InsertTargetPool(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolsRequest
+  google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest
       request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_target_pool_resource() = target_pool_resource;
-  return connection_->InsertTargetPools(request);
+  return connection_->InsertTargetPool(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsClient::InsertTargetPools(
+TargetPoolsClient::InsertTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
-        InsertTargetPoolsRequest const& request,
+        InsertTargetPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertTargetPools(request);
+  return connection_->InsertTargetPool(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetPool>

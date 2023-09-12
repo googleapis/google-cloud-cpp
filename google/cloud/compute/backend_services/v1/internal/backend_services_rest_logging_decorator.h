@@ -56,11 +56,11 @@ class BackendServicesRestLogging : public BackendServicesRestStub {
           AggregatedListBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteBackendServices(
+  AsyncDeleteBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_services::v1::
-          DeleteBackendServicesRequest const& request) override;
+          DeleteBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteSignedUrlKey(
@@ -69,10 +69,10 @@ class BackendServicesRestLogging : public BackendServicesRestStub {
       google::cloud::cpp::compute::backend_services::v1::
           DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::backend_services::v1::
-          GetBackendServicesRequest const& request) override;
+          GetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(
@@ -86,11 +86,11 @@ class BackendServicesRestLogging : public BackendServicesRestStub {
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertBackendServices(
+  AsyncInsertBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_services::v1::
-          InsertBackendServicesRequest const& request) override;
+          InsertBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
   ListBackendServices(google::cloud::rest_internal::RestContext& rest_context,
@@ -98,11 +98,11 @@ class BackendServicesRestLogging : public BackendServicesRestStub {
                           ListBackendServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchBackendServices(
+  AsyncPatchBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_services::v1::
-          PatchBackendServicesRequest const& request) override;
+          PatchBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetEdgeSecurityPolicy(
@@ -124,24 +124,24 @@ class BackendServicesRestLogging : public BackendServicesRestStub {
           SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateBackendServices(
+  AsyncUpdateBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::backend_services::v1::
-          UpdateBackendServicesRequest const& request) override;
+          UpdateBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<BackendServicesRestStub> child_;

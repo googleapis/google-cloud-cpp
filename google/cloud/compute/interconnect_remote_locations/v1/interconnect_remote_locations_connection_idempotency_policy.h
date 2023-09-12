@@ -39,9 +39,9 @@ class InterconnectRemoteLocationsConnectionIdempotencyPolicy {
       InterconnectRemoteLocationsConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency GetInterconnectRemoteLocations(
+  virtual google::cloud::Idempotency GetInterconnectRemoteLocation(
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
-          GetInterconnectRemoteLocationsRequest const& request);
+          GetInterconnectRemoteLocationRequest const& request);
 
   virtual google::cloud::Idempotency ListInterconnectRemoteLocations(
       google::cloud::cpp::compute::interconnect_remote_locations::v1::

@@ -45,24 +45,23 @@ class RegionSecurityPoliciesRestLogging
       TracingOptions tracing_options, std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionSecurityPolicies(
+  AsyncDeleteSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_security_policies::v1::
-          DeleteRegionSecurityPoliciesRequest const& request) override;
+          DeleteSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetRegionSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_security_policies::v1::
-          GetRegionSecurityPoliciesRequest const& request) override;
+          GetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionSecurityPolicies(
+  AsyncInsertSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_security_policies::v1::
-          InsertRegionSecurityPoliciesRequest const& request) override;
+          InsertSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
   ListRegionSecurityPolicies(
@@ -71,24 +70,24 @@ class RegionSecurityPoliciesRestLogging
           ListRegionSecurityPoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionSecurityPolicies(
+  AsyncPatchSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_security_policies::v1::
-          PatchRegionSecurityPoliciesRequest const& request) override;
+          PatchSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionSecurityPoliciesRestStub> child_;

@@ -49,21 +49,21 @@ GlobalOperationsRestMetadata::AggregatedListGlobalOperations(
   return child_->AggregatedListGlobalOperations(rest_context, request);
 }
 
-Status GlobalOperationsRestMetadata::DeleteGlobalOperations(
+Status GlobalOperationsRestMetadata::DeleteOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->DeleteGlobalOperations(rest_context, request);
+  return child_->DeleteOperation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsRestMetadata::GetGlobalOperations(
+GlobalOperationsRestMetadata::GetOperation(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetGlobalOperations(rest_context, request);
+  return child_->GetOperation(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>

@@ -71,11 +71,11 @@ DefaultBackendBucketsRestStub::AsyncAddSignedUrlKey(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultBackendBucketsRestStub::AsyncDeleteBackendBuckets(
+DefaultBackendBucketsRestStub::AsyncDeleteBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        DeleteBackendBucketsRequest const& request) {
+        DeleteBackendBucketRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -122,10 +122,10 @@ DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-DefaultBackendBucketsRestStub::GetBackendBuckets(
+DefaultBackendBucketsRestStub::GetBackendBucket(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        GetBackendBucketsRequest const& request) {
+        GetBackendBucketRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucket>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -135,11 +135,11 @@ DefaultBackendBucketsRestStub::GetBackendBuckets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultBackendBucketsRestStub::AsyncInsertBackendBuckets(
+DefaultBackendBucketsRestStub::AsyncInsertBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        InsertBackendBucketsRequest const& request) {
+        InsertBackendBucketRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -177,11 +177,11 @@ DefaultBackendBucketsRestStub::ListBackendBuckets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultBackendBucketsRestStub::AsyncPatchBackendBuckets(
+DefaultBackendBucketsRestStub::AsyncPatchBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        PatchBackendBucketsRequest const& request) {
+        PatchBackendBucketRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -229,11 +229,11 @@ DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultBackendBucketsRestStub::AsyncUpdateBackendBuckets(
+DefaultBackendBucketsRestStub::AsyncUpdateBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        UpdateBackendBucketsRequest const& request) {
+        UpdateBackendBucketRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -258,7 +258,7 @@ DefaultBackendBucketsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -281,7 +281,7 @@ future<Status> DefaultBackendBucketsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

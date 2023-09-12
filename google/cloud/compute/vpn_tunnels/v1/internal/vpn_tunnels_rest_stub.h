@@ -44,23 +44,23 @@ class VpnTunnelsRestStub {
           AggregatedListVpnTunnelsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteVpnTunnels(
+  AsyncDeleteVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelsRequest const& request) = 0;
+          DeleteVpnTunnelRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+  virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertVpnTunnels(
+  AsyncInsertVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelsRequest const& request) = 0;
+          InsertVpnTunnelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
   ListVpnTunnels(
@@ -80,13 +80,13 @@ class VpnTunnelsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultVpnTunnelsRestStub : public VpnTunnelsRestStub {
@@ -105,23 +105,23 @@ class DefaultVpnTunnelsRestStub : public VpnTunnelsRestStub {
           AggregatedListVpnTunnelsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteVpnTunnels(
+  AsyncDeleteVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelsRequest const& request) override;
+          DeleteVpnTunnelRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertVpnTunnels(
+  AsyncInsertVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelsRequest const& request) override;
+          InsertVpnTunnelRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList> ListVpnTunnels(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -139,13 +139,13 @@ class DefaultVpnTunnelsRestStub : public VpnTunnelsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

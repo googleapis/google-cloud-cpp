@@ -166,11 +166,11 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       std::string const& project, std::string const& zone,
       std::string const& node_type, Options opts = {});
 
@@ -182,7 +182,7 @@ class NodeTypesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest].
+  ///     [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -198,12 +198,12 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L144}
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_081.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
-      google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
           request,
       Options opts = {});
 

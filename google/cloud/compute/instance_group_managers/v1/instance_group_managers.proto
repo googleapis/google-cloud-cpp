@@ -109,7 +109,7 @@ service InstanceGroupManagers {
   // that group. Note that the instance group must not belong to a backend
   // service. Read Deleting an instance group for more information.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/delete
-  rpc DeleteInstanceGroupManagers(DeleteInstanceGroupManagersRequest)
+  rpc DeleteInstanceGroupManager(DeleteInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}"
@@ -158,7 +158,7 @@ service InstanceGroupManagers {
 
   // Returns all of the details about the specified managed instance group.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/get
-  rpc GetInstanceGroupManagers(GetInstanceGroupManagersRequest)
+  rpc GetInstanceGroupManager(GetInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.InstanceGroupManager) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}"
@@ -176,7 +176,7 @@ service InstanceGroupManagers {
   // can have up to 1000 VM instances per group. Please contact Cloud Support if
   // you need an increase in this limit.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/insert
-  rpc InsertInstanceGroupManagers(InsertInstanceGroupManagersRequest)
+  rpc InsertInstanceGroupManager(InsertInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instanceGroupManagers"
@@ -255,7 +255,7 @@ service InstanceGroupManagers {
   // different from the current state of that VM. To learn how to apply an
   // updated configuration to the VMs in a MIG, see Updating instances in a MIG.
   // https://cloud.google.com/compute/docs/reference/rest/v1/instanceGroupManagers/patch
-  rpc PatchInstanceGroupManagers(PatchInstanceGroupManagersRequest)
+  rpc PatchInstanceGroupManager(PatchInstanceGroupManagerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/instanceGroupManagers/{instance_group_manager}"
@@ -549,8 +549,8 @@ message CreateInstancesRequest {
   ];
 }
 
-// Request message for DeleteInstanceGroupManagers.
-message DeleteInstanceGroupManagersRequest {
+// Request message for DeleteInstanceGroupManager.
+message DeleteInstanceGroupManagerRequest {
   // The name of the managed instance group to delete.
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -640,8 +640,8 @@ message DeletePerInstanceConfigsRequest {
   ];
 }
 
-// Request message for GetInstanceGroupManagers.
-message GetInstanceGroupManagersRequest {
+// Request message for GetInstanceGroupManager.
+message GetInstanceGroupManagerRequest {
   // The name of the managed instance group.
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -652,8 +652,8 @@ message GetInstanceGroupManagersRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertInstanceGroupManagers.
-message InsertInstanceGroupManagersRequest {
+// Request message for InsertInstanceGroupManager.
+message InsertInstanceGroupManagerRequest {
   // The InstanceGroupManager for this request.
   optional google.cloud.cpp.compute.v1.InstanceGroupManager
       instance_group_manager_resource = 1 [json_name = "__json_request_body"];
@@ -968,8 +968,8 @@ message ListPerInstanceConfigsRequest {
   string zone = 8 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for PatchInstanceGroupManagers.
-message PatchInstanceGroupManagersRequest {
+// Request message for PatchInstanceGroupManager.
+message PatchInstanceGroupManagerRequest {
   // The name of the instance group manager.
   string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
 

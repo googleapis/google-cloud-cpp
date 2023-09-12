@@ -39,24 +39,23 @@ class RegionInstanceTemplatesRestStub {
   virtual ~RegionInstanceTemplatesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionInstanceTemplates(
+  AsyncDeleteInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplatesRequest const& request) = 0;
+          DeleteInstanceTemplateRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplatesRequest const& request) = 0;
+  GetInstanceTemplate(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::region_instance_templates::
+                          v1::GetInstanceTemplateRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionInstanceTemplates(
+  AsyncInsertInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplatesRequest const& request) = 0;
+          InsertInstanceTemplateRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
   ListRegionInstanceTemplates(
@@ -69,13 +68,13 @@ class RegionInstanceTemplatesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultRegionInstanceTemplatesRestStub
@@ -89,24 +88,24 @@ class DefaultRegionInstanceTemplatesRestStub
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionInstanceTemplates(
+  AsyncDeleteInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplatesRequest const& request) override;
+          DeleteInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(
+  GetInstanceTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplatesRequest const& request) override;
+          GetInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionInstanceTemplates(
+  AsyncInsertInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplatesRequest const& request) override;
+          InsertInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
   ListRegionInstanceTemplates(
@@ -119,13 +118,13 @@ class DefaultRegionInstanceTemplatesRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

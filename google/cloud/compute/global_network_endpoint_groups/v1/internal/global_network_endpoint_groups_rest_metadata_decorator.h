@@ -50,11 +50,11 @@ class GlobalNetworkEndpointGroupsRestMetadata
           AttachNetworkEndpointsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteGlobalNetworkEndpointGroups(
+  AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-          DeleteGlobalNetworkEndpointGroupsRequest const& request) override;
+          DeleteNetworkEndpointGroupRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDetachNetworkEndpoints(
@@ -64,17 +64,17 @@ class GlobalNetworkEndpointGroupsRestMetadata
           DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetGlobalNetworkEndpointGroups(
+  GetNetworkEndpointGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-          GetGlobalNetworkEndpointGroupsRequest const& request) override;
+          GetNetworkEndpointGroupRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertGlobalNetworkEndpointGroups(
+  AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-          InsertGlobalNetworkEndpointGroupsRequest const& request) override;
+          InsertNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
   ListGlobalNetworkEndpointGroups(
@@ -94,13 +94,13 @@ class GlobalNetworkEndpointGroupsRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

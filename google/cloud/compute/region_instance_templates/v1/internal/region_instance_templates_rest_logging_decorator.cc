@@ -35,49 +35,49 @@ RegionInstanceTemplatesRestLogging::RegionInstanceTemplatesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesRestLogging::AsyncDeleteRegionInstanceTemplates(
+RegionInstanceTemplatesRestLogging::AsyncDeleteInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteRegionInstanceTemplatesRequest const& request) {
+        DeleteInstanceTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_instance_templates::v1::
-                 DeleteRegionInstanceTemplatesRequest const& request) {
-        return child_->AsyncDeleteRegionInstanceTemplates(
-            cq, std::move(rest_context), request);
+                 DeleteInstanceTemplateRequest const& request) {
+        return child_->AsyncDeleteInstanceTemplate(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-RegionInstanceTemplatesRestLogging::GetRegionInstanceTemplates(
+RegionInstanceTemplatesRestLogging::GetInstanceTemplate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
-        GetRegionInstanceTemplatesRequest const& request) {
+        GetInstanceTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_instance_templates::v1::
-                 GetRegionInstanceTemplatesRequest const& request) {
-        return child_->GetRegionInstanceTemplates(rest_context, request);
+                 GetInstanceTemplateRequest const& request) {
+        return child_->GetInstanceTemplate(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceTemplatesRestLogging::AsyncInsertRegionInstanceTemplates(
+RegionInstanceTemplatesRestLogging::AsyncInsertInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertRegionInstanceTemplatesRequest const& request) {
+        InsertInstanceTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_instance_templates::v1::
-                 InsertRegionInstanceTemplatesRequest const& request) {
-        return child_->AsyncInsertRegionInstanceTemplates(
-            cq, std::move(rest_context), request);
+                 InsertInstanceTemplateRequest const& request) {
+        return child_->AsyncInsertInstanceTemplate(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -101,12 +101,12 @@ RegionInstanceTemplatesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -116,12 +116,12 @@ future<Status> RegionInstanceTemplatesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

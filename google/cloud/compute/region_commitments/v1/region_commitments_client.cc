@@ -52,49 +52,49 @@ RegionCommitmentsClient::AggregatedListRegionCommitments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsClient::GetRegionCommitments(std::string const& project,
-                                              std::string const& region,
-                                              std::string const& commitment,
-                                              Options opts) {
+RegionCommitmentsClient::GetCommitment(std::string const& project,
+                                       std::string const& region,
+                                       std::string const& commitment,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_commitments::v1::
-      GetRegionCommitmentsRequest request;
+  google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_commitment(commitment);
-  return connection_->GetRegionCommitments(request);
+  return connection_->GetCommitment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
-RegionCommitmentsClient::GetRegionCommitments(
+RegionCommitmentsClient::GetCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        GetRegionCommitmentsRequest const& request,
+        GetCommitmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionCommitments(request);
+  return connection_->GetCommitment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsClient::InsertRegionCommitments(
+RegionCommitmentsClient::InsertCommitment(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_commitments::v1::
-      InsertRegionCommitmentsRequest request;
+  google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_commitment_resource() = commitment_resource;
-  return connection_->InsertRegionCommitments(request);
+  return connection_->InsertCommitment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsClient::InsertRegionCommitments(
+RegionCommitmentsClient::InsertCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        InsertRegionCommitmentsRequest const& request,
+        InsertCommitmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionCommitments(request);
+  return connection_->InsertCommitment(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Commitment>
@@ -119,28 +119,28 @@ RegionCommitmentsClient::ListRegionCommitments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsClient::UpdateRegionCommitments(
+RegionCommitmentsClient::UpdateCommitment(
     std::string const& project, std::string const& region,
     std::string const& commitment,
     google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_commitments::v1::
-      UpdateRegionCommitmentsRequest request;
+  google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_commitment(commitment);
   *request.mutable_commitment_resource() = commitment_resource;
-  return connection_->UpdateRegionCommitments(request);
+  return connection_->UpdateCommitment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionCommitmentsClient::UpdateRegionCommitments(
+RegionCommitmentsClient::UpdateCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
-        UpdateRegionCommitmentsRequest const& request,
+        UpdateCommitmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRegionCommitments(request);
+  return connection_->UpdateCommitment(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

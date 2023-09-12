@@ -37,25 +37,25 @@ RegionNetworkEndpointGroupsConnection::
     ~RegionNetworkEndpointGroupsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsConnection::DeleteRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        DeleteRegionNetworkEndpointGroupsRequest const&) {
+        DeleteNetworkEndpointGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-RegionNetworkEndpointGroupsConnection::GetRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsConnection::GetNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        GetRegionNetworkEndpointGroupsRequest const&) {
+        GetNetworkEndpointGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNetworkEndpointGroupsConnection::InsertRegionNetworkEndpointGroups(
+RegionNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-        InsertRegionNetworkEndpointGroupsRequest const&) {
+        InsertNetworkEndpointGroupRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

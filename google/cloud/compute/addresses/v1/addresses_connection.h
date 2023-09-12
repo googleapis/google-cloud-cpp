@@ -189,17 +189,17 @@ class AddressesConnection {
                               AggregatedListAddressesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddresses(
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+  DeleteAddress(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddresses(
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+  InsertAddress(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(

@@ -44,9 +44,9 @@ class AcceleratorTypesRestStub {
           AggregatedListAcceleratorTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::accelerator_types::v1::
-                          GetAcceleratorTypesRequest const& request) = 0;
+  GetAcceleratorType(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::accelerator_types::v1::
+                         GetAcceleratorTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
   ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
@@ -68,10 +68,10 @@ class DefaultAcceleratorTypesRestStub : public AcceleratorTypesRestStub {
       google::cloud::cpp::compute::accelerator_types::v1::
           AggregatedListAcceleratorTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::accelerator_types::v1::
-                          GetAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
   ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,

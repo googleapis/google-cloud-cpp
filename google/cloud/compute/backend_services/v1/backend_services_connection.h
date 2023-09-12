@@ -198,16 +198,16 @@ class BackendServicesConnection {
           AggregatedListBackendServicesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                            DeleteBackendServicesRequest const& request);
+  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           DeleteBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
                          DeleteSignedUrlKeyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                         GetBackendServicesRequest const& request);
+  GetBackendService(google::cloud::cpp::compute::backend_services::v1::
+                        GetBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(
@@ -219,16 +219,16 @@ class BackendServicesConnection {
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                            InsertBackendServicesRequest const& request);
+  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           InsertBackendServiceRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
                           ListBackendServicesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                           PatchBackendServicesRequest const& request);
+  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
+                          PatchBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
@@ -243,8 +243,8 @@ class BackendServicesConnection {
                         SetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendServices(google::cloud::cpp::compute::backend_services::v1::
-                            UpdateBackendServicesRequest const& request);
+  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           UpdateBackendServiceRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

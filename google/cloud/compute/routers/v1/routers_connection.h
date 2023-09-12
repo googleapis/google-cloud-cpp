@@ -187,12 +187,12 @@ class RoutersConnection {
                             AggregatedListRoutersRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouters(
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+  DeleteRouter(
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
+      google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -206,16 +206,16 @@ class RoutersConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouters(
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+  InsertRouter(
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouters(
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+  PatchRouter(
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -223,8 +223,8 @@ class RoutersConnection {
       google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouters(
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+  UpdateRouter(
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request);
 };
 

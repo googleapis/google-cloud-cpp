@@ -183,14 +183,14 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.DeleteInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L206}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.DeleteInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectAttachments(std::string const& project,
-                                std::string const& region,
-                                std::string const& interconnect_attachment,
-                                Options opts = {});
+  DeleteInterconnectAttachment(std::string const& project,
+                               std::string const& region,
+                               std::string const& interconnect_attachment,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -200,7 +200,7 @@ class InterconnectAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.DeleteInterconnectAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.DeleteInterconnectAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -223,13 +223,13 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.DeleteInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L206}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.DeleteInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L206}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnectAttachments(
+  DeleteInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          DeleteInterconnectAttachmentsRequest const& request,
+          DeleteInterconnectAttachmentRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -253,15 +253,15 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L236}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L236}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-  GetInterconnectAttachments(std::string const& project,
-                             std::string const& region,
-                             std::string const& interconnect_attachment,
-                             Options opts = {});
+  GetInterconnectAttachment(std::string const& project,
+                            std::string const& region,
+                            std::string const& interconnect_attachment,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -271,7 +271,7 @@ class InterconnectAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -287,14 +287,14 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L236}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L236}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-  GetInterconnectAttachments(
+  GetInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          GetInterconnectAttachmentsRequest const& request,
+          GetInterconnectAttachmentRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -326,11 +326,11 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.InsertInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L248}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.InsertInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L248}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectAttachments(
+  InsertInterconnectAttachment(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::InterconnectAttachment const&
           interconnect_attachment_resource,
@@ -345,7 +345,7 @@ class InterconnectAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.InsertInterconnectAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.InsertInterconnectAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -368,13 +368,13 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.InsertInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L248}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.InsertInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L248}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnectAttachments(
+  InsertInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          InsertInterconnectAttachmentsRequest const& request,
+          InsertInterconnectAttachmentRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -490,11 +490,11 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.PatchInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L350}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.PatchInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L350}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectAttachments(
+  PatchInterconnectAttachment(
       std::string const& project, std::string const& region,
       std::string const& interconnect_attachment,
       google::cloud::cpp::compute::v1::InterconnectAttachment const&
@@ -511,7 +511,7 @@ class InterconnectAttachmentsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.PatchInterconnectAttachmentsRequest].
+  ///     [google.cloud.cpp.compute.interconnect_attachments.v1.PatchInterconnectAttachmentRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -534,13 +534,13 @@ class InterconnectAttachmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_attachments.v1.PatchInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L350}
+  /// [google.cloud.cpp.compute.interconnect_attachments.v1.PatchInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L350}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnectAttachments(
+  PatchInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          PatchInterconnectAttachmentsRequest const& request,
+          PatchInterconnectAttachmentRequest const& request,
       Options opts = {});
 
   // clang-format off

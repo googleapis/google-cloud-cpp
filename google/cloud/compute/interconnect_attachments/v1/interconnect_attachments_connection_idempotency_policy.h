@@ -42,25 +42,25 @@ class InterconnectAttachmentsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::interconnect_attachments::v1::
           AggregatedListInterconnectAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteInterconnectAttachments(
+  virtual google::cloud::Idempotency DeleteInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          DeleteInterconnectAttachmentsRequest const& request);
+          DeleteInterconnectAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetInterconnectAttachments(
+  virtual google::cloud::Idempotency GetInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          GetInterconnectAttachmentsRequest const& request);
+          GetInterconnectAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency InsertInterconnectAttachments(
+  virtual google::cloud::Idempotency InsertInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          InsertInterconnectAttachmentsRequest const& request);
+          InsertInterconnectAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency ListInterconnectAttachments(
       google::cloud::cpp::compute::interconnect_attachments::v1::
           ListInterconnectAttachmentsRequest request);
 
-  virtual google::cloud::Idempotency PatchInterconnectAttachments(
+  virtual google::cloud::Idempotency PatchInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          PatchInterconnectAttachmentsRequest const& request);
+          PatchInterconnectAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency SetLabels(
       google::cloud::cpp::compute::interconnect_attachments::v1::

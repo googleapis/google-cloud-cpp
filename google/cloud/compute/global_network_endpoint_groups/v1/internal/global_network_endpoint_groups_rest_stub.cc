@@ -77,12 +77,11 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalNetworkEndpointGroupsRestStub::
-    AsyncDeleteGlobalNetworkEndpointGroups(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            DeleteGlobalNetworkEndpointGroupsRequest const& request) {
+DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -133,10 +132,10 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-DefaultGlobalNetworkEndpointGroupsRestStub::GetGlobalNetworkEndpointGroups(
+DefaultGlobalNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        GetGlobalNetworkEndpointGroupsRequest const& request) {
+        GetNetworkEndpointGroupRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request,
@@ -148,12 +147,11 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetGlobalNetworkEndpointGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalNetworkEndpointGroupsRestStub::
-    AsyncInsertGlobalNetworkEndpointGroups(
-        CompletionQueue& cq,
-        std::unique_ptr<rest_internal::RestContext> rest_context,
-        google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            InsertGlobalNetworkEndpointGroupsRequest const& request) {
+DefaultGlobalNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -213,7 +211,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -236,7 +234,7 @@ future<Status> DefaultGlobalNetworkEndpointGroupsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

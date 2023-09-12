@@ -37,9 +37,9 @@ class RegionDiskTypesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionDiskTypesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency GetRegionDiskTypes(
+  virtual google::cloud::Idempotency GetDiskType(
       google::cloud::cpp::compute::region_disk_types::v1::
-          GetRegionDiskTypesRequest const& request);
+          GetDiskTypeRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionDiskTypes(
       google::cloud::cpp::compute::region_disk_types::v1::

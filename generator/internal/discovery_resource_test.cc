@@ -460,18 +460,26 @@ TEST_F(DiscoveryResourceTest, FormatFilePathEmptyOutputPath) {
 }
 
 TEST_F(DiscoveryResourceTest, FormatMethodName) {
-  auto constexpr kResourceJson = R"""({})""";
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "get": {
+      "response": {
+        "$ref": "Address"
+      }
+    }
+  }
+})""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", json);
+  DiscoveryResource r("addresses", "", json);
   EXPECT_THAT(r.FormatMethodName("aggregatedList"),
-              Eq("AggregatedListMyTests"));
-  EXPECT_THAT(r.FormatMethodName("delete"), Eq("DeleteMyTests"));
-  EXPECT_THAT(r.FormatMethodName("get"), Eq("GetMyTests"));
-  EXPECT_THAT(r.FormatMethodName("insert"), Eq("InsertMyTests"));
-  EXPECT_THAT(r.FormatMethodName("list"), Eq("ListMyTests"));
-  EXPECT_THAT(r.FormatMethodName("patch"), Eq("PatchMyTests"));
-  EXPECT_THAT(r.FormatMethodName("update"), Eq("UpdateMyTests"));
+              Eq("AggregatedListAddresses"));
+  EXPECT_THAT(r.FormatMethodName("delete"), Eq("DeleteAddress"));
+  EXPECT_THAT(r.FormatMethodName("get"), Eq("GetAddress"));
+  EXPECT_THAT(r.FormatMethodName("insert"), Eq("InsertAddress"));
+  EXPECT_THAT(r.FormatMethodName("list"), Eq("ListAddresses"));
+  EXPECT_THAT(r.FormatMethodName("patch"), Eq("PatchAddress"));
+  EXPECT_THAT(r.FormatMethodName("update"), Eq("UpdateAddress"));
   EXPECT_THAT(r.FormatMethodName("testPermissions"), Eq("TestPermissions"));
 }
 
@@ -494,6 +502,9 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufService) {
           "project": {
             "type": "string"
           }
+        },
+        "response": {
+          "$ref": "MyResource"
         },
         "parameterOrder": [
           "project",
@@ -543,7 +554,7 @@ service MyResources {
 
   // Description for the get method.
   // https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources/get
-  rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
+  rpc GetMyResource(GetMyResourceRequest) returns (MyResource) {
     option (google.api.http) = {
       get: "base/path/projects/{project}/regions/{region}/myResources/{foo}"
     };
@@ -563,12 +574,14 @@ service MyResources {
       nlohmann::json::parse(kDoFooRequestTypeJson, nullptr, false);
   ASSERT_TRUE(do_foo_request_type_json.is_object());
   DiscoveryResource r("myResources", "this.package", resource_json);
-  DiscoveryTypeVertex t("GetMyResourcesRequest", "this.package",
+  DiscoveryTypeVertex t("GetMyResourceRequest", "this.package",
                         get_request_type_json, &pool());
   DiscoveryTypeVertex t2("DoFooRequest", "this.package",
                          do_foo_request_type_json, &pool());
-  r.AddRequestType("GetMyResourcesRequest", &t);
+  DiscoveryTypeVertex response("MyResource", "this.package", {}, &pool());
+  r.AddRequestType("GetMyResourceRequest", &t);
   r.AddRequestType("DoFooRequest", &t2);
+  r.AddResponseType("MyResource", &response);
   DiscoveryTypeVertex t3("Operation", "other.package", operation_type_json,
                          &pool());
   r.AddResponseType("Operation", &t3);

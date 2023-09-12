@@ -45,23 +45,23 @@ class TargetInstancesRestStub {
           AggregatedListTargetInstancesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetInstances(
+  AsyncDeleteTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          DeleteTargetInstancesRequest const& request) = 0;
+          DeleteTargetInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
-                     google::cloud::cpp::compute::target_instances::v1::
-                         GetTargetInstancesRequest const& request) = 0;
+  GetTargetInstance(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::target_instances::v1::
+                        GetTargetInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetInstances(
+  AsyncInsertTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          InsertTargetInstancesRequest const& request) = 0;
+          InsertTargetInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
   ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
@@ -73,13 +73,13 @@ class TargetInstancesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
@@ -98,23 +98,23 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
           AggregatedListTargetInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetInstances(
+  AsyncDeleteTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          DeleteTargetInstancesRequest const& request) override;
+          DeleteTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          GetTargetInstancesRequest const& request) override;
+          GetTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetInstances(
+  AsyncInsertTargetInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_instances::v1::
-          InsertTargetInstancesRequest const& request) override;
+          InsertTargetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
   ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
@@ -126,13 +126,13 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -76,45 +76,45 @@ SecurityPoliciesClient::AggregatedListSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::DeleteSecurityPolicies(
-    std::string const& project, std::string const& security_policy,
-    Options opts) {
+SecurityPoliciesClient::DeleteSecurityPolicy(std::string const& project,
+                                             std::string const& security_policy,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::
-      DeleteSecurityPoliciesRequest request;
+      DeleteSecurityPolicyRequest request;
   request.set_project(project);
   request.set_security_policy(security_policy);
-  return connection_->DeleteSecurityPolicies(request);
+  return connection_->DeleteSecurityPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::DeleteSecurityPolicies(
+SecurityPoliciesClient::DeleteSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPoliciesRequest const& request,
+        DeleteSecurityPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSecurityPolicies(request);
+  return connection_->DeleteSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesClient::GetSecurityPolicies(std::string const& project,
-                                            std::string const& security_policy,
-                                            Options opts) {
+SecurityPoliciesClient::GetSecurityPolicy(std::string const& project,
+                                          std::string const& security_policy,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::GetSecurityPoliciesRequest
+  google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest
       request;
   request.set_project(project);
   request.set_security_policy(security_policy);
-  return connection_->GetSecurityPolicies(request);
+  return connection_->GetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesClient::GetSecurityPolicies(
+SecurityPoliciesClient::GetSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPoliciesRequest const& request,
+        GetSecurityPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetSecurityPolicies(request);
+  return connection_->GetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
@@ -138,26 +138,26 @@ SecurityPoliciesClient::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::InsertSecurityPolicies(
+SecurityPoliciesClient::InsertSecurityPolicy(
     std::string const& project,
     google::cloud::cpp::compute::v1::SecurityPolicy const&
         security_policy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::security_policies::v1::
-      InsertSecurityPoliciesRequest request;
+      InsertSecurityPolicyRequest request;
   request.set_project(project);
   *request.mutable_security_policy_resource() = security_policy_resource;
-  return connection_->InsertSecurityPolicies(request);
+  return connection_->InsertSecurityPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::InsertSecurityPolicies(
+SecurityPoliciesClient::InsertSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPoliciesRequest const& request,
+        InsertSecurityPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertSecurityPolicies(request);
+  return connection_->InsertSecurityPolicy(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -201,27 +201,27 @@ SecurityPoliciesClient::ListPreconfiguredExpressionSets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchSecurityPolicies(
+SecurityPoliciesClient::PatchSecurityPolicy(
     std::string const& project, std::string const& security_policy,
     google::cloud::cpp::compute::v1::SecurityPolicy const&
         security_policy_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::security_policies::v1::
-      PatchSecurityPoliciesRequest request;
+  google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest
+      request;
   request.set_project(project);
   request.set_security_policy(security_policy);
   *request.mutable_security_policy_resource() = security_policy_resource;
-  return connection_->PatchSecurityPolicies(request);
+  return connection_->PatchSecurityPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesClient::PatchSecurityPolicies(
+SecurityPoliciesClient::PatchSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPoliciesRequest const& request,
+        PatchSecurityPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchSecurityPolicies(request);
+  return connection_->PatchSecurityPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

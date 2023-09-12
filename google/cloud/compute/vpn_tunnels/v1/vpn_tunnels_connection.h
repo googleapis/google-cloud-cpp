@@ -189,16 +189,16 @@ class VpnTunnelsConnection {
                                AggregatedListVpnTunnelsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::
-                       DeleteVpnTunnelsRequest const& request);
+  DeleteVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::
+                      DeleteVpnTunnelRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnTunnels(google::cloud::cpp::compute::vpn_tunnels::v1::
-                       InsertVpnTunnelsRequest const& request);
+  InsertVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::
+                      InsertVpnTunnelRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
   ListVpnTunnels(

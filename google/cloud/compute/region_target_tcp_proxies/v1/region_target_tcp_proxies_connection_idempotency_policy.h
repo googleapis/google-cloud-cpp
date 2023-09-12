@@ -38,17 +38,17 @@ class RegionTargetTcpProxiesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionTargetTcpProxiesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionTargetTcpProxies(
+  virtual google::cloud::Idempotency DeleteTargetTcpProxy(
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          DeleteRegionTargetTcpProxiesRequest const& request);
+          DeleteTargetTcpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionTargetTcpProxies(
+  virtual google::cloud::Idempotency GetTargetTcpProxy(
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          GetRegionTargetTcpProxiesRequest const& request);
+          GetTargetTcpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionTargetTcpProxies(
+  virtual google::cloud::Idempotency InsertTargetTcpProxy(
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          InsertRegionTargetTcpProxiesRequest const& request);
+          InsertTargetTcpProxyRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionTargetTcpProxies(
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::

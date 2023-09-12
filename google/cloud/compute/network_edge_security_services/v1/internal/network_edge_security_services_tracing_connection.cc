@@ -51,54 +51,53 @@ NetworkEdgeSecurityServicesTracingConnection::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        DeleteNetworkEdgeSecurityServicesRequest const& request) {
+        DeleteNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
-      "DeleteNetworkEdgeSecurityServices");
+      "DeleteNetworkEdgeSecurityService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteNetworkEdgeSecurityServices(request));
+                           child_->DeleteNetworkEdgeSecurityService(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-NetworkEdgeSecurityServicesTracingConnection::GetNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesTracingConnection::GetNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        GetNetworkEdgeSecurityServicesRequest const& request) {
+        GetNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
-      "NetworkEdgeSecurityServicesConnection::GetNetworkEdgeSecurityServices");
+      "NetworkEdgeSecurityServicesConnection::GetNetworkEdgeSecurityService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
-                           child_->GetNetworkEdgeSecurityServices(request));
+                           child_->GetNetworkEdgeSecurityService(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        InsertNetworkEdgeSecurityServicesRequest const& request) {
+        InsertNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
-      "InsertNetworkEdgeSecurityServices");
+      "InsertNetworkEdgeSecurityService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertNetworkEdgeSecurityServices(request));
+                           child_->InsertNetworkEdgeSecurityService(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        PatchNetworkEdgeSecurityServicesRequest const& request) {
+        PatchNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
-      "NetworkEdgeSecurityServicesConnection::"
-      "PatchNetworkEdgeSecurityServices");
+      "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchNetworkEdgeSecurityServices(request));
+                           child_->PatchNetworkEdgeSecurityService(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

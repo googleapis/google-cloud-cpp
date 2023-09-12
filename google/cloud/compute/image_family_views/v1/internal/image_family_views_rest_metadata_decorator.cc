@@ -41,12 +41,12 @@ ImageFamilyViewsRestMetadata::ImageFamilyViewsRestMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsRestMetadata::GetImageFamilyViews(
+ImageFamilyViewsRestMetadata::GetImageFamilyView(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const& request) {
+        GetImageFamilyViewRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetImageFamilyViews(rest_context, request);
+  return child_->GetImageFamilyView(rest_context, request);
 }
 
 void ImageFamilyViewsRestMetadata::SetMetadata(

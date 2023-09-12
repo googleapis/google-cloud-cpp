@@ -41,25 +41,25 @@ class PacketMirroringsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::packet_mirrorings::v1::
           AggregatedListPacketMirroringsRequest const& request);
 
-  virtual google::cloud::Idempotency DeletePacketMirrorings(
+  virtual google::cloud::Idempotency DeletePacketMirroring(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          DeletePacketMirroringsRequest const& request);
+          DeletePacketMirroringRequest const& request);
 
-  virtual google::cloud::Idempotency GetPacketMirrorings(
+  virtual google::cloud::Idempotency GetPacketMirroring(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          GetPacketMirroringsRequest const& request);
+          GetPacketMirroringRequest const& request);
 
-  virtual google::cloud::Idempotency InsertPacketMirrorings(
+  virtual google::cloud::Idempotency InsertPacketMirroring(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          InsertPacketMirroringsRequest const& request);
+          InsertPacketMirroringRequest const& request);
 
   virtual google::cloud::Idempotency ListPacketMirrorings(
       google::cloud::cpp::compute::packet_mirrorings::v1::
           ListPacketMirroringsRequest request);
 
-  virtual google::cloud::Idempotency PatchPacketMirrorings(
+  virtual google::cloud::Idempotency PatchPacketMirroring(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          PatchPacketMirroringsRequest const& request);
+          PatchPacketMirroringRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::packet_mirrorings::v1::

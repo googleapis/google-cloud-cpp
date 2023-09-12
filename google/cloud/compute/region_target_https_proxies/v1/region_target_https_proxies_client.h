@@ -120,14 +120,13 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionTargetHttpsProxies(std::string const& project,
-                                 std::string const& region,
-                                 std::string const& target_https_proxy,
-                                 Options opts = {});
+  DeleteTargetHttpsProxy(std::string const& project, std::string const& region,
+                         std::string const& target_https_proxy,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -137,7 +136,7 @@ class RegionTargetHttpsProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteRegionTargetHttpsProxiesRequest].
+  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -160,13 +159,13 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L131}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.DeleteTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionTargetHttpsProxies(
+  DeleteTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          DeleteRegionTargetHttpsProxiesRequest const& request,
+          DeleteTargetHttpsProxyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -190,15 +189,13 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L161}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L161}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-  GetRegionTargetHttpsProxies(std::string const& project,
-                              std::string const& region,
-                              std::string const& target_https_proxy,
-                              Options opts = {});
+  GetTargetHttpsProxy(std::string const& project, std::string const& region,
+                      std::string const& target_https_proxy, Options opts = {});
 
   // clang-format off
   ///
@@ -208,7 +205,7 @@ class RegionTargetHttpsProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.GetRegionTargetHttpsProxiesRequest].
+  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -224,15 +221,14 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L161}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.GetTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L161}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-  GetRegionTargetHttpsProxies(
-      google::cloud::cpp::compute::region_target_https_proxies::v1::
-          GetRegionTargetHttpsProxiesRequest const& request,
-      Options opts = {});
+  GetTargetHttpsProxy(google::cloud::cpp::compute::region_target_https_proxies::
+                          v1::GetTargetHttpsProxyRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -263,11 +259,11 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L173}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionTargetHttpsProxies(
+  InsertTargetHttpsProxy(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::TargetHttpsProxy const&
           target_https_proxy_resource,
@@ -282,7 +278,7 @@ class RegionTargetHttpsProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertRegionTargetHttpsProxiesRequest].
+  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -305,13 +301,13 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L173}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.InsertTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionTargetHttpsProxies(
+  InsertTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          InsertRegionTargetHttpsProxiesRequest const& request,
+          InsertTargetHttpsProxyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -427,16 +423,15 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L272}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionTargetHttpsProxies(
-      std::string const& project, std::string const& region,
-      std::string const& target_https_proxy,
-      google::cloud::cpp::compute::v1::TargetHttpsProxy const&
-          target_https_proxy_resource,
-      Options opts = {});
+  PatchTargetHttpsProxy(std::string const& project, std::string const& region,
+                        std::string const& target_https_proxy,
+                        google::cloud::cpp::compute::v1::TargetHttpsProxy const&
+                            target_https_proxy_resource,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -448,7 +443,7 @@ class RegionTargetHttpsProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchRegionTargetHttpsProxiesRequest].
+  ///     [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -471,13 +466,13 @@ class RegionTargetHttpsProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchRegionTargetHttpsProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L272}
+  /// [google.cloud.cpp.compute.region_target_https_proxies.v1.PatchTargetHttpsProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L272}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionTargetHttpsProxies(
+  PatchTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          PatchRegionTargetHttpsProxiesRequest const& request,
+          PatchTargetHttpsProxyRequest const& request,
       Options opts = {});
 
   // clang-format off

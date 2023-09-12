@@ -49,22 +49,21 @@ RoutersRestMetadata::AggregatedListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestMetadata::AsyncDeleteRouters(
+RoutersRestMetadata::AsyncDeleteRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRouters(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteRouter(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
-RoutersRestMetadata::GetRouters(
+RoutersRestMetadata::GetRouter(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-        request) {
+    google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRouters(rest_context, request);
+  return child_->GetRouter(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
@@ -86,13 +85,13 @@ RoutersRestMetadata::GetRouterStatus(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestMetadata::AsyncInsertRouters(
+RoutersRestMetadata::AsyncInsertRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRouters(cq, std::move(rest_context), request);
+  return child_->AsyncInsertRouter(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
@@ -105,13 +104,13 @@ RoutersRestMetadata::ListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestMetadata::AsyncPatchRouters(
+RoutersRestMetadata::AsyncPatchRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRouters(cq, std::move(rest_context), request);
+  return child_->AsyncPatchRouter(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -123,13 +122,13 @@ RoutersRestMetadata::Preview(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestMetadata::AsyncUpdateRouters(
+RoutersRestMetadata::AsyncUpdateRouter(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateRouters(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateRouter(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -137,7 +136,7 @@ RoutersRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -146,7 +145,7 @@ future<Status> RoutersRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

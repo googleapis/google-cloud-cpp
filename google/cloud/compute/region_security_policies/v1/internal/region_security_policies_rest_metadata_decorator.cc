@@ -42,34 +42,34 @@ RegionSecurityPoliciesRestMetadata::RegionSecurityPoliciesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesRestMetadata::AsyncDeleteRegionSecurityPolicies(
+RegionSecurityPoliciesRestMetadata::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        DeleteRegionSecurityPoliciesRequest const& request) {
+        DeleteSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionSecurityPolicies(cq, std::move(rest_context),
-                                                   request);
+  return child_->AsyncDeleteSecurityPolicy(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-RegionSecurityPoliciesRestMetadata::GetRegionSecurityPolicies(
+RegionSecurityPoliciesRestMetadata::GetSecurityPolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        GetRegionSecurityPoliciesRequest const& request) {
+        GetSecurityPolicyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionSecurityPolicies(rest_context, request);
+  return child_->GetSecurityPolicy(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesRestMetadata::AsyncInsertRegionSecurityPolicies(
+RegionSecurityPoliciesRestMetadata::AsyncInsertSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        InsertRegionSecurityPoliciesRequest const& request) {
+        InsertSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionSecurityPolicies(cq, std::move(rest_context),
-                                                   request);
+  return child_->AsyncInsertSecurityPolicy(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
@@ -82,14 +82,13 @@ RegionSecurityPoliciesRestMetadata::ListRegionSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesRestMetadata::AsyncPatchRegionSecurityPolicies(
+RegionSecurityPoliciesRestMetadata::AsyncPatchSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        PatchRegionSecurityPoliciesRequest const& request) {
+        PatchSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchRegionSecurityPolicies(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncPatchSecurityPolicy(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -97,7 +96,7 @@ RegionSecurityPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -106,7 +105,7 @@ future<Status> RegionSecurityPoliciesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

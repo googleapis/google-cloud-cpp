@@ -51,11 +51,11 @@ class NodeGroupsRestStub {
           AggregatedListNodeGroupsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNodeGroups(
+  AsyncDeleteNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupsRequest const& request) = 0;
+          DeleteNodeGroupRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNodes(
@@ -64,9 +64,9 @@ class NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -75,11 +75,11 @@ class NodeGroupsRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNodeGroups(
+  AsyncInsertNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupsRequest const& request) = 0;
+          InsertNodeGroupRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
   ListNodeGroups(
@@ -94,11 +94,11 @@ class NodeGroupsRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNodeGroups(
+  AsyncPatchNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::
-          PatchNodeGroupsRequest const& request) = 0;
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -129,13 +129,13 @@ class NodeGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
@@ -160,11 +160,11 @@ class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
           AggregatedListNodeGroupsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNodeGroups(
+  AsyncDeleteNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupsRequest const& request) override;
+          DeleteNodeGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNodes(
       google::cloud::CompletionQueue& cq,
@@ -172,9 +172,9 @@ class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -183,11 +183,11 @@ class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNodeGroups(
+  AsyncInsertNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupsRequest const& request) override;
+          InsertNodeGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupList> ListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -200,11 +200,11 @@ class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNodeGroups(
+  AsyncPatchNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::node_groups::v1::
-          PatchNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -235,13 +235,13 @@ class DefaultNodeGroupsRestStub : public NodeGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

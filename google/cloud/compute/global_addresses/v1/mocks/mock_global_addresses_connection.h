@@ -48,21 +48,20 @@ class MockGlobalAddressesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteGlobalAddresses,
+              DeleteAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
-                   DeleteGlobalAddressesRequest const& request),
+                   DeleteAddressRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>,
-              GetGlobalAddresses,
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
-                   GetGlobalAddressesRequest const& request),
+                   GetAddressRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertGlobalAddresses,
+              InsertAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
-                   InsertGlobalAddressesRequest const& request),
+                   InsertAddressRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Address>,

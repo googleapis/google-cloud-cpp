@@ -36,25 +36,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GlobalForwardingRulesConnection::~GlobalForwardingRulesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesConnection::DeleteGlobalForwardingRules(
+GlobalForwardingRulesConnection::DeleteForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRulesRequest const&) {
+        DeleteForwardingRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesConnection::GetGlobalForwardingRules(
+GlobalForwardingRulesConnection::GetForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRulesRequest const&) {
+        GetForwardingRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesConnection::InsertGlobalForwardingRules(
+GlobalForwardingRulesConnection::InsertForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRulesRequest const&) {
+        InsertForwardingRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -69,9 +69,9 @@ GlobalForwardingRulesConnection::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesConnection::PatchGlobalForwardingRules(
+GlobalForwardingRulesConnection::PatchForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRulesRequest const&) {
+        PatchForwardingRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

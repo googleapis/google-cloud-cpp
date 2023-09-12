@@ -34,21 +34,21 @@ TargetSslProxiesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetSslProxiesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::DeleteTargetSslProxies(
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::DeleteTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxiesRequest const&) {
+        DeleteTargetSslProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::GetTargetSslProxies(
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::GetTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        GetTargetSslProxiesRequest const&) {
+        GetTargetSslProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetSslProxiesConnectionIdempotencyPolicy::InsertTargetSslProxies(
+Idempotency TargetSslProxiesConnectionIdempotencyPolicy::InsertTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxiesRequest const&) {
+        InsertTargetSslProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

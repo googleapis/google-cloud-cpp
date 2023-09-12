@@ -40,22 +40,22 @@ InterconnectsRestMetadata::InterconnectsRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsRestMetadata::AsyncDeleteInterconnects(
+InterconnectsRestMetadata::AsyncDeleteInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectsRequest const& request) {
+        DeleteInterconnectRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteInterconnects(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteInterconnect(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsRestMetadata::GetInterconnects(
+InterconnectsRestMetadata::GetInterconnect(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectsRequest const& request) {
+        GetInterconnectRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetInterconnects(rest_context, request);
+  return child_->GetInterconnect(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -68,13 +68,13 @@ InterconnectsRestMetadata::GetDiagnostics(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsRestMetadata::AsyncInsertInterconnects(
+InterconnectsRestMetadata::AsyncInsertInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectsRequest const& request) {
+        InsertInterconnectRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertInterconnects(cq, std::move(rest_context), request);
+  return child_->AsyncInsertInterconnect(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
@@ -87,13 +87,13 @@ InterconnectsRestMetadata::ListInterconnects(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsRestMetadata::AsyncPatchInterconnects(
+InterconnectsRestMetadata::AsyncPatchInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectsRequest const& request) {
+        PatchInterconnectRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchInterconnects(cq, std::move(rest_context), request);
+  return child_->AsyncPatchInterconnect(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -111,7 +111,7 @@ InterconnectsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -120,7 +120,7 @@ future<Status> InterconnectsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

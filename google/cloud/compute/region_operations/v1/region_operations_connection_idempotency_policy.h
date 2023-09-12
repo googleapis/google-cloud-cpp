@@ -37,13 +37,13 @@ class RegionOperationsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionOperationsConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteRegionOperations(
+  virtual google::cloud::Idempotency DeleteOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request);
+          DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionOperations(
+  virtual google::cloud::Idempotency GetOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request);
+          GetOperationRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionOperations(
       google::cloud::cpp::compute::region_operations::v1::

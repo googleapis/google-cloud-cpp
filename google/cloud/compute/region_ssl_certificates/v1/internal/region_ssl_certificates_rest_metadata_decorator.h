@@ -42,24 +42,23 @@ class RegionSslCertificatesRestMetadata : public RegionSslCertificatesRestStub {
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionSslCertificates(
+  AsyncDeleteSslCertificate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          DeleteRegionSslCertificatesRequest const& request) override;
+          DeleteSslCertificateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetRegionSslCertificates(
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          GetRegionSslCertificatesRequest const& request) override;
+          GetSslCertificateRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionSslCertificates(
+  AsyncInsertSslCertificate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_ssl_certificates::v1::
-          InsertRegionSslCertificatesRequest const& request) override;
+          InsertSslCertificateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
   ListRegionSslCertificates(
@@ -72,13 +71,13 @@ class RegionSslCertificatesRestMetadata : public RegionSslCertificatesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

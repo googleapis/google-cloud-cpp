@@ -49,16 +49,15 @@ GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsTracingConnection::DeleteGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        DeleteGlobalNetworkEndpointGroupsRequest const& request) {
+        DeleteNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
-      "GlobalNetworkEndpointGroupsConnection::"
-      "DeleteGlobalNetworkEndpointGroups");
+      "GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteGlobalNetworkEndpointGroups(request));
+                           child_->DeleteNetworkEndpointGroup(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -74,28 +73,26 @@ GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-GlobalNetworkEndpointGroupsTracingConnection::GetGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsTracingConnection::GetNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        GetGlobalNetworkEndpointGroupsRequest const& request) {
+        GetNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
-      "GlobalNetworkEndpointGroupsConnection::GetGlobalNetworkEndpointGroups");
+      "GlobalNetworkEndpointGroupsConnection::GetNetworkEndpointGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->GetGlobalNetworkEndpointGroups(request));
+  return internal::EndSpan(*span, child_->GetNetworkEndpointGroup(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsTracingConnection::InsertGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        InsertGlobalNetworkEndpointGroupsRequest const& request) {
+        InsertNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
-      "GlobalNetworkEndpointGroupsConnection::"
-      "InsertGlobalNetworkEndpointGroups");
+      "GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertGlobalNetworkEndpointGroups(request));
+                           child_->InsertNetworkEndpointGroup(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

@@ -50,21 +50,21 @@ class MockPublicAdvertisedPrefixesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeletePublicAdvertisedPrefixes,
+              DeletePublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                   DeletePublicAdvertisedPrefixesRequest const& request),
+                   DeletePublicAdvertisedPrefixRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>,
-              GetPublicAdvertisedPrefixes,
+              GetPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                   GetPublicAdvertisedPrefixesRequest const& request),
+                   GetPublicAdvertisedPrefixRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertPublicAdvertisedPrefixes,
+              InsertPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                   InsertPublicAdvertisedPrefixesRequest const& request),
+                   InsertPublicAdvertisedPrefixRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -75,9 +75,9 @@ class MockPublicAdvertisedPrefixesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchPublicAdvertisedPrefixes,
+              PatchPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                   PatchPublicAdvertisedPrefixesRequest const& request),
+                   PatchPublicAdvertisedPrefixRequest const& request),
               (override));
 };
 

@@ -41,16 +41,16 @@ class MachineImagesRestMetadata : public MachineImagesRestStub {
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteMachineImages(
+  AsyncDeleteMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::machine_images::v1::
-          DeleteMachineImagesRequest const& request) override;
+          DeleteMachineImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
+  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::machine_images::v1::
-          GetMachineImagesRequest const& request) override;
+          GetMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -58,11 +58,11 @@ class MachineImagesRestMetadata : public MachineImagesRestStub {
           GetIamPolicyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertMachineImages(
+  AsyncInsertMachineImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::machine_images::v1::
-          InsertMachineImagesRequest const& request) override;
+          InsertMachineImageRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImageList> ListMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -84,13 +84,13 @@ class MachineImagesRestMetadata : public MachineImagesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

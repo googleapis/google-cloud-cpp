@@ -37,29 +37,29 @@ class RegionUrlMapsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionUrlMapsConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteRegionUrlMaps(
+  virtual google::cloud::Idempotency DeleteUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
-          DeleteRegionUrlMapsRequest const& request);
+          DeleteUrlMapRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionUrlMaps(
-      google::cloud::cpp::compute::region_url_maps::v1::
-          GetRegionUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency GetUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+          request);
 
-  virtual google::cloud::Idempotency InsertRegionUrlMaps(
+  virtual google::cloud::Idempotency InsertUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
-          InsertRegionUrlMapsRequest const& request);
+          InsertUrlMapRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionUrlMaps(
       google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
           request);
 
-  virtual google::cloud::Idempotency PatchRegionUrlMaps(
+  virtual google::cloud::Idempotency PatchUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
-          PatchRegionUrlMapsRequest const& request);
+          PatchUrlMapRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRegionUrlMaps(
+  virtual google::cloud::Idempotency UpdateUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
-          UpdateRegionUrlMapsRequest const& request);
+          UpdateUrlMapRequest const& request);
 
   virtual google::cloud::Idempotency Validate(
       google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&

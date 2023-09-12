@@ -76,8 +76,13 @@ class DiscoveryResource {
                              std::string const& version,
                              std::string const& output_path) const;
 
+  // Interrogates the resource json for the schema name of the response to its
+  // get method. An empty string is returned if none can be found.
+  std::string GetMethodResponseTypeName() const;
+
   // Method names are formatted as is, except for primitive method names which
-  // are concatenated with the resource name.
+  // are concatenated with the singular form of the resource name which is
+  // determined via the schema name returned from the get method.
   std::string FormatMethodName(std::string method_name) const;
 
   StatusOr<std::string> JsonToProtobufService(

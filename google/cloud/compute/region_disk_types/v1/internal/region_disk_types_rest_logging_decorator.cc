@@ -34,15 +34,15 @@ RegionDiskTypesRestLogging::RegionDiskTypesRestLogging(
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesRestLogging::GetRegionDiskTypes(
+RegionDiskTypesRestLogging::GetDiskType(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypesRequest const& request) {
+        GetDiskTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_disk_types::v1::
-                 GetRegionDiskTypesRequest const& request) {
-        return child_->GetRegionDiskTypes(rest_context, request);
+                 GetDiskTypeRequest const& request) {
+        return child_->GetDiskType(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }

@@ -50,7 +50,7 @@ service Autoscalers {
 
   // Deletes the specified autoscaler.
   // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/delete
-  rpc DeleteAutoscalers(DeleteAutoscalersRequest)
+  rpc DeleteAutoscaler(DeleteAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}"
@@ -61,7 +61,7 @@ service Autoscalers {
 
   // Returns the specified autoscaler resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/get
-  rpc GetAutoscalers(GetAutoscalersRequest)
+  rpc GetAutoscaler(GetAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}"
@@ -72,7 +72,7 @@ service Autoscalers {
   // Creates an autoscaler in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/insert
-  rpc InsertAutoscalers(InsertAutoscalersRequest)
+  rpc InsertAutoscaler(InsertAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
@@ -96,7 +96,7 @@ service Autoscalers {
   // the request. This method supports PATCH semantics and uses the JSON merge
   // patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/patch
-  rpc PatchAutoscalers(PatchAutoscalersRequest)
+  rpc PatchAutoscaler(PatchAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
@@ -109,7 +109,7 @@ service Autoscalers {
   // Updates an autoscaler in the specified project using the data included in
   // the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/autoscalers/update
-  rpc UpdateAutoscalers(UpdateAutoscalersRequest)
+  rpc UpdateAutoscaler(UpdateAutoscalerRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
@@ -194,8 +194,8 @@ message AggregatedListAutoscalersRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteAutoscalers.
-message DeleteAutoscalersRequest {
+// Request message for DeleteAutoscaler.
+message DeleteAutoscalerRequest {
   // Name of the autoscaler to delete.
   string autoscaler = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -224,8 +224,8 @@ message DeleteAutoscalersRequest {
   ];
 }
 
-// Request message for GetAutoscalers.
-message GetAutoscalersRequest {
+// Request message for GetAutoscaler.
+message GetAutoscalerRequest {
   // Name of the autoscaler to return.
   string autoscaler = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -236,8 +236,8 @@ message GetAutoscalersRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertAutoscalers.
-message InsertAutoscalersRequest {
+// Request message for InsertAutoscaler.
+message InsertAutoscalerRequest {
   // The Autoscaler for this request.
   optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 1
       [json_name = "__json_request_body"];
@@ -335,8 +335,8 @@ message ListAutoscalersRequest {
   string zone = 7 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for PatchAutoscalers.
-message PatchAutoscalersRequest {
+// Request message for PatchAutoscaler.
+message PatchAutoscalerRequest {
   // Name of the autoscaler to patch.
   optional string autoscaler = 1;
 
@@ -369,8 +369,8 @@ message PatchAutoscalersRequest {
   ];
 }
 
-// Request message for UpdateAutoscalers.
-message UpdateAutoscalersRequest {
+// Request message for UpdateAutoscaler.
+message UpdateAutoscalerRequest {
   // Name of the autoscaler to update.
   optional string autoscaler = 1;
 

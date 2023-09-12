@@ -50,10 +50,8 @@ InstanceGroupsRestConnectionImpl::AddInstances(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -64,13 +62,13 @@ InstanceGroupsRestConnectionImpl::AddInstances(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -81,16 +79,17 @@ InstanceGroupsRestConnectionImpl::AddInstances(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -114,54 +113,53 @@ InstanceGroupsRestConnectionImpl::AggregatedListInstanceGroups(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsRestConnectionImpl::DeleteInstanceGroups(
+InstanceGroupsRestConnectionImpl::DeleteInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        DeleteInstanceGroupsRequest const& request) {
+        DeleteInstanceGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::instance_groups::v1::
-                         DeleteInstanceGroupsRequest const& request) {
-        return stub->AsyncDeleteInstanceGroups(cq, std::move(context), request);
+                         DeleteInstanceGroupRequest const& request) {
+        return stub->AsyncDeleteInstanceGroup(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstanceGroups(request),
+      idempotency_policy(*current)->DeleteInstanceGroup(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -169,70 +167,69 @@ InstanceGroupsRestConnectionImpl::DeleteInstanceGroups(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsRestConnectionImpl::GetInstanceGroups(
+InstanceGroupsRestConnectionImpl::GetInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        GetInstanceGroupsRequest const& request) {
+        GetInstanceGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetInstanceGroups(request),
+      idempotency_policy(*current)->GetInstanceGroup(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::instance_groups::v1::
-                 GetInstanceGroupsRequest const& request) {
-        return stub_->GetInstanceGroups(rest_context, request);
+                 GetInstanceGroupRequest const& request) {
+        return stub_->GetInstanceGroup(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsRestConnectionImpl::InsertInstanceGroups(
+InstanceGroupsRestConnectionImpl::InsertInstanceGroup(
     google::cloud::cpp::compute::instance_groups::v1::
-        InsertInstanceGroupsRequest const& request) {
+        InsertInstanceGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::instance_groups::v1::
-                         InsertInstanceGroupsRequest const& request) {
-        return stub->AsyncInsertInstanceGroups(cq, std::move(context), request);
+                         InsertInstanceGroupRequest const& request) {
+        return stub->AsyncInsertInstanceGroup(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertInstanceGroups(request),
+      idempotency_policy(*current)->InsertInstanceGroup(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -319,10 +316,8 @@ InstanceGroupsRestConnectionImpl::RemoveInstances(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -333,13 +328,13 @@ InstanceGroupsRestConnectionImpl::RemoveInstances(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -350,16 +345,17 @@ InstanceGroupsRestConnectionImpl::RemoveInstances(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -374,10 +370,8 @@ InstanceGroupsRestConnectionImpl::SetNamedPorts(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -388,13 +382,13 @@ InstanceGroupsRestConnectionImpl::SetNamedPorts(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -405,16 +399,17 @@ InstanceGroupsRestConnectionImpl::SetNamedPorts(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);

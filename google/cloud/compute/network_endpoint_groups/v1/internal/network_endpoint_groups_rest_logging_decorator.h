@@ -57,11 +57,11 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
           AttachNetworkEndpointsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNetworkEndpointGroups(
+  AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          DeleteNetworkEndpointGroupsRequest const& request) override;
+          DeleteNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDetachNetworkEndpoints(
@@ -71,17 +71,17 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
           DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-  GetNetworkEndpointGroups(
+  GetNetworkEndpointGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          GetNetworkEndpointGroupsRequest const& request) override;
+          GetNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNetworkEndpointGroups(
+  AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          InsertNetworkEndpointGroupsRequest const& request) override;
+          InsertNetworkEndpointGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
   ListNetworkEndpointGroups(
@@ -106,13 +106,13 @@ class NetworkEndpointGroupsRestLogging : public NetworkEndpointGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<NetworkEndpointGroupsRestStub> child_;

@@ -119,13 +119,13 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L102}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePublicAdvertisedPrefixes(std::string const& project,
-                                 std::string const& public_advertised_prefix,
-                                 Options opts = {});
+  DeletePublicAdvertisedPrefix(std::string const& project,
+                               std::string const& public_advertised_prefix,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -135,7 +135,7 @@ class PublicAdvertisedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest].
+  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -158,13 +158,13 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L102}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.DeletePublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L102}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePublicAdvertisedPrefixes(
+  DeletePublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          DeletePublicAdvertisedPrefixesRequest const& request,
+          DeletePublicAdvertisedPrefixRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -187,14 +187,14 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L126}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L126}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-  GetPublicAdvertisedPrefixes(std::string const& project,
-                              std::string const& public_advertised_prefix,
-                              Options opts = {});
+  GetPublicAdvertisedPrefix(std::string const& project,
+                            std::string const& public_advertised_prefix,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -204,7 +204,7 @@ class PublicAdvertisedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest].
+  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -220,14 +220,14 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L126}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.GetPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L126}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_087.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-  GetPublicAdvertisedPrefixes(
+  GetPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          GetPublicAdvertisedPrefixesRequest const& request,
+          GetPublicAdvertisedPrefixRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -258,11 +258,11 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPublicAdvertisedPrefixes(
+  InsertPublicAdvertisedPrefix(
       std::string const& project,
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
           public_advertised_prefix_resource,
@@ -277,7 +277,7 @@ class PublicAdvertisedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest].
+  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -300,13 +300,13 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.InsertPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPublicAdvertisedPrefixes(
+  InsertPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          InsertPublicAdvertisedPrefixesRequest const& request,
+          InsertPublicAdvertisedPrefixRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -417,11 +417,11 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L225}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPublicAdvertisedPrefixes(
+  PatchPublicAdvertisedPrefix(
       std::string const& project, std::string const& public_advertised_prefix,
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
           public_advertised_prefix_resource,
@@ -437,7 +437,7 @@ class PublicAdvertisedPrefixesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest].
+  ///     [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -460,13 +460,13 @@ class PublicAdvertisedPrefixesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L225}
+  /// [google.cloud.cpp.compute.public_advertised_prefixes.v1.PatchPublicAdvertisedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L225}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPublicAdvertisedPrefixes(
+  PatchPublicAdvertisedPrefix(
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          PatchPublicAdvertisedPrefixesRequest const& request,
+          PatchPublicAdvertisedPrefixRequest const& request,
       Options opts = {});
 
  private:

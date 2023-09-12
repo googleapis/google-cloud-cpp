@@ -35,25 +35,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetSslProxiesConnection::~TargetSslProxiesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesConnection::DeleteTargetSslProxies(
+TargetSslProxiesConnection::DeleteTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxiesRequest const&) {
+        DeleteTargetSslProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesConnection::GetTargetSslProxies(
+TargetSslProxiesConnection::GetTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        GetTargetSslProxiesRequest const&) {
+        GetTargetSslProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesConnection::InsertTargetSslProxies(
+TargetSslProxiesConnection::InsertTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxiesRequest const&) {
+        InsertTargetSslProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

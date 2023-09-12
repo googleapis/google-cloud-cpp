@@ -177,12 +177,12 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L202}
+  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L202}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthChecks(std::string const& project,
-                     std::string const& health_check, Options opts = {});
+  DeleteHealthCheck(std::string const& project, std::string const& health_check,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -192,7 +192,7 @@ class HealthChecksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest].
+  ///     [google.cloud.cpp.compute.health_checks.v1.DeleteHealthCheckRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -215,13 +215,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L202}
+  /// [google.cloud.cpp.compute.health_checks.v1.DeleteHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L202}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         DeleteHealthChecksRequest const& request,
-                     Options opts = {});
+  DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        DeleteHealthCheckRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -243,11 +243,11 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L226}
+  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L226}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_042.proto#L271}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       std::string const& project, std::string const& health_check,
       Options opts = {});
 
@@ -259,7 +259,7 @@ class HealthChecksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest].
+  ///     [google.cloud.cpp.compute.health_checks.v1.GetHealthCheckRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,13 +275,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L226}
+  /// [google.cloud.cpp.compute.health_checks.v1.GetHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L226}
   /// [google.cloud.cpp.compute.v1.HealthCheck]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_042.proto#L271}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       google::cloud::cpp::compute::health_checks::v1::
-          GetHealthChecksRequest const& request,
+          GetHealthCheckRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -312,11 +312,11 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L235}
+  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthChecks(
+  InsertHealthCheck(
       std::string const& project,
       google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
       Options opts = {});
@@ -330,7 +330,7 @@ class HealthChecksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest].
+  ///     [google.cloud.cpp.compute.health_checks.v1.InsertHealthCheckRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -353,13 +353,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L235}
+  /// [google.cloud.cpp.compute.health_checks.v1.InsertHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         InsertHealthChecksRequest const& request,
-                     Options opts = {});
+  InsertHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        InsertHealthCheckRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -470,11 +470,10 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L325}
+  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L325}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthChecks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
       std::string const& project, std::string const& health_check,
       google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
       Options opts = {});
@@ -489,7 +488,7 @@ class HealthChecksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest].
+  ///     [google.cloud.cpp.compute.health_checks.v1.PatchHealthCheckRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -512,13 +511,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L325}
+  /// [google.cloud.cpp.compute.health_checks.v1.PatchHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L325}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                        PatchHealthChecksRequest const& request,
-                    Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
+      google::cloud::cpp::compute::health_checks::v1::
+          PatchHealthCheckRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -549,11 +548,11 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L353}
+  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L353}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthChecks(
+  UpdateHealthCheck(
       std::string const& project, std::string const& health_check,
       google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
       Options opts = {});
@@ -567,7 +566,7 @@ class HealthChecksClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest].
+  ///     [google.cloud.cpp.compute.health_checks.v1.UpdateHealthCheckRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -590,13 +589,13 @@ class HealthChecksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthChecksRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L353}
+  /// [google.cloud.cpp.compute.health_checks.v1.UpdateHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/health_checks/v1/health_checks.proto#L353}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthChecks(google::cloud::cpp::compute::health_checks::v1::
-                         UpdateHealthChecksRequest const& request,
-                     Options opts = {});
+  UpdateHealthCheck(google::cloud::cpp::compute::health_checks::v1::
+                        UpdateHealthCheckRequest const& request,
+                    Options opts = {});
 
  private:
   std::shared_ptr<HealthChecksConnection> connection_;

@@ -52,49 +52,49 @@ NodeTemplatesClient::AggregatedListNodeTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesClient::DeleteNodeTemplates(std::string const& project,
-                                         std::string const& region,
-                                         std::string const& node_template,
-                                         Options opts) {
+NodeTemplatesClient::DeleteNodeTemplate(std::string const& project,
+                                        std::string const& region,
+                                        std::string const& node_template,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplatesRequest
+  google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest
       request;
   request.set_project(project);
   request.set_region(region);
   request.set_node_template(node_template);
-  return connection_->DeleteNodeTemplates(request);
+  return connection_->DeleteNodeTemplate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesClient::DeleteNodeTemplates(
+NodeTemplatesClient::DeleteNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplatesRequest const& request,
+        DeleteNodeTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNodeTemplates(request);
+  return connection_->DeleteNodeTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesClient::GetNodeTemplates(std::string const& project,
-                                      std::string const& region,
-                                      std::string const& node_template,
-                                      Options opts) {
+NodeTemplatesClient::GetNodeTemplate(std::string const& project,
+                                     std::string const& region,
+                                     std::string const& node_template,
+                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::node_templates::v1::GetNodeTemplatesRequest
+  google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest
       request;
   request.set_project(project);
   request.set_region(region);
   request.set_node_template(node_template);
-  return connection_->GetNodeTemplates(request);
+  return connection_->GetNodeTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesClient::GetNodeTemplates(
+NodeTemplatesClient::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        GetNodeTemplatesRequest const& request,
+        GetNodeTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetNodeTemplates(request);
+  return connection_->GetNodeTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -119,26 +119,26 @@ NodeTemplatesClient::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesClient::InsertNodeTemplates(
+NodeTemplatesClient::InsertNodeTemplate(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::NodeTemplate const& node_template_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplatesRequest
+  google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest
       request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_node_template_resource() = node_template_resource;
-  return connection_->InsertNodeTemplates(request);
+  return connection_->InsertNodeTemplate(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesClient::InsertNodeTemplates(
+NodeTemplatesClient::InsertNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplatesRequest const& request,
+        InsertNodeTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNodeTemplates(request);
+  return connection_->InsertNodeTemplate(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>

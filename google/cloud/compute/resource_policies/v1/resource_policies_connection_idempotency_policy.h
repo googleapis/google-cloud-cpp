@@ -41,29 +41,29 @@ class ResourcePoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::resource_policies::v1::
           AggregatedListResourcePoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteResourcePolicies(
+  virtual google::cloud::Idempotency DeleteResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::
-          DeleteResourcePoliciesRequest const& request);
+          DeleteResourcePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetResourcePolicies(
+  virtual google::cloud::Idempotency GetResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::
-          GetResourcePoliciesRequest const& request);
+          GetResourcePolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertResourcePolicies(
+  virtual google::cloud::Idempotency InsertResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::
-          InsertResourcePoliciesRequest const& request);
+          InsertResourcePolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListResourcePolicies(
       google::cloud::cpp::compute::resource_policies::v1::
           ListResourcePoliciesRequest request);
 
-  virtual google::cloud::Idempotency PatchResourcePolicies(
+  virtual google::cloud::Idempotency PatchResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::
-          PatchResourcePoliciesRequest const& request);
+          PatchResourcePolicyRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::

@@ -46,14 +46,14 @@ AcceleratorTypesTracingConnection::AggregatedListAcceleratorTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesTracingConnection::GetAcceleratorTypes(
+AcceleratorTypesTracingConnection::GetAcceleratorType(
     google::cloud::cpp::compute::accelerator_types::v1::
-        GetAcceleratorTypesRequest const& request) {
+        GetAcceleratorTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_accelerator_types_v1::AcceleratorTypesConnection::"
-      "GetAcceleratorTypes");
+      "GetAcceleratorType");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetAcceleratorTypes(request));
+  return internal::EndSpan(*span, child_->GetAcceleratorType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>

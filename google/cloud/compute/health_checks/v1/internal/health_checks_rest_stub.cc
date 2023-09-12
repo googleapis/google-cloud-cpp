@@ -65,11 +65,11 @@ DefaultHealthChecksRestStub::AggregatedListHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHealthChecksRestStub::AsyncDeleteHealthChecks(
+DefaultHealthChecksRestStub::AsyncDeleteHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        DeleteHealthChecksRequest const& request) {
+        DeleteHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -90,10 +90,10 @@ DefaultHealthChecksRestStub::AsyncDeleteHealthChecks(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-DefaultHealthChecksRestStub::GetHealthChecks(
+DefaultHealthChecksRestStub::GetHealthCheck(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::health_checks::v1::
-        GetHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -103,11 +103,11 @@ DefaultHealthChecksRestStub::GetHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHealthChecksRestStub::AsyncInsertHealthChecks(
+DefaultHealthChecksRestStub::AsyncInsertHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        InsertHealthChecksRequest const& request) {
+        InsertHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -145,11 +145,11 @@ DefaultHealthChecksRestStub::ListHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHealthChecksRestStub::AsyncPatchHealthChecks(
+DefaultHealthChecksRestStub::AsyncPatchHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        PatchHealthChecksRequest const& request) {
+        PatchHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -170,11 +170,11 @@ DefaultHealthChecksRestStub::AsyncPatchHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultHealthChecksRestStub::AsyncUpdateHealthChecks(
+DefaultHealthChecksRestStub::AsyncUpdateHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        UpdateHealthChecksRequest const& request) {
+        UpdateHealthCheckRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -199,7 +199,7 @@ DefaultHealthChecksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -222,7 +222,7 @@ future<Status> DefaultHealthChecksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

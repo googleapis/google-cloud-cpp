@@ -58,55 +58,54 @@ RoutersRestConnectionImpl::AggregatedListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestConnectionImpl::DeleteRouters(
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+RoutersRestConnectionImpl::DeleteRouter(
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+          google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
               request) {
-        return stub->AsyncDeleteRouters(cq, std::move(context), request);
+        return stub->AsyncDeleteRouter(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRouters(request),
+      idempotency_policy(*current)->DeleteRouter(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -114,16 +113,15 @@ RoutersRestConnectionImpl::DeleteRouters(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
-RoutersRestConnectionImpl::GetRouters(
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-        request) {
+RoutersRestConnectionImpl::GetRouter(
+    google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRouters(request),
+      idempotency_policy(*current)->GetRouter(request),
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-                 request) { return stub_->GetRouters(rest_context, request); },
+             google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
+                 request) { return stub_->GetRouter(rest_context, request); },
       request, __func__);
 }
 
@@ -160,55 +158,54 @@ RoutersRestConnectionImpl::GetRouterStatus(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestConnectionImpl::InsertRouters(
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+RoutersRestConnectionImpl::InsertRouter(
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+          google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
               request) {
-        return stub->AsyncInsertRouters(cq, std::move(context), request);
+        return stub->AsyncInsertRouter(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertRouters(request),
+      idempotency_policy(*current)->InsertRouter(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -250,55 +247,54 @@ RoutersRestConnectionImpl::ListRouters(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestConnectionImpl::PatchRouters(
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+RoutersRestConnectionImpl::PatchRouter(
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+          google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
               request) {
-        return stub->AsyncPatchRouters(cq, std::move(context), request);
+        return stub->AsyncPatchRouter(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchRouters(request),
+      idempotency_policy(*current)->PatchRouter(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -319,55 +315,54 @@ RoutersRestConnectionImpl::Preview(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RoutersRestConnectionImpl::UpdateRouters(
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+RoutersRestConnectionImpl::UpdateRouter(
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+          google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
               request) {
-        return stub->AsyncUpdateRouters(cq, std::move(context), request);
+        return stub->AsyncUpdateRouter(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRouters(request),
+      idempotency_policy(*current)->UpdateRouter(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

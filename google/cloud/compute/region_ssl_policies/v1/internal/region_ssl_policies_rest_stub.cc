@@ -46,11 +46,11 @@ DefaultRegionSslPoliciesRestStub::DefaultRegionSslPoliciesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionSslPoliciesRestStub::AsyncDeleteRegionSslPolicies(
+DefaultRegionSslPoliciesRestStub::AsyncDeleteSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteRegionSslPoliciesRequest const& request) {
+        DeleteSslPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -72,10 +72,10 @@ DefaultRegionSslPoliciesRestStub::AsyncDeleteRegionSslPolicies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-DefaultRegionSslPoliciesRestStub::GetRegionSslPolicies(
+DefaultRegionSslPoliciesRestStub::GetSslPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetRegionSslPoliciesRequest const& request) {
+        GetSslPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -85,11 +85,11 @@ DefaultRegionSslPoliciesRestStub::GetRegionSslPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionSslPoliciesRestStub::AsyncInsertRegionSslPolicies(
+DefaultRegionSslPoliciesRestStub::AsyncInsertSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertRegionSslPoliciesRequest const& request) {
+        InsertSslPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -148,11 +148,11 @@ DefaultRegionSslPoliciesRestStub::ListAvailableFeatures(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionSslPoliciesRestStub::AsyncPatchRegionSslPolicies(
+DefaultRegionSslPoliciesRestStub::AsyncPatchSslPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchRegionSslPoliciesRequest const& request) {
+        PatchSslPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -178,7 +178,7 @@ DefaultRegionSslPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -202,7 +202,7 @@ future<Status> DefaultRegionSslPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

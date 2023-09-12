@@ -37,9 +37,9 @@ class ImageFamilyViewsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency GetImageFamilyViews(
+  virtual google::cloud::Idempotency GetImageFamilyView(
       google::cloud::cpp::compute::image_family_views::v1::
-          GetImageFamilyViewsRequest const& request);
+          GetImageFamilyViewRequest const& request);
 };
 
 std::unique_ptr<ImageFamilyViewsConnectionIdempotencyPolicy>

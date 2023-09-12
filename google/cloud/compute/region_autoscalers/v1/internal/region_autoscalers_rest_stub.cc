@@ -46,11 +46,11 @@ DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionAutoscalersRestStub::AsyncDeleteRegionAutoscalers(
+DefaultRegionAutoscalersRestStub::AsyncDeleteAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalersRequest const& request) {
+        DeleteAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -72,10 +72,10 @@ DefaultRegionAutoscalersRestStub::AsyncDeleteRegionAutoscalers(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-DefaultRegionAutoscalersRestStub::GetRegionAutoscalers(
+DefaultRegionAutoscalersRestStub::GetAutoscaler(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalersRequest const& request) {
+        GetAutoscalerRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -85,11 +85,11 @@ DefaultRegionAutoscalersRestStub::GetRegionAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionAutoscalersRestStub::AsyncInsertRegionAutoscalers(
+DefaultRegionAutoscalersRestStub::AsyncInsertAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalersRequest const& request) {
+        InsertAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -129,11 +129,11 @@ DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionAutoscalersRestStub::AsyncPatchRegionAutoscalers(
+DefaultRegionAutoscalersRestStub::AsyncPatchAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalersRequest const& request) {
+        PatchAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -154,11 +154,11 @@ DefaultRegionAutoscalersRestStub::AsyncPatchRegionAutoscalers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionAutoscalersRestStub::AsyncUpdateRegionAutoscalers(
+DefaultRegionAutoscalersRestStub::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalersRequest const& request) {
+        UpdateAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -183,7 +183,7 @@ DefaultRegionAutoscalersRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -207,7 +207,7 @@ future<Status> DefaultRegionAutoscalersRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

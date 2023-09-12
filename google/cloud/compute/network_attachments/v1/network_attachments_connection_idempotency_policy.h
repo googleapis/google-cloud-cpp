@@ -41,21 +41,21 @@ class NetworkAttachmentsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_attachments::v1::
           AggregatedListNetworkAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNetworkAttachments(
+  virtual google::cloud::Idempotency DeleteNetworkAttachment(
       google::cloud::cpp::compute::network_attachments::v1::
-          DeleteNetworkAttachmentsRequest const& request);
+          DeleteNetworkAttachmentRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetworkAttachments(
+  virtual google::cloud::Idempotency GetNetworkAttachment(
       google::cloud::cpp::compute::network_attachments::v1::
-          GetNetworkAttachmentsRequest const& request);
+          GetNetworkAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworkAttachments(
+  virtual google::cloud::Idempotency InsertNetworkAttachment(
       google::cloud::cpp::compute::network_attachments::v1::
-          InsertNetworkAttachmentsRequest const& request);
+          InsertNetworkAttachmentRequest const& request);
 
   virtual google::cloud::Idempotency ListNetworkAttachments(
       google::cloud::cpp::compute::network_attachments::v1::

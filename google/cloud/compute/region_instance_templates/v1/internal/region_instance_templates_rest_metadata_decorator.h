@@ -43,24 +43,24 @@ class RegionInstanceTemplatesRestMetadata
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionInstanceTemplates(
+  AsyncDeleteInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          DeleteRegionInstanceTemplatesRequest const& request) override;
+          DeleteInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetRegionInstanceTemplates(
+  GetInstanceTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          GetRegionInstanceTemplatesRequest const& request) override;
+          GetInstanceTemplateRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionInstanceTemplates(
+  AsyncInsertInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_instance_templates::v1::
-          InsertRegionInstanceTemplatesRequest const& request) override;
+          InsertInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
   ListRegionInstanceTemplates(
@@ -73,13 +73,13 @@ class RegionInstanceTemplatesRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

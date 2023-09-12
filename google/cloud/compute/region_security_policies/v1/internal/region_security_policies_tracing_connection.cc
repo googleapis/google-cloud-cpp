@@ -37,38 +37,38 @@ RegionSecurityPoliciesTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesTracingConnection::DeleteRegionSecurityPolicies(
+RegionSecurityPoliciesTracingConnection::DeleteSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        DeleteRegionSecurityPoliciesRequest const& request) {
+        DeleteSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_security_policies_v1::RegionSecurityPoliciesConnection::"
-      "DeleteRegionSecurityPolicies");
+      "DeleteSecurityPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionSecurityPolicies(request));
+                           child_->DeleteSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-RegionSecurityPoliciesTracingConnection::GetRegionSecurityPolicies(
+RegionSecurityPoliciesTracingConnection::GetSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        GetRegionSecurityPoliciesRequest const& request) {
+        GetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_security_policies_v1::RegionSecurityPoliciesConnection::"
-      "GetRegionSecurityPolicies");
+      "GetSecurityPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionSecurityPolicies(request));
+  return internal::EndSpan(*span, child_->GetSecurityPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesTracingConnection::InsertRegionSecurityPolicies(
+RegionSecurityPoliciesTracingConnection::InsertSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        InsertRegionSecurityPoliciesRequest const& request) {
+        InsertSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_security_policies_v1::RegionSecurityPoliciesConnection::"
-      "InsertRegionSecurityPolicies");
+      "InsertSecurityPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionSecurityPolicies(request));
+                           child_->InsertSecurityPolicy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -86,15 +86,15 @@ RegionSecurityPoliciesTracingConnection::ListRegionSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesTracingConnection::PatchRegionSecurityPolicies(
+RegionSecurityPoliciesTracingConnection::PatchSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        PatchRegionSecurityPoliciesRequest const& request) {
+        PatchSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_security_policies_v1::RegionSecurityPoliciesConnection::"
-      "PatchRegionSecurityPolicies");
+      "PatchSecurityPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchRegionSecurityPolicies(request));
+                           child_->PatchSecurityPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

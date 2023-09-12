@@ -154,11 +154,11 @@ DefaultInstanceGroupManagersRestStub::AsyncCreateInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManagers(
+DefaultInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
-        DeleteInstanceGroupManagersRequest const& request) {
+        DeleteInstanceGroupManagerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -237,10 +237,10 @@ DefaultInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-DefaultInstanceGroupManagersRestStub::GetInstanceGroupManagers(
+DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
-        GetInstanceGroupManagersRequest const& request) {
+        GetInstanceGroupManagerRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request,
@@ -252,11 +252,11 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManagers(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManagers(
+DefaultInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
-        InsertInstanceGroupManagersRequest const& request) {
+        InsertInstanceGroupManagerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -350,11 +350,11 @@ DefaultInstanceGroupManagersRestStub::ListPerInstanceConfigs(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManagers(
+DefaultInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
-        PatchInstanceGroupManagersRequest const& request) {
+        PatchInstanceGroupManagerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -550,8 +550,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupManagersRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -575,7 +575,7 @@ future<Status> DefaultInstanceGroupManagersRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

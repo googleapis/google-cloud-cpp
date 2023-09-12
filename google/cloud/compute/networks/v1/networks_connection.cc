@@ -43,16 +43,16 @@ NetworksConnection::AddPeering(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksConnection::DeleteNetworks(
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&) {
+NetworksConnection::DeleteNetwork(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
-NetworksConnection::GetNetworks(
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&) {
+NetworksConnection::GetNetwork(
+    google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -64,8 +64,8 @@ NetworksConnection::GetEffectiveFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksConnection::InsertNetworks(
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&) {
+NetworksConnection::InsertNetwork(
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -88,8 +88,8 @@ NetworksConnection::ListPeeringRoutes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworksConnection::PatchNetworks(
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&) {
+NetworksConnection::PatchNetwork(
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

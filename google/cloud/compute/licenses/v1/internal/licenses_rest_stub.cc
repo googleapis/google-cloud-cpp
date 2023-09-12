@@ -45,10 +45,10 @@ DefaultLicensesRestStub::DefaultLicensesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultLicensesRestStub::AsyncDeleteLicenses(
+DefaultLicensesRestStub::AsyncDeleteLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -70,9 +70,9 @@ DefaultLicensesRestStub::AsyncDeleteLicenses(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-DefaultLicensesRestStub::GetLicenses(
+DefaultLicensesRestStub::GetLicense(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
       *service_, rest_context, request,
@@ -98,10 +98,10 @@ DefaultLicensesRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultLicensesRestStub::AsyncInsertLicenses(
+DefaultLicensesRestStub::AsyncInsertLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -170,7 +170,7 @@ DefaultLicensesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -193,7 +193,7 @@ future<Status> DefaultLicensesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

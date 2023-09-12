@@ -43,70 +43,69 @@ InterconnectsRestConnectionImpl::InterconnectsRestConnectionImpl(
                                       InterconnectsConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsRestConnectionImpl::DeleteInterconnects(
+InterconnectsRestConnectionImpl::DeleteInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectsRequest const& request) {
+        DeleteInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::interconnects::v1::
-                         DeleteInterconnectsRequest const& request) {
-        return stub->AsyncDeleteInterconnects(cq, std::move(context), request);
+                         DeleteInterconnectRequest const& request) {
+        return stub->AsyncDeleteInterconnect(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInterconnects(request),
+      idempotency_policy(*current)->DeleteInterconnect(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsRestConnectionImpl::GetInterconnects(
+InterconnectsRestConnectionImpl::GetInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectsRequest const& request) {
+        GetInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetInterconnects(request),
+      idempotency_policy(*current)->GetInterconnect(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::interconnects::v1::
-                 GetInterconnectsRequest const& request) {
-        return stub_->GetInterconnects(rest_context, request);
+                 GetInterconnectRequest const& request) {
+        return stub_->GetInterconnect(rest_context, request);
       },
       request, __func__);
 }
@@ -128,53 +127,52 @@ InterconnectsRestConnectionImpl::GetDiagnostics(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsRestConnectionImpl::InsertInterconnects(
+InterconnectsRestConnectionImpl::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectsRequest const& request) {
+        InsertInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::interconnects::v1::
-                         InsertInterconnectsRequest const& request) {
-        return stub->AsyncInsertInterconnects(cq, std::move(context), request);
+                         InsertInterconnectRequest const& request) {
+        return stub->AsyncInsertInterconnect(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertInterconnects(request),
+      idempotency_policy(*current)->InsertInterconnect(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -217,53 +215,52 @@ InterconnectsRestConnectionImpl::ListInterconnects(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectsRestConnectionImpl::PatchInterconnects(
+InterconnectsRestConnectionImpl::PatchInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectsRequest const& request) {
+        PatchInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::interconnects::v1::
-                         PatchInterconnectsRequest const& request) {
-        return stub->AsyncPatchInterconnects(cq, std::move(context), request);
+                         PatchInterconnectRequest const& request) {
+        return stub->AsyncPatchInterconnect(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchInterconnects(request),
+      idempotency_policy(*current)->PatchInterconnect(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -277,10 +274,9 @@ InterconnectsRestConnectionImpl::SetLabels(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -291,13 +287,13 @@ InterconnectsRestConnectionImpl::SetLabels(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -310,13 +306,13 @@ InterconnectsRestConnectionImpl::SetLabels(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });

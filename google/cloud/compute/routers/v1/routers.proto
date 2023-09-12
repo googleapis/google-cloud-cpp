@@ -49,7 +49,7 @@ service Routers {
 
   // Deletes the specified Router resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/routers/delete
-  rpc DeleteRouters(DeleteRoutersRequest)
+  rpc DeleteRouter(DeleteRouterRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
@@ -60,8 +60,7 @@ service Routers {
 
   // Returns the specified Router resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/routers/get
-  rpc GetRouters(GetRoutersRequest)
-      returns (google.cloud.cpp.compute.v1.Router) {
+  rpc GetRouter(GetRouterRequest) returns (google.cloud.cpp.compute.v1.Router) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
     };
@@ -91,7 +90,7 @@ service Routers {
   // Creates a Router resource in the specified project and region using the
   // data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/routers/insert
-  rpc InsertRouters(InsertRoutersRequest)
+  rpc InsertRouter(InsertRouterRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/routers"
@@ -115,7 +114,7 @@ service Routers {
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/routers/patch
-  rpc PatchRouters(PatchRoutersRequest)
+  rpc PatchRouter(PatchRouterRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
@@ -144,7 +143,7 @@ service Routers {
   // state of the target resource be created or replaced with the state defined
   // by the representation enclosed in the request message payload.
   // https://cloud.google.com/compute/docs/reference/rest/v1/routers/update
-  rpc UpdateRouters(UpdateRoutersRequest)
+  rpc UpdateRouter(UpdateRouterRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/regions/{region}/routers/{router}"
@@ -230,8 +229,8 @@ message AggregatedListRoutersRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for DeleteRouters.
-message DeleteRoutersRequest {
+// Request message for DeleteRouter.
+message DeleteRouterRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -337,6 +336,18 @@ message GetNatMappingInfoRequest {
   string router = 9 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Request message for GetRouter.
+message GetRouterRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region for this request.
+  string region = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the Router resource to return.
+  string router = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
 // Request message for GetRouterStatus.
 message GetRouterStatusRequest {
   // Project ID for this request.
@@ -349,20 +360,8 @@ message GetRouterStatusRequest {
   string router = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetRouters.
-message GetRoutersRequest {
-  // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED];
-
-  // Name of the Router resource to return.
-  string router = 3 [(google.api.field_behavior) = REQUIRED];
-}
-
-// Request message for InsertRouters.
-message InsertRoutersRequest {
+// Request message for InsertRouter.
+message InsertRouterRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -460,8 +459,8 @@ message ListRoutersRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRouters.
-message PatchRoutersRequest {
+// Request message for PatchRouter.
+message PatchRouterRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -510,8 +509,8 @@ message PreviewRequest {
       [json_name = "__json_request_body"];
 }
 
-// Request message for UpdateRouters.
-message UpdateRoutersRequest {
+// Request message for UpdateRouter.
+message UpdateRouterRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

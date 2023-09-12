@@ -44,23 +44,23 @@ Idempotency InterconnectAttachmentsConnectionIdempotencyPolicy::
 }
 
 Idempotency InterconnectAttachmentsConnectionIdempotencyPolicy::
-    DeleteInterconnectAttachments(
+    DeleteInterconnectAttachment(
         google::cloud::cpp::compute::interconnect_attachments::v1::
-            DeleteInterconnectAttachmentsRequest const&) {
+            DeleteInterconnectAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-InterconnectAttachmentsConnectionIdempotencyPolicy::GetInterconnectAttachments(
+InterconnectAttachmentsConnectionIdempotencyPolicy::GetInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const&) {
+        GetInterconnectAttachmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency InterconnectAttachmentsConnectionIdempotencyPolicy::
-    InsertInterconnectAttachments(
+    InsertInterconnectAttachment(
         google::cloud::cpp::compute::interconnect_attachments::v1::
-            InsertInterconnectAttachmentsRequest const&) {
+            InsertInterconnectAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,10 +71,10 @@ InterconnectAttachmentsConnectionIdempotencyPolicy::ListInterconnectAttachments(
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectAttachmentsConnectionIdempotencyPolicy::
-    PatchInterconnectAttachments(
-        google::cloud::cpp::compute::interconnect_attachments::v1::
-            PatchInterconnectAttachmentsRequest const&) {
+Idempotency
+InterconnectAttachmentsConnectionIdempotencyPolicy::PatchInterconnectAttachment(
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        PatchInterconnectAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

@@ -80,8 +80,8 @@ class MockInstancesConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteInstances,
-      (google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+      DeleteInstance,
+      (google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
            request),
       (override));
 
@@ -98,8 +98,8 @@ class MockInstancesConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Instance>, GetInstances,
-      (google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::Instance>, GetInstance,
+      (google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
            request),
       (override));
 
@@ -143,8 +143,8 @@ class MockInstancesConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertInstances,
-      (google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+      InsertInstance,
+      (google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
            request),
       (override));
 
@@ -299,8 +299,8 @@ class MockInstancesConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      UpdateInstances,
-      (google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+      UpdateInstance,
+      (google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
            request),
       (override));
 

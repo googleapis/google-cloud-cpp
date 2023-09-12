@@ -44,34 +44,33 @@ GlobalOrganizationOperationsRestConnectionImpl::
           std::move(options),
           GlobalOrganizationOperationsConnection::options())) {}
 
-Status GlobalOrganizationOperationsRestConnectionImpl::
-    DeleteGlobalOrganizationOperations(
-        google::cloud::cpp::compute::global_organization_operations::v1::
-            DeleteGlobalOrganizationOperationsRequest const& request) {
+Status GlobalOrganizationOperationsRestConnectionImpl::DeleteOperation(
+    google::cloud::cpp::compute::global_organization_operations::v1::
+        DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGlobalOrganizationOperations(request),
+      idempotency_policy(*current)->DeleteOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_organization_operations::v1::
-                 DeleteGlobalOrganizationOperationsRequest const& request) {
-        return stub_->DeleteGlobalOrganizationOperations(rest_context, request);
+                 DeleteOperationRequest const& request) {
+        return stub_->DeleteOperation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsRestConnectionImpl::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsRestConnectionImpl::GetOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetGlobalOrganizationOperations(request),
+      idempotency_policy(*current)->GetOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_organization_operations::v1::
-                 GetGlobalOrganizationOperationsRequest const& request) {
-        return stub_->GetGlobalOrganizationOperations(rest_context, request);
+                 GetOperationRequest const& request) {
+        return stub_->GetOperation(rest_context, request);
       },
       request, __func__);
 }

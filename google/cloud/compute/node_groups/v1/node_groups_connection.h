@@ -193,16 +193,16 @@ class NodeGroupsConnection {
                                AggregatedListNodeGroupsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeGroups(google::cloud::cpp::compute::node_groups::v1::
-                       DeleteNodeGroupsRequest const& request);
+  DeleteNodeGroup(google::cloud::cpp::compute::node_groups::v1::
+                      DeleteNodeGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodes(
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -210,8 +210,8 @@ class NodeGroupsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeGroups(google::cloud::cpp::compute::node_groups::v1::
-                       InsertNodeGroupsRequest const& request);
+  InsertNodeGroup(google::cloud::cpp::compute::node_groups::v1::
+                      InsertNodeGroupRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
   ListNodeGroups(
@@ -222,8 +222,9 @@ class NodeGroupsConnection {
       google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNodeGroups(google::cloud::cpp::compute::node_groups::v1::
-                      PatchNodeGroupsRequest const& request);
+  PatchNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&

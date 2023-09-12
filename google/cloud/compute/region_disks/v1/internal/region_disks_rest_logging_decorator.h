@@ -62,29 +62,27 @@ class RegionDisksRestLogging : public RegionDisksRestStub {
       google::cloud::cpp::compute::region_disks::v1::
           CreateSnapshotRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_disks::v1::
-          DeleteRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::region_disks::v1::
-          GetRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_disks::v1::
-          InsertRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskList> ListRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -141,25 +139,24 @@ class RegionDisksRestLogging : public RegionDisksRestStub {
                      google::cloud::cpp::compute::region_disks::v1::
                          TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateRegionDisks(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::region_disks::v1::
-          UpdateRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionDisksRestStub> child_;

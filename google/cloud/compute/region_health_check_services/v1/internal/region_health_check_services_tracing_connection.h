@@ -45,19 +45,19 @@ class RegionHealthCheckServicesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthCheckServices(
+  DeleteHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          DeleteRegionHealthCheckServicesRequest const& request) override;
+          DeleteHealthCheckServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-  GetRegionHealthCheckServices(
+  GetHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          GetRegionHealthCheckServicesRequest const& request) override;
+          GetHealthCheckServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthCheckServices(
+  InsertHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          InsertRegionHealthCheckServicesRequest const& request) override;
+          InsertHealthCheckServiceRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>
   ListRegionHealthCheckServices(
@@ -65,9 +65,9 @@ class RegionHealthCheckServicesTracingConnection
           ListRegionHealthCheckServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthCheckServices(
+  PatchHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          PatchRegionHealthCheckServicesRequest const& request) override;
+          PatchHealthCheckServiceRequest const& request) override;
 
  private:
   std::shared_ptr<compute_region_health_check_services_v1::

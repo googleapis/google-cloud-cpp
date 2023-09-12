@@ -55,21 +55,21 @@ class MockTargetInstancesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteTargetInstances,
+              DeleteTargetInstance,
               (google::cloud::cpp::compute::target_instances::v1::
-                   DeleteTargetInstancesRequest const& request),
+                   DeleteTargetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetInstance>,
-              GetTargetInstances,
+              GetTargetInstance,
               (google::cloud::cpp::compute::target_instances::v1::
-                   GetTargetInstancesRequest const& request),
+                   GetTargetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertTargetInstances,
+              InsertTargetInstance,
               (google::cloud::cpp::compute::target_instances::v1::
-                   InsertTargetInstancesRequest const& request),
+                   InsertTargetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetInstance>,

@@ -194,24 +194,24 @@ class PacketMirroringsConnection {
           AggregatedListPacketMirroringsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeletePacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                             DeletePacketMirroringsRequest const& request);
+  DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                            DeletePacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                          GetPacketMirroringsRequest const& request);
+  GetPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                         GetPacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                             InsertPacketMirroringsRequest const& request);
+  InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                            InsertPacketMirroringRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
   ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
                            ListPacketMirroringsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
-                            PatchPacketMirroringsRequest const& request);
+  PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
+                           PatchPacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::

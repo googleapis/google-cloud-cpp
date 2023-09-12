@@ -65,10 +65,10 @@ DefaultAddressesRestStub::AggregatedListAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultAddressesRestStub::AsyncDeleteAddresses(
+DefaultAddressesRestStub::AsyncDeleteAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -91,9 +91,9 @@ DefaultAddressesRestStub::AsyncDeleteAddresses(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-DefaultAddressesRestStub::GetAddresses(
+DefaultAddressesRestStub::GetAddress(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
       *service_, rest_context, request,
@@ -104,10 +104,10 @@ DefaultAddressesRestStub::GetAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultAddressesRestStub::AsyncInsertAddresses(
+DefaultAddressesRestStub::AsyncInsertAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -204,7 +204,7 @@ DefaultAddressesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -228,7 +228,7 @@ future<Status> DefaultAddressesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

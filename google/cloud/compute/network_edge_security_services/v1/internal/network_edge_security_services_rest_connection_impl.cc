@@ -67,57 +67,55 @@ NetworkEdgeSecurityServicesRestConnectionImpl::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesRestConnectionImpl::
-    DeleteNetworkEdgeSecurityServices(
-        google::cloud::cpp::compute::network_edge_security_services::v1::
-            DeleteNetworkEdgeSecurityServicesRequest const& request) {
+NetworkEdgeSecurityServicesRestConnectionImpl::DeleteNetworkEdgeSecurityService(
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        DeleteNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::network_edge_security_services::v1::
-              DeleteNetworkEdgeSecurityServicesRequest const& request) {
-        return stub->AsyncDeleteNetworkEdgeSecurityServices(
+              DeleteNetworkEdgeSecurityServiceRequest const& request) {
+        return stub->AsyncDeleteNetworkEdgeSecurityService(
             cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteNetworkEdgeSecurityServices(request),
+      idempotency_policy(*current)->DeleteNetworkEdgeSecurityService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -125,73 +123,71 @@ NetworkEdgeSecurityServicesRestConnectionImpl::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-NetworkEdgeSecurityServicesRestConnectionImpl::GetNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesRestConnectionImpl::GetNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        GetNetworkEdgeSecurityServicesRequest const& request) {
+        GetNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetNetworkEdgeSecurityServices(request),
+      idempotency_policy(*current)->GetNetworkEdgeSecurityService(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_edge_security_services::v1::
-                 GetNetworkEdgeSecurityServicesRequest const& request) {
-        return stub_->GetNetworkEdgeSecurityServices(rest_context, request);
+                 GetNetworkEdgeSecurityServiceRequest const& request) {
+        return stub_->GetNetworkEdgeSecurityService(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesRestConnectionImpl::
-    InsertNetworkEdgeSecurityServices(
-        google::cloud::cpp::compute::network_edge_security_services::v1::
-            InsertNetworkEdgeSecurityServicesRequest const& request) {
+NetworkEdgeSecurityServicesRestConnectionImpl::InsertNetworkEdgeSecurityService(
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        InsertNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::network_edge_security_services::v1::
-              InsertNetworkEdgeSecurityServicesRequest const& request) {
-        return stub->AsyncInsertNetworkEdgeSecurityServices(
+              InsertNetworkEdgeSecurityServiceRequest const& request) {
+        return stub->AsyncInsertNetworkEdgeSecurityService(
             cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertNetworkEdgeSecurityServices(request),
+      idempotency_policy(*current)->InsertNetworkEdgeSecurityService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -199,56 +195,55 @@ NetworkEdgeSecurityServicesRestConnectionImpl::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        PatchNetworkEdgeSecurityServicesRequest const& request) {
+        PatchNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::network_edge_security_services::v1::
-              PatchNetworkEdgeSecurityServicesRequest const& request) {
-        return stub->AsyncPatchNetworkEdgeSecurityServices(
+              PatchNetworkEdgeSecurityServiceRequest const& request) {
+        return stub->AsyncPatchNetworkEdgeSecurityService(
             cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchNetworkEdgeSecurityServices(request),
+      idempotency_policy(*current)->PatchNetworkEdgeSecurityService(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

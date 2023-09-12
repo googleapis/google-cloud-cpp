@@ -46,24 +46,24 @@ class PublicDelegatedPrefixesRestStub {
           AggregatedListPublicDelegatedPrefixesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeletePublicDelegatedPrefixes(
+  AsyncDeletePublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          DeletePublicDelegatedPrefixesRequest const& request) = 0;
+          DeletePublicDelegatedPrefixRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-  GetPublicDelegatedPrefixes(
+  GetPublicDelegatedPrefix(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          GetPublicDelegatedPrefixesRequest const& request) = 0;
+          GetPublicDelegatedPrefixRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertPublicDelegatedPrefixes(
+  AsyncInsertPublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          InsertPublicDelegatedPrefixesRequest const& request) = 0;
+          InsertPublicDelegatedPrefixRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
   ListPublicDelegatedPrefixes(
@@ -72,24 +72,24 @@ class PublicDelegatedPrefixesRestStub {
           ListPublicDelegatedPrefixesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchPublicDelegatedPrefixes(
+  AsyncPatchPublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          PatchPublicDelegatedPrefixesRequest const& request) = 0;
+          PatchPublicDelegatedPrefixRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultPublicDelegatedPrefixesRestStub
@@ -109,24 +109,24 @@ class DefaultPublicDelegatedPrefixesRestStub
           AggregatedListPublicDelegatedPrefixesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeletePublicDelegatedPrefixes(
+  AsyncDeletePublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          DeletePublicDelegatedPrefixesRequest const& request) override;
+          DeletePublicDelegatedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-  GetPublicDelegatedPrefixes(
+  GetPublicDelegatedPrefix(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          GetPublicDelegatedPrefixesRequest const& request) override;
+          GetPublicDelegatedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertPublicDelegatedPrefixes(
+  AsyncInsertPublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          InsertPublicDelegatedPrefixesRequest const& request) override;
+          InsertPublicDelegatedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
   ListPublicDelegatedPrefixes(
@@ -135,24 +135,24 @@ class DefaultPublicDelegatedPrefixesRestStub
           ListPublicDelegatedPrefixesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchPublicDelegatedPrefixes(
+  AsyncPatchPublicDelegatedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          PatchPublicDelegatedPrefixesRequest const& request) override;
+          PatchPublicDelegatedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

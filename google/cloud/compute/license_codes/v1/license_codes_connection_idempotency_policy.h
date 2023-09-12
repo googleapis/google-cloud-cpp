@@ -37,9 +37,9 @@ class LicenseCodesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<LicenseCodesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency GetLicenseCodes(
+  virtual google::cloud::Idempotency GetLicenseCode(
       google::cloud::cpp::compute::license_codes::v1::
-          GetLicenseCodesRequest const& request);
+          GetLicenseCodeRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::cloud::cpp::compute::license_codes::v1::

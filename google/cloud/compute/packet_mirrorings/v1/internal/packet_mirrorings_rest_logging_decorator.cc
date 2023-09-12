@@ -48,49 +48,49 @@ PacketMirroringsRestLogging::AggregatedListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsRestLogging::AsyncDeletePacketMirrorings(
+PacketMirroringsRestLogging::AsyncDeletePacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringsRequest const& request) {
+        DeletePacketMirroringRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::packet_mirrorings::v1::
-                 DeletePacketMirroringsRequest const& request) {
-        return child_->AsyncDeletePacketMirrorings(cq, std::move(rest_context),
-                                                   request);
+                 DeletePacketMirroringRequest const& request) {
+        return child_->AsyncDeletePacketMirroring(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-PacketMirroringsRestLogging::GetPacketMirrorings(
+PacketMirroringsRestLogging::GetPacketMirroring(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        GetPacketMirroringsRequest const& request) {
+        GetPacketMirroringRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::packet_mirrorings::v1::
-                 GetPacketMirroringsRequest const& request) {
-        return child_->GetPacketMirrorings(rest_context, request);
+                 GetPacketMirroringRequest const& request) {
+        return child_->GetPacketMirroring(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsRestLogging::AsyncInsertPacketMirrorings(
+PacketMirroringsRestLogging::AsyncInsertPacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringsRequest const& request) {
+        InsertPacketMirroringRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::packet_mirrorings::v1::
-                 InsertPacketMirroringsRequest const& request) {
-        return child_->AsyncInsertPacketMirrorings(cq, std::move(rest_context),
-                                                   request);
+                 InsertPacketMirroringRequest const& request) {
+        return child_->AsyncInsertPacketMirroring(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -110,18 +110,18 @@ PacketMirroringsRestLogging::ListPacketMirrorings(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PacketMirroringsRestLogging::AsyncPatchPacketMirrorings(
+PacketMirroringsRestLogging::AsyncPatchPacketMirroring(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringsRequest const& request) {
+        PatchPacketMirroringRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::packet_mirrorings::v1::
-                 PatchPacketMirroringsRequest const& request) {
-        return child_->AsyncPatchPacketMirrorings(cq, std::move(rest_context),
-                                                  request);
+                 PatchPacketMirroringRequest const& request) {
+        return child_->AsyncPatchPacketMirroring(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -145,12 +145,12 @@ PacketMirroringsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -160,12 +160,12 @@ future<Status> PacketMirroringsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

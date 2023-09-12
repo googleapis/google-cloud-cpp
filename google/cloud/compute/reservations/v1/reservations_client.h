@@ -176,12 +176,12 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L237}
+  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L237}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteReservations(std::string const& project, std::string const& zone,
-                     std::string const& reservation, Options opts = {});
+  DeleteReservation(std::string const& project, std::string const& zone,
+                    std::string const& reservation, Options opts = {});
 
   // clang-format off
   ///
@@ -191,7 +191,7 @@ class ReservationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest].
+  ///     [google.cloud.cpp.compute.reservations.v1.DeleteReservationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -214,13 +214,13 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L237}
+  /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L237}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteReservations(google::cloud::cpp::compute::reservations::v1::
-                         DeleteReservationsRequest const& request,
-                     Options opts = {});
+  DeleteReservation(google::cloud::cpp::compute::reservations::v1::
+                        DeleteReservationRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -243,11 +243,11 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L282}
+  /// [google.cloud.cpp.compute.reservations.v1.GetReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L282}
   /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L106}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
+  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
       std::string const& project, std::string const& zone,
       std::string const& reservation, Options opts = {});
 
@@ -259,7 +259,7 @@ class ReservationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest].
+  ///     [google.cloud.cpp.compute.reservations.v1.GetReservationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -275,13 +275,13 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L282}
+  /// [google.cloud.cpp.compute.reservations.v1.GetReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L282}
   /// [google.cloud.cpp.compute.v1.Reservation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L106}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
+  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
       google::cloud::cpp::compute::reservations::v1::
-          GetReservationsRequest const& request,
+          GetReservationRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -377,11 +377,11 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L294}
+  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertReservations(
+  InsertReservation(
       std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
       Options opts = {});
@@ -395,7 +395,7 @@ class ReservationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest].
+  ///     [google.cloud.cpp.compute.reservations.v1.InsertReservationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -418,13 +418,13 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L294}
+  /// [google.cloud.cpp.compute.reservations.v1.InsertReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L294}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertReservations(google::cloud::cpp::compute::reservations::v1::
-                         InsertReservationsRequest const& request,
-                     Options opts = {});
+  InsertReservation(google::cloud::cpp::compute::reservations::v1::
+                        InsertReservationRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -750,11 +750,11 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L460}
+  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L460}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateReservations(
+  UpdateReservation(
       std::string const& project, std::string const& zone,
       std::string const& reservation,
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
@@ -768,7 +768,7 @@ class ReservationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest].
+  ///     [google.cloud.cpp.compute.reservations.v1.UpdateReservationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -791,13 +791,13 @@ class ReservationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L460}
+  /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationRequest]: @cloud_cpp_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L460}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateReservations(google::cloud::cpp::compute::reservations::v1::
-                         UpdateReservationsRequest const& request,
-                     Options opts = {});
+  UpdateReservation(google::cloud::cpp::compute::reservations::v1::
+                        UpdateReservationRequest const& request,
+                    Options opts = {});
 
  private:
   std::shared_ptr<ReservationsConnection> connection_;

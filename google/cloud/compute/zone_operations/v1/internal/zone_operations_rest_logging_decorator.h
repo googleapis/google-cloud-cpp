@@ -41,15 +41,15 @@ class ZoneOperationsRestLogging : public ZoneOperationsRestStub {
                             TracingOptions tracing_options,
                             std::set<std::string> components);
 
-  Status DeleteZoneOperations(
+  Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,

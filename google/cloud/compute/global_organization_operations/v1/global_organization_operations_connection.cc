@@ -36,17 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GlobalOrganizationOperationsConnection::
     ~GlobalOrganizationOperationsConnection() = default;
 
-Status
-GlobalOrganizationOperationsConnection::DeleteGlobalOrganizationOperations(
+Status GlobalOrganizationOperationsConnection::DeleteOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationsRequest const&) {
+        DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOrganizationOperationsConnection::GetGlobalOrganizationOperations(
+GlobalOrganizationOperationsConnection::GetOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const&) {
+        GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

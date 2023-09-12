@@ -42,25 +42,25 @@ TargetHttpProxiesConnection::AggregatedListTargetHttpProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesConnection::DeleteTargetHttpProxies(
+TargetHttpProxiesConnection::DeleteTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        DeleteTargetHttpProxiesRequest const&) {
+        DeleteTargetHttpProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-TargetHttpProxiesConnection::GetTargetHttpProxies(
+TargetHttpProxiesConnection::GetTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        GetTargetHttpProxiesRequest const&) {
+        GetTargetHttpProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesConnection::InsertTargetHttpProxies(
+TargetHttpProxiesConnection::InsertTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        InsertTargetHttpProxiesRequest const&) {
+        InsertTargetHttpProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -75,9 +75,9 @@ TargetHttpProxiesConnection::ListTargetHttpProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpProxiesConnection::PatchTargetHttpProxies(
+TargetHttpProxiesConnection::PatchTargetHttpProxy(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        PatchTargetHttpProxiesRequest const&) {
+        PatchTargetHttpProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

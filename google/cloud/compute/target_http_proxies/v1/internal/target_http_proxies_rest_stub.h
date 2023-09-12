@@ -45,23 +45,23 @@ class TargetHttpProxiesRestStub {
           AggregatedListTargetHttpProxiesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetHttpProxies(
+  AsyncDeleteTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_http_proxies::v1::
-          DeleteTargetHttpProxiesRequest const& request) = 0;
+          DeleteTargetHttpProxyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetTargetHttpProxies(google::cloud::rest_internal::RestContext& rest_context,
-                       google::cloud::cpp::compute::target_http_proxies::v1::
-                           GetTargetHttpProxiesRequest const& request) = 0;
+  GetTargetHttpProxy(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::target_http_proxies::v1::
+                         GetTargetHttpProxyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetHttpProxies(
+  AsyncInsertTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_http_proxies::v1::
-          InsertTargetHttpProxiesRequest const& request) = 0;
+          InsertTargetHttpProxyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
   ListTargetHttpProxies(google::cloud::rest_internal::RestContext& rest_context,
@@ -69,11 +69,11 @@ class TargetHttpProxiesRestStub {
                             ListTargetHttpProxiesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchTargetHttpProxies(
+  AsyncPatchTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_http_proxies::v1::
-          PatchTargetHttpProxiesRequest const& request) = 0;
+          PatchTargetHttpProxyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetUrlMap(
@@ -87,13 +87,13 @@ class TargetHttpProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultTargetHttpProxiesRestStub : public TargetHttpProxiesRestStub {
@@ -112,23 +112,23 @@ class DefaultTargetHttpProxiesRestStub : public TargetHttpProxiesRestStub {
           AggregatedListTargetHttpProxiesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetHttpProxies(
+  AsyncDeleteTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_http_proxies::v1::
-          DeleteTargetHttpProxiesRequest const& request) override;
+          DeleteTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetTargetHttpProxies(google::cloud::rest_internal::RestContext& rest_context,
-                       google::cloud::cpp::compute::target_http_proxies::v1::
-                           GetTargetHttpProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          GetTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetHttpProxies(
+  AsyncInsertTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_http_proxies::v1::
-          InsertTargetHttpProxiesRequest const& request) override;
+          InsertTargetHttpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
   ListTargetHttpProxies(
@@ -137,11 +137,11 @@ class DefaultTargetHttpProxiesRestStub : public TargetHttpProxiesRestStub {
           ListTargetHttpProxiesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchTargetHttpProxies(
+  AsyncPatchTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_http_proxies::v1::
-          PatchTargetHttpProxiesRequest const& request) override;
+          PatchTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetUrlMap(
       google::cloud::CompletionQueue& cq,
@@ -154,13 +154,13 @@ class DefaultTargetHttpProxiesRestStub : public TargetHttpProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

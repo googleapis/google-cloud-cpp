@@ -54,10 +54,9 @@ GlobalNetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -70,13 +69,13 @@ GlobalNetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -89,69 +88,67 @@ GlobalNetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsRestConnectionImpl::
-    DeleteGlobalNetworkEndpointGroups(
-        google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            DeleteGlobalNetworkEndpointGroupsRequest const& request) {
+GlobalNetworkEndpointGroupsRestConnectionImpl::DeleteNetworkEndpointGroup(
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-              DeleteGlobalNetworkEndpointGroupsRequest const& request) {
-        return stub->AsyncDeleteGlobalNetworkEndpointGroups(
-            cq, std::move(context), request);
+              DeleteNetworkEndpointGroupRequest const& request) {
+        return stub->AsyncDeleteNetworkEndpointGroup(cq, std::move(context),
+                                                     request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGlobalNetworkEndpointGroups(request),
+      idempotency_policy(*current)->DeleteNetworkEndpointGroup(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -165,10 +162,9 @@ GlobalNetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -181,13 +177,13 @@ GlobalNetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -200,85 +196,83 @@ GlobalNetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
-GlobalNetworkEndpointGroupsRestConnectionImpl::GetGlobalNetworkEndpointGroups(
+GlobalNetworkEndpointGroupsRestConnectionImpl::GetNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-        GetGlobalNetworkEndpointGroupsRequest const& request) {
+        GetNetworkEndpointGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetGlobalNetworkEndpointGroups(request),
+      idempotency_policy(*current)->GetNetworkEndpointGroup(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-                 GetGlobalNetworkEndpointGroupsRequest const& request) {
-        return stub_->GetGlobalNetworkEndpointGroups(rest_context, request);
+                 GetNetworkEndpointGroupRequest const& request) {
+        return stub_->GetNetworkEndpointGroup(rest_context, request);
       },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalNetworkEndpointGroupsRestConnectionImpl::
-    InsertGlobalNetworkEndpointGroups(
-        google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-            InsertGlobalNetworkEndpointGroupsRequest const& request) {
+GlobalNetworkEndpointGroupsRestConnectionImpl::InsertNetworkEndpointGroup(
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
           google::cloud::cpp::compute::global_network_endpoint_groups::v1::
-              InsertGlobalNetworkEndpointGroupsRequest const& request) {
-        return stub->AsyncInsertGlobalNetworkEndpointGroups(
-            cq, std::move(context), request);
+              InsertNetworkEndpointGroupRequest const& request) {
+        return stub->AsyncInsertNetworkEndpointGroup(cq, std::move(context),
+                                                     request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertGlobalNetworkEndpointGroups(request),
+      idempotency_policy(*current)->InsertNetworkEndpointGroup(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });

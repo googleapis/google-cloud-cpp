@@ -41,10 +41,10 @@ DefaultInterconnectLocationsRestStub::DefaultInterconnectLocationsRestStub(
     : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-DefaultInterconnectLocationsRestStub::GetInterconnectLocations(
+DefaultInterconnectLocationsRestStub::GetInterconnectLocation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_locations::v1::
-        GetInterconnectLocationsRequest const& request) {
+        GetInterconnectLocationRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectLocation>(
       *service_, rest_context, request,

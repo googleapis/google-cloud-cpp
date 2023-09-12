@@ -34,32 +34,32 @@ MachineImagesRestLogging::MachineImagesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesRestLogging::AsyncDeleteMachineImages(
+MachineImagesRestLogging::AsyncDeleteMachineImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImagesRequest const& request) {
+        DeleteMachineImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::machine_images::v1::
-                 DeleteMachineImagesRequest const& request) {
-        return child_->AsyncDeleteMachineImages(cq, std::move(rest_context),
-                                                request);
+                 DeleteMachineImageRequest const& request) {
+        return child_->AsyncDeleteMachineImage(cq, std::move(rest_context),
+                                               request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesRestLogging::GetMachineImages(
+MachineImagesRestLogging::GetMachineImage(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::
-        GetMachineImagesRequest const& request) {
+        GetMachineImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::machine_images::v1::
-                 GetMachineImagesRequest const& request) {
-        return child_->GetMachineImages(rest_context, request);
+                 GetMachineImageRequest const& request) {
+        return child_->GetMachineImage(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -79,18 +79,18 @@ MachineImagesRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesRestLogging::AsyncInsertMachineImages(
+MachineImagesRestLogging::AsyncInsertMachineImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImagesRequest const& request) {
+        InsertMachineImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::machine_images::v1::
-                 InsertMachineImagesRequest const& request) {
-        return child_->AsyncInsertMachineImages(cq, std::move(rest_context),
-                                                request);
+                 InsertMachineImageRequest const& request) {
+        return child_->AsyncInsertMachineImage(cq, std::move(rest_context),
+                                               request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -142,12 +142,12 @@ MachineImagesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -157,12 +157,12 @@ future<Status> MachineImagesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

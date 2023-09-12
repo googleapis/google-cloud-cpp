@@ -65,11 +65,11 @@ DefaultReservationsRestStub::AggregatedListReservations(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultReservationsRestStub::AsyncDeleteReservations(
+DefaultReservationsRestStub::AsyncDeleteReservation(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationsRequest const& request) {
+        DeleteReservationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -91,9 +91,9 @@ DefaultReservationsRestStub::AsyncDeleteReservations(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
-DefaultReservationsRestStub::GetReservations(
+DefaultReservationsRestStub::GetReservation(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const&
+    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Reservation>(
       *service_, rest_context, request,
@@ -120,11 +120,11 @@ DefaultReservationsRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultReservationsRestStub::AsyncInsertReservations(
+DefaultReservationsRestStub::AsyncInsertReservation(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::reservations::v1::
-        InsertReservationsRequest const& request) {
+        InsertReservationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -217,11 +217,11 @@ DefaultReservationsRestStub::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultReservationsRestStub::AsyncUpdateReservations(
+DefaultReservationsRestStub::AsyncUpdateReservation(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationsRequest const& request) {
+        UpdateReservationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -246,8 +246,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultReservationsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -271,7 +271,7 @@ future<Status> DefaultReservationsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

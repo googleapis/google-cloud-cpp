@@ -41,9 +41,9 @@ class ImageFamilyViewsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      google::cloud::cpp::compute::image_family_views::v1::
+          GetImageFamilyViewRequest const& request) override;
 
  private:
   std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>

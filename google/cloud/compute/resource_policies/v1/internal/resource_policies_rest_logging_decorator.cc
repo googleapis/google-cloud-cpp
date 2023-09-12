@@ -48,32 +48,32 @@ ResourcePoliciesRestLogging::AggregatedListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestLogging::AsyncDeleteResourcePolicies(
+ResourcePoliciesRestLogging::AsyncDeleteResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePoliciesRequest const& request) {
+        DeleteResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::resource_policies::v1::
-                 DeleteResourcePoliciesRequest const& request) {
-        return child_->AsyncDeleteResourcePolicies(cq, std::move(rest_context),
-                                                   request);
+                 DeleteResourcePolicyRequest const& request) {
+        return child_->AsyncDeleteResourcePolicy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesRestLogging::GetResourcePolicies(
+ResourcePoliciesRestLogging::GetResourcePolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePoliciesRequest const& request) {
+        GetResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::resource_policies::v1::
-                 GetResourcePoliciesRequest const& request) {
-        return child_->GetResourcePolicies(rest_context, request);
+                 GetResourcePolicyRequest const& request) {
+        return child_->GetResourcePolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -93,18 +93,18 @@ ResourcePoliciesRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestLogging::AsyncInsertResourcePolicies(
+ResourcePoliciesRestLogging::AsyncInsertResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePoliciesRequest const& request) {
+        InsertResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::resource_policies::v1::
-                 InsertResourcePoliciesRequest const& request) {
-        return child_->AsyncInsertResourcePolicies(cq, std::move(rest_context),
-                                                   request);
+                 InsertResourcePolicyRequest const& request) {
+        return child_->AsyncInsertResourcePolicy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -124,18 +124,18 @@ ResourcePoliciesRestLogging::ListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestLogging::AsyncPatchResourcePolicies(
+ResourcePoliciesRestLogging::AsyncPatchResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePoliciesRequest const& request) {
+        PatchResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::resource_policies::v1::
-                 PatchResourcePoliciesRequest const& request) {
-        return child_->AsyncPatchResourcePolicies(cq, std::move(rest_context),
-                                                  request);
+                 PatchResourcePolicyRequest const& request) {
+        return child_->AsyncPatchResourcePolicy(cq, std::move(rest_context),
+                                                request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -173,12 +173,12 @@ ResourcePoliciesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -188,12 +188,12 @@ future<Status> ResourcePoliciesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

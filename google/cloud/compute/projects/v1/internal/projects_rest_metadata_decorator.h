@@ -67,9 +67,9 @@ class ProjectsRestMetadata : public ProjectsRestStub {
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
@@ -128,13 +128,13 @@ class ProjectsRestMetadata : public ProjectsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

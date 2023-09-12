@@ -42,121 +42,119 @@ FirewallsRestConnectionImpl::FirewallsRestConnectionImpl(
                                       FirewallsConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestConnectionImpl::DeleteFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+FirewallsRestConnectionImpl::DeleteFirewall(
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::firewalls::v1::
-                         DeleteFirewallsRequest const& request) {
-        return stub->AsyncDeleteFirewalls(cq, std::move(context), request);
+                         DeleteFirewallRequest const& request) {
+        return stub->AsyncDeleteFirewall(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFirewalls(request),
+      idempotency_policy(*current)->DeleteFirewall(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsRestConnectionImpl::GetFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+FirewallsRestConnectionImpl::GetFirewall(
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetFirewalls(request),
+      idempotency_policy(*current)->GetFirewall(request),
       [this](
           rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
-              request) { return stub_->GetFirewalls(rest_context, request); },
+          google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
+              request) { return stub_->GetFirewall(rest_context, request); },
       request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestConnectionImpl::InsertFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+FirewallsRestConnectionImpl::InsertFirewall(
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::firewalls::v1::
-                         InsertFirewallsRequest const& request) {
-        return stub->AsyncInsertFirewalls(cq, std::move(context), request);
+                         InsertFirewallRequest const& request) {
+        return stub->AsyncInsertFirewall(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertFirewalls(request),
+      idempotency_policy(*current)->InsertFirewall(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
@@ -197,106 +195,104 @@ FirewallsRestConnectionImpl::ListFirewalls(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestConnectionImpl::PatchFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+FirewallsRestConnectionImpl::PatchFirewall(
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::firewalls::v1::
-                         PatchFirewallsRequest const& request) {
-        return stub->AsyncPatchFirewalls(cq, std::move(context), request);
+                         PatchFirewallRequest const& request) {
+        return stub->AsyncPatchFirewall(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchFirewalls(request),
+      idempotency_policy(*current)->PatchFirewall(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallsRestConnectionImpl::UpdateFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+FirewallsRestConnectionImpl::UpdateFirewall(
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest,
-      google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::firewalls::v1::
-                         UpdateFirewallsRequest const& request) {
-        return stub->AsyncUpdateFirewalls(cq, std::move(context), request);
+                         UpdateFirewallRequest const& request) {
+        return stub->AsyncUpdateFirewall(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         GetGlobalOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::global_operations::v1::
-                         DeleteGlobalOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFirewalls(request),
+      idempotency_policy(*current)->UpdateFirewall(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    GetGlobalOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::global_operations::v1::
-                    DeleteGlobalOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_operation(op);
       });

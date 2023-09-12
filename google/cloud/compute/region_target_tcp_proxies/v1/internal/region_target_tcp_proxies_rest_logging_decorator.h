@@ -45,24 +45,23 @@ class RegionTargetTcpProxiesRestLogging
       TracingOptions tracing_options, std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionTargetTcpProxies(
+  AsyncDeleteTargetTcpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          DeleteRegionTargetTcpProxiesRequest const& request) override;
+          DeleteTargetTcpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetRegionTargetTcpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          GetRegionTargetTcpProxiesRequest const& request) override;
+          GetTargetTcpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionTargetTcpProxies(
+  AsyncInsertTargetTcpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-          InsertRegionTargetTcpProxiesRequest const& request) override;
+          InsertTargetTcpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
   ListRegionTargetTcpProxies(
@@ -75,13 +74,13 @@ class RegionTargetTcpProxiesRestLogging
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<RegionTargetTcpProxiesRestStub> child_;

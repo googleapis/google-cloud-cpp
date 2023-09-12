@@ -253,10 +253,10 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L325}
+  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L325}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
       std::string const& project, std::string const& zone,
       std::string const& node_group, Options opts = {});
 
@@ -268,7 +268,7 @@ class NodeGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest].
+  ///     [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -291,12 +291,12 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L325}
+  /// [google.cloud.cpp.compute.node_groups.v1.DeleteNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L325}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupsRequest const& request,
+          DeleteNodeGroupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -400,11 +400,11 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L405}
+  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L405}
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
       std::string const& project, std::string const& zone,
       std::string const& node_group, Options opts = {});
 
@@ -418,7 +418,7 @@ class NodeGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest].
+  ///     [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -434,12 +434,12 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L405}
+  /// [google.cloud.cpp.compute.node_groups.v1.GetNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L405}
   /// [google.cloud.cpp.compute.v1.NodeGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_057.proto#L57}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupsRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
           request,
       Options opts = {});
 
@@ -537,10 +537,10 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L417}
+  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L417}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
       std::string const& project, std::string const& zone,
       std::int32_t initial_node_count,
       google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
@@ -555,7 +555,7 @@ class NodeGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest].
+  ///     [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -578,12 +578,12 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L417}
+  /// [google.cloud.cpp.compute.node_groups.v1.InsertNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L417}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupsRequest const& request,
+          InsertNodeGroupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -774,10 +774,10 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L590}
+  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L590}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroups(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
       std::string const& project, std::string const& zone,
       std::string const& node_group,
       google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
@@ -791,7 +791,7 @@ class NodeGroupsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest].
+  ///     [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -814,12 +814,12 @@ class NodeGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L590}
+  /// [google.cloud.cpp.compute.node_groups.v1.PatchNodeGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L590}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroups(
-      google::cloud::cpp::compute::node_groups::v1::
-          PatchNodeGroupsRequest const& request,
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request,
       Options opts = {});
 
   // clang-format off

@@ -50,48 +50,48 @@ PublicDelegatedPrefixesRestLogging::AggregatedListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesRestLogging::AsyncDeletePublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestLogging::AsyncDeletePublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixesRequest const& request) {
+        DeletePublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::public_delegated_prefixes::v1::
-                 DeletePublicDelegatedPrefixesRequest const& request) {
-        return child_->AsyncDeletePublicDelegatedPrefixes(
+                 DeletePublicDelegatedPrefixRequest const& request) {
+        return child_->AsyncDeletePublicDelegatedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
-PublicDelegatedPrefixesRestLogging::GetPublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestLogging::GetPublicDelegatedPrefix(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        GetPublicDelegatedPrefixesRequest const& request) {
+        GetPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::public_delegated_prefixes::v1::
-                 GetPublicDelegatedPrefixesRequest const& request) {
-        return child_->GetPublicDelegatedPrefixes(rest_context, request);
+                 GetPublicDelegatedPrefixRequest const& request) {
+        return child_->GetPublicDelegatedPrefix(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesRestLogging::AsyncInsertPublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestLogging::AsyncInsertPublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixesRequest const& request) {
+        InsertPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::public_delegated_prefixes::v1::
-                 InsertPublicDelegatedPrefixesRequest const& request) {
-        return child_->AsyncInsertPublicDelegatedPrefixes(
+                 InsertPublicDelegatedPrefixRequest const& request) {
+        return child_->AsyncInsertPublicDelegatedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -112,17 +112,17 @@ PublicDelegatedPrefixesRestLogging::ListPublicDelegatedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicDelegatedPrefixesRestLogging::AsyncPatchPublicDelegatedPrefixes(
+PublicDelegatedPrefixesRestLogging::AsyncPatchPublicDelegatedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixesRequest const& request) {
+        PatchPublicDelegatedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::public_delegated_prefixes::v1::
-                 PatchPublicDelegatedPrefixesRequest const& request) {
-        return child_->AsyncPatchPublicDelegatedPrefixes(
+                 PatchPublicDelegatedPrefixRequest const& request) {
+        return child_->AsyncPatchPublicDelegatedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -133,12 +133,12 @@ PublicDelegatedPrefixesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -148,12 +148,12 @@ future<Status> PublicDelegatedPrefixesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

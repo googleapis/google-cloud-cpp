@@ -34,24 +34,24 @@ InterconnectLocationsClient::InterconnectLocationsClient(
 InterconnectLocationsClient::~InterconnectLocationsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-InterconnectLocationsClient::GetInterconnectLocations(
+InterconnectLocationsClient::GetInterconnectLocation(
     std::string const& project, std::string const& interconnect_location,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_locations::v1::
-      GetInterconnectLocationsRequest request;
+      GetInterconnectLocationRequest request;
   request.set_project(project);
   request.set_interconnect_location(interconnect_location);
-  return connection_->GetInterconnectLocations(request);
+  return connection_->GetInterconnectLocation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
-InterconnectLocationsClient::GetInterconnectLocations(
+InterconnectLocationsClient::GetInterconnectLocation(
     google::cloud::cpp::compute::interconnect_locations::v1::
-        GetInterconnectLocationsRequest const& request,
+        GetInterconnectLocationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetInterconnectLocations(request);
+  return connection_->GetInterconnectLocation(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>

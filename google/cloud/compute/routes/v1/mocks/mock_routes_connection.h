@@ -47,21 +47,19 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteRoutes,
-      (google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteRoute,
+      (google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
            request),
       (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Route>, GetRoutes,
-              (google::cloud::cpp::compute::routes::v1::GetRoutesRequest const&
-                   request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Route>, GetRoute,
+      (google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request),
+      (override));
 
   MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertRoutes,
-      (google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, InsertRoute,
+      (google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
            request),
       (override));
 

@@ -39,24 +39,24 @@ class RegionHealthCheckServicesRestStub {
   virtual ~RegionHealthCheckServicesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionHealthCheckServices(
+  AsyncDeleteHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          DeleteRegionHealthCheckServicesRequest const& request) = 0;
+          DeleteHealthCheckServiceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-  GetRegionHealthCheckServices(
+  GetHealthCheckService(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          GetRegionHealthCheckServicesRequest const& request) = 0;
+          GetHealthCheckServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionHealthCheckServices(
+  AsyncInsertHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          InsertRegionHealthCheckServicesRequest const& request) = 0;
+          InsertHealthCheckServiceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheckServicesList>
   ListRegionHealthCheckServices(
@@ -65,24 +65,24 @@ class RegionHealthCheckServicesRestStub {
           ListRegionHealthCheckServicesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionHealthCheckServices(
+  AsyncPatchHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          PatchRegionHealthCheckServicesRequest const& request) = 0;
+          PatchHealthCheckServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultRegionHealthCheckServicesRestStub
@@ -96,24 +96,24 @@ class DefaultRegionHealthCheckServicesRestStub
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionHealthCheckServices(
+  AsyncDeleteHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          DeleteRegionHealthCheckServicesRequest const& request) override;
+          DeleteHealthCheckServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-  GetRegionHealthCheckServices(
+  GetHealthCheckService(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          GetRegionHealthCheckServicesRequest const& request) override;
+          GetHealthCheckServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionHealthCheckServices(
+  AsyncInsertHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          InsertRegionHealthCheckServicesRequest const& request) override;
+          InsertHealthCheckServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckServicesList>
   ListRegionHealthCheckServices(
@@ -122,24 +122,24 @@ class DefaultRegionHealthCheckServicesRestStub
           ListRegionHealthCheckServicesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRegionHealthCheckServices(
+  AsyncPatchHealthCheckService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_health_check_services::v1::
-          PatchRegionHealthCheckServicesRequest const& request) override;
+          PatchHealthCheckServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

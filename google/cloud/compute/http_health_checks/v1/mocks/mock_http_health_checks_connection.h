@@ -48,21 +48,21 @@ class MockHttpHealthChecksConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteHttpHealthChecks,
+              DeleteHttpHealthCheck,
               (google::cloud::cpp::compute::http_health_checks::v1::
-                   DeleteHttpHealthChecksRequest const& request),
+                   DeleteHttpHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>,
-              GetHttpHealthChecks,
+              GetHttpHealthCheck,
               (google::cloud::cpp::compute::http_health_checks::v1::
-                   GetHttpHealthChecksRequest const& request),
+                   GetHttpHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertHttpHealthChecks,
+              InsertHttpHealthCheck,
               (google::cloud::cpp::compute::http_health_checks::v1::
-                   InsertHttpHealthChecksRequest const& request),
+                   InsertHttpHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>,
@@ -72,15 +72,15 @@ class MockHttpHealthChecksConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchHttpHealthChecks,
+              PatchHttpHealthCheck,
               (google::cloud::cpp::compute::http_health_checks::v1::
-                   PatchHttpHealthChecksRequest const& request),
+                   PatchHttpHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateHttpHealthChecks,
+              UpdateHttpHealthCheck,
               (google::cloud::cpp::compute::http_health_checks::v1::
-                   UpdateHttpHealthChecksRequest const& request),
+                   UpdateHttpHealthCheckRequest const& request),
               (override));
 };
 

@@ -49,9 +49,9 @@ class MockRegionInstanceGroupsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>,
-              GetRegionInstanceGroups,
+              GetInstanceGroup,
               (google::cloud::cpp::compute::region_instance_groups::v1::
-                   GetRegionInstanceGroupsRequest const& request),
+                   GetInstanceGroupRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>,

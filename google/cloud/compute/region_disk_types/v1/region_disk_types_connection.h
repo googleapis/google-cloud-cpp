@@ -185,9 +185,9 @@ class RegionDiskTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::
-                         GetRegionDiskTypesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
+      google::cloud::cpp::compute::region_disk_types::v1::
+          GetDiskTypeRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::DiskType>
   ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::

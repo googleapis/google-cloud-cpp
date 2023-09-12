@@ -33,23 +33,23 @@ LicensesTracingConnection::LicensesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesTracingConnection::DeleteLicenses(
-    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+LicensesTracingConnection::DeleteLicense(
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_licenses_v1::LicensesConnection::DeleteLicenses");
+      "compute_licenses_v1::LicensesConnection::DeleteLicense");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteLicenses(request));
+  return internal::EndSpan(std::move(span), child_->DeleteLicense(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesTracingConnection::GetLicenses(
-    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+LicensesTracingConnection::GetLicense(
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
-  auto span = internal::MakeSpan(
-      "compute_licenses_v1::LicensesConnection::GetLicenses");
+  auto span =
+      internal::MakeSpan("compute_licenses_v1::LicensesConnection::GetLicense");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetLicenses(request));
+  return internal::EndSpan(*span, child_->GetLicense(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -63,13 +63,13 @@ LicensesTracingConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesTracingConnection::InsertLicenses(
-    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+LicensesTracingConnection::InsertLicense(
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_licenses_v1::LicensesConnection::InsertLicenses");
+      "compute_licenses_v1::LicensesConnection::InsertLicense");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertLicenses(request));
+  return internal::EndSpan(std::move(span), child_->InsertLicense(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::License>

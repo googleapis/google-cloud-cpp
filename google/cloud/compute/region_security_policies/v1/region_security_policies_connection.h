@@ -196,19 +196,16 @@ class RegionSecurityPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSecurityPolicies(
-      google::cloud::cpp::compute::region_security_policies::v1::
-          DeleteRegionSecurityPoliciesRequest const& request);
+  DeleteSecurityPolicy(google::cloud::cpp::compute::region_security_policies::
+                           v1::DeleteSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetRegionSecurityPolicies(
-      google::cloud::cpp::compute::region_security_policies::v1::
-          GetRegionSecurityPoliciesRequest const& request);
+  GetSecurityPolicy(google::cloud::cpp::compute::region_security_policies::v1::
+                        GetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSecurityPolicies(
-      google::cloud::cpp::compute::region_security_policies::v1::
-          InsertRegionSecurityPoliciesRequest const& request);
+  InsertSecurityPolicy(google::cloud::cpp::compute::region_security_policies::
+                           v1::InsertSecurityPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListRegionSecurityPolicies(
@@ -216,9 +213,8 @@ class RegionSecurityPoliciesConnection {
           ListRegionSecurityPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSecurityPolicies(
-      google::cloud::cpp::compute::region_security_policies::v1::
-          PatchRegionSecurityPoliciesRequest const& request);
+  PatchSecurityPolicy(google::cloud::cpp::compute::region_security_policies::
+                          v1::PatchSecurityPolicyRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

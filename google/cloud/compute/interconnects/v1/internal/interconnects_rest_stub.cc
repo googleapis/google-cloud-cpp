@@ -45,11 +45,11 @@ DefaultInterconnectsRestStub::DefaultInterconnectsRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInterconnectsRestStub::AsyncDeleteInterconnects(
+DefaultInterconnectsRestStub::AsyncDeleteInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectsRequest const& request) {
+        DeleteInterconnectRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -70,10 +70,10 @@ DefaultInterconnectsRestStub::AsyncDeleteInterconnects(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-DefaultInterconnectsRestStub::GetInterconnects(
+DefaultInterconnectsRestStub::GetInterconnect(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        GetInterconnectsRequest const& request) {
+        GetInterconnectRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Interconnect>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -97,11 +97,11 @@ DefaultInterconnectsRestStub::GetDiagnostics(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInterconnectsRestStub::AsyncInsertInterconnects(
+DefaultInterconnectsRestStub::AsyncInsertInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectsRequest const& request) {
+        InsertInterconnectRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -139,11 +139,11 @@ DefaultInterconnectsRestStub::ListInterconnects(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultInterconnectsRestStub::AsyncPatchInterconnects(
+DefaultInterconnectsRestStub::AsyncPatchInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectsRequest const& request) {
+        PatchInterconnectRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -195,7 +195,7 @@ DefaultInterconnectsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -218,7 +218,7 @@ future<Status> DefaultInterconnectsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

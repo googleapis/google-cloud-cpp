@@ -35,18 +35,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MachineImagesConnection::~MachineImagesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesConnection::DeleteMachineImages(
+MachineImagesConnection::DeleteMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImagesRequest const&) {
+        DeleteMachineImageRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-MachineImagesConnection::GetMachineImages(
+MachineImagesConnection::GetMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        GetMachineImagesRequest const&) {
+        GetMachineImageRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -58,9 +58,9 @@ MachineImagesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-MachineImagesConnection::InsertMachineImages(
+MachineImagesConnection::InsertMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImagesRequest const&) {
+        InsertMachineImageRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

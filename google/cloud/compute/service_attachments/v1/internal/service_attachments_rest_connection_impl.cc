@@ -60,55 +60,54 @@ ServiceAttachmentsRestConnectionImpl::AggregatedListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachments(
+ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const& request) {
+        DeleteServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::service_attachments::v1::
-                         DeleteServiceAttachmentsRequest const& request) {
-        return stub->AsyncDeleteServiceAttachments(cq, std::move(context),
-                                                   request);
+                         DeleteServiceAttachmentRequest const& request) {
+        return stub->AsyncDeleteServiceAttachment(cq, std::move(context),
+                                                  request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteServiceAttachments(request),
+      idempotency_policy(*current)->DeleteServiceAttachment(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -116,17 +115,17 @@ ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsRestConnectionImpl::GetServiceAttachments(
+ServiceAttachmentsRestConnectionImpl::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const& request) {
+        GetServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetServiceAttachments(request),
+      idempotency_policy(*current)->GetServiceAttachment(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::service_attachments::v1::
-                 GetServiceAttachmentsRequest const& request) {
-        return stub_->GetServiceAttachments(rest_context, request);
+                 GetServiceAttachmentRequest const& request) {
+        return stub_->GetServiceAttachment(rest_context, request);
       },
       request, __func__);
 }
@@ -148,55 +147,54 @@ ServiceAttachmentsRestConnectionImpl::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestConnectionImpl::InsertServiceAttachments(
+ServiceAttachmentsRestConnectionImpl::InsertServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const& request) {
+        InsertServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::service_attachments::v1::
-                         InsertServiceAttachmentsRequest const& request) {
-        return stub->AsyncInsertServiceAttachments(cq, std::move(context),
-                                                   request);
+                         InsertServiceAttachmentRequest const& request) {
+        return stub->AsyncInsertServiceAttachment(cq, std::move(context),
+                                                  request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertServiceAttachments(request),
+      idempotency_policy(*current)->InsertServiceAttachment(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
@@ -241,55 +239,54 @@ ServiceAttachmentsRestConnectionImpl::ListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsRestConnectionImpl::PatchServiceAttachments(
+ServiceAttachmentsRestConnectionImpl::PatchServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const& request) {
+        PatchServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest,
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest>(
+          DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::service_attachments::v1::
-                         PatchServiceAttachmentsRequest const& request) {
-        return stub->AsyncPatchServiceAttachments(cq, std::move(context),
-                                                  request);
+                         PatchServiceAttachmentRequest const& request) {
+        return stub->AsyncPatchServiceAttachment(cq, std::move(context),
+                                                 request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         GetRegionOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::region_operations::v1::
-                         DeleteRegionOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PatchServiceAttachments(request),
+      idempotency_policy(*current)->PatchServiceAttachment(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    GetRegionOperationsRequest& r) {
+                    GetOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::region_operations::v1::
-                    DeleteRegionOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_region(request.region());
         r.set_operation(op);

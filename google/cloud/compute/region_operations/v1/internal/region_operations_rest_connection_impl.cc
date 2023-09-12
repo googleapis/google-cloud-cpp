@@ -41,33 +41,33 @@ RegionOperationsRestConnectionImpl::RegionOperationsRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       RegionOperationsConnection::options())) {}
 
-Status RegionOperationsRestConnectionImpl::DeleteRegionOperations(
+Status RegionOperationsRestConnectionImpl::DeleteOperation(
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegionOperations(request),
+      idempotency_policy(*current)->DeleteOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
-        return stub_->DeleteRegionOperations(rest_context, request);
+                 DeleteOperationRequest const& request) {
+        return stub_->DeleteOperation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsRestConnectionImpl::GetRegionOperations(
+RegionOperationsRestConnectionImpl::GetOperation(
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetRegionOperations(request),
+      idempotency_policy(*current)->GetOperation(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
-        return stub_->GetRegionOperations(rest_context, request);
+                 GetOperationRequest const& request) {
+        return stub_->GetOperation(rest_context, request);
       },
       request, __func__);
 }

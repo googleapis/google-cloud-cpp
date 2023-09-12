@@ -64,32 +64,32 @@ SecurityPoliciesRestLogging::AggregatedListSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesRestLogging::AsyncDeleteSecurityPolicies(
+SecurityPoliciesRestLogging::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        DeleteSecurityPoliciesRequest const& request) {
+        DeleteSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::security_policies::v1::
-                 DeleteSecurityPoliciesRequest const& request) {
-        return child_->AsyncDeleteSecurityPolicies(cq, std::move(rest_context),
-                                                   request);
+                 DeleteSecurityPolicyRequest const& request) {
+        return child_->AsyncDeleteSecurityPolicy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesRestLogging::GetSecurityPolicies(
+SecurityPoliciesRestLogging::GetSecurityPolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        GetSecurityPoliciesRequest const& request) {
+        GetSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::security_policies::v1::
-                 GetSecurityPoliciesRequest const& request) {
-        return child_->GetSecurityPolicies(rest_context, request);
+                 GetSecurityPolicyRequest const& request) {
+        return child_->GetSecurityPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -109,18 +109,18 @@ SecurityPoliciesRestLogging::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesRestLogging::AsyncInsertSecurityPolicies(
+SecurityPoliciesRestLogging::AsyncInsertSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        InsertSecurityPoliciesRequest const& request) {
+        InsertSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::security_policies::v1::
-                 InsertSecurityPoliciesRequest const& request) {
-        return child_->AsyncInsertSecurityPolicies(cq, std::move(rest_context),
-                                                   request);
+                 InsertSecurityPolicyRequest const& request) {
+        return child_->AsyncInsertSecurityPolicy(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -155,18 +155,18 @@ SecurityPoliciesRestLogging::ListPreconfiguredExpressionSets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SecurityPoliciesRestLogging::AsyncPatchSecurityPolicies(
+SecurityPoliciesRestLogging::AsyncPatchSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::security_policies::v1::
-        PatchSecurityPoliciesRequest const& request) {
+        PatchSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::security_policies::v1::
-                 PatchSecurityPoliciesRequest const& request) {
-        return child_->AsyncPatchSecurityPolicies(cq, std::move(rest_context),
-                                                  request);
+                 PatchSecurityPolicyRequest const& request) {
+        return child_->AsyncPatchSecurityPolicy(cq, std::move(rest_context),
+                                                request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -224,12 +224,12 @@ SecurityPoliciesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -239,12 +239,12 @@ future<Status> SecurityPoliciesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

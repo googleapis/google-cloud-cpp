@@ -36,25 +36,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionSslCertificatesConnection::~RegionSslCertificatesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesConnection::DeleteRegionSslCertificates(
+RegionSslCertificatesConnection::DeleteSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteRegionSslCertificatesRequest const&) {
+        DeleteSslCertificateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesConnection::GetRegionSslCertificates(
+RegionSslCertificatesConnection::GetSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        GetRegionSslCertificatesRequest const&) {
+        GetSslCertificateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesConnection::InsertRegionSslCertificates(
+RegionSslCertificatesConnection::InsertSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertRegionSslCertificatesRequest const&) {
+        InsertSslCertificateRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

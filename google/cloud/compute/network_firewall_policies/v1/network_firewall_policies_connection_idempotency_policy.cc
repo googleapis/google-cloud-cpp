@@ -54,17 +54,17 @@ Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::CloneRules(
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    DeleteNetworkFirewallPolicies(
-        google::cloud::cpp::compute::network_firewall_policies::v1::
-            DeleteNetworkFirewallPoliciesRequest const&) {
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::DeleteFirewallPolicy(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency
-NetworkFirewallPoliciesConnectionIdempotencyPolicy::GetNetworkFirewallPolicies(
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::GetFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        GetNetworkFirewallPoliciesRequest const&) {
+        GetFirewallPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -86,10 +86,10 @@ Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::GetRule(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    InsertNetworkFirewallPolicies(
-        google::cloud::cpp::compute::network_firewall_policies::v1::
-            InsertNetworkFirewallPoliciesRequest const&) {
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::InsertFirewallPolicy(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -100,10 +100,10 @@ NetworkFirewallPoliciesConnectionIdempotencyPolicy::ListNetworkFirewallPolicies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::
-    PatchNetworkFirewallPolicies(
-        google::cloud::cpp::compute::network_firewall_policies::v1::
-            PatchNetworkFirewallPoliciesRequest const&) {
+Idempotency
+NetworkFirewallPoliciesConnectionIdempotencyPolicy::PatchFirewallPolicy(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

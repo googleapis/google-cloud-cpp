@@ -51,34 +51,34 @@ InterconnectAttachmentsRestMetadata::AggregatedListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsRestMetadata::AsyncDeleteInterconnectAttachments(
+InterconnectAttachmentsRestMetadata::AsyncDeleteInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        DeleteInterconnectAttachmentsRequest const& request) {
+        DeleteInterconnectAttachmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteInterconnectAttachments(cq, std::move(rest_context),
-                                                    request);
+  return child_->AsyncDeleteInterconnectAttachment(cq, std::move(rest_context),
+                                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
-InterconnectAttachmentsRestMetadata::GetInterconnectAttachments(
+InterconnectAttachmentsRestMetadata::GetInterconnectAttachment(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        GetInterconnectAttachmentsRequest const& request) {
+        GetInterconnectAttachmentRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetInterconnectAttachments(rest_context, request);
+  return child_->GetInterconnectAttachment(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsRestMetadata::AsyncInsertInterconnectAttachments(
+InterconnectAttachmentsRestMetadata::AsyncInsertInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        InsertInterconnectAttachmentsRequest const& request) {
+        InsertInterconnectAttachmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertInterconnectAttachments(cq, std::move(rest_context),
-                                                    request);
+  return child_->AsyncInsertInterconnectAttachment(cq, std::move(rest_context),
+                                                   request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
@@ -91,14 +91,14 @@ InterconnectAttachmentsRestMetadata::ListInterconnectAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectAttachmentsRestMetadata::AsyncPatchInterconnectAttachments(
+InterconnectAttachmentsRestMetadata::AsyncPatchInterconnectAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        PatchInterconnectAttachmentsRequest const& request) {
+        PatchInterconnectAttachmentRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchInterconnectAttachments(cq, std::move(rest_context),
-                                                   request);
+  return child_->AsyncPatchInterconnectAttachment(cq, std::move(rest_context),
+                                                  request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -116,7 +116,7 @@ InterconnectAttachmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -125,7 +125,7 @@ future<Status> InterconnectAttachmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

@@ -38,7 +38,7 @@ service RegionDiskTypes {
 
   // Returns the specified regional disk type.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionDiskTypes/get
-  rpc GetRegionDiskTypes(GetRegionDiskTypesRequest)
+  rpc GetDiskType(GetDiskTypeRequest)
       returns (google.cloud.cpp.compute.v1.DiskType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/diskTypes/{disk_type}"
@@ -57,8 +57,8 @@ service RegionDiskTypes {
   }
 }
 
-// Request message for GetRegionDiskTypes.
-message GetRegionDiskTypesRequest {
+// Request message for GetDiskType.
+message GetDiskTypeRequest {
   // Name of the disk type to return.
   string disk_type = 1 [(google.api.field_behavior) = REQUIRED];
 

@@ -52,33 +52,29 @@ class RegionAutoscalersRestConnectionImpl
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteRegionAutoscalersRequest const& request) override;
+          DeleteAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          GetRegionAutoscalersRequest const& request) override;
+          GetAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertRegionAutoscalersRequest const& request) override;
+          InsertAutoscalerRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
   ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
                             ListRegionAutoscalersRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchRegionAutoscalersRequest const& request) override;
+          PatchAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateRegionAutoscalersRequest const& request) override;
+          UpdateAutoscalerRequest const& request) override;
 
  private:
   static std::unique_ptr<

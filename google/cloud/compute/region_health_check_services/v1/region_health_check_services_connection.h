@@ -203,19 +203,19 @@ class RegionHealthCheckServicesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionHealthCheckServices(
+  DeleteHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          DeleteRegionHealthCheckServicesRequest const& request);
+          DeleteHealthCheckServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
-  GetRegionHealthCheckServices(
+  GetHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          GetRegionHealthCheckServicesRequest const& request);
+          GetHealthCheckServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionHealthCheckServices(
+  InsertHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          InsertRegionHealthCheckServicesRequest const& request);
+          InsertHealthCheckServiceRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>
   ListRegionHealthCheckServices(
@@ -223,9 +223,9 @@ class RegionHealthCheckServicesConnection {
           ListRegionHealthCheckServicesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionHealthCheckServices(
+  PatchHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
-          PatchRegionHealthCheckServicesRequest const& request);
+          PatchHealthCheckServiceRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,8 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ZonesConnection::~ZonesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesConnection::GetZones(
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesConnection::GetZone(
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

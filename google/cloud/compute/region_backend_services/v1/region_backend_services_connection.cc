@@ -36,18 +36,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionBackendServicesConnection::~RegionBackendServicesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesConnection::DeleteRegionBackendServices(
+RegionBackendServicesConnection::DeleteBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteRegionBackendServicesRequest const&) {
+        DeleteBackendServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-RegionBackendServicesConnection::GetRegionBackendServices(
+RegionBackendServicesConnection::GetBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        GetRegionBackendServicesRequest const&) {
+        GetBackendServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -66,9 +66,9 @@ RegionBackendServicesConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesConnection::InsertRegionBackendServices(
+RegionBackendServicesConnection::InsertBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        InsertRegionBackendServicesRequest const&) {
+        InsertBackendServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,9 +83,9 @@ RegionBackendServicesConnection::ListRegionBackendServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesConnection::PatchRegionBackendServices(
+RegionBackendServicesConnection::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        PatchRegionBackendServicesRequest const&) {
+        PatchBackendServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -99,9 +99,9 @@ RegionBackendServicesConnection::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesConnection::UpdateRegionBackendServices(
+RegionBackendServicesConnection::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateRegionBackendServicesRequest const&) {
+        UpdateBackendServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

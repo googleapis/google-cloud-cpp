@@ -34,15 +34,15 @@ MachineImagesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MachineImagesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::DeleteMachineImages(
+Idempotency MachineImagesConnectionIdempotencyPolicy::DeleteMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImagesRequest const&) {
+        DeleteMachineImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::GetMachineImages(
+Idempotency MachineImagesConnectionIdempotencyPolicy::GetMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        GetMachineImagesRequest const&) {
+        GetMachineImageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -52,9 +52,9 @@ Idempotency MachineImagesConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency MachineImagesConnectionIdempotencyPolicy::InsertMachineImages(
+Idempotency MachineImagesConnectionIdempotencyPolicy::InsertMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImagesRequest const&) {
+        InsertMachineImageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

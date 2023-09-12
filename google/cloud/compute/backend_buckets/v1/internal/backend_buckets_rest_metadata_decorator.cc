@@ -51,14 +51,13 @@ BackendBucketsRestMetadata::AsyncAddSignedUrlKey(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsRestMetadata::AsyncDeleteBackendBuckets(
+BackendBucketsRestMetadata::AsyncDeleteBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        DeleteBackendBucketsRequest const& request) {
+        DeleteBackendBucketRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteBackendBuckets(cq, std::move(rest_context),
-                                           request);
+  return child_->AsyncDeleteBackendBucket(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -72,23 +71,22 @@ BackendBucketsRestMetadata::AsyncDeleteSignedUrlKey(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsRestMetadata::GetBackendBuckets(
+BackendBucketsRestMetadata::GetBackendBucket(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        GetBackendBucketsRequest const& request) {
+        GetBackendBucketRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetBackendBuckets(rest_context, request);
+  return child_->GetBackendBucket(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsRestMetadata::AsyncInsertBackendBuckets(
+BackendBucketsRestMetadata::AsyncInsertBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        InsertBackendBucketsRequest const& request) {
+        InsertBackendBucketRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertBackendBuckets(cq, std::move(rest_context),
-                                           request);
+  return child_->AsyncInsertBackendBucket(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
@@ -101,13 +99,13 @@ BackendBucketsRestMetadata::ListBackendBuckets(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsRestMetadata::AsyncPatchBackendBuckets(
+BackendBucketsRestMetadata::AsyncPatchBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        PatchBackendBucketsRequest const& request) {
+        PatchBackendBucketRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchBackendBuckets(cq, std::move(rest_context), request);
+  return child_->AsyncPatchBackendBucket(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -122,14 +120,13 @@ BackendBucketsRestMetadata::AsyncSetEdgeSecurityPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendBucketsRestMetadata::AsyncUpdateBackendBuckets(
+BackendBucketsRestMetadata::AsyncUpdateBackendBucket(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::backend_buckets::v1::
-        UpdateBackendBucketsRequest const& request) {
+        UpdateBackendBucketRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateBackendBuckets(cq, std::move(rest_context),
-                                           request);
+  return child_->AsyncUpdateBackendBucket(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -137,7 +134,7 @@ BackendBucketsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -146,7 +143,7 @@ future<Status> BackendBucketsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

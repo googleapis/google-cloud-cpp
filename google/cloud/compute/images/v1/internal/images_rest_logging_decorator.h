@@ -42,11 +42,10 @@ class ImagesRestLogging : public ImagesRestStub {
                     TracingOptions tracing_options,
                     std::set<std::string> components);
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeprecate(
@@ -55,9 +54,9 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
       override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Image> GetImages(
+  StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request)
+      google::cloud::cpp::compute::images::v1::GetImageRequest const& request)
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Image> GetFromFamily(
@@ -70,11 +69,10 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ImageList> ListImages(
@@ -82,11 +80,11 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::cpp::compute::images::v1::ListImagesRequest const& request)
       override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchImages(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-          request) override;
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -110,13 +108,13 @@ class ImagesRestLogging : public ImagesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<ImagesRestStub> child_;

@@ -43,24 +43,24 @@ class PublicAdvertisedPrefixesRestMetadata
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeletePublicAdvertisedPrefixes(
+  AsyncDeletePublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          DeletePublicAdvertisedPrefixesRequest const& request) override;
+          DeletePublicAdvertisedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-  GetPublicAdvertisedPrefixes(
+  GetPublicAdvertisedPrefix(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          GetPublicAdvertisedPrefixesRequest const& request) override;
+          GetPublicAdvertisedPrefixRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertPublicAdvertisedPrefixes(
+  AsyncInsertPublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          InsertPublicAdvertisedPrefixesRequest const& request) override;
+          InsertPublicAdvertisedPrefixRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>
   ListPublicAdvertisedPrefixes(
@@ -69,24 +69,24 @@ class PublicAdvertisedPrefixesRestMetadata
           ListPublicAdvertisedPrefixesRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchPublicAdvertisedPrefixes(
+  AsyncPatchPublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          PatchPublicAdvertisedPrefixesRequest const& request) override;
+          PatchPublicAdvertisedPrefixRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

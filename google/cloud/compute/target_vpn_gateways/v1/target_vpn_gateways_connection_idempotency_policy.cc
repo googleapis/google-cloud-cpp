@@ -42,22 +42,22 @@ TargetVpnGatewaysConnectionIdempotencyPolicy::AggregatedListTargetVpnGateways(
 }
 
 Idempotency
-TargetVpnGatewaysConnectionIdempotencyPolicy::DeleteTargetVpnGateways(
+TargetVpnGatewaysConnectionIdempotencyPolicy::DeleteTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        DeleteTargetVpnGatewaysRequest const&) {
+        DeleteTargetVpnGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::GetTargetVpnGateways(
+Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::GetTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        GetTargetVpnGatewaysRequest const&) {
+        GetTargetVpnGatewayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-TargetVpnGatewaysConnectionIdempotencyPolicy::InsertTargetVpnGateways(
+TargetVpnGatewaysConnectionIdempotencyPolicy::InsertTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        InsertTargetVpnGatewaysRequest const&) {
+        InsertTargetVpnGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

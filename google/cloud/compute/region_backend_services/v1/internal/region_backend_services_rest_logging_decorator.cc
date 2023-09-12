@@ -35,32 +35,32 @@ RegionBackendServicesRestLogging::RegionBackendServicesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestLogging::AsyncDeleteRegionBackendServices(
+RegionBackendServicesRestLogging::AsyncDeleteBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteRegionBackendServicesRequest const& request) {
+        DeleteBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_backend_services::v1::
-                 DeleteRegionBackendServicesRequest const& request) {
-        return child_->AsyncDeleteRegionBackendServices(
-            cq, std::move(rest_context), request);
+                 DeleteBackendServiceRequest const& request) {
+        return child_->AsyncDeleteBackendService(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-RegionBackendServicesRestLogging::GetRegionBackendServices(
+RegionBackendServicesRestLogging::GetBackendService(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        GetRegionBackendServicesRequest const& request) {
+        GetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::region_backend_services::v1::
-                 GetRegionBackendServicesRequest const& request) {
-        return child_->GetRegionBackendServices(rest_context, request);
+                 GetBackendServiceRequest const& request) {
+        return child_->GetBackendService(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -94,18 +94,18 @@ RegionBackendServicesRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestLogging::AsyncInsertRegionBackendServices(
+RegionBackendServicesRestLogging::AsyncInsertBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        InsertRegionBackendServicesRequest const& request) {
+        InsertBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_backend_services::v1::
-                 InsertRegionBackendServicesRequest const& request) {
-        return child_->AsyncInsertRegionBackendServices(
-            cq, std::move(rest_context), request);
+                 InsertBackendServiceRequest const& request) {
+        return child_->AsyncInsertBackendService(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -125,18 +125,18 @@ RegionBackendServicesRestLogging::ListRegionBackendServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestLogging::AsyncPatchRegionBackendServices(
+RegionBackendServicesRestLogging::AsyncPatchBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        PatchRegionBackendServicesRequest const& request) {
+        PatchBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_backend_services::v1::
-                 PatchRegionBackendServicesRequest const& request) {
-        return child_->AsyncPatchRegionBackendServices(
-            cq, std::move(rest_context), request);
+                 PatchBackendServiceRequest const& request) {
+        return child_->AsyncPatchBackendService(cq, std::move(rest_context),
+                                                request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -156,18 +156,18 @@ RegionBackendServicesRestLogging::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesRestLogging::AsyncUpdateRegionBackendServices(
+RegionBackendServicesRestLogging::AsyncUpdateBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateRegionBackendServicesRequest const& request) {
+        UpdateBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_backend_services::v1::
-                 UpdateRegionBackendServicesRequest const& request) {
-        return child_->AsyncUpdateRegionBackendServices(
-            cq, std::move(rest_context), request);
+                 UpdateBackendServiceRequest const& request) {
+        return child_->AsyncUpdateBackendService(cq, std::move(rest_context),
+                                                 request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -177,12 +177,12 @@ RegionBackendServicesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -192,12 +192,12 @@ future<Status> RegionBackendServicesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

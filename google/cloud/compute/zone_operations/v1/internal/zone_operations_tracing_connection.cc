@@ -32,25 +32,23 @@ ZoneOperationsTracingConnection::ZoneOperationsTracingConnection(
     std::shared_ptr<compute_zone_operations_v1::ZoneOperationsConnection> child)
     : child_(std::move(child)) {}
 
-Status ZoneOperationsTracingConnection::DeleteZoneOperations(
+Status ZoneOperationsTracingConnection::DeleteOperation(
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_zone_operations_v1::ZoneOperationsConnection::"
-      "DeleteZoneOperations");
+      "compute_zone_operations_v1::ZoneOperationsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->DeleteZoneOperations(request));
+  return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ZoneOperationsTracingConnection::GetZoneOperations(
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+ZoneOperationsTracingConnection::GetOperation(
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_zone_operations_v1::ZoneOperationsConnection::"
-      "GetZoneOperations");
+      "compute_zone_operations_v1::ZoneOperationsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetZoneOperations(request));
+  return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>

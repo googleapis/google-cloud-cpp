@@ -45,16 +45,16 @@ class ResourcePoliciesRestStub {
           AggregatedListResourcePoliciesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteResourcePolicies(
+  AsyncDeleteResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          DeleteResourcePoliciesRequest const& request) = 0;
+          DeleteResourcePolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::resource_policies::v1::
-                          GetResourcePoliciesRequest const& request) = 0;
+  GetResourcePolicy(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::resource_policies::v1::
+                        GetResourcePolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -62,11 +62,11 @@ class ResourcePoliciesRestStub {
           GetIamPolicyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertResourcePolicies(
+  AsyncInsertResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          InsertResourcePoliciesRequest const& request) = 0;
+          InsertResourcePolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
   ListResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
@@ -74,11 +74,11 @@ class ResourcePoliciesRestStub {
                            ListResourcePoliciesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchResourcePolicies(
+  AsyncPatchResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          PatchResourcePoliciesRequest const& request) = 0;
+          PatchResourcePolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -95,13 +95,13 @@ class ResourcePoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
@@ -120,16 +120,16 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
           AggregatedListResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteResourcePolicies(
+  AsyncDeleteResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          DeleteResourcePoliciesRequest const& request) override;
+          DeleteResourcePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          GetResourcePoliciesRequest const& request) override;
+          GetResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -137,11 +137,11 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertResourcePolicies(
+  AsyncInsertResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          InsertResourcePoliciesRequest const& request) override;
+          InsertResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
   ListResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
@@ -149,11 +149,11 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
                            ListResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchResourcePolicies(
+  AsyncPatchResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::resource_policies::v1::
-          PatchResourcePoliciesRequest const& request) override;
+          PatchResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -170,13 +170,13 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

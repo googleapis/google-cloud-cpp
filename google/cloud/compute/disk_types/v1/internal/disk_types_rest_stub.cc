@@ -59,9 +59,9 @@ DefaultDiskTypesRestStub::AggregatedListDiskTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DefaultDiskTypesRestStub::GetDiskTypes(
+DefaultDiskTypesRestStub::GetDiskType(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,

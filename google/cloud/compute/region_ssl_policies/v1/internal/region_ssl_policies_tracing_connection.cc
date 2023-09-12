@@ -34,38 +34,36 @@ RegionSslPoliciesTracingConnection::RegionSslPoliciesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesTracingConnection::DeleteRegionSslPolicies(
+RegionSslPoliciesTracingConnection::DeleteSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteRegionSslPoliciesRequest const& request) {
+        DeleteSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
-      "DeleteRegionSslPolicies");
+      "DeleteSslPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionSslPolicies(request));
+  return internal::EndSpan(std::move(span), child_->DeleteSslPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesTracingConnection::GetRegionSslPolicies(
+RegionSslPoliciesTracingConnection::GetSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        GetRegionSslPoliciesRequest const& request) {
+        GetSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
-      "GetRegionSslPolicies");
+      "GetSslPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionSslPolicies(request));
+  return internal::EndSpan(*span, child_->GetSslPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesTracingConnection::InsertRegionSslPolicies(
+RegionSslPoliciesTracingConnection::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertRegionSslPoliciesRequest const& request) {
+        InsertSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
-      "InsertRegionSslPolicies");
+      "InsertSslPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertRegionSslPolicies(request));
+  return internal::EndSpan(std::move(span), child_->InsertSslPolicy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
@@ -95,15 +93,14 @@ RegionSslPoliciesTracingConnection::ListAvailableFeatures(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesTracingConnection::PatchRegionSslPolicies(
+RegionSslPoliciesTracingConnection::PatchSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchRegionSslPoliciesRequest const& request) {
+        PatchSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
-      "PatchRegionSslPolicies");
+      "PatchSslPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchRegionSslPolicies(request));
+  return internal::EndSpan(std::move(span), child_->PatchSslPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

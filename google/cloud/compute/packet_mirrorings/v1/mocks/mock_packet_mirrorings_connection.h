@@ -55,21 +55,21 @@ class MockPacketMirroringsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeletePacketMirrorings,
+              DeletePacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
-                   DeletePacketMirroringsRequest const& request),
+                   DeletePacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>,
-              GetPacketMirrorings,
+              GetPacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
-                   GetPacketMirroringsRequest const& request),
+                   GetPacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertPacketMirrorings,
+              InsertPacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
-                   InsertPacketMirroringsRequest const& request),
+                   InsertPacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>,
@@ -79,9 +79,9 @@ class MockPacketMirroringsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchPacketMirrorings,
+              PatchPacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
-                   PatchPacketMirroringsRequest const& request),
+                   PatchPacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(

@@ -118,12 +118,12 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L113}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L113}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslPolicies(std::string const& project, std::string const& region,
-                          std::string const& ssl_policy, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& ssl_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -135,7 +135,7 @@ class RegionSslPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteSslPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -158,13 +158,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L113}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.DeleteSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L113}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                              DeleteRegionSslPoliciesRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          DeleteSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -188,11 +188,11 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L144}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L144}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       std::string const& project, std::string const& region,
       std::string const& ssl_policy, Options opts = {});
 
@@ -204,7 +204,7 @@ class RegionSslPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.GetSslPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -220,13 +220,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L144}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.GetSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L144}
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_115.proto#L137}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          GetRegionSslPoliciesRequest const& request,
+          GetSslPolicyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -258,11 +258,10 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L157}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L157}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
       Options opts = {});
@@ -276,7 +275,7 @@ class RegionSslPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.InsertSslPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -299,13 +298,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L157}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.InsertSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L157}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                              InsertRegionSslPoliciesRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          InsertSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -482,11 +481,10 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L324}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L324}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
       std::string const& project, std::string const& region,
       std::string const& ssl_policy,
       google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
@@ -500,7 +498,7 @@ class RegionSslPoliciesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest].
+  ///     [google.cloud.cpp.compute.region_ssl_policies.v1.PatchSslPolicyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -523,13 +521,13 @@ class RegionSslPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchRegionSslPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L324}
+  /// [google.cloud.cpp.compute.region_ssl_policies.v1.PatchSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L324}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::
-                             PatchRegionSslPoliciesRequest const& request,
-                         Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
+      google::cloud::cpp::compute::region_ssl_policies::v1::
+          PatchSslPolicyRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionSslPoliciesConnection> connection_;

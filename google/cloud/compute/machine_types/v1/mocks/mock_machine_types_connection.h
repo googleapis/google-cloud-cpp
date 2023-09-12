@@ -55,9 +55,9 @@ class MockMachineTypesConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::MachineType>,
-              GetMachineTypes,
+              GetMachineType,
               (google::cloud::cpp::compute::machine_types::v1::
-                   GetMachineTypesRequest const& request),
+                   GetMachineTypeRequest const& request),
               (override));
 
   MOCK_METHOD(

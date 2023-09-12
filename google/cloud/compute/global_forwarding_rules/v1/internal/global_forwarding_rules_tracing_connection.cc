@@ -36,38 +36,38 @@ GlobalForwardingRulesTracingConnection::GlobalForwardingRulesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesTracingConnection::DeleteGlobalForwardingRules(
+GlobalForwardingRulesTracingConnection::DeleteForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRulesRequest const& request) {
+        DeleteForwardingRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
-      "DeleteGlobalForwardingRules");
+      "DeleteForwardingRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteGlobalForwardingRules(request));
+                           child_->DeleteForwardingRule(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-GlobalForwardingRulesTracingConnection::GetGlobalForwardingRules(
+GlobalForwardingRulesTracingConnection::GetForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRulesRequest const& request) {
+        GetForwardingRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
-      "GetGlobalForwardingRules");
+      "GetForwardingRule");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetGlobalForwardingRules(request));
+  return internal::EndSpan(*span, child_->GetForwardingRule(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesTracingConnection::InsertGlobalForwardingRules(
+GlobalForwardingRulesTracingConnection::InsertForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRulesRequest const& request) {
+        InsertForwardingRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
-      "InsertGlobalForwardingRules");
+      "InsertForwardingRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertGlobalForwardingRules(request));
+                           child_->InsertForwardingRule(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -85,15 +85,15 @@ GlobalForwardingRulesTracingConnection::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalForwardingRulesTracingConnection::PatchGlobalForwardingRules(
+GlobalForwardingRulesTracingConnection::PatchForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRulesRequest const& request) {
+        PatchForwardingRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_forwarding_rules_v1::GlobalForwardingRulesConnection::"
-      "PatchGlobalForwardingRules");
+      "PatchForwardingRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchGlobalForwardingRules(request));
+                           child_->PatchForwardingRule(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

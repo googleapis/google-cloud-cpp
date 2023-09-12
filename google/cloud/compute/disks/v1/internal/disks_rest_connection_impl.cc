@@ -49,10 +49,8 @@ DisksRestConnectionImpl::AddResourcePolicies(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -63,13 +61,13 @@ DisksRestConnectionImpl::AddResourcePolicies(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -80,16 +78,17 @@ DisksRestConnectionImpl::AddResourcePolicies(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -119,10 +118,8 @@ DisksRestConnectionImpl::BulkInsert(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -134,13 +131,13 @@ DisksRestConnectionImpl::BulkInsert(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -151,16 +148,17 @@ DisksRestConnectionImpl::BulkInsert(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -175,10 +173,8 @@ DisksRestConnectionImpl::CreateSnapshot(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -190,13 +186,13 @@ DisksRestConnectionImpl::CreateSnapshot(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -207,16 +203,17 @@ DisksRestConnectionImpl::CreateSnapshot(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -224,54 +221,53 @@ DisksRestConnectionImpl::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksRestConnectionImpl::DeleteDisks(
-    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
+DisksRestConnectionImpl::DeleteDisk(
+    google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
+          google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
               request) {
-        return stub->AsyncDeleteDisks(cq, std::move(context), request);
+        return stub->AsyncDeleteDisk(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDisks(request),
+      idempotency_policy(*current)->DeleteDisk(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -279,15 +275,15 @@ DisksRestConnectionImpl::DeleteDisks(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-DisksRestConnectionImpl::GetDisks(
-    google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
+DisksRestConnectionImpl::GetDisk(
+    google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetDisks(request),
+      idempotency_policy(*current)->GetDisk(request),
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::disks::v1::GetDisksRequest const&
-                 request) { return stub_->GetDisks(rest_context, request); },
+             google::cloud::cpp::compute::disks::v1::GetDiskRequest const&
+                 request) { return stub_->GetDisk(rest_context, request); },
       request, __func__);
 }
 
@@ -308,54 +304,53 @@ DisksRestConnectionImpl::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksRestConnectionImpl::InsertDisks(
-    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
+DisksRestConnectionImpl::InsertDisk(
+    google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
+          google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&
               request) {
-        return stub->AsyncInsertDisks(cq, std::move(context), request);
+        return stub->AsyncInsertDisk(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InsertDisks(request),
+      idempotency_policy(*current)->InsertDisk(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -402,10 +397,8 @@ DisksRestConnectionImpl::RemoveResourcePolicies(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -417,13 +410,13 @@ DisksRestConnectionImpl::RemoveResourcePolicies(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -434,16 +427,17 @@ DisksRestConnectionImpl::RemoveResourcePolicies(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -457,10 +451,8 @@ DisksRestConnectionImpl::Resize(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -472,13 +464,13 @@ DisksRestConnectionImpl::Resize(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -489,16 +481,17 @@ DisksRestConnectionImpl::Resize(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -528,10 +521,8 @@ DisksRestConnectionImpl::SetLabels(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
@@ -543,13 +534,13 @@ DisksRestConnectionImpl::SetLabels(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -560,16 +551,17 @@ DisksRestConnectionImpl::SetLabels(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -584,10 +576,8 @@ DisksRestConnectionImpl::StartAsyncReplication(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -599,13 +589,13 @@ DisksRestConnectionImpl::StartAsyncReplication(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -616,16 +606,17 @@ DisksRestConnectionImpl::StartAsyncReplication(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -640,10 +631,8 @@ DisksRestConnectionImpl::StopAsyncReplication(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -654,13 +643,13 @@ DisksRestConnectionImpl::StopAsyncReplication(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -671,16 +660,17 @@ DisksRestConnectionImpl::StopAsyncReplication(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -695,10 +685,8 @@ DisksRestConnectionImpl::StopGroupAsyncReplication(
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
@@ -710,13 +698,13 @@ DisksRestConnectionImpl::StopGroupAsyncReplication(
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
@@ -727,16 +715,17 @@ DisksRestConnectionImpl::StopGroupAsyncReplication(
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
@@ -760,54 +749,53 @@ DisksRestConnectionImpl::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksRestConnectionImpl::UpdateDisks(
-    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
+DisksRestConnectionImpl::UpdateDisk(
+    google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
       google::cloud::cpp::compute::v1::Operation,
       google::cloud::cpp::compute::v1::Operation,
-      google::cloud::cpp::compute::zone_operations::v1::
-          GetZoneOperationsRequest,
-      google::cloud::cpp::compute::zone_operations::v1::
-          DeleteZoneOperationsRequest>(
+      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest>(
       background_->cq(), request,
       [stub = stub_](
           CompletionQueue& cq,
           std::unique_ptr<rest_internal::RestContext> context,
-          google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
+          google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
               request) {
-        return stub->AsyncUpdateDisks(cq, std::move(context), request);
+        return stub->AsyncUpdateDisk(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         GetZoneOperationsRequest const& request) {
+                         GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
                      google::cloud::cpp::compute::zone_operations::v1::
-                         DeleteZoneOperationsRequest const& request) {
+                         DeleteOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
       [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
          std::string const&) { return op; },
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDisks(request),
+      idempotency_policy(*current)->UpdateDisk(request),
       polling_policy(*current), __func__,
       [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
       },
-      [request](std::string const& op,
-                google::cloud::cpp::compute::zone_operations::v1::
-                    GetZoneOperationsRequest& r) {
+      [request](
+          std::string const& op,
+          google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest&
+              r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);
       },
       [request](std::string const& op,
                 google::cloud::cpp::compute::zone_operations::v1::
-                    DeleteZoneOperationsRequest& r) {
+                    DeleteOperationRequest& r) {
         r.set_project(request.project());
         r.set_zone(request.zone());
         r.set_operation(op);

@@ -197,27 +197,24 @@ class TargetHttpsProxiesConnection {
           AggregatedListTargetHttpsProxiesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpsProxies(
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          DeleteTargetHttpsProxiesRequest const& request);
+  DeleteTargetHttpsProxy(google::cloud::cpp::compute::target_https_proxies::v1::
+                             DeleteTargetHttpsProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-  GetTargetHttpsProxies(google::cloud::cpp::compute::target_https_proxies::v1::
-                            GetTargetHttpsProxiesRequest const& request);
+  GetTargetHttpsProxy(google::cloud::cpp::compute::target_https_proxies::v1::
+                          GetTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpsProxies(
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          InsertTargetHttpsProxiesRequest const& request);
+  InsertTargetHttpsProxy(google::cloud::cpp::compute::target_https_proxies::v1::
+                             InsertTargetHttpsProxyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   ListTargetHttpsProxies(google::cloud::cpp::compute::target_https_proxies::v1::
                              ListTargetHttpsProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpsProxies(
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          PatchTargetHttpsProxiesRequest const& request);
+  PatchTargetHttpsProxy(google::cloud::cpp::compute::target_https_proxies::v1::
+                            PatchTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(google::cloud::cpp::compute::target_https_proxies::v1::

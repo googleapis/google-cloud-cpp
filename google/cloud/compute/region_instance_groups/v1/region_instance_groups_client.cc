@@ -34,25 +34,26 @@ RegionInstanceGroupsClient::RegionInstanceGroupsClient(
 RegionInstanceGroupsClient::~RegionInstanceGroupsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-RegionInstanceGroupsClient::GetRegionInstanceGroups(
-    std::string const& project, std::string const& region,
-    std::string const& instance_group, Options opts) {
+RegionInstanceGroupsClient::GetInstanceGroup(std::string const& project,
+                                             std::string const& region,
+                                             std::string const& instance_group,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_groups::v1::
-      GetRegionInstanceGroupsRequest request;
+      GetInstanceGroupRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_instance_group(instance_group);
-  return connection_->GetRegionInstanceGroups(request);
+  return connection_->GetInstanceGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-RegionInstanceGroupsClient::GetRegionInstanceGroups(
+RegionInstanceGroupsClient::GetInstanceGroup(
     google::cloud::cpp::compute::region_instance_groups::v1::
-        GetRegionInstanceGroupsRequest const& request,
+        GetInstanceGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionInstanceGroups(request);
+  return connection_->GetInstanceGroup(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>

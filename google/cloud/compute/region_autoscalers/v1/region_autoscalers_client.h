@@ -116,12 +116,12 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionAutoscalers(std::string const& project, std::string const& region,
-                          std::string const& autoscaler, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
+      std::string const& project, std::string const& region,
+      std::string const& autoscaler, Options opts = {});
 
   // clang-format off
   ///
@@ -131,7 +131,7 @@ class RegionAutoscalersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest].
+  ///     [google.cloud.cpp.compute.region_autoscalers.v1.DeleteAutoscalerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -154,13 +154,13 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.DeleteAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L114}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                              DeleteRegionAutoscalersRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          DeleteAutoscalerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -183,11 +183,11 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       std::string const& project, std::string const& region,
       std::string const& autoscaler, Options opts = {});
 
@@ -199,7 +199,7 @@ class RegionAutoscalersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest].
+  ///     [google.cloud.cpp.compute.region_autoscalers.v1.GetAutoscalerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -215,13 +215,13 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.GetAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L144}
   /// [google.cloud.cpp.compute.v1.Autoscaler]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::cpp::compute::region_autoscalers::v1::
-          GetRegionAutoscalersRequest const& request,
+          GetAutoscalerRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -253,11 +253,10 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
@@ -271,7 +270,7 @@ class RegionAutoscalersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest].
+  ///     [google.cloud.cpp.compute.region_autoscalers.v1.InsertAutoscalerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -294,13 +293,13 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.InsertAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L156}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                              InsertRegionAutoscalersRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          InsertAutoscalerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -411,11 +410,10 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
@@ -430,7 +428,7 @@ class RegionAutoscalersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest].
+  ///     [google.cloud.cpp.compute.region_autoscalers.v1.PatchAutoscalerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -453,13 +451,13 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.PatchAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L255}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                             PatchRegionAutoscalersRequest const& request,
-                         Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          PatchAutoscalerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -490,11 +488,10 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionAutoscalers(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
@@ -508,7 +505,7 @@ class RegionAutoscalersClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest].
+  ///     [google.cloud.cpp.compute.region_autoscalers.v1.UpdateAutoscalerRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -531,13 +528,13 @@ class RegionAutoscalersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateRegionAutoscalersRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
+  /// [google.cloud.cpp.compute.region_autoscalers.v1.UpdateAutoscalerRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L289}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                              UpdateRegionAutoscalersRequest const& request,
-                          Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          UpdateAutoscalerRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionAutoscalersConnection> connection_;

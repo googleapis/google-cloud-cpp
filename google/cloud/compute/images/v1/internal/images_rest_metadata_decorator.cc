@@ -40,13 +40,13 @@ ImagesRestMetadata::ImagesRestMetadata(std::shared_ptr<ImagesRestStub> child,
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesRestMetadata::AsyncDeleteImages(
+ImagesRestMetadata::AsyncDeleteImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteImages(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteImage(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -58,11 +58,11 @@ ImagesRestMetadata::AsyncDeprecate(
   return child_->AsyncDeprecate(cq, std::move(rest_context), request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestMetadata::GetImages(
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestMetadata::GetImage(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
+    google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetImages(rest_context, request);
+  return child_->GetImage(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
@@ -84,13 +84,13 @@ ImagesRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesRestMetadata::AsyncInsertImages(
+ImagesRestMetadata::AsyncInsertImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertImages(cq, std::move(rest_context), request);
+  return child_->AsyncInsertImage(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
@@ -102,13 +102,12 @@ ImagesRestMetadata::ListImages(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesRestMetadata::AsyncPatchImages(
+ImagesRestMetadata::AsyncPatchImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-        request) {
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchImages(cq, std::move(rest_context), request);
+  return child_->AsyncPatchImage(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -143,7 +142,7 @@ ImagesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -152,7 +151,7 @@ future<Status> ImagesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

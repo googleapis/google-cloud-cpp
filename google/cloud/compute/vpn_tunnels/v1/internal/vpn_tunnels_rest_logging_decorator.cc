@@ -48,49 +48,49 @@ VpnTunnelsRestLogging::AggregatedListVpnTunnels(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsRestLogging::AsyncDeleteVpnTunnels(
+VpnTunnelsRestLogging::AsyncDeleteVpnTunnel(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelsRequest const&
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::vpn_tunnels::v1::
-                 DeleteVpnTunnelsRequest const& request) {
-        return child_->AsyncDeleteVpnTunnels(cq, std::move(rest_context),
-                                             request);
+                 DeleteVpnTunnelRequest const& request) {
+        return child_->AsyncDeleteVpnTunnel(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-VpnTunnelsRestLogging::GetVpnTunnels(
+VpnTunnelsRestLogging::GetVpnTunnel(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+    google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::vpn_tunnels::v1::
-                 GetVpnTunnelsRequest const& request) {
-        return child_->GetVpnTunnels(rest_context, request);
+                 GetVpnTunnelRequest const& request) {
+        return child_->GetVpnTunnel(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-VpnTunnelsRestLogging::AsyncInsertVpnTunnels(
+VpnTunnelsRestLogging::AsyncInsertVpnTunnel(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelsRequest const&
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::vpn_tunnels::v1::
-                 InsertVpnTunnelsRequest const& request) {
-        return child_->AsyncInsertVpnTunnels(cq, std::move(rest_context),
-                                             request);
+                 InsertVpnTunnelRequest const& request) {
+        return child_->AsyncInsertVpnTunnel(cq, std::move(rest_context),
+                                            request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -131,12 +131,12 @@ VpnTunnelsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -146,12 +146,12 @@ future<Status> VpnTunnelsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

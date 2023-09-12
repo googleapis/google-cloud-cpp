@@ -41,21 +41,21 @@ class RegionCommitmentsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_commitments::v1::
           AggregatedListRegionCommitmentsRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionCommitments(
+  virtual google::cloud::Idempotency GetCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          GetRegionCommitmentsRequest const& request);
+          GetCommitmentRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionCommitments(
+  virtual google::cloud::Idempotency InsertCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          InsertRegionCommitmentsRequest const& request);
+          InsertCommitmentRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionCommitments(
       google::cloud::cpp::compute::region_commitments::v1::
           ListRegionCommitmentsRequest request);
 
-  virtual google::cloud::Idempotency UpdateRegionCommitments(
+  virtual google::cloud::Idempotency UpdateCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
-          UpdateRegionCommitmentsRequest const& request);
+          UpdateCommitmentRequest const& request);
 };
 
 std::unique_ptr<RegionCommitmentsConnectionIdempotencyPolicy>

@@ -58,32 +58,31 @@ class ServiceAttachmentsRestConnectionImpl
           AggregatedListServiceAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachments(
+  DeleteServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentsRequest const& request) override;
+          DeleteServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          GetServiceAttachmentsRequest const& request) override;
+  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                           GetServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachments(
+  InsertServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentsRequest const& request) override;
+          InsertServiceAttachmentRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
   ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
                              ListServiceAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachments(
+  PatchServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
-          PatchServiceAttachmentsRequest const& request) override;
+          PatchServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::

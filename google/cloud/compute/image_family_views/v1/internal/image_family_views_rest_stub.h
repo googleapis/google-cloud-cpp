@@ -37,9 +37,9 @@ class ImageFamilyViewsRestStub {
   virtual ~ImageFamilyViewsRestStub() = default;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request) = 0;
+  GetImageFamilyView(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::image_family_views::v1::
+                         GetImageFamilyViewRequest const& request) = 0;
 };
 
 class DefaultImageFamilyViewsRestStub : public ImageFamilyViewsRestStub {
@@ -50,10 +50,10 @@ class DefaultImageFamilyViewsRestStub : public ImageFamilyViewsRestStub {
   DefaultImageFamilyViewsRestStub(
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::image_family_views::v1::
+          GetImageFamilyViewRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

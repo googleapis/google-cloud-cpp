@@ -84,13 +84,13 @@ InstancesTracingConnection::BulkInsert(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesTracingConnection::DeleteInstances(
-    google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+InstancesTracingConnection::DeleteInstance(
+    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_instances_v1::InstancesConnection::DeleteInstances");
+      "compute_instances_v1::InstancesConnection::DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteInstances(request));
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -115,13 +115,13 @@ InstancesTracingConnection::DetachDisk(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
-InstancesTracingConnection::GetInstances(
-    google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+InstancesTracingConnection::GetInstance(
+    google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_instances_v1::InstancesConnection::GetInstances");
+      "compute_instances_v1::InstancesConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetInstances(request));
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 StatusOr<
@@ -186,13 +186,13 @@ InstancesTracingConnection::GetShieldedInstanceIdentity(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesTracingConnection::InsertInstances(
-    google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+InstancesTracingConnection::InsertInstance(
+    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_instances_v1::InstancesConnection::InsertInstances");
+      "compute_instances_v1::InstancesConnection::InsertInstance");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertInstances(request));
+  return internal::EndSpan(std::move(span), child_->InsertInstance(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Instance>
@@ -449,13 +449,13 @@ InstancesTracingConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesTracingConnection::UpdateInstances(
-    google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+InstancesTracingConnection::UpdateInstance(
+    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_instances_v1::InstancesConnection::UpdateInstances");
+      "compute_instances_v1::InstancesConnection::UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateInstances(request));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

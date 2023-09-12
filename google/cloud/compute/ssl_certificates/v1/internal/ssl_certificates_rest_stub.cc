@@ -66,11 +66,11 @@ DefaultSslCertificatesRestStub::AggregatedListSslCertificates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSslCertificatesRestStub::AsyncDeleteSslCertificates(
+DefaultSslCertificatesRestStub::AsyncDeleteSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
-        DeleteSslCertificatesRequest const& request) {
+        DeleteSslCertificateRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -92,10 +92,10 @@ DefaultSslCertificatesRestStub::AsyncDeleteSslCertificates(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-DefaultSslCertificatesRestStub::GetSslCertificates(
+DefaultSslCertificatesRestStub::GetSslCertificate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
-        GetSslCertificatesRequest const& request) {
+        GetSslCertificateRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificate>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -105,11 +105,11 @@ DefaultSslCertificatesRestStub::GetSslCertificates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultSslCertificatesRestStub::AsyncInsertSslCertificates(
+DefaultSslCertificatesRestStub::AsyncInsertSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
-        InsertSslCertificatesRequest const& request) {
+        InsertSslCertificateRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -152,7 +152,7 @@ DefaultSslCertificatesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -175,7 +175,7 @@ future<Status> DefaultSslCertificatesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

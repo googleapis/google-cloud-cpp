@@ -67,17 +67,16 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::CloneRulesRequest const& request),
               (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteRegionNetworkFirewallPolicies,
-      (google::cloud::cpp::compute::region_network_firewall_policies::v1::
-           DeleteRegionNetworkFirewallPoliciesRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteFirewallPolicy,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::DeleteFirewallPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
-              GetRegionNetworkFirewallPolicies,
+              GetFirewallPolicy,
               (google::cloud::cpp::compute::region_network_firewall_policies::
-                   v1::GetRegionNetworkFirewallPoliciesRequest const& request),
+                   v1::GetFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -106,12 +105,11 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::GetRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertRegionNetworkFirewallPolicies,
-      (google::cloud::cpp::compute::region_network_firewall_policies::v1::
-           InsertRegionNetworkFirewallPoliciesRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertFirewallPolicy,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::InsertFirewallPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>,
               ListRegionNetworkFirewallPolicies,
@@ -119,12 +117,11 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::ListRegionNetworkFirewallPoliciesRequest request),
               (override));
 
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      PatchRegionNetworkFirewallPolicies,
-      (google::cloud::cpp::compute::region_network_firewall_policies::v1::
-           PatchRegionNetworkFirewallPoliciesRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchFirewallPolicy,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::PatchFirewallPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRule,

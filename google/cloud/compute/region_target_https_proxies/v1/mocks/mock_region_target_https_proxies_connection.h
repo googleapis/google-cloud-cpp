@@ -50,21 +50,21 @@ class MockRegionTargetHttpsProxiesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionTargetHttpsProxies,
+              DeleteTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   DeleteRegionTargetHttpsProxiesRequest const& request),
+                   DeleteTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>,
-              GetRegionTargetHttpsProxies,
+              GetTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   GetRegionTargetHttpsProxiesRequest const& request),
+                   GetTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionTargetHttpsProxies,
+              InsertTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   InsertRegionTargetHttpsProxiesRequest const& request),
+                   InsertTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>,
@@ -74,9 +74,9 @@ class MockRegionTargetHttpsProxiesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionTargetHttpsProxies,
+              PatchTargetHttpsProxy,
               (google::cloud::cpp::compute::region_target_https_proxies::v1::
-                   PatchRegionTargetHttpsProxiesRequest const& request),
+                   PatchTargetHttpsProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

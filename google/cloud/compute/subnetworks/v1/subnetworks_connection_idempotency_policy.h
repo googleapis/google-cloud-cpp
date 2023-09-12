@@ -40,25 +40,25 @@ class SubnetworksConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::subnetworks::v1::
           AggregatedListSubnetworksRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSubnetworks(
+  virtual google::cloud::Idempotency DeleteSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::
-          DeleteSubnetworksRequest const& request);
+          DeleteSubnetworkRequest const& request);
 
   virtual google::cloud::Idempotency ExpandIpCidrRange(
       google::cloud::cpp::compute::subnetworks::v1::
           ExpandIpCidrRangeRequest const& request);
 
-  virtual google::cloud::Idempotency GetSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+  virtual google::cloud::Idempotency GetSubnetwork(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
           request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertSubnetworks(
+  virtual google::cloud::Idempotency InsertSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::
-          InsertSubnetworksRequest const& request);
+          InsertSubnetworkRequest const& request);
 
   virtual google::cloud::Idempotency ListSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
@@ -67,9 +67,9 @@ class SubnetworksConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListUsable(
       google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request);
 
-  virtual google::cloud::Idempotency PatchSubnetworks(
+  virtual google::cloud::Idempotency PatchSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::
-          PatchSubnetworksRequest const& request);
+          PatchSubnetworkRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&

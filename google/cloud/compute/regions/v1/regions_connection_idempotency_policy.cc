@@ -34,8 +34,8 @@ RegionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegionsConnectionIdempotencyPolicy::GetRegions(
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&) {
+Idempotency RegionsConnectionIdempotencyPolicy::GetRegion(
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const&) {
   return Idempotency::kIdempotent;
 }
 

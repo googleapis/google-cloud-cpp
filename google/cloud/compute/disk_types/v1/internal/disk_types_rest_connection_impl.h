@@ -54,8 +54,8 @@ class DiskTypesRestConnectionImpl
       google::cloud::cpp::compute::disk_types::v1::
           AggregatedListDiskTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
-      google::cloud::cpp::compute::disk_types::v1::GetDiskTypesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
+      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(

@@ -38,9 +38,9 @@ class RegionInstanceGroupsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionInstanceGroupsConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency GetRegionInstanceGroups(
+  virtual google::cloud::Idempotency GetInstanceGroup(
       google::cloud::cpp::compute::region_instance_groups::v1::
-          GetRegionInstanceGroupsRequest const& request);
+          GetInstanceGroupRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionInstanceGroups(
       google::cloud::cpp::compute::region_instance_groups::v1::

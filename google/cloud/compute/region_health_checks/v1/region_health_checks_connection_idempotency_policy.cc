@@ -35,24 +35,21 @@ RegionHealthChecksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionHealthChecksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::DeleteRegionHealthChecks(
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::DeleteHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        DeleteRegionHealthChecksRequest const&) {
+        DeleteHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::GetRegionHealthChecks(
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::GetHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        GetRegionHealthChecksRequest const&) {
+        GetHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::InsertRegionHealthChecks(
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::InsertHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        InsertRegionHealthChecksRequest const&) {
+        InsertHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -63,17 +60,15 @@ RegionHealthChecksConnectionIdempotencyPolicy::ListRegionHealthChecks(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::PatchRegionHealthChecks(
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::PatchHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        PatchRegionHealthChecksRequest const&) {
+        PatchHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionHealthChecksConnectionIdempotencyPolicy::UpdateRegionHealthChecks(
+Idempotency RegionHealthChecksConnectionIdempotencyPolicy::UpdateHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        UpdateRegionHealthChecksRequest const&) {
+        UpdateHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 

@@ -49,12 +49,12 @@ NodeTypesRestMetadata::AggregatedListNodeTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesRestMetadata::GetNodeTypes(
+NodeTypesRestMetadata::GetNodeType(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetNodeTypes(rest_context, request);
+  return child_->GetNodeType(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>

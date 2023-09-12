@@ -47,10 +47,9 @@ class MockRegionDiskTypesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::DiskType>,
-              GetRegionDiskTypes,
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::DiskType>, GetDiskType,
               (google::cloud::cpp::compute::region_disk_types::v1::
-                   GetRegionDiskTypesRequest const& request),
+                   GetDiskTypeRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::DiskType>,

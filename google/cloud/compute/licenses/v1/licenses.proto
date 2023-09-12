@@ -46,7 +46,7 @@ service Licenses {
   // Deletes the specified license. *Caution* This resource is intended for use
   // only by third-party partners who are creating Cloud Marketplace images.
   // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/delete
-  rpc DeleteLicenses(DeleteLicensesRequest)
+  rpc DeleteLicense(DeleteLicenseRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/licenses/{license}"
@@ -59,7 +59,7 @@ service Licenses {
   // for use only by third-party partners who are creating Cloud Marketplace
   // images.
   // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/get
-  rpc GetLicenses(GetLicensesRequest)
+  rpc GetLicense(GetLicenseRequest)
       returns (google.cloud.cpp.compute.v1.License) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/licenses/{license}"
@@ -83,7 +83,7 @@ service Licenses {
   // is intended for use only by third-party partners who are creating Cloud
   // Marketplace images.
   // https://cloud.google.com/compute/docs/reference/rest/v1/licenses/insert
-  rpc InsertLicenses(InsertLicensesRequest)
+  rpc InsertLicense(InsertLicenseRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/licenses"
@@ -138,8 +138,8 @@ service Licenses {
   }
 }
 
-// Request message for DeleteLicenses.
-message DeleteLicensesRequest {
+// Request message for DeleteLicense.
+message DeleteLicenseRequest {
   // Name of the license resource to delete.
   string license = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -174,8 +174,8 @@ message GetIamPolicyRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetLicenses.
-message GetLicensesRequest {
+// Request message for GetLicense.
+message GetLicenseRequest {
   // Name of the License resource to return.
   string license = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -183,8 +183,8 @@ message GetLicensesRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertLicenses.
-message InsertLicensesRequest {
+// Request message for InsertLicense.
+message InsertLicenseRequest {
   // The License for this request.
   optional google.cloud.cpp.compute.v1.License license_resource = 1
       [json_name = "__json_request_body"];

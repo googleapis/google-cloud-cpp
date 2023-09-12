@@ -39,10 +39,9 @@ DefaultRegionsRestStub::DefaultRegionsRestStub(
     : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
-DefaultRegionsRestStub::GetRegions(
+DefaultRegionsRestStub::GetRegion(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-        request) {
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

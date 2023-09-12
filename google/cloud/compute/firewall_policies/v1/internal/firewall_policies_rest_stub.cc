@@ -124,11 +124,11 @@ DefaultFirewallPoliciesRestStub::AsyncCloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultFirewallPoliciesRestStub::AsyncDeleteFirewallPolicies(
+DefaultFirewallPoliciesRestStub::AsyncDeleteFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::firewall_policies::v1::
-        DeleteFirewallPoliciesRequest const& request) {
+        DeleteFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -149,10 +149,10 @@ DefaultFirewallPoliciesRestStub::AsyncDeleteFirewallPolicies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-DefaultFirewallPoliciesRestStub::GetFirewallPolicies(
+DefaultFirewallPoliciesRestStub::GetFirewallPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::firewall_policies::v1::
-        GetFirewallPoliciesRequest const& request) {
+        GetFirewallPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
@@ -204,11 +204,11 @@ DefaultFirewallPoliciesRestStub::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultFirewallPoliciesRestStub::AsyncInsertFirewallPolicies(
+DefaultFirewallPoliciesRestStub::AsyncInsertFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::firewall_policies::v1::
-        InsertFirewallPoliciesRequest const& request) {
+        InsertFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -283,11 +283,11 @@ DefaultFirewallPoliciesRestStub::AsyncMove(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultFirewallPoliciesRestStub::AsyncPatchFirewallPolicies(
+DefaultFirewallPoliciesRestStub::AsyncPatchFirewallPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::firewall_policies::v1::
-        PatchFirewallPoliciesRequest const& request) {
+        PatchFirewallPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -415,7 +415,7 @@ DefaultFirewallPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        GetGlobalOrganizationOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -438,7 +438,7 @@ future<Status> DefaultFirewallPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_organization_operations::v1::
-        DeleteGlobalOrganizationOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

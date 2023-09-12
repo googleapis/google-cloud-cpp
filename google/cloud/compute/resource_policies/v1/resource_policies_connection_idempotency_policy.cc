@@ -41,15 +41,15 @@ ResourcePoliciesConnectionIdempotencyPolicy::AggregatedListResourcePolicies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::DeleteResourcePolicies(
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::DeleteResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePoliciesRequest const&) {
+        DeleteResourcePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetResourcePolicies(
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePoliciesRequest const&) {
+        GetResourcePolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -59,9 +59,9 @@ Idempotency ResourcePoliciesConnectionIdempotencyPolicy::GetIamPolicy(
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::InsertResourcePolicies(
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::InsertResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePoliciesRequest const&) {
+        InsertResourcePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,9 +71,9 @@ Idempotency ResourcePoliciesConnectionIdempotencyPolicy::ListResourcePolicies(
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourcePoliciesConnectionIdempotencyPolicy::PatchResourcePolicies(
+Idempotency ResourcePoliciesConnectionIdempotencyPolicy::PatchResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePoliciesRequest const&) {
+        PatchResourcePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

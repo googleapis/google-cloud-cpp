@@ -106,13 +106,11 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L94}
+  /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L93}
   ///
   // clang-format on
-  Status DeleteRegionOperations(std::string const& project,
-                                std::string const& region,
-                                std::string const& operation,
-                                Options opts = {});
+  Status DeleteOperation(std::string const& project, std::string const& region,
+                         std::string const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -122,7 +120,7 @@ class RegionOperationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest].
+  ///     [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -136,13 +134,12 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.DeleteRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L94}
+  /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L93}
   ///
   // clang-format on
-  Status DeleteRegionOperations(
-      google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request,
-      Options opts = {});
+  Status DeleteOperation(google::cloud::cpp::compute::region_operations::v1::
+                             DeleteOperationRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -165,11 +162,11 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L106}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L105}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       std::string const& project, std::string const& region,
       std::string const& operation, Options opts = {});
 
@@ -181,7 +178,7 @@ class RegionOperationsClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest].
+  ///     [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -197,13 +194,13 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L106}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L105}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request,
+          GetOperationRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -236,7 +233,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L124}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L123}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -277,7 +274,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L124}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L123}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -317,7 +314,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L192}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L191}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on
@@ -359,7 +356,7 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L192}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L191}
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L98}
   ///
   // clang-format on

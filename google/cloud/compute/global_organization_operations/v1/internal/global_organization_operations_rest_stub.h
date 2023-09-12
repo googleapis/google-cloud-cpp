@@ -37,16 +37,15 @@ class GlobalOrganizationOperationsRestStub {
  public:
   virtual ~GlobalOrganizationOperationsRestStub() = default;
 
-  virtual Status DeleteGlobalOrganizationOperations(
+  virtual Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOrganizationOperations(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListGlobalOrganizationOperations(
@@ -64,16 +63,15 @@ class DefaultGlobalOrganizationOperationsRestStub
   DefaultGlobalOrganizationOperationsRestStub(
       std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  Status DeleteGlobalOrganizationOperations(
+  Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_organization_operations::v1::
-          DeleteGlobalOrganizationOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOrganizationOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_organization_operations::v1::
-          GetGlobalOrganizationOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList>
   ListGlobalOrganizationOperations(

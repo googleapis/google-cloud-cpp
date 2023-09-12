@@ -196,14 +196,12 @@ class RegionBackendServicesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionBackendServices(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          DeleteRegionBackendServicesRequest const& request);
+  DeleteBackendService(google::cloud::cpp::compute::region_backend_services::
+                           v1::DeleteBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetRegionBackendServices(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          GetRegionBackendServicesRequest const& request);
+  GetBackendService(google::cloud::cpp::compute::region_backend_services::v1::
+                        GetBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(google::cloud::cpp::compute::region_backend_services::v1::
@@ -214,9 +212,8 @@ class RegionBackendServicesConnection {
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionBackendServices(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          InsertRegionBackendServicesRequest const& request);
+  InsertBackendService(google::cloud::cpp::compute::region_backend_services::
+                           v1::InsertBackendServiceRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListRegionBackendServices(
@@ -224,18 +221,16 @@ class RegionBackendServicesConnection {
           ListRegionBackendServicesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionBackendServices(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          PatchRegionBackendServicesRequest const& request);
+  PatchBackendService(google::cloud::cpp::compute::region_backend_services::v1::
+                          PatchBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::region_backend_services::v1::
           SetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionBackendServices(
-      google::cloud::cpp::compute::region_backend_services::v1::
-          UpdateRegionBackendServicesRequest const& request);
+  UpdateBackendService(google::cloud::cpp::compute::region_backend_services::
+                           v1::UpdateBackendServiceRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

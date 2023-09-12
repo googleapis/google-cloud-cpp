@@ -45,19 +45,18 @@ class GlobalForwardingRulesTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteGlobalForwardingRules(
+  DeleteForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          DeleteGlobalForwardingRulesRequest const& request) override;
+          DeleteForwardingRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetGlobalForwardingRules(
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          GetGlobalForwardingRulesRequest const& request) override;
+          GetForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertGlobalForwardingRules(
+  InsertForwardingRule(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          InsertGlobalForwardingRulesRequest const& request) override;
+          InsertForwardingRuleRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
   ListGlobalForwardingRules(
@@ -65,9 +64,8 @@ class GlobalForwardingRulesTracingConnection
           ListGlobalForwardingRulesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchGlobalForwardingRules(
-      google::cloud::cpp::compute::global_forwarding_rules::v1::
-          PatchGlobalForwardingRulesRequest const& request) override;
+  PatchForwardingRule(google::cloud::cpp::compute::global_forwarding_rules::v1::
+                          PatchForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::global_forwarding_rules::v1::

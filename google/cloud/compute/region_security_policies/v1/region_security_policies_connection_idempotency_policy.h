@@ -38,25 +38,25 @@ class RegionSecurityPoliciesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionSecurityPoliciesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionSecurityPolicies(
+  virtual google::cloud::Idempotency DeleteSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          DeleteRegionSecurityPoliciesRequest const& request);
+          DeleteSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionSecurityPolicies(
+  virtual google::cloud::Idempotency GetSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          GetRegionSecurityPoliciesRequest const& request);
+          GetSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionSecurityPolicies(
+  virtual google::cloud::Idempotency InsertSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          InsertRegionSecurityPoliciesRequest const& request);
+          InsertSecurityPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionSecurityPolicies(
       google::cloud::cpp::compute::region_security_policies::v1::
           ListRegionSecurityPoliciesRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionSecurityPolicies(
+  virtual google::cloud::Idempotency PatchSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          PatchRegionSecurityPoliciesRequest const& request);
+          PatchSecurityPolicyRequest const& request);
 };
 
 std::unique_ptr<RegionSecurityPoliciesConnectionIdempotencyPolicy>

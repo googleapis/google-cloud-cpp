@@ -40,12 +40,11 @@ RegionsRestMetadata::RegionsRestMetadata(std::shared_ptr<RegionsRestStub> child,
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsRestMetadata::GetRegions(
+RegionsRestMetadata::GetRegion(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-        request) {
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegions(rest_context, request);
+  return child_->GetRegion(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>

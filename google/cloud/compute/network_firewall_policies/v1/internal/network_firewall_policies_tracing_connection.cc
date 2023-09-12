@@ -70,26 +70,26 @@ NetworkFirewallPoliciesTracingConnection::CloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesTracingConnection::DeleteNetworkFirewallPolicies(
+NetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        DeleteNetworkFirewallPoliciesRequest const& request) {
+        DeleteFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
-      ":DeleteNetworkFirewallPolicies");
+      ":DeleteFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteNetworkFirewallPolicies(request));
+                           child_->DeleteFirewallPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-NetworkFirewallPoliciesTracingConnection::GetNetworkFirewallPolicies(
+NetworkFirewallPoliciesTracingConnection::GetFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        GetNetworkFirewallPoliciesRequest const& request) {
+        GetFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
-      ":GetNetworkFirewallPolicies");
+      ":GetFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetNetworkFirewallPolicies(request));
+  return internal::EndSpan(*span, child_->GetFirewallPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
@@ -126,15 +126,15 @@ NetworkFirewallPoliciesTracingConnection::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesTracingConnection::InsertNetworkFirewallPolicies(
+NetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        InsertNetworkFirewallPoliciesRequest const& request) {
+        InsertFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
-      ":InsertNetworkFirewallPolicies");
+      ":InsertFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertNetworkFirewallPolicies(request));
+                           child_->InsertFirewallPolicy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -152,15 +152,15 @@ NetworkFirewallPoliciesTracingConnection::ListNetworkFirewallPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkFirewallPoliciesTracingConnection::PatchNetworkFirewallPolicies(
+NetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
-        PatchNetworkFirewallPoliciesRequest const& request) {
+        PatchFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
-      ":PatchNetworkFirewallPolicies");
+      ":PatchFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->PatchNetworkFirewallPolicies(request));
+                           child_->PatchFirewallPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

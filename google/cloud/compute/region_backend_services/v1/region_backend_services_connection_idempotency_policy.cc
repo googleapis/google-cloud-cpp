@@ -37,16 +37,15 @@ RegionBackendServicesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-RegionBackendServicesConnectionIdempotencyPolicy::DeleteRegionBackendServices(
+RegionBackendServicesConnectionIdempotencyPolicy::DeleteBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteRegionBackendServicesRequest const&) {
+        DeleteBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionBackendServicesConnectionIdempotencyPolicy::GetRegionBackendServices(
+Idempotency RegionBackendServicesConnectionIdempotencyPolicy::GetBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        GetRegionBackendServicesRequest const&) {
+        GetBackendServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -63,9 +62,9 @@ Idempotency RegionBackendServicesConnectionIdempotencyPolicy::GetIamPolicy(
 }
 
 Idempotency
-RegionBackendServicesConnectionIdempotencyPolicy::InsertRegionBackendServices(
+RegionBackendServicesConnectionIdempotencyPolicy::InsertBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        InsertRegionBackendServicesRequest const&) {
+        InsertBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -77,9 +76,9 @@ RegionBackendServicesConnectionIdempotencyPolicy::ListRegionBackendServices(
 }
 
 Idempotency
-RegionBackendServicesConnectionIdempotencyPolicy::PatchRegionBackendServices(
+RegionBackendServicesConnectionIdempotencyPolicy::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        PatchRegionBackendServicesRequest const&) {
+        PatchBackendServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -90,9 +89,9 @@ Idempotency RegionBackendServicesConnectionIdempotencyPolicy::SetIamPolicy(
 }
 
 Idempotency
-RegionBackendServicesConnectionIdempotencyPolicy::UpdateRegionBackendServices(
+RegionBackendServicesConnectionIdempotencyPolicy::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateRegionBackendServicesRequest const&) {
+        UpdateBackendServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 

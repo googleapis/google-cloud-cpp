@@ -36,20 +36,20 @@ class SnapshotsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<SnapshotsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency DeleteSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+  virtual google::cloud::Idempotency DeleteSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request);
 
-  virtual google::cloud::Idempotency GetSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+  virtual google::cloud::Idempotency GetSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
           request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
       google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
           request);
 
-  virtual google::cloud::Idempotency InsertSnapshots(
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+  virtual google::cloud::Idempotency InsertSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request);
 
   virtual google::cloud::Idempotency ListSnapshots(

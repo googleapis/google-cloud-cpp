@@ -37,38 +37,38 @@ RegionTargetTcpProxiesTracingConnection::
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesTracingConnection::DeleteRegionTargetTcpProxies(
+RegionTargetTcpProxiesTracingConnection::DeleteTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        DeleteRegionTargetTcpProxiesRequest const& request) {
+        DeleteTargetTcpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesConnection::"
-      "DeleteRegionTargetTcpProxies");
+      "DeleteTargetTcpProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionTargetTcpProxies(request));
+                           child_->DeleteTargetTcpProxy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-RegionTargetTcpProxiesTracingConnection::GetRegionTargetTcpProxies(
+RegionTargetTcpProxiesTracingConnection::GetTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        GetRegionTargetTcpProxiesRequest const& request) {
+        GetTargetTcpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesConnection::"
-      "GetRegionTargetTcpProxies");
+      "GetTargetTcpProxy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionTargetTcpProxies(request));
+  return internal::EndSpan(*span, child_->GetTargetTcpProxy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionTargetTcpProxiesTracingConnection::InsertRegionTargetTcpProxies(
+RegionTargetTcpProxiesTracingConnection::InsertTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        InsertRegionTargetTcpProxiesRequest const& request) {
+        InsertTargetTcpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesConnection::"
-      "InsertRegionTargetTcpProxies");
+      "InsertTargetTcpProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertRegionTargetTcpProxies(request));
+                           child_->InsertTargetTcpProxy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>

@@ -47,11 +47,11 @@ DefaultGlobalForwardingRulesRestStub::DefaultGlobalForwardingRulesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalForwardingRulesRestStub::AsyncDeleteGlobalForwardingRules(
+DefaultGlobalForwardingRulesRestStub::AsyncDeleteForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRulesRequest const& request) {
+        DeleteForwardingRuleRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -73,10 +73,10 @@ DefaultGlobalForwardingRulesRestStub::AsyncDeleteGlobalForwardingRules(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-DefaultGlobalForwardingRulesRestStub::GetGlobalForwardingRules(
+DefaultGlobalForwardingRulesRestStub::GetForwardingRule(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRulesRequest const& request) {
+        GetForwardingRuleRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -86,11 +86,11 @@ DefaultGlobalForwardingRulesRestStub::GetGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalForwardingRulesRestStub::AsyncInsertGlobalForwardingRules(
+DefaultGlobalForwardingRulesRestStub::AsyncInsertForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRulesRequest const& request) {
+        InsertForwardingRuleRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -129,11 +129,11 @@ DefaultGlobalForwardingRulesRestStub::ListGlobalForwardingRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalForwardingRulesRestStub::AsyncPatchGlobalForwardingRules(
+DefaultGlobalForwardingRulesRestStub::AsyncPatchForwardingRule(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRulesRequest const& request) {
+        PatchForwardingRuleRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -212,7 +212,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -235,7 +235,7 @@ future<Status> DefaultGlobalForwardingRulesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

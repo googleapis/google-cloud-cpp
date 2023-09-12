@@ -48,21 +48,21 @@ class MockRegionSslPoliciesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionSslPolicies,
+              DeleteSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
-                   DeleteRegionSslPoliciesRequest const& request),
+                   DeleteSslPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPolicy>,
-              GetRegionSslPolicies,
+              GetSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
-                   GetRegionSslPoliciesRequest const& request),
+                   GetSslPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionSslPolicies,
+              InsertSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
-                   InsertRegionSslPoliciesRequest const& request),
+                   InsertSslPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SslPolicy>,
@@ -79,9 +79,9 @@ class MockRegionSslPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionSslPolicies,
+              PatchSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
-                   PatchRegionSslPoliciesRequest const& request),
+                   PatchSslPolicyRequest const& request),
               (override));
 };
 

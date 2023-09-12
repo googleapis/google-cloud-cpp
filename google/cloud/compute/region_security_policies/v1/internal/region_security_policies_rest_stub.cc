@@ -47,11 +47,11 @@ DefaultRegionSecurityPoliciesRestStub::DefaultRegionSecurityPoliciesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionSecurityPoliciesRestStub::AsyncDeleteRegionSecurityPolicies(
+DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        DeleteRegionSecurityPoliciesRequest const& request) {
+        DeleteSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -73,10 +73,10 @@ DefaultRegionSecurityPoliciesRestStub::AsyncDeleteRegionSecurityPolicies(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-DefaultRegionSecurityPoliciesRestStub::GetRegionSecurityPolicies(
+DefaultRegionSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        GetRegionSecurityPoliciesRequest const& request) {
+        GetSecurityPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -86,11 +86,11 @@ DefaultRegionSecurityPoliciesRestStub::GetRegionSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionSecurityPoliciesRestStub::AsyncInsertRegionSecurityPolicies(
+DefaultRegionSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        InsertRegionSecurityPoliciesRequest const& request) {
+        InsertSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -130,11 +130,11 @@ DefaultRegionSecurityPoliciesRestStub::ListRegionSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionSecurityPoliciesRestStub::AsyncPatchRegionSecurityPolicies(
+DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
-        PatchRegionSecurityPoliciesRequest const& request) {
+        PatchSecurityPolicyRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -160,7 +160,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -184,7 +184,7 @@ future<Status> DefaultRegionSecurityPoliciesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

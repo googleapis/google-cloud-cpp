@@ -41,17 +41,17 @@ ImageFamilyViewsRestConnectionImpl::ImageFamilyViewsRestConnectionImpl(
                                       ImageFamilyViewsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsRestConnectionImpl::GetImageFamilyViews(
+ImageFamilyViewsRestConnectionImpl::GetImageFamilyView(
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const& request) {
+        GetImageFamilyViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetImageFamilyViews(request),
+      idempotency_policy(*current)->GetImageFamilyView(request),
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::image_family_views::v1::
-                 GetImageFamilyViewsRequest const& request) {
-        return stub_->GetImageFamilyViews(rest_context, request);
+                 GetImageFamilyViewRequest const& request) {
+        return stub_->GetImageFamilyView(rest_context, request);
       },
       request, __func__);
 }

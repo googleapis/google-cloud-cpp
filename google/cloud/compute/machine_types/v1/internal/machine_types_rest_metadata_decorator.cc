@@ -49,12 +49,12 @@ MachineTypesRestMetadata::AggregatedListMachineTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesRestMetadata::GetMachineTypes(
+MachineTypesRestMetadata::GetMachineType(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machine_types::v1::
-        GetMachineTypesRequest const& request) {
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request) {
   SetMetadata(rest_context);
-  return child_->GetMachineTypes(rest_context, request);
+  return child_->GetMachineType(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>

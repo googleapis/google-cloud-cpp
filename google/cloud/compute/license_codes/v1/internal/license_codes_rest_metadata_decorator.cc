@@ -40,12 +40,12 @@ LicenseCodesRestMetadata::LicenseCodesRestMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesRestMetadata::GetLicenseCodes(
+LicenseCodesRestMetadata::GetLicenseCode(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::license_codes::v1::
-        GetLicenseCodesRequest const& request) {
+    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
+        request) {
   SetMetadata(rest_context);
-  return child_->GetLicenseCodes(rest_context, request);
+  return child_->GetLicenseCode(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

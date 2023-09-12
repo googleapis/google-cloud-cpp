@@ -34,23 +34,21 @@ RegionAutoscalersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionAutoscalersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::DeleteRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::DeleteAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteRegionAutoscalersRequest const&) {
+        DeleteAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionAutoscalersConnectionIdempotencyPolicy::GetRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::GetAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        GetRegionAutoscalersRequest const&) {
+        GetAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::InsertRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::InsertAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertRegionAutoscalersRequest const&) {
+        InsertAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -60,17 +58,15 @@ Idempotency RegionAutoscalersConnectionIdempotencyPolicy::ListRegionAutoscalers(
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::PatchRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::PatchAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchRegionAutoscalersRequest const&) {
+        PatchAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-RegionAutoscalersConnectionIdempotencyPolicy::UpdateRegionAutoscalers(
+Idempotency RegionAutoscalersConnectionIdempotencyPolicy::UpdateAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateRegionAutoscalersRequest const&) {
+        UpdateAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 

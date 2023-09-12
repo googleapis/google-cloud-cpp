@@ -61,18 +61,15 @@ RegionDisksConnection::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::DeleteRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDisksRequest const&) {
+RegionDisksConnection::DeleteDisk(
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksConnection::GetRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        GetRegionDisksRequest const&) {
+StatusOr<google::cloud::cpp::compute::v1::Disk> RegionDisksConnection::GetDisk(
+    google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -83,9 +80,8 @@ RegionDisksConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::InsertRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDisksRequest const&) {
+RegionDisksConnection::InsertDisk(
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -165,9 +161,8 @@ RegionDisksConnection::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksConnection::UpdateRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDisksRequest const&) {
+RegionDisksConnection::UpdateDisk(
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -55,15 +55,15 @@ class MockRegionCommitmentsConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Commitment>,
-              GetRegionCommitments,
+              GetCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
-                   GetRegionCommitmentsRequest const& request),
+                   GetCommitmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionCommitments,
+              InsertCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
-                   InsertRegionCommitmentsRequest const& request),
+                   InsertCommitmentRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Commitment>,
@@ -73,9 +73,9 @@ class MockRegionCommitmentsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionCommitments,
+              UpdateCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
-                   UpdateRegionCommitmentsRequest const& request),
+                   UpdateCommitmentRequest const& request),
               (override));
 };
 

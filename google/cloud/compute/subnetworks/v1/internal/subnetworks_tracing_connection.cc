@@ -44,13 +44,13 @@ SubnetworksTracingConnection::AggregatedListSubnetworks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksTracingConnection::DeleteSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::
-        DeleteSubnetworksRequest const& request) {
+SubnetworksTracingConnection::DeleteSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_subnetworks_v1::SubnetworksConnection::DeleteSubnetworks");
+      "compute_subnetworks_v1::SubnetworksConnection::DeleteSubnetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteSubnetworks(request));
+  return internal::EndSpan(std::move(span), child_->DeleteSubnetwork(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -64,13 +64,13 @@ SubnetworksTracingConnection::ExpandIpCidrRange(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksTracingConnection::GetSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+SubnetworksTracingConnection::GetSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_subnetworks_v1::SubnetworksConnection::GetSubnetworks");
+      "compute_subnetworks_v1::SubnetworksConnection::GetSubnetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetSubnetworks(request));
+  return internal::EndSpan(*span, child_->GetSubnetwork(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -84,13 +84,13 @@ SubnetworksTracingConnection::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksTracingConnection::InsertSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::
-        InsertSubnetworksRequest const& request) {
+SubnetworksTracingConnection::InsertSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "compute_subnetworks_v1::SubnetworksConnection::InsertSubnetworks");
+      "compute_subnetworks_v1::SubnetworksConnection::InsertSubnetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertSubnetworks(request));
+  return internal::EndSpan(std::move(span), child_->InsertSubnetwork(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
@@ -119,13 +119,13 @@ SubnetworksTracingConnection::ListUsable(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SubnetworksTracingConnection::PatchSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+SubnetworksTracingConnection::PatchSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "compute_subnetworks_v1::SubnetworksConnection::PatchSubnetworks");
+      "compute_subnetworks_v1::SubnetworksConnection::PatchSubnetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchSubnetworks(request));
+  return internal::EndSpan(std::move(span), child_->PatchSubnetwork(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

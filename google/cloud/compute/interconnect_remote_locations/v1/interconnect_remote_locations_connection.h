@@ -204,9 +204,9 @@ class InterconnectRemoteLocationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>
-  GetInterconnectRemoteLocations(
+  GetInterconnectRemoteLocation(
       google::cloud::cpp::compute::interconnect_remote_locations::v1::
-          GetInterconnectRemoteLocationsRequest const& request);
+          GetInterconnectRemoteLocationRequest const& request);
 
   virtual StreamRange<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocation>

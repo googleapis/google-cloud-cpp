@@ -44,24 +44,24 @@ class ExternalVpnGatewaysRestLogging : public ExternalVpnGatewaysRestStub {
       TracingOptions tracing_options, std::set<std::string> components);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteExternalVpnGateways(
+  AsyncDeleteExternalVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          DeleteExternalVpnGatewaysRequest const& request) override;
+          DeleteExternalVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
-  GetExternalVpnGateways(
+  GetExternalVpnGateway(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          GetExternalVpnGatewaysRequest const& request) override;
+          GetExternalVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertExternalVpnGateways(
+  AsyncInsertExternalVpnGateway(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
-          InsertExternalVpnGatewaysRequest const& request) override;
+          InsertExternalVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGatewayList>
   ListExternalVpnGateways(
@@ -85,13 +85,13 @@ class ExternalVpnGatewaysRestLogging : public ExternalVpnGatewaysRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<ExternalVpnGatewaysRestStub> child_;

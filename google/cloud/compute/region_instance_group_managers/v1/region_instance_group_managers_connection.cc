@@ -64,9 +64,9 @@ RegionInstanceGroupManagersConnection::CreateInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersConnection::DeleteRegionInstanceGroupManagers(
+RegionInstanceGroupManagersConnection::DeleteInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        DeleteRegionInstanceGroupManagersRequest const&) {
+        DeleteInstanceGroupManagerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,16 +91,16 @@ RegionInstanceGroupManagersConnection::DeletePerInstanceConfigs(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
-RegionInstanceGroupManagersConnection::GetRegionInstanceGroupManagers(
+RegionInstanceGroupManagersConnection::GetInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        GetRegionInstanceGroupManagersRequest const&) {
+        GetInstanceGroupManagerRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersConnection::InsertRegionInstanceGroupManagers(
+RegionInstanceGroupManagersConnection::InsertInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        InsertRegionInstanceGroupManagersRequest const&) {
+        InsertInstanceGroupManagerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -139,9 +139,9 @@ RegionInstanceGroupManagersConnection::ListPerInstanceConfigs(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionInstanceGroupManagersConnection::PatchRegionInstanceGroupManagers(
+RegionInstanceGroupManagersConnection::PatchInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
-        PatchRegionInstanceGroupManagersRequest const&) {
+        PatchInstanceGroupManagerRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

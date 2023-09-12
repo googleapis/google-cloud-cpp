@@ -56,15 +56,15 @@ class MockServiceAttachmentsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteServiceAttachments,
+              DeleteServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
-                   DeleteServiceAttachmentsRequest const& request),
+                   DeleteServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>,
-              GetServiceAttachments,
+              GetServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
-                   GetServiceAttachmentsRequest const& request),
+                   GetServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
@@ -73,9 +73,9 @@ class MockServiceAttachmentsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertServiceAttachments,
+              InsertServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
-                   InsertServiceAttachmentsRequest const& request),
+                   InsertServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>,
@@ -85,9 +85,9 @@ class MockServiceAttachmentsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchServiceAttachments,
+              PatchServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
-                   PatchServiceAttachmentsRequest const& request),
+                   PatchServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

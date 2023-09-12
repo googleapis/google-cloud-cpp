@@ -48,21 +48,21 @@ class MockTargetSslProxiesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteTargetSslProxies,
+              DeleteTargetSslProxy,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   DeleteTargetSslProxiesRequest const& request),
+                   DeleteTargetSslProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>,
-              GetTargetSslProxies,
+              GetTargetSslProxy,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   GetTargetSslProxiesRequest const& request),
+                   GetTargetSslProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertTargetSslProxies,
+              InsertTargetSslProxy,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   InsertTargetSslProxiesRequest const& request),
+                   InsertTargetSslProxyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>,

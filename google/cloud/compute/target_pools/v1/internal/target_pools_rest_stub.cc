@@ -119,11 +119,11 @@ DefaultTargetPoolsRestStub::AggregatedListTargetPools(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetPoolsRestStub::AsyncDeleteTargetPools(
+DefaultTargetPoolsRestStub::AsyncDeleteTargetPool(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_pools::v1::
-        DeleteTargetPoolsRequest const& request) {
+        DeleteTargetPoolRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -145,9 +145,9 @@ DefaultTargetPoolsRestStub::AsyncDeleteTargetPools(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-DefaultTargetPoolsRestStub::GetTargetPools(
+DefaultTargetPoolsRestStub::GetTargetPool(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolsRequest const&
+    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPool>(
       *service_, rest_context, request,
@@ -172,11 +172,11 @@ DefaultTargetPoolsRestStub::GetHealth(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultTargetPoolsRestStub::AsyncInsertTargetPools(
+DefaultTargetPoolsRestStub::AsyncInsertTargetPool(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_pools::v1::
-        InsertTargetPoolsRequest const& request) {
+        InsertTargetPoolRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -299,7 +299,7 @@ DefaultTargetPoolsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -323,7 +323,7 @@ future<Status> DefaultTargetPoolsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

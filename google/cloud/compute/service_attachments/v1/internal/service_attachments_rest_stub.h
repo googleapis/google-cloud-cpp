@@ -45,16 +45,16 @@ class ServiceAttachmentsRestStub {
           AggregatedListServiceAttachmentsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteServiceAttachments(
+  AsyncDeleteServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentsRequest const& request) = 0;
+          DeleteServiceAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(google::cloud::rest_internal::RestContext& rest_context,
-                        google::cloud::cpp::compute::service_attachments::v1::
-                            GetServiceAttachmentsRequest const& request) = 0;
+  GetServiceAttachment(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::service_attachments::v1::
+                           GetServiceAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -62,11 +62,11 @@ class ServiceAttachmentsRestStub {
           GetIamPolicyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertServiceAttachments(
+  AsyncInsertServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentsRequest const& request) = 0;
+          InsertServiceAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
   ListServiceAttachments(
@@ -75,11 +75,11 @@ class ServiceAttachmentsRestStub {
           ListServiceAttachmentsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchServiceAttachments(
+  AsyncPatchServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::service_attachments::v1::
-          PatchServiceAttachmentsRequest const& request) = 0;
+          PatchServiceAttachmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -96,13 +96,13 @@ class ServiceAttachmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
@@ -121,17 +121,16 @@ class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
           AggregatedListServiceAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteServiceAttachments(
+  AsyncDeleteServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentsRequest const& request) override;
+          DeleteServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::service_attachments::v1::
-          GetServiceAttachmentsRequest const& request) override;
+  GetServiceAttachment(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::service_attachments::v1::
+                           GetServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -139,11 +138,11 @@ class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
           GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertServiceAttachments(
+  AsyncInsertServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentsRequest const& request) override;
+          InsertServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
   ListServiceAttachments(
@@ -152,11 +151,11 @@ class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
           ListServiceAttachmentsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchServiceAttachments(
+  AsyncPatchServiceAttachment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::service_attachments::v1::
-          PatchServiceAttachmentsRequest const& request) override;
+          PatchServiceAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -173,13 +172,13 @@ class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

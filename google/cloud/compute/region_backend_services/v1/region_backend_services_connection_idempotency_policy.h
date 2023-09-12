@@ -38,13 +38,13 @@ class RegionBackendServicesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionBackendServicesConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionBackendServices(
+  virtual google::cloud::Idempotency DeleteBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          DeleteRegionBackendServicesRequest const& request);
+          DeleteBackendServiceRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionBackendServices(
+  virtual google::cloud::Idempotency GetBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          GetRegionBackendServicesRequest const& request);
+          GetBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency GetHealth(
       google::cloud::cpp::compute::region_backend_services::v1::
@@ -54,25 +54,25 @@ class RegionBackendServicesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_backend_services::v1::
           GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionBackendServices(
+  virtual google::cloud::Idempotency InsertBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          InsertRegionBackendServicesRequest const& request);
+          InsertBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionBackendServices(
       google::cloud::cpp::compute::region_backend_services::v1::
           ListRegionBackendServicesRequest request);
 
-  virtual google::cloud::Idempotency PatchRegionBackendServices(
+  virtual google::cloud::Idempotency PatchBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          PatchRegionBackendServicesRequest const& request);
+          PatchBackendServiceRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::cloud::cpp::compute::region_backend_services::v1::
           SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRegionBackendServices(
+  virtual google::cloud::Idempotency UpdateBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
-          UpdateRegionBackendServicesRequest const& request);
+          UpdateBackendServiceRequest const& request);
 };
 
 std::unique_ptr<RegionBackendServicesConnectionIdempotencyPolicy>

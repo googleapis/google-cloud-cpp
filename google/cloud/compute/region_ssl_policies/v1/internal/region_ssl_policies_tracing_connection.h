@@ -42,19 +42,17 @@ class RegionSslPoliciesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          DeleteRegionSslPoliciesRequest const& request) override;
+          DeleteSslPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          GetRegionSslPoliciesRequest const& request) override;
+          GetSslPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          InsertRegionSslPoliciesRequest const& request) override;
+          InsertSslPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListRegionSslPolicies(
       google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -66,10 +64,9 @@ class RegionSslPoliciesTracingConnection
       google::cloud::cpp::compute::region_ssl_policies::v1::
           ListAvailableFeaturesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSslPolicies(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          PatchRegionSslPoliciesRequest const& request) override;
+          PatchSslPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>

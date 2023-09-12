@@ -45,11 +45,11 @@ DefaultGlobalAddressesRestStub::DefaultGlobalAddressesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalAddressesRestStub::AsyncDeleteGlobalAddresses(
+DefaultGlobalAddressesRestStub::AsyncDeleteAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_addresses::v1::
-        DeleteGlobalAddressesRequest const& request) {
+        DeleteAddressRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -70,10 +70,10 @@ DefaultGlobalAddressesRestStub::AsyncDeleteGlobalAddresses(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-DefaultGlobalAddressesRestStub::GetGlobalAddresses(
+DefaultGlobalAddressesRestStub::GetAddress(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::global_addresses::v1::
-        GetGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -83,11 +83,11 @@ DefaultGlobalAddressesRestStub::GetGlobalAddresses(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultGlobalAddressesRestStub::AsyncInsertGlobalAddresses(
+DefaultGlobalAddressesRestStub::AsyncInsertAddress(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_addresses::v1::
-        InsertGlobalAddressesRequest const& request) {
+        InsertAddressRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -181,7 +181,7 @@ DefaultGlobalAddressesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -204,7 +204,7 @@ future<Status> DefaultGlobalAddressesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

@@ -40,15 +40,15 @@ Idempotency VpnGatewaysConnectionIdempotencyPolicy::AggregatedListVpnGateways(
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnGatewaysConnectionIdempotencyPolicy::DeleteVpnGateways(
+Idempotency VpnGatewaysConnectionIdempotencyPolicy::DeleteVpnGateway(
     google::cloud::cpp::compute::vpn_gateways::v1::
-        DeleteVpnGatewaysRequest const&) {
+        DeleteVpnGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VpnGatewaysConnectionIdempotencyPolicy::GetVpnGateways(
+Idempotency VpnGatewaysConnectionIdempotencyPolicy::GetVpnGateway(
     google::cloud::cpp::compute::vpn_gateways::v1::
-        GetVpnGatewaysRequest const&) {
+        GetVpnGatewayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -57,9 +57,9 @@ Idempotency VpnGatewaysConnectionIdempotencyPolicy::GetStatus(
   return Idempotency::kIdempotent;
 }
 
-Idempotency VpnGatewaysConnectionIdempotencyPolicy::InsertVpnGateways(
+Idempotency VpnGatewaysConnectionIdempotencyPolicy::InsertVpnGateway(
     google::cloud::cpp::compute::vpn_gateways::v1::
-        InsertVpnGatewaysRequest const&) {
+        InsertVpnGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

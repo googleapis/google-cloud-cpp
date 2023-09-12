@@ -114,7 +114,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L105}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
   ///
   // clang-format on
@@ -148,7 +148,7 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L107}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.AggregatedListNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L105}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L74}
   ///
   // clang-format on
@@ -187,11 +187,11 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L179}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkEdgeSecurityServices(
+  DeleteNetworkEdgeSecurityService(
       std::string const& project, std::string const& region,
       std::string const& network_edge_security_service, Options opts = {});
 
@@ -203,7 +203,7 @@ class NetworkEdgeSecurityServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest].
+  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -226,13 +226,13 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.DeleteNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L179}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkEdgeSecurityServices(
+  DeleteNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          DeleteNetworkEdgeSecurityServicesRequest const& request,
+          DeleteNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -256,12 +256,12 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L210}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-  GetNetworkEdgeSecurityServices(
+  GetNetworkEdgeSecurityService(
       std::string const& project, std::string const& region,
       std::string const& network_edge_security_service, Options opts = {});
 
@@ -273,7 +273,7 @@ class NetworkEdgeSecurityServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest].
+  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -289,14 +289,14 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L212}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.GetNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L210}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-  GetNetworkEdgeSecurityServices(
+  GetNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          GetNetworkEdgeSecurityServicesRequest const& request,
+          GetNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -328,11 +328,11 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkEdgeSecurityServices(
+  InsertNetworkEdgeSecurityService(
       std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
           network_edge_security_service_resource,
@@ -347,7 +347,7 @@ class NetworkEdgeSecurityServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest].
+  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -370,13 +370,13 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L225}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.InsertNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkEdgeSecurityServices(
+  InsertNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          InsertNetworkEdgeSecurityServicesRequest const& request,
+          InsertNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -408,11 +408,11 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkEdgeSecurityServices(
+  PatchNetworkEdgeSecurityService(
       std::string const& project, std::string const& region,
       std::string const& network_edge_security_service,
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
@@ -427,7 +427,7 @@ class NetworkEdgeSecurityServicesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest].
+  ///     [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServiceRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -450,13 +450,13 @@ class NetworkEdgeSecurityServicesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L260}
+  /// [google.cloud.cpp.compute.network_edge_security_services.v1.PatchNetworkEdgeSecurityServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L258}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkEdgeSecurityServices(
+  PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          PatchNetworkEdgeSecurityServicesRequest const& request,
+          PatchNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
  private:

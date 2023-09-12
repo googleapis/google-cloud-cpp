@@ -56,15 +56,15 @@ class MockNetworkAttachmentsConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNetworkAttachments,
+              DeleteNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
-                   DeleteNetworkAttachmentsRequest const& request),
+                   DeleteNetworkAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>,
-              GetNetworkAttachments,
+              GetNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
-                   GetNetworkAttachmentsRequest const& request),
+                   GetNetworkAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
@@ -73,9 +73,9 @@ class MockNetworkAttachmentsConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNetworkAttachments,
+              InsertNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
-                   InsertNetworkAttachmentsRequest const& request),
+                   InsertNetworkAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>,

@@ -34,47 +34,47 @@ RegionBackendServicesClient::RegionBackendServicesClient(
 RegionBackendServicesClient::~RegionBackendServicesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::DeleteRegionBackendServices(
+RegionBackendServicesClient::DeleteBackendService(
     std::string const& project, std::string const& region,
     std::string const& backend_service, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_backend_services::v1::
-      DeleteRegionBackendServicesRequest request;
+      DeleteBackendServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_backend_service(backend_service);
-  return connection_->DeleteRegionBackendServices(request);
+  return connection_->DeleteBackendService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::DeleteRegionBackendServices(
+RegionBackendServicesClient::DeleteBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteRegionBackendServicesRequest const& request,
+        DeleteBackendServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionBackendServices(request);
+  return connection_->DeleteBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-RegionBackendServicesClient::GetRegionBackendServices(
+RegionBackendServicesClient::GetBackendService(
     std::string const& project, std::string const& region,
     std::string const& backend_service, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_backend_services::v1::
-      GetRegionBackendServicesRequest request;
+      GetBackendServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_backend_service(backend_service);
-  return connection_->GetRegionBackendServices(request);
+  return connection_->GetBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-RegionBackendServicesClient::GetRegionBackendServices(
+RegionBackendServicesClient::GetBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        GetRegionBackendServicesRequest const& request,
+        GetBackendServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionBackendServices(request);
+  return connection_->GetBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -128,27 +128,27 @@ RegionBackendServicesClient::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::InsertRegionBackendServices(
+RegionBackendServicesClient::InsertBackendService(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::BackendService const&
         backend_service_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_backend_services::v1::
-      InsertRegionBackendServicesRequest request;
+      InsertBackendServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_backend_service_resource() = backend_service_resource;
-  return connection_->InsertRegionBackendServices(request);
+  return connection_->InsertBackendService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::InsertRegionBackendServices(
+RegionBackendServicesClient::InsertBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        InsertRegionBackendServicesRequest const& request,
+        InsertBackendServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionBackendServices(request);
+  return connection_->InsertBackendService(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -172,7 +172,7 @@ RegionBackendServicesClient::ListRegionBackendServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::PatchRegionBackendServices(
+RegionBackendServicesClient::PatchBackendService(
     std::string const& project, std::string const& region,
     std::string const& backend_service,
     google::cloud::cpp::compute::v1::BackendService const&
@@ -180,21 +180,21 @@ RegionBackendServicesClient::PatchRegionBackendServices(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_backend_services::v1::
-      PatchRegionBackendServicesRequest request;
+      PatchBackendServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_backend_service(backend_service);
   *request.mutable_backend_service_resource() = backend_service_resource;
-  return connection_->PatchRegionBackendServices(request);
+  return connection_->PatchBackendService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::PatchRegionBackendServices(
+RegionBackendServicesClient::PatchBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        PatchRegionBackendServicesRequest const& request,
+        PatchBackendServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchRegionBackendServices(request);
+  return connection_->PatchBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -225,7 +225,7 @@ RegionBackendServicesClient::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::UpdateRegionBackendServices(
+RegionBackendServicesClient::UpdateBackendService(
     std::string const& project, std::string const& region,
     std::string const& backend_service,
     google::cloud::cpp::compute::v1::BackendService const&
@@ -233,21 +233,21 @@ RegionBackendServicesClient::UpdateRegionBackendServices(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_backend_services::v1::
-      UpdateRegionBackendServicesRequest request;
+      UpdateBackendServiceRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_backend_service(backend_service);
   *request.mutable_backend_service_resource() = backend_service_resource;
-  return connection_->UpdateRegionBackendServices(request);
+  return connection_->UpdateBackendService(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionBackendServicesClient::UpdateRegionBackendServices(
+RegionBackendServicesClient::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateRegionBackendServicesRequest const& request,
+        UpdateBackendServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRegionBackendServices(request);
+  return connection_->UpdateBackendService(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

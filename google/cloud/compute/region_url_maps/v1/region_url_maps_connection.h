@@ -187,16 +187,16 @@ class RegionUrlMapsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          DeleteRegionUrlMapsRequest const& request);
+  DeleteUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   DeleteUrlMapRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
-      google::cloud::cpp::compute::region_url_maps::v1::
-          GetRegionUrlMapsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          InsertRegionUrlMapsRequest const& request);
+  InsertUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   InsertUrlMapRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap>
   ListRegionUrlMaps(
@@ -204,12 +204,12 @@ class RegionUrlMapsConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                         PatchRegionUrlMapsRequest const& request);
+  PatchUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                  PatchUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::
-                          UpdateRegionUrlMapsRequest const& request);
+  UpdateUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   UpdateUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
   Validate(

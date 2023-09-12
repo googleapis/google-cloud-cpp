@@ -49,21 +49,21 @@ class MockRegionHealthChecksConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRegionHealthChecks,
+              DeleteHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   DeleteRegionHealthChecksRequest const& request),
+                   DeleteHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheck>,
-              GetRegionHealthChecks,
+              GetHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   GetRegionHealthChecksRequest const& request),
+                   GetHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRegionHealthChecks,
+              InsertHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   InsertRegionHealthChecksRequest const& request),
+                   InsertHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::HealthCheck>,
@@ -73,15 +73,15 @@ class MockRegionHealthChecksConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchRegionHealthChecks,
+              PatchHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   PatchRegionHealthChecksRequest const& request),
+                   PatchHealthCheckRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              UpdateRegionHealthChecks,
+              UpdateHealthCheck,
               (google::cloud::cpp::compute::region_health_checks::v1::
-                   UpdateRegionHealthChecksRequest const& request),
+                   UpdateHealthCheckRequest const& request),
               (override));
 };
 

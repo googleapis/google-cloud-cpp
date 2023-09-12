@@ -46,16 +46,16 @@ class RoutersRestMetadata : public RoutersRestStub {
           AggregatedListRoutersRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRouters(
+  AsyncDeleteRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
+  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
-          request) override;
+      google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
@@ -70,10 +70,10 @@ class RoutersRestMetadata : public RoutersRestStub {
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRouters(
+  AsyncInsertRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterList> ListRouters(
@@ -82,10 +82,10 @@ class RoutersRestMetadata : public RoutersRestStub {
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchRouters(
+  AsyncPatchRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -94,10 +94,10 @@ class RoutersRestMetadata : public RoutersRestStub {
       override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateRouters(
+  AsyncUpdateRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -105,13 +105,13 @@ class RoutersRestMetadata : public RoutersRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

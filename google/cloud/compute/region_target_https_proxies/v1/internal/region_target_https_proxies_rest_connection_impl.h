@@ -55,19 +55,19 @@ class RegionTargetHttpsProxiesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionTargetHttpsProxies(
+  DeleteTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          DeleteRegionTargetHttpsProxiesRequest const& request) override;
+          DeleteTargetHttpsProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-  GetRegionTargetHttpsProxies(
+  GetTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          GetRegionTargetHttpsProxiesRequest const& request) override;
+          GetTargetHttpsProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionTargetHttpsProxies(
+  InsertTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          InsertRegionTargetHttpsProxiesRequest const& request) override;
+          InsertTargetHttpsProxyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   ListRegionTargetHttpsProxies(
@@ -75,9 +75,9 @@ class RegionTargetHttpsProxiesRestConnectionImpl
           ListRegionTargetHttpsProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionTargetHttpsProxies(
+  PatchTargetHttpsProxy(
       google::cloud::cpp::compute::region_target_https_proxies::v1::
-          PatchRegionTargetHttpsProxiesRequest const& request) override;
+          PatchTargetHttpsProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(google::cloud::cpp::compute::region_target_https_proxies::

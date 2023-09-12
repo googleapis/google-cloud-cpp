@@ -67,11 +67,11 @@ DefaultNetworkAttachmentsRestStub::AggregatedListNetworkAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachments(
+DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentsRequest const& request) {
+        DeleteNetworkAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -93,10 +93,10 @@ DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachments(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-DefaultNetworkAttachmentsRestStub::GetNetworkAttachments(
+DefaultNetworkAttachmentsRestStub::GetNetworkAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
-        GetNetworkAttachmentsRequest const& request) {
+        GetNetworkAttachmentRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkAttachment>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -123,11 +123,11 @@ DefaultNetworkAttachmentsRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultNetworkAttachmentsRestStub::AsyncInsertNetworkAttachments(
+DefaultNetworkAttachmentsRestStub::AsyncInsertNetworkAttachment(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentsRequest const& request) {
+        InsertNetworkAttachmentRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -198,7 +198,7 @@ DefaultNetworkAttachmentsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -222,7 +222,7 @@ future<Status> DefaultNetworkAttachmentsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

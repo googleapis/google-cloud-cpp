@@ -36,38 +36,36 @@ RegionHealthChecksTracingConnection::RegionHealthChecksTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksTracingConnection::DeleteRegionHealthChecks(
+RegionHealthChecksTracingConnection::DeleteHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        DeleteRegionHealthChecksRequest const& request) {
+        DeleteHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_checks_v1::RegionHealthChecksConnection::"
-      "DeleteRegionHealthChecks");
+      "DeleteHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteRegionHealthChecks(request));
+  return internal::EndSpan(std::move(span), child_->DeleteHealthCheck(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-RegionHealthChecksTracingConnection::GetRegionHealthChecks(
+RegionHealthChecksTracingConnection::GetHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        GetRegionHealthChecksRequest const& request) {
+        GetHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_checks_v1::RegionHealthChecksConnection::"
-      "GetRegionHealthChecks");
+      "GetHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionHealthChecks(request));
+  return internal::EndSpan(*span, child_->GetHealthCheck(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksTracingConnection::InsertRegionHealthChecks(
+RegionHealthChecksTracingConnection::InsertHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        InsertRegionHealthChecksRequest const& request) {
+        InsertHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_checks_v1::RegionHealthChecksConnection::"
-      "InsertRegionHealthChecks");
+      "InsertHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertRegionHealthChecks(request));
+  return internal::EndSpan(std::move(span), child_->InsertHealthCheck(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
@@ -85,27 +83,25 @@ RegionHealthChecksTracingConnection::ListRegionHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksTracingConnection::PatchRegionHealthChecks(
+RegionHealthChecksTracingConnection::PatchHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        PatchRegionHealthChecksRequest const& request) {
+        PatchHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_checks_v1::RegionHealthChecksConnection::"
-      "PatchRegionHealthChecks");
+      "PatchHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchRegionHealthChecks(request));
+  return internal::EndSpan(std::move(span), child_->PatchHealthCheck(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionHealthChecksTracingConnection::UpdateRegionHealthChecks(
+RegionHealthChecksTracingConnection::UpdateHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
-        UpdateRegionHealthChecksRequest const& request) {
+        UpdateHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_checks_v1::RegionHealthChecksConnection::"
-      "UpdateRegionHealthChecks");
+      "UpdateHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateRegionHealthChecks(request));
+  return internal::EndSpan(std::move(span), child_->UpdateHealthCheck(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -39,9 +39,9 @@ class RegionsTracingConnection : public compute_regions_v1::RegionsConnection {
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-          request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request)
+      override;
 
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
       google::cloud::cpp::compute::regions::v1::ListRegionsRequest request)

@@ -47,11 +47,11 @@ DefaultRegionBackendServicesRestStub::DefaultRegionBackendServicesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionBackendServicesRestStub::AsyncDeleteRegionBackendServices(
+DefaultRegionBackendServicesRestStub::AsyncDeleteBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteRegionBackendServicesRequest const& request) {
+        DeleteBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -73,10 +73,10 @@ DefaultRegionBackendServicesRestStub::AsyncDeleteRegionBackendServices(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-DefaultRegionBackendServicesRestStub::GetRegionBackendServices(
+DefaultRegionBackendServicesRestStub::GetBackendService(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        GetRegionBackendServicesRequest const& request) {
+        GetBackendServiceRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -116,11 +116,11 @@ DefaultRegionBackendServicesRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionBackendServicesRestStub::AsyncInsertRegionBackendServices(
+DefaultRegionBackendServicesRestStub::AsyncInsertBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        InsertRegionBackendServicesRequest const& request) {
+        InsertBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -160,11 +160,11 @@ DefaultRegionBackendServicesRestStub::ListRegionBackendServices(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionBackendServicesRestStub::AsyncPatchRegionBackendServices(
+DefaultRegionBackendServicesRestStub::AsyncPatchBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        PatchRegionBackendServicesRequest const& request) {
+        PatchBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -199,11 +199,11 @@ DefaultRegionBackendServicesRestStub::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultRegionBackendServicesRestStub::AsyncUpdateRegionBackendServices(
+DefaultRegionBackendServicesRestStub::AsyncUpdateBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateRegionBackendServicesRequest const& request) {
+        UpdateBackendServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -229,7 +229,7 @@ DefaultRegionBackendServicesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -253,7 +253,7 @@ future<Status> DefaultRegionBackendServicesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {

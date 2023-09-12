@@ -65,7 +65,7 @@ TEST_F(ComputeIntegrationTest, DeleteUnknownDisk) {
       disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> delete_disk =
-      client.DeleteDisks(project_id_, zone_, "not_found").get();
+      client.DeleteDisk(project_id_, zone_, "not_found").get();
   EXPECT_THAT(
       delete_disk,
       StatusIs(StatusCode::kNotFound,
@@ -84,10 +84,10 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
   disk.set_name(CreateRandomName("int-test-disk-"));
   disk.set_size_gb("10");
   (*disk.mutable_labels())["test"] = "test";
-  auto result = client.InsertDisks(project_id_, zone_, disk).get();
+  auto result = client.InsertDisk(project_id_, zone_, disk).get();
   ASSERT_THAT(result, testing_util::IsOk());
 
-  auto get_disk = client.GetDisks(project_id_, zone_, disk.name());
+  auto get_disk = client.GetDisk(project_id_, zone_, disk.name());
   ASSERT_THAT(get_disk, IsOk());
   EXPECT_THAT(get_disk->name(), Eq(disk.name()));
 
@@ -104,8 +104,7 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
     ASSERT_STATUS_OK(d);
     // Delete the disk we just created, we expect this to succeed.
     if (d->name() == disk.name()) {
-      auto delete_disk =
-          client.DeleteDisks(project_id_, zone_, d->name()).get();
+      auto delete_disk = client.DeleteDisk(project_id_, zone_, d->name()).get();
       EXPECT_THAT(delete_disk, IsOk());
     }
     // Garbage collect old disks, ignore errors.
@@ -113,7 +112,7 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
     if (creation_timestamp) {
       if (d->labels().contains("test") &&
           *creation_timestamp < create_threshold) {
-        (void)client.DeleteDisks(project_id_, zone_, d->name()).get();
+        (void)client.DeleteDisk(project_id_, zone_, d->name()).get();
       }
     }
   }

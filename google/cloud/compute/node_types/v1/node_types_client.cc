@@ -52,24 +52,24 @@ NodeTypesClient::AggregatedListNodeTypes(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesClient::GetNodeTypes(std::string const& project,
-                              std::string const& zone,
-                              std::string const& node_type, Options opts) {
+NodeTypesClient::GetNodeType(std::string const& project,
+                             std::string const& zone,
+                             std::string const& node_type, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest request;
+  google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_node_type(node_type);
-  return connection_->GetNodeTypes(request);
+  return connection_->GetNodeType(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
-NodeTypesClient::GetNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::GetNodeTypesRequest const&
+NodeTypesClient::GetNodeType(
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetNodeTypes(request);
+  return connection_->GetNodeType(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeType>

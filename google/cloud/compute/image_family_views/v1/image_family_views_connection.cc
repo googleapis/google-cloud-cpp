@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageFamilyViewsConnection::~ImageFamilyViewsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsConnection::GetImageFamilyViews(
+ImageFamilyViewsConnection::GetImageFamilyView(
     google::cloud::cpp::compute::image_family_views::v1::
-        GetImageFamilyViewsRequest const&) {
+        GetImageFamilyViewRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

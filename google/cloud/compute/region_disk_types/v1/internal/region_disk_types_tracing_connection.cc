@@ -34,14 +34,13 @@ RegionDiskTypesTracingConnection::RegionDiskTypesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesTracingConnection::GetRegionDiskTypes(
+RegionDiskTypesTracingConnection::GetDiskType(
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypesRequest const& request) {
+        GetDiskTypeRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_disk_types_v1::RegionDiskTypesConnection::"
-      "GetRegionDiskTypes");
+      "compute_region_disk_types_v1::RegionDiskTypesConnection::GetDiskType");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetRegionDiskTypes(request));
+  return internal::EndSpan(*span, child_->GetDiskType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>

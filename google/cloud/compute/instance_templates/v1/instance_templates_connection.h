@@ -194,20 +194,20 @@ class InstanceTemplatesConnection {
           AggregatedListInstanceTemplatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                              DeleteInstanceTemplatesRequest const& request);
+  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                             DeleteInstanceTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                           GetInstanceTemplatesRequest const& request);
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                          GetInstanceTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::instance_templates::v1::
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                              InsertInstanceTemplatesRequest const& request);
+  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                             InsertInstanceTemplateRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::

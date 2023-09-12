@@ -42,34 +42,34 @@ RegionSslCertificatesRestMetadata::RegionSslCertificatesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesRestMetadata::AsyncDeleteRegionSslCertificates(
+RegionSslCertificatesRestMetadata::AsyncDeleteSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteRegionSslCertificatesRequest const& request) {
+        DeleteSslCertificateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionSslCertificates(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncDeleteSslCertificate(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-RegionSslCertificatesRestMetadata::GetRegionSslCertificates(
+RegionSslCertificatesRestMetadata::GetSslCertificate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        GetRegionSslCertificatesRequest const& request) {
+        GetSslCertificateRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionSslCertificates(rest_context, request);
+  return child_->GetSslCertificate(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslCertificatesRestMetadata::AsyncInsertRegionSslCertificates(
+RegionSslCertificatesRestMetadata::AsyncInsertSslCertificate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertRegionSslCertificatesRequest const& request) {
+        InsertSslCertificateRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionSslCertificates(cq, std::move(rest_context),
-                                                  request);
+  return child_->AsyncInsertSslCertificate(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
@@ -86,7 +86,7 @@ RegionSslCertificatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -95,7 +95,7 @@ future<Status> RegionSslCertificatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

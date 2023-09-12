@@ -53,65 +53,65 @@ NetworkEdgeSecurityServicesRestLogging::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesRestLogging::AsyncDeleteNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesRestLogging::AsyncDeleteNetworkEdgeSecurityService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        DeleteNetworkEdgeSecurityServicesRequest const& request) {
+        DeleteNetworkEdgeSecurityServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::network_edge_security_services::v1::
-                 DeleteNetworkEdgeSecurityServicesRequest const& request) {
-        return child_->AsyncDeleteNetworkEdgeSecurityServices(
+                 DeleteNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->AsyncDeleteNetworkEdgeSecurityService(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-NetworkEdgeSecurityServicesRestLogging::GetNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesRestLogging::GetNetworkEdgeSecurityService(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        GetNetworkEdgeSecurityServicesRequest const& request) {
+        GetNetworkEdgeSecurityServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::network_edge_security_services::v1::
-                 GetNetworkEdgeSecurityServicesRequest const& request) {
-        return child_->GetNetworkEdgeSecurityServices(rest_context, request);
+                 GetNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->GetNetworkEdgeSecurityService(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesRestLogging::AsyncInsertNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesRestLogging::AsyncInsertNetworkEdgeSecurityService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        InsertNetworkEdgeSecurityServicesRequest const& request) {
+        InsertNetworkEdgeSecurityServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::network_edge_security_services::v1::
-                 InsertNetworkEdgeSecurityServicesRequest const& request) {
-        return child_->AsyncInsertNetworkEdgeSecurityServices(
+                 InsertNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->AsyncInsertNetworkEdgeSecurityService(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesRestLogging::AsyncPatchNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesRestLogging::AsyncPatchNetworkEdgeSecurityService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        PatchNetworkEdgeSecurityServicesRequest const& request) {
+        PatchNetworkEdgeSecurityServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::network_edge_security_services::v1::
-                 PatchNetworkEdgeSecurityServicesRequest const& request) {
-        return child_->AsyncPatchNetworkEdgeSecurityServices(
+                 PatchNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->AsyncPatchNetworkEdgeSecurityService(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -122,12 +122,12 @@ NetworkEdgeSecurityServicesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -137,12 +137,12 @@ future<Status> NetworkEdgeSecurityServicesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -40,7 +40,7 @@ service TargetSslProxies {
 
   // Deletes the specified TargetSslProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/delete
-  rpc DeleteTargetSslProxies(DeleteTargetSslProxiesRequest)
+  rpc DeleteTargetSslProxy(DeleteTargetSslProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}"
@@ -51,7 +51,7 @@ service TargetSslProxies {
 
   // Returns the specified TargetSslProxy resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/get
-  rpc GetTargetSslProxies(GetTargetSslProxiesRequest)
+  rpc GetTargetSslProxy(GetTargetSslProxyRequest)
       returns (google.cloud.cpp.compute.v1.TargetSslProxy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}"
@@ -62,7 +62,7 @@ service TargetSslProxies {
   // Creates a TargetSslProxy resource in the specified project using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/targetSslProxies/insert
-  rpc InsertTargetSslProxies(InsertTargetSslProxiesRequest)
+  rpc InsertTargetSslProxy(InsertTargetSslProxyRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/targetSslProxies"
@@ -152,8 +152,8 @@ service TargetSslProxies {
   }
 }
 
-// Request message for DeleteTargetSslProxies.
-message DeleteTargetSslProxiesRequest {
+// Request message for DeleteTargetSslProxy.
+message DeleteTargetSslProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
@@ -176,8 +176,8 @@ message DeleteTargetSslProxiesRequest {
   string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetTargetSslProxies.
-message GetTargetSslProxiesRequest {
+// Request message for GetTargetSslProxy.
+message GetTargetSslProxyRequest {
   // Project ID for this request.
   string project = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -185,8 +185,8 @@ message GetTargetSslProxiesRequest {
   string target_ssl_proxy = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertTargetSslProxies.
-message InsertTargetSslProxiesRequest {
+// Request message for InsertTargetSslProxy.
+message InsertTargetSslProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,

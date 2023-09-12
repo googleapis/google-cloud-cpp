@@ -41,17 +41,17 @@ class TargetTcpProxiesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           AggregatedListTargetTcpProxiesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTargetTcpProxies(
+  virtual google::cloud::Idempotency DeleteTargetTcpProxy(
       google::cloud::cpp::compute::target_tcp_proxies::v1::
-          DeleteTargetTcpProxiesRequest const& request);
+          DeleteTargetTcpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency GetTargetTcpProxies(
+  virtual google::cloud::Idempotency GetTargetTcpProxy(
       google::cloud::cpp::compute::target_tcp_proxies::v1::
-          GetTargetTcpProxiesRequest const& request);
+          GetTargetTcpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertTargetTcpProxies(
+  virtual google::cloud::Idempotency InsertTargetTcpProxy(
       google::cloud::cpp::compute::target_tcp_proxies::v1::
-          InsertTargetTcpProxiesRequest const& request);
+          InsertTargetTcpProxyRequest const& request);
 
   virtual google::cloud::Idempotency ListTargetTcpProxies(
       google::cloud::cpp::compute::target_tcp_proxies::v1::

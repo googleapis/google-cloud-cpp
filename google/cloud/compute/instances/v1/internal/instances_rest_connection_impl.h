@@ -71,8 +71,8 @@ class InstancesRestConnectionImpl
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
           request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -83,8 +83,8 @@ class InstancesRestConnectionImpl
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
+      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
           request) override;
 
   StatusOr<
@@ -114,8 +114,8 @@ class InstancesRestConnectionImpl
       google::cloud::cpp::compute::instances::v1::
           GetShieldedInstanceIdentityRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstances(
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
@@ -223,8 +223,8 @@ class InstancesRestConnectionImpl
   TestIamPermissions(google::cloud::cpp::compute::instances::v1::
                          TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstances(
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

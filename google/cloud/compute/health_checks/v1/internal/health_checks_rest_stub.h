@@ -44,23 +44,23 @@ class HealthChecksRestStub {
           AggregatedListHealthChecksRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteHealthChecks(
+  AsyncDeleteHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          DeleteHealthChecksRequest const& request) = 0;
+          DeleteHealthCheckRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetHealthChecks(google::cloud::rest_internal::RestContext& rest_context,
-                  google::cloud::cpp::compute::health_checks::v1::
-                      GetHealthChecksRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::health_checks::v1::
+          GetHealthCheckRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertHealthChecks(
+  AsyncInsertHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          InsertHealthChecksRequest const& request) = 0;
+          InsertHealthCheckRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheckList>
   ListHealthChecks(google::cloud::rest_internal::RestContext& rest_context,
@@ -68,31 +68,31 @@ class HealthChecksRestStub {
                        ListHealthChecksRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchHealthChecks(
+  AsyncPatchHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          PatchHealthChecksRequest const& request) = 0;
+          PatchHealthCheckRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateHealthChecks(
+  AsyncUpdateHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          UpdateHealthChecksRequest const& request) = 0;
+          UpdateHealthCheckRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultHealthChecksRestStub : public HealthChecksRestStub {
@@ -111,23 +111,23 @@ class DefaultHealthChecksRestStub : public HealthChecksRestStub {
           AggregatedListHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteHealthChecks(
+  AsyncDeleteHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          DeleteHealthChecksRequest const& request) override;
+          DeleteHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          GetHealthChecksRequest const& request) override;
+          GetHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertHealthChecks(
+  AsyncInsertHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          InsertHealthChecksRequest const& request) override;
+          InsertHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckList> ListHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -135,31 +135,31 @@ class DefaultHealthChecksRestStub : public HealthChecksRestStub {
           ListHealthChecksRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchHealthChecks(
+  AsyncPatchHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          PatchHealthChecksRequest const& request) override;
+          PatchHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncUpdateHealthChecks(
+  AsyncUpdateHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::health_checks::v1::
-          UpdateHealthChecksRequest const& request) override;
+          UpdateHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

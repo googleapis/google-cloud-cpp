@@ -40,22 +40,22 @@ LicensesRestMetadata::LicensesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesRestMetadata::AsyncDeleteLicenses(
+LicensesRestMetadata::AsyncDeleteLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteLicenses(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteLicense(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
-LicensesRestMetadata::GetLicenses(
+LicensesRestMetadata::GetLicense(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetLicenses(rest_context, request);
+  return child_->GetLicense(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -68,13 +68,13 @@ LicensesRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-LicensesRestMetadata::AsyncInsertLicenses(
+LicensesRestMetadata::AsyncInsertLicense(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertLicenses(cq, std::move(rest_context), request);
+  return child_->AsyncInsertLicense(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
@@ -109,7 +109,7 @@ LicensesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -118,7 +118,7 @@ future<Status> LicensesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

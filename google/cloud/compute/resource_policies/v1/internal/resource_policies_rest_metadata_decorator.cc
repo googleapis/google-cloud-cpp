@@ -50,23 +50,23 @@ ResourcePoliciesRestMetadata::AggregatedListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestMetadata::AsyncDeleteResourcePolicies(
+ResourcePoliciesRestMetadata::AsyncDeleteResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePoliciesRequest const& request) {
+        DeleteResourcePolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteResourcePolicies(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncDeleteResourcePolicy(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-ResourcePoliciesRestMetadata::GetResourcePolicies(
+ResourcePoliciesRestMetadata::GetResourcePolicy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        GetResourcePoliciesRequest const& request) {
+        GetResourcePolicyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetResourcePolicies(rest_context, request);
+  return child_->GetResourcePolicy(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -79,14 +79,14 @@ ResourcePoliciesRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestMetadata::AsyncInsertResourcePolicies(
+ResourcePoliciesRestMetadata::AsyncInsertResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePoliciesRequest const& request) {
+        InsertResourcePolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertResourcePolicies(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncInsertResourcePolicy(cq, std::move(rest_context),
+                                           request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
@@ -99,14 +99,13 @@ ResourcePoliciesRestMetadata::ListResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ResourcePoliciesRestMetadata::AsyncPatchResourcePolicies(
+ResourcePoliciesRestMetadata::AsyncPatchResourcePolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePoliciesRequest const& request) {
+        PatchResourcePolicyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchResourcePolicies(cq, std::move(rest_context),
-                                            request);
+  return child_->AsyncPatchResourcePolicy(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -132,7 +131,7 @@ ResourcePoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -141,7 +140,7 @@ future<Status> ResourcePoliciesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

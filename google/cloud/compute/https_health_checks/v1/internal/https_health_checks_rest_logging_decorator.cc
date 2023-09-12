@@ -34,49 +34,49 @@ HttpsHealthChecksRestLogging::HttpsHealthChecksRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestLogging::AsyncDeleteHttpsHealthChecks(
+HttpsHealthChecksRestLogging::AsyncDeleteHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        DeleteHttpsHealthChecksRequest const& request) {
+        DeleteHttpsHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::https_health_checks::v1::
-                 DeleteHttpsHealthChecksRequest const& request) {
-        return child_->AsyncDeleteHttpsHealthChecks(cq, std::move(rest_context),
-                                                    request);
+                 DeleteHttpsHealthCheckRequest const& request) {
+        return child_->AsyncDeleteHttpsHealthCheck(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-HttpsHealthChecksRestLogging::GetHttpsHealthChecks(
+HttpsHealthChecksRestLogging::GetHttpsHealthCheck(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        GetHttpsHealthChecksRequest const& request) {
+        GetHttpsHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::https_health_checks::v1::
-                 GetHttpsHealthChecksRequest const& request) {
-        return child_->GetHttpsHealthChecks(rest_context, request);
+                 GetHttpsHealthCheckRequest const& request) {
+        return child_->GetHttpsHealthCheck(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestLogging::AsyncInsertHttpsHealthChecks(
+HttpsHealthChecksRestLogging::AsyncInsertHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        InsertHttpsHealthChecksRequest const& request) {
+        InsertHttpsHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::https_health_checks::v1::
-                 InsertHttpsHealthChecksRequest const& request) {
-        return child_->AsyncInsertHttpsHealthChecks(cq, std::move(rest_context),
-                                                    request);
+                 InsertHttpsHealthCheckRequest const& request) {
+        return child_->AsyncInsertHttpsHealthCheck(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -96,35 +96,35 @@ HttpsHealthChecksRestLogging::ListHttpsHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestLogging::AsyncPatchHttpsHealthChecks(
+HttpsHealthChecksRestLogging::AsyncPatchHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        PatchHttpsHealthChecksRequest const& request) {
+        PatchHttpsHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::https_health_checks::v1::
-                 PatchHttpsHealthChecksRequest const& request) {
-        return child_->AsyncPatchHttpsHealthChecks(cq, std::move(rest_context),
-                                                   request);
+                 PatchHttpsHealthCheckRequest const& request) {
+        return child_->AsyncPatchHttpsHealthCheck(cq, std::move(rest_context),
+                                                  request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HttpsHealthChecksRestLogging::AsyncUpdateHttpsHealthChecks(
+HttpsHealthChecksRestLogging::AsyncUpdateHttpsHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::https_health_checks::v1::
-        UpdateHttpsHealthChecksRequest const& request) {
+        UpdateHttpsHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::https_health_checks::v1::
-                 UpdateHttpsHealthChecksRequest const& request) {
-        return child_->AsyncUpdateHttpsHealthChecks(cq, std::move(rest_context),
-                                                    request);
+                 UpdateHttpsHealthCheckRequest const& request) {
+        return child_->AsyncUpdateHttpsHealthCheck(cq, std::move(rest_context),
+                                                   request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -134,12 +134,12 @@ HttpsHealthChecksRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -149,12 +149,12 @@ future<Status> HttpsHealthChecksRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

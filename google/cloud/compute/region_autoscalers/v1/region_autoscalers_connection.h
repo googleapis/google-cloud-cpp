@@ -188,28 +188,28 @@ class RegionAutoscalersConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                              DeleteRegionAutoscalersRequest const& request);
+  DeleteAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
+                       DeleteAutoscalerRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                           GetRegionAutoscalersRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
+      google::cloud::cpp::compute::region_autoscalers::v1::
+          GetAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                              InsertRegionAutoscalersRequest const& request);
+  InsertAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
+                       InsertAutoscalerRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
   ListRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
                             ListRegionAutoscalersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                             PatchRegionAutoscalersRequest const& request);
+  PatchAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
+                      PatchAutoscalerRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRegionAutoscalers(google::cloud::cpp::compute::region_autoscalers::v1::
-                              UpdateRegionAutoscalersRequest const& request);
+  UpdateAutoscaler(google::cloud::cpp::compute::region_autoscalers::v1::
+                       UpdateAutoscalerRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,25 +36,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionSecurityPoliciesConnection::~RegionSecurityPoliciesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesConnection::DeleteRegionSecurityPolicies(
+RegionSecurityPoliciesConnection::DeleteSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        DeleteRegionSecurityPoliciesRequest const&) {
+        DeleteSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-RegionSecurityPoliciesConnection::GetRegionSecurityPolicies(
+RegionSecurityPoliciesConnection::GetSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        GetRegionSecurityPoliciesRequest const&) {
+        GetSecurityPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesConnection::InsertRegionSecurityPolicies(
+RegionSecurityPoliciesConnection::InsertSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        InsertRegionSecurityPoliciesRequest const&) {
+        InsertSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -69,9 +69,9 @@ RegionSecurityPoliciesConnection::ListRegionSecurityPolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSecurityPoliciesConnection::PatchRegionSecurityPolicies(
+RegionSecurityPoliciesConnection::PatchSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
-        PatchRegionSecurityPoliciesRequest const&) {
+        PatchSecurityPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -43,32 +43,32 @@ class HttpsHealthChecksTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpsHealthChecks(
+  DeleteHttpsHealthCheck(
       google::cloud::cpp::compute::https_health_checks::v1::
-          DeleteHttpsHealthChecksRequest const& request) override;
+          DeleteHttpsHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  GetHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::
-                           GetHttpsHealthChecksRequest const& request) override;
+  GetHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
+                          GetHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpsHealthChecks(
+  InsertHttpsHealthCheck(
       google::cloud::cpp::compute::https_health_checks::v1::
-          InsertHttpsHealthChecksRequest const& request) override;
+          InsertHttpsHealthCheckRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
   ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::
                             ListHttpsHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpsHealthChecks(
+  PatchHttpsHealthCheck(
       google::cloud::cpp::compute::https_health_checks::v1::
-          PatchHttpsHealthChecksRequest const& request) override;
+          PatchHttpsHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpsHealthChecks(
+  UpdateHttpsHealthCheck(
       google::cloud::cpp::compute::https_health_checks::v1::
-          UpdateHttpsHealthChecksRequest const& request) override;
+          UpdateHttpsHealthCheckRequest const& request) override;
 
  private:
   std::shared_ptr<compute_https_health_checks_v1::HttpsHealthChecksConnection>

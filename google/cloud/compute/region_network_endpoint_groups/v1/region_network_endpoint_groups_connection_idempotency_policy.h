@@ -39,17 +39,17 @@ class RegionNetworkEndpointGroupsConnectionIdempotencyPolicy {
       RegionNetworkEndpointGroupsConnectionIdempotencyPolicy>
   clone() const;
 
-  virtual google::cloud::Idempotency DeleteRegionNetworkEndpointGroups(
+  virtual google::cloud::Idempotency DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          DeleteRegionNetworkEndpointGroupsRequest const& request);
+          DeleteNetworkEndpointGroupRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionNetworkEndpointGroups(
+  virtual google::cloud::Idempotency GetNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          GetRegionNetworkEndpointGroupsRequest const& request);
+          GetNetworkEndpointGroupRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionNetworkEndpointGroups(
+  virtual google::cloud::Idempotency InsertNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
-          InsertRegionNetworkEndpointGroupsRequest const& request);
+          InsertNetworkEndpointGroupRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionNetworkEndpointGroups(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::

@@ -68,15 +68,15 @@ class MockNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNetworkFirewallPolicies,
+              DeleteFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   DeleteNetworkFirewallPoliciesRequest const& request),
+                   DeleteFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
-              GetNetworkFirewallPolicies,
+              GetFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   GetNetworkFirewallPoliciesRequest const& request),
+                   GetFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(
@@ -98,9 +98,9 @@ class MockNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNetworkFirewallPolicies,
+              InsertFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   InsertNetworkFirewallPoliciesRequest const& request),
+                   InsertFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>,
@@ -110,9 +110,9 @@ class MockNetworkFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchNetworkFirewallPolicies,
+              PatchFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
-                   PatchNetworkFirewallPoliciesRequest const& request),
+                   PatchFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

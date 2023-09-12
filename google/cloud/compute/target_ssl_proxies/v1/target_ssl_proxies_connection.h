@@ -188,16 +188,16 @@ class TargetSslProxiesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                             DeleteTargetSslProxiesRequest const& request);
+  DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           DeleteTargetSslProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-  GetTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                          GetTargetSslProxiesRequest const& request);
+  GetTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                        GetTargetSslProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
-                             InsertTargetSslProxiesRequest const& request);
+  InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           InsertTargetSslProxyRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
   ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::

@@ -34,9 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LicenseCodesConnection::~LicenseCodesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-LicenseCodesConnection::GetLicenseCodes(
+LicenseCodesConnection::GetLicenseCode(
     google::cloud::cpp::compute::license_codes::v1::
-        GetLicenseCodesRequest const&) {
+        GetLicenseCodeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

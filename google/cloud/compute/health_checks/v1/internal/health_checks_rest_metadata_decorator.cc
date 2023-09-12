@@ -49,32 +49,32 @@ HealthChecksRestMetadata::AggregatedListHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksRestMetadata::AsyncDeleteHealthChecks(
+HealthChecksRestMetadata::AsyncDeleteHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        DeleteHealthChecksRequest const& request) {
+        DeleteHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteHealthChecks(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteHealthCheck(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-HealthChecksRestMetadata::GetHealthChecks(
+HealthChecksRestMetadata::GetHealthCheck(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::health_checks::v1::
-        GetHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const&
+        request) {
   SetMetadata(rest_context);
-  return child_->GetHealthChecks(rest_context, request);
+  return child_->GetHealthCheck(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksRestMetadata::AsyncInsertHealthChecks(
+HealthChecksRestMetadata::AsyncInsertHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        InsertHealthChecksRequest const& request) {
+        InsertHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertHealthChecks(cq, std::move(rest_context), request);
+  return child_->AsyncInsertHealthCheck(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckList>
@@ -87,23 +87,23 @@ HealthChecksRestMetadata::ListHealthChecks(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksRestMetadata::AsyncPatchHealthChecks(
+HealthChecksRestMetadata::AsyncPatchHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        PatchHealthChecksRequest const& request) {
+        PatchHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchHealthChecks(cq, std::move(rest_context), request);
+  return child_->AsyncPatchHealthCheck(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-HealthChecksRestMetadata::AsyncUpdateHealthChecks(
+HealthChecksRestMetadata::AsyncUpdateHealthCheck(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::health_checks::v1::
-        UpdateHealthChecksRequest const& request) {
+        UpdateHealthCheckRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncUpdateHealthChecks(cq, std::move(rest_context), request);
+  return child_->AsyncUpdateHealthCheck(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -111,7 +111,7 @@ HealthChecksRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -120,7 +120,7 @@ future<Status> HealthChecksRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

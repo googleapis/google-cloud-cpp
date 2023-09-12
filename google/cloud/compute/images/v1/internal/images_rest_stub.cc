@@ -45,10 +45,10 @@ DefaultImagesRestStub::DefaultImagesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultImagesRestStub::AsyncDeleteImages(
+DefaultImagesRestStub::AsyncDeleteImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -94,9 +94,9 @@ DefaultImagesRestStub::AsyncDeprecate(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
-DefaultImagesRestStub::GetImages(
+DefaultImagesRestStub::GetImage(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
+    google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -134,10 +134,10 @@ DefaultImagesRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultImagesRestStub::AsyncInsertImages(
+DefaultImagesRestStub::AsyncInsertImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
@@ -174,11 +174,10 @@ DefaultImagesRestStub::ListImages(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultImagesRestStub::AsyncPatchImages(
+DefaultImagesRestStub::AsyncPatchImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
-        request) {
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -253,7 +252,7 @@ DefaultImagesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -276,7 +275,7 @@ future<Status> DefaultImagesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

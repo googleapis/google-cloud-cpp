@@ -142,10 +142,10 @@ DefaultDisksRestStub::AsyncCreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultDisksRestStub::AsyncDeleteDisks(
+DefaultDisksRestStub::AsyncDeleteDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
+    google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -166,9 +166,9 @@ DefaultDisksRestStub::AsyncDeleteDisks(
   });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Disk> DefaultDisksRestStub::GetDisks(
+StatusOr<google::cloud::cpp::compute::v1::Disk> DefaultDisksRestStub::GetDisk(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
+    google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
@@ -193,10 +193,10 @@ DefaultDisksRestStub::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultDisksRestStub::AsyncInsertDisks(
+DefaultDisksRestStub::AsyncInsertDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
+    google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -419,10 +419,10 @@ DefaultDisksRestStub::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DefaultDisksRestStub::AsyncUpdateDisks(
+DefaultDisksRestStub::AsyncUpdateDisk(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
+    google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -447,8 +447,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultDisksRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::zone_operations::v1::
-        GetZoneOperationsRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
@@ -472,7 +472,7 @@ future<Status> DefaultDisksRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::zone_operations::v1::
-        DeleteZoneOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{

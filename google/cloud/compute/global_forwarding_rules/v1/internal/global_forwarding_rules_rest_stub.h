@@ -39,24 +39,23 @@ class GlobalForwardingRulesRestStub {
   virtual ~GlobalForwardingRulesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteGlobalForwardingRules(
+  AsyncDeleteForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          DeleteGlobalForwardingRulesRequest const& request) = 0;
+          DeleteForwardingRuleRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetGlobalForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::global_forwarding_rules::v1::
-          GetGlobalForwardingRulesRequest const& request) = 0;
+  GetForwardingRule(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::global_forwarding_rules::v1::
+                        GetForwardingRuleRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertGlobalForwardingRules(
+  AsyncInsertForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          InsertGlobalForwardingRulesRequest const& request) = 0;
+          InsertForwardingRuleRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
   ListGlobalForwardingRules(
@@ -65,11 +64,11 @@ class GlobalForwardingRulesRestStub {
           ListGlobalForwardingRulesRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchGlobalForwardingRules(
+  AsyncPatchForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          PatchGlobalForwardingRulesRequest const& request) = 0;
+          PatchForwardingRuleRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
@@ -90,13 +89,13 @@ class GlobalForwardingRulesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultGlobalForwardingRulesRestStub
@@ -110,24 +109,23 @@ class DefaultGlobalForwardingRulesRestStub
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteGlobalForwardingRules(
+  AsyncDeleteForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          DeleteGlobalForwardingRulesRequest const& request) override;
+          DeleteForwardingRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetGlobalForwardingRules(
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          GetGlobalForwardingRulesRequest const& request) override;
+          GetForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertGlobalForwardingRules(
+  AsyncInsertForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          InsertGlobalForwardingRulesRequest const& request) override;
+          InsertForwardingRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
   ListGlobalForwardingRules(
@@ -136,11 +134,11 @@ class DefaultGlobalForwardingRulesRestStub
           ListGlobalForwardingRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchGlobalForwardingRules(
+  AsyncPatchForwardingRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_forwarding_rules::v1::
-          PatchGlobalForwardingRulesRequest const& request) override;
+          PatchForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
@@ -159,13 +157,13 @@ class DefaultGlobalForwardingRulesRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

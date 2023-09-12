@@ -177,13 +177,12 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L199}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxies(std::string const& project,
-                         std::string const& target_tcp_proxy,
-                         Options opts = {});
+  DeleteTargetTcpProxy(std::string const& project,
+                       std::string const& target_tcp_proxy, Options opts = {});
 
   // clang-format off
   ///
@@ -193,7 +192,7 @@ class TargetTcpProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest].
+  ///     [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -216,13 +215,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L199}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.DeleteTargetTcpProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L199}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                             DeleteTargetTcpProxiesRequest const& request,
-                         Options opts = {});
+  DeleteTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           DeleteTargetTcpProxyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -244,11 +243,11 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L223}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L223}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       std::string const& project, std::string const& target_tcp_proxy,
       Options opts = {});
 
@@ -260,7 +259,7 @@ class TargetTcpProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest].
+  ///     [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -276,13 +275,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L223}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.GetTargetTcpProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L223}
   /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       google::cloud::cpp::compute::target_tcp_proxies::v1::
-          GetTargetTcpProxiesRequest const& request,
+          GetTargetTcpProxyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -313,14 +312,14 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L232}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L232}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxies(std::string const& project,
-                         google::cloud::cpp::compute::v1::TargetTcpProxy const&
-                             target_tcp_proxy_resource,
-                         Options opts = {});
+  InsertTargetTcpProxy(std::string const& project,
+                       google::cloud::cpp::compute::v1::TargetTcpProxy const&
+                           target_tcp_proxy_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -331,7 +330,7 @@ class TargetTcpProxiesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest].
+  ///     [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxyRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -354,13 +353,13 @@ class TargetTcpProxiesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxiesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L232}
+  /// [google.cloud.cpp.compute.target_tcp_proxies.v1.InsertTargetTcpProxyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L232}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetTcpProxies(google::cloud::cpp::compute::target_tcp_proxies::v1::
-                             InsertTargetTcpProxiesRequest const& request,
-                         Options opts = {});
+  InsertTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           InsertTargetTcpProxyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///

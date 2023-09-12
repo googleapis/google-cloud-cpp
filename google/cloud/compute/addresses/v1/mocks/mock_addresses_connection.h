@@ -55,21 +55,21 @@ class MockAddressesConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      DeleteAddresses,
-      (google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+      DeleteAddress,
+      (google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddresses,
-      (google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+      StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
+      (google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-      InsertAddresses,
-      (google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+      InsertAddress,
+      (google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
            request),
       (override));
 

@@ -42,25 +42,25 @@ TargetVpnGatewaysConnection::AggregatedListTargetVpnGateways(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysConnection::DeleteTargetVpnGateways(
+TargetVpnGatewaysConnection::DeleteTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        DeleteTargetVpnGatewaysRequest const&) {
+        DeleteTargetVpnGatewayRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysConnection::GetTargetVpnGateways(
+TargetVpnGatewaysConnection::GetTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        GetTargetVpnGatewaysRequest const&) {
+        GetTargetVpnGatewayRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetVpnGatewaysConnection::InsertTargetVpnGateways(
+TargetVpnGatewaysConnection::InsertTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
-        InsertTargetVpnGatewaysRequest const&) {
+        InsertTargetVpnGatewayRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -37,17 +37,17 @@ class RegionSslPoliciesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RegionSslPoliciesConnectionIdempotencyPolicy> clone()
       const;
 
-  virtual google::cloud::Idempotency DeleteRegionSslPolicies(
+  virtual google::cloud::Idempotency DeleteSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          DeleteRegionSslPoliciesRequest const& request);
+          DeleteSslPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetRegionSslPolicies(
+  virtual google::cloud::Idempotency GetSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          GetRegionSslPoliciesRequest const& request);
+          GetSslPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency InsertRegionSslPolicies(
+  virtual google::cloud::Idempotency InsertSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          InsertRegionSslPoliciesRequest const& request);
+          InsertSslPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListRegionSslPolicies(
       google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -57,9 +57,9 @@ class RegionSslPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_ssl_policies::v1::
           ListAvailableFeaturesRequest const& request);
 
-  virtual google::cloud::Idempotency PatchRegionSslPolicies(
+  virtual google::cloud::Idempotency PatchSslPolicy(
       google::cloud::cpp::compute::region_ssl_policies::v1::
-          PatchRegionSslPoliciesRequest const& request);
+          PatchSslPolicyRequest const& request);
 };
 
 std::unique_ptr<RegionSslPoliciesConnectionIdempotencyPolicy>

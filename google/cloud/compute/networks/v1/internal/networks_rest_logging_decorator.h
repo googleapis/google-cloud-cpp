@@ -49,15 +49,15 @@ class NetworksRestLogging : public NetworksRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteNetworks(
+  AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
+  StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
           request) override;
 
   StatusOr<
@@ -68,10 +68,10 @@ class NetworksRestLogging : public NetworksRestStub {
           GetEffectiveFirewallsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertNetworks(
+  AsyncInsertNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkList> ListNetworks(
@@ -86,10 +86,10 @@ class NetworksRestLogging : public NetworksRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncPatchNetworks(
+  AsyncPatchNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -118,13 +118,13 @@ class NetworksRestLogging : public NetworksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<NetworksRestStub> child_;

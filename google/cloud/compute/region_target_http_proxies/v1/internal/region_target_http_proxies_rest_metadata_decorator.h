@@ -43,24 +43,23 @@ class RegionTargetHttpProxiesRestMetadata
       std::string api_client_header = "");
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteRegionTargetHttpProxies(
+  AsyncDeleteTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          DeleteRegionTargetHttpProxiesRequest const& request) override;
+          DeleteTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetRegionTargetHttpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          GetRegionTargetHttpProxiesRequest const& request) override;
+          GetTargetHttpProxyRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertRegionTargetHttpProxies(
+  AsyncInsertTargetHttpProxy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          InsertRegionTargetHttpProxiesRequest const& request) override;
+          InsertTargetHttpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
   ListRegionTargetHttpProxies(
@@ -80,13 +79,13 @@ class RegionTargetHttpProxiesRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

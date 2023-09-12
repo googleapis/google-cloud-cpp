@@ -46,23 +46,23 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
           AggregatedListVpnTunnelsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteVpnTunnels(
+  AsyncDeleteVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelsRequest const& request) override;
+          DeleteVpnTunnelRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+  StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelsRequest const&
+      google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertVpnTunnels(
+  AsyncInsertVpnTunnel(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelsRequest const& request) override;
+          InsertVpnTunnelRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList> ListVpnTunnels(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -81,13 +81,13 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

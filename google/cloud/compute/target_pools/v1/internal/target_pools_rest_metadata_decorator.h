@@ -60,16 +60,16 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
           AggregatedListTargetPoolsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetPools(
+  AsyncDeleteTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolsRequest const& request) override;
+          DeleteTargetPoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -77,11 +77,11 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
           request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetPools(
+  AsyncInsertTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolsRequest const& request) override;
+          InsertTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolList> ListTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -114,13 +114,13 @@ class TargetPoolsRestMetadata : public TargetPoolsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

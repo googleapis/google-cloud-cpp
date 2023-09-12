@@ -41,7 +41,7 @@ service GlobalAddresses {
 
   // Deletes the specified address resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/delete
-  rpc DeleteGlobalAddresses(DeleteGlobalAddressesRequest)
+  rpc DeleteAddress(DeleteAddressRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/addresses/{address}"
@@ -52,7 +52,7 @@ service GlobalAddresses {
 
   // Returns the specified address resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/get
-  rpc GetGlobalAddresses(GetGlobalAddressesRequest)
+  rpc GetAddress(GetAddressRequest)
       returns (google.cloud.cpp.compute.v1.Address) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/addresses/{address}"
@@ -63,7 +63,7 @@ service GlobalAddresses {
   // Creates an address resource in the specified project by using the data
   // included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses/insert
-  rpc InsertGlobalAddresses(InsertGlobalAddressesRequest)
+  rpc InsertAddress(InsertAddressRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/addresses"
@@ -110,8 +110,8 @@ service GlobalAddresses {
   }
 }
 
-// Request message for DeleteGlobalAddresses.
-message DeleteGlobalAddressesRequest {
+// Request message for DeleteAddress.
+message DeleteAddressRequest {
   // Name of the address resource to delete.
   string address = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -134,8 +134,8 @@ message DeleteGlobalAddressesRequest {
   optional string request_id = 3;
 }
 
-// Request message for GetGlobalAddresses.
-message GetGlobalAddressesRequest {
+// Request message for GetAddress.
+message GetAddressRequest {
   // Name of the address resource to return.
   string address = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -143,8 +143,8 @@ message GetGlobalAddressesRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertGlobalAddresses.
-message InsertGlobalAddressesRequest {
+// Request message for InsertAddress.
+message InsertAddressRequest {
   // The Address for this request.
   optional google.cloud.cpp.compute.v1.Address address_resource = 1
       [json_name = "__json_request_body"];

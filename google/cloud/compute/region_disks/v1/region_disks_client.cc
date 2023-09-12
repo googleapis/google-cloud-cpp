@@ -108,46 +108,43 @@ RegionDisksClient::CreateSnapshot(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksClient::DeleteRegionDisks(std::string const& project,
-                                     std::string const& region,
-                                     std::string const& disk, Options opts) {
+RegionDisksClient::DeleteDisk(std::string const& project,
+                              std::string const& region,
+                              std::string const& disk, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_disks::v1::DeleteRegionDisksRequest
-      request;
+  google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_disk(disk);
-  return connection_->DeleteRegionDisks(request);
+  return connection_->DeleteDisk(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksClient::DeleteRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        DeleteRegionDisksRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRegionDisks(request);
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksClient::GetRegionDisks(std::string const& project,
-                                  std::string const& region,
-                                  std::string const& disk, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_disks::v1::GetRegionDisksRequest request;
-  request.set_project(project);
-  request.set_region(region);
-  request.set_disk(disk);
-  return connection_->GetRegionDisks(request);
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Disk>
-RegionDisksClient::GetRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::GetRegionDisksRequest const&
+RegionDisksClient::DeleteDisk(
+    google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetRegionDisks(request);
+  return connection_->DeleteDisk(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Disk> RegionDisksClient::GetDisk(
+    std::string const& project, std::string const& region,
+    std::string const& disk, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_disks::v1::GetDiskRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_disk(disk);
+  return connection_->GetDisk(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Disk> RegionDisksClient::GetDisk(
+    google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDisk(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -172,25 +169,24 @@ RegionDisksClient::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksClient::InsertRegionDisks(
+RegionDisksClient::InsertDisk(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_disks::v1::InsertRegionDisksRequest
-      request;
+  google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_disk_resource() = disk_resource;
-  return connection_->InsertRegionDisks(request);
+  return connection_->InsertDisk(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksClient::InsertRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        InsertRegionDisksRequest const& request,
+RegionDisksClient::InsertDisk(
+    google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertRegionDisks(request);
+  return connection_->InsertDisk(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk>
@@ -421,27 +417,26 @@ RegionDisksClient::TestIamPermissions(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksClient::UpdateRegionDisks(
+RegionDisksClient::UpdateDisk(
     std::string const& project, std::string const& region,
     std::string const& disk,
     google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_disks::v1::UpdateRegionDisksRequest
-      request;
+  google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_disk(disk);
   *request.mutable_disk_resource() = disk_resource;
-  return connection_->UpdateRegionDisks(request);
+  return connection_->UpdateDisk(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionDisksClient::UpdateRegionDisks(
-    google::cloud::cpp::compute::region_disks::v1::
-        UpdateRegionDisksRequest const& request,
+RegionDisksClient::UpdateDisk(
+    google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRegionDisks(request);
+  return connection_->UpdateDisk(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

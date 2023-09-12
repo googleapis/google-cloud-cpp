@@ -41,9 +41,9 @@ class RegionDiskTypesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::cpp::compute::region_disk_types::v1::
-          GetRegionDiskTypesRequest const& request) override;
+          GetDiskTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
       google::cloud::cpp::compute::region_disk_types::v1::

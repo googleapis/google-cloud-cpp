@@ -196,30 +196,28 @@ class ServiceAttachmentsConnection {
           AggregatedListServiceAttachmentsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          DeleteServiceAttachmentsRequest const& request);
+  DeleteServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                              DeleteServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
-                            GetServiceAttachmentsRequest const& request);
+  GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                           GetServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertServiceAttachments(
-      google::cloud::cpp::compute::service_attachments::v1::
-          InsertServiceAttachmentsRequest const& request);
+  InsertServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                              InsertServiceAttachmentRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
   ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
                              ListServiceAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
-                              PatchServiceAttachmentsRequest const& request);
+  PatchServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
+                             PatchServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::

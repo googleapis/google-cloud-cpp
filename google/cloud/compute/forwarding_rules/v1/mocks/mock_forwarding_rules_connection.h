@@ -55,21 +55,21 @@ class MockForwardingRulesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteForwardingRules,
+              DeleteForwardingRule,
               (google::cloud::cpp::compute::forwarding_rules::v1::
-                   DeleteForwardingRulesRequest const& request),
+                   DeleteForwardingRuleRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>,
-              GetForwardingRules,
+              GetForwardingRule,
               (google::cloud::cpp::compute::forwarding_rules::v1::
-                   GetForwardingRulesRequest const& request),
+                   GetForwardingRuleRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertForwardingRules,
+              InsertForwardingRule,
               (google::cloud::cpp::compute::forwarding_rules::v1::
-                   InsertForwardingRulesRequest const& request),
+                   InsertForwardingRuleRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>,
@@ -79,9 +79,9 @@ class MockForwardingRulesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchForwardingRules,
+              PatchForwardingRule,
               (google::cloud::cpp::compute::forwarding_rules::v1::
-                   PatchForwardingRulesRequest const& request),
+                   PatchForwardingRuleRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

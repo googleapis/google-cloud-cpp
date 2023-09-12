@@ -43,34 +43,34 @@ RegionNotificationEndpointsRestMetadata::
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsRestMetadata::AsyncDeleteRegionNotificationEndpoints(
+RegionNotificationEndpointsRestMetadata::AsyncDeleteNotificationEndpoint(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        DeleteRegionNotificationEndpointsRequest const& request) {
+        DeleteNotificationEndpointRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteRegionNotificationEndpoints(
-      cq, std::move(rest_context), request);
+  return child_->AsyncDeleteNotificationEndpoint(cq, std::move(rest_context),
+                                                 request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
-RegionNotificationEndpointsRestMetadata::GetRegionNotificationEndpoints(
+RegionNotificationEndpointsRestMetadata::GetNotificationEndpoint(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        GetRegionNotificationEndpointsRequest const& request) {
+        GetNotificationEndpointRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetRegionNotificationEndpoints(rest_context, request);
+  return child_->GetNotificationEndpoint(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionNotificationEndpointsRestMetadata::AsyncInsertRegionNotificationEndpoints(
+RegionNotificationEndpointsRestMetadata::AsyncInsertNotificationEndpoint(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
-        InsertRegionNotificationEndpointsRequest const& request) {
+        InsertNotificationEndpointRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertRegionNotificationEndpoints(
-      cq, std::move(rest_context), request);
+  return child_->AsyncInsertNotificationEndpoint(cq, std::move(rest_context),
+                                                 request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>
@@ -87,7 +87,7 @@ RegionNotificationEndpointsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -96,7 +96,7 @@ future<Status> RegionNotificationEndpointsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

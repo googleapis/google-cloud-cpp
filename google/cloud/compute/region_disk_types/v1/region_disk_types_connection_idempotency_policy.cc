@@ -34,9 +34,9 @@ RegionDiskTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionDiskTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegionDiskTypesConnectionIdempotencyPolicy::GetRegionDiskTypes(
+Idempotency RegionDiskTypesConnectionIdempotencyPolicy::GetDiskType(
     google::cloud::cpp::compute::region_disk_types::v1::
-        GetRegionDiskTypesRequest const&) {
+        GetDiskTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 

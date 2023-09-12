@@ -45,34 +45,34 @@ NetworkEdgeSecurityServicesConnection::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesConnection::DeleteNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesConnection::DeleteNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        DeleteNetworkEdgeSecurityServicesRequest const&) {
+        DeleteNetworkEdgeSecurityServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
-NetworkEdgeSecurityServicesConnection::GetNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesConnection::GetNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        GetNetworkEdgeSecurityServicesRequest const&) {
+        GetNetworkEdgeSecurityServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesConnection::InsertNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesConnection::InsertNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        InsertNetworkEdgeSecurityServicesRequest const&) {
+        InsertNetworkEdgeSecurityServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityServices(
+NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        PatchNetworkEdgeSecurityServicesRequest const&) {
+        PatchNetworkEdgeSecurityServiceRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

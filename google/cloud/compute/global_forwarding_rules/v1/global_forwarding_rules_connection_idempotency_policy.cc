@@ -37,23 +37,22 @@ GlobalForwardingRulesConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
-GlobalForwardingRulesConnectionIdempotencyPolicy::DeleteGlobalForwardingRules(
+GlobalForwardingRulesConnectionIdempotencyPolicy::DeleteForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteGlobalForwardingRulesRequest const&) {
+        DeleteForwardingRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency
-GlobalForwardingRulesConnectionIdempotencyPolicy::GetGlobalForwardingRules(
+Idempotency GlobalForwardingRulesConnectionIdempotencyPolicy::GetForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        GetGlobalForwardingRulesRequest const&) {
+        GetForwardingRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 Idempotency
-GlobalForwardingRulesConnectionIdempotencyPolicy::InsertGlobalForwardingRules(
+GlobalForwardingRulesConnectionIdempotencyPolicy::InsertForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertGlobalForwardingRulesRequest const&) {
+        InsertForwardingRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,9 +64,9 @@ GlobalForwardingRulesConnectionIdempotencyPolicy::ListGlobalForwardingRules(
 }
 
 Idempotency
-GlobalForwardingRulesConnectionIdempotencyPolicy::PatchGlobalForwardingRules(
+GlobalForwardingRulesConnectionIdempotencyPolicy::PatchForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchGlobalForwardingRulesRequest const&) {
+        PatchForwardingRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

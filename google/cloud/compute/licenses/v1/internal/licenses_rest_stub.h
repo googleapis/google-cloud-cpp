@@ -38,15 +38,15 @@ class LicensesRestStub {
   virtual ~LicensesRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteLicenses(
+  AsyncDeleteLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+  virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -55,10 +55,10 @@ class LicensesRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertLicenses(
+  AsyncInsertLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
@@ -82,13 +82,13 @@ class LicensesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultLicensesRestStub : public LicensesRestStub {
@@ -101,15 +101,15 @@ class DefaultLicensesRestStub : public LicensesRestStub {
                           Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteLicenses(
+  AsyncDeleteLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -118,10 +118,10 @@ class DefaultLicensesRestStub : public LicensesRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertLicenses(
+  AsyncInsertLicense(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
@@ -144,13 +144,13 @@ class DefaultLicensesRestStub : public LicensesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          GetGlobalOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::global_operations::v1::
-          DeleteGlobalOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

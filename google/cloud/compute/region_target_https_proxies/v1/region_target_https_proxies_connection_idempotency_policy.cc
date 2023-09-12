@@ -36,24 +36,24 @@ RegionTargetHttpsProxiesConnectionIdempotencyPolicy::clone() const {
       *this);
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    DeleteRegionTargetHttpsProxies(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            DeleteRegionTargetHttpsProxiesRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::DeleteTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        DeleteTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    GetRegionTargetHttpsProxies(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            GetRegionTargetHttpsProxiesRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::GetTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        GetTargetHttpsProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    InsertRegionTargetHttpsProxies(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            InsertRegionTargetHttpsProxiesRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::InsertTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        InsertTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -64,10 +64,10 @@ Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionTargetHttpsProxiesConnectionIdempotencyPolicy::
-    PatchRegionTargetHttpsProxies(
-        google::cloud::cpp::compute::region_target_https_proxies::v1::
-            PatchRegionTargetHttpsProxiesRequest const&) {
+Idempotency
+RegionTargetHttpsProxiesConnectionIdempotencyPolicy::PatchTargetHttpsProxy(
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        PatchTargetHttpsProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

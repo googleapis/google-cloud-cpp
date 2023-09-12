@@ -50,13 +50,13 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           CloneRulesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency DeleteFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          DeleteNetworkFirewallPoliciesRequest const& request);
+          DeleteFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency GetFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          GetNetworkFirewallPoliciesRequest const& request);
+          GetFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency GetAssociation(
       google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -70,17 +70,17 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           GetRuleRequest const& request);
 
-  virtual google::cloud::Idempotency InsertNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency InsertFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          InsertNetworkFirewallPoliciesRequest const& request);
+          InsertFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListNetworkFirewallPolicies(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           ListNetworkFirewallPoliciesRequest request);
 
-  virtual google::cloud::Idempotency PatchNetworkFirewallPolicies(
+  virtual google::cloud::Idempotency PatchFirewallPolicy(
       google::cloud::cpp::compute::network_firewall_policies::v1::
-          PatchNetworkFirewallPoliciesRequest const& request);
+          PatchFirewallPolicyRequest const& request);
 
   virtual google::cloud::Idempotency PatchRule(
       google::cloud::cpp::compute::network_firewall_policies::v1::

@@ -43,25 +43,25 @@ TargetHttpsProxiesConnection::AggregatedListTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpsProxiesConnection::DeleteTargetHttpsProxies(
+TargetHttpsProxiesConnection::DeleteTargetHttpsProxy(
     google::cloud::cpp::compute::target_https_proxies::v1::
-        DeleteTargetHttpsProxiesRequest const&) {
+        DeleteTargetHttpsProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
-TargetHttpsProxiesConnection::GetTargetHttpsProxies(
+TargetHttpsProxiesConnection::GetTargetHttpsProxy(
     google::cloud::cpp::compute::target_https_proxies::v1::
-        GetTargetHttpsProxiesRequest const&) {
+        GetTargetHttpsProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpsProxiesConnection::InsertTargetHttpsProxies(
+TargetHttpsProxiesConnection::InsertTargetHttpsProxy(
     google::cloud::cpp::compute::target_https_proxies::v1::
-        InsertTargetHttpsProxiesRequest const&) {
+        InsertTargetHttpsProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -76,9 +76,9 @@ TargetHttpsProxiesConnection::ListTargetHttpsProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetHttpsProxiesConnection::PatchTargetHttpsProxies(
+TargetHttpsProxiesConnection::PatchTargetHttpsProxy(
     google::cloud::cpp::compute::target_https_proxies::v1::
-        PatchTargetHttpsProxiesRequest const&) {
+        PatchTargetHttpsProxyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -55,19 +55,18 @@ class RegionSecurityPoliciesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionSecurityPolicies(
+  DeleteSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          DeleteRegionSecurityPoliciesRequest const& request) override;
+          DeleteSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetRegionSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          GetRegionSecurityPoliciesRequest const& request) override;
+          GetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionSecurityPolicies(
+  InsertSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          InsertRegionSecurityPoliciesRequest const& request) override;
+          InsertSecurityPolicyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListRegionSecurityPolicies(
@@ -75,9 +74,9 @@ class RegionSecurityPoliciesRestConnectionImpl
           ListRegionSecurityPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRegionSecurityPolicies(
+  PatchSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
-          PatchRegionSecurityPoliciesRequest const& request) override;
+          PatchSecurityPolicyRequest const& request) override;
 
  private:
   static std::unique_ptr<

@@ -40,7 +40,7 @@ service RegionInstanceTemplates {
   // Deletes the specified instance template. Deleting an instance template is
   // permanent and cannot be undone.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/delete
-  rpc DeleteRegionInstanceTemplates(DeleteRegionInstanceTemplatesRequest)
+  rpc DeleteInstanceTemplate(DeleteInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates/{instance_template}"
@@ -51,7 +51,7 @@ service RegionInstanceTemplates {
 
   // Returns the specified instance template.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/get
-  rpc GetRegionInstanceTemplates(GetRegionInstanceTemplatesRequest)
+  rpc GetInstanceTemplate(GetInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.InstanceTemplate) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates/{instance_template}"
@@ -62,7 +62,7 @@ service RegionInstanceTemplates {
   // Creates an instance template in the specified project and region using the
   // global instance template whose URL is included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionInstanceTemplates/insert
-  rpc InsertRegionInstanceTemplates(InsertRegionInstanceTemplatesRequest)
+  rpc InsertInstanceTemplate(InsertInstanceTemplateRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/instanceTemplates"
@@ -85,8 +85,8 @@ service RegionInstanceTemplates {
   }
 }
 
-// Request message for DeleteRegionInstanceTemplates.
-message DeleteRegionInstanceTemplatesRequest {
+// Request message for DeleteInstanceTemplate.
+message DeleteInstanceTemplateRequest {
   // The name of the instance template to delete.
   string instance_template = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -115,8 +115,8 @@ message DeleteRegionInstanceTemplatesRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetRegionInstanceTemplates.
-message GetRegionInstanceTemplatesRequest {
+// Request message for GetInstanceTemplate.
+message GetInstanceTemplateRequest {
   // The name of the instance template.
   string instance_template = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -127,8 +127,8 @@ message GetRegionInstanceTemplatesRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionInstanceTemplates.
-message InsertRegionInstanceTemplatesRequest {
+// Request message for InsertInstanceTemplate.
+message InsertInstanceTemplateRequest {
   // The InstanceTemplate for this request.
   optional google.cloud.cpp.compute.v1.InstanceTemplate
       instance_template_resource = 1 [json_name = "__json_request_body"];

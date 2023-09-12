@@ -34,21 +34,20 @@ RegionUrlMapsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RegionUrlMapsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::DeleteRegionUrlMaps(
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::DeleteUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        DeleteRegionUrlMapsRequest const&) {
+        DeleteUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::GetRegionUrlMaps(
-    google::cloud::cpp::compute::region_url_maps::v1::
-        GetRegionUrlMapsRequest const&) {
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::GetUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::InsertRegionUrlMaps(
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::InsertUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        InsertRegionUrlMapsRequest const&) {
+        InsertUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -58,15 +57,15 @@ Idempotency RegionUrlMapsConnectionIdempotencyPolicy::ListRegionUrlMaps(
   return Idempotency::kIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::PatchRegionUrlMaps(
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::PatchUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        PatchRegionUrlMapsRequest const&) {
+        PatchUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RegionUrlMapsConnectionIdempotencyPolicy::UpdateRegionUrlMaps(
+Idempotency RegionUrlMapsConnectionIdempotencyPolicy::UpdateUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::
-        UpdateRegionUrlMapsRequest const&) {
+        UpdateUrlMapRequest const&) {
   return Idempotency::kIdempotent;
 }
 

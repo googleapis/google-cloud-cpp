@@ -48,7 +48,7 @@ service Images {
 
   // Deletes the specified image.
   // https://cloud.google.com/compute/docs/reference/rest/v1/images/delete
-  rpc DeleteImages(DeleteImagesRequest)
+  rpc DeleteImage(DeleteImageRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/images/{image}"
@@ -73,7 +73,7 @@ service Images {
 
   // Returns the specified image.
   // https://cloud.google.com/compute/docs/reference/rest/v1/images/get
-  rpc GetImages(GetImagesRequest) returns (google.cloud.cpp.compute.v1.Image) {
+  rpc GetImage(GetImageRequest) returns (google.cloud.cpp.compute.v1.Image) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/images/{image}"
     };
@@ -106,7 +106,7 @@ service Images {
   // Creates an image in the specified project using the data included in the
   // request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/images/insert
-  rpc InsertImages(InsertImagesRequest)
+  rpc InsertImage(InsertImageRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/images"
@@ -134,7 +134,7 @@ service Images {
   // Patches the specified image with the data included in the request. Only the
   // following fields can be modified: family, description, deprecation status.
   // https://cloud.google.com/compute/docs/reference/rest/v1/images/patch
-  rpc PatchImages(PatchImagesRequest)
+  rpc PatchImage(PatchImageRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/images/{image}"
@@ -184,8 +184,8 @@ service Images {
   }
 }
 
-// Request message for DeleteImages.
-message DeleteImagesRequest {
+// Request message for DeleteImage.
+message DeleteImageRequest {
   // Name of the image resource to delete.
   string image = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -258,8 +258,8 @@ message GetIamPolicyRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetImages.
-message GetImagesRequest {
+// Request message for GetImage.
+message GetImageRequest {
   // Name of the image resource to return.
   string image = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -267,8 +267,8 @@ message GetImagesRequest {
   string project = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertImages.
-message InsertImagesRequest {
+// Request message for InsertImage.
+message InsertImageRequest {
   // Force image creation if true.
   optional bool force_create = 1;
 
@@ -360,8 +360,8 @@ message ListImagesRequest {
   optional bool return_partial_success = 6;
 }
 
-// Request message for PatchImages.
-message PatchImagesRequest {
+// Request message for PatchImage.
+message PatchImageRequest {
   // Name of the image resource to patch.
   string image = 1 [(google.api.field_behavior) = REQUIRED];
 

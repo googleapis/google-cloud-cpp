@@ -61,18 +61,18 @@ FirewallPoliciesConnection::CloneRules(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallPoliciesConnection::DeleteFirewallPolicies(
+FirewallPoliciesConnection::DeleteFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        DeleteFirewallPoliciesRequest const&) {
+        DeleteFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-FirewallPoliciesConnection::GetFirewallPolicies(
+FirewallPoliciesConnection::GetFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        GetFirewallPoliciesRequest const&) {
+        GetFirewallPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -97,9 +97,9 @@ FirewallPoliciesConnection::GetRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallPoliciesConnection::InsertFirewallPolicies(
+FirewallPoliciesConnection::InsertFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        InsertFirewallPoliciesRequest const&) {
+        InsertFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -130,9 +130,9 @@ FirewallPoliciesConnection::Move(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-FirewallPoliciesConnection::PatchFirewallPolicies(
+FirewallPoliciesConnection::PatchFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
-        PatchFirewallPoliciesRequest const&) {
+        PatchFirewallPolicyRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

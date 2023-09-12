@@ -34,38 +34,38 @@ TargetSslProxiesTracingConnection::TargetSslProxiesTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::DeleteTargetSslProxies(
+TargetSslProxiesTracingConnection::DeleteTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        DeleteTargetSslProxiesRequest const& request) {
+        DeleteTargetSslProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
-      "DeleteTargetSslProxies");
+      "DeleteTargetSslProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->DeleteTargetSslProxies(request));
+                           child_->DeleteTargetSslProxy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesTracingConnection::GetTargetSslProxies(
+TargetSslProxiesTracingConnection::GetTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        GetTargetSslProxiesRequest const& request) {
+        GetTargetSslProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
-      "GetTargetSslProxies");
+      "GetTargetSslProxy");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetTargetSslProxies(request));
+  return internal::EndSpan(*span, child_->GetTargetSslProxy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetSslProxiesTracingConnection::InsertTargetSslProxies(
+TargetSslProxiesTracingConnection::InsertTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
-        InsertTargetSslProxiesRequest const& request) {
+        InsertTargetSslProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
-      "InsertTargetSslProxies");
+      "InsertTargetSslProxy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(std::move(span),
-                           child_->InsertTargetSslProxies(request));
+                           child_->InsertTargetSslProxy(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>

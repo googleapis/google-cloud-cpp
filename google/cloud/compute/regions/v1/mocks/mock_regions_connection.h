@@ -46,11 +46,10 @@ class MockRegionsConnection : public compute_regions_v1::RegionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Region>, GetRegions,
-      (google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Region>, GetRegion,
+              (google::cloud::cpp::compute::regions::v1::GetRegionRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(
       StreamRange<google::cloud::cpp::compute::v1::Region>, ListRegions,

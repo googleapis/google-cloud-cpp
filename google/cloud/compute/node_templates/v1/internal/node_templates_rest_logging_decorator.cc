@@ -48,32 +48,32 @@ NodeTemplatesRestLogging::AggregatedListNodeTemplates(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesRestLogging::AsyncDeleteNodeTemplates(
+NodeTemplatesRestLogging::AsyncDeleteNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplatesRequest const& request) {
+        DeleteNodeTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::node_templates::v1::
-                 DeleteNodeTemplatesRequest const& request) {
-        return child_->AsyncDeleteNodeTemplates(cq, std::move(rest_context),
-                                                request);
+                 DeleteNodeTemplateRequest const& request) {
+        return child_->AsyncDeleteNodeTemplate(cq, std::move(rest_context),
+                                               request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesRestLogging::GetNodeTemplates(
+NodeTemplatesRestLogging::GetNodeTemplate(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
-        GetNodeTemplatesRequest const& request) {
+        GetNodeTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::node_templates::v1::
-                 GetNodeTemplatesRequest const& request) {
-        return child_->GetNodeTemplates(rest_context, request);
+                 GetNodeTemplateRequest const& request) {
+        return child_->GetNodeTemplate(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
@@ -93,18 +93,18 @@ NodeTemplatesRestLogging::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-NodeTemplatesRestLogging::AsyncInsertNodeTemplates(
+NodeTemplatesRestLogging::AsyncInsertNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplatesRequest const& request) {
+        InsertNodeTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::node_templates::v1::
-                 InsertNodeTemplatesRequest const& request) {
-        return child_->AsyncInsertNodeTemplates(cq, std::move(rest_context),
-                                                request);
+                 InsertNodeTemplateRequest const& request) {
+        return child_->AsyncInsertNodeTemplate(cq, std::move(rest_context),
+                                               request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
@@ -156,12 +156,12 @@ NodeTemplatesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        GetRegionOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 GetRegionOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -171,12 +171,12 @@ future<Status> NodeTemplatesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::region_operations::v1::
-        DeleteRegionOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::region_operations::v1::
-                 DeleteRegionOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

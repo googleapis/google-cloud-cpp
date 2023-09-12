@@ -39,10 +39,10 @@ DefaultLicenseCodesRestStub::DefaultLicenseCodesRestStub(
     : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-DefaultLicenseCodesRestStub::GetLicenseCodes(
+DefaultLicenseCodesRestStub::GetLicenseCode(
     google::cloud::rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::license_codes::v1::
-        GetLicenseCodesRequest const& request) {
+    google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",

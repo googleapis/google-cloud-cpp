@@ -55,21 +55,21 @@ class MockTargetVpnGatewaysConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteTargetVpnGateways,
+              DeleteTargetVpnGateway,
               (google::cloud::cpp::compute::target_vpn_gateways::v1::
-                   DeleteTargetVpnGatewaysRequest const& request),
+                   DeleteTargetVpnGatewayRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>,
-              GetTargetVpnGateways,
+              GetTargetVpnGateway,
               (google::cloud::cpp::compute::target_vpn_gateways::v1::
-                   GetTargetVpnGatewaysRequest const& request),
+                   GetTargetVpnGatewayRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertTargetVpnGateways,
+              InsertTargetVpnGateway,
               (google::cloud::cpp::compute::target_vpn_gateways::v1::
-                   InsertTargetVpnGatewaysRequest const& request),
+                   InsertTargetVpnGatewayRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>,

@@ -35,48 +35,48 @@ PublicAdvertisedPrefixesRestLogging::PublicAdvertisedPrefixesRestLogging(
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesRestLogging::AsyncDeletePublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestLogging::AsyncDeletePublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixesRequest const& request) {
+        DeletePublicAdvertisedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 DeletePublicAdvertisedPrefixesRequest const& request) {
-        return child_->AsyncDeletePublicAdvertisedPrefixes(
+                 DeletePublicAdvertisedPrefixRequest const& request) {
+        return child_->AsyncDeletePublicAdvertisedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
-PublicAdvertisedPrefixesRestLogging::GetPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestLogging::GetPublicAdvertisedPrefix(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        GetPublicAdvertisedPrefixesRequest const& request) {
+        GetPublicAdvertisedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
              google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 GetPublicAdvertisedPrefixesRequest const& request) {
-        return child_->GetPublicAdvertisedPrefixes(rest_context, request);
+                 GetPublicAdvertisedPrefixRequest const& request) {
+        return child_->GetPublicAdvertisedPrefix(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesRestLogging::AsyncInsertPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestLogging::AsyncInsertPublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixesRequest const& request) {
+        InsertPublicAdvertisedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 InsertPublicAdvertisedPrefixesRequest const& request) {
-        return child_->AsyncInsertPublicAdvertisedPrefixes(
+                 InsertPublicAdvertisedPrefixRequest const& request) {
+        return child_->AsyncInsertPublicAdvertisedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -97,17 +97,17 @@ PublicAdvertisedPrefixesRestLogging::ListPublicAdvertisedPrefixes(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-PublicAdvertisedPrefixesRestLogging::AsyncPatchPublicAdvertisedPrefixes(
+PublicAdvertisedPrefixesRestLogging::AsyncPatchPublicAdvertisedPrefix(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixesRequest const& request) {
+        PatchPublicAdvertisedPrefixRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::public_advertised_prefixes::v1::
-                 PatchPublicAdvertisedPrefixesRequest const& request) {
-        return child_->AsyncPatchPublicAdvertisedPrefixes(
+                 PatchPublicAdvertisedPrefixRequest const& request) {
+        return child_->AsyncPatchPublicAdvertisedPrefix(
             cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -118,12 +118,12 @@ PublicAdvertisedPrefixesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 GetGlobalOperationsRequest const& request) {
+                 GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(rest_context), request);
       },
       cq, std::move(rest_context), request, __func__, tracing_options_);
@@ -133,12 +133,12 @@ future<Status> PublicAdvertisedPrefixesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::cpp::compute::global_operations::v1::
-                 DeleteGlobalOperationsRequest const& request) {
+                 DeleteOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(rest_context),
                                             request);
       },

@@ -180,13 +180,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L216}
+  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L216}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(std::string const& project,
-                          std::string const& instance_template,
-                          Options opts = {});
+  DeleteInstanceTemplate(std::string const& project,
+                         std::string const& instance_template,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -198,7 +198,7 @@ class InstanceTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest].
+  ///     [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -221,13 +221,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L216}
+  /// [google.cloud.cpp.compute.instance_templates.v1.DeleteInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L216}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                              DeleteInstanceTemplatesRequest const& request,
-                          Options opts = {});
+  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                             DeleteInstanceTemplateRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -249,13 +249,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L252}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L252}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(std::string const& project,
-                       std::string const& instance_template, Options opts = {});
+  GetInstanceTemplate(std::string const& project,
+                      std::string const& instance_template, Options opts = {});
 
   // clang-format off
   ///
@@ -265,7 +265,7 @@ class InstanceTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest].
+  ///     [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -281,14 +281,14 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L252}
+  /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L252}
   /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_023.proto#L78}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                           GetInstanceTemplatesRequest const& request,
-                       Options opts = {});
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                          GetInstanceTemplateRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -383,11 +383,11 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L261}
+  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(
+  InsertInstanceTemplate(
       std::string const& project,
       google::cloud::cpp::compute::v1::InstanceTemplate const&
           instance_template_resource,
@@ -404,7 +404,7 @@ class InstanceTemplatesClient {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest].
+  ///     [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -427,13 +427,13 @@ class InstanceTemplatesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L261}
+  /// [google.cloud.cpp.compute.instance_templates.v1.InsertInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
-                              InsertInstanceTemplatesRequest const& request,
-                          Options opts = {});
+  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                             InsertInstanceTemplateRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///

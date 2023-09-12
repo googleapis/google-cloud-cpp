@@ -41,21 +41,21 @@ PacketMirroringsConnectionIdempotencyPolicy::AggregatedListPacketMirrorings(
   return Idempotency::kIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::DeletePacketMirrorings(
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::DeletePacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringsRequest const&) {
+        DeletePacketMirroringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::GetPacketMirrorings(
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::GetPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        GetPacketMirroringsRequest const&) {
+        GetPacketMirroringRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::InsertPacketMirrorings(
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::InsertPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringsRequest const&) {
+        InsertPacketMirroringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -65,9 +65,9 @@ Idempotency PacketMirroringsConnectionIdempotencyPolicy::ListPacketMirrorings(
   return Idempotency::kIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::PatchPacketMirrorings(
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::PatchPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringsRequest const&) {
+        PatchPacketMirroringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

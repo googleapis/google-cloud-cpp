@@ -39,7 +39,7 @@ service RegionHealthCheckServices {
 
   // Deletes the specified regional HealthCheckService.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthCheckServices/delete
-  rpc DeleteRegionHealthCheckServices(DeleteRegionHealthCheckServicesRequest)
+  rpc DeleteHealthCheckService(DeleteHealthCheckServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
@@ -51,7 +51,7 @@ service RegionHealthCheckServices {
 
   // Returns the specified regional HealthCheckService resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthCheckServices/get
-  rpc GetRegionHealthCheckServices(GetRegionHealthCheckServicesRequest)
+  rpc GetHealthCheckService(GetHealthCheckServiceRequest)
       returns (google.cloud.cpp.compute.v1.HealthCheckService) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
@@ -63,7 +63,7 @@ service RegionHealthCheckServices {
   // Creates a regional HealthCheckService resource in the specified project and
   // region using the data included in the request.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthCheckServices/insert
-  rpc InsertRegionHealthCheckServices(InsertRegionHealthCheckServicesRequest)
+  rpc InsertHealthCheckService(InsertHealthCheckServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices"
@@ -89,7 +89,7 @@ service RegionHealthCheckServices {
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
   // https://cloud.google.com/compute/docs/reference/rest/v1/regionHealthCheckServices/patch
-  rpc PatchRegionHealthCheckServices(PatchRegionHealthCheckServicesRequest)
+  rpc PatchHealthCheckService(PatchHealthCheckServiceRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
@@ -101,8 +101,8 @@ service RegionHealthCheckServices {
   }
 }
 
-// Request message for DeleteRegionHealthCheckServices.
-message DeleteRegionHealthCheckServicesRequest {
+// Request message for DeleteHealthCheckService.
+message DeleteHealthCheckServiceRequest {
   // Name of the HealthCheckService to delete. The name must be 1-63 characters
   // long, and comply with RFC1035.
   string health_check_service = 1 [(google.api.field_behavior) = REQUIRED];
@@ -132,8 +132,8 @@ message DeleteRegionHealthCheckServicesRequest {
   optional string request_id = 4;
 }
 
-// Request message for GetRegionHealthCheckServices.
-message GetRegionHealthCheckServicesRequest {
+// Request message for GetHealthCheckService.
+message GetHealthCheckServiceRequest {
   // Name of the HealthCheckService to update. The name must be 1-63 characters
   // long, and comply with RFC1035.
   string health_check_service = 1 [(google.api.field_behavior) = REQUIRED];
@@ -145,8 +145,8 @@ message GetRegionHealthCheckServicesRequest {
   string region = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for InsertRegionHealthCheckServices.
-message InsertRegionHealthCheckServicesRequest {
+// Request message for InsertHealthCheckService.
+message InsertHealthCheckServiceRequest {
   // The HealthCheckService for this request.
   optional google.cloud.cpp.compute.v1.HealthCheckService
       health_check_service_resource = 1 [json_name = "__json_request_body"];
@@ -244,8 +244,8 @@ message ListRegionHealthCheckServicesRequest {
   optional bool return_partial_success = 7;
 }
 
-// Request message for PatchRegionHealthCheckServices.
-message PatchRegionHealthCheckServicesRequest {
+// Request message for PatchHealthCheckService.
+message PatchHealthCheckServiceRequest {
   // Name of the HealthCheckService to update. The name must be 1-63 characters
   // long, and comply with RFC1035.
   string health_check_service = 1 [(google.api.field_behavior) = REQUIRED];

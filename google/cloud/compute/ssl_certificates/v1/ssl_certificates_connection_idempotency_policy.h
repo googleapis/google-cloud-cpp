@@ -41,17 +41,17 @@ class SslCertificatesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::ssl_certificates::v1::
           AggregatedListSslCertificatesRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteSslCertificates(
+  virtual google::cloud::Idempotency DeleteSslCertificate(
       google::cloud::cpp::compute::ssl_certificates::v1::
-          DeleteSslCertificatesRequest const& request);
+          DeleteSslCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency GetSslCertificates(
+  virtual google::cloud::Idempotency GetSslCertificate(
       google::cloud::cpp::compute::ssl_certificates::v1::
-          GetSslCertificatesRequest const& request);
+          GetSslCertificateRequest const& request);
 
-  virtual google::cloud::Idempotency InsertSslCertificates(
+  virtual google::cloud::Idempotency InsertSslCertificate(
       google::cloud::cpp::compute::ssl_certificates::v1::
-          InsertSslCertificatesRequest const& request);
+          InsertSslCertificateRequest const& request);
 
   virtual google::cloud::Idempotency ListSslCertificates(
       google::cloud::cpp::compute::ssl_certificates::v1::

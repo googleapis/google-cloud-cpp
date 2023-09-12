@@ -183,12 +183,12 @@ class LicensesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicenses(
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+  DeleteLicense(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+  virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -196,8 +196,8 @@ class LicensesConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicenses(
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+  InsertLicense(
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(

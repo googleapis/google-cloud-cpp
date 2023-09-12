@@ -41,34 +41,34 @@ TargetGrpcProxiesRestMetadata::TargetGrpcProxiesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesRestMetadata::AsyncDeleteTargetGrpcProxies(
+TargetGrpcProxiesRestMetadata::AsyncDeleteTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxiesRequest const& request) {
+        DeleteTargetGrpcProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteTargetGrpcProxies(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncDeleteTargetGrpcProxy(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-TargetGrpcProxiesRestMetadata::GetTargetGrpcProxies(
+TargetGrpcProxiesRestMetadata::GetTargetGrpcProxy(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        GetTargetGrpcProxiesRequest const& request) {
+        GetTargetGrpcProxyRequest const& request) {
   SetMetadata(rest_context);
-  return child_->GetTargetGrpcProxies(rest_context, request);
+  return child_->GetTargetGrpcProxy(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesRestMetadata::AsyncInsertTargetGrpcProxies(
+TargetGrpcProxiesRestMetadata::AsyncInsertTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxiesRequest const& request) {
+        InsertTargetGrpcProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertTargetGrpcProxies(cq, std::move(rest_context),
-                                              request);
+  return child_->AsyncInsertTargetGrpcProxy(cq, std::move(rest_context),
+                                            request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
@@ -81,14 +81,14 @@ TargetGrpcProxiesRestMetadata::ListTargetGrpcProxies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetGrpcProxiesRestMetadata::AsyncPatchTargetGrpcProxies(
+TargetGrpcProxiesRestMetadata::AsyncPatchTargetGrpcProxy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxiesRequest const& request) {
+        PatchTargetGrpcProxyRequest const& request) {
   SetMetadata(*rest_context);
-  return child_->AsyncPatchTargetGrpcProxies(cq, std::move(rest_context),
-                                             request);
+  return child_->AsyncPatchTargetGrpcProxy(cq, std::move(rest_context),
+                                           request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -96,7 +96,7 @@ TargetGrpcProxiesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -105,7 +105,7 @@ future<Status> TargetGrpcProxiesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

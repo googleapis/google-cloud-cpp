@@ -40,22 +40,22 @@ SnapshotsRestMetadata::SnapshotsRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsRestMetadata::AsyncDeleteSnapshots(
+SnapshotsRestMetadata::AsyncDeleteSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncDeleteSnapshots(cq, std::move(rest_context), request);
+  return child_->AsyncDeleteSnapshot(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsRestMetadata::GetSnapshots(
+SnapshotsRestMetadata::GetSnapshot(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
         request) {
   SetMetadata(rest_context);
-  return child_->GetSnapshots(rest_context, request);
+  return child_->GetSnapshot(rest_context, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -68,13 +68,13 @@ SnapshotsRestMetadata::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsRestMetadata::AsyncInsertSnapshots(
+SnapshotsRestMetadata::AsyncInsertSnapshot(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
         request) {
   SetMetadata(*rest_context);
-  return child_->AsyncInsertSnapshots(cq, std::move(rest_context), request);
+  return child_->AsyncInsertSnapshot(cq, std::move(rest_context), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
@@ -119,7 +119,7 @@ SnapshotsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const& request) {
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
@@ -128,7 +128,7 @@ future<Status> SnapshotsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const& request) {
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }

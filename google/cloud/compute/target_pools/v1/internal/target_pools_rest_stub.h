@@ -58,16 +58,16 @@ class TargetPoolsRestStub {
           AggregatedListTargetPoolsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetPools(
+  AsyncDeleteTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolsRequest const& request) = 0;
+          DeleteTargetPoolRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request) = 0;
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
   GetHealth(
@@ -76,11 +76,11 @@ class TargetPoolsRestStub {
           request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetPools(
+  AsyncInsertTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolsRequest const& request) = 0;
+          InsertTargetPoolRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
   ListTargetPools(google::cloud::rest_internal::RestContext& rest_context,
@@ -113,13 +113,13 @@ class TargetPoolsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) = 0;
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) = 0;
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultTargetPoolsRestStub : public TargetPoolsRestStub {
@@ -151,16 +151,16 @@ class DefaultTargetPoolsRestStub : public TargetPoolsRestStub {
           AggregatedListTargetPoolsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncDeleteTargetPools(
+  AsyncDeleteTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_pools::v1::
-          DeleteTargetPoolsRequest const& request) override;
+          DeleteTargetPoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::target_pools::v1::
-          GetTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -168,11 +168,11 @@ class DefaultTargetPoolsRestStub : public TargetPoolsRestStub {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AsyncInsertTargetPools(
+  AsyncInsertTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::target_pools::v1::
-          InsertTargetPoolsRequest const& request) override;
+          InsertTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolList> ListTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -204,13 +204,13 @@ class DefaultTargetPoolsRestStub : public TargetPoolsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

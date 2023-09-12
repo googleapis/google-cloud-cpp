@@ -51,6 +51,9 @@ auto constexpr kResourceJson = R"""({
           "description": "Description for foo."
         }
       },
+      "response": {
+        "$ref": "MyResource"
+      },
       "parameterOrder": [
         "project",
         "region",
@@ -118,7 +121,7 @@ auto constexpr kDoFooRequestTypeJson = R"""({
 
 auto constexpr kGetRequestTypeJson = R"""({
   "type": "object",
-  "id": "GetMyResourcesRequest",
+  "id": "GetMyResourceRequest",
   "properties": {
     "project": {
       "type": "string",
@@ -182,7 +185,7 @@ service MyResources {
 
   // Description for the get method.
   // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/get
-  rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
+  rpc GetMyResource(GetMyResourceRequest) returns (other.package.MyResource) {
     option (google.api.http) = {
       get: "my/service/projects/{project}/regions/{region}/myResources/{foo}"
     };
@@ -203,7 +206,7 @@ message DoFooRequest {
   optional string zone = 4;
 }
 
-message GetMyResourcesRequest {
+message GetMyResourceRequest {
   // Description for foo.
   optional string foo = 1;
 
@@ -229,14 +232,16 @@ message GetMyResourcesRequest {
   DiscoveryResource r("myResources", "my.package.name", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json, &pool());
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest",
+  DiscoveryTypeVertex get_request_type("GetMyResourceRequest",
                                        "my.package.name", get_request_type_json,
                                        &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
-  r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  r.AddRequestType("GetMyResourceRequest", &get_request_type);
   DiscoveryTypeVertex operation_type("Operation", "other.package",
                                      operation_type_json, &pool());
+  DiscoveryTypeVertex get_response("MyResource", "other.package", {}, &pool());
   r.AddResponseType("Operation", &operation_type);
+  r.AddResponseType("MyResource", &get_response);
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
@@ -299,7 +304,7 @@ service MyResources {
 
   // Description for the get method.
   // https://cloud.google.com/my_product/docs/reference/rest/v1/myResources/get
-  rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
+  rpc GetMyResource(GetMyResourceRequest) returns (other.package.MyResource) {
     option (google.api.http) = {
       get: "my/service/projects/{project}/regions/{region}/myResources/{foo}"
     };
@@ -320,7 +325,7 @@ message DoFooRequest {
   optional string zone = 4;
 }
 
-message GetMyResourcesRequest {
+message GetMyResourceRequest {
   // Description for foo.
   optional string foo = 1;
 
@@ -345,14 +350,16 @@ message GetMyResourcesRequest {
   DiscoveryResource r("myResources", "my.package.name", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json, &pool());
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest",
+  DiscoveryTypeVertex get_request_type("GetMyResourceRequest",
                                        "my.package.name", get_request_type_json,
                                        &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
-  r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  r.AddRequestType("GetMyResourceRequest", &get_request_type);
   DiscoveryTypeVertex operation_type("Operation", "other.package",
                                      operation_type_json, &pool());
+  DiscoveryTypeVertex get_response("MyResource", "other.package", {}, &pool());
   r.AddResponseType("Operation", &operation_type);
+  r.AddResponseType("MyResource", &get_response);
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
@@ -408,7 +415,7 @@ message DoFooRequest {
   optional string zone = 4;
 }
 
-message GetMyResourcesRequest {
+message GetMyResourceRequest {
   // Description for foo.
   optional string foo = 1;
 
@@ -427,7 +434,7 @@ message GetMyResourcesRequest {
   ASSERT_TRUE(get_request_type_json.is_object());
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json, &pool());
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
+  DiscoveryTypeVertex get_request_type("GetMyResourceRequest", "",
                                        get_request_type_json, &pool());
   DiscoveryFile f(nullptr, "my_path", "my_relative_proto_path",
                   "my.package.name", {&do_foo_request_type, &get_request_type});
@@ -554,10 +561,10 @@ TEST_F(DiscoveryFileTest, FormatFileResourceScopeError) {
   DiscoveryResource r("myResources", "", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json, &pool());
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
+  DiscoveryTypeVertex get_request_type("GetMyResourceRequest", "",
                                        get_request_type_json, &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
-  r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  r.AddRequestType("GetMyResourceRequest", &get_request_type);
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
@@ -608,14 +615,15 @@ TEST_F(DiscoveryFileTest, FormatFileTypeMissingError) {
   DiscoveryResource r("myResources", "", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json, &pool());
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
+  DiscoveryTypeVertex get_request_type("GetMyResourceRequest", "",
                                        get_request_type_json, &pool());
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
-  r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  r.AddRequestType("GetMyResourceRequest", &get_request_type);
   DiscoveryTypeVertex operation_type("Operation", "other.package",
                                      operation_type_json, &pool());
+  DiscoveryTypeVertex get_response("MyResource", "other.package", {}, &pool());
   r.AddResponseType("Operation", &operation_type);
-
+  r.AddResponseType("MyResource", &get_response);
   DiscoveryFile f(&r, "my_path", "my_relative_proto_path", "my.package.name",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");

@@ -195,14 +195,37 @@ std::string DiscoveryResource::FormatFilePath(
                        "/");
 }
 
-// TODO(#11138): Add logic to keep resource name plural for aggregatedList and
-// list, but change resource name to singular for remaining primitive methods.
+std::string DiscoveryResource::GetMethodResponseTypeName() const {
+  std::string get_ref;
+  auto methods_iter = json_.find("methods");
+  if (methods_iter != json_.end()) {
+    auto get_method_iter = methods_iter->find("get");
+    if (get_method_iter != methods_iter->end()) {
+      auto response_iter = get_method_iter->find("response");
+      if (response_iter != get_method_iter->end()) {
+        get_ref = response_iter->value("$ref", "");
+      }
+    }
+  }
+
+  return get_ref;
+}
+
 std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
-  constexpr char const* kPrimitives[] = {
-      "AggregatedList", "Delete", "Get", "Insert", "List", "Patch", "Update"};
+  constexpr char const* kPluralPrimitives[] = {"AggregatedList", "List"};
+  constexpr char const* kSingularPrimitives[] = {"Delete", "Get", "Insert",
+                                                 "Patch", "Update"};
   method_name = CapitalizeFirstLetter(method_name);
-  if (internal::Contains(kPrimitives, method_name)) {
+  if (internal::Contains(kPluralPrimitives, method_name)) {
     return absl::StrCat(method_name, CapitalizeFirstLetter(name_));
+  }
+  if (internal::Contains(kSingularPrimitives, method_name)) {
+    std::string get_method_response_name = GetMethodResponseTypeName();
+    return absl::StrCat(
+        method_name,
+        CapitalizeFirstLetter(get_method_response_name.empty()
+                                  ? name_
+                                  : std::move(get_method_response_name)));
   }
   return method_name;
 }

@@ -40,8 +40,7 @@ service ZoneOperations {
 
   // Deletes the specified zone-specific Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/delete
-  rpc DeleteZoneOperations(DeleteZoneOperationsRequest)
-      returns (google.protobuf.Empty) {
+  rpc DeleteOperation(DeleteOperationRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}"
     };
@@ -50,7 +49,7 @@ service ZoneOperations {
 
   // Retrieves the specified zone-specific Operations resource.
   // https://cloud.google.com/compute/docs/reference/rest/v1/zoneOperations/get
-  rpc GetZoneOperations(GetZoneOperationsRequest)
+  rpc GetOperation(GetOperationRequest)
       returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}"
@@ -89,8 +88,8 @@ service ZoneOperations {
   }
 }
 
-// Request message for DeleteZoneOperations.
-message DeleteZoneOperationsRequest {
+// Request message for DeleteOperation.
+message DeleteOperationRequest {
   // Name of the Operations resource to delete.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -101,8 +100,8 @@ message DeleteZoneOperationsRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for GetZoneOperations.
-message GetZoneOperationsRequest {
+// Request message for GetOperation.
+message GetOperationRequest {
   // Name of the Operations resource to return.
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 

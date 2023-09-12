@@ -33,8 +33,8 @@ ZonesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ZonesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ZonesConnectionIdempotencyPolicy::GetZones(
-    google::cloud::cpp::compute::zones::v1::GetZonesRequest const&) {
+Idempotency ZonesConnectionIdempotencyPolicy::GetZone(
+    google::cloud::cpp::compute::zones::v1::GetZoneRequest const&) {
   return Idempotency::kIdempotent;
 }
 

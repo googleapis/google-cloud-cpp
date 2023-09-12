@@ -196,22 +196,20 @@ class NetworkAttachmentsConnection {
           AggregatedListNetworkAttachmentsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          DeleteNetworkAttachmentsRequest const& request);
+  DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
+                              DeleteNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
-                            GetNetworkAttachmentsRequest const& request);
+  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
+                           GetNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::
           GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachments(
-      google::cloud::cpp::compute::network_attachments::v1::
-          InsertNetworkAttachmentsRequest const& request);
+  InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
+                              InsertNetworkAttachmentRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
   ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::

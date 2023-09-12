@@ -55,19 +55,18 @@ class RegionTargetHttpProxiesRestConnectionImpl
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRegionTargetHttpProxies(
+  DeleteTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          DeleteRegionTargetHttpProxiesRequest const& request) override;
+          DeleteTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetRegionTargetHttpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          GetRegionTargetHttpProxiesRequest const& request) override;
+          GetTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRegionTargetHttpProxies(
+  InsertTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
-          InsertRegionTargetHttpProxiesRequest const& request) override;
+          InsertTargetHttpProxyRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
   ListRegionTargetHttpProxies(

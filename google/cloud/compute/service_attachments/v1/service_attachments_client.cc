@@ -52,47 +52,47 @@ ServiceAttachmentsClient::AggregatedListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsClient::DeleteServiceAttachments(
+ServiceAttachmentsClient::DeleteServiceAttachment(
     std::string const& project, std::string const& region,
     std::string const& service_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::service_attachments::v1::
-      DeleteServiceAttachmentsRequest request;
+      DeleteServiceAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_service_attachment(service_attachment);
-  return connection_->DeleteServiceAttachments(request);
+  return connection_->DeleteServiceAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsClient::DeleteServiceAttachments(
+ServiceAttachmentsClient::DeleteServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentsRequest const& request,
+        DeleteServiceAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServiceAttachments(request);
+  return connection_->DeleteServiceAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsClient::GetServiceAttachments(
+ServiceAttachmentsClient::GetServiceAttachment(
     std::string const& project, std::string const& region,
     std::string const& service_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::service_attachments::v1::
-      GetServiceAttachmentsRequest request;
+      GetServiceAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_service_attachment(service_attachment);
-  return connection_->GetServiceAttachments(request);
+  return connection_->GetServiceAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-ServiceAttachmentsClient::GetServiceAttachments(
+ServiceAttachmentsClient::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        GetServiceAttachmentsRequest const& request,
+        GetServiceAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->GetServiceAttachments(request);
+  return connection_->GetServiceAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -119,27 +119,27 @@ ServiceAttachmentsClient::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsClient::InsertServiceAttachments(
+ServiceAttachmentsClient::InsertServiceAttachment(
     std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::ServiceAttachment const&
         service_attachment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::service_attachments::v1::
-      InsertServiceAttachmentsRequest request;
+      InsertServiceAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_service_attachment_resource() = service_attachment_resource;
-  return connection_->InsertServiceAttachments(request);
+  return connection_->InsertServiceAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsClient::InsertServiceAttachments(
+ServiceAttachmentsClient::InsertServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentsRequest const& request,
+        InsertServiceAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertServiceAttachments(request);
+  return connection_->InsertServiceAttachment(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -164,7 +164,7 @@ ServiceAttachmentsClient::ListServiceAttachments(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsClient::PatchServiceAttachments(
+ServiceAttachmentsClient::PatchServiceAttachment(
     std::string const& project, std::string const& region,
     std::string const& service_attachment,
     google::cloud::cpp::compute::v1::ServiceAttachment const&
@@ -172,21 +172,21 @@ ServiceAttachmentsClient::PatchServiceAttachments(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::service_attachments::v1::
-      PatchServiceAttachmentsRequest request;
+      PatchServiceAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_service_attachment(service_attachment);
   *request.mutable_service_attachment_resource() = service_attachment_resource;
-  return connection_->PatchServiceAttachments(request);
+  return connection_->PatchServiceAttachment(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ServiceAttachmentsClient::PatchServiceAttachments(
+ServiceAttachmentsClient::PatchServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentsRequest const& request,
+        PatchServiceAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchServiceAttachments(request);
+  return connection_->PatchServiceAttachment(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

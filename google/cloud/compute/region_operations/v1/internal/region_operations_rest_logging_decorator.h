@@ -41,15 +41,15 @@ class RegionOperationsRestLogging : public RegionOperationsRestStub {
                               TracingOptions tracing_options,
                               std::set<std::string> components);
 
-  Status DeleteRegionOperations(
+  Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          DeleteRegionOperationsRequest const& request) override;
+          DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_operations::v1::
-          GetRegionOperationsRequest const& request) override;
+          GetOperationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,

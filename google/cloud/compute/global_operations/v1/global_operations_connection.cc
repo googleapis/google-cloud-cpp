@@ -41,16 +41,16 @@ GlobalOperationsConnection::AggregatedListGlobalOperations(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status GlobalOperationsConnection::DeleteGlobalOperations(
+Status GlobalOperationsConnection::DeleteOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        DeleteGlobalOperationsRequest const&) {
+        DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsConnection::GetGlobalOperations(
+GlobalOperationsConnection::GetOperation(
     google::cloud::cpp::compute::global_operations::v1::
-        GetGlobalOperationsRequest const&) {
+        GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

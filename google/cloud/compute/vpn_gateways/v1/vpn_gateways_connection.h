@@ -190,12 +190,12 @@ class VpnGatewaysConnection {
           AggregatedListVpnGatewaysRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::
-                        DeleteVpnGatewaysRequest const& request);
+  DeleteVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::
+                       DeleteVpnGatewayRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          GetVpnGatewaysRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateway(
+      google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
+          request);
 
   virtual StatusOr<
       google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
@@ -204,8 +204,8 @@ class VpnGatewaysConnection {
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertVpnGateways(google::cloud::cpp::compute::vpn_gateways::v1::
-                        InsertVpnGatewaysRequest const& request);
+  InsertVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::
+                       InsertVpnGatewayRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::VpnGateway>
   ListVpnGateways(

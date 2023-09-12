@@ -55,15 +55,15 @@ class MockInstanceTemplatesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteInstanceTemplates,
+              DeleteInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
-                   DeleteInstanceTemplatesRequest const& request),
+                   DeleteInstanceTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>,
-              GetInstanceTemplates,
+              GetInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
-                   GetInstanceTemplatesRequest const& request),
+                   GetInstanceTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
@@ -72,9 +72,9 @@ class MockInstanceTemplatesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertInstanceTemplates,
+              InsertInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
-                   InsertInstanceTemplatesRequest const& request),
+                   InsertInstanceTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>,

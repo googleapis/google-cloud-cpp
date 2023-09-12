@@ -41,10 +41,10 @@ class ImageFamilyViewsRestLogging : public ImageFamilyViewsRestStub {
                               TracingOptions tracing_options,
                               std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::rest_internal::RestContext& rest_context,
-                      google::cloud::cpp::compute::image_family_views::v1::
-                          GetImageFamilyViewsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView> GetImageFamilyView(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::image_family_views::v1::
+          GetImageFamilyViewRequest const& request) override;
 
  private:
   std::shared_ptr<ImageFamilyViewsRestStub> child_;
