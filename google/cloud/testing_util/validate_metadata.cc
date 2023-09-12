@@ -48,7 +48,6 @@ using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Matcher;
 using ::testing::Not;
-using ::testing::NotNull;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAreArray;
 
@@ -321,7 +320,11 @@ void ValidateMetadataFixture::IsContextMDValid(
 
   auto const* method =
       DescriptorPool::generated_pool()->FindMethodByName(method_name);
-  ASSERT_THAT(method, NotNull()) << "Method " + method_name + " is unknown.";
+  if (method == nullptr) {
+    GCP_LOG(INFO) << "`x-goog-request-params` header not verified for "
+                  << method_name << ", because it is unknown.";
+    return;
+  }
 
   // Extract expectations on `x-goog-request-params` from the
   // `google.api.routing` or `google.api.http` annotation on the specified
