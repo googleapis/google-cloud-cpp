@@ -49,6 +49,8 @@ extend-exclude = [
     "docfx/testing/inputs.cc",
     # Some of the tests also contain the same long hex strings.
     "docfx/doxygen2toc_test.cc",
+    # If we're using a post-download patch file for googleapis.
+    "external/googleapis.patch",
 ]
 
 [default]
