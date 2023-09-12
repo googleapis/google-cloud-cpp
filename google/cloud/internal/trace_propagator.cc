@@ -83,7 +83,7 @@ class CloudTraceContext
 }  // namespace
 
 std::unique_ptr<opentelemetry::context::propagation::TextMapPropagator>
-MakePropagator(Options const&) {
+MakePropagator() {
   std::vector<
       std::unique_ptr<opentelemetry::context::propagation::TextMapPropagator>>
       v;

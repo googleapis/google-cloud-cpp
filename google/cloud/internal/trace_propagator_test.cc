@@ -82,7 +82,7 @@ TEST(CloudTraceContextPropagator, Inject) {
         std::make_shared<opentelemetry::trace::DefaultSpan>(span_context);
     opentelemetry::trace::Scope scope{span};
 
-    auto p = MakePropagator(Options{});
+    auto p = MakePropagator();
     TestCarrier carrier;
     p->Inject(carrier, opentelemetry::context::RuntimeContext::GetCurrent());
 
@@ -100,7 +100,7 @@ TEST(CloudTraceContextPropagator, Fields) {
     return true;
   };
 
-  auto p = MakePropagator(Options{});
+  auto p = MakePropagator();
   EXPECT_TRUE(p->Fields(save_keys));
 
   // We use `IsSupersetOf` instead of `UnorderedElementsAre` because

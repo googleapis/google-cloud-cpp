@@ -42,7 +42,7 @@ namespace internal {
  * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#textmap-propagator
  */
 std::unique_ptr<opentelemetry::context::propagation::TextMapPropagator>
-MakePropagator(Options const&);
+MakePropagator();
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
