@@ -23,9 +23,10 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+namespace {
 class FlowControlledPublisherTracingConnection
     : public pubsub::PublisherConnection {
  public:
