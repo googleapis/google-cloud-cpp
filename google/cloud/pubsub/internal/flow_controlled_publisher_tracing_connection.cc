@@ -12,23 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
-#include "google/cloud/pubsub/internal/message_carrier.h"
-#include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/publisher_connection.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/options.h"
-#include "absl/strings/match.h"
-#include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/provider.h>
-#include <opentelemetry/trace/semantic_conventions.h>
-#include <opentelemetry/trace/span_metadata.h>
-#include <opentelemetry/trace/span_startoptions.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -36,6 +25,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 class FlowControlledPublisherTracingConnection
     : public pubsub::PublisherConnection {
  public:
@@ -49,29 +39,24 @@ class FlowControlledPublisherTracingConnection
     auto span = internal::MakeSpan(
         "pubsub::FlowControlledPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
-
-    
-    span->SetStatus(opentelemetry::trace::StatusCode::kError, status.message());
-    span->SetAttribute("gcloud.status_code", static_cast<int>(status.code()));
-
-     internal::EndSpan(std::move(span));
+    internal::EndSpan(*span);
     return result;
   }
 
   void Flush(FlushParams p) override {
-    auto span = internal::MakeSpan(
-        "pubsub::FlowControlledPublisherTracingConnection::Flush");
+    auto span =
+        internal::MakeSpan("pubsub::FlowControlledPublisherConnection::Flush");
     auto scope = opentelemetry::trace::Scope(span);
     child_->Flush(std::move(p));
-    internal::EndSpan(std::move(span));
+    internal::EndSpan(*span);
   }
 
   void ResumePublish(ResumePublishParams p) override {
     auto span = internal::MakeSpan(
-        "pubsub::FlowControlledPublisherTracingConnection::ResumePublish");
+        "pubsub::FlowControlledPublisherConnection::ResumePublish");
     auto scope = opentelemetry::trace::Scope(span);
     child_->ResumePublish(std::move(p));
-    internal::EndSpan(std::move(span));
+    internal::EndSpan(*span);
   }
 
  private:
@@ -87,7 +72,7 @@ MakeFlowControlledPublisherTracingConnection(
       std::move(connection));
 }
 
-#else
+#else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<pubsub::PublisherConnection>
 MakeFlowControlledPublisherTracingConnection(
