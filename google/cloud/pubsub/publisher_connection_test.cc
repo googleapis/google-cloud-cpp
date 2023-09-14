@@ -19,14 +19,14 @@
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/opentelemetry_options.h"
-#include "google/cloud/testing_util/opentelemetry_matchers.h"
 
 namespace google {
 namespace cloud {
