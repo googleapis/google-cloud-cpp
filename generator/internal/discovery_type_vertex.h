@@ -49,6 +49,9 @@ class DiscoveryTypeVertex {
   std::set<std::string> const& needed_by_resource() const {
     return needed_by_resource_;
   }
+  std::set<std::string> const& needs_protobuf_type() const {
+    return needs_protobuf_type_;
+  }
 
   bool IsSynthesizedRequestType() const;
 
@@ -61,6 +64,9 @@ class DiscoveryTypeVertex {
   // Adds the name of the resource that either directly or transitively depends
   // on this type.
   void AddNeededByResource(std::string resource_name);
+
+  // Adds the name of a "google.protobuf.*" type that exists as a field.
+  void AddNeedsProtobufType(std::string type);
 
   // Returns "optional ", "repeated ", or an empty string depending on the
   // field type.
@@ -141,6 +147,7 @@ class DiscoveryTypeVertex {
   std::set<DiscoveryTypeVertex*> needs_type_;
   std::set<DiscoveryTypeVertex*> needed_by_type_;
   std::set<std::string> needed_by_resource_;
+  std::set<std::string> needs_protobuf_type_;
 };
 
 }  // namespace generator_internal

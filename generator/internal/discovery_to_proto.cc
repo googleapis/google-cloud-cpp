@@ -101,6 +101,21 @@ void AddImportToFile(std::map<std::string, DiscoveryFile> const& common_files,
   }
 }
 
+StatusOr<std::string> GetImportForProtobufType(
+    std::string const& protobuf_type) {
+  static auto const* const kProtobufTypeImports =
+      new std::unordered_map<std::string, std::string>{
+          {"google.protobuf.Any", "google/protobuf/any.proto"}};
+
+  auto iter = kProtobufTypeImports->find(protobuf_type);
+  if (iter == kProtobufTypeImports->end()) {
+    return internal::InvalidArgumentError(
+        absl::StrCat("Unrecognized protobuf type: ", protobuf_type),
+        GCP_ERROR_INFO());
+  }
+  return iter->second;
+}
+
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
@@ -315,8 +330,8 @@ Status ProcessMethodRequestsAndResponses(
 }
 
 // NOLINTNEXTLINE(misc-no-recursion)
-std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
-  std::set<std::string> ref_values;
+std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
+  std::set<std::string> types_to_import;
   nlohmann::json fields;
   if (json.contains("properties")) {
     fields = json["properties"];
@@ -325,34 +340,46 @@ std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
   }
 
   for (auto const& f : fields) {
+    if (f.contains("type")) {
+      if (f["type"] == "any") {
+        types_to_import.insert("google.protobuf.Any");
+      }
+    }
+
     if (f.contains("$ref")) {
-      ref_values.insert(f["$ref"]);
-    } else if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
-               IsDiscoveryNestedType(f)) {
-      auto new_ref_values = FindAllRefValues(f);
-      ref_values.insert(new_ref_values.begin(), new_ref_values.end());
+      types_to_import.insert(f["$ref"]);
+    }
+
+    if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
+        IsDiscoveryNestedType(f)) {
+      auto new_ref_values = FindAllTypesToImport(f);
+      types_to_import.insert(new_ref_values.begin(), new_ref_values.end());
     }
   }
 
-  return ref_values;
+  return types_to_import;
 }
 
 Status EstablishTypeDependencies(
     std::map<std::string, DiscoveryTypeVertex>& types) {
   for (auto& type : types) {
     auto const& json = type.second.json();
-    auto ref_values = FindAllRefValues(json);
+    auto ref_values = FindAllTypesToImport(json);
     for (auto const& ref : ref_values) {
-      auto ref_iter = types.find(ref);
-      if (ref_iter == types.end()) {
-        return internal::InvalidArgumentError(
-            absl::StrCat("Unknown depended upon type: ", ref),
-            GCP_ERROR_INFO()
-                .WithMetadata("dependent type", type.first)
-                .WithMetadata("depended upon type", ref));
+      if (absl::StartsWith(ref, "google.protobuf.")) {
+        type.second.AddNeedsProtobufType(ref);
+      } else {
+        auto ref_iter = types.find(ref);
+        if (ref_iter == types.end()) {
+          return internal::InvalidArgumentError(
+              absl::StrCat("Unknown depended upon type: ", ref),
+              GCP_ERROR_INFO()
+                  .WithMetadata("dependent type", type.first)
+                  .WithMetadata("depended upon type", ref));
+        }
+        type.second.AddNeedsType(&ref_iter->second);
+        ref_iter->second.AddNeededByType(&type.second);
       }
-      type.second.AddNeedsType(&ref_iter->second);
-      ref_iter->second.AddNeededByType(&type.second);
     }
   }
 
@@ -464,6 +491,13 @@ StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
         if (file.relative_proto_path() != needed_file_relative_proto_path) {
           file.AddImportPath(std::move(needed_file_relative_proto_path));
         }
+      }
+      for (auto const& protobuf_type : type->needs_protobuf_type()) {
+        auto protobuf_type_import = GetImportForProtobufType(protobuf_type);
+        if (!protobuf_type_import) {
+          return std::move(protobuf_type_import).status();
+        }
+        file.AddImportPath(*protobuf_type_import);
       }
     }
   }

@@ -210,6 +210,10 @@ INSTANTIATE_TEST_SUITE_P(
             R"""({"type":"array","items":{"type":"integer","format":"int64"}})""",
             "int64", true, false, false, false},
         DetermineTypesSuccess{
+            "array_any",
+            R"""({"type":"array","items":{"type":"object","additionalProperties":{"type":"any"}}})""",
+            "google.protobuf.Any", true, false, false, false},
+        DetermineTypesSuccess{
             "array_nested_message",
             R"""({"type":"array","items":{"type":"object", "properties":{}}})""",
             "TestFieldItem", false, false, false, true},
