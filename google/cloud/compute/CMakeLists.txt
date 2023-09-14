@@ -15,11 +15,16 @@
 # ~~~
 
 # Defines a compute proto library and installs the .proto and .pb.h files.
-function (compute_proto_library library)
-    cmake_parse_arguments(_opt "" "" "DEPS;PROTO_FILES" ${ARGN})
+function (compute_proto_library dir library)
+    cmake_parse_arguments(_opt "" "" "DEPS" ${ARGN})
+    file(
+        GLOB proto_files
+        LIST_DIRECTORIES false
+        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.proto")
+    list(SORT proto_files)
     string(REPLACE "google_cloud_cpp_" "" alias "${library}")
     google_cloud_cpp_proto_library(
-        "${library}" "${_opt_PROTO_FILES}" PROTO_PATH_DIRECTORIES
+        "${library}" "${proto_files}" PROTO_PATH_DIRECTORIES
         "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
         "${PROJECT_SOURCE_DIR}")
     external_googleapis_set_version_and_alias("${alias}")
@@ -34,11 +39,17 @@ function (compute_proto_library library)
 endfunction ()
 
 # Defines a compute service library and installs the headers.
-function (compute_service_library library)
-    cmake_parse_arguments(_opt "" "" "DEPS;SRC_FILES" ${ARGN})
-    string(REPLACE "google_cloud_cpp_" "" service_name "${library}")
-    string(REPLACE "_" "-" alias "${service_name}")
-    add_library(${library} ${_opt_SRC_FILES})
+function (compute_service_library dir library)
+    cmake_parse_arguments(_opt "" "" "DEPS" ${ARGN})
+    file(
+        GLOB service_source_files
+        LIST_DIRECTORIES false
+        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h" "${dir}*.cc"
+        "${dir}internal/*")
+    list(SORT service_source_files)
+
+    string(REPLACE "google_cloud_cpp_" "" alias "${library}")
+    add_library(${library} ${service_source_files})
     target_include_directories(
         ${library}
         PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -58,31 +69,6 @@ function (compute_service_library library)
     google_cloud_cpp_install_headers(${library} "include/google/cloud/compute")
 
     add_library(google-cloud-cpp::experimental-${alias} ALIAS ${library})
-endfunction ()
-
-# Creates and installs the pkgconfig (.pc) file for the target.
-function (compute_pkgconfig target)
-    cmake_parse_arguments(_opt "" "" "DEPS" ${ARGN})
-    set(GOOGLE_CLOUD_CPP_PC_NAME "The Cloud Compute API C++ Client Library")
-    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-        "Provides C++ APIs to use the Cloud Compute API.")
-    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
-    string(JOIN " " GOOGLE_CLOUD_CPP_PC_REQUIRES ${_opt_DEPS})
-    google_cloud_cpp_set_pkgconfig_paths()
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
-    get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
-    if (target_defs)
-        foreach (def ${target_defs})
-            string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
-        endforeach ()
-    endif ()
-    # Create and install the pkg-config files.
-    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
-                   "${target}.pc" @ONLY)
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-        COMPONENT google_cloud_cpp_development)
 endfunction ()
 
 include(GoogleapisConfig)
@@ -172,7 +158,6 @@ set(service_dirs
     "target_tcp_proxies/v1/"
     "target_vpn_gateways/v1/"
     "url_maps/v1/"
-    "v1/"
     "vpn_gateways/v1/"
     "vpn_tunnels/v1/"
     "zones/v1/")
@@ -187,31 +172,17 @@ google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
     deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
 
-file(
-    GLOB internal_proto_files
-    LIST_DIRECTORIES false
-    RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "v1/internal/*.proto")
-list(SORT internal_proto_files)
+compute_proto_library("v1/internal/" "google_cloud_cpp_compute_internal_protos"
+                      DEPS "${deps}")
 
-compute_proto_library("google_cloud_cpp_compute_internal_protos" PROTO_FILES
-                      "${internal_proto_files}" DEPS "${deps}")
-
-list(APPEND deps "google_cloud_cpp_compute_internal_protos")
-unset(compute_proto_lib_targets)
 foreach (dir IN LISTS service_dirs operation_service_dirs)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        file(
-            GLOB ${short_dir}_proto_files
-            LIST_DIRECTORIES false
-            RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.proto")
-        list(SORT ${short_dir}_proto_files)
-        compute_proto_library(
-            "google_cloud_cpp_compute_${short_dir}_protos" PROTO_FILES
-            "${${short_dir}_proto_files}" DEPS ${deps})
-        list(APPEND compute_proto_lib_targets
-             "google_cloud_cpp_compute_${short_dir}_protos")
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    compute_proto_library(
+        ${dir} "google_cloud_cpp_compute_${short_dir}_protos" PROTO_FILES
+        "${${short_dir}_proto_files}" DEPS
+        google_cloud_cpp_compute_internal_protos)
+    list(APPEND compute_proto_lib_targets
+         "google_cloud_cpp_compute_${short_dir}_protos")
 endforeach ()
 
 set(DOXYGEN_PROJECT_NAME "Cloud Compute API C++ Client")
@@ -219,63 +190,36 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Compute API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 foreach (dir IN LISTS service_dirs operation_service_dirs)
-    if (NOT "${dir}" STREQUAL "v1/")
-        list(APPEND DOXYGEN_EXAMPLE_PATH
-             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
-    endif ()
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
 endforeach ()
 list(APPEND DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
                                  ${compute_proto_lib_targets})
 
-unset(compute_operation_lib_targets)
-list(APPEND deps "google-cloud-cpp::rest_protobuf_internal"
-     "google-cloud-cpp::grpc_utils" "google-cloud-cpp::rest_internal"
-     "google-cloud-cpp::common")
 foreach (dir IN LISTS operation_service_dirs)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        unset(service_source_files)
-        file(
-            GLOB service_source_files
-            LIST_DIRECTORIES false
-            RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h"
-            "${dir}*.cc" "${dir}internal/*")
-        list(SORT service_source_files)
-        compute_service_library(
-            google_cloud_cpp_compute_${short_dir} SRC_FILES
-            ${service_source_files} DEPS ${deps}
-            google-cloud-cpp::compute_${short_dir}_protos)
-        list(APPEND compute_operation_lib_targets
-             "google_cloud_cpp_compute_${short_dir}")
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    compute_service_library(
+        ${dir} google_cloud_cpp_compute_${short_dir} DEPS
+        google-cloud-cpp::rest_protobuf_internal
+        google-cloud-cpp::compute_${short_dir}_protos)
+    list(APPEND compute_operation_lib_targets
+         "google_cloud_cpp_compute_${short_dir}")
 endforeach ()
 
-unset(compute_lib_targets)
-list(
-    APPEND
-    deps
-    "google-cloud-cpp::experimental-compute-global-operations"
-    "google-cloud-cpp::experimental-compute-global-organization-operations"
-    "google-cloud-cpp::experimental-compute-region-operations"
-    "google-cloud-cpp::experimental-compute-zone-operations")
 foreach (dir IN LISTS service_dirs)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        unset(service_source_files)
-        file(
-            GLOB service_source_files
-            LIST_DIRECTORIES false
-            RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}*.h"
-            "${dir}*.cc" "${dir}internal/*")
-        list(SORT service_source_files)
-        compute_service_library(
-            google_cloud_cpp_compute_${short_dir} SRC_FILES
-            ${service_source_files} DEPS ${deps}
-            google-cloud-cpp::compute_${short_dir}_protos)
-        list(APPEND compute_lib_targets "google_cloud_cpp_compute_${short_dir}")
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    compute_service_library(
+        ${dir}
+        google_cloud_cpp_compute_${short_dir}
+        DEPS
+        google-cloud-cpp::compute_${short_dir}_protos
+        google-cloud-cpp::experimental-compute_global_operations
+        google-cloud-cpp::experimental-compute_global_organization_operations
+        google-cloud-cpp::experimental-compute_region_operations
+        google-cloud-cpp::experimental-compute_zone_operations)
+    list(APPEND compute_lib_targets "google_cloud_cpp_compute_${short_dir}")
 endforeach ()
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -283,46 +227,43 @@ endforeach ()
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
 foreach (dir IN LISTS service_dirs operation_service_dirs)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        file(
-            GLOB ${short_dir}_relative_mock_files
-            LIST_DIRECTORIES false
-            RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}mocks/*.h")
-        list(SORT ${short_dir}_relative_mock_files)
-        set(mock_files)
-        foreach (file IN LISTS ${short_dir}_relative_mock_files)
-            list(APPEND mock_files "${file}")
-        endforeach ()
-        add_library(google_cloud_cpp_compute_${short_dir}_mocks INTERFACE)
-        target_sources(google_cloud_cpp_compute_${short_dir}_mocks
-                       INTERFACE ${mock_files})
-        target_link_libraries(
-            google_cloud_cpp_compute_${short_dir}_mocks
-            INTERFACE google-cloud-cpp::experimental-compute-${short_dir}
-                      GTest::gmock_main GTest::gmock GTest::gtest)
-        set_target_properties(
-            google_cloud_cpp_compute_${short_dir}_mocks
-            PROPERTIES EXPORT_NAME
-                       google-cloud-cpp::experimental-compute-${short_dir}_mocks
-        )
-        target_include_directories(
-            google_cloud_cpp_compute_${short_dir}_mocks
-            INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                      $<INSTALL_INTERFACE:include>)
-        target_compile_options(google_cloud_cpp_compute_${short_dir}_mocks
-                               INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-        google_cloud_cpp_install_headers(
-            "google_cloud_cpp_compute_${short_dir}_mocks"
-            "include/google/cloud/compute")
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    file(
+        GLOB ${short_dir}_relative_mock_files
+        LIST_DIRECTORIES false
+        RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${dir}mocks/*.h")
+    list(SORT ${short_dir}_relative_mock_files)
+    set(mock_files)
+    foreach (file IN LISTS ${short_dir}_relative_mock_files)
+        list(APPEND mock_files "${file}")
+    endforeach ()
+    add_library(google_cloud_cpp_compute_${short_dir}_mocks INTERFACE)
+    target_sources(google_cloud_cpp_compute_${short_dir}_mocks
+                   INTERFACE ${mock_files})
+    target_link_libraries(
+        google_cloud_cpp_compute_${short_dir}_mocks
+        INTERFACE google-cloud-cpp::experimental-compute-${short_dir}
+                  GTest::gmock_main GTest::gmock GTest::gtest)
+    set_target_properties(
+        google_cloud_cpp_compute_${short_dir}_mocks
+        PROPERTIES EXPORT_NAME
+                   google-cloud-cpp::experimental-compute-${short_dir}_mocks)
+    target_include_directories(
+        google_cloud_cpp_compute_${short_dir}_mocks
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_compute_${short_dir}_mocks
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    google_cloud_cpp_install_headers(
+        "google_cloud_cpp_compute_${short_dir}_mocks"
+        "include/google/cloud/compute")
 endforeach ()
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(compute_quickstart "quickstart/quickstart.cc")
     target_link_libraries(compute_quickstart
-                          PRIVATE google-cloud-cpp::experimental-compute-disks)
+                          PRIVATE google-cloud-cpp::experimental-compute_disks)
     google_cloud_cpp_add_common_options(compute_quickstart)
     add_test(
         NAME compute_quickstart
@@ -374,59 +315,45 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_compute"
     COMPONENT google_cloud_cpp_development)
 
-unset(pkgconfig_deps)
-list(APPEND pkgconfig_deps "google_cloud_cpp_cloud_extended_operations_protos")
-compute_pkgconfig(google_cloud_cpp_compute_internal_protos DEPS
-                  ${pkgconfig_deps})
+google_cloud_cpp_add_pkgconfig(
+    "compute_internal_protos" "The Cloud Compute API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Compute API."
+    "google_cloud_cpp_cloud_extended_operations_protos")
 
-unset(pkgconfig_deps)
-list(
-    APPEND
-    pkgconfig_deps
-    "google_cloud_cpp_compute_internal_protos"
-    "google_cloud_cpp_api_annotations_protos"
-    "google_cloud_cpp_api_client_protos"
-    "google_cloud_cpp_api_field_behavior_protos")
 foreach (dir IN LISTS service_dirs operation_service_dirs)
-    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
-    unset(DEPS)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        compute_pkgconfig("google_cloud_cpp_compute_${short_dir}_protos" DEPS
-                          ${pkgconfig_deps})
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    google_cloud_cpp_add_pkgconfig(
+        "compute_${short_dir}_protos"
+        "The Cloud Compute API C++ Client Library"
+        "Provides C++ APIs to use the Cloud Compute API."
+        "google_cloud_cpp_compute_internal_protos"
+        "google_cloud_cpp_api_annotations_protos"
+        "google_cloud_cpp_api_client_protos"
+        "google_cloud_cpp_api_field_behavior_protos")
 endforeach ()
 
-unset(pkgconfig_deps)
-list(APPEND pkgconfig_deps "google_cloud_cpp_rest_internal"
-     "google_cloud_cpp_rest_protobuf_internal" "google_cloud_cpp_grpc_utils"
-     "google_cloud_cpp_common")
 foreach (dir IN LISTS operation_service_dirs)
-    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
-    unset(DEPS)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        compute_pkgconfig(
-            "google_cloud_cpp_compute_${short_dir}" DEPS ${pkgconfig_deps}
-            "google_cloud_cpp_compute_${short_dir}_protos")
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    google_cloud_cpp_add_pkgconfig(
+        "compute_${short_dir}"
+        "The Cloud Compute API C++ Client Library"
+        "Provides C++ APIs to use the Cloud Compute API."
+        "google_cloud_cpp_rest_internal"
+        "google_cloud_cpp_rest_protobuf_internal"
+        "google_cloud_cpp_grpc_utils"
+        "google_cloud_cpp_common"
+        "google_cloud_cpp_compute_${short_dir}_protos")
 endforeach ()
 
-unset(pkgconfig_deps)
-list(
-    APPEND
-    pkgconfig_deps
-    "google_cloud_cpp_compute_global_operations"
-    "google_cloud_cpp_compute_global_organization_operations"
-    "google_cloud_cpp_compute_region_operations"
-    "google_cloud_cpp_compute_zone_operations")
 foreach (dir IN LISTS service_dirs)
-    unset(GOOGLE_CLOUD_CPP_PC_REQUIRES)
-    unset(DEPS)
-    if (NOT "${dir}" STREQUAL "v1/")
-        string(REPLACE "/v1/" "" short_dir "${dir}")
-        compute_pkgconfig(
-            "google_cloud_cpp_compute_${short_dir}" DEPS ${pkgconfig_deps}
-            "google_cloud_cpp_compute_${short_dir}_protos")
-    endif ()
+    string(REPLACE "/v1/" "" short_dir "${dir}")
+    google_cloud_cpp_add_pkgconfig(
+        "compute_${short_dir}"
+        "The Cloud Compute API C++ Client Library"
+        "Provides C++ APIs to use the Cloud Compute API."
+        "google_cloud_cpp_compute_global_operations"
+        "google_cloud_cpp_compute_global_organization_operations"
+        "google_cloud_cpp_compute_region_operations"
+        "google_cloud_cpp_compute_zone_operations"
+        "google_cloud_cpp_compute_${short_dir}_protos")
 endforeach ()
