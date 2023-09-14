@@ -261,6 +261,17 @@ TEST(Message, SizeEstimation) {
             pubsub_internal::MessageSize(pubsub_internal::FromProto(expected)));
 }
 
+TEST(Message, SetAttributeFriend) {
+  auto m0 = MessageBuilder{}.Build();
+  pubsub_internal::SetAttribute("k1", "v1", m0);
+  pubsub_internal::SetAttribute("k2", "v2", m0);
+  pubsub_internal::SetAttribute("k2", "v3", m0);
+
+  EXPECT_THAT(m0.attributes(),
+              UnorderedElementsAre(std::make_pair("k1", "v1"),
+                                   std::make_pair("k2", "v3")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
