@@ -23,37 +23,6 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class TracingRestClient : public RestClient {
- public:
-  explicit TracingRestClient(std::unique_ptr<RestClient> impl);
-  ~TracingRestClient() override = default;
-
-  StatusOr<std::unique_ptr<RestResponse>> Delete(
-      RestContext& context, RestRequest const& request) override;
-  StatusOr<std::unique_ptr<RestResponse>> Get(
-      RestContext& context, RestRequest const& request) override;
-  StatusOr<std::unique_ptr<RestResponse>> Patch(
-      RestContext& context, RestRequest const& request,
-      std::vector<absl::Span<char const>> const& payload) override;
-  StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestContext& context, RestRequest const& request,
-      std::vector<absl::Span<char const>> const& payload) override;
-  StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestContext& context, RestRequest const& request,
-      std::vector<std::pair<std::string, std::string>> const& form_data)
-      override;
-  StatusOr<std::unique_ptr<RestResponse>> Put(
-      RestContext& context, RestRequest const& request,
-      std::vector<absl::Span<char const>> const& payload) override;
-
- private:
-  std::unique_ptr<RestClient> impl_;
-};
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 /// Decorate a `RestClient` with a tracing wrapper.
 std::unique_ptr<RestClient> MakeTracingRestClient(
     std::unique_ptr<RestClient> client);
