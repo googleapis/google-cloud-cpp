@@ -124,6 +124,8 @@ add_library(
     internal/throw_delegate.h
     internal/timer_queue.cc
     internal/timer_queue.h
+    internal/trace_propagator.cc
+    internal/trace_propagator.h
     internal/traced_stream_range.h
     internal/tuple.h
     internal/type_list.h
@@ -355,6 +357,7 @@ if (BUILD_TESTING)
         internal/subject_token_test.cc
         internal/throw_delegate_test.cc
         internal/timer_queue_test.cc
+        internal/trace_propagator_test.cc
         internal/traced_stream_range_test.cc
         internal/tuple_test.cc
         internal/type_list_test.cc
