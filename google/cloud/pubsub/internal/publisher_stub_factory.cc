@@ -18,6 +18,8 @@
 #include "google/cloud/pubsub/internal/publisher_logging_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin_decorator.h"
+#include "google/cloud/pubsub/internal/publisher_tracing_stub.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/log.h"
 
@@ -54,6 +56,7 @@ std::shared_ptr<PublisherStub> MakeDefaultPublisherStub(
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
   auto stub = pubsub_internal::CreateDefaultPublisherStub(
+      options,
       auth->CreateChannel(options.get<EndpointOption>(),
                           pubsub_internal::MakeChannelArguments(options, 0)));
   return DecoratePublisherStub(options, std::move(auth), std::move(stub));
@@ -67,9 +70,10 @@ std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
       options.get<GrpcNumChannelsOption>());
   int id = 0;
   std::generate(children.begin(), children.end(), [&id, &options, &auth] {
-    return pubsub_internal::CreateDefaultPublisherStub(auth->CreateChannel(
-        options.get<EndpointOption>(),
-        pubsub_internal::MakeChannelArguments(options, id++)));
+    return pubsub_internal::CreateDefaultPublisherStub(
+        options, auth->CreateChannel(
+                     options.get<EndpointOption>(),
+                     pubsub_internal::MakeChannelArguments(options, id++)));
   });
 
   auto stub = std::make_shared<pubsub_internal::PublisherRoundRobin>(
@@ -89,13 +93,19 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id) {
-  return CreateDefaultPublisherStub(CreateChannel(opts, channel_id));
+  return CreateDefaultPublisherStub(opts, CreateChannel(opts, channel_id));
 }
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    std::shared_ptr<grpc::Channel> channel) {
-  return std::make_shared<DefaultPublisherStub>(
-      google::pubsub::v1::Publisher::NewStub(std::move(channel)));
+    Options const& opts, std::shared_ptr<grpc::Channel> channel) {
+  auto service_grpc_stub = google::pubsub::v1::Publisher::NewStub(channel);
+  std::shared_ptr<PublisherStub> stub =
+      std::make_shared<DefaultPublisherStub>(std::move(service_grpc_stub));
+
+  if (internal::TracingEnabled(opts)) {
+    stub = MakePublisherTracingStub(std::move(stub));
+  }
+  return stub;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
