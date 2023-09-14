@@ -49,6 +49,7 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Not;
@@ -162,7 +163,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
                   SpanNamed("projects/test-project/topics/test-topic send"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                   Not(SpanHasAttributes(OTelAttribute<std::string>(
-                      "messaging.pubsub.ordering_key", ""))))));
+                      "messaging.pubsub.ordering_key", _))))));
 }
 
 TEST(PublisherTracingConnectionTest, FlushSpan) {
