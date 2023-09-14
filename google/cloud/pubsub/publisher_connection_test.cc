@@ -141,8 +141,8 @@ TEST(PublisherConnectionTest, FlowControl) {
         {
           std::lock_guard<std::mutex> lk(mu);
           received_count += request.messages_size();
+          ++publish_count;
         }
-        ++publish_count;
         cv.notify_all();
         return publish.PushBack().then([request](future<void>) {
           google::pubsub::v1::PublishResponse response;
