@@ -171,14 +171,6 @@ std::shared_ptr<SpanCatcher> InstallSpanCatcher() {
   return std::make_shared<SpanCatcher>();
 }
 
-std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
-  namespace propagation = opentelemetry::context::propagation;
-  auto mock = std::make_shared<MockTextMapPropagator>();
-  propagation::GlobalTextMapPropagator::SetGlobalPropagator(
-      std::shared_ptr<propagation::TextMapPropagator>(mock));
-  return mock;
-}
-
 Options EnableTracing(Options options) {
   options.set<experimental::OpenTelemetryTracingOption>(true);
   return options;

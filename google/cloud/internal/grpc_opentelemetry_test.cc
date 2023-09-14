@@ -17,7 +17,7 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -49,7 +49,6 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
-using ::testing::Pair;
 
 TEST(OpenTelemetry, MakeSpanGrpc) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -89,18 +88,14 @@ TEST(OpenTelemetry, MakeSpanGrpcHandlesNonNullTerminatedStringView) {
 }
 
 TEST(OpenTelemetry, InjectTraceContextGrpc) {
-  auto mock_propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject)
-      .WillOnce([](auto& carrier, auto const&) {
-        carrier.Set("x-test-key", "test-value");
-      });
+  auto span_catcher = InstallSpanCatcher();
+
+  opentelemetry::trace::Scope scope(
+      MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"));
 
   grpc::ClientContext context;
   InjectTraceContext(context, Options{});
-
-  testing_util::ValidateMetadataFixture fixture;
-  auto md = fixture.GetMetadata(context);
-  EXPECT_THAT(md, ElementsAre(Pair("x-test-key", "test-value")));
+  testing_util::ValidatePropagator(context);
 }
 
 TEST(OpenTelemetry, EndSpan) {

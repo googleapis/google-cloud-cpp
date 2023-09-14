@@ -15,6 +15,7 @@
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
@@ -90,8 +91,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
           options);
 }
 
-void InjectTraceContext(grpc::ClientContext& context, Options const& options) {
-  auto propagator = GetTextMapPropagator(options);
+void InjectTraceContext(grpc::ClientContext& context, Options const&) {
+  auto propagator = MakePropagator();
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   GrpcClientCarrier carrier(context);
   propagator->Inject(carrier, current);
