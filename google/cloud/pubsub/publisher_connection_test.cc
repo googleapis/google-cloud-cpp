@@ -364,9 +364,13 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
 
+  auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      span_catcher->GetSpans(),
+      spans,
       Contains(SpanNamed("projects/test-project/topics/test-topic send")));
+  EXPECT_THAT(spans,
+              Contains(SpanNamed(
+                  "pubsub::FlowControlledPublisherConnection::Publish")));
 }
 
 TEST(MakePublisherConnectionTest, TracingDisabled) {
