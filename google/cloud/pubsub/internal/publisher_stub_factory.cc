@@ -94,11 +94,11 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id) {
   return CreateDefaultPublisherStub(opts,
-                                    std::move(CreateChannel(opts, channel_id)));
+                                    CreateChannel(opts, channel_id));
 }
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    Options const& opts, std::shared_ptr<grpc::Channel> channel) {
+    Options const& opts, std::shared_ptr<grpc::Channel> const& channel) {
   auto service_grpc_stub = google::pubsub::v1::Publisher::NewStub(channel);
   std::shared_ptr<PublisherStub> stub =
       std::make_shared<DefaultPublisherStub>(std::move(service_grpc_stub));
