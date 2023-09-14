@@ -157,62 +157,72 @@ StatusOr<std::unique_ptr<RestResponse>> WrappedRequest(
   return EndResponseSpan(std::move(span), context, std::move(response));
 }
 
+class TracingRestClient : public RestClient {
+ public:
+  explicit TracingRestClient(std::unique_ptr<RestClient> impl)
+      : impl_(std::move(impl)) {}
+
+  ~TracingRestClient() override = default;
+
+  StatusOr<std::unique_ptr<RestResponse>> Delete(
+      RestContext& context, RestRequest const& request) override {
+    return WrappedRequest(context, request, "DELETE",
+                          [this](auto& context, auto const& request) {
+                            return impl_->Delete(context, request);
+                          });
+  }
+
+  StatusOr<std::unique_ptr<RestResponse>> Get(
+      RestContext& context, RestRequest const& request) override {
+    return WrappedRequest(context, request, "GET",
+                          [this](auto& context, auto const& request) {
+                            return impl_->Get(context, request);
+                          });
+  }
+
+  StatusOr<std::unique_ptr<RestResponse>> Patch(
+      RestContext& context, RestRequest const& request,
+      std::vector<absl::Span<char const>> const& payload) override {
+    return WrappedRequest(context, request, "PATCH",
+                          [this, &payload](auto& context, auto const& request) {
+                            return impl_->Patch(context, request, payload);
+                          });
+  }
+
+  StatusOr<std::unique_ptr<RestResponse>> Post(
+      RestContext& context, RestRequest const& request,
+      std::vector<absl::Span<char const>> const& payload) override {
+    return WrappedRequest(context, request, "POST",
+                          [this, &payload](auto& context, auto const& request) {
+                            return impl_->Post(context, request, payload);
+                          });
+  }
+
+  StatusOr<std::unique_ptr<RestResponse>> Post(
+      RestContext& context, RestRequest const& request,
+      std::vector<std::pair<std::string, std::string>> const& form_data)
+      override {
+    return WrappedRequest(
+        context, request, "POST",
+        [this, &form_data](auto& context, auto const& request) {
+          return impl_->Post(context, request, form_data);
+        });
+  }
+
+  StatusOr<std::unique_ptr<RestResponse>> Put(
+      RestContext& context, RestRequest const& request,
+      std::vector<absl::Span<char const>> const& payload) override {
+    return WrappedRequest(context, request, "PUT",
+                          [this, &payload](auto& context, auto const& request) {
+                            return impl_->Put(context, request, payload);
+                          });
+  }
+
+ private:
+  std::unique_ptr<RestClient> impl_;
+};
+
 }  // namespace
-
-TracingRestClient::TracingRestClient(std::unique_ptr<RestClient> impl)
-    : impl_(std::move(impl)) {}
-
-StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Delete(
-    RestContext& context, RestRequest const& request) {
-  return WrappedRequest(context, request, "DELETE",
-                        [this](auto& context, auto const& request) {
-                          return impl_->Delete(context, request);
-                        });
-}
-
-StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Get(
-    RestContext& context, RestRequest const& request) {
-  return WrappedRequest(context, request, "GET",
-                        [this](auto& context, auto const& request) {
-                          return impl_->Get(context, request);
-                        });
-}
-
-StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Patch(
-    RestContext& context, RestRequest const& request,
-    std::vector<absl::Span<char const>> const& payload) {
-  return WrappedRequest(context, request, "PATCH",
-                        [this, &payload](auto& context, auto const& request) {
-                          return impl_->Patch(context, request, payload);
-                        });
-}
-
-StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
-    RestContext& context, RestRequest const& request,
-    std::vector<absl::Span<char const>> const& payload) {
-  return WrappedRequest(context, request, "POST",
-                        [this, &payload](auto& context, auto const& request) {
-                          return impl_->Post(context, request, payload);
-                        });
-}
-
-StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
-    RestContext& context, RestRequest const& request,
-    std::vector<std::pair<std::string, std::string>> const& form_data) {
-  return WrappedRequest(context, request, "POST",
-                        [this, &form_data](auto& context, auto const& request) {
-                          return impl_->Post(context, request, form_data);
-                        });
-}
-
-StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Put(
-    RestContext& context, RestRequest const& request,
-    std::vector<absl::Span<char const>> const& payload) {
-  return WrappedRequest(context, request, "PUT",
-                        [this, &payload](auto& context, auto const& request) {
-                          return impl_->Put(context, request, payload);
-                        });
-}
 
 std::unique_ptr<RestClient> MakeTracingRestClient(
     std::unique_ptr<RestClient> client) {
