@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 #include <gmock/gmock.h>
 
@@ -196,6 +197,8 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::google::cloud::testing_util::ValidateNoPropagator;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::_;
 using ::testing::IsEmpty;
 
@@ -203,15 +206,15 @@ auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
 TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoTracing) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto mock_propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject).Times(0);
 
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
-  EXPECT_CALL(*mock, AsyncGenerateAccessToken).WillOnce([] {
-    EXPECT_FALSE(ThereIsAnActiveSpan());
-    return make_ready_future<StatusOr<GenerateAccessTokenResponse>>(
-        AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncGenerateAccessToken)
+      .WillOnce([](auto const&, auto context, auto const&) {
+        ValidateNoPropagator(*context);
+        EXPECT_FALSE(ThereIsAnActiveSpan());
+        return make_ready_future<StatusOr<GenerateAccessTokenResponse>>(
+            AbortedError("fail"));
+      });
 
   auto stub =
       DecorateMinimalIamCredentialsStub(mock, DisableTracing(Options{}));
@@ -228,15 +231,15 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoTracing) {
 
 TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenTracing) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto mock_propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
-  EXPECT_CALL(*mock, AsyncGenerateAccessToken).WillOnce([] {
-    EXPECT_FALSE(ThereIsAnActiveSpan());
-    return make_ready_future<StatusOr<GenerateAccessTokenResponse>>(
-        AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncGenerateAccessToken)
+      .WillOnce([](auto const&, auto context, auto const&) {
+        ValidatePropagator(*context);
+        EXPECT_FALSE(ThereIsAnActiveSpan());
+        return make_ready_future<StatusOr<GenerateAccessTokenResponse>>(
+            AbortedError("fail"));
+      });
 
   auto stub = DecorateMinimalIamCredentialsStub(mock, EnableTracing(Options{}));
   CompletionQueue cq;
@@ -261,11 +264,10 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenTracing) {
 
 TEST_F(MinimalIamCredentialsStubTest, SignBlobNoTracing) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto mock_propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject).Times(0);
 
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
-  EXPECT_CALL(*mock, SignBlob).WillOnce([] {
+  EXPECT_CALL(*mock, SignBlob).WillOnce([](auto& context, auto const&) {
+    ValidateNoPropagator(context);
     EXPECT_FALSE(ThereIsAnActiveSpan());
     return AbortedError("fail");
   });
@@ -283,11 +285,10 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobNoTracing) {
 
 TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto mock_propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
-  EXPECT_CALL(*mock, SignBlob).WillOnce([] {
+  EXPECT_CALL(*mock, SignBlob).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return AbortedError("fail");
   });

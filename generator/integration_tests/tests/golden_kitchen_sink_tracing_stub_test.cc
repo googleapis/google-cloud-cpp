@@ -21,6 +21,7 @@
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -34,7 +35,6 @@ using ::testing::Return;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-using ::google::cloud::testing_util::InstallMockPropagator;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -43,6 +43,7 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::_;
@@ -54,14 +55,14 @@ auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
 TEST(GoldenKitchenSinkTracingStubTest, GenerateAccessToken) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, GenerateAccessToken).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, GenerateAccessToken)
+      .WillOnce([](auto& context, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   grpc::ClientContext context;
@@ -84,11 +85,10 @@ TEST(GoldenKitchenSinkTracingStubTest, GenerateAccessToken) {
 
 TEST(GoldenKitchenSinkTracingStubTest, GenerateIdToken) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, GenerateIdToken).WillOnce([] {
+  EXPECT_CALL(*mock, GenerateIdToken).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -114,11 +114,10 @@ TEST(GoldenKitchenSinkTracingStubTest, GenerateIdToken) {
 
 TEST(GoldenKitchenSinkTracingStubTest, WriteLogEntries) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, WriteLogEntries).WillOnce([] {
+  EXPECT_CALL(*mock, WriteLogEntries).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -144,11 +143,10 @@ TEST(GoldenKitchenSinkTracingStubTest, WriteLogEntries) {
 
 TEST(GoldenKitchenSinkTracingStubTest, ListLogs) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, ListLogs).WillOnce([] {
+  EXPECT_CALL(*mock, ListLogs).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -173,13 +171,12 @@ TEST(GoldenKitchenSinkTracingStubTest, ListLogs) {
 
 TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::StreamingReadRpcError<Response>;
-  EXPECT_CALL(*mock, StreamingRead).WillOnce([] {
+  EXPECT_CALL(*mock, StreamingRead).WillOnce([](auto context, auto const&) {
+    ValidatePropagator(*context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
   });
@@ -205,14 +202,14 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
 
 TEST(GoldenKitchenSinkTracingStubTest, ListServiceAccountKeys) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, ListServiceAccountKeys).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, ListServiceAccountKeys)
+      .WillOnce([](auto& context, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   grpc::ClientContext context;
@@ -235,11 +232,10 @@ TEST(GoldenKitchenSinkTracingStubTest, ListServiceAccountKeys) {
 
 TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, DoNothing).WillOnce([] {
+  EXPECT_CALL(*mock, DoNothing).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -265,11 +261,10 @@ TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
 
 TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto) {
+  EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto context) {
+    ValidatePropagator(*context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     auto stream = std::make_unique<MockStreamingWriteRpc>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
@@ -300,16 +295,16 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, AsyncStreamingRead).WillOnce([]() {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    using ErrorStream =
-        ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
-    return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncStreamingRead)
+      .WillOnce([](auto const&, auto context, auto const&) {
+        ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        using ErrorStream =
+            ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
+        return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
+      });
 
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
@@ -335,17 +330,17 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, AsyncStreamingWrite).WillOnce([]() {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    using ErrorStream =
-        ::google::cloud::internal::AsyncStreamingWriteRpcError<Request,
-                                                               Response>;
-    return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncStreamingWrite)
+      .WillOnce([](auto const&, auto context) {
+        ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        using ErrorStream =
+            ::google::cloud::internal::AsyncStreamingWriteRpcError<Request,
+                                                                   Response>;
+        return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
+      });
 
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
@@ -371,17 +366,17 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, AsyncStreamingReadWrite).WillOnce([]() {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    using ErrorStream =
-        ::google::cloud::internal::AsyncStreamingReadWriteRpcError<Request,
-                                                                   Response>;
-    return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
-  });
+  EXPECT_CALL(*mock, AsyncStreamingReadWrite)
+      .WillOnce([](auto const&, auto context) {
+        ValidatePropagator(*context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        using ErrorStream =
+            ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+                Request, Response>;
+        return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
+      });
 
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
@@ -407,11 +402,10 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
 
 TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, ExplicitRouting1).WillOnce([] {
+  EXPECT_CALL(*mock, ExplicitRouting1).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -437,11 +431,10 @@ TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
 
 TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting2) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, ExplicitRouting2).WillOnce([] {
+  EXPECT_CALL(*mock, ExplicitRouting2).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -467,8 +460,6 @@ TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting2) {
 
 TEST(MakeGoldenKitchenSinkTracingStub, OpenTelemetry) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, DoNothing)
