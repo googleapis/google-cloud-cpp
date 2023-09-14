@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_TRACING_STUB_H
 
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -46,6 +47,8 @@ class PolicyTroubleshooterTracingStub : public PolicyTroubleshooterStub {
 
  private:
   std::shared_ptr<PolicyTroubleshooterStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

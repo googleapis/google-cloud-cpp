@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProfilerServiceTracingStub::ProfilerServiceTracingStub(
     std::shared_ptr<ProfilerServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceTracingStub::CreateProfile(
@@ -37,7 +37,7 @@ ProfilerServiceTracingStub::CreateProfile(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudprofiler.v2.ProfilerService", "CreateProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateProfile(context, request));
 }
@@ -51,7 +51,7 @@ ProfilerServiceTracingStub::CreateOfflineProfile(
       internal::MakeSpanGrpc("google.devtools.cloudprofiler.v2.ProfilerService",
                              "CreateOfflineProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateOfflineProfile(context, request));
 }
@@ -63,7 +63,7 @@ ProfilerServiceTracingStub::UpdateProfile(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudprofiler.v2.ProfilerService", "UpdateProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateProfile(context, request));
 }

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V1_INTERNAL_MANAGED_NOTEBOOK_TRACING_STUB_H
 
 #include "google/cloud/notebooks/v1/internal/managed_notebook_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -123,6 +124,8 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
 
  private:
   std::shared_ptr<ManagedNotebookServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

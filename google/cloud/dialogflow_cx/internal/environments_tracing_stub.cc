@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EnvironmentsTracingStub::EnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 EnvironmentsTracingStub::ListEnvironments(
@@ -37,7 +37,7 @@ EnvironmentsTracingStub::ListEnvironments(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "ListEnvironments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEnvironments(context, request));
 }
@@ -49,7 +49,7 @@ EnvironmentsTracingStub::GetEnvironment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEnvironment(context, request));
 }
@@ -64,7 +64,7 @@ EnvironmentsTracingStub::AsyncCreateEnvironment(
       "google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -80,7 +80,7 @@ EnvironmentsTracingStub::AsyncUpdateEnvironment(
       "google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ Status EnvironmentsTracingStub::DeleteEnvironment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "DeleteEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEnvironment(context, request));
 }
@@ -106,7 +106,7 @@ EnvironmentsTracingStub::LookupEnvironmentHistory(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "LookupEnvironmentHistory");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->LookupEnvironmentHistory(context, request));
 }
@@ -121,7 +121,7 @@ EnvironmentsTracingStub::AsyncRunContinuousTest(
       "google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRunContinuousTest(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -136,7 +136,7 @@ EnvironmentsTracingStub::ListContinuousTestResults(
       internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments",
                              "ListContinuousTestResults");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListContinuousTestResults(context, request));
 }
@@ -150,7 +150,7 @@ EnvironmentsTracingStub::AsyncDeployFlow(
       "google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeployFlow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -165,7 +165,7 @@ EnvironmentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -179,7 +179,7 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

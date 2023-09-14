@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceTracingStub::TraceServiceTracingStub(
     std::shared_ptr<TraceServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 Status TraceServiceTracingStub::BatchWriteSpans(
     grpc::ClientContext& context,
@@ -36,7 +36,7 @@ Status TraceServiceTracingStub::BatchWriteSpans(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v2.TraceService", "BatchWriteSpans");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->BatchWriteSpans(context, request));
 }
@@ -48,7 +48,7 @@ TraceServiceTracingStub::CreateSpan(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v2.TraceService", "CreateSpan");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSpan(context, request));
 }

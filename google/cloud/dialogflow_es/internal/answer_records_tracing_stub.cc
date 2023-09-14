@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AnswerRecordsTracingStub::AnswerRecordsTracingStub(
     std::shared_ptr<AnswerRecordsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsTracingStub::ListAnswerRecords(
@@ -37,7 +37,7 @@ AnswerRecordsTracingStub::ListAnswerRecords(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.AnswerRecords",
                                      "ListAnswerRecords");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAnswerRecords(context, request));
 }
@@ -49,7 +49,7 @@ AnswerRecordsTracingStub::UpdateAnswerRecord(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.AnswerRecords",
                                      "UpdateAnswerRecord");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateAnswerRecord(context, request));
 }

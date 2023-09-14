@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentProcessorServiceTracingStub::DocumentProcessorServiceTracingStub(
     std::shared_ptr<DocumentProcessorServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceTracingStub::ProcessDocument(
@@ -37,7 +37,7 @@ DocumentProcessorServiceTracingStub::ProcessDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "ProcessDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ProcessDocument(context, request));
 }
@@ -52,7 +52,7 @@ DocumentProcessorServiceTracingStub::AsyncBatchProcessDocuments(
       "BatchProcessDocuments");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchProcessDocuments(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -66,7 +66,7 @@ DocumentProcessorServiceTracingStub::FetchProcessorTypes(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "FetchProcessorTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchProcessorTypes(context, request));
 }
@@ -79,7 +79,7 @@ DocumentProcessorServiceTracingStub::ListProcessorTypes(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "ListProcessorTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProcessorTypes(context, request));
 }
@@ -92,7 +92,7 @@ DocumentProcessorServiceTracingStub::GetProcessorType(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "GetProcessorType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProcessorType(context, request));
 }
@@ -104,7 +104,7 @@ DocumentProcessorServiceTracingStub::ListProcessors(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "ListProcessors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProcessors(context, request));
 }
@@ -116,7 +116,7 @@ DocumentProcessorServiceTracingStub::GetProcessor(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "GetProcessor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProcessor(context, request));
 }
@@ -132,7 +132,7 @@ DocumentProcessorServiceTracingStub::AsyncTrainProcessorVersion(
       "TrainProcessorVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncTrainProcessorVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -146,7 +146,7 @@ DocumentProcessorServiceTracingStub::GetProcessorVersion(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "GetProcessorVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProcessorVersion(context, request));
 }
@@ -160,7 +160,7 @@ DocumentProcessorServiceTracingStub::ListProcessorVersions(
       "google.cloud.documentai.v1.DocumentProcessorService",
       "ListProcessorVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProcessorVersions(context, request));
 }
@@ -176,7 +176,7 @@ DocumentProcessorServiceTracingStub::AsyncDeleteProcessorVersion(
       "DeleteProcessorVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteProcessorVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -193,7 +193,7 @@ DocumentProcessorServiceTracingStub::AsyncDeployProcessorVersion(
       "DeployProcessorVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeployProcessorVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -210,7 +210,7 @@ DocumentProcessorServiceTracingStub::AsyncUndeployProcessorVersion(
       "UndeployProcessorVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUndeployProcessorVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -223,7 +223,7 @@ DocumentProcessorServiceTracingStub::CreateProcessor(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "CreateProcessor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateProcessor(context, request));
 }
@@ -237,7 +237,7 @@ DocumentProcessorServiceTracingStub::AsyncDeleteProcessor(
       "google.cloud.documentai.v1.DocumentProcessorService", "DeleteProcessor");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteProcessor(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -252,7 +252,7 @@ DocumentProcessorServiceTracingStub::AsyncEnableProcessor(
       "google.cloud.documentai.v1.DocumentProcessorService", "EnableProcessor");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncEnableProcessor(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -268,7 +268,7 @@ DocumentProcessorServiceTracingStub::AsyncDisableProcessor(
       "DisableProcessor");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDisableProcessor(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -285,7 +285,7 @@ DocumentProcessorServiceTracingStub::AsyncSetDefaultProcessorVersion(
       "SetDefaultProcessorVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncSetDefaultProcessorVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -300,7 +300,7 @@ DocumentProcessorServiceTracingStub::AsyncReviewDocument(
       "google.cloud.documentai.v1.DocumentProcessorService", "ReviewDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncReviewDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -317,7 +317,7 @@ DocumentProcessorServiceTracingStub::AsyncEvaluateProcessorVersion(
       "EvaluateProcessorVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncEvaluateProcessorVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -330,7 +330,7 @@ DocumentProcessorServiceTracingStub::GetEvaluation(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "GetEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEvaluation(context, request));
 }
@@ -342,7 +342,7 @@ DocumentProcessorServiceTracingStub::ListEvaluations(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.documentai.v1.DocumentProcessorService", "ListEvaluations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEvaluations(context, request));
 }
@@ -356,7 +356,7 @@ DocumentProcessorServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -370,7 +370,7 @@ future<Status> DocumentProcessorServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

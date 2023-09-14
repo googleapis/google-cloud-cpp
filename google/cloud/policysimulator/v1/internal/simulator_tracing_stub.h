@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_INTERNAL_SIMULATOR_TRACING_STUB_H
 
 #include "google/cloud/policysimulator/v1/internal/simulator_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -65,6 +66,8 @@ class SimulatorTracingStub : public SimulatorStub {
 
  private:
   std::shared_ptr<SimulatorStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

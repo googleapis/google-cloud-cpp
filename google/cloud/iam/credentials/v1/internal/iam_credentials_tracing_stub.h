@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_INTERNAL_IAM_CREDENTIALS_TRACING_STUB_H
 
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -57,6 +58,8 @@ class IAMCredentialsTracingStub : public IAMCredentialsStub {
 
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

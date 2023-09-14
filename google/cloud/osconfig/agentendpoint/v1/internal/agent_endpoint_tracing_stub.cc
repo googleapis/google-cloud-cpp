@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AgentEndpointServiceTracingStub::AgentEndpointServiceTracingStub(
     std::shared_ptr<AgentEndpointServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
@@ -42,7 +42,7 @@ AgentEndpointServiceTracingStub::ReceiveTaskNotification(
       "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
       "ReceiveTaskNotification");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->ReceiveTaskNotification(context, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::osconfig::agentendpoint::v1::
@@ -59,7 +59,7 @@ AgentEndpointServiceTracingStub::StartNextTask(
       "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
       "StartNextTask");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->StartNextTask(context, request));
 }
@@ -73,7 +73,7 @@ AgentEndpointServiceTracingStub::ReportTaskProgress(
       "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
       "ReportTaskProgress");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReportTaskProgress(context, request));
 }
@@ -87,7 +87,7 @@ AgentEndpointServiceTracingStub::ReportTaskComplete(
       "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
       "ReportTaskComplete");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReportTaskComplete(context, request));
 }
@@ -101,7 +101,7 @@ AgentEndpointServiceTracingStub::RegisterAgent(
       "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
       "RegisterAgent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RegisterAgent(context, request));
 }
@@ -115,7 +115,7 @@ AgentEndpointServiceTracingStub::ReportInventory(
       "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
       "ReportInventory");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReportInventory(context, request));
 }

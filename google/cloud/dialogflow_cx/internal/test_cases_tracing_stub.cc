@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TestCasesTracingStub::TestCasesTracingStub(std::shared_ptr<TestCasesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesTracingStub::ListTestCases(
@@ -36,7 +36,7 @@ TestCasesTracingStub::ListTestCases(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "ListTestCases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTestCases(context, request));
 }
@@ -48,7 +48,7 @@ Status TestCasesTracingStub::BatchDeleteTestCases(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "BatchDeleteTestCases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->BatchDeleteTestCases(context, request));
 }
@@ -60,7 +60,7 @@ TestCasesTracingStub::GetTestCase(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "GetTestCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTestCase(context, request));
 }
@@ -72,7 +72,7 @@ TestCasesTracingStub::CreateTestCase(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "CreateTestCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTestCase(context, request));
 }
@@ -84,7 +84,7 @@ TestCasesTracingStub::UpdateTestCase(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "UpdateTestCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTestCase(context, request));
 }
@@ -98,7 +98,7 @@ TestCasesTracingStub::AsyncRunTestCase(
                                      "RunTestCase");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRunTestCase(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -114,7 +114,7 @@ TestCasesTracingStub::AsyncBatchRunTestCases(
                                      "BatchRunTestCases");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchRunTestCases(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -128,7 +128,7 @@ TestCasesTracingStub::CalculateCoverage(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "CalculateCoverage");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CalculateCoverage(context, request));
 }
@@ -142,7 +142,7 @@ TestCasesTracingStub::AsyncImportTestCases(
                                      "ImportTestCases");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportTestCases(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -157,7 +157,7 @@ TestCasesTracingStub::AsyncExportTestCases(
                                      "ExportTestCases");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportTestCases(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -171,7 +171,7 @@ TestCasesTracingStub::ListTestCaseResults(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "ListTestCaseResults");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTestCaseResults(context, request));
 }
@@ -184,7 +184,7 @@ TestCasesTracingStub::GetTestCaseResult(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "GetTestCaseResult");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTestCaseResult(context, request));
 }
@@ -198,7 +198,7 @@ TestCasesTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -212,7 +212,7 @@ future<Status> TestCasesTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

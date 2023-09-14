@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExecutionsTracingStub::ExecutionsTracingStub(
     std::shared_ptr<ExecutionsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 ExecutionsTracingStub::ListExecutions(
@@ -38,7 +38,7 @@ ExecutionsTracingStub::ListExecutions(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workflows.executions.v1.Executions", "ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListExecutions(context, request));
 }
@@ -51,7 +51,7 @@ ExecutionsTracingStub::CreateExecution(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workflows.executions.v1.Executions", "CreateExecution");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateExecution(context, request));
 }
@@ -64,7 +64,7 @@ ExecutionsTracingStub::GetExecution(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workflows.executions.v1.Executions", "GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetExecution(context, request));
 }
@@ -77,7 +77,7 @@ ExecutionsTracingStub::CancelExecution(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workflows.executions.v1.Executions", "CancelExecution");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelExecution(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastoreAdminTracingStub::DatastoreAdminTracingStub(
     std::shared_ptr<DatastoreAdminStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncExportEntities(
@@ -39,7 +39,7 @@ DatastoreAdminTracingStub::AsyncExportEntities(
                                      "ExportEntities");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -54,7 +54,7 @@ DatastoreAdminTracingStub::AsyncImportEntities(
                                      "ImportEntities");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -69,7 +69,7 @@ DatastoreAdminTracingStub::AsyncCreateIndex(
                                      "CreateIndex");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateIndex(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -84,7 +84,7 @@ DatastoreAdminTracingStub::AsyncDeleteIndex(
                                      "DeleteIndex");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteIndex(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -97,7 +97,7 @@ DatastoreAdminTracingStub::GetIndex(
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "GetIndex");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetIndex(context, request));
 }
 
@@ -108,7 +108,7 @@ DatastoreAdminTracingStub::ListIndexes(
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "ListIndexes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListIndexes(context, request));
 }
@@ -122,7 +122,7 @@ DatastoreAdminTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -136,7 +136,7 @@ future<Status> DatastoreAdminTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

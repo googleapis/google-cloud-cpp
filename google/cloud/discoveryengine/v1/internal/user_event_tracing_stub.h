@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_USER_EVENT_TRACING_STUB_H
 
 #include "google/cloud/discoveryengine/v1/internal/user_event_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -65,6 +66,8 @@ class UserEventServiceTracingStub : public UserEventServiceStub {
 
  private:
   std::shared_ptr<UserEventServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

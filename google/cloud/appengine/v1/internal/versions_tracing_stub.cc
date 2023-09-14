@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 VersionsTracingStub::VersionsTracingStub(std::shared_ptr<VersionsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsTracingStub::ListVersions(
@@ -36,7 +36,7 @@ VersionsTracingStub::ListVersions(
   auto span =
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "ListVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVersions(context, request));
 }
@@ -47,7 +47,7 @@ StatusOr<google::appengine::v1::Version> VersionsTracingStub::GetVersion(
   auto span =
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "GetVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetVersion(context, request));
 }
@@ -61,7 +61,7 @@ VersionsTracingStub::AsyncCreateVersion(
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "CreateVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -76,7 +76,7 @@ VersionsTracingStub::AsyncUpdateVersion(
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "UpdateVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -91,7 +91,7 @@ VersionsTracingStub::AsyncDeleteVersion(
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "DeleteVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -106,7 +106,7 @@ VersionsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -120,7 +120,7 @@ future<Status> VersionsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

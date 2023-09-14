@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2TracingStub::LoggingServiceV2TracingStub(
     std::shared_ptr<LoggingServiceV2Stub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 Status LoggingServiceV2TracingStub::DeleteLog(
     grpc::ClientContext& context,
@@ -37,7 +37,7 @@ Status LoggingServiceV2TracingStub::DeleteLog(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2", "DeleteLog");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->DeleteLog(context, request));
 }
 
@@ -48,7 +48,7 @@ LoggingServiceV2TracingStub::WriteLogEntries(
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "WriteLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->WriteLogEntries(context, request));
 }
@@ -60,7 +60,7 @@ LoggingServiceV2TracingStub::ListLogEntries(
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "ListLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLogEntries(context, request));
 }
@@ -73,7 +73,7 @@ LoggingServiceV2TracingStub::ListMonitoredResourceDescriptors(
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "ListMonitoredResourceDescriptors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->ListMonitoredResourceDescriptors(context, request));
@@ -86,7 +86,7 @@ LoggingServiceV2TracingStub::ListLogs(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2", "ListLogs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListLogs(context, request));
 }
 
@@ -98,7 +98,7 @@ LoggingServiceV2TracingStub::AsyncTailLogEntries(
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "TailLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncTailLogEntries(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::logging::v2::TailLogEntriesRequest,
@@ -115,7 +115,7 @@ LoggingServiceV2TracingStub::AsyncWriteLogEntries(
                                      "WriteLogEntries");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncWriteLogEntries(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

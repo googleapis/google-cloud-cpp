@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsLoginServiceTracingStub::OsLoginServiceTracingStub(
     std::shared_ptr<OsLoginServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
 OsLoginServiceTracingStub::CreateSshPublicKey(
@@ -37,7 +37,7 @@ OsLoginServiceTracingStub::CreateSshPublicKey(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "CreateSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSshPublicKey(context, request));
 }
@@ -48,7 +48,7 @@ Status OsLoginServiceTracingStub::DeletePosixAccount(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "DeletePosixAccount");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeletePosixAccount(context, request));
 }
@@ -59,7 +59,7 @@ Status OsLoginServiceTracingStub::DeleteSshPublicKey(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "DeleteSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSshPublicKey(context, request));
 }
@@ -71,7 +71,7 @@ OsLoginServiceTracingStub::GetLoginProfile(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "GetLoginProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLoginProfile(context, request));
 }
@@ -83,7 +83,7 @@ OsLoginServiceTracingStub::GetSshPublicKey(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "GetSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSshPublicKey(context, request));
 }
@@ -95,7 +95,7 @@ OsLoginServiceTracingStub::ImportSshPublicKey(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "ImportSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ImportSshPublicKey(context, request));
 }
@@ -107,7 +107,7 @@ OsLoginServiceTracingStub::UpdateSshPublicKey(
   auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
                                      "UpdateSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSshPublicKey(context, request));
 }

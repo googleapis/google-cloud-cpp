@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PipelineServiceTracingStub::PipelineServiceTracingStub(
     std::shared_ptr<PipelineServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceTracingStub::CreateTrainingPipeline(
@@ -38,7 +38,7 @@ PipelineServiceTracingStub::CreateTrainingPipeline(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "CreateTrainingPipeline");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTrainingPipeline(context, request));
 }
@@ -50,7 +50,7 @@ PipelineServiceTracingStub::GetTrainingPipeline(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "GetTrainingPipeline");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTrainingPipeline(context, request));
 }
@@ -63,7 +63,7 @@ PipelineServiceTracingStub::ListTrainingPipelines(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "ListTrainingPipelines");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTrainingPipelines(context, request));
 }
@@ -78,7 +78,7 @@ PipelineServiceTracingStub::AsyncDeleteTrainingPipeline(
       "google.cloud.aiplatform.v1.PipelineService", "DeleteTrainingPipeline");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteTrainingPipeline(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -91,7 +91,7 @@ Status PipelineServiceTracingStub::CancelTrainingPipeline(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "CancelTrainingPipeline");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelTrainingPipeline(context, request));
 }
@@ -103,7 +103,7 @@ PipelineServiceTracingStub::CreatePipelineJob(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "CreatePipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreatePipelineJob(context, request));
 }
@@ -115,7 +115,7 @@ PipelineServiceTracingStub::GetPipelineJob(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "GetPipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPipelineJob(context, request));
 }
@@ -127,7 +127,7 @@ PipelineServiceTracingStub::ListPipelineJobs(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "ListPipelineJobs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPipelineJobs(context, request));
 }
@@ -141,7 +141,7 @@ PipelineServiceTracingStub::AsyncDeletePipelineJob(
       "google.cloud.aiplatform.v1.PipelineService", "DeletePipelineJob");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeletePipelineJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -153,7 +153,7 @@ Status PipelineServiceTracingStub::CancelPipelineJob(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PipelineService", "CancelPipelineJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelPipelineJob(context, request));
 }
@@ -167,7 +167,7 @@ PipelineServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -181,7 +181,7 @@ future<Status> PipelineServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

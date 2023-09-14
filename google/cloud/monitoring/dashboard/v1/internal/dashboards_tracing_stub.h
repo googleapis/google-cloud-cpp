@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_INTERNAL_DASHBOARDS_TRACING_STUB_H
 
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -64,6 +65,8 @@ class DashboardsServiceTracingStub : public DashboardsServiceStub {
 
  private:
   std::shared_ptr<DashboardsServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

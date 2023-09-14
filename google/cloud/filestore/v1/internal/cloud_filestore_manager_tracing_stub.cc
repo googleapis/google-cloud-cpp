@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFilestoreManagerTracingStub::CloudFilestoreManagerTracingStub(
     std::shared_ptr<CloudFilestoreManagerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
 CloudFilestoreManagerTracingStub::ListInstances(
@@ -37,7 +37,7 @@ CloudFilestoreManagerTracingStub::ListInstances(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, request));
 }
@@ -49,7 +49,7 @@ CloudFilestoreManagerTracingStub::GetInstance(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetInstance(context, request));
 }
@@ -63,7 +63,7 @@ CloudFilestoreManagerTracingStub::AsyncCreateInstance(
       "google.cloud.filestore.v1.CloudFilestoreManager", "CreateInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -78,7 +78,7 @@ CloudFilestoreManagerTracingStub::AsyncUpdateInstance(
       "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ CloudFilestoreManagerTracingStub::AsyncRestoreInstance(
       "google.cloud.filestore.v1.CloudFilestoreManager", "RestoreInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRestoreInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -108,7 +108,7 @@ CloudFilestoreManagerTracingStub::AsyncDeleteInstance(
       "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -121,7 +121,7 @@ CloudFilestoreManagerTracingStub::ListSnapshots(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "ListSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSnapshots(context, request));
 }
@@ -133,7 +133,7 @@ CloudFilestoreManagerTracingStub::GetSnapshot(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "GetSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSnapshot(context, request));
 }
@@ -147,7 +147,7 @@ CloudFilestoreManagerTracingStub::AsyncCreateSnapshot(
       "google.cloud.filestore.v1.CloudFilestoreManager", "CreateSnapshot");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -162,7 +162,7 @@ CloudFilestoreManagerTracingStub::AsyncDeleteSnapshot(
       "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteSnapshot");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -177,7 +177,7 @@ CloudFilestoreManagerTracingStub::AsyncUpdateSnapshot(
       "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateSnapshot");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateSnapshot(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -190,7 +190,7 @@ CloudFilestoreManagerTracingStub::ListBackups(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBackups(context, request));
 }
@@ -202,7 +202,7 @@ CloudFilestoreManagerTracingStub::GetBackup(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.filestore.v1.CloudFilestoreManager", "GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetBackup(context, request));
 }
 
@@ -215,7 +215,7 @@ CloudFilestoreManagerTracingStub::AsyncCreateBackup(
       "google.cloud.filestore.v1.CloudFilestoreManager", "CreateBackup");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -230,7 +230,7 @@ CloudFilestoreManagerTracingStub::AsyncDeleteBackup(
       "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteBackup");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -245,7 +245,7 @@ CloudFilestoreManagerTracingStub::AsyncUpdateBackup(
       "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateBackup");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateBackup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -260,7 +260,7 @@ CloudFilestoreManagerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -274,7 +274,7 @@ future<Status> CloudFilestoreManagerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

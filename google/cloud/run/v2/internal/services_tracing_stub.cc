@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ServicesTracingStub::ServicesTracingStub(std::shared_ptr<ServicesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ServicesTracingStub::AsyncCreateService(
@@ -38,7 +38,7 @@ ServicesTracingStub::AsyncCreateService(
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "CreateService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -50,7 +50,7 @@ StatusOr<google::cloud::run::v2::Service> ServicesTracingStub::GetService(
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetService(context, request));
 }
@@ -62,7 +62,7 @@ ServicesTracingStub::ListServices(
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, request));
 }
@@ -76,7 +76,7 @@ ServicesTracingStub::AsyncUpdateService(
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "UpdateService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -91,7 +91,7 @@ ServicesTracingStub::AsyncDeleteService(
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "DeleteService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -103,7 +103,7 @@ StatusOr<google::iam::v1::Policy> ServicesTracingStub::GetIamPolicy(
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -114,7 +114,7 @@ StatusOr<google::iam::v1::Policy> ServicesTracingStub::SetIamPolicy(
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Services", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -126,7 +126,7 @@ ServicesTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Services",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -140,7 +140,7 @@ ServicesTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -154,7 +154,7 @@ future<Status> ServicesTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

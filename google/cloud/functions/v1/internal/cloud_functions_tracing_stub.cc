@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceTracingStub::CloudFunctionsServiceTracingStub(
     std::shared_ptr<CloudFunctionsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
 CloudFunctionsServiceTracingStub::ListFunctions(
@@ -37,7 +37,7 @@ CloudFunctionsServiceTracingStub::ListFunctions(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "ListFunctions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFunctions(context, request));
 }
@@ -49,7 +49,7 @@ CloudFunctionsServiceTracingStub::GetFunction(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "GetFunction");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFunction(context, request));
 }
@@ -63,7 +63,7 @@ CloudFunctionsServiceTracingStub::AsyncCreateFunction(
       "google.cloud.functions.v1.CloudFunctionsService", "CreateFunction");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateFunction(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -78,7 +78,7 @@ CloudFunctionsServiceTracingStub::AsyncUpdateFunction(
       "google.cloud.functions.v1.CloudFunctionsService", "UpdateFunction");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateFunction(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ CloudFunctionsServiceTracingStub::AsyncDeleteFunction(
       "google.cloud.functions.v1.CloudFunctionsService", "DeleteFunction");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteFunction(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -106,7 +106,7 @@ CloudFunctionsServiceTracingStub::CallFunction(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "CallFunction");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CallFunction(context, request));
 }
@@ -118,7 +118,7 @@ CloudFunctionsServiceTracingStub::GenerateUploadUrl(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "GenerateUploadUrl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateUploadUrl(context, request));
 }
@@ -130,7 +130,7 @@ CloudFunctionsServiceTracingStub::GenerateDownloadUrl(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "GenerateDownloadUrl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateDownloadUrl(context, request));
 }
@@ -142,7 +142,7 @@ CloudFunctionsServiceTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -154,7 +154,7 @@ CloudFunctionsServiceTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -166,7 +166,7 @@ CloudFunctionsServiceTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v1.CloudFunctionsService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -180,7 +180,7 @@ CloudFunctionsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -194,7 +194,7 @@ future<Status> CloudFunctionsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

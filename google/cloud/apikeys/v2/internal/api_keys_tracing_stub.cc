@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ApiKeysTracingStub::ApiKeysTracingStub(std::shared_ptr<ApiKeysStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncCreateKey(
@@ -38,7 +38,7 @@ ApiKeysTracingStub::AsyncCreateKey(
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "CreateKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -51,7 +51,7 @@ ApiKeysTracingStub::ListKeys(
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "ListKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListKeys(context, request));
 }
 
@@ -60,7 +60,7 @@ StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingStub::GetKey(
     google::api::apikeys::v2::GetKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetKey(context, request));
 }
 
@@ -71,7 +71,7 @@ ApiKeysTracingStub::GetKeyString(
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKeyString");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetKeyString(context, request));
 }
@@ -85,7 +85,7 @@ ApiKeysTracingStub::AsyncUpdateKey(
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "UpdateKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -100,7 +100,7 @@ ApiKeysTracingStub::AsyncDeleteKey(
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "DeleteKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -115,7 +115,7 @@ ApiKeysTracingStub::AsyncUndeleteKey(
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "UndeleteKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUndeleteKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -128,7 +128,7 @@ ApiKeysTracingStub::LookupKey(
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "LookupKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->LookupKey(context, request));
 }
 
@@ -141,7 +141,7 @@ ApiKeysTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -155,7 +155,7 @@ future<Status> ApiKeysTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

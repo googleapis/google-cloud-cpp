@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConfigServiceV2TracingStub::ConfigServiceV2TracingStub(
     std::shared_ptr<ConfigServiceV2Stub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::logging::v2::ListBucketsResponse>
 ConfigServiceV2TracingStub::ListBuckets(
@@ -37,7 +37,7 @@ ConfigServiceV2TracingStub::ListBuckets(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "ListBuckets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBuckets(context, request));
 }
@@ -48,7 +48,7 @@ StatusOr<google::logging::v2::LogBucket> ConfigServiceV2TracingStub::GetBucket(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "GetBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetBucket(context, request));
 }
 
@@ -61,7 +61,7 @@ ConfigServiceV2TracingStub::AsyncCreateBucketAsync(
                                      "CreateBucketAsync");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateBucketAsync(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -76,7 +76,7 @@ ConfigServiceV2TracingStub::AsyncUpdateBucketAsync(
                                      "UpdateBucketAsync");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateBucketAsync(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -89,7 +89,7 @@ ConfigServiceV2TracingStub::CreateBucket(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "CreateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateBucket(context, request));
 }
@@ -101,7 +101,7 @@ ConfigServiceV2TracingStub::UpdateBucket(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "UpdateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateBucket(context, request));
 }
@@ -112,7 +112,7 @@ Status ConfigServiceV2TracingStub::DeleteBucket(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "DeleteBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteBucket(context, request));
 }
@@ -123,7 +123,7 @@ Status ConfigServiceV2TracingStub::UndeleteBucket(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "UndeleteBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UndeleteBucket(context, request));
 }
@@ -135,7 +135,7 @@ ConfigServiceV2TracingStub::ListViews(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "ListViews");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListViews(context, request));
 }
 
@@ -145,7 +145,7 @@ StatusOr<google::logging::v2::LogView> ConfigServiceV2TracingStub::GetView(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "GetView");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetView(context, request));
 }
 
@@ -155,7 +155,7 @@ StatusOr<google::logging::v2::LogView> ConfigServiceV2TracingStub::CreateView(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "CreateView");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateView(context, request));
 }
@@ -166,7 +166,7 @@ StatusOr<google::logging::v2::LogView> ConfigServiceV2TracingStub::UpdateView(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "UpdateView");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateView(context, request));
 }
@@ -177,7 +177,7 @@ Status ConfigServiceV2TracingStub::DeleteView(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "DeleteView");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteView(context, request));
 }
@@ -189,7 +189,7 @@ ConfigServiceV2TracingStub::ListSinks(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "ListSinks");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListSinks(context, request));
 }
 
@@ -199,7 +199,7 @@ StatusOr<google::logging::v2::LogSink> ConfigServiceV2TracingStub::GetSink(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "GetSink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSink(context, request));
 }
 
@@ -209,7 +209,7 @@ StatusOr<google::logging::v2::LogSink> ConfigServiceV2TracingStub::CreateSink(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "CreateSink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSink(context, request));
 }
@@ -220,7 +220,7 @@ StatusOr<google::logging::v2::LogSink> ConfigServiceV2TracingStub::UpdateSink(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "UpdateSink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSink(context, request));
 }
@@ -231,7 +231,7 @@ Status ConfigServiceV2TracingStub::DeleteSink(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "DeleteSink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSink(context, request));
 }
@@ -245,7 +245,7 @@ ConfigServiceV2TracingStub::AsyncCreateLink(
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "CreateLink");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateLink(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -260,7 +260,7 @@ ConfigServiceV2TracingStub::AsyncDeleteLink(
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "DeleteLink");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteLink(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -273,7 +273,7 @@ ConfigServiceV2TracingStub::ListLinks(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "ListLinks");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListLinks(context, request));
 }
 
@@ -283,7 +283,7 @@ StatusOr<google::logging::v2::Link> ConfigServiceV2TracingStub::GetLink(
   auto span =
       internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2", "GetLink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetLink(context, request));
 }
 
@@ -294,7 +294,7 @@ ConfigServiceV2TracingStub::ListExclusions(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "ListExclusions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListExclusions(context, request));
 }
@@ -306,7 +306,7 @@ ConfigServiceV2TracingStub::GetExclusion(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "GetExclusion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetExclusion(context, request));
 }
@@ -318,7 +318,7 @@ ConfigServiceV2TracingStub::CreateExclusion(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "CreateExclusion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateExclusion(context, request));
 }
@@ -330,7 +330,7 @@ ConfigServiceV2TracingStub::UpdateExclusion(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "UpdateExclusion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateExclusion(context, request));
 }
@@ -341,7 +341,7 @@ Status ConfigServiceV2TracingStub::DeleteExclusion(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "DeleteExclusion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteExclusion(context, request));
 }
@@ -353,7 +353,7 @@ ConfigServiceV2TracingStub::GetCmekSettings(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "GetCmekSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCmekSettings(context, request));
 }
@@ -365,7 +365,7 @@ ConfigServiceV2TracingStub::UpdateCmekSettings(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "UpdateCmekSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateCmekSettings(context, request));
 }
@@ -376,7 +376,7 @@ StatusOr<google::logging::v2::Settings> ConfigServiceV2TracingStub::GetSettings(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "GetSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSettings(context, request));
 }
@@ -388,7 +388,7 @@ ConfigServiceV2TracingStub::UpdateSettings(
   auto span = internal::MakeSpanGrpc("google.logging.v2.ConfigServiceV2",
                                      "UpdateSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSettings(context, request));
 }
@@ -402,7 +402,7 @@ ConfigServiceV2TracingStub::AsyncCopyLogEntries(
                                      "CopyLogEntries");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCopyLogEntries(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -417,7 +417,7 @@ ConfigServiceV2TracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -431,7 +431,7 @@ future<Status> ConfigServiceV2TracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

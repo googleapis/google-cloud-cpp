@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerTracingStub::ClusterManagerTracingStub(
     std::shared_ptr<ClusterManagerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerTracingStub::ListClusters(
@@ -37,7 +37,7 @@ ClusterManagerTracingStub::ListClusters(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListClusters(context, request));
 }
@@ -48,7 +48,7 @@ StatusOr<google::container::v1::Cluster> ClusterManagerTracingStub::GetCluster(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCluster(context, request));
 }
@@ -60,7 +60,7 @@ ClusterManagerTracingStub::CreateCluster(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "CreateCluster");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCluster(context, request));
 }
@@ -72,7 +72,7 @@ ClusterManagerTracingStub::UpdateCluster(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "UpdateCluster");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateCluster(context, request));
 }
@@ -84,7 +84,7 @@ ClusterManagerTracingStub::UpdateNodePool(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "UpdateNodePool");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateNodePool(context, request));
 }
@@ -96,7 +96,7 @@ ClusterManagerTracingStub::SetNodePoolAutoscaling(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetNodePoolAutoscaling");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetNodePoolAutoscaling(context, request));
 }
@@ -108,7 +108,7 @@ ClusterManagerTracingStub::SetLoggingService(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetLoggingService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetLoggingService(context, request));
 }
@@ -120,7 +120,7 @@ ClusterManagerTracingStub::SetMonitoringService(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetMonitoringService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetMonitoringService(context, request));
 }
@@ -132,7 +132,7 @@ ClusterManagerTracingStub::SetAddonsConfig(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetAddonsConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetAddonsConfig(context, request));
 }
@@ -144,7 +144,7 @@ ClusterManagerTracingStub::SetLocations(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetLocations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetLocations(context, request));
 }
@@ -156,7 +156,7 @@ ClusterManagerTracingStub::UpdateMaster(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "UpdateMaster");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateMaster(context, request));
 }
@@ -168,7 +168,7 @@ ClusterManagerTracingStub::SetMasterAuth(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetMasterAuth");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetMasterAuth(context, request));
 }
@@ -180,7 +180,7 @@ ClusterManagerTracingStub::DeleteCluster(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "DeleteCluster");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteCluster(context, request));
 }
@@ -192,7 +192,7 @@ ClusterManagerTracingStub::ListOperations(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, request));
 }
@@ -204,7 +204,7 @@ ClusterManagerTracingStub::GetOperation(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetOperation(context, request));
 }
@@ -215,7 +215,7 @@ Status ClusterManagerTracingStub::CancelOperation(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelOperation(context, request));
 }
@@ -227,7 +227,7 @@ ClusterManagerTracingStub::GetServerConfig(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "GetServerConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetServerConfig(context, request));
 }
@@ -239,7 +239,7 @@ ClusterManagerTracingStub::GetJSONWebKeys(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "GetJSONWebKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetJSONWebKeys(context, request));
 }
@@ -251,7 +251,7 @@ ClusterManagerTracingStub::ListNodePools(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "ListNodePools");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNodePools(context, request));
 }
@@ -263,7 +263,7 @@ ClusterManagerTracingStub::GetNodePool(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "GetNodePool");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNodePool(context, request));
 }
@@ -275,7 +275,7 @@ ClusterManagerTracingStub::CreateNodePool(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "CreateNodePool");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateNodePool(context, request));
 }
@@ -287,7 +287,7 @@ ClusterManagerTracingStub::DeleteNodePool(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "DeleteNodePool");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteNodePool(context, request));
 }
@@ -298,7 +298,7 @@ Status ClusterManagerTracingStub::CompleteNodePoolUpgrade(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "CompleteNodePoolUpgrade");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CompleteNodePoolUpgrade(context, request));
 }
@@ -310,7 +310,7 @@ ClusterManagerTracingStub::RollbackNodePoolUpgrade(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "RollbackNodePoolUpgrade");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RollbackNodePoolUpgrade(context, request));
 }
@@ -322,7 +322,7 @@ ClusterManagerTracingStub::SetNodePoolManagement(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetNodePoolManagement");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetNodePoolManagement(context, request));
 }
@@ -333,7 +333,7 @@ StatusOr<google::container::v1::Operation> ClusterManagerTracingStub::SetLabels(
   auto span =
       internal::MakeSpanGrpc("google.container.v1.ClusterManager", "SetLabels");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->SetLabels(context, request));
 }
 
@@ -344,7 +344,7 @@ ClusterManagerTracingStub::SetLegacyAbac(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetLegacyAbac");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetLegacyAbac(context, request));
 }
@@ -356,7 +356,7 @@ ClusterManagerTracingStub::StartIPRotation(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "StartIPRotation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->StartIPRotation(context, request));
 }
@@ -368,7 +368,7 @@ ClusterManagerTracingStub::CompleteIPRotation(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "CompleteIPRotation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CompleteIPRotation(context, request));
 }
@@ -380,7 +380,7 @@ ClusterManagerTracingStub::SetNodePoolSize(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetNodePoolSize");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetNodePoolSize(context, request));
 }
@@ -392,7 +392,7 @@ ClusterManagerTracingStub::SetNetworkPolicy(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetNetworkPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetNetworkPolicy(context, request));
 }
@@ -404,7 +404,7 @@ ClusterManagerTracingStub::SetMaintenancePolicy(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "SetMaintenancePolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetMaintenancePolicy(context, request));
 }
@@ -416,7 +416,7 @@ ClusterManagerTracingStub::ListUsableSubnetworks(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "ListUsableSubnetworks");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListUsableSubnetworks(context, request));
 }
@@ -428,7 +428,7 @@ ClusterManagerTracingStub::CheckAutopilotCompatibility(
   auto span = internal::MakeSpanGrpc("google.container.v1.ClusterManager",
                                      "CheckAutopilotCompatibility");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->CheckAutopilotCompatibility(context, request));
 }

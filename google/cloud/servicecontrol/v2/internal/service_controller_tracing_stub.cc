@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceControllerTracingStub::ServiceControllerTracingStub(
     std::shared_ptr<ServiceControllerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerTracingStub::Check(
@@ -37,7 +37,7 @@ ServiceControllerTracingStub::Check(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicecontrol.v2.ServiceController", "Check");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Check(context, request));
 }
 
@@ -48,7 +48,7 @@ ServiceControllerTracingStub::Report(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicecontrol.v2.ServiceController", "Report");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Report(context, request));
 }
 

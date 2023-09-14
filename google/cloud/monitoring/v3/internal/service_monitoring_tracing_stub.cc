@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceMonitoringServiceTracingStub::ServiceMonitoringServiceTracingStub(
     std::shared_ptr<ServiceMonitoringServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceTracingStub::CreateService(
@@ -37,7 +37,7 @@ ServiceMonitoringServiceTracingStub::CreateService(
   auto span = internal::MakeSpanGrpc(
       "google.monitoring.v3.ServiceMonitoringService", "CreateService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateService(context, request));
 }
@@ -49,7 +49,7 @@ ServiceMonitoringServiceTracingStub::GetService(
   auto span = internal::MakeSpanGrpc(
       "google.monitoring.v3.ServiceMonitoringService", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetService(context, request));
 }
@@ -61,7 +61,7 @@ ServiceMonitoringServiceTracingStub::ListServices(
   auto span = internal::MakeSpanGrpc(
       "google.monitoring.v3.ServiceMonitoringService", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, request));
 }
@@ -73,7 +73,7 @@ ServiceMonitoringServiceTracingStub::UpdateService(
   auto span = internal::MakeSpanGrpc(
       "google.monitoring.v3.ServiceMonitoringService", "UpdateService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateService(context, request));
 }
@@ -84,7 +84,7 @@ Status ServiceMonitoringServiceTracingStub::DeleteService(
   auto span = internal::MakeSpanGrpc(
       "google.monitoring.v3.ServiceMonitoringService", "DeleteService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteService(context, request));
 }
@@ -97,7 +97,7 @@ ServiceMonitoringServiceTracingStub::CreateServiceLevelObjective(
       internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
                              "CreateServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->CreateServiceLevelObjective(context, request));
 }
@@ -110,7 +110,7 @@ ServiceMonitoringServiceTracingStub::GetServiceLevelObjective(
       internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
                              "GetServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetServiceLevelObjective(context, request));
 }
@@ -123,7 +123,7 @@ ServiceMonitoringServiceTracingStub::ListServiceLevelObjectives(
       internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
                              "ListServiceLevelObjectives");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->ListServiceLevelObjectives(context, request));
 }
@@ -136,7 +136,7 @@ ServiceMonitoringServiceTracingStub::UpdateServiceLevelObjective(
       internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
                              "UpdateServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->UpdateServiceLevelObjective(context, request));
 }
@@ -148,7 +148,7 @@ Status ServiceMonitoringServiceTracingStub::DeleteServiceLevelObjective(
       internal::MakeSpanGrpc("google.monitoring.v3.ServiceMonitoringService",
                              "DeleteServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->DeleteServiceLevelObjective(context, request));
 }

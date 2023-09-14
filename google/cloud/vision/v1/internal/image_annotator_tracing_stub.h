@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_IMAGE_ANNOTATOR_TRACING_STUB_H
 
 #include "google/cloud/vision/v1/internal/image_annotator_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -72,6 +73,8 @@ class ImageAnnotatorTracingStub : public ImageAnnotatorStub {
 
  private:
   std::shared_ptr<ImageAnnotatorStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

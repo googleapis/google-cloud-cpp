@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaServiceTracingStub::SchemaServiceTracingStub(
     std::shared_ptr<SchemaServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceTracingStub::CreateSchema(
     grpc::ClientContext& context,
@@ -36,7 +36,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceTracingStub::CreateSchema(
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.SchemaService", "CreateSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSchema(context, request));
 }
@@ -47,7 +47,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceTracingStub::GetSchema(
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.SchemaService", "GetSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSchema(context, request));
 }
 
@@ -58,7 +58,7 @@ SchemaServiceTracingStub::ListSchemas(
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.SchemaService", "ListSchemas");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSchemas(context, request));
 }
@@ -70,7 +70,7 @@ SchemaServiceTracingStub::ListSchemaRevisions(
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.SchemaService",
                                      "ListSchemaRevisions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSchemaRevisions(context, request));
 }
@@ -81,7 +81,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceTracingStub::CommitSchema(
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.SchemaService", "CommitSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CommitSchema(context, request));
 }
@@ -92,7 +92,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceTracingStub::RollbackSchema(
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.SchemaService",
                                      "RollbackSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RollbackSchema(context, request));
 }
@@ -104,7 +104,7 @@ SchemaServiceTracingStub::DeleteSchemaRevision(
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.SchemaService",
                                      "DeleteSchemaRevision");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSchemaRevision(context, request));
 }
@@ -115,7 +115,7 @@ Status SchemaServiceTracingStub::DeleteSchema(
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.SchemaService", "DeleteSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSchema(context, request));
 }
@@ -127,7 +127,7 @@ SchemaServiceTracingStub::ValidateSchema(
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.SchemaService",
                                      "ValidateSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ValidateSchema(context, request));
 }
@@ -139,7 +139,7 @@ SchemaServiceTracingStub::ValidateMessage(
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.SchemaService",
                                      "ValidateMessage");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ValidateMessage(context, request));
 }

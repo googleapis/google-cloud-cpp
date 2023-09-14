@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RuleSetServiceTracingStub::RuleSetServiceTracingStub(
     std::shared_ptr<RuleSetServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceTracingStub::CreateRuleSet(
@@ -37,7 +37,7 @@ RuleSetServiceTracingStub::CreateRuleSet(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.RuleSetService", "CreateRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateRuleSet(context, request));
 }
@@ -49,7 +49,7 @@ RuleSetServiceTracingStub::GetRuleSet(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.RuleSetService", "GetRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRuleSet(context, request));
 }
@@ -61,7 +61,7 @@ RuleSetServiceTracingStub::UpdateRuleSet(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.RuleSetService", "UpdateRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateRuleSet(context, request));
 }
@@ -72,7 +72,7 @@ Status RuleSetServiceTracingStub::DeleteRuleSet(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.RuleSetService", "DeleteRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRuleSet(context, request));
 }
@@ -84,7 +84,7 @@ RuleSetServiceTracingStub::ListRuleSets(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.RuleSetService", "ListRuleSets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRuleSets(context, request));
 }

@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TagKeysTracingStub::TagKeysTracingStub(std::shared_ptr<TagKeysStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysTracingStub::ListTagKeys(
@@ -36,7 +36,7 @@ TagKeysTracingStub::ListTagKeys(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "ListTagKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTagKeys(context, request));
 }
@@ -48,7 +48,7 @@ TagKeysTracingStub::GetTagKey(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "GetTagKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetTagKey(context, request));
 }
 
@@ -60,7 +60,7 @@ TagKeysTracingStub::GetNamespacedTagKey(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "GetNamespacedTagKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNamespacedTagKey(context, request));
 }
@@ -74,7 +74,7 @@ TagKeysTracingStub::AsyncCreateTagKey(
                                      "CreateTagKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateTagKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -89,7 +89,7 @@ TagKeysTracingStub::AsyncUpdateTagKey(
                                      "UpdateTagKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateTagKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -104,7 +104,7 @@ TagKeysTracingStub::AsyncDeleteTagKey(
                                      "DeleteTagKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteTagKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -116,7 +116,7 @@ StatusOr<google::iam::v1::Policy> TagKeysTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -127,7 +127,7 @@ StatusOr<google::iam::v1::Policy> TagKeysTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -139,7 +139,7 @@ TagKeysTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -153,7 +153,7 @@ TagKeysTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -167,7 +167,7 @@ future<Status> TagKeysTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

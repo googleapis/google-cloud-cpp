@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsTracingStub::DetectIntent(
@@ -37,7 +37,7 @@ SessionsTracingStub::DetectIntent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Sessions",
                                      "DetectIntent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DetectIntent(context, request));
 }
@@ -50,7 +50,7 @@ SessionsTracingStub::AsyncStreamingDetectIntent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Sessions",
                                      "StreamingDetectIntent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingDetectIntent(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,

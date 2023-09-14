@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_ZONAL_TRACING_STUB_H
 
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -121,6 +122,8 @@ class OsConfigZonalServiceTracingStub : public OsConfigZonalServiceStub {
 
  private:
   std::shared_ptr<OsConfigZonalServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

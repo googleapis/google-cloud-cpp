@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IdentityAwareProxyAdminServiceTracingStub::
     IdentityAwareProxyAdminServiceTracingStub(
         std::shared_ptr<IdentityAwareProxyAdminServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceTracingStub::SetIamPolicy(
@@ -38,7 +38,7 @@ IdentityAwareProxyAdminServiceTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -50,7 +50,7 @@ IdentityAwareProxyAdminServiceTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -63,7 +63,7 @@ IdentityAwareProxyAdminServiceTracingStub::TestIamPermissions(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -75,7 +75,7 @@ IdentityAwareProxyAdminServiceTracingStub::GetIapSettings(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService", "GetIapSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIapSettings(context, request));
 }
@@ -88,7 +88,7 @@ IdentityAwareProxyAdminServiceTracingStub::UpdateIapSettings(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "UpdateIapSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateIapSettings(context, request));
 }
@@ -101,7 +101,7 @@ IdentityAwareProxyAdminServiceTracingStub::ListTunnelDestGroups(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "ListTunnelDestGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTunnelDestGroups(context, request));
 }
@@ -114,7 +114,7 @@ IdentityAwareProxyAdminServiceTracingStub::CreateTunnelDestGroup(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "CreateTunnelDestGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTunnelDestGroup(context, request));
 }
@@ -127,7 +127,7 @@ IdentityAwareProxyAdminServiceTracingStub::GetTunnelDestGroup(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "GetTunnelDestGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTunnelDestGroup(context, request));
 }
@@ -139,7 +139,7 @@ Status IdentityAwareProxyAdminServiceTracingStub::DeleteTunnelDestGroup(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "DeleteTunnelDestGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTunnelDestGroup(context, request));
 }
@@ -152,7 +152,7 @@ IdentityAwareProxyAdminServiceTracingStub::UpdateTunnelDestGroup(
       "google.cloud.iap.v1.IdentityAwareProxyAdminService",
       "UpdateTunnelDestGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTunnelDestGroup(context, request));
 }

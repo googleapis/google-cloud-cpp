@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LookupServiceTracingStub::LookupServiceTracingStub(
     std::shared_ptr<LookupServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceTracingStub::ResolveService(
@@ -37,7 +37,7 @@ LookupServiceTracingStub::ResolveService(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicedirectory.v1.LookupService", "ResolveService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResolveService(context, request));
 }

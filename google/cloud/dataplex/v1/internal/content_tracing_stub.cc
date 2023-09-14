@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContentServiceTracingStub::ContentServiceTracingStub(
     std::shared_ptr<ContentServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceTracingStub::CreateContent(
@@ -37,7 +37,7 @@ ContentServiceTracingStub::CreateContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "CreateContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateContent(context, request));
 }
@@ -49,7 +49,7 @@ ContentServiceTracingStub::UpdateContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "UpdateContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateContent(context, request));
 }
@@ -60,7 +60,7 @@ Status ContentServiceTracingStub::DeleteContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "DeleteContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteContent(context, request));
 }
@@ -72,7 +72,7 @@ ContentServiceTracingStub::GetContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "GetContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetContent(context, request));
 }
@@ -83,7 +83,7 @@ StatusOr<google::iam::v1::Policy> ContentServiceTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -94,7 +94,7 @@ StatusOr<google::iam::v1::Policy> ContentServiceTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -106,7 +106,7 @@ ContentServiceTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -118,7 +118,7 @@ ContentServiceTracingStub::ListContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
                                      "ListContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListContent(context, request));
 }

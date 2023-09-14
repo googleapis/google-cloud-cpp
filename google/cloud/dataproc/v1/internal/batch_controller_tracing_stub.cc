@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BatchControllerTracingStub::BatchControllerTracingStub(
     std::shared_ptr<BatchControllerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 BatchControllerTracingStub::AsyncCreateBatch(
@@ -39,7 +39,7 @@ BatchControllerTracingStub::AsyncCreateBatch(
                                      "CreateBatch");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateBatch(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ BatchControllerTracingStub::GetBatch(
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
                                      "GetBatch");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetBatch(context, request));
 }
 
@@ -63,7 +63,7 @@ BatchControllerTracingStub::ListBatches(
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
                                      "ListBatches");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBatches(context, request));
 }
@@ -74,7 +74,7 @@ Status BatchControllerTracingStub::DeleteBatch(
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
                                      "DeleteBatch");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteBatch(context, request));
 }
@@ -88,7 +88,7 @@ BatchControllerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -102,7 +102,7 @@ future<Status> BatchControllerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

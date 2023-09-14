@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeploymentsTracingStub::DeploymentsTracingStub(
     std::shared_ptr<DeploymentsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DeploymentsTracingStub::ListDeployments(
@@ -37,7 +37,7 @@ DeploymentsTracingStub::ListDeployments(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Deployments", "ListDeployments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDeployments(context, request));
 }
@@ -49,7 +49,7 @@ DeploymentsTracingStub::GetDeployment(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Deployments", "GetDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDeployment(context, request));
 }

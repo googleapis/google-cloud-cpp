@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ControlServiceTracingStub::ControlServiceTracingStub(
     std::shared_ptr<ControlServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceTracingStub::CreateControl(
@@ -37,7 +37,7 @@ ControlServiceTracingStub::CreateControl(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ControlService",
                                      "CreateControl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateControl(context, request));
 }
@@ -48,7 +48,7 @@ Status ControlServiceTracingStub::DeleteControl(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ControlService",
                                      "DeleteControl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteControl(context, request));
 }
@@ -60,7 +60,7 @@ ControlServiceTracingStub::UpdateControl(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ControlService",
                                      "UpdateControl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateControl(context, request));
 }
@@ -72,7 +72,7 @@ ControlServiceTracingStub::GetControl(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ControlService",
                                      "GetControl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetControl(context, request));
 }
@@ -84,7 +84,7 @@ ControlServiceTracingStub::ListControls(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ControlService",
                                      "ListControls");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListControls(context, request));
 }

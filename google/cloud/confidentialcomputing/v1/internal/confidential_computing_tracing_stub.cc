@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConfidentialComputingTracingStub::ConfidentialComputingTracingStub(
     std::shared_ptr<ConfidentialComputingStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingTracingStub::CreateChallenge(
@@ -39,7 +39,7 @@ ConfidentialComputingTracingStub::CreateChallenge(
       "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
       "CreateChallenge");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateChallenge(context, request));
 }
@@ -53,7 +53,7 @@ ConfidentialComputingTracingStub::VerifyAttestation(
       "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
       "VerifyAttestation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->VerifyAttestation(context, request));
 }

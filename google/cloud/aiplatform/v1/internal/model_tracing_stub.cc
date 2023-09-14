@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelServiceTracingStub::ModelServiceTracingStub(
     std::shared_ptr<ModelServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceTracingStub::AsyncUploadModel(
@@ -39,7 +39,7 @@ ModelServiceTracingStub::AsyncUploadModel(
                                      "UploadModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUploadModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ ModelServiceTracingStub::GetModel(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "GetModel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetModel(context, request));
 }
 
@@ -63,7 +63,7 @@ ModelServiceTracingStub::ListModels(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "ListModels");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListModels(context, request));
 }
@@ -75,7 +75,7 @@ ModelServiceTracingStub::ListModelVersions(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "ListModelVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListModelVersions(context, request));
 }
@@ -87,7 +87,7 @@ ModelServiceTracingStub::UpdateModel(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "UpdateModel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateModel(context, request));
 }
@@ -102,7 +102,7 @@ ModelServiceTracingStub::AsyncUpdateExplanationDataset(
                                      "UpdateExplanationDataset");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateExplanationDataset(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -117,7 +117,7 @@ ModelServiceTracingStub::AsyncDeleteModel(
                                      "DeleteModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -132,7 +132,7 @@ ModelServiceTracingStub::AsyncDeleteModelVersion(
                                      "DeleteModelVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteModelVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -145,7 +145,7 @@ ModelServiceTracingStub::MergeVersionAliases(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "MergeVersionAliases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MergeVersionAliases(context, request));
 }
@@ -159,7 +159,7 @@ ModelServiceTracingStub::AsyncExportModel(
                                      "ExportModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -174,7 +174,7 @@ ModelServiceTracingStub::AsyncCopyModel(
                                      "CopyModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCopyModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -188,7 +188,7 @@ ModelServiceTracingStub::ImportModelEvaluation(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "ImportModelEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ImportModelEvaluation(context, request));
 }
@@ -202,7 +202,7 @@ ModelServiceTracingStub::BatchImportModelEvaluationSlices(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "BatchImportModelEvaluationSlices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->BatchImportModelEvaluationSlices(context, request));
@@ -216,7 +216,7 @@ ModelServiceTracingStub::BatchImportEvaluatedAnnotations(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "BatchImportEvaluatedAnnotations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->BatchImportEvaluatedAnnotations(context, request));
@@ -229,7 +229,7 @@ ModelServiceTracingStub::GetModelEvaluation(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "GetModelEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetModelEvaluation(context, request));
 }
@@ -241,7 +241,7 @@ ModelServiceTracingStub::ListModelEvaluations(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "ListModelEvaluations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListModelEvaluations(context, request));
 }
@@ -254,7 +254,7 @@ ModelServiceTracingStub::GetModelEvaluationSlice(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "GetModelEvaluationSlice");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetModelEvaluationSlice(context, request));
 }
@@ -267,7 +267,7 @@ ModelServiceTracingStub::ListModelEvaluationSlices(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
                                      "ListModelEvaluationSlices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListModelEvaluationSlices(context, request));
 }
@@ -281,7 +281,7 @@ ModelServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -295,7 +295,7 @@ future<Status> ModelServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

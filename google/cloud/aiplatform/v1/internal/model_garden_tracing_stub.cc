@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelGardenServiceTracingStub::ModelGardenServiceTracingStub(
     std::shared_ptr<ModelGardenServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceTracingStub::GetPublisherModel(
@@ -37,7 +37,7 @@ ModelGardenServiceTracingStub::GetPublisherModel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ModelGardenService", "GetPublisherModel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPublisherModel(context, request));
 }

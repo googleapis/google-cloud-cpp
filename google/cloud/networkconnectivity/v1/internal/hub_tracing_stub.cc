@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HubServiceTracingStub::HubServiceTracingStub(
     std::shared_ptr<HubServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 HubServiceTracingStub::ListHubs(
@@ -37,7 +37,7 @@ HubServiceTracingStub::ListHubs(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkconnectivity.v1.HubService", "ListHubs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListHubs(context, request));
 }
 
@@ -48,7 +48,7 @@ HubServiceTracingStub::GetHub(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkconnectivity.v1.HubService", "GetHub");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetHub(context, request));
 }
 
@@ -61,7 +61,7 @@ HubServiceTracingStub::AsyncCreateHub(
       "google.cloud.networkconnectivity.v1.HubService", "CreateHub");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateHub(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -76,7 +76,7 @@ HubServiceTracingStub::AsyncUpdateHub(
       "google.cloud.networkconnectivity.v1.HubService", "UpdateHub");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateHub(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -91,7 +91,7 @@ HubServiceTracingStub::AsyncDeleteHub(
       "google.cloud.networkconnectivity.v1.HubService", "DeleteHub");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteHub(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -104,7 +104,7 @@ HubServiceTracingStub::ListSpokes(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkconnectivity.v1.HubService", "ListSpokes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSpokes(context, request));
 }
@@ -116,7 +116,7 @@ HubServiceTracingStub::GetSpoke(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkconnectivity.v1.HubService", "GetSpoke");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSpoke(context, request));
 }
 
@@ -129,7 +129,7 @@ HubServiceTracingStub::AsyncCreateSpoke(
       "google.cloud.networkconnectivity.v1.HubService", "CreateSpoke");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateSpoke(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -144,7 +144,7 @@ HubServiceTracingStub::AsyncUpdateSpoke(
       "google.cloud.networkconnectivity.v1.HubService", "UpdateSpoke");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateSpoke(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -159,7 +159,7 @@ HubServiceTracingStub::AsyncDeleteSpoke(
       "google.cloud.networkconnectivity.v1.HubService", "DeleteSpoke");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteSpoke(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -174,7 +174,7 @@ HubServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -188,7 +188,7 @@ future<Status> HubServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GkeHubTracingStub::GkeHubTracingStub(std::shared_ptr<GkeHubStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubTracingStub::ListMemberships(
@@ -36,7 +36,7 @@ GkeHubTracingStub::ListMemberships(
   auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
                                      "ListMemberships");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListMemberships(context, request));
 }
@@ -48,7 +48,7 @@ GkeHubTracingStub::ListFeatures(
   auto span =
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "ListFeatures");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFeatures(context, request));
 }
@@ -60,7 +60,7 @@ GkeHubTracingStub::GetMembership(
   auto span =
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "GetMembership");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetMembership(context, request));
 }
@@ -71,7 +71,7 @@ StatusOr<google::cloud::gkehub::v1::Feature> GkeHubTracingStub::GetFeature(
   auto span =
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "GetFeature");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFeature(context, request));
 }
@@ -85,7 +85,7 @@ GkeHubTracingStub::AsyncCreateMembership(
                                      "CreateMembership");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateMembership(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -100,7 +100,7 @@ GkeHubTracingStub::AsyncCreateFeature(
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "CreateFeature");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateFeature(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -115,7 +115,7 @@ GkeHubTracingStub::AsyncDeleteMembership(
                                      "DeleteMembership");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteMembership(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -130,7 +130,7 @@ GkeHubTracingStub::AsyncDeleteFeature(
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "DeleteFeature");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteFeature(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -145,7 +145,7 @@ GkeHubTracingStub::AsyncUpdateMembership(
                                      "UpdateMembership");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateMembership(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -160,7 +160,7 @@ GkeHubTracingStub::AsyncUpdateFeature(
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "UpdateFeature");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateFeature(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -173,7 +173,7 @@ GkeHubTracingStub::GenerateConnectManifest(
   auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
                                      "GenerateConnectManifest");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateConnectManifest(context, request));
 }
@@ -187,7 +187,7 @@ GkeHubTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -201,7 +201,7 @@ future<Status> GkeHubTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

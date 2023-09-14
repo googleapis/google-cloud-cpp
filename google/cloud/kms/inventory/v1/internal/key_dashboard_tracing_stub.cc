@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KeyDashboardServiceTracingStub::KeyDashboardServiceTracingStub(
     std::shared_ptr<KeyDashboardServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceTracingStub::ListCryptoKeys(
@@ -37,7 +37,7 @@ KeyDashboardServiceTracingStub::ListCryptoKeys(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.kms.inventory.v1.KeyDashboardService", "ListCryptoKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCryptoKeys(context, request));
 }

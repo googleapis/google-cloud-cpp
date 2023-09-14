@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudShellServiceTracingStub::CloudShellServiceTracingStub(
     std::shared_ptr<CloudShellServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceTracingStub::GetEnvironment(
@@ -37,7 +37,7 @@ CloudShellServiceTracingStub::GetEnvironment(
   auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
                                      "GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEnvironment(context, request));
 }
@@ -51,7 +51,7 @@ CloudShellServiceTracingStub::AsyncStartEnvironment(
                                      "StartEnvironment");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncStartEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -66,7 +66,7 @@ CloudShellServiceTracingStub::AsyncAuthorizeEnvironment(
                                      "AuthorizeEnvironment");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncAuthorizeEnvironment(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -81,7 +81,7 @@ CloudShellServiceTracingStub::AsyncAddPublicKey(
                                      "AddPublicKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncAddPublicKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -96,7 +96,7 @@ CloudShellServiceTracingStub::AsyncRemovePublicKey(
                                      "RemovePublicKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRemovePublicKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -111,7 +111,7 @@ CloudShellServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -125,7 +125,7 @@ future<Status> CloudShellServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

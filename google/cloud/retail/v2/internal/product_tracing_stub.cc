@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProductServiceTracingStub::ProductServiceTracingStub(
     std::shared_ptr<ProductServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::CreateProduct(
@@ -37,7 +37,7 @@ ProductServiceTracingStub::CreateProduct(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "CreateProduct");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateProduct(context, request));
 }
@@ -49,7 +49,7 @@ ProductServiceTracingStub::GetProduct(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "GetProduct");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProduct(context, request));
 }
@@ -61,7 +61,7 @@ ProductServiceTracingStub::ListProducts(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "ListProducts");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProducts(context, request));
 }
@@ -73,7 +73,7 @@ ProductServiceTracingStub::UpdateProduct(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "UpdateProduct");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateProduct(context, request));
 }
@@ -84,7 +84,7 @@ Status ProductServiceTracingStub::DeleteProduct(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "DeleteProduct");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteProduct(context, request));
 }
@@ -98,7 +98,7 @@ ProductServiceTracingStub::AsyncImportProducts(
                                      "ImportProducts");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportProducts(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -113,7 +113,7 @@ ProductServiceTracingStub::AsyncSetInventory(
                                      "SetInventory");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncSetInventory(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -128,7 +128,7 @@ ProductServiceTracingStub::AsyncAddFulfillmentPlaces(
                                      "AddFulfillmentPlaces");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncAddFulfillmentPlaces(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -143,7 +143,7 @@ ProductServiceTracingStub::AsyncRemoveFulfillmentPlaces(
                                      "RemoveFulfillmentPlaces");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRemoveFulfillmentPlaces(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -158,7 +158,7 @@ ProductServiceTracingStub::AsyncAddLocalInventories(
                                      "AddLocalInventories");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncAddLocalInventories(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -173,7 +173,7 @@ ProductServiceTracingStub::AsyncRemoveLocalInventories(
                                      "RemoveLocalInventories");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRemoveLocalInventories(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -188,7 +188,7 @@ ProductServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -202,7 +202,7 @@ future<Status> ProductServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsConfigServiceTracingStub::OsConfigServiceTracingStub(
     std::shared_ptr<OsConfigServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceTracingStub::ExecutePatchJob(
@@ -37,7 +37,7 @@ OsConfigServiceTracingStub::ExecutePatchJob(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "ExecutePatchJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExecutePatchJob(context, request));
 }
@@ -49,7 +49,7 @@ OsConfigServiceTracingStub::GetPatchJob(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "GetPatchJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPatchJob(context, request));
 }
@@ -61,7 +61,7 @@ OsConfigServiceTracingStub::CancelPatchJob(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "CancelPatchJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelPatchJob(context, request));
 }
@@ -73,7 +73,7 @@ OsConfigServiceTracingStub::ListPatchJobs(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "ListPatchJobs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPatchJobs(context, request));
 }
@@ -86,7 +86,7 @@ OsConfigServiceTracingStub::ListPatchJobInstanceDetails(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "ListPatchJobInstanceDetails");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->ListPatchJobInstanceDetails(context, request));
 }
@@ -98,7 +98,7 @@ OsConfigServiceTracingStub::CreatePatchDeployment(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "CreatePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreatePatchDeployment(context, request));
 }
@@ -110,7 +110,7 @@ OsConfigServiceTracingStub::GetPatchDeployment(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "GetPatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPatchDeployment(context, request));
 }
@@ -122,7 +122,7 @@ OsConfigServiceTracingStub::ListPatchDeployments(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "ListPatchDeployments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPatchDeployments(context, request));
 }
@@ -133,7 +133,7 @@ Status OsConfigServiceTracingStub::DeletePatchDeployment(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "DeletePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeletePatchDeployment(context, request));
 }
@@ -145,7 +145,7 @@ OsConfigServiceTracingStub::UpdatePatchDeployment(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "UpdatePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdatePatchDeployment(context, request));
 }
@@ -157,7 +157,7 @@ OsConfigServiceTracingStub::PausePatchDeployment(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "PausePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PausePatchDeployment(context, request));
 }
@@ -169,7 +169,7 @@ OsConfigServiceTracingStub::ResumePatchDeployment(
   auto span = internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigService",
                                      "ResumePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResumePatchDeployment(context, request));
 }

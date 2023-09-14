@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_UPTIME_CHECK_TRACING_STUB_H
 
 #include "google/cloud/monitoring/v3/internal/uptime_check_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -70,6 +71,8 @@ class UptimeCheckServiceTracingStub : public UptimeCheckServiceStub {
 
  private:
   std::shared_ptr<UptimeCheckServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

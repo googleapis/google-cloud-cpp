@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_STUB_H
 
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -239,6 +240,8 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
 
  private:
   std::shared_ptr<ArtifactRegistryStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

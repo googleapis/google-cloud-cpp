@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ResourceSettingsServiceTracingStub::ResourceSettingsServiceTracingStub(
     std::shared_ptr<ResourceSettingsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceTracingStub::ListSettings(
@@ -38,7 +38,7 @@ ResourceSettingsServiceTracingStub::ListSettings(
       "google.cloud.resourcesettings.v1.ResourceSettingsService",
       "ListSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSettings(context, request));
 }
@@ -50,7 +50,7 @@ ResourceSettingsServiceTracingStub::GetSetting(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcesettings.v1.ResourceSettingsService", "GetSetting");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSetting(context, request));
 }
@@ -63,7 +63,7 @@ ResourceSettingsServiceTracingStub::UpdateSetting(
       "google.cloud.resourcesettings.v1.ResourceSettingsService",
       "UpdateSetting");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSetting(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecuritySettingsServiceTracingStub::SecuritySettingsServiceTracingStub(
     std::shared_ptr<SecuritySettingsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceTracingStub::CreateSecuritySettings(
@@ -39,7 +39,7 @@ SecuritySettingsServiceTracingStub::CreateSecuritySettings(
       "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
       "CreateSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSecuritySettings(context, request));
 }
@@ -53,7 +53,7 @@ SecuritySettingsServiceTracingStub::GetSecuritySettings(
       "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
       "GetSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSecuritySettings(context, request));
 }
@@ -67,7 +67,7 @@ SecuritySettingsServiceTracingStub::UpdateSecuritySettings(
       "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
       "UpdateSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSecuritySettings(context, request));
 }
@@ -81,7 +81,7 @@ SecuritySettingsServiceTracingStub::ListSecuritySettings(
       "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
       "ListSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSecuritySettings(context, request));
 }
@@ -94,7 +94,7 @@ Status SecuritySettingsServiceTracingStub::DeleteSecuritySettings(
       "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
       "DeleteSecuritySettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSecuritySettings(context, request));
 }

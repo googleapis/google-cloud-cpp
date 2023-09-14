@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TextToSpeechTracingStub::TextToSpeechTracingStub(
     std::shared_ptr<TextToSpeechStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechTracingStub::ListVoices(
@@ -37,7 +37,7 @@ TextToSpeechTracingStub::ListVoices(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.texttospeech.v1.TextToSpeech", "ListVoices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVoices(context, request));
 }
@@ -49,7 +49,7 @@ TextToSpeechTracingStub::SynthesizeSpeech(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.texttospeech.v1.TextToSpeech", "SynthesizeSpeech");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SynthesizeSpeech(context, request));
 }

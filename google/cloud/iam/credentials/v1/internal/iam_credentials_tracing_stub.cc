@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMCredentialsTracingStub::IAMCredentialsTracingStub(
     std::shared_ptr<IAMCredentialsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsTracingStub::GenerateAccessToken(
@@ -37,7 +37,7 @@ IAMCredentialsTracingStub::GenerateAccessToken(
   auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
                                      "GenerateAccessToken");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateAccessToken(context, request));
 }
@@ -49,7 +49,7 @@ IAMCredentialsTracingStub::GenerateIdToken(
   auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
                                      "GenerateIdToken");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateIdToken(context, request));
 }
@@ -61,7 +61,7 @@ IAMCredentialsTracingStub::SignBlob(
   auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
                                      "SignBlob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->SignBlob(context, request));
 }
 
@@ -72,7 +72,7 @@ IAMCredentialsTracingStub::SignJwt(
   auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
                                      "SignJwt");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->SignJwt(context, request));
 }
 

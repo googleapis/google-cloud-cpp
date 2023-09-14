@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IDSTracingStub::IDSTracingStub(std::shared_ptr<IDSStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSTracingStub::ListEndpoints(
@@ -36,7 +36,7 @@ IDSTracingStub::ListEndpoints(
   auto span =
       internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "ListEndpoints");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEndpoints(context, request));
 }
@@ -46,7 +46,7 @@ StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingStub::GetEndpoint(
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEndpoint(context, request));
 }
@@ -60,7 +60,7 @@ IDSTracingStub::AsyncCreateEndpoint(
       internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "CreateEndpoint");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateEndpoint(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -75,7 +75,7 @@ IDSTracingStub::AsyncDeleteEndpoint(
       internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "DeleteEndpoint");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteEndpoint(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -90,7 +90,7 @@ IDSTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -104,7 +104,7 @@ future<Status> IDSTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

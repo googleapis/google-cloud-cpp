@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RecaptchaEnterpriseServiceTracingStub::RecaptchaEnterpriseServiceTracingStub(
     std::shared_ptr<RecaptchaEnterpriseServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
 RecaptchaEnterpriseServiceTracingStub::CreateAssessment(
@@ -39,7 +39,7 @@ RecaptchaEnterpriseServiceTracingStub::CreateAssessment(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "CreateAssessment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAssessment(context, request));
 }
@@ -53,7 +53,7 @@ RecaptchaEnterpriseServiceTracingStub::AnnotateAssessment(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "AnnotateAssessment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnnotateAssessment(context, request));
 }
@@ -66,7 +66,7 @@ RecaptchaEnterpriseServiceTracingStub::CreateKey(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "CreateKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->CreateKey(context, request));
 }
 
@@ -78,7 +78,7 @@ RecaptchaEnterpriseServiceTracingStub::ListKeys(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "ListKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListKeys(context, request));
 }
 
@@ -92,7 +92,7 @@ RecaptchaEnterpriseServiceTracingStub::RetrieveLegacySecretKey(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "RetrieveLegacySecretKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RetrieveLegacySecretKey(context, request));
 }
@@ -105,7 +105,7 @@ RecaptchaEnterpriseServiceTracingStub::GetKey(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "GetKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetKey(context, request));
 }
 
@@ -117,7 +117,7 @@ RecaptchaEnterpriseServiceTracingStub::UpdateKey(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "UpdateKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->UpdateKey(context, request));
 }
 
@@ -128,7 +128,7 @@ Status RecaptchaEnterpriseServiceTracingStub::DeleteKey(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "DeleteKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->DeleteKey(context, request));
 }
 
@@ -140,7 +140,7 @@ RecaptchaEnterpriseServiceTracingStub::MigrateKey(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "MigrateKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MigrateKey(context, request));
 }
@@ -153,7 +153,7 @@ RecaptchaEnterpriseServiceTracingStub::GetMetrics(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "GetMetrics");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetMetrics(context, request));
 }
@@ -168,7 +168,7 @@ RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroups(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "ListRelatedAccountGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRelatedAccountGroups(context, request));
 }
@@ -183,7 +183,7 @@ RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroupMemberships(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "ListRelatedAccountGroupMemberships");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->ListRelatedAccountGroupMemberships(context, request));
@@ -199,7 +199,7 @@ RecaptchaEnterpriseServiceTracingStub::SearchRelatedAccountGroupMemberships(
       "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
       "SearchRelatedAccountGroupMemberships");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->SearchRelatedAccountGroupMemberships(context, request));

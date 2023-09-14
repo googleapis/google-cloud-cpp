@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VizierServiceTracingStub::VizierServiceTracingStub(
     std::shared_ptr<VizierServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 VizierServiceTracingStub::CreateStudy(
@@ -37,7 +37,7 @@ VizierServiceTracingStub::CreateStudy(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "CreateStudy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateStudy(context, request));
 }
@@ -49,7 +49,7 @@ VizierServiceTracingStub::GetStudy(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "GetStudy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetStudy(context, request));
 }
 
@@ -60,7 +60,7 @@ VizierServiceTracingStub::ListStudies(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "ListStudies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListStudies(context, request));
 }
@@ -71,7 +71,7 @@ Status VizierServiceTracingStub::DeleteStudy(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "DeleteStudy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteStudy(context, request));
 }
@@ -83,7 +83,7 @@ VizierServiceTracingStub::LookupStudy(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "LookupStudy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->LookupStudy(context, request));
 }
@@ -97,7 +97,7 @@ VizierServiceTracingStub::AsyncSuggestTrials(
                                      "SuggestTrials");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncSuggestTrials(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -110,7 +110,7 @@ VizierServiceTracingStub::CreateTrial(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "CreateTrial");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTrial(context, request));
 }
@@ -122,7 +122,7 @@ VizierServiceTracingStub::GetTrial(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "GetTrial");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetTrial(context, request));
 }
 
@@ -133,7 +133,7 @@ VizierServiceTracingStub::ListTrials(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "ListTrials");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTrials(context, request));
 }
@@ -145,7 +145,7 @@ VizierServiceTracingStub::AddTrialMeasurement(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "AddTrialMeasurement");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AddTrialMeasurement(context, request));
 }
@@ -157,7 +157,7 @@ VizierServiceTracingStub::CompleteTrial(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "CompleteTrial");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CompleteTrial(context, request));
 }
@@ -168,7 +168,7 @@ Status VizierServiceTracingStub::DeleteTrial(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "DeleteTrial");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTrial(context, request));
 }
@@ -183,7 +183,7 @@ VizierServiceTracingStub::AsyncCheckTrialEarlyStoppingState(
                                      "CheckTrialEarlyStoppingState");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCheckTrialEarlyStoppingState(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -196,7 +196,7 @@ VizierServiceTracingStub::StopTrial(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "StopTrial");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->StopTrial(context, request));
 }
 
@@ -207,7 +207,7 @@ VizierServiceTracingStub::ListOptimalTrials(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.VizierService",
                                      "ListOptimalTrials");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOptimalTrials(context, request));
 }
@@ -221,7 +221,7 @@ VizierServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -235,7 +235,7 @@ future<Status> VizierServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

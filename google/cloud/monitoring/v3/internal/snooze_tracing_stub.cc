@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SnoozeServiceTracingStub::SnoozeServiceTracingStub(
     std::shared_ptr<SnoozeServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::CreateSnooze(
     grpc::ClientContext& context,
@@ -36,7 +36,7 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::CreateSnooze(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService",
                                      "CreateSnooze");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSnooze(context, request));
 }
@@ -48,7 +48,7 @@ SnoozeServiceTracingStub::ListSnoozes(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService",
                                      "ListSnoozes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSnoozes(context, request));
 }
@@ -59,7 +59,7 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::GetSnooze(
   auto span =
       internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService", "GetSnooze");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSnooze(context, request));
 }
 
@@ -69,7 +69,7 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceTracingStub::UpdateSnooze(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.SnoozeService",
                                      "UpdateSnooze");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSnooze(context, request));
 }

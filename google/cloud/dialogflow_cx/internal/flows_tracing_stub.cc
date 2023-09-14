@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 FlowsTracingStub::FlowsTracingStub(std::shared_ptr<FlowsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsTracingStub::CreateFlow(
     grpc::ClientContext& context,
@@ -35,7 +35,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsTracingStub::CreateFlow(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
                                      "CreateFlow");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateFlow(context, request));
 }
@@ -46,7 +46,7 @@ Status FlowsTracingStub::DeleteFlow(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
                                      "DeleteFlow");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteFlow(context, request));
 }
@@ -58,7 +58,7 @@ FlowsTracingStub::ListFlows(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
                                      "ListFlows");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListFlows(context, request));
 }
 
@@ -68,7 +68,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsTracingStub::GetFlow(
   auto span =
       internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows", "GetFlow");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetFlow(context, request));
 }
 
@@ -78,7 +78,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsTracingStub::UpdateFlow(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
                                      "UpdateFlow");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateFlow(context, request));
 }
@@ -92,7 +92,7 @@ FlowsTracingStub::AsyncTrainFlow(
                                      "TrainFlow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncTrainFlow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -105,7 +105,7 @@ FlowsTracingStub::ValidateFlow(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
                                      "ValidateFlow");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ValidateFlow(context, request));
 }
@@ -118,7 +118,7 @@ FlowsTracingStub::GetFlowValidationResult(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Flows",
                                      "GetFlowValidationResult");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFlowValidationResult(context, request));
 }
@@ -132,7 +132,7 @@ FlowsTracingStub::AsyncImportFlow(
                                      "ImportFlow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportFlow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -147,7 +147,7 @@ FlowsTracingStub::AsyncExportFlow(
                                      "ExportFlow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportFlow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -162,7 +162,7 @@ FlowsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -176,7 +176,7 @@ future<Status> FlowsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

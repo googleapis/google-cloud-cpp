@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationDatasetsTracingStub::ConversationDatasetsTracingStub(
     std::shared_ptr<ConversationDatasetsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncCreateConversationDataset(
@@ -41,7 +41,7 @@ ConversationDatasetsTracingStub::AsyncCreateConversationDataset(
                              "CreateConversationDataset");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateConversationDataset(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -56,7 +56,7 @@ ConversationDatasetsTracingStub::GetConversationDataset(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationDatasets",
                              "GetConversationDataset");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConversationDataset(context, request));
 }
@@ -70,7 +70,7 @@ ConversationDatasetsTracingStub::ListConversationDatasets(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationDatasets",
                              "ListConversationDatasets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConversationDatasets(context, request));
 }
@@ -86,7 +86,7 @@ ConversationDatasetsTracingStub::AsyncDeleteConversationDataset(
                              "DeleteConversationDataset");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteConversationDataset(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -103,7 +103,7 @@ ConversationDatasetsTracingStub::AsyncImportConversationData(
                              "ImportConversationData");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportConversationData(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -118,7 +118,7 @@ ConversationDatasetsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -132,7 +132,7 @@ future<Status> ConversationDatasetsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

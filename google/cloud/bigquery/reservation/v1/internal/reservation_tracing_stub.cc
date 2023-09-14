@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationServiceTracingStub::ReservationServiceTracingStub(
     std::shared_ptr<ReservationServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceTracingStub::CreateReservation(
@@ -39,7 +39,7 @@ ReservationServiceTracingStub::CreateReservation(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "CreateReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateReservation(context, request));
 }
@@ -53,7 +53,7 @@ ReservationServiceTracingStub::ListReservations(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "ListReservations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListReservations(context, request));
 }
@@ -67,7 +67,7 @@ ReservationServiceTracingStub::GetReservation(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "GetReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetReservation(context, request));
 }
@@ -80,7 +80,7 @@ Status ReservationServiceTracingStub::DeleteReservation(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "DeleteReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteReservation(context, request));
 }
@@ -94,7 +94,7 @@ ReservationServiceTracingStub::UpdateReservation(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "UpdateReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateReservation(context, request));
 }
@@ -108,7 +108,7 @@ ReservationServiceTracingStub::CreateCapacityCommitment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "CreateCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCapacityCommitment(context, request));
 }
@@ -123,7 +123,7 @@ ReservationServiceTracingStub::ListCapacityCommitments(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "ListCapacityCommitments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCapacityCommitments(context, request));
 }
@@ -137,7 +137,7 @@ ReservationServiceTracingStub::GetCapacityCommitment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "GetCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCapacityCommitment(context, request));
 }
@@ -150,7 +150,7 @@ Status ReservationServiceTracingStub::DeleteCapacityCommitment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "DeleteCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteCapacityCommitment(context, request));
 }
@@ -164,7 +164,7 @@ ReservationServiceTracingStub::UpdateCapacityCommitment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "UpdateCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateCapacityCommitment(context, request));
 }
@@ -179,7 +179,7 @@ ReservationServiceTracingStub::SplitCapacityCommitment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "SplitCapacityCommitment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SplitCapacityCommitment(context, request));
 }
@@ -193,7 +193,7 @@ ReservationServiceTracingStub::MergeCapacityCommitments(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "MergeCapacityCommitments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MergeCapacityCommitments(context, request));
 }
@@ -207,7 +207,7 @@ ReservationServiceTracingStub::CreateAssignment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "CreateAssignment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAssignment(context, request));
 }
@@ -221,7 +221,7 @@ ReservationServiceTracingStub::ListAssignments(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "ListAssignments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAssignments(context, request));
 }
@@ -234,7 +234,7 @@ Status ReservationServiceTracingStub::DeleteAssignment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "DeleteAssignment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteAssignment(context, request));
 }
@@ -248,7 +248,7 @@ ReservationServiceTracingStub::SearchAssignments(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "SearchAssignments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchAssignments(context, request));
 }
@@ -262,7 +262,7 @@ ReservationServiceTracingStub::SearchAllAssignments(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "SearchAllAssignments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchAllAssignments(context, request));
 }
@@ -276,7 +276,7 @@ ReservationServiceTracingStub::MoveAssignment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "MoveAssignment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MoveAssignment(context, request));
 }
@@ -290,7 +290,7 @@ ReservationServiceTracingStub::UpdateAssignment(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "UpdateAssignment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateAssignment(context, request));
 }
@@ -304,7 +304,7 @@ ReservationServiceTracingStub::GetBiReservation(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "GetBiReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetBiReservation(context, request));
 }
@@ -318,7 +318,7 @@ ReservationServiceTracingStub::UpdateBiReservation(
       "google.cloud.bigquery.reservation.v1.ReservationService",
       "UpdateBiReservation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateBiReservation(context, request));
 }

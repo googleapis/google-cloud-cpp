@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebSecurityScannerTracingStub::WebSecurityScannerTracingStub(
     std::shared_ptr<WebSecurityScannerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerTracingStub::CreateScanConfig(
@@ -39,7 +39,7 @@ WebSecurityScannerTracingStub::CreateScanConfig(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner",
       "CreateScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateScanConfig(context, request));
 }
@@ -52,7 +52,7 @@ Status WebSecurityScannerTracingStub::DeleteScanConfig(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner",
       "DeleteScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteScanConfig(context, request));
 }
@@ -65,7 +65,7 @@ WebSecurityScannerTracingStub::GetScanConfig(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "GetScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetScanConfig(context, request));
 }
@@ -79,7 +79,7 @@ WebSecurityScannerTracingStub::ListScanConfigs(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner",
       "ListScanConfigs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListScanConfigs(context, request));
 }
@@ -93,7 +93,7 @@ WebSecurityScannerTracingStub::UpdateScanConfig(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner",
       "UpdateScanConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateScanConfig(context, request));
 }
@@ -105,7 +105,7 @@ WebSecurityScannerTracingStub::StartScanRun(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "StartScanRun");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->StartScanRun(context, request));
 }
@@ -117,7 +117,7 @@ WebSecurityScannerTracingStub::GetScanRun(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "GetScanRun");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetScanRun(context, request));
 }
@@ -129,7 +129,7 @@ WebSecurityScannerTracingStub::ListScanRuns(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "ListScanRuns");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListScanRuns(context, request));
 }
@@ -141,7 +141,7 @@ WebSecurityScannerTracingStub::StopScanRun(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "StopScanRun");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->StopScanRun(context, request));
 }
@@ -155,7 +155,7 @@ WebSecurityScannerTracingStub::ListCrawledUrls(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner",
       "ListCrawledUrls");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCrawledUrls(context, request));
 }
@@ -167,7 +167,7 @@ WebSecurityScannerTracingStub::GetFinding(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "GetFinding");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFinding(context, request));
 }
@@ -179,7 +179,7 @@ WebSecurityScannerTracingStub::ListFindings(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner", "ListFindings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFindings(context, request));
 }
@@ -193,7 +193,7 @@ WebSecurityScannerTracingStub::ListFindingTypeStats(
       "google.cloud.websecurityscanner.v1.WebSecurityScanner",
       "ListFindingTypeStats");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFindingTypeStats(context, request));
 }

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_DOMAIN_MAPPINGS_TRACING_STUB_H
 
 #include "google/cloud/appengine/v1/internal/domain_mappings_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -75,6 +76,8 @@ class DomainMappingsTracingStub : public DomainMappingsStub {
 
  private:
   std::shared_ptr<DomainMappingsStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_CONTAINER_ANALYSIS_TRACING_STUB_H
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -58,6 +59,8 @@ class ContainerAnalysisTracingStub : public ContainerAnalysisStub {
 
  private:
   std::shared_ptr<ContainerAnalysisStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

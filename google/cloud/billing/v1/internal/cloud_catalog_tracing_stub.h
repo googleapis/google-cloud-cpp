@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_CATALOG_TRACING_STUB_H
 
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -46,6 +47,8 @@ class CloudCatalogTracingStub : public CloudCatalogStub {
 
  private:
   std::shared_ptr<CloudCatalogStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

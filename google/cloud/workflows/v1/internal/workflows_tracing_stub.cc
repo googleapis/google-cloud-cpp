@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 WorkflowsTracingStub::WorkflowsTracingStub(std::shared_ptr<WorkflowsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsTracingStub::ListWorkflows(
@@ -36,7 +36,7 @@ WorkflowsTracingStub::ListWorkflows(
   auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
                                      "ListWorkflows");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWorkflows(context, request));
 }
@@ -48,7 +48,7 @@ WorkflowsTracingStub::GetWorkflow(
   auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
                                      "GetWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWorkflow(context, request));
 }
@@ -62,7 +62,7 @@ WorkflowsTracingStub::AsyncCreateWorkflow(
                                      "CreateWorkflow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateWorkflow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -77,7 +77,7 @@ WorkflowsTracingStub::AsyncDeleteWorkflow(
                                      "DeleteWorkflow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteWorkflow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -92,7 +92,7 @@ WorkflowsTracingStub::AsyncUpdateWorkflow(
                                      "UpdateWorkflow");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateWorkflow(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -107,7 +107,7 @@ WorkflowsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -121,7 +121,7 @@ future<Status> WorkflowsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

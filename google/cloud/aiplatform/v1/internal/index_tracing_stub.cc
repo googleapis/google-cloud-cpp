@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IndexServiceTracingStub::IndexServiceTracingStub(
     std::shared_ptr<IndexServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceTracingStub::AsyncCreateIndex(
@@ -39,7 +39,7 @@ IndexServiceTracingStub::AsyncCreateIndex(
                                      "CreateIndex");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateIndex(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ IndexServiceTracingStub::GetIndex(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "GetIndex");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetIndex(context, request));
 }
 
@@ -63,7 +63,7 @@ IndexServiceTracingStub::ListIndexes(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "ListIndexes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListIndexes(context, request));
 }
@@ -77,7 +77,7 @@ IndexServiceTracingStub::AsyncUpdateIndex(
                                      "UpdateIndex");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateIndex(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -92,7 +92,7 @@ IndexServiceTracingStub::AsyncDeleteIndex(
                                      "DeleteIndex");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteIndex(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -105,7 +105,7 @@ IndexServiceTracingStub::UpsertDatapoints(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "UpsertDatapoints");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpsertDatapoints(context, request));
 }
@@ -117,7 +117,7 @@ IndexServiceTracingStub::RemoveDatapoints(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "RemoveDatapoints");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RemoveDatapoints(context, request));
 }
@@ -131,7 +131,7 @@ IndexServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -145,7 +145,7 @@ future<Status> IndexServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

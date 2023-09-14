@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalingPolicyServiceTracingStub::AutoscalingPolicyServiceTracingStub(
     std::shared_ptr<AutoscalingPolicyServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingStub::CreateAutoscalingPolicy(
@@ -39,7 +39,7 @@ AutoscalingPolicyServiceTracingStub::CreateAutoscalingPolicy(
       "google.cloud.dataproc.v1.AutoscalingPolicyService",
       "CreateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAutoscalingPolicy(context, request));
 }
@@ -53,7 +53,7 @@ AutoscalingPolicyServiceTracingStub::UpdateAutoscalingPolicy(
       "google.cloud.dataproc.v1.AutoscalingPolicyService",
       "UpdateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateAutoscalingPolicy(context, request));
 }
@@ -66,7 +66,7 @@ AutoscalingPolicyServiceTracingStub::GetAutoscalingPolicy(
       "google.cloud.dataproc.v1.AutoscalingPolicyService",
       "GetAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAutoscalingPolicy(context, request));
 }
@@ -80,7 +80,7 @@ AutoscalingPolicyServiceTracingStub::ListAutoscalingPolicies(
       "google.cloud.dataproc.v1.AutoscalingPolicyService",
       "ListAutoscalingPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAutoscalingPolicies(context, request));
 }
@@ -93,7 +93,7 @@ Status AutoscalingPolicyServiceTracingStub::DeleteAutoscalingPolicy(
       "google.cloud.dataproc.v1.AutoscalingPolicyService",
       "DeleteAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteAutoscalingPolicy(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CaseAttachmentServiceTracingStub::CaseAttachmentServiceTracingStub(
     std::shared_ptr<CaseAttachmentServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 CaseAttachmentServiceTracingStub::ListAttachments(
@@ -37,7 +37,7 @@ CaseAttachmentServiceTracingStub::ListAttachments(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.support.v2.CaseAttachmentService", "ListAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAttachments(context, request));
 }

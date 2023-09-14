@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageVersionsTracingStub::ImageVersionsTracingStub(
     std::shared_ptr<ImageVersionsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse>
@@ -40,7 +40,7 @@ ImageVersionsTracingStub::ListImageVersions(
       "google.cloud.orchestration.airflow.service.v1.ImageVersions",
       "ListImageVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListImageVersions(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SpeechTracingStub::SpeechTracingStub(std::shared_ptr<SpeechStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechTracingStub::Recognize(
@@ -37,7 +37,7 @@ SpeechTracingStub::Recognize(
   auto span =
       internal::MakeSpanGrpc("google.cloud.speech.v1.Speech", "Recognize");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Recognize(context, request));
 }
 
@@ -50,7 +50,7 @@ SpeechTracingStub::AsyncLongRunningRecognize(
                                      "LongRunningRecognize");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncLongRunningRecognize(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -64,7 +64,7 @@ SpeechTracingStub::AsyncStreamingRecognize(
   auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Speech",
                                      "StreamingRecognize");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingRecognize(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::speech::v1::StreamingRecognizeRequest,
@@ -81,7 +81,7 @@ SpeechTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -95,7 +95,7 @@ future<Status> SpeechTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

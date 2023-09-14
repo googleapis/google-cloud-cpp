@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaServiceTracingStub::SchemaServiceTracingStub(
     std::shared_ptr<SchemaServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceTracingStub::GetSchema(
@@ -37,7 +37,7 @@ SchemaServiceTracingStub::GetSchema(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.SchemaService", "GetSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSchema(context, request));
 }
 
@@ -48,7 +48,7 @@ SchemaServiceTracingStub::ListSchemas(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.SchemaService", "ListSchemas");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSchemas(context, request));
 }
@@ -62,7 +62,7 @@ SchemaServiceTracingStub::AsyncCreateSchema(
       "google.cloud.discoveryengine.v1.SchemaService", "CreateSchema");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateSchema(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -77,7 +77,7 @@ SchemaServiceTracingStub::AsyncUpdateSchema(
       "google.cloud.discoveryengine.v1.SchemaService", "UpdateSchema");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateSchema(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -92,7 +92,7 @@ SchemaServiceTracingStub::AsyncDeleteSchema(
       "google.cloud.discoveryengine.v1.SchemaService", "DeleteSchema");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteSchema(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -107,7 +107,7 @@ SchemaServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -121,7 +121,7 @@ future<Status> SchemaServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentLinkServiceTracingStub::DocumentLinkServiceTracingStub(
     std::shared_ptr<DocumentLinkServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DocumentLinkServiceTracingStub::ListLinkedTargets(
@@ -39,7 +39,7 @@ DocumentLinkServiceTracingStub::ListLinkedTargets(
       "google.cloud.contentwarehouse.v1.DocumentLinkService",
       "ListLinkedTargets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLinkedTargets(context, request));
 }
@@ -53,7 +53,7 @@ DocumentLinkServiceTracingStub::ListLinkedSources(
       "google.cloud.contentwarehouse.v1.DocumentLinkService",
       "ListLinkedSources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLinkedSources(context, request));
 }
@@ -67,7 +67,7 @@ DocumentLinkServiceTracingStub::CreateDocumentLink(
       "google.cloud.contentwarehouse.v1.DocumentLinkService",
       "CreateDocumentLink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDocumentLink(context, request));
 }
@@ -80,7 +80,7 @@ Status DocumentLinkServiceTracingStub::DeleteDocumentLink(
       "google.cloud.contentwarehouse.v1.DocumentLinkService",
       "DeleteDocumentLink");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDocumentLink(context, request));
 }

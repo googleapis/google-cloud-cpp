@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ValidationHelperV1TracingStub::ValidationHelperV1TracingStub(
     std::shared_ptr<ValidationHelperV1Stub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>
@@ -40,7 +40,7 @@ ValidationHelperV1TracingStub::ValidateAttestationOccurrence(
       "google.cloud.binaryauthorization.v1.ValidationHelperV1",
       "ValidateAttestationOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->ValidateAttestationOccurrence(context, request));
 }

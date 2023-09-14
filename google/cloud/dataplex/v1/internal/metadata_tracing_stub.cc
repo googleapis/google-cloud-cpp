@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetadataServiceTracingStub::MetadataServiceTracingStub(
     std::shared_ptr<MetadataServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceTracingStub::CreateEntity(
@@ -37,7 +37,7 @@ MetadataServiceTracingStub::CreateEntity(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "CreateEntity");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEntity(context, request));
 }
@@ -49,7 +49,7 @@ MetadataServiceTracingStub::UpdateEntity(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "UpdateEntity");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateEntity(context, request));
 }
@@ -60,7 +60,7 @@ Status MetadataServiceTracingStub::DeleteEntity(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "DeleteEntity");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEntity(context, request));
 }
@@ -72,7 +72,7 @@ MetadataServiceTracingStub::GetEntity(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "GetEntity");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetEntity(context, request));
 }
 
@@ -83,7 +83,7 @@ MetadataServiceTracingStub::ListEntities(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "ListEntities");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntities(context, request));
 }
@@ -95,7 +95,7 @@ MetadataServiceTracingStub::CreatePartition(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "CreatePartition");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreatePartition(context, request));
 }
@@ -106,7 +106,7 @@ Status MetadataServiceTracingStub::DeletePartition(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "DeletePartition");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeletePartition(context, request));
 }
@@ -118,7 +118,7 @@ MetadataServiceTracingStub::GetPartition(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "GetPartition");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPartition(context, request));
 }
@@ -130,7 +130,7 @@ MetadataServiceTracingStub::ListPartitions(
   auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.MetadataService",
                                      "ListPartitions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPartitions(context, request));
 }

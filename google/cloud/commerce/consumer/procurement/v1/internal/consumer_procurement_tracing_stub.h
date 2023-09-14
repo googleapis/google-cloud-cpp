@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMERCE_CONSUMER_PROCUREMENT_V1_INTERNAL_CONSUMER_PROCUREMENT_TRACING_STUB_H
 
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -68,6 +69,8 @@ class ConsumerProcurementServiceTracingStub
 
  private:
   std::shared_ptr<ConsumerProcurementServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -30,7 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FeaturestoreOnlineServingServiceTracingStub::
     FeaturestoreOnlineServingServiceTracingStub(
         std::shared_ptr<FeaturestoreOnlineServingServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceTracingStub::ReadFeatureValues(
@@ -40,7 +40,7 @@ FeaturestoreOnlineServingServiceTracingStub::ReadFeatureValues(
       "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
       "ReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReadFeatureValues(context, request));
 }
@@ -55,7 +55,7 @@ FeaturestoreOnlineServingServiceTracingStub::StreamingReadFeatureValues(
       "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
       "StreamingReadFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->StreamingReadFeatureValues(context, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::aiplatform::v1::ReadFeatureValuesResponse>>(
@@ -70,7 +70,7 @@ FeaturestoreOnlineServingServiceTracingStub::WriteFeatureValues(
       "google.cloud.aiplatform.v1.FeaturestoreOnlineServingService",
       "WriteFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->WriteFeatureValues(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationModelsTracingStub::ConversationModelsTracingStub(
     std::shared_ptr<ConversationModelsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsTracingStub::AsyncCreateConversationModel(
@@ -41,7 +41,7 @@ ConversationModelsTracingStub::AsyncCreateConversationModel(
                              "CreateConversationModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateConversationModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -54,7 +54,7 @@ ConversationModelsTracingStub::GetConversationModel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.ConversationModels", "GetConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConversationModel(context, request));
 }
@@ -68,7 +68,7 @@ ConversationModelsTracingStub::ListConversationModels(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
                              "ListConversationModels");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConversationModels(context, request));
 }
@@ -84,7 +84,7 @@ ConversationModelsTracingStub::AsyncDeleteConversationModel(
                              "DeleteConversationModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteConversationModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -101,7 +101,7 @@ ConversationModelsTracingStub::AsyncDeployConversationModel(
                              "DeployConversationModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeployConversationModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -118,7 +118,7 @@ ConversationModelsTracingStub::AsyncUndeployConversationModel(
                              "UndeployConversationModel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUndeployConversationModel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -133,7 +133,7 @@ ConversationModelsTracingStub::GetConversationModelEvaluation(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
                              "GetConversationModelEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->GetConversationModelEvaluation(context, request));
 }
@@ -148,7 +148,7 @@ ConversationModelsTracingStub::ListConversationModelEvaluations(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
                              "ListConversationModelEvaluations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->ListConversationModelEvaluations(context, request));
@@ -165,7 +165,7 @@ ConversationModelsTracingStub::AsyncCreateConversationModelEvaluation(
                              "CreateConversationModelEvaluation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateConversationModelEvaluation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -180,7 +180,7 @@ ConversationModelsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -194,7 +194,7 @@ future<Status> ConversationModelsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

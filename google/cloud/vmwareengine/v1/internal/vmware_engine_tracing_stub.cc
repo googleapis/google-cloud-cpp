@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VmwareEngineTracingStub::VmwareEngineTracingStub(
     std::shared_ptr<VmwareEngineStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
 VmwareEngineTracingStub::ListPrivateClouds(
@@ -37,7 +37,7 @@ VmwareEngineTracingStub::ListPrivateClouds(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListPrivateClouds");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPrivateClouds(context, request));
 }
@@ -49,7 +49,7 @@ VmwareEngineTracingStub::GetPrivateCloud(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetPrivateCloud");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPrivateCloud(context, request));
 }
@@ -63,7 +63,7 @@ VmwareEngineTracingStub::AsyncCreatePrivateCloud(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreatePrivateCloud");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreatePrivateCloud(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -78,7 +78,7 @@ VmwareEngineTracingStub::AsyncUpdatePrivateCloud(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdatePrivateCloud");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdatePrivateCloud(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ VmwareEngineTracingStub::AsyncDeletePrivateCloud(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeletePrivateCloud");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeletePrivateCloud(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -109,7 +109,7 @@ VmwareEngineTracingStub::AsyncUndeletePrivateCloud(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UndeletePrivateCloud");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUndeletePrivateCloud(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -122,7 +122,7 @@ VmwareEngineTracingStub::ListClusters(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListClusters(context, request));
 }
@@ -134,7 +134,7 @@ VmwareEngineTracingStub::GetCluster(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCluster(context, request));
 }
@@ -148,7 +148,7 @@ VmwareEngineTracingStub::AsyncCreateCluster(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateCluster");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -163,7 +163,7 @@ VmwareEngineTracingStub::AsyncUpdateCluster(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateCluster");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -178,7 +178,7 @@ VmwareEngineTracingStub::AsyncDeleteCluster(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteCluster");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteCluster(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -191,7 +191,7 @@ VmwareEngineTracingStub::ListSubnets(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListSubnets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSubnets(context, request));
 }
@@ -203,7 +203,7 @@ VmwareEngineTracingStub::GetSubnet(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetSubnet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSubnet(context, request));
 }
 
@@ -216,7 +216,7 @@ VmwareEngineTracingStub::AsyncUpdateSubnet(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateSubnet");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateSubnet(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -229,7 +229,7 @@ VmwareEngineTracingStub::ListNodeTypes(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListNodeTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNodeTypes(context, request));
 }
@@ -241,7 +241,7 @@ VmwareEngineTracingStub::GetNodeType(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetNodeType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNodeType(context, request));
 }
@@ -253,7 +253,7 @@ VmwareEngineTracingStub::ShowNsxCredentials(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ShowNsxCredentials");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ShowNsxCredentials(context, request));
 }
@@ -266,7 +266,7 @@ VmwareEngineTracingStub::ShowVcenterCredentials(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ShowVcenterCredentials");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ShowVcenterCredentials(context, request));
 }
@@ -281,7 +281,7 @@ VmwareEngineTracingStub::AsyncResetNsxCredentials(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ResetNsxCredentials");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncResetNsxCredentials(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -297,7 +297,7 @@ VmwareEngineTracingStub::AsyncResetVcenterCredentials(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ResetVcenterCredentials");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncResetVcenterCredentials(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -313,7 +313,7 @@ VmwareEngineTracingStub::AsyncCreateHcxActivationKey(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateHcxActivationKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateHcxActivationKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -327,7 +327,7 @@ VmwareEngineTracingStub::ListHcxActivationKeys(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListHcxActivationKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListHcxActivationKeys(context, request));
 }
@@ -340,7 +340,7 @@ VmwareEngineTracingStub::GetHcxActivationKey(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetHcxActivationKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetHcxActivationKey(context, request));
 }
@@ -352,7 +352,7 @@ VmwareEngineTracingStub::GetNetworkPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetNetworkPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNetworkPolicy(context, request));
 }
@@ -365,7 +365,7 @@ VmwareEngineTracingStub::ListNetworkPolicies(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListNetworkPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNetworkPolicies(context, request));
 }
@@ -380,7 +380,7 @@ VmwareEngineTracingStub::AsyncCreateNetworkPolicy(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateNetworkPolicy");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateNetworkPolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -396,7 +396,7 @@ VmwareEngineTracingStub::AsyncUpdateNetworkPolicy(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateNetworkPolicy");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateNetworkPolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -412,7 +412,7 @@ VmwareEngineTracingStub::AsyncDeleteNetworkPolicy(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteNetworkPolicy");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteNetworkPolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -428,7 +428,7 @@ VmwareEngineTracingStub::AsyncCreateVmwareEngineNetwork(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreateVmwareEngineNetwork");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateVmwareEngineNetwork(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -444,7 +444,7 @@ VmwareEngineTracingStub::AsyncUpdateVmwareEngineNetwork(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdateVmwareEngineNetwork");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateVmwareEngineNetwork(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -460,7 +460,7 @@ VmwareEngineTracingStub::AsyncDeleteVmwareEngineNetwork(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeleteVmwareEngineNetwork");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteVmwareEngineNetwork(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -474,7 +474,7 @@ VmwareEngineTracingStub::GetVmwareEngineNetwork(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetVmwareEngineNetwork");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetVmwareEngineNetwork(context, request));
 }
@@ -487,7 +487,7 @@ VmwareEngineTracingStub::ListVmwareEngineNetworks(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListVmwareEngineNetworks");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVmwareEngineNetworks(context, request));
 }
@@ -502,7 +502,7 @@ VmwareEngineTracingStub::AsyncCreatePrivateConnection(
       "google.cloud.vmwareengine.v1.VmwareEngine", "CreatePrivateConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreatePrivateConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -516,7 +516,7 @@ VmwareEngineTracingStub::GetPrivateConnection(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "GetPrivateConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPrivateConnection(context, request));
 }
@@ -529,7 +529,7 @@ VmwareEngineTracingStub::ListPrivateConnections(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vmwareengine.v1.VmwareEngine", "ListPrivateConnections");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPrivateConnections(context, request));
 }
@@ -544,7 +544,7 @@ VmwareEngineTracingStub::AsyncUpdatePrivateConnection(
       "google.cloud.vmwareengine.v1.VmwareEngine", "UpdatePrivateConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdatePrivateConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -560,7 +560,7 @@ VmwareEngineTracingStub::AsyncDeletePrivateConnection(
       "google.cloud.vmwareengine.v1.VmwareEngine", "DeletePrivateConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeletePrivateConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -576,7 +576,7 @@ VmwareEngineTracingStub::ListPrivateConnectionPeeringRoutes(
       internal::MakeSpanGrpc("google.cloud.vmwareengine.v1.VmwareEngine",
                              "ListPrivateConnectionPeeringRoutes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->ListPrivateConnectionPeeringRoutes(context, request));
@@ -591,7 +591,7 @@ VmwareEngineTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -605,7 +605,7 @@ future<Status> VmwareEngineTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IamCheckerTracingStub::IamCheckerTracingStub(
     std::shared_ptr<IamCheckerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerTracingStub::TroubleshootIamPolicy(
@@ -39,7 +39,7 @@ IamCheckerTracingStub::TroubleshootIamPolicy(
       internal::MakeSpanGrpc("google.cloud.policytroubleshooter.v1.IamChecker",
                              "TroubleshootIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TroubleshootIamPolicy(context, request));
 }

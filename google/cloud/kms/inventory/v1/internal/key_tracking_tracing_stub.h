@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_TRACKING_TRACING_STUB_H
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -51,6 +52,8 @@ class KeyTrackingServiceTracingStub : public KeyTrackingServiceStub {
 
  private:
   std::shared_ptr<KeyTrackingServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

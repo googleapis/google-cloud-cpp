@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceTracingStub::TraceServiceTracingStub(
     std::shared_ptr<TraceServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceTracingStub::ListTraces(
@@ -37,7 +37,7 @@ TraceServiceTracingStub::ListTraces(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v1.TraceService", "ListTraces");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTraces(context, request));
 }
@@ -49,7 +49,7 @@ TraceServiceTracingStub::GetTrace(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v1.TraceService", "GetTrace");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetTrace(context, request));
 }
 
@@ -59,7 +59,7 @@ Status TraceServiceTracingStub::PatchTraces(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v1.TraceService", "PatchTraces");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PatchTraces(context, request));
 }

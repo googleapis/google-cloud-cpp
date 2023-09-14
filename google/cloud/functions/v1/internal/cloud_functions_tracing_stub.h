@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_TRACING_STUB_H
 
 #include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -105,6 +106,8 @@ class CloudFunctionsServiceTracingStub : public CloudFunctionsServiceStub {
 
  private:
   std::shared_ptr<CloudFunctionsServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

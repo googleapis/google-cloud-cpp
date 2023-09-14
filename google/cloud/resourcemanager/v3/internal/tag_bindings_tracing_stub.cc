@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TagBindingsTracingStub::TagBindingsTracingStub(
     std::shared_ptr<TagBindingsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 TagBindingsTracingStub::ListTagBindings(
@@ -37,7 +37,7 @@ TagBindingsTracingStub::ListTagBindings(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagBindings", "ListTagBindings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTagBindings(context, request));
 }
@@ -52,7 +52,7 @@ TagBindingsTracingStub::AsyncCreateTagBinding(
       "google.cloud.resourcemanager.v3.TagBindings", "CreateTagBinding");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateTagBinding(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -68,7 +68,7 @@ TagBindingsTracingStub::AsyncDeleteTagBinding(
       "google.cloud.resourcemanager.v3.TagBindings", "DeleteTagBinding");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteTagBinding(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -82,7 +82,7 @@ TagBindingsTracingStub::ListEffectiveTags(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagBindings", "ListEffectiveTags");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEffectiveTags(context, request));
 }
@@ -96,7 +96,7 @@ TagBindingsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -110,7 +110,7 @@ future<Status> TagBindingsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

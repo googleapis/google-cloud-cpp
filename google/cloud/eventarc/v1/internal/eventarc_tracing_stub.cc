@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EventarcTracingStub::EventarcTracingStub(std::shared_ptr<EventarcStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcTracingStub::GetTrigger(
     grpc::ClientContext& context,
@@ -35,7 +35,7 @@ StatusOr<google::cloud::eventarc::v1::Trigger> EventarcTracingStub::GetTrigger(
   auto span =
       internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc", "GetTrigger");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTrigger(context, request));
 }
@@ -47,7 +47,7 @@ EventarcTracingStub::ListTriggers(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "ListTriggers");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTriggers(context, request));
 }
@@ -61,7 +61,7 @@ EventarcTracingStub::AsyncCreateTrigger(
                                      "CreateTrigger");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -76,7 +76,7 @@ EventarcTracingStub::AsyncUpdateTrigger(
                                      "UpdateTrigger");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -91,7 +91,7 @@ EventarcTracingStub::AsyncDeleteTrigger(
                                      "DeleteTrigger");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteTrigger(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -103,7 +103,7 @@ StatusOr<google::cloud::eventarc::v1::Channel> EventarcTracingStub::GetChannel(
   auto span =
       internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc", "GetChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetChannel(context, request));
 }
@@ -115,7 +115,7 @@ EventarcTracingStub::ListChannels(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "ListChannels");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListChannels(context, request));
 }
@@ -129,7 +129,7 @@ EventarcTracingStub::AsyncCreateChannel(
                                      "CreateChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -144,7 +144,7 @@ EventarcTracingStub::AsyncUpdateChannel(
                                      "UpdateChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -159,7 +159,7 @@ EventarcTracingStub::AsyncDeleteChannel(
                                      "DeleteChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -172,7 +172,7 @@ EventarcTracingStub::GetProvider(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "GetProvider");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProvider(context, request));
 }
@@ -184,7 +184,7 @@ EventarcTracingStub::ListProviders(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "ListProviders");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProviders(context, request));
 }
@@ -196,7 +196,7 @@ EventarcTracingStub::GetChannelConnection(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "GetChannelConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetChannelConnection(context, request));
 }
@@ -208,7 +208,7 @@ EventarcTracingStub::ListChannelConnections(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "ListChannelConnections");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListChannelConnections(context, request));
 }
@@ -223,7 +223,7 @@ EventarcTracingStub::AsyncCreateChannelConnection(
                                      "CreateChannelConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateChannelConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -239,7 +239,7 @@ EventarcTracingStub::AsyncDeleteChannelConnection(
                                      "DeleteChannelConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteChannelConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -252,7 +252,7 @@ EventarcTracingStub::GetGoogleChannelConfig(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "GetGoogleChannelConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetGoogleChannelConfig(context, request));
 }
@@ -265,7 +265,7 @@ EventarcTracingStub::UpdateGoogleChannelConfig(
   auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
                                      "UpdateGoogleChannelConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateGoogleChannelConfig(context, request));
 }
@@ -279,7 +279,7 @@ EventarcTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -293,7 +293,7 @@ future<Status> EventarcTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

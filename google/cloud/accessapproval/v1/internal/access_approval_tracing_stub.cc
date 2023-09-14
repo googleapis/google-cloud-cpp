@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalTracingStub::AccessApprovalTracingStub(
     std::shared_ptr<AccessApprovalStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
 AccessApprovalTracingStub::ListApprovalRequests(
@@ -38,7 +38,7 @@ AccessApprovalTracingStub::ListApprovalRequests(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.accessapproval.v1.AccessApproval", "ListApprovalRequests");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListApprovalRequests(context, request));
 }
@@ -51,7 +51,7 @@ AccessApprovalTracingStub::GetApprovalRequest(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.accessapproval.v1.AccessApproval", "GetApprovalRequest");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetApprovalRequest(context, request));
 }
@@ -65,7 +65,7 @@ AccessApprovalTracingStub::ApproveApprovalRequest(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "ApproveApprovalRequest");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ApproveApprovalRequest(context, request));
 }
@@ -79,7 +79,7 @@ AccessApprovalTracingStub::DismissApprovalRequest(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "DismissApprovalRequest");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DismissApprovalRequest(context, request));
 }
@@ -93,7 +93,7 @@ AccessApprovalTracingStub::InvalidateApprovalRequest(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "InvalidateApprovalRequest");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->InvalidateApprovalRequest(context, request));
 }
@@ -107,7 +107,7 @@ AccessApprovalTracingStub::GetAccessApprovalSettings(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "GetAccessApprovalSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAccessApprovalSettings(context, request));
 }
@@ -121,7 +121,7 @@ AccessApprovalTracingStub::UpdateAccessApprovalSettings(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "UpdateAccessApprovalSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->UpdateAccessApprovalSettings(context, request));
 }
@@ -134,7 +134,7 @@ Status AccessApprovalTracingStub::DeleteAccessApprovalSettings(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "DeleteAccessApprovalSettings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->DeleteAccessApprovalSettings(context, request));
 }
@@ -148,7 +148,7 @@ AccessApprovalTracingStub::GetAccessApprovalServiceAccount(
       internal::MakeSpanGrpc("google.cloud.accessapproval.v1.AccessApproval",
                              "GetAccessApprovalServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->GetAccessApprovalServiceAccount(context, request));

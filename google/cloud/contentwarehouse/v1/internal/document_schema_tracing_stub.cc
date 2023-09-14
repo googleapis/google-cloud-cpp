@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentSchemaServiceTracingStub::DocumentSchemaServiceTracingStub(
     std::shared_ptr<DocumentSchemaServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceTracingStub::CreateDocumentSchema(
@@ -39,7 +39,7 @@ DocumentSchemaServiceTracingStub::CreateDocumentSchema(
       "google.cloud.contentwarehouse.v1.DocumentSchemaService",
       "CreateDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDocumentSchema(context, request));
 }
@@ -53,7 +53,7 @@ DocumentSchemaServiceTracingStub::UpdateDocumentSchema(
       "google.cloud.contentwarehouse.v1.DocumentSchemaService",
       "UpdateDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDocumentSchema(context, request));
 }
@@ -67,7 +67,7 @@ DocumentSchemaServiceTracingStub::GetDocumentSchema(
       "google.cloud.contentwarehouse.v1.DocumentSchemaService",
       "GetDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDocumentSchema(context, request));
 }
@@ -80,7 +80,7 @@ Status DocumentSchemaServiceTracingStub::DeleteDocumentSchema(
       "google.cloud.contentwarehouse.v1.DocumentSchemaService",
       "DeleteDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDocumentSchema(context, request));
 }
@@ -94,7 +94,7 @@ DocumentSchemaServiceTracingStub::ListDocumentSchemas(
       "google.cloud.contentwarehouse.v1.DocumentSchemaService",
       "ListDocumentSchemas");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDocumentSchemas(context, request));
 }
