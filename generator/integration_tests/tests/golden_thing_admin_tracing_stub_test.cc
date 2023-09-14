@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -30,7 +31,6 @@ using ::testing::Return;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-using ::google::cloud::testing_util::InstallMockPropagator;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -39,28 +39,27 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::_;
-using ::testing::ByMove;
 using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Unused;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
-future<StatusOr<google::longrunning::Operation>> LongrunningError(Unused,
-                                                                  Unused,
-                                                                  Unused) {
+future<StatusOr<google::longrunning::Operation>> LongrunningError(
+    Unused, std::shared_ptr<grpc::ClientContext> const& context, Unused) {
+  ValidatePropagator(*context);
   return make_ready_future(
       StatusOr<google::longrunning::Operation>(internal::AbortedError("fail")));
 }
 
 TEST(GoldenThingAdminTracingStubTest, ListDatabases) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, ListDatabases).WillOnce([] {
+  EXPECT_CALL(*mock, ListDatabases).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -86,8 +85,6 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabases) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateDatabase).WillOnce(LongrunningError);
@@ -114,11 +111,10 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
 
 TEST(GoldenThingAdminTracingStubTest, GetDatabase) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetDatabase).WillOnce([] {
+  EXPECT_CALL(*mock, GetDatabase).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -144,8 +140,6 @@ TEST(GoldenThingAdminTracingStubTest, GetDatabase) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl).WillOnce(LongrunningError);
@@ -172,11 +166,10 @@ TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
 
 TEST(GoldenThingAdminTracingStubTest, DropDatabase) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, DropDatabase).WillOnce([] {
+  EXPECT_CALL(*mock, DropDatabase).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -202,11 +195,10 @@ TEST(GoldenThingAdminTracingStubTest, DropDatabase) {
 
 TEST(GoldenThingAdminTracingStubTest, GetDatabaseDdl) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetDatabaseDdl).WillOnce([] {
+  EXPECT_CALL(*mock, GetDatabaseDdl).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -232,11 +224,10 @@ TEST(GoldenThingAdminTracingStubTest, GetDatabaseDdl) {
 
 TEST(GoldenThingAdminTracingStubTest, SetIamPolicy) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, SetIamPolicy).WillOnce([] {
+  EXPECT_CALL(*mock, SetIamPolicy).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -262,11 +253,10 @@ TEST(GoldenThingAdminTracingStubTest, SetIamPolicy) {
 
 TEST(GoldenThingAdminTracingStubTest, GetIamPolicy) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetIamPolicy).WillOnce([] {
+  EXPECT_CALL(*mock, GetIamPolicy).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -292,14 +282,14 @@ TEST(GoldenThingAdminTracingStubTest, GetIamPolicy) {
 
 TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, TestIamPermissions).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, TestIamPermissions)
+      .WillOnce([](auto& context, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
@@ -322,8 +312,6 @@ TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateBackup).WillOnce(LongrunningError);
@@ -350,11 +338,10 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
 
 TEST(GoldenThingAdminTracingStubTest, GetBackup) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, GetBackup).WillOnce([] {
+  EXPECT_CALL(*mock, GetBackup).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -379,11 +366,10 @@ TEST(GoldenThingAdminTracingStubTest, GetBackup) {
 
 TEST(GoldenThingAdminTracingStubTest, UpdateBackup) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, UpdateBackup).WillOnce([] {
+  EXPECT_CALL(*mock, UpdateBackup).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -409,11 +395,10 @@ TEST(GoldenThingAdminTracingStubTest, UpdateBackup) {
 
 TEST(GoldenThingAdminTracingStubTest, DeleteBackup) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, DeleteBackup).WillOnce([] {
+  EXPECT_CALL(*mock, DeleteBackup).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -439,11 +424,10 @@ TEST(GoldenThingAdminTracingStubTest, DeleteBackup) {
 
 TEST(GoldenThingAdminTracingStubTest, ListBackups) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, ListBackups).WillOnce([] {
+  EXPECT_CALL(*mock, ListBackups).WillOnce([](auto& context, auto const&) {
+    ValidatePropagator(context);
     EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
@@ -469,8 +453,6 @@ TEST(GoldenThingAdminTracingStubTest, ListBackups) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncRestoreDatabase).WillOnce(LongrunningError);
@@ -497,14 +479,14 @@ TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
 
 TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, ListDatabaseOperations).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, ListDatabaseOperations)
+      .WillOnce([](auto& context, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
@@ -527,14 +509,14 @@ TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
 
 TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
-  EXPECT_CALL(*mock, ListBackupOperations).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, ListBackupOperations)
+      .WillOnce([](auto& context, auto const&) {
+        ValidatePropagator(context);
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return internal::AbortedError("fail");
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   grpc::ClientContext context;
@@ -557,14 +539,15 @@ TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
-      .WillOnce(Return(ByMove(make_ready_future(
-          StatusOr<google::test::admin::database::v1::Database>(
-              internal::AbortedError("fail"))))));
+      .WillOnce([](auto const&, auto context, auto const&) {
+        ValidatePropagator(*context);
+        return make_ready_future(
+            StatusOr<google::test::admin::database::v1::Database>(
+                internal::AbortedError("fail")));
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::test::admin::database::v1::GetDatabaseRequest request;
@@ -588,13 +571,13 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncDropDatabase)
-      .WillOnce(
-          Return(ByMove(make_ready_future(internal::AbortedError("fail")))));
+      .WillOnce([](auto const&, auto context, auto const&) {
+        ValidatePropagator(*context);
+        return make_ready_future(internal::AbortedError("fail"));
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::test::admin::database::v1::DropDatabaseRequest request;
@@ -618,8 +601,6 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce(LongrunningError);
@@ -645,13 +626,13 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
 
 TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce(
-          Return(ByMove(make_ready_future(internal::AbortedError("fail")))));
+      .WillOnce([](auto const&, auto context, auto const&) {
+        ValidatePropagator(*context);
+        return make_ready_future(internal::AbortedError("fail"));
+      });
 
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::longrunning::CancelOperationRequest request;
@@ -674,8 +655,6 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
 
 TEST(MakeGoldenThingAdminTracingStub, OpenTelemetry) {
   auto span_catcher = InstallSpanCatcher();
-  auto mock_propagator = InstallMockPropagator();
-  EXPECT_CALL(*mock_propagator, Inject);
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, DropDatabase)

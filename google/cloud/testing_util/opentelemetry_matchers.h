@@ -238,14 +238,6 @@ class MockTextMapPropagator
               (const, noexcept, override));
 };
 
-/**
- * Note that this sets the global context propagator, which will persist from
- * one test in a test fixture to the next. Thus it is important that:
- * 1. a new propagator is installed for each test
- * 2. the tests within a fixture do not execute in parallel
- */
-std::shared_ptr<MockTextMapPropagator> InstallMockPropagator();
-
 // Returns options with OpenTelemetry tracing enabled. Uses the global tracer
 // provider.
 Options EnableTracing(Options options);

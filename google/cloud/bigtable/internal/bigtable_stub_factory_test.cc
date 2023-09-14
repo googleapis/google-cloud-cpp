@@ -25,6 +25,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <regex>
@@ -40,6 +41,8 @@ using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::google::cloud::testing_util::ValidateNoPropagator;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -303,15 +306,15 @@ using ::testing::IsEmpty;
 
 TEST_F(BigtableStubFactory, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*propagator, Inject);
 
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
-        EXPECT_CALL(*mock, MutateRow)
-            .WillOnce(Return(internal::AbortedError("fail")));
+        EXPECT_CALL(*mock, MutateRow).WillOnce([](auto& context, auto const&) {
+          ValidatePropagator(context);
+          return internal::AbortedError("fail");
+        });
         return mock;
       });
 
@@ -333,15 +336,15 @@ TEST_F(BigtableStubFactory, TracingEnabled) {
 
 TEST_F(BigtableStubFactory, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*propagator, Inject).Times(0);
 
   MockFactory factory;
   EXPECT_CALL(factory, Call)
       .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockBigtableStub>();
-        EXPECT_CALL(*mock, MutateRow)
-            .WillOnce(Return(internal::AbortedError("fail")));
+        EXPECT_CALL(*mock, MutateRow).WillOnce([](auto& context, auto const&) {
+          ValidateNoPropagator(context);
+          return internal::AbortedError("fail");
+        });
         return mock;
       });
 

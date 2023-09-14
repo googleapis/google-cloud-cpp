@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 
@@ -123,12 +124,12 @@ using ::testing::IsEmpty;
 
 TEST(DecorateSpannerStub, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*propagator, Inject);
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, CreateSession)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, CreateSession).WillOnce([](auto& context, auto const&) {
+    testing_util::ValidatePropagator(context);
+    return internal::AbortedError("fail");
+  });
   auto opts = EnableTracing(
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
   internal::AutomaticallyCreatedBackgroundThreads background;
@@ -149,12 +150,12 @@ TEST(DecorateSpannerStub, TracingEnabled) {
 
 TEST(DecorateSpannerStub, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  auto propagator = testing_util::InstallMockPropagator();
-  EXPECT_CALL(*propagator, Inject).Times(0);
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, CreateSession)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, CreateSession).WillOnce([](auto& context, auto const&) {
+    testing_util::ValidateNoPropagator(context);
+    return internal::AbortedError("fail");
+  });
   auto opts = DisableTracing(
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
   internal::AutomaticallyCreatedBackgroundThreads background;

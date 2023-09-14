@@ -24,6 +24,7 @@ google_cloud_cpp_testing_grpc_hdrs = [
     "mock_grpc_authentication_strategy.h",
     "mock_minimal_iam_credentials_stub.h",
     "validate_metadata.h",
+    "validate_propagator.h",
 ]
 
 google_cloud_cpp_testing_grpc_srcs = [
@@ -31,4 +32,5 @@ google_cloud_cpp_testing_grpc_srcs = [
     "is_proto_equal.cc",
     "mock_grpc_authentication_strategy.cc",
     "validate_metadata.cc",
+    "validate_propagator.cc",
 ]

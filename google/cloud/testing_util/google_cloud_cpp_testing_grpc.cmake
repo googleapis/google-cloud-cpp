@@ -26,7 +26,9 @@ add_library(
     mock_grpc_authentication_strategy.h
     mock_minimal_iam_credentials_stub.h
     validate_metadata.cc
-    validate_metadata.h)
+    validate_metadata.h
+    validate_propagator.cc
+    validate_propagator.h)
 target_link_libraries(
     google_cloud_cpp_testing_grpc
     PUBLIC google-cloud-cpp::grpc_utils
