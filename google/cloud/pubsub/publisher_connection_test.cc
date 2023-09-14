@@ -24,11 +24,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -354,7 +352,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::cloud::CompletionQueue&, auto,
-                    google::pubsub::v1::PublishRequest const& request) {
+                    google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
@@ -377,7 +375,7 @@ TEST(MakePublisherConnectionTest, TracingDisabled) {
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::cloud::CompletionQueue&, auto,
-                    google::pubsub::v1::PublishRequest const& request) {
+                    google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
         return make_ready_future(make_status_or(response));
@@ -391,7 +389,6 @@ TEST(MakePublisherConnectionTest, TracingDisabled) {
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
-
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace

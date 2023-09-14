@@ -63,7 +63,7 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
         pubsub_internal::BatchingPublisherConnection::Create(
             topic, opts, {}, std::move(sink), std::move(cq)));
   };
-  auto enable_open_telemetry = google::cloud::internal::TracingEnabled(opts);
+  auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
   auto connection = make_connection();
   if (opts.get<pubsub::FullPublisherActionOption>() !=
       pubsub::FullPublisherAction::kIgnored) {
@@ -71,7 +71,7 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
         std::move(opts), std::move(connection));
   }
 
-  if (enable_open_telemetry) {
+  if (tracing_enabled) {
     connection = pubsub_internal::MakePublisherTracingConnection(
         std::move(topic), std::move(connection));
   }
