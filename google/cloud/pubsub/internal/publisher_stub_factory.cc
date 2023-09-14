@@ -93,8 +93,7 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id) {
-  return CreateDefaultPublisherStub(opts,
-                                    CreateChannel(opts, channel_id));
+  return CreateDefaultPublisherStub(opts, CreateChannel(opts, channel_id));
 }
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
