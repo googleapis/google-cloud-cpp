@@ -21,11 +21,13 @@
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
+#include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/internal/sequential_batch_sink.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/non_constructible.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <memory>
 
@@ -59,14 +61,21 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
     }
     return pubsub_internal::RejectsWithOrderingKey::Create(
         pubsub_internal::BatchingPublisherConnection::Create(
-            std::move(topic), opts, {}, std::move(sink), std::move(cq)));
+            topic, opts, {}, std::move(sink), std::move(cq)));
   };
+  auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
   auto connection = make_connection();
   if (opts.get<pubsub::FullPublisherActionOption>() !=
       pubsub::FullPublisherAction::kIgnored) {
     connection = pubsub_internal::FlowControlledPublisherConnection::Create(
         std::move(opts), std::move(connection));
   }
+
+  if (tracing_enabled) {
+    connection = pubsub_internal::MakePublisherTracingConnection(
+        std::move(topic), std::move(connection));
+  }
+
   return std::make_shared<pubsub_internal::ContainingPublisherConnection>(
       std::move(background), std::move(connection));
 }
