@@ -44,19 +44,18 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
   namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kProducer;
-  auto span =
-      internal::GetTracer(internal::CurrentOptions())
-          ->StartSpan(topic + " send",
-                      {
-                          {sc::kMessagingSystem, "pubsub"},
-                          {sc::kMessagingDestinationName, topic},
-                          {sc::kMessagingDestinationTemplate, "topic"},
-                          {"messaging.message.total_size_bytes",
-                           static_cast<std::int64_t>(MessageSize(m))},
-                      },
-                      options);
-    
-      if (!m.ordering_key().empty()) {
+  auto span = internal::GetTracer(internal::CurrentOptions())
+                  ->StartSpan(topic + " send",
+                              {
+                                  {sc::kMessagingSystem, "pubsub"},
+                                  {sc::kMessagingDestinationName, topic},
+                                  {sc::kMessagingDestinationTemplate, "topic"},
+                                  {"messaging.message.total_size_bytes",
+                                   static_cast<std::int64_t>(MessageSize(m))},
+                              },
+                              options);
+
+  if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.pubsub.ordering_key", m.ordering_key());
   }
   return span;
