@@ -26,7 +26,7 @@ all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Compute Engine API C++
 # client library.
-CLIENT_MODULE     := google_cloud_cpp_compute
+CLIENT_MODULE     := google_cloud_cpp_compute_disks
 CLIENT_CXXFLAGS   := $(shell pkg-config $(CLIENT_MODULE) --cflags)
 CLIENT_CXXLDFLAGS := $(shell pkg-config $(CLIENT_MODULE) --libs-only-L)
 CLIENT_LIBS       := $(shell pkg-config $(CLIENT_MODULE) --libs-only-l)
