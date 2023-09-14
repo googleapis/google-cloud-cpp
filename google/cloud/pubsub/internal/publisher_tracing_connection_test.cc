@@ -88,7 +88,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                          "ordering-key-0"),
               OTelAttribute<int>("gcloud.status_code", 0),
-              OTelAttribute<int>("messaging.message.total_size_bytes", 45),
+              OTelAttribute<std::int64_t>("messaging.message.total_size_bytes", 45),
               OTelAttribute<std::string>("messaging.message_id",
                                          "test-id-0")))));
 }
@@ -130,7 +130,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
               OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                          "ordering-key-0"),
               OTelAttribute<int>("gcloud.status_code", kErrorCode),
-              OTelAttribute<int>("messaging.message.total_size_bytes", 45)))));
+              OTelAttribute<std::int64_t>("messaging.message.total_size_bytes", 45)))));
 }
 
 TEST(PublisherTracingConnectionTest, FlushSpan) {
