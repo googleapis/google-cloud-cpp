@@ -49,8 +49,10 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Not;
 
 TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -133,6 +135,34 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                     OTelAttribute<int>("gcloud.status_code", kErrorCode),
                     OTelAttribute<std::int64_t>(
                         "messaging.message.total_size_bytes", 45)))));
+}
+
+TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockPublisherConnection>();
+  EXPECT_CALL(*mock, Publish)
+      .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+        EXPECT_TRUE(ThereIsAnActiveSpan());
+        return make_ready_future(StatusOr<std::string>("test-id-0"));
+      });
+  auto connection = MakePublisherTracingConnection(
+      Topic("test-project", "test-topic"), std::move(mock));
+
+  auto response = connection
+                      ->Publish({pubsub::MessageBuilder{}
+                                     .SetData("test-data-0")
+                                     .SetOrderingKey("")
+                                     .Build()})
+                      .get();
+
+  EXPECT_STATUS_OK(response);
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsProducer(),
+                  SpanNamed("projects/test-project/topics/test-topic send"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  Not(SpanHasAttributes(OTelAttribute<std::string>(
+                      "messaging.pubsub.ordering_key", _))))));
 }
 
 TEST(PublisherTracingConnectionTest, FlushSpan) {
