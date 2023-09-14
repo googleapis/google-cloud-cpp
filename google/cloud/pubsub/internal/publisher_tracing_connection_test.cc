@@ -138,7 +138,6 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
 }
 
 TEST(PublisherTracingConnectionTest, PublishSpanOmitsOrderingKey) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
