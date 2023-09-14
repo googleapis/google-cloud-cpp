@@ -92,9 +92,9 @@ Status GenerateProtosFromDiscoveryDoc(
     std::set<std::string> operation_services = {});
 
 // Recurses through the json accumulating the values of any $ref fields
-// whether they exist in simple fields, arrays, maps, or nested messages
-// containing any of the aforementioned field types.
-std::set<std::string> FindAllRefValues(nlohmann::json const& json);
+// or google.protobuf.types whether they exist in simple fields, arrays, maps,
+// or nested messages containing any of the aforementioned field types.
+std::set<std::string> FindAllTypesToImport(nlohmann::json const& json);
 
 // Iterates through all types establishing edges based on their dependencies via
 // DiscoveryTypeVertex::AddNeedsType and DiscoveryTypeVertex::AddNeededByType.

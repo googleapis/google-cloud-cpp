@@ -99,6 +99,10 @@ void DiscoveryTypeVertex::AddNeededByResource(std::string resource_name) {
   needed_by_resource_.insert(std::move(resource_name));
 }
 
+void DiscoveryTypeVertex::AddNeedsProtobufType(std::string type) {
+  needs_protobuf_type_.insert(std::move(type));
+}
+
 std::string DiscoveryTypeVertex::DetermineIntroducer(
     nlohmann::json const& field) {
   if (field.empty()) return "";
@@ -123,7 +127,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                     false, true};
   if (!v.contains("type")) {
     return internal::InvalidArgumentError(
-        absl::StrFormat("field: %s has neither $ref nor type.", field_name));
+        absl::StrFormat("field: %s has neither $ref nor type.", field_name),
+        GCP_ERROR_INFO().WithMetadata("json", v.dump()));
   }
 
   std::string type = v["type"];
@@ -138,7 +143,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
     return internal::InvalidArgumentError(
         absl::StrFormat("field: %s is type object with neither properties nor "
                         "additionalProperties.",
-                        field_name));
+                        field_name),
+        GCP_ERROR_INFO().WithMetadata("json", v.dump()));
   }
 
   if (type == "object" && v.contains("properties")) {
@@ -164,13 +170,17 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
         properties_for_synthesis = &additional_properties;
         is_message = true;
       } else {
-        return internal::InvalidArgumentError(absl::StrFormat(
-            "field: %s unknown type: %s for map field.", field_name, map_type));
+        return internal::InvalidArgumentError(
+            absl::StrFormat("field: %s unknown type: %s for map field.",
+                            field_name, map_type),
+            GCP_ERROR_INFO().WithMetadata("json", v.dump()));
       }
       type = map_type;
     } else {
-      return internal::InvalidArgumentError(absl::StrFormat(
-          "field: %s is a map with neither $ref nor type.", field_name));
+      return internal::InvalidArgumentError(
+          absl::StrFormat("field: %s is a map with neither $ref nor type.",
+                          field_name),
+          GCP_ERROR_INFO().WithMetadata("json", v.dump()));
     }
     return TypeInfo{type, compare_package_name, properties_for_synthesis, true,
                     is_message};
@@ -179,7 +189,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   if (type == "array") {
     if (!v.contains("items")) {
       return internal::InvalidArgumentError(
-          absl::StrFormat("field: %s array has no items.", field_name));
+          absl::StrFormat("field: %s array has no items.", field_name),
+          GCP_ERROR_INFO().WithMetadata("json", v.dump()));
     }
     auto const& items = v["items"];
     if (items.contains("$ref")) {
@@ -195,21 +206,30 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
         // Synthesize a nested type for this array.
         type = CapitalizeFirstLetter(field_name + "Item");
         return TypeInfo{type, compare_package_name, &items, false, true};
+      } else if (type == "object" && items.contains("additionalProperties") &&
+                 (items["additionalProperties"]).value("type", "") == "any") {
+        type = "google.protobuf.Any";
+        return TypeInfo{type, compare_package_name, nullptr, false, false};
       } else {
-        return internal::InvalidArgumentError(absl::StrFormat(
-            "field: %s unknown type: %s for array field.", field_name, type));
+        return internal::InvalidArgumentError(
+            absl::StrFormat("field: %s unknown type: %s for array field.",
+                            field_name, type),
+            GCP_ERROR_INFO().WithMetadata("json", v.dump()));
       }
     } else {
-      return internal::InvalidArgumentError(absl::StrFormat(
-          "field: %s is array with items having neither $ref nor type.",
-          field_name));
+      return internal::InvalidArgumentError(
+          absl::StrFormat(
+              "field: %s is array with items having neither $ref nor type.",
+              field_name),
+          GCP_ERROR_INFO().WithMetadata("json", v.dump()));
     }
     return TypeInfo{type, compare_package_name, properties_for_synthesis, false,
                     is_message};
   }
 
   return internal::InvalidArgumentError(
-      absl::StrFormat("field: %s has unknown type: %s.", field_name, type));
+      absl::StrFormat("field: %s has unknown type: %s.", field_name, type),
+      GCP_ERROR_INFO().WithMetadata("json", v.dump()));
 }
 
 auto constexpr kMaxRecursionDepth = 32;

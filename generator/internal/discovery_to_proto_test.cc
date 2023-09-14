@@ -1070,7 +1070,7 @@ TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
                        HasSubstr("Response name=baz not found in types")));
 }
 
-TEST(FindAllRefValuesTest, NonRefField) {
+TEST(FindAllTypesToImportTest, NonRefNonAnyField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1081,11 +1081,11 @@ TEST(FindAllRefValuesTest, NonRefField) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, IsEmpty());
 }
 
-TEST(FindAllRefValuesTest, SimpleRefField) {
+TEST(FindAllTypesToImportTest, SimpleRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1096,11 +1096,26 @@ TEST(FindAllRefValuesTest, SimpleRefField) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo"));
 }
 
-TEST(FindAllRefValuesTest, MultipleSimpleRefFields) {
+TEST(FindAllTypesToImportTest, SimpleAnyField) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "field_name_1": {
+      "type": "any"
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Any"));
+}
+
+TEST(FindAllTypesToImportTest, MultipleSimpleRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1114,11 +1129,11 @@ TEST(FindAllRefValuesTest, MultipleSimpleRefFields) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValuesTest, ArrayRefFields) {
+TEST(FindAllTypesToImportTest, ArrayRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "array_field_name_1": {
@@ -1138,11 +1153,38 @@ TEST(FindAllRefValuesTest, ArrayRefFields) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValuesTest, MapRefFields) {
+TEST(FindAllTypesToImportTest, ArrayRefAnyFields) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "array_field_name_1": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties" : {
+          "type": "any"
+        }
+      }
+    },
+    "array_field_name_2": {
+      "type": "array",
+      "items": {
+        "$ref": "Bar"
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Any", "Bar"));
+}
+
+TEST(FindAllTypesToImportTest, MapRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "map_field_name_1": {
@@ -1162,11 +1204,29 @@ TEST(FindAllRefValuesTest, MapRefFields) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValuesTest, SingleNestedRefField) {
+TEST(FindAllTypesToImportTest, MapAnyFields) {
+  auto constexpr kTypeJson = R"""({
+  "properties": {
+    "map_field_name_1": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "any"
+      }
+    }
+  }
+})""";
+
+  auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(parsed_json.is_object());
+  auto result = FindAllTypesToImport(parsed_json);
+  EXPECT_THAT(result, UnorderedElementsAre("google.protobuf.Any"));
+}
+
+TEST(FindAllTypesToImportTest, SingleNestedRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1182,11 +1242,11 @@ TEST(FindAllRefValuesTest, SingleNestedRefField) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo"));
 }
 
-TEST(FindAllRefValuesTest, MultipleNestedRefFields) {
+TEST(FindAllTypesToImportTest, MultipleNestedRefFields) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1205,11 +1265,11 @@ TEST(FindAllRefValuesTest, MultipleNestedRefFields) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
-TEST(FindAllRefValuesTest, SingleNestedNestedRefField) {
+TEST(FindAllTypesToImportTest, SingleNestedNestedRefField) {
   auto constexpr kTypeJson = R"""({
   "properties": {
     "field_name_1": {
@@ -1233,7 +1293,7 @@ TEST(FindAllRefValuesTest, SingleNestedNestedRefField) {
 
   auto const parsed_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre("Foo", "Bar"));
 }
 
@@ -1337,11 +1397,11 @@ auto constexpr kOperationJson = R"""({
       "id": "Operation"
 })""";
 
-TEST(FindAllRefValuesTest, ComplexJsonWithRefTypes) {
+TEST(FindAllTypesToImportTest, ComplexJsonWithRefTypes) {
   auto const parsed_json =
       nlohmann::json::parse(kOperationJson, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto result = FindAllRefValues(parsed_json);
+  auto result = FindAllTypesToImport(parsed_json);
   EXPECT_THAT(result, UnorderedElementsAre(
                           "LocalizedMessage", "QuotaExceededInfo", "ErrorInfo",
                           "Help", "Timestamp", "Label", "Label2"));
@@ -2234,6 +2294,21 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
       },
       "type": "object",
       "id": "TestPermissionsResponse"
+    },
+    "ResponseWithAny": {
+      "properties": {
+        "permissions": {
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "any"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object",
+      "id": "TestPermissionsResponse"
     }
   }
 }
@@ -2355,7 +2430,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
               UnorderedElementsAre(type_named("LocalizedMessage"),
                                    type_named("TestPermissionsRequest"),
                                    type_named("TestPermissionsResponse")));
-  EXPECT_THAT(common_test_permissions_file->import_paths(), IsEmpty());
+  EXPECT_THAT(common_test_permissions_file->import_paths(),
+              UnorderedElementsAre("google/protobuf/any.proto"));
 
   auto common_disk_types_file =
       std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
