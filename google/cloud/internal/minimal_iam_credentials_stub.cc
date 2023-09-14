@@ -20,6 +20,7 @@
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/internal/url_encode.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
@@ -164,7 +165,7 @@ class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
  public:
   explicit AsyncAccessTokenGeneratorTracing(
       std::shared_ptr<MinimalIamCredentialsStub> child)
-      : child_(std::move(child)) {}
+      : child_(std::move(child)), propagator_(MakePropagator()) {}
   ~AsyncAccessTokenGeneratorTracing() override = default;
 
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
@@ -174,7 +175,7 @@ class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
                              "GenerateAccessToken");
     {
       auto scope = opentelemetry::trace::Scope(span);
-      InjectTraceContext(*context, CurrentOptions());
+      InjectTraceContext(*context, *propagator_);
     }
     auto f = child_->AsyncGenerateAccessToken(cq, context, request);
     return EndSpan(std::move(context), std::move(span), std::move(f));
@@ -186,12 +187,14 @@ class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
     auto span =
         MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials", "SignBlob");
     auto scope = opentelemetry::trace::Scope(span);
-    InjectTraceContext(context, CurrentOptions());
+    InjectTraceContext(context, *propagator_);
     return EndSpan(context, *span, child_->SignBlob(context, request));
   }
 
  private:
   std::shared_ptr<MinimalIamCredentialsStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
