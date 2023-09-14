@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_context.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
@@ -60,11 +61,12 @@ class RestClientCarrier
 
 }  // namespace
 
-void InjectTraceContext(RestContext& context, Options const& options) {
-  auto propagator = internal::GetTextMapPropagator(options);
+void InjectTraceContext(
+    RestContext& context,
+    opentelemetry::context::propagation::TextMapPropagator& propagator) {
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   RestClientCarrier carrier(context);
-  propagator->Inject(carrier, current);
+  propagator.Inject(carrier, current);
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(

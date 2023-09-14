@@ -17,6 +17,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_request.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
@@ -41,7 +42,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [header]: https://www.w3.org/TR/trace-context/#traceparent-header
  */
-void InjectTraceContext(RestContext& context, Options const& options);
+void InjectTraceContext(
+    RestContext& context,
+    opentelemetry::context::propagation::TextMapPropagator& propagator);
 
 /**
  * Make a span, setting attributes related to HTTP.

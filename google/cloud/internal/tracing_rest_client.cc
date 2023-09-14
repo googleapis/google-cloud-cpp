@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/internal/tracing_http_payload.h"
 #include "google/cloud/internal/tracing_rest_response.h"
 #include "absl/functional/function_ref.h"
@@ -32,31 +33,6 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
-
-// We always inject the CloudTraceContext. Typically, these requests are going
-// to GCP where the X-Cloud-Trace-Context header can connect the request with
-// the internal tracing service.
-void InjectCloudTraceContext(RestContext& ctx,
-                             opentelemetry::trace::Span const& span) {
-  auto context = span.GetContext();
-  if (!context.IsValid()) return;
-
-  using opentelemetry::trace::SpanId;
-  using opentelemetry::trace::TraceId;
-  std::array<char, 2 * TraceId::kSize> trace_id;
-  context.trace_id().ToLowerBase16(trace_id);
-  std::array<char, 2 * SpanId::kSize> span_id;
-  context.span_id().ToLowerBase16(span_id);
-  std::uint64_t value;
-  if (!absl::SimpleHexAtoi(absl::string_view{span_id.data(), span_id.size()},
-                           &value)) {
-    return;
-  }
-  ctx.AddHeader(
-      "X-Cloud-Trace-Context",
-      absl::StrCat(absl::string_view{trace_id.data(), trace_id.size()}, "/",
-                   value, ";o=1"));
-}
 
 /**
  * Extracts information from @p value, and adds it to a span.
@@ -140,18 +116,17 @@ StatusOr<std::unique_ptr<RestResponse>> EndStartSpan(
 }
 
 StatusOr<std::unique_ptr<RestResponse>> WrappedRequest(
-    RestContext& context, RestRequest const& request,
-    opentelemetry::nostd::string_view method,
+    RestContext& context,
+    opentelemetry::context::propagation::TextMapPropagator& propagator,
+    RestRequest const& request, opentelemetry::nostd::string_view method,
     absl::FunctionRef<StatusOr<std::unique_ptr<RestResponse>>(
         RestContext&, RestRequest const&)>
         make_request) {
   auto span = MakeSpanHttp(request, method);
   auto scope = opentelemetry::trace::Scope(span);
-  auto const& options = internal::CurrentOptions();
-  InjectTraceContext(context, options);
-  InjectCloudTraceContext(context, *span);
+  InjectTraceContext(context, propagator);
   auto start = std::chrono::system_clock::now();
-  auto start_span = HttpStart(start, options);
+  auto start_span = HttpStart(start, internal::CurrentOptions());
   auto response =
       EndStartSpan(*start_span, start, context, make_request(context, request));
   return EndResponseSpan(std::move(span), context, std::move(response));
@@ -160,13 +135,13 @@ StatusOr<std::unique_ptr<RestResponse>> WrappedRequest(
 class TracingRestClient : public RestClient {
  public:
   explicit TracingRestClient(std::unique_ptr<RestClient> impl)
-      : impl_(std::move(impl)) {}
+      : impl_(std::move(impl)), propagator_(internal::MakePropagator()) {}
 
   ~TracingRestClient() override = default;
 
   StatusOr<std::unique_ptr<RestResponse>> Delete(
       RestContext& context, RestRequest const& request) override {
-    return WrappedRequest(context, request, "DELETE",
+    return WrappedRequest(context, *propagator_, request, "DELETE",
                           [this](auto& context, auto const& request) {
                             return impl_->Delete(context, request);
                           });
@@ -174,7 +149,7 @@ class TracingRestClient : public RestClient {
 
   StatusOr<std::unique_ptr<RestResponse>> Get(
       RestContext& context, RestRequest const& request) override {
-    return WrappedRequest(context, request, "GET",
+    return WrappedRequest(context, *propagator_, request, "GET",
                           [this](auto& context, auto const& request) {
                             return impl_->Get(context, request);
                           });
@@ -183,7 +158,7 @@ class TracingRestClient : public RestClient {
   StatusOr<std::unique_ptr<RestResponse>> Patch(
       RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override {
-    return WrappedRequest(context, request, "PATCH",
+    return WrappedRequest(context, *propagator_, request, "PATCH",
                           [this, &payload](auto& context, auto const& request) {
                             return impl_->Patch(context, request, payload);
                           });
@@ -192,7 +167,7 @@ class TracingRestClient : public RestClient {
   StatusOr<std::unique_ptr<RestResponse>> Post(
       RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override {
-    return WrappedRequest(context, request, "POST",
+    return WrappedRequest(context, *propagator_, request, "POST",
                           [this, &payload](auto& context, auto const& request) {
                             return impl_->Post(context, request, payload);
                           });
@@ -203,7 +178,7 @@ class TracingRestClient : public RestClient {
       std::vector<std::pair<std::string, std::string>> const& form_data)
       override {
     return WrappedRequest(
-        context, request, "POST",
+        context, *propagator_, request, "POST",
         [this, &form_data](auto& context, auto const& request) {
           return impl_->Post(context, request, form_data);
         });
@@ -212,7 +187,7 @@ class TracingRestClient : public RestClient {
   StatusOr<std::unique_ptr<RestResponse>> Put(
       RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override {
-    return WrappedRequest(context, request, "PUT",
+    return WrappedRequest(context, *propagator_, request, "PUT",
                           [this, &payload](auto& context, auto const& request) {
                             return impl_->Put(context, request, payload);
                           });
@@ -220,6 +195,8 @@ class TracingRestClient : public RestClient {
 
  private:
   std::unique_ptr<RestClient> impl_;
+  std::unique_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 }  // namespace
