@@ -19,8 +19,8 @@
 #include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_tracing_stub.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -93,7 +93,8 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
                                                           int channel_id) {
-  return CreateDefaultPublisherStub(opts, CreateChannel(opts, channel_id));
+  return CreateDefaultPublisherStub(opts,
+                                    std::move(CreateChannel(opts, channel_id)));
 }
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
