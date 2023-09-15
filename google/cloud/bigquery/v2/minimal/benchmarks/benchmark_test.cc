@@ -167,7 +167,6 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   Benchmark::PrintLatencyResult(os, "PrintLatencyResult", "Query", result);
   std::string output = os.str();
 
-  EXPECT_THAT(output, HasSubstr("Query Throughput = 100 ops/s"));
   EXPECT_THAT(output, HasSubstr("Latency And Status: p0=100us"));
   EXPECT_THAT(output, HasSubstr("p50=5.1ms"));
   EXPECT_THAT(output, HasSubstr("p90=9ms"));

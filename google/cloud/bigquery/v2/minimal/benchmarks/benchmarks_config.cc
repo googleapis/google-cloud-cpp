@@ -28,6 +28,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::StatusCode;
 using ::google::cloud::bigquery_v2_minimal_internal::Projection;
 using ::google::cloud::bigquery_v2_minimal_internal::StateFilter;
 using ::google::cloud::bigquery_v2_minimal_internal::TableMetadataView;
@@ -35,9 +36,10 @@ using ::google::cloud::bigquery_v2_minimal_internal::TableMetadataView;
 namespace {
 
 auto invalid_argument = [](std::string msg) {
-  return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
-                               std::move(msg));
+  return google::cloud::Status(StatusCode::kInvalidArgument, std::move(msg));
 };
+
+auto status_ok = google::cloud::Status(StatusCode::kOk, "");
 
 std::string GenerateJobId() {
   auto constexpr kJobPrefix = "bqOdbcJob_benchmark_test_";
@@ -92,11 +94,14 @@ std::string query_drop_request_body =
 std::ostream& PrintHelper(std::ostream& os, std::string const& endpoint,
                           std::string const& project_id,
                           std::string const& page_token, int max_results,
-                          int connection_pool_size) {
+                          int thread_count, int connection_pool_size,
+                          std::chrono::seconds const& test_duration) {
   return os << "\n# Endpoint: " << endpoint << "\n# Project: " << project_id
             << "\n# Page Token: " << page_token
             << "\n# Max Results: " << max_results
+            << "\n# Thread Count: " << thread_count
             << "\n# Connection Size: " << connection_pool_size
+            << "\n# Test Duration (in seconds): " << test_duration.count()
             << "\n# Compiler: " << google::cloud::internal::CompilerId() << "-"
             << google::cloud::internal::CompilerVersion()
             << "\n# Build Flags: " << google::cloud::internal::compiler_flags()
@@ -106,7 +111,8 @@ std::ostream& PrintHelper(std::ostream& os, std::string const& endpoint,
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
   return PrintHelper(os, config.endpoint, config.project_id, config.page_token,
-                     config.max_results, config.connection_pool_size);
+                     config.max_results, config.thread_count,
+                     config.connection_pool_size, config.test_duration);
 }
 
 std::ostream& operator<<(std::ostream& os, DatasetConfig const& config) {
@@ -114,7 +120,8 @@ std::ostream& operator<<(std::ostream& os, DatasetConfig const& config) {
      << "\n# Filter: " << config.filter
      << "\n# Page Token: " << config.page_token;
   return PrintHelper(os, config.endpoint, config.project_id, config.page_token,
-                     config.max_results, config.connection_pool_size);
+                     config.max_results, config.thread_count,
+                     config.connection_pool_size, config.test_duration);
 }
 
 std::ostream& operator<<(std::ostream& os, TableConfig const& config) {
@@ -123,7 +130,8 @@ std::ostream& operator<<(std::ostream& os, TableConfig const& config) {
      << "\n# View: " << config.view.value;
 
   return PrintHelper(os, config.endpoint, config.project_id, config.page_token,
-                     config.max_results, config.connection_pool_size);
+                     config.max_results, config.thread_count,
+                     config.connection_pool_size, config.test_duration);
 }
 
 std::ostream& operator<<(std::ostream& os, JobConfig const& config) {
@@ -136,22 +144,53 @@ std::ostream& operator<<(std::ostream& os, JobConfig const& config) {
      << "\n# State Filter: " << config.state_filter.value;
 
   return PrintHelper(os, config.endpoint, config.project_id, config.page_token,
-                     config.max_results, config.connection_pool_size);
+                     config.max_results, config.thread_count,
+                     config.connection_pool_size, config.test_duration);
 }
 
-void Config::ParseCommonFlags() {
+void Config::PrintUsage() {
+  std::cout << "Usage Information: " << std::endl;
+  std::cout << "Brief information about the flags is listed below. Please take "
+               "a look at the Bigquery api docs "
+               "(https://cloud.google.com/bigquery/docs/reference/rest) "
+               "for more details information "
+               "regarding api specific flags."
+            << std::endl;
+  std::cout << std::endl;
+  for (auto const& flag : flags_) {
+    std::cout << flag.flag_name << "=>" << flag.flag_desc << std::endl;
+  }
+}
+
+google::cloud::Status Config::ParseCommonArgs(
+    std::vector<std::string> const& args) {
   flags_.push_back(
-      {"--endpoint=", [this](std::string v) { endpoint = std::move(v); }});
+      {"--wants-description=", "print benchmark description",
+       [this](std::string const& v) { wants_description = (v == "true"); }});
   flags_.push_back(
-      {"--project=", [this](std::string v) { project_id = std::move(v); }});
+      {"--help=", "print usage information",
+       [this](std::string const& v) { wants_help = (v == "true"); }});
+  flags_.push_back({"--endpoint=", "the Bigquery api endpoint",
+                    [this](std::string v) { endpoint = std::move(v); }});
+  flags_.push_back({"--project=", "the GCP project ID",
+                    [this](std::string v) { project_id = std::move(v); }});
+  flags_.push_back({"--page-token=", "page token for multiple page results",
+                    [this](std::string v) { page_token = std::move(v); }});
   flags_.push_back(
-      {"--page-token=", [this](std::string v) { page_token = std::move(v); }});
-  flags_.push_back({"--connection-pool-size=", [this](std::string const& v) {
-                      connection_pool_size = std::stoi(v);
+      {"--connection-pool-size=", "connection pool size for rest connections",
+       [this](std::string const& v) { connection_pool_size = std::stoi(v); }});
+  flags_.push_back(
+      {"--maximum-results=", "the maximum results returned in a single page",
+       [this](std::string const& v) { max_results = std::stoi(v); }});
+  flags_.push_back(
+      {"--thread-count=", "the number of threads to use for this benchmark",
+       [this](std::string const& v) { thread_count = std::stoi(v); }});
+  flags_.push_back({"--test-duration=", "the duration of this test",
+                    [this](std::string const& v) {
+                      test_duration = std::chrono::seconds(std::stoi(v));
                     }});
-  flags_.push_back({"--maximum-results=", [this](std::string const& v) {
-                      max_results = std::stoi(v);
-                    }});
+
+  return ValidateArgs(args);
 }
 
 google::cloud::Status Config::ValidateArgs(
@@ -170,7 +209,11 @@ google::cloud::Status Config::ValidateArgs(
     }
   }
 
-  return google::cloud::Status(StatusCode::kOk, "");
+  if (wants_description || wants_help) {
+    exit_after_parse_ = true;
+  }
+
+  return status_ok;
 }
 
 google::cloud::StatusOr<Config> Config::ParseArgs(
@@ -180,13 +223,16 @@ google::cloud::StatusOr<Config> Config::ParseArgs(
     project_id =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
 
-    ParseCommonFlags();
-    auto status = ValidateArgs(args);
-
+    auto status = ParseCommonArgs(args);
     if (!status.ok()) {
       return status;
     }
   }
+
+  if (ExitAfterParse()) {
+    return *this;
+  }
+
   if (project_id.empty()) {
     return invalid_argument(
         "The project id is not set, provide a value in the --project flag,"
@@ -213,16 +259,21 @@ google::cloud::StatusOr<Config> Config::ParseArgs(
 
 google::cloud::StatusOr<DatasetConfig> DatasetConfig::ParseArgs(
     std::vector<std::string> const& args) {
-  ParseCommonFlags();
-  flags_.push_back(
-      {"--dataset=", [this](std::string v) { dataset_id = std::move(v); }});
-  flags_.push_back(
-      {"--filter=", [this](std::string v) { filter = std::move(v); }});
-  flags_.push_back(
-      {"--all=", [this](std::string const& v) { all = (v == "true"); }});
+  ParseCommonArgs(args);
 
+  flags_.push_back({"--dataset=", "the Bigquery Dataset ID",
+                    [this](std::string v) { dataset_id = std::move(v); }});
+  flags_.push_back(
+      {"--filter=", "the Dataset filter to filter the results by label",
+       [this](std::string v) { filter = std::move(v); }});
+  flags_.push_back(
+      {"--all=", "whether to list all datasets, including hidden ones",
+       [this](std::string const& v) { all = (v == "true"); }});
+
+  if (ExitAfterParse()) {
+    return *this;
+  }
   auto status = ValidateArgs(args);
-
   if (!status.ok()) {
     return status;
   }
@@ -237,14 +288,19 @@ google::cloud::StatusOr<DatasetConfig> DatasetConfig::ParseArgs(
 
 google::cloud::StatusOr<TableConfig> TableConfig::ParseArgs(
     std::vector<std::string> const& args) {
-  ParseCommonFlags();
+  ParseCommonArgs(args);
+
+  flags_.push_back({"--dataset=", "the Dataset ID of the requested table",
+                    [this](std::string v) { dataset_id = std::move(v); }});
+  flags_.push_back({"--table=", "the Table ID of the requested table",
+                    [this](std::string v) { table_id = std::move(v); }});
   flags_.push_back(
-      {"--dataset=", [this](std::string v) { dataset_id = std::move(v); }});
-  flags_.push_back(
-      {"--table=", [this](std::string v) { table_id = std::move(v); }});
-  flags_.push_back({"--selected-fields=",
-                    [this](std::string v) { selected_fields = std::move(v); }});
-  flags_.push_back({"--view=", [this](std::string const& v) {
+      {"--selected-fields=", "list of table schema fields to return",
+       [this](std::string v) { selected_fields = std::move(v); }});
+  flags_.push_back({"--view=",
+                    "specifies the view that determines which table "
+                    "information is returned.",
+                    [this](std::string const& v) {
                       if (v == "TABLE_METADATA_VIEW_UNSPECIFIED") {
                         view = TableMetadataView::UnSpecified();
                       } else if (v == "BASIC") {
@@ -256,8 +312,11 @@ google::cloud::StatusOr<TableConfig> TableConfig::ParseArgs(
                       }
                     }});
 
-  auto status = ValidateArgs(args);
+  if (ExitAfterParse()) {
+    return *this;
+  }
 
+  auto status = ValidateArgs(args);
   if (!status.ok()) {
     return status;
   }
@@ -277,55 +336,72 @@ google::cloud::StatusOr<TableConfig> TableConfig::ParseArgs(
 
 google::cloud::StatusOr<JobConfig> JobConfig::ParseArgs(
     std::vector<std::string> const& args) {
-  ParseCommonFlags();
-  flags_.push_back(
-      {"--job=", [this](std::string v) { job_id = std::move(v); }});
-  flags_.push_back(
-      {"--location=", [this](std::string v) { location = std::move(v); }});
+  ParseCommonArgs(args);
+
+  flags_.push_back({"--job=", "the Job ID of the requested job.",
+                    [this](std::string v) { job_id = std::move(v); }});
+  flags_.push_back({"--location=", "the geographic location of the job",
+                    [this](std::string v) { location = std::move(v); }});
   flags_.push_back({"--parent-job-id=",
+                    "if set, show only child jobs of the specified parent",
                     [this](std::string v) { parent_job_id = std::move(v); }});
-  flags_.push_back({"--all-users=", [this](std::string const& v) {
-                      all_users = (v == "true");
-                    }});
-  flags_.push_back({"--dry-run=",
+  flags_.push_back(
+      {"--all-users=",
+       "whether to display jobs owned by all users in the project",
+       [this](std::string const& v) { all_users = (v == "true"); }});
+  flags_.push_back({"--dry-run=", "dry run mode",
                     [this](std::string const& v) { dry_run = (v == "true"); }});
-  flags_.push_back({"--query-create-replace=", [this](std::string const& v) {
-                      query_create_replace = (v == "true");
-                    }});
-  flags_.push_back({"--query-drop=", [this](std::string const& v) {
-                      query_drop = (v == "true");
-                    }});
-  flags_.push_back({"--use-int64-timestamp=", [this](std::string const& v) {
-                      use_int64_timestamp = (v == "true");
-                    }});
-  flags_.push_back({"--min-creation-time=", [this](std::string v) {
-                      min_creation_time = std::move(v);
-                    }});
-  flags_.push_back({"--max-creation-time=", [this](std::string v) {
-                      max_creation_time = std::move(v);
-                    }});
-  flags_.push_back({"--timeout-ms=", [this](std::string const& v) {
-                      timeout_ms = std::stoi(v);
-                    }});
-  flags_.push_back({"--start-index=", [this](std::string const& v) {
-                      start_index = std::stoi(v);
-                    }});
-  flags_.push_back({"--projection=", [this](std::string const& v) {
-                      if (v == "MINIMAL") {
-                        projection = Projection::Minimal();
-                      } else if (v == "FULL") {
-                        projection = Projection::Full();
-                      }
-                    }});
-  flags_.push_back({"--state-filter=", [this](std::string const& v) {
-                      if (v == "RUNNING") {
-                        state_filter = StateFilter::Running();
-                      } else if (v == "PENDING") {
-                        state_filter = StateFilter::Pending();
-                      } else if (v == "DONE") {
-                        state_filter = StateFilter::Done();
-                      }
-                    }});
+  flags_.push_back(
+      {"--query-create-replace=", "whether to execute create-replace stmt",
+       [this](std::string const& v) { query_create_replace = (v == "true"); }});
+  flags_.push_back(
+      {"--query-drop=", "whether to execute drop stmt",
+       [this](std::string const& v) { query_drop = (v == "true"); }});
+  flags_.push_back(
+      {"--use-int64-timestamp=", "outputs timestamp as usec int64",
+       [this](std::string const& v) { use_int64_timestamp = (v == "true"); }});
+  flags_.push_back(
+      {"--min-creation-time=",
+       "min job creation time. If set, only jobs created after or at this "
+       "timestamp are returned",
+       [this](std::string v) { min_creation_time = std::move(v); }});
+  flags_.push_back(
+      {"--max-creation-time=",
+       "max job creation time. If set, only jobs created before or at this "
+       "timestamp are returned",
+       [this](std::string v) { max_creation_time = std::move(v); }});
+  flags_.push_back(
+      {"--timeout-ms=",
+       "specifies the maximum amount of time, in milliseconds, that the client "
+       "is willing to wait for the query to complete",
+       [this](std::string const& v) { timeout_ms = std::stoi(v); }});
+  flags_.push_back(
+      {"--start-index=", "zero-based index of the starting row",
+       [this](std::string const& v) { start_index = std::stoi(v); }});
+  flags_.push_back(
+      {"--projection=",
+       "restricts information returned to a set of selected fields",
+       [this](std::string const& v) {
+         if (v == "MINIMAL") {
+           projection = Projection::Minimal();
+         } else if (v == "FULL") {
+           projection = Projection::Full();
+         }
+       }});
+  flags_.push_back(
+      {"--state-filter=", "filter for job state", [this](std::string const& v) {
+         if (v == "RUNNING") {
+           state_filter = StateFilter::Running();
+         } else if (v == "PENDING") {
+           state_filter = StateFilter::Pending();
+         } else if (v == "DONE") {
+           state_filter = StateFilter::Done();
+         }
+       }});
+
+  if (ExitAfterParse()) {
+    return *this;
+  }
 
   auto status = ValidateArgs(args);
   if (!status.ok()) {

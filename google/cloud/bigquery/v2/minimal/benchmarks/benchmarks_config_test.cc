@@ -24,18 +24,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::testing_util::StatusIs;
 
-TEST(BenchmarkConfigTest, ParseAll) {
+TEST(BenchmarkConfigTest, ParseAllWithDescriptionAndHelp) {
   Config c;
   auto config = c.ParseArgs(
       {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
-       "--project=test-project", "--maximum-results=50",
+       "--wants-description=true", "--help=true", "--project=test-project",
+       "--maximum-results=50", "--thread-count=10", "--test-duration=10",
        "--connection-pool-size=10"});
+  EXPECT_STATUS_OK(config);
+
+  EXPECT_EQ(true, config->wants_description);
+  EXPECT_EQ(true, config->wants_help);
+  EXPECT_EQ(true, config->ExitAfterParse());
+}
+
+TEST(BenchmarkConfigTest, ParseAllWithoutDescriptionAndHelp) {
+  Config c;
+  auto config = c.ParseArgs(
+      {"placeholder", "--endpoint=https://private.bigquery.googleapis.com",
+       "--project=test-project", "--maximum-results=50", "--thread-count=10",
+       "--test-duration=10", "--connection-pool-size=10"});
   EXPECT_STATUS_OK(config);
 
   EXPECT_EQ("https://private.bigquery.googleapis.com", config->endpoint);
   EXPECT_EQ("test-project", config->project_id);
   EXPECT_EQ(50, config->max_results);
+  EXPECT_EQ(10, config->thread_count);
   EXPECT_EQ(10, config->connection_pool_size);
+  EXPECT_EQ(10, config->test_duration.count());
+  EXPECT_EQ(false, config->wants_description);
+  EXPECT_EQ(false, config->ExitAfterParse());
+  EXPECT_EQ(false, config->wants_help);
 }
 
 TEST(BenchmarkConfigTest, ParseNone) {
@@ -46,12 +65,46 @@ TEST(BenchmarkConfigTest, ParseNone) {
   EXPECT_EQ("https://bigquery.googleapis.com", config->endpoint);
 }
 
+TEST(BenchmarkConfigTest, ParseWantsDescription) {
+  Config c;
+  auto config = c.ParseArgs({"placeholder", "--wants-description=true"});
+  ASSERT_STATUS_OK(config);
+  EXPECT_EQ(true, config->wants_description);
+  EXPECT_EQ(true, config->ExitAfterParse());
+  EXPECT_EQ(false, config->wants_help);
+}
+
+TEST(BenchmarkConfigTest, ParseWantsHelp) {
+  Config c;
+  auto config = c.ParseArgs({"placeholder", "--help=true"});
+  ASSERT_STATUS_OK(config);
+  EXPECT_EQ(true, config->wants_help);
+  EXPECT_EQ(true, config->ExitAfterParse());
+  EXPECT_EQ(false, config->wants_description);
+}
+
 TEST(BenchmarkConfigTest, ParseMaxResults) {
   Config c;
   auto config = c.ParseArgs(
       {"placeholder", "--project=test-project", "--maximum-results=4"});
   ASSERT_STATUS_OK(config);
   EXPECT_EQ(4, config->max_results);
+}
+
+TEST(BenchmarkConfigTest, ParseThreads) {
+  Config c;
+  auto config = c.ParseArgs(
+      {"placeholder", "--project=test-project", "--thread-count=5"});
+  ASSERT_STATUS_OK(config);
+  EXPECT_EQ(5, config->thread_count);
+}
+
+TEST(BenchmarkConfigTest, ParseTestDuration) {
+  Config c;
+  auto config = c.ParseArgs(
+      {"placeholder", "--project=test-project", "--test-duration=15"});
+  ASSERT_STATUS_OK(config);
+  EXPECT_EQ(15, config->test_duration.count());
 }
 
 TEST(BenchmarkConfigTest, ParseConnectionPoolSize) {

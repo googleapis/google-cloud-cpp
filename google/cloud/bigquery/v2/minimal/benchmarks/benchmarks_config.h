@@ -28,29 +28,43 @@ namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// How many minutes the test lasts by default.
+auto constexpr kDefaultTestDuration = std::chrono::minutes(5);
+
 struct Config {
+  // API related common configs.
   std::string endpoint;
-
   std::string project_id;
-
   std::string page_token;
   int max_results = 1000;
   int connection_pool_size = 4;
+  bool wants_description = false;
+  bool wants_help = false;
+
+  // Benchmark related common configs.
+  int thread_count = 4;
+  std::chrono::seconds test_duration =
+      std::chrono::duration_cast<std::chrono::seconds>(kDefaultTestDuration);
 
   google::cloud::StatusOr<Config> ParseArgs(
       std::vector<std::string> const& args);
 
+  bool ExitAfterParse() const { return exit_after_parse_; }
+  void PrintUsage();
+
  protected:
   struct Flag {
     std::string flag_name;
+    std::string flag_desc;
     std::function<void(std::string)> parser;
   };
 
-  void ParseCommonFlags();
+  google::cloud::Status ParseCommonArgs(std::vector<std::string> const& args);
   inline bool CommonFlagsParsed() { return !flags_.empty(); }
   google::cloud::Status ValidateArgs(std::vector<std::string> const& args);
 
   std::vector<Config::Flag> flags_;
+  bool exit_after_parse_ = false;
 };
 
 struct DatasetConfig : public Config {
