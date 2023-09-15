@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_TRACING_STUB_H
 
 #include "google/cloud/run/v2/internal/revisions_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -61,6 +62,8 @@ class RevisionsTracingStub : public RevisionsStub {
 
  private:
   std::shared_ptr<RevisionsStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

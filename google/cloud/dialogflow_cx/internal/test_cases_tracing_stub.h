@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_TEST_CASES_TRACING_STUB_H
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -114,6 +115,8 @@ class TestCasesTracingStub : public TestCasesStub {
 
  private:
   std::shared_ptr<TestCasesStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

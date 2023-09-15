@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataCatalogTracingStub::DataCatalogTracingStub(
     std::shared_ptr<DataCatalogStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DataCatalogTracingStub::SearchCatalog(
@@ -37,7 +37,7 @@ DataCatalogTracingStub::SearchCatalog(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "SearchCatalog");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchCatalog(context, request));
 }
@@ -49,7 +49,7 @@ DataCatalogTracingStub::CreateEntryGroup(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "CreateEntryGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEntryGroup(context, request));
 }
@@ -61,7 +61,7 @@ DataCatalogTracingStub::GetEntryGroup(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "GetEntryGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEntryGroup(context, request));
 }
@@ -73,7 +73,7 @@ DataCatalogTracingStub::UpdateEntryGroup(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "UpdateEntryGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateEntryGroup(context, request));
 }
@@ -84,7 +84,7 @@ Status DataCatalogTracingStub::DeleteEntryGroup(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "DeleteEntryGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEntryGroup(context, request));
 }
@@ -96,7 +96,7 @@ DataCatalogTracingStub::ListEntryGroups(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "ListEntryGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntryGroups(context, request));
 }
@@ -108,7 +108,7 @@ DataCatalogTracingStub::CreateEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "CreateEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEntry(context, request));
 }
@@ -120,7 +120,7 @@ DataCatalogTracingStub::UpdateEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "UpdateEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateEntry(context, request));
 }
@@ -131,7 +131,7 @@ Status DataCatalogTracingStub::DeleteEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "DeleteEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEntry(context, request));
 }
@@ -143,7 +143,7 @@ DataCatalogTracingStub::GetEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "GetEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetEntry(context, request));
 }
 
@@ -154,7 +154,7 @@ DataCatalogTracingStub::LookupEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "LookupEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->LookupEntry(context, request));
 }
@@ -166,7 +166,7 @@ DataCatalogTracingStub::ListEntries(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "ListEntries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntries(context, request));
 }
@@ -178,7 +178,7 @@ DataCatalogTracingStub::ModifyEntryOverview(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "ModifyEntryOverview");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ModifyEntryOverview(context, request));
 }
@@ -190,7 +190,7 @@ DataCatalogTracingStub::ModifyEntryContacts(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "ModifyEntryContacts");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ModifyEntryContacts(context, request));
 }
@@ -202,7 +202,7 @@ DataCatalogTracingStub::CreateTagTemplate(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "CreateTagTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTagTemplate(context, request));
 }
@@ -214,7 +214,7 @@ DataCatalogTracingStub::GetTagTemplate(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "GetTagTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTagTemplate(context, request));
 }
@@ -226,7 +226,7 @@ DataCatalogTracingStub::UpdateTagTemplate(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "UpdateTagTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTagTemplate(context, request));
 }
@@ -237,7 +237,7 @@ Status DataCatalogTracingStub::DeleteTagTemplate(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "DeleteTagTemplate");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTagTemplate(context, request));
 }
@@ -250,7 +250,7 @@ DataCatalogTracingStub::CreateTagTemplateField(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "CreateTagTemplateField");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTagTemplateField(context, request));
 }
@@ -263,7 +263,7 @@ DataCatalogTracingStub::UpdateTagTemplateField(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "UpdateTagTemplateField");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTagTemplateField(context, request));
 }
@@ -276,7 +276,7 @@ DataCatalogTracingStub::RenameTagTemplateField(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "RenameTagTemplateField");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RenameTagTemplateField(context, request));
 }
@@ -289,7 +289,7 @@ DataCatalogTracingStub::RenameTagTemplateFieldEnumValue(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "RenameTagTemplateFieldEnumValue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->RenameTagTemplateFieldEnumValue(context, request));
@@ -302,7 +302,7 @@ Status DataCatalogTracingStub::DeleteTagTemplateField(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "DeleteTagTemplateField");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTagTemplateField(context, request));
 }
@@ -313,7 +313,7 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogTracingStub::CreateTag(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "CreateTag");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->CreateTag(context, request));
 }
 
@@ -323,7 +323,7 @@ StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogTracingStub::UpdateTag(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "UpdateTag");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->UpdateTag(context, request));
 }
 
@@ -333,7 +333,7 @@ Status DataCatalogTracingStub::DeleteTag(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "DeleteTag");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->DeleteTag(context, request));
 }
 
@@ -344,7 +344,7 @@ DataCatalogTracingStub::ListTags(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "ListTags");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListTags(context, request));
 }
 
@@ -357,7 +357,7 @@ DataCatalogTracingStub::AsyncReconcileTags(
                                      "ReconcileTags");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncReconcileTags(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -370,7 +370,7 @@ DataCatalogTracingStub::StarEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "StarEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->StarEntry(context, request));
 }
 
@@ -381,7 +381,7 @@ DataCatalogTracingStub::UnstarEntry(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "UnstarEntry");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UnstarEntry(context, request));
 }
@@ -392,7 +392,7 @@ StatusOr<google::iam::v1::Policy> DataCatalogTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -403,7 +403,7 @@ StatusOr<google::iam::v1::Policy> DataCatalogTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -415,7 +415,7 @@ DataCatalogTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -429,7 +429,7 @@ DataCatalogTracingStub::AsyncImportEntries(
                                      "ImportEntries");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportEntries(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -444,7 +444,7 @@ DataCatalogTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -458,7 +458,7 @@ future<Status> DataCatalogTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

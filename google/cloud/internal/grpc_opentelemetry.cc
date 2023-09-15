@@ -91,11 +91,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
           options);
 }
 
-void InjectTraceContext(grpc::ClientContext& context, Options const&) {
-  auto propagator = MakePropagator();
+void InjectTraceContext(
+    grpc::ClientContext& context,
+    opentelemetry::context::propagation::TextMapPropagator& propagator) {
   auto current = opentelemetry::context::RuntimeContext::GetCurrent();
   GrpcClientCarrier carrier(context);
-  propagator->Inject(carrier, current);
+  propagator.Inject(carrier, current);
 }
 
 void ExtractAttributes(grpc::ClientContext& context,

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TranslationServiceTracingStub::TranslationServiceTracingStub(
     std::shared_ptr<TranslationServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceTracingStub::TranslateText(
@@ -37,7 +37,7 @@ TranslationServiceTracingStub::TranslateText(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "TranslateText");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TranslateText(context, request));
 }
@@ -49,7 +49,7 @@ TranslationServiceTracingStub::DetectLanguage(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "DetectLanguage");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DetectLanguage(context, request));
 }
@@ -63,7 +63,7 @@ TranslationServiceTracingStub::GetSupportedLanguages(
       internal::MakeSpanGrpc("google.cloud.translation.v3.TranslationService",
                              "GetSupportedLanguages");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSupportedLanguages(context, request));
 }
@@ -75,7 +75,7 @@ TranslationServiceTracingStub::TranslateDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "TranslateDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TranslateDocument(context, request));
 }
@@ -89,7 +89,7 @@ TranslationServiceTracingStub::AsyncBatchTranslateText(
       "google.cloud.translation.v3.TranslationService", "BatchTranslateText");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchTranslateText(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -106,7 +106,7 @@ TranslationServiceTracingStub::AsyncBatchTranslateDocument(
                              "BatchTranslateDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchTranslateDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -121,7 +121,7 @@ TranslationServiceTracingStub::AsyncCreateGlossary(
       "google.cloud.translation.v3.TranslationService", "CreateGlossary");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateGlossary(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -134,7 +134,7 @@ TranslationServiceTracingStub::ListGlossaries(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "ListGlossaries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListGlossaries(context, request));
 }
@@ -146,7 +146,7 @@ TranslationServiceTracingStub::GetGlossary(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.translation.v3.TranslationService", "GetGlossary");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetGlossary(context, request));
 }
@@ -160,7 +160,7 @@ TranslationServiceTracingStub::AsyncDeleteGlossary(
       "google.cloud.translation.v3.TranslationService", "DeleteGlossary");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteGlossary(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -175,7 +175,7 @@ TranslationServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -189,7 +189,7 @@ future<Status> TranslationServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

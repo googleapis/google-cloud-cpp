@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EssentialContactsServiceTracingStub::EssentialContactsServiceTracingStub(
     std::shared_ptr<EssentialContactsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceTracingStub::CreateContact(
@@ -38,7 +38,7 @@ EssentialContactsServiceTracingStub::CreateContact(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "CreateContact");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateContact(context, request));
 }
@@ -51,7 +51,7 @@ EssentialContactsServiceTracingStub::UpdateContact(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "UpdateContact");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateContact(context, request));
 }
@@ -64,7 +64,7 @@ EssentialContactsServiceTracingStub::ListContacts(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "ListContacts");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListContacts(context, request));
 }
@@ -77,7 +77,7 @@ EssentialContactsServiceTracingStub::GetContact(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "GetContact");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetContact(context, request));
 }
@@ -89,7 +89,7 @@ Status EssentialContactsServiceTracingStub::DeleteContact(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "DeleteContact");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteContact(context, request));
 }
@@ -103,7 +103,7 @@ EssentialContactsServiceTracingStub::ComputeContacts(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "ComputeContacts");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ComputeContacts(context, request));
 }
@@ -116,7 +116,7 @@ Status EssentialContactsServiceTracingStub::SendTestMessage(
       "google.cloud.essentialcontacts.v1.EssentialContactsService",
       "SendTestMessage");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SendTestMessage(context, request));
 }

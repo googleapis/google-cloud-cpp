@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DocumentsTracingStub::DocumentsTracingStub(std::shared_ptr<DocumentsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsTracingStub::ListDocuments(
@@ -36,7 +36,7 @@ DocumentsTracingStub::ListDocuments(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
                                      "ListDocuments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDocuments(context, request));
 }
@@ -48,7 +48,7 @@ DocumentsTracingStub::GetDocument(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
                                      "GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDocument(context, request));
 }
@@ -62,7 +62,7 @@ DocumentsTracingStub::AsyncCreateDocument(
                                      "CreateDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -77,7 +77,7 @@ DocumentsTracingStub::AsyncImportDocuments(
                                      "ImportDocuments");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportDocuments(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -92,7 +92,7 @@ DocumentsTracingStub::AsyncDeleteDocument(
                                      "DeleteDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -107,7 +107,7 @@ DocumentsTracingStub::AsyncUpdateDocument(
                                      "UpdateDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -122,7 +122,7 @@ DocumentsTracingStub::AsyncReloadDocument(
                                      "ReloadDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncReloadDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -137,7 +137,7 @@ DocumentsTracingStub::AsyncExportDocument(
                                      "ExportDocument");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportDocument(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -152,7 +152,7 @@ DocumentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -166,7 +166,7 @@ future<Status> DocumentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

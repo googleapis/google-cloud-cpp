@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_TRACING_STUB_H
 
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -148,6 +149,8 @@ class CloudBuildTracingStub : public CloudBuildStub {
 
  private:
   std::shared_ptr<CloudBuildStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

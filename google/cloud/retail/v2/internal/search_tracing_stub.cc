@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SearchServiceTracingStub::SearchServiceTracingStub(
     std::shared_ptr<SearchServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::retail::v2::SearchResponse>
 SearchServiceTracingStub::Search(
@@ -37,7 +37,7 @@ SearchServiceTracingStub::Search(
   auto span =
       internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService", "Search");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Search(context, request));
 }
 

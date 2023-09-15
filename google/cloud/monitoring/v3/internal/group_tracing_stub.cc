@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GroupServiceTracingStub::GroupServiceTracingStub(
     std::shared_ptr<GroupServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::monitoring::v3::ListGroupsResponse>
 GroupServiceTracingStub::ListGroups(
@@ -37,7 +37,7 @@ GroupServiceTracingStub::ListGroups(
   auto span =
       internal::MakeSpanGrpc("google.monitoring.v3.GroupService", "ListGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListGroups(context, request));
 }
@@ -48,7 +48,7 @@ StatusOr<google::monitoring::v3::Group> GroupServiceTracingStub::GetGroup(
   auto span =
       internal::MakeSpanGrpc("google.monitoring.v3.GroupService", "GetGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetGroup(context, request));
 }
 
@@ -58,7 +58,7 @@ StatusOr<google::monitoring::v3::Group> GroupServiceTracingStub::CreateGroup(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
                                      "CreateGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateGroup(context, request));
 }
@@ -69,7 +69,7 @@ StatusOr<google::monitoring::v3::Group> GroupServiceTracingStub::UpdateGroup(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
                                      "UpdateGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateGroup(context, request));
 }
@@ -80,7 +80,7 @@ Status GroupServiceTracingStub::DeleteGroup(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
                                      "DeleteGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteGroup(context, request));
 }
@@ -92,7 +92,7 @@ GroupServiceTracingStub::ListGroupMembers(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
                                      "ListGroupMembers");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListGroupMembers(context, request));
 }

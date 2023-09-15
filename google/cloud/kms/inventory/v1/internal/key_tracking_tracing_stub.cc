@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KeyTrackingServiceTracingStub::KeyTrackingServiceTracingStub(
     std::shared_ptr<KeyTrackingServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceTracingStub::GetProtectedResourcesSummary(
@@ -39,7 +39,7 @@ KeyTrackingServiceTracingStub::GetProtectedResourcesSummary(
       internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyTrackingService",
                              "GetProtectedResourcesSummary");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->GetProtectedResourcesSummary(context, request));
 }
@@ -53,7 +53,7 @@ KeyTrackingServiceTracingStub::SearchProtectedResources(
       internal::MakeSpanGrpc("google.cloud.kms.inventory.v1.KeyTrackingService",
                              "SearchProtectedResources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchProtectedResources(context, request));
 }

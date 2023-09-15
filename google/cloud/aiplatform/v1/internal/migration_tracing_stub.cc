@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MigrationServiceTracingStub::MigrationServiceTracingStub(
     std::shared_ptr<MigrationServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 MigrationServiceTracingStub::SearchMigratableResources(
@@ -39,7 +39,7 @@ MigrationServiceTracingStub::SearchMigratableResources(
       internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MigrationService",
                              "SearchMigratableResources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchMigratableResources(context, request));
 }
@@ -54,7 +54,7 @@ MigrationServiceTracingStub::AsyncBatchMigrateResources(
       "google.cloud.aiplatform.v1.MigrationService", "BatchMigrateResources");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchMigrateResources(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -69,7 +69,7 @@ MigrationServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -83,7 +83,7 @@ future<Status> MigrationServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

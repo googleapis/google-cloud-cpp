@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionServiceTracingStub::CompletionServiceTracingStub(
     std::shared_ptr<CompletionServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceTracingStub::CompleteQuery(
@@ -37,7 +37,7 @@ CompletionServiceTracingStub::CompleteQuery(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.CompletionService", "CompleteQuery");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CompleteQuery(context, request));
 }

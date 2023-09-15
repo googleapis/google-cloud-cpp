@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LivestreamServiceTracingStub::LivestreamServiceTracingStub(
     std::shared_ptr<LivestreamServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateChannel(
@@ -39,7 +39,7 @@ LivestreamServiceTracingStub::AsyncCreateChannel(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ LivestreamServiceTracingStub::ListChannels(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListChannels");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListChannels(context, request));
 }
@@ -64,7 +64,7 @@ LivestreamServiceTracingStub::GetChannel(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetChannel(context, request));
 }
@@ -78,7 +78,7 @@ LivestreamServiceTracingStub::AsyncDeleteChannel(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ LivestreamServiceTracingStub::AsyncUpdateChannel(
       "google.cloud.video.livestream.v1.LivestreamService", "UpdateChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -108,7 +108,7 @@ LivestreamServiceTracingStub::AsyncStartChannel(
       "google.cloud.video.livestream.v1.LivestreamService", "StartChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncStartChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -123,7 +123,7 @@ LivestreamServiceTracingStub::AsyncStopChannel(
       "google.cloud.video.livestream.v1.LivestreamService", "StopChannel");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncStopChannel(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -138,7 +138,7 @@ LivestreamServiceTracingStub::AsyncCreateInput(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateInput");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateInput(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -151,7 +151,7 @@ LivestreamServiceTracingStub::ListInputs(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListInputs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInputs(context, request));
 }
@@ -163,7 +163,7 @@ LivestreamServiceTracingStub::GetInput(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetInput");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetInput(context, request));
 }
 
@@ -176,7 +176,7 @@ LivestreamServiceTracingStub::AsyncDeleteInput(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteInput");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteInput(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -191,7 +191,7 @@ LivestreamServiceTracingStub::AsyncUpdateInput(
       "google.cloud.video.livestream.v1.LivestreamService", "UpdateInput");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateInput(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -204,7 +204,7 @@ LivestreamServiceTracingStub::CreateEvent(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateEvent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEvent(context, request));
 }
@@ -216,7 +216,7 @@ LivestreamServiceTracingStub::ListEvents(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListEvents");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEvents(context, request));
 }
@@ -228,7 +228,7 @@ LivestreamServiceTracingStub::GetEvent(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetEvent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetEvent(context, request));
 }
 
@@ -238,7 +238,7 @@ Status LivestreamServiceTracingStub::DeleteEvent(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteEvent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEvent(context, request));
 }
@@ -252,7 +252,7 @@ LivestreamServiceTracingStub::AsyncCreateAsset(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateAsset");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateAsset(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -267,7 +267,7 @@ LivestreamServiceTracingStub::AsyncDeleteAsset(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteAsset");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteAsset(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -280,7 +280,7 @@ LivestreamServiceTracingStub::GetAsset(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetAsset");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetAsset(context, request));
 }
 
@@ -291,7 +291,7 @@ LivestreamServiceTracingStub::ListAssets(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListAssets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAssets(context, request));
 }
@@ -303,7 +303,7 @@ LivestreamServiceTracingStub::GetPool(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetPool");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetPool(context, request));
 }
 
@@ -316,7 +316,7 @@ LivestreamServiceTracingStub::AsyncUpdatePool(
       "google.cloud.video.livestream.v1.LivestreamService", "UpdatePool");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdatePool(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -331,7 +331,7 @@ LivestreamServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -345,7 +345,7 @@ future<Status> LivestreamServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -27,14 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IAMPolicyTracingStub::IAMPolicyTracingStub(std::shared_ptr<IAMPolicyStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::v1::Policy> IAMPolicyTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -44,7 +44,7 @@ StatusOr<google::iam::v1::Policy> IAMPolicyTracingStub::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -56,7 +56,7 @@ IAMPolicyTracingStub::TestIamPermissions(
   auto span =
       internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }

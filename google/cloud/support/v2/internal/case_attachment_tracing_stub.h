@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_TRACING_STUB_H
 
 #include "google/cloud/support/v2/internal/case_attachment_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -44,6 +45,8 @@ class CaseAttachmentServiceTracingStub : public CaseAttachmentServiceStub {
 
  private:
   std::shared_ptr<CaseAttachmentServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

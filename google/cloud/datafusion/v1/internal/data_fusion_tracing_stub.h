@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFUSION_V1_INTERNAL_DATA_FUSION_TRACING_STUB_H
 
 #include "google/cloud/datafusion/v1/internal/data_fusion_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -88,6 +89,8 @@ class DataFusionTracingStub : public DataFusionStub {
 
  private:
   std::shared_ptr<DataFusionStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

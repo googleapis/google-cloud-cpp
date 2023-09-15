@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceManagerTracingStub::ServiceManagerTracingStub(
     std::shared_ptr<ServiceManagerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 ServiceManagerTracingStub::ListServices(
@@ -37,7 +37,7 @@ ServiceManagerTracingStub::ListServices(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, request));
 }
@@ -49,7 +49,7 @@ ServiceManagerTracingStub::GetService(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetService(context, request));
 }
@@ -63,7 +63,7 @@ ServiceManagerTracingStub::AsyncCreateService(
       "google.api.servicemanagement.v1.ServiceManager", "CreateService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -78,7 +78,7 @@ ServiceManagerTracingStub::AsyncDeleteService(
       "google.api.servicemanagement.v1.ServiceManager", "DeleteService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ ServiceManagerTracingStub::AsyncUndeleteService(
       "google.api.servicemanagement.v1.ServiceManager", "UndeleteService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUndeleteService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -107,7 +107,7 @@ ServiceManagerTracingStub::ListServiceConfigs(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "ListServiceConfigs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServiceConfigs(context, request));
 }
@@ -119,7 +119,7 @@ StatusOr<google::api::Service> ServiceManagerTracingStub::GetServiceConfig(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "GetServiceConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetServiceConfig(context, request));
 }
@@ -131,7 +131,7 @@ StatusOr<google::api::Service> ServiceManagerTracingStub::CreateServiceConfig(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "CreateServiceConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateServiceConfig(context, request));
 }
@@ -146,7 +146,7 @@ ServiceManagerTracingStub::AsyncSubmitConfigSource(
       "google.api.servicemanagement.v1.ServiceManager", "SubmitConfigSource");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncSubmitConfigSource(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -160,7 +160,7 @@ ServiceManagerTracingStub::ListServiceRollouts(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "ListServiceRollouts");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServiceRollouts(context, request));
 }
@@ -173,7 +173,7 @@ ServiceManagerTracingStub::GetServiceRollout(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "GetServiceRollout");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetServiceRollout(context, request));
 }
@@ -188,7 +188,7 @@ ServiceManagerTracingStub::AsyncCreateServiceRollout(
       "google.api.servicemanagement.v1.ServiceManager", "CreateServiceRollout");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateServiceRollout(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -202,7 +202,7 @@ ServiceManagerTracingStub::GenerateConfigReport(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicemanagement.v1.ServiceManager", "GenerateConfigReport");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateConfigReport(context, request));
 }
@@ -216,7 +216,7 @@ ServiceManagerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -230,7 +230,7 @@ future<Status> ServiceManagerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

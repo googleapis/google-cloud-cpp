@@ -60,7 +60,9 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
  *
  * [header]: https://cloud.google.com/trace/docs/setup#force-trace
  */
-void InjectTraceContext(grpc::ClientContext& context, Options const& options);
+void InjectTraceContext(
+    grpc::ClientContext& context,
+    opentelemetry::context::propagation::TextMapPropagator& propagator);
 
 /**
  * Extracts attributes from the `context` and adds them to the `span`.

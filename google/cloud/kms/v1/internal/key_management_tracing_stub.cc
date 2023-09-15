@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KeyManagementServiceTracingStub::KeyManagementServiceTracingStub(
     std::shared_ptr<KeyManagementServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>
 KeyManagementServiceTracingStub::ListKeyRings(
@@ -37,7 +37,7 @@ KeyManagementServiceTracingStub::ListKeyRings(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "ListKeyRings");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListKeyRings(context, request));
 }
@@ -49,7 +49,7 @@ KeyManagementServiceTracingStub::ListCryptoKeys(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "ListCryptoKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCryptoKeys(context, request));
 }
@@ -61,7 +61,7 @@ KeyManagementServiceTracingStub::ListCryptoKeyVersions(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "ListCryptoKeyVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCryptoKeyVersions(context, request));
 }
@@ -73,7 +73,7 @@ KeyManagementServiceTracingStub::ListImportJobs(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "ListImportJobs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListImportJobs(context, request));
 }
@@ -85,7 +85,7 @@ KeyManagementServiceTracingStub::GetKeyRing(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "GetKeyRing");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetKeyRing(context, request));
 }
@@ -97,7 +97,7 @@ KeyManagementServiceTracingStub::GetCryptoKey(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "GetCryptoKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCryptoKey(context, request));
 }
@@ -109,7 +109,7 @@ KeyManagementServiceTracingStub::GetCryptoKeyVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "GetCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCryptoKeyVersion(context, request));
 }
@@ -121,7 +121,7 @@ KeyManagementServiceTracingStub::GetPublicKey(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "GetPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetPublicKey(context, request));
 }
@@ -133,7 +133,7 @@ KeyManagementServiceTracingStub::GetImportJob(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "GetImportJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetImportJob(context, request));
 }
@@ -145,7 +145,7 @@ KeyManagementServiceTracingStub::CreateKeyRing(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "CreateKeyRing");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateKeyRing(context, request));
 }
@@ -157,7 +157,7 @@ KeyManagementServiceTracingStub::CreateCryptoKey(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "CreateCryptoKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCryptoKey(context, request));
 }
@@ -169,7 +169,7 @@ KeyManagementServiceTracingStub::CreateCryptoKeyVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "CreateCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCryptoKeyVersion(context, request));
 }
@@ -181,7 +181,7 @@ KeyManagementServiceTracingStub::ImportCryptoKeyVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "ImportCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ImportCryptoKeyVersion(context, request));
 }
@@ -193,7 +193,7 @@ KeyManagementServiceTracingStub::CreateImportJob(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "CreateImportJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateImportJob(context, request));
 }
@@ -205,7 +205,7 @@ KeyManagementServiceTracingStub::UpdateCryptoKey(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "UpdateCryptoKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateCryptoKey(context, request));
 }
@@ -217,7 +217,7 @@ KeyManagementServiceTracingStub::UpdateCryptoKeyVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "UpdateCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateCryptoKeyVersion(context, request));
 }
@@ -230,7 +230,7 @@ KeyManagementServiceTracingStub::UpdateCryptoKeyPrimaryVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "UpdateCryptoKeyPrimaryVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->UpdateCryptoKeyPrimaryVersion(context, request));
 }
@@ -242,7 +242,7 @@ KeyManagementServiceTracingStub::DestroyCryptoKeyVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "DestroyCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DestroyCryptoKeyVersion(context, request));
 }
@@ -254,7 +254,7 @@ KeyManagementServiceTracingStub::RestoreCryptoKeyVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "RestoreCryptoKeyVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RestoreCryptoKeyVersion(context, request));
 }
@@ -266,7 +266,7 @@ KeyManagementServiceTracingStub::Encrypt(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "Encrypt");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Encrypt(context, request));
 }
 
@@ -277,7 +277,7 @@ KeyManagementServiceTracingStub::Decrypt(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "Decrypt");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Decrypt(context, request));
 }
 
@@ -288,7 +288,7 @@ KeyManagementServiceTracingStub::RawEncrypt(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "RawEncrypt");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RawEncrypt(context, request));
 }
@@ -300,7 +300,7 @@ KeyManagementServiceTracingStub::RawDecrypt(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "RawDecrypt");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RawDecrypt(context, request));
 }
@@ -312,7 +312,7 @@ KeyManagementServiceTracingStub::AsymmetricSign(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "AsymmetricSign");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AsymmetricSign(context, request));
 }
@@ -324,7 +324,7 @@ KeyManagementServiceTracingStub::AsymmetricDecrypt(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "AsymmetricDecrypt");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AsymmetricDecrypt(context, request));
 }
@@ -336,7 +336,7 @@ KeyManagementServiceTracingStub::MacSign(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "MacSign");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->MacSign(context, request));
 }
 
@@ -347,7 +347,7 @@ KeyManagementServiceTracingStub::MacVerify(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "MacVerify");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->MacVerify(context, request));
 }
 
@@ -358,7 +358,7 @@ KeyManagementServiceTracingStub::GenerateRandomBytes(
   auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.KeyManagementService",
                                      "GenerateRandomBytes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateRandomBytes(context, request));
 }

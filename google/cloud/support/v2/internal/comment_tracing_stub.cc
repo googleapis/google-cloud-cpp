@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CommentServiceTracingStub::CommentServiceTracingStub(
     std::shared_ptr<CommentServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceTracingStub::ListComments(
@@ -37,7 +37,7 @@ CommentServiceTracingStub::ListComments(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
                                      "ListComments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListComments(context, request));
 }
@@ -49,7 +49,7 @@ CommentServiceTracingStub::CreateComment(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
                                      "CreateComment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateComment(context, request));
 }

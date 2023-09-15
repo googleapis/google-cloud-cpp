@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_INTERNAL_SERVICE_USAGE_TRACING_STUB_H
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -80,6 +81,8 @@ class ServiceUsageTracingStub : public ServiceUsageStub {
 
  private:
   std::shared_ptr<ServiceUsageStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

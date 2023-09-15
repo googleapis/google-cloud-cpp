@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationalSearchServiceTracingStub::ConversationalSearchServiceTracingStub(
     std::shared_ptr<ConversationalSearchServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceTracingStub::ConverseConversation(
@@ -39,7 +39,7 @@ ConversationalSearchServiceTracingStub::ConverseConversation(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
       "ConverseConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ConverseConversation(context, request));
 }
@@ -53,7 +53,7 @@ ConversationalSearchServiceTracingStub::CreateConversation(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
       "CreateConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateConversation(context, request));
 }
@@ -66,7 +66,7 @@ Status ConversationalSearchServiceTracingStub::DeleteConversation(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
       "DeleteConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteConversation(context, request));
 }
@@ -80,7 +80,7 @@ ConversationalSearchServiceTracingStub::UpdateConversation(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
       "UpdateConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateConversation(context, request));
 }
@@ -93,7 +93,7 @@ ConversationalSearchServiceTracingStub::GetConversation(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
       "GetConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConversation(context, request));
 }
@@ -107,7 +107,7 @@ ConversationalSearchServiceTracingStub::ListConversations(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
       "ListConversations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConversations(context, request));
 }

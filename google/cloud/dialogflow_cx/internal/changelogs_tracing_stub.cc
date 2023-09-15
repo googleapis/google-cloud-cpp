@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ChangelogsTracingStub::ChangelogsTracingStub(
     std::shared_ptr<ChangelogsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
 ChangelogsTracingStub::ListChangelogs(
@@ -37,7 +37,7 @@ ChangelogsTracingStub::ListChangelogs(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Changelogs",
                                      "ListChangelogs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListChangelogs(context, request));
 }
@@ -49,7 +49,7 @@ ChangelogsTracingStub::GetChangelog(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Changelogs",
                                      "GetChangelog");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetChangelog(context, request));
 }

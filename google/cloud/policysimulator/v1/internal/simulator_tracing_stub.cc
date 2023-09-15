@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SimulatorTracingStub::SimulatorTracingStub(std::shared_ptr<SimulatorStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
 SimulatorTracingStub::GetReplay(
@@ -36,7 +36,7 @@ SimulatorTracingStub::GetReplay(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.policysimulator.v1.Simulator", "GetReplay");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetReplay(context, request));
 }
 
@@ -49,7 +49,7 @@ SimulatorTracingStub::AsyncCreateReplay(
       "google.cloud.policysimulator.v1.Simulator", "CreateReplay");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateReplay(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -63,7 +63,7 @@ SimulatorTracingStub::ListReplayResults(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.policysimulator.v1.Simulator", "ListReplayResults");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListReplayResults(context, request));
 }
@@ -77,7 +77,7 @@ SimulatorTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -91,7 +91,7 @@ future<Status> SimulatorTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

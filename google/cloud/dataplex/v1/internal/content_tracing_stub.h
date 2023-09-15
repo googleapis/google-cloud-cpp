@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_CONTENT_TRACING_STUB_H
 
 #include "google/cloud/dataplex/v1/internal/content_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -72,6 +73,8 @@ class ContentServiceTracingStub : public ContentServiceStub {
 
  private:
   std::shared_ptr<ContentServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

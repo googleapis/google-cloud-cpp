@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VideoStitcherServiceTracingStub::VideoStitcherServiceTracingStub(
     std::shared_ptr<VideoStitcherServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceTracingStub::AsyncCreateCdnKey(
@@ -39,7 +39,7 @@ VideoStitcherServiceTracingStub::AsyncCreateCdnKey(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "CreateCdnKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateCdnKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ VideoStitcherServiceTracingStub::ListCdnKeys(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "ListCdnKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCdnKeys(context, request));
 }
@@ -64,7 +64,7 @@ VideoStitcherServiceTracingStub::GetCdnKey(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "GetCdnKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetCdnKey(context, request));
 }
 
@@ -77,7 +77,7 @@ VideoStitcherServiceTracingStub::AsyncDeleteCdnKey(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "DeleteCdnKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteCdnKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -92,7 +92,7 @@ VideoStitcherServiceTracingStub::AsyncUpdateCdnKey(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "UpdateCdnKey");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateCdnKey(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -107,7 +107,7 @@ VideoStitcherServiceTracingStub::CreateVodSession(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "CreateVodSession");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateVodSession(context, request));
 }
@@ -119,7 +119,7 @@ VideoStitcherServiceTracingStub::GetVodSession(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "GetVodSession");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetVodSession(context, request));
 }
@@ -133,7 +133,7 @@ VideoStitcherServiceTracingStub::ListVodStitchDetails(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "ListVodStitchDetails");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVodStitchDetails(context, request));
 }
@@ -147,7 +147,7 @@ VideoStitcherServiceTracingStub::GetVodStitchDetail(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "GetVodStitchDetail");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetVodStitchDetail(context, request));
 }
@@ -161,7 +161,7 @@ VideoStitcherServiceTracingStub::ListVodAdTagDetails(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "ListVodAdTagDetails");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVodAdTagDetails(context, request));
 }
@@ -175,7 +175,7 @@ VideoStitcherServiceTracingStub::GetVodAdTagDetail(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "GetVodAdTagDetail");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetVodAdTagDetail(context, request));
 }
@@ -189,7 +189,7 @@ VideoStitcherServiceTracingStub::ListLiveAdTagDetails(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "ListLiveAdTagDetails");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLiveAdTagDetails(context, request));
 }
@@ -203,7 +203,7 @@ VideoStitcherServiceTracingStub::GetLiveAdTagDetail(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "GetLiveAdTagDetail");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLiveAdTagDetail(context, request));
 }
@@ -217,7 +217,7 @@ VideoStitcherServiceTracingStub::AsyncCreateSlate(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "CreateSlate");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateSlate(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -230,7 +230,7 @@ VideoStitcherServiceTracingStub::ListSlates(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "ListSlates");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSlates(context, request));
 }
@@ -242,7 +242,7 @@ VideoStitcherServiceTracingStub::GetSlate(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "GetSlate");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetSlate(context, request));
 }
 
@@ -255,7 +255,7 @@ VideoStitcherServiceTracingStub::AsyncUpdateSlate(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "UpdateSlate");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateSlate(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -270,7 +270,7 @@ VideoStitcherServiceTracingStub::AsyncDeleteSlate(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "DeleteSlate");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteSlate(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -285,7 +285,7 @@ VideoStitcherServiceTracingStub::CreateLiveSession(
       "google.cloud.video.stitcher.v1.VideoStitcherService",
       "CreateLiveSession");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateLiveSession(context, request));
 }
@@ -297,7 +297,7 @@ VideoStitcherServiceTracingStub::GetLiveSession(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "GetLiveSession");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLiveSession(context, request));
 }
@@ -313,7 +313,7 @@ VideoStitcherServiceTracingStub::AsyncCreateLiveConfig(
       "CreateLiveConfig");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateLiveConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -326,7 +326,7 @@ VideoStitcherServiceTracingStub::ListLiveConfigs(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "ListLiveConfigs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLiveConfigs(context, request));
 }
@@ -338,7 +338,7 @@ VideoStitcherServiceTracingStub::GetLiveConfig(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.stitcher.v1.VideoStitcherService", "GetLiveConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLiveConfig(context, request));
 }
@@ -354,7 +354,7 @@ VideoStitcherServiceTracingStub::AsyncDeleteLiveConfig(
       "DeleteLiveConfig");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteLiveConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -369,7 +369,7 @@ VideoStitcherServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -383,7 +383,7 @@ future<Status> VideoStitcherServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

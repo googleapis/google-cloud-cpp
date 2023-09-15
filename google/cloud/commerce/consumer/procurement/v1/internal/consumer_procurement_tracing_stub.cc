@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConsumerProcurementServiceTracingStub::ConsumerProcurementServiceTracingStub(
     std::shared_ptr<ConsumerProcurementServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ConsumerProcurementServiceTracingStub::AsyncPlaceOrder(
@@ -43,7 +43,7 @@ ConsumerProcurementServiceTracingStub::AsyncPlaceOrder(
       "PlaceOrder");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncPlaceOrder(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -59,7 +59,7 @@ ConsumerProcurementServiceTracingStub::GetOrder(
       "ConsumerProcurementService",
       "GetOrder");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetOrder(context, request));
 }
 
@@ -73,7 +73,7 @@ ConsumerProcurementServiceTracingStub::ListOrders(
       "ConsumerProcurementService",
       "ListOrders");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOrders(context, request));
 }
@@ -87,7 +87,7 @@ ConsumerProcurementServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -101,7 +101,7 @@ future<Status> ConsumerProcurementServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

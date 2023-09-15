@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudTasksTracingStub::CloudTasksTracingStub(
     std::shared_ptr<CloudTasksStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::tasks::v2::ListQueuesResponse>
 CloudTasksTracingStub::ListQueues(
@@ -37,7 +37,7 @@ CloudTasksTracingStub::ListQueues(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "ListQueues");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListQueues(context, request));
 }
@@ -48,7 +48,7 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingStub::GetQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "GetQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetQueue(context, request));
 }
 
@@ -58,7 +58,7 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingStub::CreateQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "CreateQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateQueue(context, request));
 }
@@ -69,7 +69,7 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingStub::UpdateQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "UpdateQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateQueue(context, request));
 }
@@ -80,7 +80,7 @@ Status CloudTasksTracingStub::DeleteQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "DeleteQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteQueue(context, request));
 }
@@ -91,7 +91,7 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingStub::PurgeQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "PurgeQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PurgeQueue(context, request));
 }
@@ -102,7 +102,7 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingStub::PauseQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "PauseQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PauseQueue(context, request));
 }
@@ -113,7 +113,7 @@ StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingStub::ResumeQueue(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "ResumeQueue");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResumeQueue(context, request));
 }
@@ -124,7 +124,7 @@ StatusOr<google::iam::v1::Policy> CloudTasksTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -135,7 +135,7 @@ StatusOr<google::iam::v1::Policy> CloudTasksTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -147,7 +147,7 @@ CloudTasksTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -159,7 +159,7 @@ CloudTasksTracingStub::ListTasks(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "ListTasks");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListTasks(context, request));
 }
 
@@ -169,7 +169,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::GetTask(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "GetTask");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetTask(context, request));
 }
 
@@ -179,7 +179,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::CreateTask(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "CreateTask");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTask(context, request));
 }
@@ -190,7 +190,7 @@ Status CloudTasksTracingStub::DeleteTask(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "DeleteTask");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTask(context, request));
 }
@@ -201,7 +201,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::RunTask(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "RunTask");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->RunTask(context, request));
 }
 

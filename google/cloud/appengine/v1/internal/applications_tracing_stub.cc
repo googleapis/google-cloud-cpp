@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ApplicationsTracingStub::ApplicationsTracingStub(
     std::shared_ptr<ApplicationsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsTracingStub::GetApplication(
@@ -37,7 +37,7 @@ ApplicationsTracingStub::GetApplication(
   auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
                                      "GetApplication");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetApplication(context, request));
 }
@@ -51,7 +51,7 @@ ApplicationsTracingStub::AsyncCreateApplication(
                                      "CreateApplication");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateApplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -66,7 +66,7 @@ ApplicationsTracingStub::AsyncUpdateApplication(
                                      "UpdateApplication");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateApplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -81,7 +81,7 @@ ApplicationsTracingStub::AsyncRepairApplication(
                                      "RepairApplication");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRepairApplication(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -96,7 +96,7 @@ ApplicationsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -110,7 +110,7 @@ future<Status> ApplicationsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

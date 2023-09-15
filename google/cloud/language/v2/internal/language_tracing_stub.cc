@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceTracingStub::LanguageServiceTracingStub(
     std::shared_ptr<LanguageServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 LanguageServiceTracingStub::AnalyzeSentiment(
@@ -37,7 +37,7 @@ LanguageServiceTracingStub::AnalyzeSentiment(
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "AnalyzeSentiment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnalyzeSentiment(context, request));
 }
@@ -49,7 +49,7 @@ LanguageServiceTracingStub::AnalyzeEntities(
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "AnalyzeEntities");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnalyzeEntities(context, request));
 }
@@ -61,7 +61,7 @@ LanguageServiceTracingStub::ClassifyText(
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "ClassifyText");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ClassifyText(context, request));
 }
@@ -73,7 +73,7 @@ LanguageServiceTracingStub::ModerateText(
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "ModerateText");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ModerateText(context, request));
 }
@@ -85,7 +85,7 @@ LanguageServiceTracingStub::AnnotateText(
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "AnnotateText");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnnotateText(context, request));
 }

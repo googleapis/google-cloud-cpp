@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_INTERNAL_REACHABILITY_TRACING_STUB_H
 
 #include "google/cloud/networkmanagement/v1/internal/reachability_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -85,6 +86,8 @@ class ReachabilityServiceTracingStub : public ReachabilityServiceStub {
 
  private:
   std::shared_ptr<ReachabilityServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

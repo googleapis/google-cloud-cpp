@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QuotaControllerTracingStub::QuotaControllerTracingStub(
     std::shared_ptr<QuotaControllerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerTracingStub::AllocateQuota(
@@ -37,7 +37,7 @@ QuotaControllerTracingStub::AllocateQuota(
   auto span = internal::MakeSpanGrpc(
       "google.api.servicecontrol.v1.QuotaController", "AllocateQuota");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AllocateQuota(context, request));
 }

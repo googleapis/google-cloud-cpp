@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentServiceTracingStub::DocumentServiceTracingStub(
     std::shared_ptr<DocumentServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DocumentServiceTracingStub::CreateDocument(
@@ -37,7 +37,7 @@ DocumentServiceTracingStub::CreateDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "CreateDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDocument(context, request));
 }
@@ -49,7 +49,7 @@ DocumentServiceTracingStub::GetDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDocument(context, request));
 }
@@ -61,7 +61,7 @@ DocumentServiceTracingStub::UpdateDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "UpdateDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDocument(context, request));
 }
@@ -72,7 +72,7 @@ Status DocumentServiceTracingStub::DeleteDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "DeleteDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDocument(context, request));
 }
@@ -85,7 +85,7 @@ DocumentServiceTracingStub::SearchDocuments(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "SearchDocuments");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchDocuments(context, request));
 }
@@ -97,7 +97,7 @@ DocumentServiceTracingStub::LockDocument(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "LockDocument");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->LockDocument(context, request));
 }
@@ -109,7 +109,7 @@ DocumentServiceTracingStub::FetchAcl(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "FetchAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->FetchAcl(context, request));
 }
 
@@ -120,7 +120,7 @@ DocumentServiceTracingStub::SetAcl(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.DocumentService", "SetAcl");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->SetAcl(context, request));
 }
 

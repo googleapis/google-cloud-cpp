@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PolicyTagManagerSerializationTracingStub::
     PolicyTagManagerSerializationTracingStub(
         std::shared_ptr<PolicyTagManagerSerializationStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationTracingStub::ReplaceTaxonomy(
@@ -39,7 +39,7 @@ PolicyTagManagerSerializationTracingStub::ReplaceTaxonomy(
       "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
       "ReplaceTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReplaceTaxonomy(context, request));
 }
@@ -52,7 +52,7 @@ PolicyTagManagerSerializationTracingStub::ImportTaxonomies(
       "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
       "ImportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ImportTaxonomies(context, request));
 }
@@ -65,7 +65,7 @@ PolicyTagManagerSerializationTracingStub::ExportTaxonomies(
       "google.cloud.datacatalog.v1.PolicyTagManagerSerialization",
       "ExportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExportTaxonomies(context, request));
 }

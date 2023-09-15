@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBillingTracingStub::CloudBillingTracingStub(
     std::shared_ptr<CloudBillingStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingTracingStub::GetBillingAccount(
@@ -37,7 +37,7 @@ CloudBillingTracingStub::GetBillingAccount(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "GetBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetBillingAccount(context, request));
 }
@@ -49,7 +49,7 @@ CloudBillingTracingStub::ListBillingAccounts(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "ListBillingAccounts");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBillingAccounts(context, request));
 }
@@ -61,7 +61,7 @@ CloudBillingTracingStub::UpdateBillingAccount(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "UpdateBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateBillingAccount(context, request));
 }
@@ -73,7 +73,7 @@ CloudBillingTracingStub::CreateBillingAccount(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "CreateBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateBillingAccount(context, request));
 }
@@ -85,7 +85,7 @@ CloudBillingTracingStub::ListProjectBillingInfo(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "ListProjectBillingInfo");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProjectBillingInfo(context, request));
 }
@@ -97,7 +97,7 @@ CloudBillingTracingStub::GetProjectBillingInfo(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "GetProjectBillingInfo");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProjectBillingInfo(context, request));
 }
@@ -110,7 +110,7 @@ CloudBillingTracingStub::UpdateProjectBillingInfo(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "UpdateProjectBillingInfo");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateProjectBillingInfo(context, request));
 }
@@ -121,7 +121,7 @@ StatusOr<google::iam::v1::Policy> CloudBillingTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -132,7 +132,7 @@ StatusOr<google::iam::v1::Policy> CloudBillingTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -144,7 +144,7 @@ CloudBillingTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudBilling",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }

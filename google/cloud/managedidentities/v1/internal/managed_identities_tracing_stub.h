@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_INTERNAL_MANAGED_IDENTITIES_TRACING_STUB_H
 
 #include "google/cloud/managedidentities/v1/internal/managed_identities_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -108,6 +109,8 @@ class ManagedIdentitiesServiceTracingStub
 
  private:
   std::shared_ptr<ManagedIdentitiesServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

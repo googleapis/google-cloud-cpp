@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceTracingStub::AssuredWorkloadsServiceTracingStub(
     std::shared_ptr<AssuredWorkloadsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceTracingStub::AsyncCreateWorkload(
@@ -40,7 +40,7 @@ AssuredWorkloadsServiceTracingStub::AsyncCreateWorkload(
       "CreateWorkload");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateWorkload(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -54,7 +54,7 @@ AssuredWorkloadsServiceTracingStub::UpdateWorkload(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "UpdateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateWorkload(context, request));
 }
@@ -68,7 +68,7 @@ AssuredWorkloadsServiceTracingStub::RestrictAllowedResources(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "RestrictAllowedResources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RestrictAllowedResources(context, request));
 }
@@ -80,7 +80,7 @@ Status AssuredWorkloadsServiceTracingStub::DeleteWorkload(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "DeleteWorkload");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteWorkload(context, request));
 }
@@ -93,7 +93,7 @@ AssuredWorkloadsServiceTracingStub::GetWorkload(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWorkload(context, request));
 }
@@ -106,7 +106,7 @@ AssuredWorkloadsServiceTracingStub::ListWorkloads(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "ListWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWorkloads(context, request));
 }
@@ -119,7 +119,7 @@ AssuredWorkloadsServiceTracingStub::ListViolations(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "ListViolations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListViolations(context, request));
 }
@@ -132,7 +132,7 @@ AssuredWorkloadsServiceTracingStub::GetViolation(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "GetViolation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetViolation(context, request));
 }
@@ -146,7 +146,7 @@ AssuredWorkloadsServiceTracingStub::AcknowledgeViolation(
       "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
       "AcknowledgeViolation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AcknowledgeViolation(context, request));
 }
@@ -160,7 +160,7 @@ AssuredWorkloadsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -174,7 +174,7 @@ future<Status> AssuredWorkloadsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_INTERNAL_RESERVATION_TRACING_STUB_H
 
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -162,6 +163,8 @@ class ReservationServiceTracingStub : public ReservationServiceStub {
 
  private:
   std::shared_ptr<ReservationServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

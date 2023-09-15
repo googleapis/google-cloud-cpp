@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContainerAnalysisTracingStub::ContainerAnalysisTracingStub(
     std::shared_ptr<ContainerAnalysisStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
@@ -36,7 +36,7 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.containeranalysis.v1.ContainerAnalysis", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -47,7 +47,7 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.devtools.containeranalysis.v1.ContainerAnalysis", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -60,7 +60,7 @@ ContainerAnalysisTracingStub::TestIamPermissions(
       "google.devtools.containeranalysis.v1.ContainerAnalysis",
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -75,7 +75,7 @@ ContainerAnalysisTracingStub::GetVulnerabilityOccurrencesSummary(
       "google.devtools.containeranalysis.v1.ContainerAnalysis",
       "GetVulnerabilityOccurrencesSummary");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->GetVulnerabilityOccurrencesSummary(context, request));

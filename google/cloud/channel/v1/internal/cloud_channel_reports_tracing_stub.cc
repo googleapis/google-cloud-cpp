@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelReportsServiceTracingStub::CloudChannelReportsServiceTracingStub(
     std::shared_ptr<CloudChannelReportsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
@@ -39,7 +39,7 @@ CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
       "google.cloud.channel.v1.CloudChannelReportsService", "RunReportJob");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRunReportJob(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -53,7 +53,7 @@ CloudChannelReportsServiceTracingStub::FetchReportResults(
       "google.cloud.channel.v1.CloudChannelReportsService",
       "FetchReportResults");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchReportResults(context, request));
 }
@@ -65,7 +65,7 @@ CloudChannelReportsServiceTracingStub::ListReports(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelReportsService", "ListReports");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListReports(context, request));
 }
@@ -79,7 +79,7 @@ CloudChannelReportsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ future<Status> CloudChannelReportsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_INTERNAL_RECOMMENDER_TRACING_STUB_H
 
 #include "google/cloud/recommender/v1/internal/recommender_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -112,6 +113,8 @@ class RecommenderTracingStub : public RecommenderStub {
 
  private:
   std::shared_ptr<RecommenderStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

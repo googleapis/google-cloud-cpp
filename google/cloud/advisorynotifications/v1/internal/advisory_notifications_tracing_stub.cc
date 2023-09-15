@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AdvisoryNotificationsServiceTracingStub::
     AdvisoryNotificationsServiceTracingStub(
         std::shared_ptr<AdvisoryNotificationsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 AdvisoryNotificationsServiceTracingStub::ListNotifications(
@@ -40,7 +40,7 @@ AdvisoryNotificationsServiceTracingStub::ListNotifications(
       "google.cloud.advisorynotifications.v1.AdvisoryNotificationsService",
       "ListNotifications");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNotifications(context, request));
 }
@@ -54,7 +54,7 @@ AdvisoryNotificationsServiceTracingStub::GetNotification(
       "google.cloud.advisorynotifications.v1.AdvisoryNotificationsService",
       "GetNotification");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNotification(context, request));
 }

@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ProjectsTracingStub::ProjectsTracingStub(std::shared_ptr<ProjectsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsTracingStub::GetProject(
@@ -36,7 +36,7 @@ ProjectsTracingStub::GetProject(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
                                      "GetProject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProject(context, request));
 }
@@ -48,7 +48,7 @@ ProjectsTracingStub::ListProjects(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
                                      "ListProjects");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProjects(context, request));
 }
@@ -60,7 +60,7 @@ ProjectsTracingStub::SearchProjects(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
                                      "SearchProjects");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchProjects(context, request));
 }
@@ -74,7 +74,7 @@ ProjectsTracingStub::AsyncCreateProject(
                                      "CreateProject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateProject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -89,7 +89,7 @@ ProjectsTracingStub::AsyncUpdateProject(
                                      "UpdateProject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateProject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -104,7 +104,7 @@ ProjectsTracingStub::AsyncMoveProject(
                                      "MoveProject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncMoveProject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -119,7 +119,7 @@ ProjectsTracingStub::AsyncDeleteProject(
                                      "DeleteProject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteProject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -134,7 +134,7 @@ ProjectsTracingStub::AsyncUndeleteProject(
                                      "UndeleteProject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUndeleteProject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -146,7 +146,7 @@ StatusOr<google::iam::v1::Policy> ProjectsTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -157,7 +157,7 @@ StatusOr<google::iam::v1::Policy> ProjectsTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -169,7 +169,7 @@ ProjectsTracingStub::TestIamPermissions(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -183,7 +183,7 @@ ProjectsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -197,7 +197,7 @@ future<Status> ProjectsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

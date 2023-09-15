@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeGroupControllerTracingStub::NodeGroupControllerTracingStub(
     std::shared_ptr<NodeGroupControllerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
@@ -39,7 +39,7 @@ NodeGroupControllerTracingStub::AsyncCreateNodeGroup(
       "google.cloud.dataproc.v1.NodeGroupController", "CreateNodeGroup");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateNodeGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -54,7 +54,7 @@ NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
       "google.cloud.dataproc.v1.NodeGroupController", "ResizeNodeGroup");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncResizeNodeGroup(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -67,7 +67,7 @@ NodeGroupControllerTracingStub::GetNodeGroup(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dataproc.v1.NodeGroupController", "GetNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNodeGroup(context, request));
 }
@@ -81,7 +81,7 @@ NodeGroupControllerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -95,7 +95,7 @@ future<Status> NodeGroupControllerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

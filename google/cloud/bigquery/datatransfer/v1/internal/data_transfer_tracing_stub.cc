@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataTransferServiceTracingStub::DataTransferServiceTracingStub(
     std::shared_ptr<DataTransferServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceTracingStub::GetDataSource(
@@ -39,7 +39,7 @@ DataTransferServiceTracingStub::GetDataSource(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "GetDataSource");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDataSource(context, request));
 }
@@ -53,7 +53,7 @@ DataTransferServiceTracingStub::ListDataSources(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "ListDataSources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDataSources(context, request));
 }
@@ -67,7 +67,7 @@ DataTransferServiceTracingStub::CreateTransferConfig(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "CreateTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTransferConfig(context, request));
 }
@@ -81,7 +81,7 @@ DataTransferServiceTracingStub::UpdateTransferConfig(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "UpdateTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTransferConfig(context, request));
 }
@@ -94,7 +94,7 @@ Status DataTransferServiceTracingStub::DeleteTransferConfig(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "DeleteTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTransferConfig(context, request));
 }
@@ -108,7 +108,7 @@ DataTransferServiceTracingStub::GetTransferConfig(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "GetTransferConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTransferConfig(context, request));
 }
@@ -122,7 +122,7 @@ DataTransferServiceTracingStub::ListTransferConfigs(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "ListTransferConfigs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTransferConfigs(context, request));
 }
@@ -137,7 +137,7 @@ DataTransferServiceTracingStub::ScheduleTransferRuns(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "ScheduleTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ScheduleTransferRuns(context, request));
 }
@@ -152,7 +152,7 @@ DataTransferServiceTracingStub::StartManualTransferRuns(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "StartManualTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->StartManualTransferRuns(context, request));
 }
@@ -166,7 +166,7 @@ DataTransferServiceTracingStub::GetTransferRun(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "GetTransferRun");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTransferRun(context, request));
 }
@@ -179,7 +179,7 @@ Status DataTransferServiceTracingStub::DeleteTransferRun(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "DeleteTransferRun");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTransferRun(context, request));
 }
@@ -193,7 +193,7 @@ DataTransferServiceTracingStub::ListTransferRuns(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "ListTransferRuns");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTransferRuns(context, request));
 }
@@ -207,7 +207,7 @@ DataTransferServiceTracingStub::ListTransferLogs(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "ListTransferLogs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTransferLogs(context, request));
 }
@@ -221,7 +221,7 @@ DataTransferServiceTracingStub::CheckValidCreds(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "CheckValidCreds");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CheckValidCreds(context, request));
 }
@@ -234,7 +234,7 @@ Status DataTransferServiceTracingStub::EnrollDataSources(
       "google.cloud.bigquery.datatransfer.v1.DataTransferService",
       "EnrollDataSources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->EnrollDataSources(context, request));
 }

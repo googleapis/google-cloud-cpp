@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RevisionsTracingStub::RevisionsTracingStub(std::shared_ptr<RevisionsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsTracingStub::GetRevision(
     grpc::ClientContext& context,
@@ -35,7 +35,7 @@ StatusOr<google::cloud::run::v2::Revision> RevisionsTracingStub::GetRevision(
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetRevision");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRevision(context, request));
 }
@@ -47,7 +47,7 @@ RevisionsTracingStub::ListRevisions(
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListRevisions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRevisions(context, request));
 }
@@ -61,7 +61,7 @@ RevisionsTracingStub::AsyncDeleteRevision(
       internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteRevision");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteRevision(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -76,7 +76,7 @@ RevisionsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -90,7 +90,7 @@ future<Status> RevisionsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

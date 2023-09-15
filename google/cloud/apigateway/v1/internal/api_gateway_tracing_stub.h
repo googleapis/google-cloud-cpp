@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_TRACING_STUB_H
 
 #include "google/cloud/apigateway/v1/internal/api_gateway_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -127,6 +128,8 @@ class ApiGatewayServiceTracingStub : public ApiGatewayServiceStub {
 
  private:
   std::shared_ptr<ApiGatewayServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

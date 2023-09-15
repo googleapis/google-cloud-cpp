@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataPolicyServiceTracingStub::DataPolicyServiceTracingStub(
     std::shared_ptr<DataPolicyServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceTracingStub::CreateDataPolicy(
@@ -39,7 +39,7 @@ DataPolicyServiceTracingStub::CreateDataPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "CreateDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDataPolicy(context, request));
 }
@@ -53,7 +53,7 @@ DataPolicyServiceTracingStub::UpdateDataPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "UpdateDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDataPolicy(context, request));
 }
@@ -67,7 +67,7 @@ DataPolicyServiceTracingStub::RenameDataPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "RenameDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RenameDataPolicy(context, request));
 }
@@ -80,7 +80,7 @@ Status DataPolicyServiceTracingStub::DeleteDataPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "DeleteDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDataPolicy(context, request));
 }
@@ -94,7 +94,7 @@ DataPolicyServiceTracingStub::GetDataPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "GetDataPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDataPolicy(context, request));
 }
@@ -108,7 +108,7 @@ DataPolicyServiceTracingStub::ListDataPolicies(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "ListDataPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDataPolicies(context, request));
 }
@@ -120,7 +120,7 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceTracingStub::GetIamPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -132,7 +132,7 @@ StatusOr<google::iam::v1::Policy> DataPolicyServiceTracingStub::SetIamPolicy(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -145,7 +145,7 @@ DataPolicyServiceTracingStub::TestIamPermissions(
       "google.cloud.bigquery.datapolicies.v1.DataPolicyService",
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }

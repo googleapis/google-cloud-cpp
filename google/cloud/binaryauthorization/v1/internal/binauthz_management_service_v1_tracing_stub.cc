@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BinauthzManagementServiceV1TracingStub::BinauthzManagementServiceV1TracingStub(
     std::shared_ptr<BinauthzManagementServiceV1Stub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1TracingStub::GetPolicy(
@@ -38,7 +38,7 @@ BinauthzManagementServiceV1TracingStub::GetPolicy(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "GetPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetPolicy(context, request));
 }
 
@@ -51,7 +51,7 @@ BinauthzManagementServiceV1TracingStub::UpdatePolicy(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "UpdatePolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdatePolicy(context, request));
 }
@@ -65,7 +65,7 @@ BinauthzManagementServiceV1TracingStub::CreateAttestor(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "CreateAttestor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAttestor(context, request));
 }
@@ -78,7 +78,7 @@ BinauthzManagementServiceV1TracingStub::GetAttestor(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "GetAttestor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAttestor(context, request));
 }
@@ -92,7 +92,7 @@ BinauthzManagementServiceV1TracingStub::UpdateAttestor(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "UpdateAttestor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateAttestor(context, request));
 }
@@ -106,7 +106,7 @@ BinauthzManagementServiceV1TracingStub::ListAttestors(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "ListAttestors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAttestors(context, request));
 }
@@ -119,7 +119,7 @@ Status BinauthzManagementServiceV1TracingStub::DeleteAttestor(
       "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
       "DeleteAttestor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteAttestor(context, request));
 }

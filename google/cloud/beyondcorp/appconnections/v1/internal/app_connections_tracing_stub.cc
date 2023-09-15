@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppConnectionsServiceTracingStub::AppConnectionsServiceTracingStub(
     std::shared_ptr<AppConnectionsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
@@ -41,7 +41,7 @@ AppConnectionsServiceTracingStub::ListAppConnections(
       "google.cloud.beyondcorp.appconnections.v1.AppConnectionsService",
       "ListAppConnections");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAppConnections(context, request));
 }
@@ -55,7 +55,7 @@ AppConnectionsServiceTracingStub::GetAppConnection(
       "google.cloud.beyondcorp.appconnections.v1.AppConnectionsService",
       "GetAppConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAppConnection(context, request));
 }
@@ -71,7 +71,7 @@ AppConnectionsServiceTracingStub::AsyncCreateAppConnection(
       "CreateAppConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateAppConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -88,7 +88,7 @@ AppConnectionsServiceTracingStub::AsyncUpdateAppConnection(
       "UpdateAppConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateAppConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -105,7 +105,7 @@ AppConnectionsServiceTracingStub::AsyncDeleteAppConnection(
       "DeleteAppConnection");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteAppConnection(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -121,7 +121,7 @@ AppConnectionsServiceTracingStub::ResolveAppConnections(
       "google.cloud.beyondcorp.appconnections.v1.AppConnectionsService",
       "ResolveAppConnections");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResolveAppConnections(context, request));
 }
@@ -135,7 +135,7 @@ AppConnectionsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -149,7 +149,7 @@ future<Status> AppConnectionsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

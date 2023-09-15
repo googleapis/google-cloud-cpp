@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 WebhooksTracingStub::WebhooksTracingStub(std::shared_ptr<WebhooksStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 WebhooksTracingStub::ListWebhooks(
@@ -36,7 +36,7 @@ WebhooksTracingStub::ListWebhooks(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Webhooks",
                                      "ListWebhooks");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWebhooks(context, request));
 }
@@ -48,7 +48,7 @@ WebhooksTracingStub::GetWebhook(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Webhooks",
                                      "GetWebhook");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWebhook(context, request));
 }
@@ -60,7 +60,7 @@ WebhooksTracingStub::CreateWebhook(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Webhooks",
                                      "CreateWebhook");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateWebhook(context, request));
 }
@@ -72,7 +72,7 @@ WebhooksTracingStub::UpdateWebhook(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Webhooks",
                                      "UpdateWebhook");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateWebhook(context, request));
 }
@@ -83,7 +83,7 @@ Status WebhooksTracingStub::DeleteWebhook(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Webhooks",
                                      "DeleteWebhook");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteWebhook(context, request));
 }

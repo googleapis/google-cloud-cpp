@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FulfillmentsTracingStub::FulfillmentsTracingStub(
     std::shared_ptr<FulfillmentsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsTracingStub::GetFulfillment(
@@ -37,7 +37,7 @@ FulfillmentsTracingStub::GetFulfillment(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Fulfillments",
                                      "GetFulfillment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFulfillment(context, request));
 }
@@ -49,7 +49,7 @@ FulfillmentsTracingStub::UpdateFulfillment(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Fulfillments",
                                      "UpdateFulfillment");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateFulfillment(context, request));
 }

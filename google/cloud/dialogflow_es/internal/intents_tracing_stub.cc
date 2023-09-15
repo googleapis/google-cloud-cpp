@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IntentsTracingStub::IntentsTracingStub(std::shared_ptr<IntentsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse>
 IntentsTracingStub::ListIntents(
@@ -36,7 +36,7 @@ IntentsTracingStub::ListIntents(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
                                      "ListIntents");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListIntents(context, request));
 }
@@ -47,7 +47,7 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsTracingStub::GetIntent(
   auto span =
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "GetIntent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetIntent(context, request));
 }
 
@@ -58,7 +58,7 @@ IntentsTracingStub::CreateIntent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
                                      "CreateIntent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateIntent(context, request));
 }
@@ -70,7 +70,7 @@ IntentsTracingStub::UpdateIntent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
                                      "UpdateIntent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateIntent(context, request));
 }
@@ -81,7 +81,7 @@ Status IntentsTracingStub::DeleteIntent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
                                      "DeleteIntent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteIntent(context, request));
 }
@@ -95,7 +95,7 @@ IntentsTracingStub::AsyncBatchUpdateIntents(
                                      "BatchUpdateIntents");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchUpdateIntents(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -110,7 +110,7 @@ IntentsTracingStub::AsyncBatchDeleteIntents(
                                      "BatchDeleteIntents");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchDeleteIntents(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -125,7 +125,7 @@ IntentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -139,7 +139,7 @@ future<Status> IntentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

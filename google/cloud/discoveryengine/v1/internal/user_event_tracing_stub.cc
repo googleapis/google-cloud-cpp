@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 UserEventServiceTracingStub::UserEventServiceTracingStub(
     std::shared_ptr<UserEventServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::discoveryengine::v1::UserEvent>
 UserEventServiceTracingStub::WriteUserEvent(
@@ -37,7 +37,7 @@ UserEventServiceTracingStub::WriteUserEvent(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.UserEventService", "WriteUserEvent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->WriteUserEvent(context, request));
 }
@@ -49,7 +49,7 @@ StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.UserEventService", "CollectUserEvent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CollectUserEvent(context, request));
 }
@@ -64,7 +64,7 @@ UserEventServiceTracingStub::AsyncImportUserEvents(
       "google.cloud.discoveryengine.v1.UserEventService", "ImportUserEvents");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportUserEvents(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -79,7 +79,7 @@ UserEventServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ future<Status> UserEventServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

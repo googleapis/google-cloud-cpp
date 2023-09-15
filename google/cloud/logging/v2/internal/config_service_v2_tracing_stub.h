@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_CONFIG_SERVICE_V2_TRACING_STUB_H
 
 #include "google/cloud/logging/v2/internal/config_service_v2_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -182,6 +183,8 @@ class ConfigServiceV2TracingStub : public ConfigServiceV2Stub {
 
  private:
   std::shared_ptr<ConfigServiceV2Stub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

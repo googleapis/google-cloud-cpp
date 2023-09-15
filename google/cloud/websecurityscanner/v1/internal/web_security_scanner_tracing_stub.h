@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_TRACING_STUB_H
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -107,6 +108,8 @@ class WebSecurityScannerTracingStub : public WebSecurityScannerStub {
 
  private:
   std::shared_ptr<WebSecurityScannerStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

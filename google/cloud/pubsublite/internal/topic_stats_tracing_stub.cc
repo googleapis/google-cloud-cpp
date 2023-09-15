@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TopicStatsServiceTracingStub::TopicStatsServiceTracingStub(
     std::shared_ptr<TopicStatsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceTracingStub::ComputeMessageStats(
@@ -37,7 +37,7 @@ TopicStatsServiceTracingStub::ComputeMessageStats(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.TopicStatsService", "ComputeMessageStats");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ComputeMessageStats(context, request));
 }
@@ -49,7 +49,7 @@ TopicStatsServiceTracingStub::ComputeHeadCursor(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.TopicStatsService", "ComputeHeadCursor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ComputeHeadCursor(context, request));
 }
@@ -61,7 +61,7 @@ TopicStatsServiceTracingStub::ComputeTimeCursor(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.TopicStatsService", "ComputeTimeCursor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ComputeTimeCursor(context, request));
 }

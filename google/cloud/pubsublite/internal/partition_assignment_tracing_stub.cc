@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PartitionAssignmentServiceTracingStub::PartitionAssignmentServiceTracingStub(
     std::shared_ptr<PartitionAssignmentServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PartitionAssignmentRequest,
@@ -40,7 +40,7 @@ PartitionAssignmentServiceTracingStub::AsyncAssignPartitions(
       "google.cloud.pubsublite.v1.PartitionAssignmentService",
       "AssignPartitions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncAssignPartitions(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,

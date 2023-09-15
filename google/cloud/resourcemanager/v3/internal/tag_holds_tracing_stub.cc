@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TagHoldsTracingStub::TagHoldsTracingStub(std::shared_ptr<TagHoldsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsTracingStub::AsyncCreateTagHold(
@@ -38,7 +38,7 @@ TagHoldsTracingStub::AsyncCreateTagHold(
                                      "CreateTagHold");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateTagHold(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -53,7 +53,7 @@ TagHoldsTracingStub::AsyncDeleteTagHold(
                                      "DeleteTagHold");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteTagHold(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -66,7 +66,7 @@ TagHoldsTracingStub::ListTagHolds(
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagHolds",
                                      "ListTagHolds");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTagHolds(context, request));
 }
@@ -80,7 +80,7 @@ TagHoldsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -94,7 +94,7 @@ future<Status> TagHoldsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

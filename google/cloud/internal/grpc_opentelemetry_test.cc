@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -94,7 +95,8 @@ TEST(OpenTelemetry, InjectTraceContextGrpc) {
       MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"));
 
   grpc::ClientContext context;
-  InjectTraceContext(context, Options{});
+  auto propagator = MakePropagator();
+  InjectTraceContext(context, *propagator);
   testing_util::ValidatePropagator(context);
 }
 

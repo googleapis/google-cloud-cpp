@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_INTERNAL_METRICS_SCOPES_TRACING_STUB_H
 
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -72,6 +73,8 @@ class MetricsScopesTracingStub : public MetricsScopesStub {
 
  private:
   std::shared_ptr<MetricsScopesStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

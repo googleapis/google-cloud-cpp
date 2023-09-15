@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ManagedIdentitiesServiceTracingStub::ManagedIdentitiesServiceTracingStub(
     std::shared_ptr<ManagedIdentitiesServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
@@ -41,7 +41,7 @@ ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
       "CreateMicrosoftAdDomain");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateMicrosoftAdDomain(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -56,7 +56,7 @@ ManagedIdentitiesServiceTracingStub::ResetAdminPassword(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "ResetAdminPassword");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ResetAdminPassword(context, request));
 }
@@ -69,7 +69,7 @@ ManagedIdentitiesServiceTracingStub::ListDomains(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "ListDomains");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDomains(context, request));
 }
@@ -82,7 +82,7 @@ ManagedIdentitiesServiceTracingStub::GetDomain(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "GetDomain");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetDomain(context, request));
 }
 
@@ -96,7 +96,7 @@ ManagedIdentitiesServiceTracingStub::AsyncUpdateDomain(
       "UpdateDomain");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateDomain(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -112,7 +112,7 @@ ManagedIdentitiesServiceTracingStub::AsyncDeleteDomain(
       "DeleteDomain");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteDomain(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -128,7 +128,7 @@ ManagedIdentitiesServiceTracingStub::AsyncAttachTrust(
       "AttachTrust");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncAttachTrust(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -145,7 +145,7 @@ ManagedIdentitiesServiceTracingStub::AsyncReconfigureTrust(
       "ReconfigureTrust");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncReconfigureTrust(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -161,7 +161,7 @@ ManagedIdentitiesServiceTracingStub::AsyncDetachTrust(
       "DetachTrust");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDetachTrust(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -177,7 +177,7 @@ ManagedIdentitiesServiceTracingStub::AsyncValidateTrust(
       "ValidateTrust");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncValidateTrust(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -192,7 +192,7 @@ ManagedIdentitiesServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -206,7 +206,7 @@ future<Status> ManagedIdentitiesServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

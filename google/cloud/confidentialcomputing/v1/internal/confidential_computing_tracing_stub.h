@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_INTERNAL_CONFIDENTIAL_COMPUTING_TRACING_STUB_H
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -50,6 +51,8 @@ class ConfidentialComputingTracingStub : public ConfidentialComputingStub {
 
  private:
   std::shared_ptr<ConfidentialComputingStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

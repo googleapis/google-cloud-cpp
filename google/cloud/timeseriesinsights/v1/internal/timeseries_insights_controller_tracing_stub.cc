@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TimeseriesInsightsControllerTracingStub::
     TimeseriesInsightsControllerTracingStub(
         std::shared_ptr<TimeseriesInsightsControllerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
 TimeseriesInsightsControllerTracingStub::ListDataSets(
@@ -39,7 +39,7 @@ TimeseriesInsightsControllerTracingStub::ListDataSets(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "ListDataSets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDataSets(context, request));
 }
@@ -53,7 +53,7 @@ TimeseriesInsightsControllerTracingStub::CreateDataSet(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "CreateDataSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDataSet(context, request));
 }
@@ -66,7 +66,7 @@ Status TimeseriesInsightsControllerTracingStub::DeleteDataSet(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "DeleteDataSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDataSet(context, request));
 }
@@ -79,7 +79,7 @@ TimeseriesInsightsControllerTracingStub::AppendEvents(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "AppendEvents");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AppendEvents(context, request));
 }
@@ -92,7 +92,7 @@ TimeseriesInsightsControllerTracingStub::QueryDataSet(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "QueryDataSet");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->QueryDataSet(context, request));
 }
@@ -106,7 +106,7 @@ TimeseriesInsightsControllerTracingStub::EvaluateSlice(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "EvaluateSlice");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->EvaluateSlice(context, request));
 }
@@ -120,7 +120,7 @@ TimeseriesInsightsControllerTracingStub::EvaluateTimeseries(
       "google.cloud.timeseriesinsights.v1.TimeseriesInsightsController",
       "EvaluateTimeseries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->EvaluateTimeseries(context, request));
 }

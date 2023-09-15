@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_ADMIN_TRACING_STUB_H
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -86,6 +87,8 @@ class IdentityAwareProxyAdminServiceTracingStub
 
  private:
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

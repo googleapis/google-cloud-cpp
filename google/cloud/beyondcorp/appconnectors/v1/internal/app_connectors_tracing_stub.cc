@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppConnectorsServiceTracingStub::AppConnectorsServiceTracingStub(
     std::shared_ptr<AppConnectorsServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<
     google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
@@ -39,7 +39,7 @@ AppConnectorsServiceTracingStub::ListAppConnectors(
       "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
       "ListAppConnectors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAppConnectors(context, request));
 }
@@ -53,7 +53,7 @@ AppConnectorsServiceTracingStub::GetAppConnector(
       "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
       "GetAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAppConnector(context, request));
 }
@@ -69,7 +69,7 @@ AppConnectorsServiceTracingStub::AsyncCreateAppConnector(
       "CreateAppConnector");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateAppConnector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -86,7 +86,7 @@ AppConnectorsServiceTracingStub::AsyncUpdateAppConnector(
       "UpdateAppConnector");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateAppConnector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -103,7 +103,7 @@ AppConnectorsServiceTracingStub::AsyncDeleteAppConnector(
       "DeleteAppConnector");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteAppConnector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -120,7 +120,7 @@ AppConnectorsServiceTracingStub::AsyncReportStatus(
       "ReportStatus");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncReportStatus(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -135,7 +135,7 @@ AppConnectorsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -149,7 +149,7 @@ future<Status> AppConnectorsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

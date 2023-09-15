@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EventServiceTracingStub::EventServiceTracingStub(
     std::shared_ptr<EventServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceTracingStub::CreateClientEvent(
@@ -37,7 +37,7 @@ EventServiceTracingStub::CreateClientEvent(
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.EventService",
                                      "CreateClientEvent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateClientEvent(context, request));
 }

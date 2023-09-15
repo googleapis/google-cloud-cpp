@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriberServiceTracingStub::SubscriberServiceTracingStub(
     std::shared_ptr<SubscriberServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::SubscribeRequest,
@@ -39,7 +39,7 @@ SubscriberServiceTracingStub::AsyncSubscribe(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.SubscriberService", "Subscribe");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncSubscribe(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::SubscribeRequest,

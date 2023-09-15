@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MetastoreServiceTracingStub::MetastoreServiceTracingStub(
     std::shared_ptr<MetastoreServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
 MetastoreServiceTracingStub::CreateCatalog(
@@ -37,7 +37,7 @@ MetastoreServiceTracingStub::CreateCatalog(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "CreateCatalog");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCatalog(context, request));
 }
@@ -49,7 +49,7 @@ MetastoreServiceTracingStub::DeleteCatalog(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteCatalog");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteCatalog(context, request));
 }
@@ -61,7 +61,7 @@ MetastoreServiceTracingStub::GetCatalog(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "GetCatalog");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCatalog(context, request));
 }
@@ -73,7 +73,7 @@ MetastoreServiceTracingStub::ListCatalogs(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "ListCatalogs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCatalogs(context, request));
 }
@@ -86,7 +86,7 @@ MetastoreServiceTracingStub::CreateDatabase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "CreateDatabase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDatabase(context, request));
 }
@@ -99,7 +99,7 @@ MetastoreServiceTracingStub::DeleteDatabase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteDatabase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDatabase(context, request));
 }
@@ -112,7 +112,7 @@ MetastoreServiceTracingStub::UpdateDatabase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "UpdateDatabase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDatabase(context, request));
 }
@@ -124,7 +124,7 @@ MetastoreServiceTracingStub::GetDatabase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "GetDatabase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDatabase(context, request));
 }
@@ -136,7 +136,7 @@ MetastoreServiceTracingStub::ListDatabases(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "ListDatabases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDatabases(context, request));
 }
@@ -148,7 +148,7 @@ MetastoreServiceTracingStub::CreateTable(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "CreateTable");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTable(context, request));
 }
@@ -160,7 +160,7 @@ MetastoreServiceTracingStub::DeleteTable(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteTable");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTable(context, request));
 }
@@ -172,7 +172,7 @@ MetastoreServiceTracingStub::UpdateTable(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "UpdateTable");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTable(context, request));
 }
@@ -184,7 +184,7 @@ MetastoreServiceTracingStub::RenameTable(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "RenameTable");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RenameTable(context, request));
 }
@@ -196,7 +196,7 @@ MetastoreServiceTracingStub::GetTable(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "GetTable");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetTable(context, request));
 }
 
@@ -207,7 +207,7 @@ MetastoreServiceTracingStub::ListTables(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.biglake.v1.MetastoreService", "ListTables");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTables(context, request));
 }

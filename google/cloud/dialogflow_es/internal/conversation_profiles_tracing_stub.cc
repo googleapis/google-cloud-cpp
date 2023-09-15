@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationProfilesTracingStub::ConversationProfilesTracingStub(
     std::shared_ptr<ConversationProfilesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 ConversationProfilesTracingStub::ListConversationProfiles(
@@ -39,7 +39,7 @@ ConversationProfilesTracingStub::ListConversationProfiles(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
                              "ListConversationProfiles");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConversationProfiles(context, request));
 }
@@ -53,7 +53,7 @@ ConversationProfilesTracingStub::GetConversationProfile(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
                              "GetConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConversationProfile(context, request));
 }
@@ -67,7 +67,7 @@ ConversationProfilesTracingStub::CreateConversationProfile(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
                              "CreateConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateConversationProfile(context, request));
 }
@@ -81,7 +81,7 @@ ConversationProfilesTracingStub::UpdateConversationProfile(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
                              "UpdateConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateConversationProfile(context, request));
 }
@@ -94,7 +94,7 @@ Status ConversationProfilesTracingStub::DeleteConversationProfile(
       internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
                              "DeleteConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteConversationProfile(context, request));
 }
@@ -110,7 +110,7 @@ ConversationProfilesTracingStub::AsyncSetSuggestionFeatureConfig(
                              "SetSuggestionFeatureConfig");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncSetSuggestionFeatureConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -127,7 +127,7 @@ ConversationProfilesTracingStub::AsyncClearSuggestionFeatureConfig(
                              "ClearSuggestionFeatureConfig");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncClearSuggestionFeatureConfig(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -142,7 +142,7 @@ ConversationProfilesTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -156,7 +156,7 @@ future<Status> ConversationProfilesTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

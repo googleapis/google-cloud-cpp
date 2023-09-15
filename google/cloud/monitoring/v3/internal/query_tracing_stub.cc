@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QueryServiceTracingStub::QueryServiceTracingStub(
     std::shared_ptr<QueryServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceTracingStub::QueryTimeSeries(
@@ -37,7 +37,7 @@ QueryServiceTracingStub::QueryTimeSeries(
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.QueryService",
                                      "QueryTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->QueryTimeSeries(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceUsageTracingStub::ServiceUsageTracingStub(
     std::shared_ptr<ServiceUsageStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncEnableService(
@@ -39,7 +39,7 @@ ServiceUsageTracingStub::AsyncEnableService(
                                      "EnableService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncEnableService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -54,7 +54,7 @@ ServiceUsageTracingStub::AsyncDisableService(
                                      "DisableService");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDisableService(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -67,7 +67,7 @@ ServiceUsageTracingStub::GetService(
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "GetService");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetService(context, request));
 }
@@ -79,7 +79,7 @@ ServiceUsageTracingStub::ListServices(
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, request));
 }
@@ -93,7 +93,7 @@ ServiceUsageTracingStub::AsyncBatchEnableServices(
                                      "BatchEnableServices");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchEnableServices(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -106,7 +106,7 @@ ServiceUsageTracingStub::BatchGetServices(
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "BatchGetServices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->BatchGetServices(context, request));
 }
@@ -120,7 +120,7 @@ ServiceUsageTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -134,7 +134,7 @@ future<Status> ServiceUsageTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

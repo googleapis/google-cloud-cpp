@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationsTracingStub::ConversationsTracingStub(
     std::shared_ptr<ConversationsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingStub::CreateConversation(
@@ -37,7 +37,7 @@ ConversationsTracingStub::CreateConversation(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "CreateConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateConversation(context, request));
 }
@@ -49,7 +49,7 @@ ConversationsTracingStub::ListConversations(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "ListConversations");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConversations(context, request));
 }
@@ -61,7 +61,7 @@ ConversationsTracingStub::GetConversation(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "GetConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConversation(context, request));
 }
@@ -73,7 +73,7 @@ ConversationsTracingStub::CompleteConversation(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "CompleteConversation");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CompleteConversation(context, request));
 }
@@ -85,7 +85,7 @@ ConversationsTracingStub::ListMessages(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "ListMessages");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListMessages(context, request));
 }
@@ -98,7 +98,7 @@ ConversationsTracingStub::SuggestConversationSummary(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "SuggestConversationSummary");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->SuggestConversationSummary(context, request));
 }
@@ -111,7 +111,7 @@ ConversationsTracingStub::GenerateStatelessSummary(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "GenerateStatelessSummary");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GenerateStatelessSummary(context, request));
 }
@@ -123,7 +123,7 @@ ConversationsTracingStub::SearchKnowledge(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
                                      "SearchKnowledge");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchKnowledge(context, request));
 }

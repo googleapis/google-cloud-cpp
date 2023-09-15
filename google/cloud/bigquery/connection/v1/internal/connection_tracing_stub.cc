@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectionServiceTracingStub::ConnectionServiceTracingStub(
     std::shared_ptr<ConnectionServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingStub::CreateConnection(
@@ -39,7 +39,7 @@ ConnectionServiceTracingStub::CreateConnection(
       "google.cloud.bigquery.connection.v1.ConnectionService",
       "CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateConnection(context, request));
 }
@@ -52,7 +52,7 @@ ConnectionServiceTracingStub::GetConnection(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.connection.v1.ConnectionService", "GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConnection(context, request));
 }
@@ -66,7 +66,7 @@ ConnectionServiceTracingStub::ListConnections(
       "google.cloud.bigquery.connection.v1.ConnectionService",
       "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnections(context, request));
 }
@@ -80,7 +80,7 @@ ConnectionServiceTracingStub::UpdateConnection(
       "google.cloud.bigquery.connection.v1.ConnectionService",
       "UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateConnection(context, request));
 }
@@ -93,7 +93,7 @@ Status ConnectionServiceTracingStub::DeleteConnection(
       "google.cloud.bigquery.connection.v1.ConnectionService",
       "DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteConnection(context, request));
 }
@@ -104,7 +104,7 @@ StatusOr<google::iam::v1::Policy> ConnectionServiceTracingStub::GetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.connection.v1.ConnectionService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -115,7 +115,7 @@ StatusOr<google::iam::v1::Policy> ConnectionServiceTracingStub::SetIamPolicy(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.connection.v1.ConnectionService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -128,7 +128,7 @@ ConnectionServiceTracingStub::TestIamPermissions(
       "google.cloud.bigquery.connection.v1.ConnectionService",
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }

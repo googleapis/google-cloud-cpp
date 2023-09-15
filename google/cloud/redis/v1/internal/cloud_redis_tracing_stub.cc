@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudRedisTracingStub::CloudRedisTracingStub(
     std::shared_ptr<CloudRedisStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisTracingStub::ListInstances(
@@ -37,7 +37,7 @@ CloudRedisTracingStub::ListInstances(
   auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
                                      "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, request));
 }
@@ -48,7 +48,7 @@ StatusOr<google::cloud::redis::v1::Instance> CloudRedisTracingStub::GetInstance(
   auto span =
       internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetInstance(context, request));
 }
@@ -60,7 +60,7 @@ CloudRedisTracingStub::GetInstanceAuthString(
   auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
                                      "GetInstanceAuthString");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetInstanceAuthString(context, request));
 }
@@ -74,7 +74,7 @@ CloudRedisTracingStub::AsyncCreateInstance(
                                      "CreateInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -89,7 +89,7 @@ CloudRedisTracingStub::AsyncUpdateInstance(
                                      "UpdateInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdateInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -104,7 +104,7 @@ CloudRedisTracingStub::AsyncUpgradeInstance(
                                      "UpgradeInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpgradeInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -119,7 +119,7 @@ CloudRedisTracingStub::AsyncImportInstance(
                                      "ImportInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncImportInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -134,7 +134,7 @@ CloudRedisTracingStub::AsyncExportInstance(
                                      "ExportInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -149,7 +149,7 @@ CloudRedisTracingStub::AsyncFailoverInstance(
                                      "FailoverInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncFailoverInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -164,7 +164,7 @@ CloudRedisTracingStub::AsyncDeleteInstance(
                                      "DeleteInstance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteInstance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -179,7 +179,7 @@ CloudRedisTracingStub::AsyncRescheduleMaintenance(
                                      "RescheduleMaintenance");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncRescheduleMaintenance(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -194,7 +194,7 @@ CloudRedisTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -208,7 +208,7 @@ future<Status> CloudRedisTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

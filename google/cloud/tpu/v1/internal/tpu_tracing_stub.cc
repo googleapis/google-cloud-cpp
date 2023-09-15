@@ -27,14 +27,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TpuTracingStub::TpuTracingStub(std::shared_ptr<TpuStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::tpu::v1::ListNodesResponse> TpuTracingStub::ListNodes(
     grpc::ClientContext& context,
     google::cloud::tpu::v1::ListNodesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "ListNodes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListNodes(context, request));
 }
 
@@ -43,7 +43,7 @@ StatusOr<google::cloud::tpu::v1::Node> TpuTracingStub::GetNode(
     google::cloud::tpu::v1::GetNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "GetNode");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetNode(context, request));
 }
 
@@ -55,7 +55,7 @@ TpuTracingStub::AsyncCreateNode(
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "CreateNode");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -69,7 +69,7 @@ TpuTracingStub::AsyncDeleteNode(
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "DeleteNode");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -83,7 +83,7 @@ TpuTracingStub::AsyncReimageNode(
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "ReimageNode");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncReimageNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -96,7 +96,7 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStopNode(
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "StopNode");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncStopNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -109,7 +109,7 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "StartNode");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncStartNode(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -122,7 +122,7 @@ TpuTracingStub::ListTensorFlowVersions(
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu",
                                      "ListTensorFlowVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTensorFlowVersions(context, request));
 }
@@ -134,7 +134,7 @@ TpuTracingStub::GetTensorFlowVersion(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "GetTensorFlowVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTensorFlowVersion(context, request));
 }
@@ -146,7 +146,7 @@ TpuTracingStub::ListAcceleratorTypes(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "ListAcceleratorTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAcceleratorTypes(context, request));
 }
@@ -158,7 +158,7 @@ TpuTracingStub::GetAcceleratorType(
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "GetAcceleratorType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAcceleratorType(context, request));
 }
@@ -172,7 +172,7 @@ TpuTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -186,7 +186,7 @@ future<Status> TpuTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

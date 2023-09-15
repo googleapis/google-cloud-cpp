@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_INTERNAL_ANALYTICS_HUB_TRACING_STUB_H
 
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -116,6 +117,8 @@ class AnalyticsHubServiceTracingStub : public AnalyticsHubServiceStub {
 
  private:
   std::shared_ptr<AnalyticsHubServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

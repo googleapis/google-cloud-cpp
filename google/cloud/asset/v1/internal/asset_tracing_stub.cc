@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssetServiceTracingStub::AssetServiceTracingStub(
     std::shared_ptr<AssetServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceTracingStub::AsyncExportAssets(
@@ -39,7 +39,7 @@ AssetServiceTracingStub::AsyncExportAssets(
                                      "ExportAssets");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncExportAssets(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ AssetServiceTracingStub::ListAssets(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "ListAssets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAssets(context, request));
 }
@@ -64,7 +64,7 @@ AssetServiceTracingStub::BatchGetAssetsHistory(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "BatchGetAssetsHistory");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->BatchGetAssetsHistory(context, request));
 }
@@ -75,7 +75,7 @@ StatusOr<google::cloud::asset::v1::Feed> AssetServiceTracingStub::CreateFeed(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "CreateFeed");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateFeed(context, request));
 }
@@ -86,7 +86,7 @@ StatusOr<google::cloud::asset::v1::Feed> AssetServiceTracingStub::GetFeed(
   auto span =
       internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService", "GetFeed");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetFeed(context, request));
 }
 
@@ -97,7 +97,7 @@ AssetServiceTracingStub::ListFeeds(
   auto span =
       internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService", "ListFeeds");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListFeeds(context, request));
 }
 
@@ -107,7 +107,7 @@ StatusOr<google::cloud::asset::v1::Feed> AssetServiceTracingStub::UpdateFeed(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "UpdateFeed");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateFeed(context, request));
 }
@@ -118,7 +118,7 @@ Status AssetServiceTracingStub::DeleteFeed(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "DeleteFeed");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteFeed(context, request));
 }
@@ -130,7 +130,7 @@ AssetServiceTracingStub::SearchAllResources(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "SearchAllResources");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchAllResources(context, request));
 }
@@ -142,7 +142,7 @@ AssetServiceTracingStub::SearchAllIamPolicies(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "SearchAllIamPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchAllIamPolicies(context, request));
 }
@@ -154,7 +154,7 @@ AssetServiceTracingStub::AnalyzeIamPolicy(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "AnalyzeIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnalyzeIamPolicy(context, request));
 }
@@ -169,7 +169,7 @@ AssetServiceTracingStub::AsyncAnalyzeIamPolicyLongrunning(
                                      "AnalyzeIamPolicyLongrunning");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncAnalyzeIamPolicyLongrunning(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -182,7 +182,7 @@ AssetServiceTracingStub::AnalyzeMove(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "AnalyzeMove");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnalyzeMove(context, request));
 }
@@ -194,7 +194,7 @@ AssetServiceTracingStub::QueryAssets(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "QueryAssets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->QueryAssets(context, request));
 }
@@ -206,7 +206,7 @@ AssetServiceTracingStub::CreateSavedQuery(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "CreateSavedQuery");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateSavedQuery(context, request));
 }
@@ -218,7 +218,7 @@ AssetServiceTracingStub::GetSavedQuery(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "GetSavedQuery");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSavedQuery(context, request));
 }
@@ -230,7 +230,7 @@ AssetServiceTracingStub::ListSavedQueries(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "ListSavedQueries");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSavedQueries(context, request));
 }
@@ -242,7 +242,7 @@ AssetServiceTracingStub::UpdateSavedQuery(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "UpdateSavedQuery");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateSavedQuery(context, request));
 }
@@ -253,7 +253,7 @@ Status AssetServiceTracingStub::DeleteSavedQuery(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "DeleteSavedQuery");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSavedQuery(context, request));
 }
@@ -266,7 +266,7 @@ AssetServiceTracingStub::BatchGetEffectiveIamPolicies(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "BatchGetEffectiveIamPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->BatchGetEffectiveIamPolicies(context, request));
 }
@@ -278,7 +278,7 @@ AssetServiceTracingStub::AnalyzeOrgPolicies(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "AnalyzeOrgPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnalyzeOrgPolicies(context, request));
 }
@@ -291,7 +291,7 @@ AssetServiceTracingStub::AnalyzeOrgPolicyGovernedContainers(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "AnalyzeOrgPolicyGovernedContainers");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->AnalyzeOrgPolicyGovernedContainers(context, request));
@@ -305,7 +305,7 @@ AssetServiceTracingStub::AnalyzeOrgPolicyGovernedAssets(
   auto span = internal::MakeSpanGrpc("google.cloud.asset.v1.AssetService",
                                      "AnalyzeOrgPolicyGovernedAssets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->AnalyzeOrgPolicyGovernedAssets(context, request));
 }
@@ -319,7 +319,7 @@ AssetServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -333,7 +333,7 @@ future<Status> AssetServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

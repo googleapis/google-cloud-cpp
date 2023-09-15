@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_INTERNAL_DATASTORE_TRACING_STUB_H
 
 #include "google/cloud/datastore/v1/internal/datastore_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -71,6 +72,8 @@ class DatastoreTracingStub : public DatastoreStub {
 
  private:
   std::shared_ptr<DatastoreStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

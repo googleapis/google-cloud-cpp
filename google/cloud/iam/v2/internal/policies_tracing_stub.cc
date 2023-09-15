@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PoliciesTracingStub::PoliciesTracingStub(std::shared_ptr<PoliciesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::v2::ListPoliciesResponse>
 PoliciesTracingStub::ListPolicies(
@@ -35,7 +35,7 @@ PoliciesTracingStub::ListPolicies(
     google::iam::v2::ListPoliciesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "ListPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPolicies(context, request));
 }
@@ -45,7 +45,7 @@ StatusOr<google::iam::v2::Policy> PoliciesTracingStub::GetPolicy(
     google::iam::v2::GetPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "GetPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetPolicy(context, request));
 }
 
@@ -57,7 +57,7 @@ PoliciesTracingStub::AsyncCreatePolicy(
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "CreatePolicy");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreatePolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -71,7 +71,7 @@ PoliciesTracingStub::AsyncUpdatePolicy(
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "UpdatePolicy");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncUpdatePolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -85,7 +85,7 @@ PoliciesTracingStub::AsyncDeletePolicy(
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "DeletePolicy");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeletePolicy(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -100,7 +100,7 @@ PoliciesTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -114,7 +114,7 @@ future<Status> PoliciesTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

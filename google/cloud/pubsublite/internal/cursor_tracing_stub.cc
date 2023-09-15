@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CursorServiceTracingStub::CursorServiceTracingStub(
     std::shared_ptr<CursorServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
@@ -39,7 +39,7 @@ CursorServiceTracingStub::AsyncStreamingCommitCursor(
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
                                      "StreamingCommitCursor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingCommitCursor(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
@@ -54,7 +54,7 @@ CursorServiceTracingStub::CommitCursor(
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
                                      "CommitCursor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CommitCursor(context, request));
 }
@@ -66,7 +66,7 @@ CursorServiceTracingStub::ListPartitionCursors(
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
                                      "ListPartitionCursors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListPartitionCursors(context, request));
 }

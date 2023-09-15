@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MIGRATIONCENTER_V1_INTERNAL_MIGRATION_CENTER_TRACING_STUB_H
 
 #include "google/cloud/migrationcenter/v1/internal/migration_center_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -321,6 +322,8 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
  private:
   std::shared_ptr<MigrationCenterStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

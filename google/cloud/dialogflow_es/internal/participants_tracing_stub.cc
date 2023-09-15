@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ParticipantsTracingStub::ParticipantsTracingStub(
     std::shared_ptr<ParticipantsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingStub::CreateParticipant(
@@ -38,7 +38,7 @@ ParticipantsTracingStub::CreateParticipant(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "CreateParticipant");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateParticipant(context, request));
 }
@@ -50,7 +50,7 @@ ParticipantsTracingStub::GetParticipant(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "GetParticipant");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetParticipant(context, request));
 }
@@ -62,7 +62,7 @@ ParticipantsTracingStub::ListParticipants(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "ListParticipants");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListParticipants(context, request));
 }
@@ -74,7 +74,7 @@ ParticipantsTracingStub::UpdateParticipant(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "UpdateParticipant");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateParticipant(context, request));
 }
@@ -86,7 +86,7 @@ ParticipantsTracingStub::AnalyzeContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "AnalyzeContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AnalyzeContent(context, request));
 }
@@ -99,7 +99,7 @@ ParticipantsTracingStub::AsyncStreamingAnalyzeContent(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "StreamingAnalyzeContent");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncStreamingAnalyzeContent(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
@@ -114,7 +114,7 @@ ParticipantsTracingStub::SuggestArticles(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "SuggestArticles");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SuggestArticles(context, request));
 }
@@ -126,7 +126,7 @@ ParticipantsTracingStub::SuggestFaqAnswers(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "SuggestFaqAnswers");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SuggestFaqAnswers(context, request));
 }
@@ -138,7 +138,7 @@ ParticipantsTracingStub::SuggestSmartReplies(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "SuggestSmartReplies");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SuggestSmartReplies(context, request));
 }

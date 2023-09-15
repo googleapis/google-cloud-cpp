@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpcAccessServiceTracingStub::VpcAccessServiceTracingStub(
     std::shared_ptr<VpcAccessServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceTracingStub::AsyncCreateConnector(
@@ -39,7 +39,7 @@ VpcAccessServiceTracingStub::AsyncCreateConnector(
       "google.cloud.vpcaccess.v1.VpcAccessService", "CreateConnector");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateConnector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -52,7 +52,7 @@ VpcAccessServiceTracingStub::GetConnector(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vpcaccess.v1.VpcAccessService", "GetConnector");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConnector(context, request));
 }
@@ -64,7 +64,7 @@ VpcAccessServiceTracingStub::ListConnectors(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vpcaccess.v1.VpcAccessService", "ListConnectors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnectors(context, request));
 }
@@ -78,7 +78,7 @@ VpcAccessServiceTracingStub::AsyncDeleteConnector(
       "google.cloud.vpcaccess.v1.VpcAccessService", "DeleteConnector");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteConnector(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -93,7 +93,7 @@ VpcAccessServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -107,7 +107,7 @@ future<Status> VpcAccessServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

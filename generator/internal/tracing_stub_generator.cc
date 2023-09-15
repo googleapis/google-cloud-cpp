@@ -44,8 +44,9 @@ Status TracingStubGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/options.h",
-                       "google/cloud/version.h"});
+  HeaderLocalIncludes({vars("stub_header_path"),
+                       "google/cloud/internal/trace_propagator.h",
+                       "google/cloud/options.h", "google/cloud/version.h"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -67,6 +68,7 @@ class $tracing_stub_class_name$ : public $stub_class_name$ {
   HeaderPrint(R"""(
  private:
   std::shared_ptr<$stub_class_name$> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -127,7 +129,7 @@ Status TracingStubGenerator::GenerateCc() {
 
 $tracing_stub_class_name$::$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 )""");
 
   // Tracing stub class member methods
@@ -139,7 +141,7 @@ $tracing_stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->$method_name$(context);
   return std::make_unique<
       internal::StreamingWriteRpcTracing<$request_type$, $response_type$>>(
@@ -157,7 +159,7 @@ $tracing_stub_class_name$::Async$method_name$(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->Async$method_name$(cq, context);
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       $request_type$,
@@ -179,7 +181,7 @@ StatusOr<$response_type$> $tracing_stub_class_name$::$method_name$()"""},
     $request_type$ const& request) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->$method_name$(context, request));
 }
@@ -194,7 +196,7 @@ $tracing_stub_class_name$::Async$method_name$(
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->Async$method_name$(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -208,7 +210,7 @@ $tracing_stub_class_name$::$method_name$(
     $request_type$ const& request) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->$method_name$(context, request);
   return std::make_unique<internal::StreamingReadRpcTracing<$response_type$>>(
       std::move(context), std::move(stream), std::move(span));
@@ -228,7 +230,7 @@ $tracing_stub_class_name$::Async$method_name$(
     $request_type$ const& request) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->Async$method_name$(cq, context, request);
   return std::make_unique<
       internal::AsyncStreamingReadRpcTracing<$response_type$>>(
@@ -247,7 +249,7 @@ $tracing_stub_class_name$::Async$method_name$(
     std::shared_ptr<grpc::ClientContext> context) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->Async$method_name$(cq, context);
   return std::make_unique<
       internal::AsyncStreamingWriteRpcTracing<$request_type$, $response_type$>>(
@@ -272,7 +274,7 @@ future<StatusOr<$response_type$>> $tracing_stub_class_name$::Async$method_name$(
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->Async$method_name$(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -294,7 +296,7 @@ $tracing_stub_class_name$::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -308,7 +310,7 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

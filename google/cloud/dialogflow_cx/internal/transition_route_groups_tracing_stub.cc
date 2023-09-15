@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TransitionRouteGroupsTracingStub::TransitionRouteGroupsTracingStub(
     std::shared_ptr<TransitionRouteGroupsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
 TransitionRouteGroupsTracingStub::ListTransitionRouteGroups(
@@ -39,7 +39,7 @@ TransitionRouteGroupsTracingStub::ListTransitionRouteGroups(
       "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
       "ListTransitionRouteGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTransitionRouteGroups(context, request));
 }
@@ -53,7 +53,7 @@ TransitionRouteGroupsTracingStub::GetTransitionRouteGroup(
       "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
       "GetTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTransitionRouteGroup(context, request));
 }
@@ -67,7 +67,7 @@ TransitionRouteGroupsTracingStub::CreateTransitionRouteGroup(
       "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
       "CreateTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->CreateTransitionRouteGroup(context, request));
 }
@@ -81,7 +81,7 @@ TransitionRouteGroupsTracingStub::UpdateTransitionRouteGroup(
       "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
       "UpdateTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->UpdateTransitionRouteGroup(context, request));
 }
@@ -94,7 +94,7 @@ Status TransitionRouteGroupsTracingStub::DeleteTransitionRouteGroup(
       "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
       "DeleteTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->DeleteTransitionRouteGroup(context, request));
 }

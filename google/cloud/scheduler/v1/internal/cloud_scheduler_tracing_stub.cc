@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudSchedulerTracingStub::CloudSchedulerTracingStub(
     std::shared_ptr<CloudSchedulerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 CloudSchedulerTracingStub::ListJobs(
@@ -37,7 +37,7 @@ CloudSchedulerTracingStub::ListJobs(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListJobs(context, request));
 }
 
@@ -47,7 +47,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::GetJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetJob(context, request));
 }
 
@@ -58,7 +58,7 @@ CloudSchedulerTracingStub::CreateJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->CreateJob(context, request));
 }
 
@@ -69,7 +69,7 @@ CloudSchedulerTracingStub::UpdateJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "UpdateJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->UpdateJob(context, request));
 }
 
@@ -79,7 +79,7 @@ Status CloudSchedulerTracingStub::DeleteJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->DeleteJob(context, request));
 }
 
@@ -89,7 +89,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::PauseJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "PauseJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->PauseJob(context, request));
 }
 
@@ -100,7 +100,7 @@ CloudSchedulerTracingStub::ResumeJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "ResumeJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ResumeJob(context, request));
 }
 
@@ -110,7 +110,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::RunJob(
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "RunJob");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->RunJob(context, request));
 }
 

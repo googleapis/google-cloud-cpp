@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_SYSTEM_POLICY_V1_TRACING_STUB_H
 
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -43,6 +44,8 @@ class SystemPolicyV1TracingStub : public SystemPolicyV1Stub {
 
  private:
   std::shared_ptr<SystemPolicyV1Stub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

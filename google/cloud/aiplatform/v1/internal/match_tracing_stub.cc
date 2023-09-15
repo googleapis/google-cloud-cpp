@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MatchServiceTracingStub::MatchServiceTracingStub(
     std::shared_ptr<MatchServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceTracingStub::FindNeighbors(
@@ -37,7 +37,7 @@ MatchServiceTracingStub::FindNeighbors(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MatchService",
                                      "FindNeighbors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FindNeighbors(context, request));
 }
@@ -49,7 +49,7 @@ MatchServiceTracingStub::ReadIndexDatapoints(
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.MatchService",
                                      "ReadIndexDatapoints");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReadIndexDatapoints(context, request));
 }

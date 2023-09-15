@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_INTERNAL_ALLOY_DB_ADMIN_TRACING_STUB_H
 
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -193,6 +194,8 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
 
  private:
   std::shared_ptr<AlloyDBAdminStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

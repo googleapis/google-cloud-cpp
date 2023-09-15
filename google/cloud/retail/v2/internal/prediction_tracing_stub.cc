@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PredictionServiceTracingStub::PredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceTracingStub::Predict(
@@ -37,7 +37,7 @@ PredictionServiceTracingStub::Predict(
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.PredictionService",
                                      "Predict");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Predict(context, request));
 }
 

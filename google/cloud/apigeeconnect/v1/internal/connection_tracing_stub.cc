@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectionServiceTracingStub::ConnectionServiceTracingStub(
     std::shared_ptr<ConnectionServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceTracingStub::ListConnections(
@@ -37,7 +37,7 @@ ConnectionServiceTracingStub::ListConnections(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigeeconnect.v1.ConnectionService", "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnections(context, request));
 }

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FleetRoutingTracingStub::FleetRoutingTracingStub(
     std::shared_ptr<FleetRoutingStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingTracingStub::OptimizeTours(
@@ -37,7 +37,7 @@ FleetRoutingTracingStub::OptimizeTours(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.optimization.v1.FleetRouting", "OptimizeTours");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->OptimizeTours(context, request));
 }
@@ -51,7 +51,7 @@ FleetRoutingTracingStub::AsyncBatchOptimizeTours(
       "google.cloud.optimization.v1.FleetRouting", "BatchOptimizeTours");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchOptimizeTours(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -66,7 +66,7 @@ FleetRoutingTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -80,7 +80,7 @@ future<Status> FleetRoutingTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

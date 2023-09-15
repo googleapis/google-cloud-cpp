@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EntityTypesTracingStub::EntityTypesTracingStub(
     std::shared_ptr<EntityTypesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
 EntityTypesTracingStub::ListEntityTypes(
@@ -37,7 +37,7 @@ EntityTypesTracingStub::ListEntityTypes(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "ListEntityTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntityTypes(context, request));
 }
@@ -49,7 +49,7 @@ EntityTypesTracingStub::GetEntityType(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "GetEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEntityType(context, request));
 }
@@ -61,7 +61,7 @@ EntityTypesTracingStub::CreateEntityType(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "CreateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEntityType(context, request));
 }
@@ -73,7 +73,7 @@ EntityTypesTracingStub::UpdateEntityType(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "UpdateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateEntityType(context, request));
 }
@@ -84,7 +84,7 @@ Status EntityTypesTracingStub::DeleteEntityType(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EntityTypes",
                                      "DeleteEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEntityType(context, request));
 }
@@ -99,7 +99,7 @@ EntityTypesTracingStub::AsyncBatchUpdateEntityTypes(
                                      "BatchUpdateEntityTypes");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchUpdateEntityTypes(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -115,7 +115,7 @@ EntityTypesTracingStub::AsyncBatchDeleteEntityTypes(
                                      "BatchDeleteEntityTypes");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchDeleteEntityTypes(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -130,7 +130,7 @@ EntityTypesTracingStub::AsyncBatchCreateEntities(
                                      "BatchCreateEntities");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchCreateEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -145,7 +145,7 @@ EntityTypesTracingStub::AsyncBatchUpdateEntities(
                                      "BatchUpdateEntities");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchUpdateEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -160,7 +160,7 @@ EntityTypesTracingStub::AsyncBatchDeleteEntities(
                                      "BatchDeleteEntities");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncBatchDeleteEntities(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -175,7 +175,7 @@ EntityTypesTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -189,7 +189,7 @@ future<Status> EntityTypesTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

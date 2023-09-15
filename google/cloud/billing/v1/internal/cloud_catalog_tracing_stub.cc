@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudCatalogTracingStub::CloudCatalogTracingStub(
     std::shared_ptr<CloudCatalogStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogTracingStub::ListServices(
@@ -37,7 +37,7 @@ CloudCatalogTracingStub::ListServices(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog",
                                      "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListServices(context, request));
 }
@@ -49,7 +49,7 @@ CloudCatalogTracingStub::ListSkus(
   auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog",
                                      "ListSkus");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListSkus(context, request));
 }
 

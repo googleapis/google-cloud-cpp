@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EntityTypesTracingStub::EntityTypesTracingStub(
     std::shared_ptr<EntityTypesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesTracingStub::ListEntityTypes(
@@ -37,7 +37,7 @@ EntityTypesTracingStub::ListEntityTypes(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.EntityTypes", "ListEntityTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntityTypes(context, request));
 }
@@ -49,7 +49,7 @@ EntityTypesTracingStub::GetEntityType(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.EntityTypes", "GetEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetEntityType(context, request));
 }
@@ -61,7 +61,7 @@ EntityTypesTracingStub::CreateEntityType(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.EntityTypes", "CreateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateEntityType(context, request));
 }
@@ -73,7 +73,7 @@ EntityTypesTracingStub::UpdateEntityType(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.EntityTypes", "UpdateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateEntityType(context, request));
 }
@@ -84,7 +84,7 @@ Status EntityTypesTracingStub::DeleteEntityType(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.EntityTypes", "DeleteEntityType");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteEntityType(context, request));
 }

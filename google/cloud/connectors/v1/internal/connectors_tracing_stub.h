@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_TRACING_STUB_H
 
 #include "google/cloud/connectors/v1/internal/connectors_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -142,6 +143,8 @@ class ConnectorsTracingStub : public ConnectorsStub {
 
  private:
   std::shared_ptr<ConnectorsStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -31,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 StorageTracingStub::StorageTracingStub(std::shared_ptr<StorageStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 Status StorageTracingStub::DeleteBucket(
     grpc::ClientContext& context,
@@ -39,7 +39,7 @@ Status StorageTracingStub::DeleteBucket(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteBucket(context, request));
 }
@@ -49,7 +49,7 @@ StatusOr<google::storage::v2::Bucket> StorageTracingStub::GetBucket(
     google::storage::v2::GetBucketRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "GetBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetBucket(context, request));
 }
 
@@ -59,7 +59,7 @@ StatusOr<google::storage::v2::Bucket> StorageTracingStub::CreateBucket(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "CreateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateBucket(context, request));
 }
@@ -71,7 +71,7 @@ StorageTracingStub::ListBuckets(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ListBuckets");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBuckets(context, request));
 }
@@ -83,7 +83,7 @@ StorageTracingStub::LockBucketRetentionPolicy(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "LockBucketRetentionPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->LockBucketRetentionPolicy(context, request));
 }
@@ -94,7 +94,7 @@ StatusOr<google::iam::v1::Policy> StorageTracingStub::GetIamPolicy(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, request));
 }
@@ -105,7 +105,7 @@ StatusOr<google::iam::v1::Policy> StorageTracingStub::SetIamPolicy(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, request));
 }
@@ -117,7 +117,7 @@ StorageTracingStub::TestIamPermissions(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
 }
@@ -128,7 +128,7 @@ StatusOr<google::storage::v2::Bucket> StorageTracingStub::UpdateBucket(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "UpdateBucket");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateBucket(context, request));
 }
@@ -139,7 +139,7 @@ Status StorageTracingStub::DeleteNotificationConfig(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "DeleteNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteNotificationConfig(context, request));
 }
@@ -151,7 +151,7 @@ StorageTracingStub::GetNotificationConfig(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "GetNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNotificationConfig(context, request));
 }
@@ -163,7 +163,7 @@ StorageTracingStub::CreateNotificationConfig(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "CreateNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateNotificationConfig(context, request));
 }
@@ -175,7 +175,7 @@ StorageTracingStub::ListNotificationConfigs(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "ListNotificationConfigs");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNotificationConfigs(context, request));
 }
@@ -186,7 +186,7 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::ComposeObject(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ComposeObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ComposeObject(context, request));
 }
@@ -197,7 +197,7 @@ Status StorageTracingStub::DeleteObject(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteObject(context, request));
 }
@@ -209,7 +209,7 @@ StorageTracingStub::CancelResumableWrite(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "CancelResumableWrite");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelResumableWrite(context, request));
 }
@@ -219,7 +219,7 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::GetObject(
     google::storage::v2::GetObjectRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "GetObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetObject(context, request));
 }
 
@@ -230,7 +230,7 @@ StorageTracingStub::ReadObject(
     google::storage::v2::ReadObjectRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "ReadObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->ReadObject(context, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::storage::v2::ReadObjectResponse>>(
@@ -243,7 +243,7 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::UpdateObject(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "UpdateObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateObject(context, request));
 }
@@ -255,7 +255,7 @@ StorageTracingStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "WriteObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->WriteObject(context);
   return std::make_unique<internal::StreamingWriteRpcTracing<
       google::storage::v2::WriteObjectRequest,
@@ -270,7 +270,7 @@ StorageTracingStub::ListObjects(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ListObjects");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListObjects(context, request));
 }
@@ -282,7 +282,7 @@ StorageTracingStub::RewriteObject(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "RewriteObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RewriteObject(context, request));
 }
@@ -294,7 +294,7 @@ StorageTracingStub::StartResumableWrite(
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "StartResumableWrite");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->StartResumableWrite(context, request));
 }
@@ -306,7 +306,7 @@ StorageTracingStub::QueryWriteStatus(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "QueryWriteStatus");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->QueryWriteStatus(context, request));
 }
@@ -318,7 +318,7 @@ StorageTracingStub::GetServiceAccount(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "GetServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetServiceAccount(context, request));
 }
@@ -330,7 +330,7 @@ StorageTracingStub::CreateHmacKey(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "CreateHmacKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateHmacKey(context, request));
 }
@@ -341,7 +341,7 @@ Status StorageTracingStub::DeleteHmacKey(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteHmacKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteHmacKey(context, request));
 }
@@ -351,7 +351,7 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageTracingStub::GetHmacKey(
     google::storage::v2::GetHmacKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "GetHmacKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetHmacKey(context, request));
 }
@@ -363,7 +363,7 @@ StorageTracingStub::ListHmacKeys(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ListHmacKeys");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListHmacKeys(context, request));
 }
@@ -375,7 +375,7 @@ StorageTracingStub::UpdateHmacKey(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "UpdateHmacKey");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateHmacKey(context, request));
 }
@@ -389,7 +389,7 @@ StorageTracingStub::AsyncComposeObject(
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ComposeObject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncComposeObject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -403,7 +403,7 @@ future<Status> StorageTracingStub::AsyncDeleteObject(
       internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteObject");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncDeleteObject(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -417,7 +417,7 @@ StorageTracingStub::AsyncReadObject(
     google::storage::v2::ReadObjectRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "ReadObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncReadObject(cq, context, request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
       google::storage::v2::ReadObjectResponse>>(
@@ -433,7 +433,7 @@ StorageTracingStub::AsyncWriteObject(
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "WriteObject");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncWriteObject(cq, context);
   return std::make_unique<internal::AsyncStreamingWriteRpcTracing<
       google::storage::v2::WriteObjectRequest,
@@ -450,7 +450,7 @@ StorageTracingStub::AsyncStartResumableWrite(
                                      "StartResumableWrite");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncStartResumableWrite(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -465,7 +465,7 @@ StorageTracingStub::AsyncQueryWriteStatus(
       internal::MakeSpanGrpc("google.storage.v2.Storage", "QueryWriteStatus");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncQueryWriteStatus(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

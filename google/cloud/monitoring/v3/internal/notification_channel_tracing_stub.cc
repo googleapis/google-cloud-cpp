@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NotificationChannelServiceTracingStub::NotificationChannelServiceTracingStub(
     std::shared_ptr<NotificationChannelServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
 NotificationChannelServiceTracingStub::ListNotificationChannelDescriptors(
@@ -39,7 +39,7 @@ NotificationChannelServiceTracingStub::ListNotificationChannelDescriptors(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "ListNotificationChannelDescriptors");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->ListNotificationChannelDescriptors(context, request));
@@ -54,7 +54,7 @@ NotificationChannelServiceTracingStub::GetNotificationChannelDescriptor(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "GetNotificationChannelDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->GetNotificationChannelDescriptor(context, request));
@@ -68,7 +68,7 @@ NotificationChannelServiceTracingStub::ListNotificationChannels(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "ListNotificationChannels");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListNotificationChannels(context, request));
 }
@@ -81,7 +81,7 @@ NotificationChannelServiceTracingStub::GetNotificationChannel(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "GetNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNotificationChannel(context, request));
 }
@@ -94,7 +94,7 @@ NotificationChannelServiceTracingStub::CreateNotificationChannel(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "CreateNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateNotificationChannel(context, request));
 }
@@ -107,7 +107,7 @@ NotificationChannelServiceTracingStub::UpdateNotificationChannel(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "UpdateNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateNotificationChannel(context, request));
 }
@@ -119,7 +119,7 @@ Status NotificationChannelServiceTracingStub::DeleteNotificationChannel(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "DeleteNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteNotificationChannel(context, request));
 }
@@ -133,7 +133,7 @@ NotificationChannelServiceTracingStub::SendNotificationChannelVerificationCode(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "SendNotificationChannelVerificationCode");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->SendNotificationChannelVerificationCode(context, request));
@@ -148,7 +148,7 @@ NotificationChannelServiceTracingStub::GetNotificationChannelVerificationCode(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "GetNotificationChannelVerificationCode");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->GetNotificationChannelVerificationCode(context, request));
@@ -162,7 +162,7 @@ NotificationChannelServiceTracingStub::VerifyNotificationChannel(
       internal::MakeSpanGrpc("google.monitoring.v3.NotificationChannelService",
                              "VerifyNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->VerifyNotificationChannel(context, request));
 }

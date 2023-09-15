@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_THING_ADMIN_TRACING_STUB_H
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -135,6 +136,7 @@ class GoldenThingAdminTracingStub : public GoldenThingAdminStub {
 
  private:
   std::shared_ptr<GoldenThingAdminStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

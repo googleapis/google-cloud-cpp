@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_INTERNAL_CLOUD_SCHEDULER_TRACING_STUB_H
 
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -70,6 +71,8 @@ class CloudSchedulerTracingStub : public CloudSchedulerStub {
 
  private:
   std::shared_ptr<CloudSchedulerStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 KnowledgeBasesTracingStub::KnowledgeBasesTracingStub(
     std::shared_ptr<KnowledgeBasesStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesTracingStub::ListKnowledgeBases(
@@ -37,7 +37,7 @@ KnowledgeBasesTracingStub::ListKnowledgeBases(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.KnowledgeBases", "ListKnowledgeBases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListKnowledgeBases(context, request));
 }
@@ -49,7 +49,7 @@ KnowledgeBasesTracingStub::GetKnowledgeBase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.KnowledgeBases", "GetKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetKnowledgeBase(context, request));
 }
@@ -61,7 +61,7 @@ KnowledgeBasesTracingStub::CreateKnowledgeBase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.KnowledgeBases", "CreateKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateKnowledgeBase(context, request));
 }
@@ -72,7 +72,7 @@ Status KnowledgeBasesTracingStub::DeleteKnowledgeBase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.KnowledgeBases", "DeleteKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteKnowledgeBase(context, request));
 }
@@ -84,7 +84,7 @@ KnowledgeBasesTracingStub::UpdateKnowledgeBase(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.KnowledgeBases", "UpdateKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateKnowledgeBase(context, request));
 }

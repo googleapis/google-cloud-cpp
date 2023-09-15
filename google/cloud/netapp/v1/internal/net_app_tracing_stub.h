@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_INTERNAL_NET_APP_TRACING_STUB_H
 
 #include "google/cloud/netapp/v1/internal/net_app_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -237,6 +238,8 @@ class NetAppTracingStub : public NetAppStub {
 
  private:
   std::shared_ptr<NetAppStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

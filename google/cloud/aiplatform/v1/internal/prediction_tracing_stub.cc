@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PredictionServiceTracingStub::PredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 PredictionServiceTracingStub::Predict(
@@ -38,7 +38,7 @@ PredictionServiceTracingStub::Predict(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "Predict");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Predict(context, request));
 }
 
@@ -48,7 +48,7 @@ StatusOr<google::api::HttpBody> PredictionServiceTracingStub::RawPredict(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "RawPredict");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RawPredict(context, request));
 }
@@ -61,7 +61,7 @@ PredictionServiceTracingStub::ServerStreamingPredict(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "ServerStreamingPredict");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->ServerStreamingPredict(context, request);
   return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>(
@@ -75,7 +75,7 @@ PredictionServiceTracingStub::Explain(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "Explain");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->Explain(context, request));
 }
 

@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 VersionsTracingStub::VersionsTracingStub(std::shared_ptr<VersionsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
 VersionsTracingStub::ListVersions(
@@ -36,7 +36,7 @@ VersionsTracingStub::ListVersions(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "ListVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVersions(context, request));
 }
@@ -48,7 +48,7 @@ VersionsTracingStub::GetVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "GetVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetVersion(context, request));
 }
@@ -62,7 +62,7 @@ VersionsTracingStub::AsyncCreateVersion(
                                      "CreateVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCreateVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -75,7 +75,7 @@ VersionsTracingStub::UpdateVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "UpdateVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateVersion(context, request));
 }
@@ -86,7 +86,7 @@ Status VersionsTracingStub::DeleteVersion(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "DeleteVersion");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteVersion(context, request));
 }
@@ -100,7 +100,7 @@ VersionsTracingStub::AsyncLoadVersion(
                                      "LoadVersion");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncLoadVersion(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -113,7 +113,7 @@ VersionsTracingStub::CompareVersions(
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
                                      "CompareVersions");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CompareVersions(context, request));
 }
@@ -127,7 +127,7 @@ VersionsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncGetOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
@@ -141,7 +141,7 @@ future<Status> VersionsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   {
     auto scope = opentelemetry::trace::Scope(span);
-    internal::InjectTraceContext(*context, internal::CurrentOptions());
+    internal::InjectTraceContext(*context, *propagator_);
   }
   auto f = child_->AsyncCancelOperation(cq, context, request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));

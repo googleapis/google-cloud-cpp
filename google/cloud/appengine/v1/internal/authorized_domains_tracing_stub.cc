@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuthorizedDomainsTracingStub::AuthorizedDomainsTracingStub(
     std::shared_ptr<AuthorizedDomainsStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsTracingStub::ListAuthorizedDomains(
@@ -37,7 +37,7 @@ AuthorizedDomainsTracingStub::ListAuthorizedDomains(
   auto span = internal::MakeSpanGrpc("google.appengine.v1.AuthorizedDomains",
                                      "ListAuthorizedDomains");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListAuthorizedDomains(context, request));
 }

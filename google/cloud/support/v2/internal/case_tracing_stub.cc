@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CaseServiceTracingStub::CaseServiceTracingStub(
     std::shared_ptr<CaseServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::GetCase(
     grpc::ClientContext& context,
@@ -36,7 +36,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::GetCase(
   auto span =
       internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "GetCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetCase(context, request));
 }
 
@@ -47,7 +47,7 @@ CaseServiceTracingStub::ListCases(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "ListCases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->ListCases(context, request));
 }
 
@@ -58,7 +58,7 @@ CaseServiceTracingStub::SearchCases(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "SearchCases");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchCases(context, request));
 }
@@ -69,7 +69,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::CreateCase(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "CreateCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCase(context, request));
 }
@@ -80,7 +80,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::UpdateCase(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "UpdateCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateCase(context, request));
 }
@@ -91,7 +91,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::EscalateCase(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "EscalateCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->EscalateCase(context, request));
 }
@@ -102,7 +102,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::CloseCase(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "CloseCase");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->CloseCase(context, request));
 }
 
@@ -114,7 +114,7 @@ CaseServiceTracingStub::SearchCaseClassifications(
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
                                      "SearchCaseClassifications");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchCaseClassifications(context, request));
 }

@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IdentityAwareProxyOAuthServiceTracingStub::
     IdentityAwareProxyOAuthServiceTracingStub(
         std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 IdentityAwareProxyOAuthServiceTracingStub::ListBrands(
@@ -38,7 +38,7 @@ IdentityAwareProxyOAuthServiceTracingStub::ListBrands(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService", "ListBrands");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBrands(context, request));
 }
@@ -50,7 +50,7 @@ IdentityAwareProxyOAuthServiceTracingStub::CreateBrand(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService", "CreateBrand");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateBrand(context, request));
 }
@@ -62,7 +62,7 @@ IdentityAwareProxyOAuthServiceTracingStub::GetBrand(
   auto span = internal::MakeSpanGrpc(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService", "GetBrand");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span, child_->GetBrand(context, request));
 }
 
@@ -75,7 +75,7 @@ IdentityAwareProxyOAuthServiceTracingStub::CreateIdentityAwareProxyClient(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
       "CreateIdentityAwareProxyClient");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->CreateIdentityAwareProxyClient(context, request));
 }
@@ -89,7 +89,7 @@ IdentityAwareProxyOAuthServiceTracingStub::ListIdentityAwareProxyClients(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
       "ListIdentityAwareProxyClients");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->ListIdentityAwareProxyClients(context, request));
 }
@@ -102,7 +102,7 @@ IdentityAwareProxyOAuthServiceTracingStub::GetIdentityAwareProxyClient(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
       "GetIdentityAwareProxyClient");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->GetIdentityAwareProxyClient(context, request));
 }
@@ -116,7 +116,7 @@ IdentityAwareProxyOAuthServiceTracingStub::ResetIdentityAwareProxyClientSecret(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
       "ResetIdentityAwareProxyClientSecret");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
       child_->ResetIdentityAwareProxyClientSecret(context, request));
@@ -131,7 +131,7 @@ IdentityAwareProxyOAuthServiceTracingStub::DeleteIdentityAwareProxyClient(
       "google.cloud.iap.v1.IdentityAwareProxyOAuthService",
       "DeleteIdentityAwareProxyClient");
   auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
+  internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->DeleteIdentityAwareProxyClient(context, request));
 }

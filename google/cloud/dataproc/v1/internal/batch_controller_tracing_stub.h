@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_BATCH_CONTROLLER_TRACING_STUB_H
 
 #include "google/cloud/dataproc/v1/internal/batch_controller_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -66,6 +67,8 @@ class BatchControllerTracingStub : public BatchControllerStub {
 
  private:
   std::shared_ptr<BatchControllerStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

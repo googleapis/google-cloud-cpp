@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_INTERNAL_DATA_POLICY_TRACING_STUB_H
 
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
@@ -85,6 +86,8 @@ class DataPolicyServiceTracingStub : public DataPolicyServiceStub {
 
  private:
   std::shared_ptr<DataPolicyServiceStub> child_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
