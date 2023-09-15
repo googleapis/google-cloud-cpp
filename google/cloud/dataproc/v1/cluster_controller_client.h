@@ -118,7 +118,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1243}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
@@ -159,7 +159,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1243}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
@@ -209,7 +209,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.ClusterStatus.State]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L896}
   /// [google.cloud.dataproc.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1274}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
@@ -256,7 +256,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.ClusterStatus.State]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L896}
   /// [google.cloud.dataproc.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1274}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
@@ -296,7 +296,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.StopClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1370}
   ///
   // clang-format on
@@ -334,7 +334,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.StartClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1401}
   ///
   // clang-format on
@@ -444,7 +444,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1463}
   ///
   // clang-format on
@@ -475,7 +475,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1463}
   ///
   // clang-format on
@@ -512,7 +512,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1476}
   ///
   // clang-format on
@@ -568,7 +568,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1476}
   ///
   // clang-format on
@@ -608,7 +608,7 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L156}
+  /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L158}
   /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1476}
   ///
   // clang-format on
@@ -651,7 +651,7 @@ class ClusterControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1524}
-  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1537}
+  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1556}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
@@ -697,7 +697,7 @@ class ClusterControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1524}
-  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1537}
+  /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1556}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
