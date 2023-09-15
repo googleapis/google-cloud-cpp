@@ -343,8 +343,8 @@ using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanNamed;
-using ::testing::Contains;
 using ::testing::IsEmpty;
+using ::testing::UnorderedElementsAre;
 
 TEST(MakePublisherConnectionTest, TracingEnabled) {
   auto span_catcher = InstallSpanCatcher();
@@ -366,7 +366,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
 
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ::testing::UnorderedElementsAre(
+      UnorderedElementsAre(
           SpanNamed("projects/test-project/topics/test-topic send"),
           SpanNamed("pubsub::FlowControlledPublisherConnection::Publish")));
 }
