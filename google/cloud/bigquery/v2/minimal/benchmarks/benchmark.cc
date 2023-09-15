@@ -111,9 +111,7 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
             });
 
   auto const nsamples = result.operations.size();
-  auto ops_throughput = 1000 * nsamples / result.elapsed.count();
-  os << "# Test=" << test_name << ", " << operation
-     << " Throughput = " << ops_throughput << " ops/s, Latency And Status: ";
+  os << "# Test=" << test_name << ", " << operation << ", Latency And Status: ";
   char const* sep = "";
   for (double p : kResultPercentiles) {
     auto index = static_cast<std::size_t>(
