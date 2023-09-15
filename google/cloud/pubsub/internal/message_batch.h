@@ -24,11 +24,12 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * An interface with callbacks for a batching publish call.
+ * An interface for storing and acting on a batch messages across calls and
+ * callbacks in the `BatchingPublisherConnection`.
  *
- * There are many layers in a batching publish call. Interesting events happen
- * at different layers. This interface offers a centralized way to achieve
- * observability across the different layers.
+ * The `BatchingPublisherConnection` receives messages to publish and batches
+ * them in a single rpc. This interface offers a way to trace the life of the
+ * message from the initial Publish call to when the stub returns.
  */
 class MessageBatch {
  public:
@@ -38,10 +39,12 @@ class MessageBatch {
   // `BatchingPublisherConnection::Publish(...)`.
   virtual void SaveMessage(pubsub::Message m) = 0;
 
-  // Invoked in `BatchingPublisherConnection::FlushImpl(...)`.
+  // Acts on the batch of messages before the batch is flushed. Invoked in
+  // `BatchingPublisherConnection::FlushImpl(...)`.
   virtual void Flush() = 0;
 
-  // Invoked in the `BatchSink::AsyncPublish(...)` callback.
+  // Acts on the response from the service in a callback. Invoked in the
+  // `BatchSink::AsyncPublish(...)` callback.
   virtual void FlushCallback() = 0;
 };
 
