@@ -20,36 +20,17 @@ Go to whatever directory holds your clone of the project, for example:
 cd $HOME/google-cloud-cpp
 ```
 
-Create a branch to make your changes
+## Create a branch to make your changes
 
 ```shell
 git checkout main
 git checkout -b chore-update-googleapis-sha-circa-$(date +%Y-%m-%d)
 ```
 
-## Run the "renovate.sh" script to update the Bazel/CMake dependencies
+## Run the "renovate.sh" script
 
 ```shell
 external/googleapis/renovate.sh
-```
-
-Commit those edits:
-
-```shell
-git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" bazel cmake
-```
-
-## Update the generated libraries
-
-```shell
-external/googleapis/update_libraries.sh
-ci/cloudbuild/build.sh -t generate-libraries-pr
-```
-
-## Stage these changes
-
-```shell
-git add .
 ```
 
 ## Verify everything compiles
@@ -57,12 +38,6 @@ git add .
 ```shell
 bazel build //google/cloud/...
 ci/cloudbuild/build.sh -t cmake-install-pr
-```
-
-## Commit the generated changes
-
-```shell
-git commit -m"Regenerate libraries"
 ```
 
 ## Push the branch and create a pull request

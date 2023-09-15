@@ -14,8 +14,17 @@
 # limitations under the License.
 
 set -euo pipefail
+BOLD_ON_GREY=$(tput bold && tput setab 252)
+TURN_OFF_ATTR=$(tput sgr0)
+SEPARATOR=
 
-# Determine the googleapis HEAD commit and the checksum of its tarball.
+function banner() {
+  test -n "${SEPARATOR}" && echo
+  echo "${BOLD_ON_GREY}[ $* ]${TURN_OFF_ATTR}"
+  SEPARATOR=Y
+}
+
+banner "Determining googleapis HEAD commit and tarball checksum"
 REPO="googleapis/googleapis"
 BRANCH="master"
 COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
@@ -26,7 +35,7 @@ gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleap
 SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
 rm -f "${DOWNLOAD}"
 
-# Update the Bazel dependency.
+banner "Updating Bazel/CMake dependencies"
 sed -i -f - bazel/google_cloud_cpp_deps.bzl <<EOT
   /name = "com_google_googleapis",/,/strip_prefix = "/ {
     s;/com_google_googleapis/.*.tar.gz",;/com_google_googleapis/${COMMIT}.tar.gz",;
@@ -35,8 +44,6 @@ sed -i -f - bazel/google_cloud_cpp_deps.bzl <<EOT
     s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
   }
 EOT
-
-# Update the CMake dependency.
 sed -i -f - cmake/GoogleapisConfig.cmake <<EOT
   /^set(_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA$/ {
     n
@@ -47,3 +54,22 @@ sed -i -f - cmake/GoogleapisConfig.cmake <<EOT
     s/".*"/"${SHA256}"/
   }
 EOT
+
+banner "Updating the protodeps/protolists"
+external/googleapis/update_libraries.sh
+
+banner "Regenerating libraries"
+# generate-libraries fails if it creates a diff, so ignore its status.
+ci/cloudbuild/build.sh --docker --trigger=generate-libraries-pr || true
+
+banner "Creating commits"
+git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
+  bazel/google_cloud_cpp_deps.bzl cmake/GoogleapisConfig.cmake
+git commit -m"Update the protodeps/protolists" \
+  external/googleapis/protodeps external/googleapis/protolists
+git commit -m"Regenerate libraries" .
+
+banner "Showing git state"
+git status --untracked-files=no
+echo ""
+git show-branch
