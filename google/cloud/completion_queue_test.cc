@@ -15,6 +15,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/default_completion_queue_impl.h"
+#include "google/cloud/status.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
@@ -22,10 +23,18 @@
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
+#include <grpcpp/completion_queue.h>
+#include <grpcpp/support/async_unary_call.h>
+#include <grpcpp/support/status.h>
+#include <algorithm>
 #include <chrono>
 #include <deque>
+#include <future>
 #include <memory>
+#include <mutex>
+#include <set>
 #include <thread>
+#include <type_traits>
 
 namespace google {
 namespace cloud {

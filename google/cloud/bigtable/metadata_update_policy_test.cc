@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
-#include "google/cloud/bigtable/admin_client.h"
+#include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
 #include "google/cloud/internal/url_encode.h"

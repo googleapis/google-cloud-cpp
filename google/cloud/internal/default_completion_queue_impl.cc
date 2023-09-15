@@ -16,7 +16,6 @@
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <grpcpp/alarm.h>
-#include <mutex>
 #include <sstream>
 
 // There is no way to unblock the gRPC event loop, not even calling Shutdown(),
