@@ -14,10 +14,11 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_GENERIC_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_GENERIC_H
+
 /**
  * @file
  *
- * Fully specialize `future<void>` and `promise<R>` for void.
+ * Implement `future<T>` and `promise<T>`.
  */
 
 #include "google/cloud/internal/future_base.h"
@@ -26,10 +27,12 @@
 #include "google/cloud/internal/future_then_meta.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
+#include <future>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Implement ISO/IEC TS 19571:2016 `future<T>`.
  */
@@ -141,7 +144,7 @@ class future final : private internal::future_base<T> {
 };
 
 /**
- * Implement `promise<T>` as defined in ISO/IEC TS 19571:2016.
+ * Implement ISO/IEC TS 19571:2016 `promise<T>`.
  */
 template <typename T>
 class promise final : private internal::promise_base<T> {

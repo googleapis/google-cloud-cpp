@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include <sstream>
+#include <utility>
 
 namespace google {
 namespace cloud {

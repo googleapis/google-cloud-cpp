@@ -22,7 +22,9 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <fstream>
+#include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

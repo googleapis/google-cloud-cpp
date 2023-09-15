@@ -25,6 +25,7 @@
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

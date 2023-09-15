@@ -15,7 +15,10 @@
 #include "google/cloud/storage/parallel_upload.h"
 #include <nlohmann/json.hpp>
 #include <algorithm>
+#include <memory>
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

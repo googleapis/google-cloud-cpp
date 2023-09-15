@@ -14,10 +14,11 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_VOID_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_VOID_H
+
 /**
  * @file
  *
- * Fully specialize `future<void>` and `promise<R>` for void.
+ * Specialize `future<T>` and `promise<T>` for void.
  */
 
 #include "google/cloud/internal/future_base.h"
@@ -25,12 +26,14 @@
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/internal/future_then_meta.h"
 #include "google/cloud/version.h"
+#include <future>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
- * Implement ISO/IEC TS 19571:2016 future for void.
+ * Specialize ISO/IEC TS 19571:2016 future for void.
  */
 template <>
 class future<void> final : private internal::future_base<void> {
@@ -134,7 +137,7 @@ class future<void> final : private internal::future_base<void> {
 };
 
 /**
- * Specialize promise as defined in ISO/IEC TS 19571:2016 for void.
+ * Specialize ISO/IEC TS 19571:2016 promise for void.
  */
 template <>
 class promise<void> final : private internal::promise_base<void> {
