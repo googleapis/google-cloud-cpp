@@ -36,9 +36,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ::google::pubsub::v1::PubsubMessage const& ToProto(pubsub::Message const&);
 ::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&&);
 pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage);
-
 /// Estimate the size of a message.
 std::size_t MessageSize(pubsub::Message const&);
+// For Open Telemetry tracing only. Inserts or sets an attribute on the message.
+void SetAttribute(std::string const& key, std::string value, pubsub::Message&);
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 
@@ -124,6 +125,9 @@ class Message {
   friend ::google::pubsub::v1::PubsubMessage&& pubsub_internal::ToProto(
       Message&& m);
   friend std::size_t pubsub_internal::MessageSize(Message const&);
+  friend void pubsub_internal::SetAttribute(std::string const& key,
+                                            std::string value,
+                                            pubsub::Message&);
 
   /// Construct `Message` objects.
   friend class MessageBuilder;
@@ -284,6 +288,11 @@ inline std::size_t MessageSize(pubsub::Message const& m) {
 }
 
 std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
+
+inline void SetAttribute(std::string const& key, std::string value,
+                         pubsub::Message& m) {
+  (*m.proto_.mutable_attributes())[key] = std::move(value);
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
