@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <map>
+#include <string>
 #include <thread>
 
 namespace google {

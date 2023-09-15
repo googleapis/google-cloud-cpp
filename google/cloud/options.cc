@@ -19,6 +19,7 @@
 #include <iterator>
 #include <set>
 #include <unordered_map>
+#include <utility>
 
 namespace google {
 namespace cloud {

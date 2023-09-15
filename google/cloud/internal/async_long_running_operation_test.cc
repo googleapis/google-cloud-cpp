@@ -22,6 +22,7 @@
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -24,6 +24,7 @@
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invoke_result.h"
+#include <memory>
 #include <string>
 
 namespace google {

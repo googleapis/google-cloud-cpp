@@ -15,6 +15,7 @@
 #include "google/cloud/storage/object_rewriter.h"
 #include "google/cloud/storage/internal/storage_connection.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/internal/hybrid_stub.h"
 #include "google/cloud/internal/getenv.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

@@ -27,6 +27,7 @@
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

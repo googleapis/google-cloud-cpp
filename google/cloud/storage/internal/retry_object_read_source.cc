@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/log.h"
 #include <algorithm>
+#include <string>
 #include <thread>
 
 namespace google {

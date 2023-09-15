@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
