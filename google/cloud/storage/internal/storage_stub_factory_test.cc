@@ -18,9 +18,12 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "google/cloud/testing_util/validate_propagator.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -241,6 +244,79 @@ TEST_F(StorageStubFactory, QueryWriteStatus) {
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("QueryWriteStatus")));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ValidateNoPropagator;
+using ::google::cloud::testing_util::ValidatePropagator;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+
+TEST_F(StorageStubFactory, TracingEnabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockStorageStub>();
+        EXPECT_CALL(*mock, DeleteBucket)
+            .WillOnce([](auto& context, auto const&) {
+              ValidatePropagator(context);
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  CompletionQueue cq;
+  auto stub =
+      CreateDecoratedStubs(std::move(cq),
+                           EnableTracing(Options{}
+                                             .set<EndpointOption>("localhost:1")
+                                             .set<GrpcNumChannelsOption>(1)
+                                             .set<UnifiedCredentialsOption>(
+                                                 MakeInsecureCredentials())),
+                           factory.AsStdFunction())
+          .second;
+  grpc::ClientContext context;
+  (void)stub->DeleteBucket(context, {});
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(SpanNamed("google.storage.v2.Storage/DeleteBucket")));
+}
+
+TEST_F(StorageStubFactory, TracingDisabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockStorageStub>();
+        EXPECT_CALL(*mock, DeleteBucket)
+            .WillOnce([](auto& context, auto const&) {
+              ValidateNoPropagator(context);
+              return internal::AbortedError("fail");
+            });
+        return mock;
+      });
+
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+                  std::move(cq),
+                  DisableTracing(Options{}
+                                     .set<EndpointOption>("localhost:1")
+                                     .set<GrpcNumChannelsOption>(1)
+                                     .set<UnifiedCredentialsOption>(
+                                         MakeInsecureCredentials())),
+                  factory.AsStdFunction())
+                  .second;
+  grpc::ClientContext context;
+  (void)stub->DeleteBucket(context, {});
+
+  EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
