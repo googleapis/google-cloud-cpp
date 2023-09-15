@@ -14,7 +14,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
+#include "google/cloud/pubsub/internal/batching_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
@@ -39,6 +40,7 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::SizeIs;
 
 TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
   auto span_catcher = InstallSpanCatcher();
@@ -57,7 +59,7 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
                                      .Build()})
                       .get();
 
-  EXPECT_THAT(response, StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(response);
   EXPECT_THAT(
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
@@ -70,7 +72,7 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
 TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, Flush).Times(1);
+  EXPECT_CALL(*mock, Flush);
   auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   connection->Flush(PublisherConnection::FlushParams{});
@@ -84,10 +86,10 @@ TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
           SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST(FlowControlledPublisher, ResumePublishSpan) {
+TEST(BatchingPublisherTracingConnectionTest, ResumePublishSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, ResumePublish).Times(1);
+  EXPECT_CALL(*mock, ResumePublish);
   auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   connection->ResumePublish(PublisherConnection::ResumePublishParams{});
@@ -105,11 +107,12 @@ TEST(MakeBatchingPublisherTracingConnectionTest, CreateTracingConnection) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_FALSE(ThereIsAnActiveSpan());
   });
   auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   connection->Flush(PublisherConnection::FlushParams{});
+  EXPECT_THAT(span_catcher->GetSpans(), SizeIs(1));
 }
 
 }  // namespace
