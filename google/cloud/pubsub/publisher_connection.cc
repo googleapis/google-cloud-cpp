@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
+#include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_stub_factory.h"
 #include "google/cloud/pubsub/internal/publisher_tracing_connection.h"
@@ -69,6 +70,11 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
       pubsub::FullPublisherAction::kIgnored) {
     connection = pubsub_internal::FlowControlledPublisherConnection::Create(
         std::move(opts), std::move(connection));
+    if (tracing_enabled) {
+      connection =
+          pubsub_internal::MakeFlowControlledPublisherTracingConnection(
+              std::move(connection));
+    }
   }
 
   if (tracing_enabled) {
