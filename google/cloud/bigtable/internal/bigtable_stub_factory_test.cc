@@ -41,8 +41,6 @@ using ::google::cloud::bigtable::testing::MockReadRowsStream;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
-using ::google::cloud::testing_util::ValidateNoPropagator;
-using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -301,6 +299,8 @@ TEST_F(BigtableStubFactory, FeaturesFlags) {
 using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::ValidateNoPropagator;
+using ::google::cloud::testing_util::ValidatePropagator;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
