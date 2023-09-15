@@ -47,7 +47,6 @@ class FlowControlledPublisherTracingConnection
   void Flush(FlushParams p) override {
     auto span =
         internal::MakeSpan("pubsub::FlowControlledPublisherConnection::Flush");
-    auto scope = opentelemetry::trace::Scope(span);
     child_->Flush(std::move(p));
     internal::EndSpan(*span);
   }
@@ -55,7 +54,6 @@ class FlowControlledPublisherTracingConnection
   void ResumePublish(ResumePublishParams p) override {
     auto span = internal::MakeSpan(
         "pubsub::FlowControlledPublisherConnection::ResumePublish");
-    auto scope = opentelemetry::trace::Scope(span);
     child_->ResumePublish(std::move(p));
     internal::EndSpan(*span);
   }

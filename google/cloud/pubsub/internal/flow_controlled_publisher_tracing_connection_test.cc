@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::SizeIs;
 
 TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
   auto span_catcher = InstallSpanCatcher();
@@ -110,12 +111,13 @@ TEST(MakeFlowControlledPublisherTracingConnectionTest,
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
+    EXPECT_FALSE(ThereIsAnActiveSpan());
   });
   auto connection =
       MakeFlowControlledPublisherTracingConnection(std::move(mock));
 
   connection->Flush(PublisherConnection::FlushParams{});
+  EXPECT_THAT(span_catcher->GetSpans(), SizeIs(1));
 }
 
 }  // namespace
