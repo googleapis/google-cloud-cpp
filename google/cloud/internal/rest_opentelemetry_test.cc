@@ -17,8 +17,6 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 
 namespace google {
@@ -81,24 +79,19 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
 
 TEST(RestOpentelemetry, InjectTraceContext) {
   auto span_catcher = InstallSpanCatcher();
-  auto propagator =
-      std::make_shared<opentelemetry::trace::propagation::HttpTraceContext>();
-  // Set the global propagator.
-  opentelemetry::context::propagation::GlobalTextMapPropagator::
-      SetGlobalPropagator(
-          opentelemetry::nostd::shared_ptr<
-              opentelemetry::context::propagation::TextMapPropagator>(
-              propagator));
   auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
   RestRequest request(kUrl, RestRequest::HttpHeaders{{"empty", {}}});
 
   auto span = MakeSpanHttp(request, "GET");
   auto scope = opentelemetry::trace::Scope(span);
   RestContext context;
-  InjectTraceContext(context, {});
+  auto propagator = internal::MakePropagator();
+  InjectTraceContext(context, *propagator);
 
   span->End();
-  EXPECT_THAT(context.headers(), Contains(Pair("traceparent", _)));
+  EXPECT_THAT(context.headers(),
+              AllOf(Contains(Pair("x-cloud-trace-context", _)),
+                    Contains(Pair("traceparent", _))));
 }
 
 }  // namespace
