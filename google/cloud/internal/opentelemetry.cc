@@ -16,7 +16,6 @@
 #include "google/cloud/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/trace/provider.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -32,13 +31,6 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
     Options const&) {
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
   return provider->GetTracer("gcloud-cpp", version_string());
-}
-
-opentelemetry::nostd::shared_ptr<
-    opentelemetry::context::propagation::TextMapPropagator>
-GetTextMapPropagator(Options const&) {
-  return opentelemetry::context::propagation::GlobalTextMapPropagator::
-      GetGlobalPropagator();
 }
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(

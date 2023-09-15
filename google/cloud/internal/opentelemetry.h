@@ -53,19 +53,6 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
     Options const& options);
 
 /**
- * Returns a [propagator] to use for propagating context across process
- * boundaries.
- *
- * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#context-propagation
- *
- * [propagator]:
- * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#textmap-propagator
- */
-opentelemetry::nostd::shared_ptr<
-    opentelemetry::context::propagation::TextMapPropagator>
-GetTextMapPropagator(Options const& options);
-
-/**
  * Start a [span] using the current [tracer].
  *
  * The current tracer is determined by the prevailing `CurrentOptions()`.
