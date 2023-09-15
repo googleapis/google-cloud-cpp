@@ -29,7 +29,7 @@ namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // How many minutes the test lasts by default.
-int constexpr kDefaultTestDuration = 5;
+auto constexpr kDefaultTestDuration = std::chrono::minutes(5);
 
 struct Config {
   // API related common configs.
@@ -44,7 +44,7 @@ struct Config {
   // Benchmark related common configs.
   int thread_count = 4;
   std::chrono::seconds test_duration =
-      std::chrono::seconds(kDefaultTestDuration * 60);
+      std::chrono::duration_cast<std::chrono::seconds>(kDefaultTestDuration);
 
   google::cloud::StatusOr<Config> ParseArgs(
       std::vector<std::string> const& args);

@@ -92,9 +92,13 @@ std::chrono::milliseconds ToChronoMillis(int m) {
 void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
                                       std::string const& phase,
                                       BenchmarkResult const& result) {
-  auto ops_throughput =
-      1000 * result.operations.size() / result.elapsed.count();
-  os << "# " << phase << " op throughput=" << ops_throughput << " ops/s\n";
+  std::chrono::seconds elapsed =
+      std::chrono::duration_cast<std::chrono::seconds>(result.elapsed);
+  auto elapsed_dbl = static_cast<double>(elapsed.count());
+  auto operations_size_dbl = static_cast<double>(result.operations.size());
+  auto ops_throughput = operations_size_dbl / elapsed_dbl;
+  os << "# " << phase << " op throughput=" << ops_throughput << " ops/s"
+     << std::endl;
 }
 
 void Benchmark::PrintLatencyResult(std::ostream& os,
