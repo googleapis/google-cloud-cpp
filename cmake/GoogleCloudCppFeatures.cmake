@@ -164,54 +164,63 @@ export_list_to_bazel(
     "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES GOOGLE_CLOUD_CPP_GA_LIBRARIES)
 
+# ~~~
 # Handle the dependencies between features. That is, if feature "X" is enabled
 # also enable feature "Y" because "X" depends on "Y".
-function (google_cloud_cpp_enable_deps)
-    set(enabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
-    list(FILTER enabled_features EXCLUDE REGEX "^-")
-    list(FILTER enabled_features EXCLUDE REGEX "^__")
+#
+# This also implements a few meta-features:
+# __ga_libraries__: compile all the GA libraries
+# __experimental_libraries__: compile all the experimental libraries
+# __common__: compile all the common libraries, even if not needed by any
+#   other feature, or even if no features are enabled.
+# ~~~
+macro (google_cloud_cpp_enable_deps)
     if (__ga_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
-        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES})
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
+             ${GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES})
     endif ()
     if (__experimental_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND enabled_features ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
+             ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
     endif ()
+    if (__common__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
+        set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
+    endif ()
+    list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^-")
+    list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^__")
 
     set(disabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(FILTER disabled_features INCLUDE REGEX "^-")
     foreach (disabled IN LISTS disabled_features)
         string(SUBSTRING "${disabled}" 1 -1 feature)
-        list(REMOVE_ITEM enabled_features "${feature}")
+        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE "${feature}")
     endforeach ()
 
-    if (asset IN_LIST enabled_features)
-        list(INSERT enabled_features 0 accesscontextmanager osconfig)
+    if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
     endif ()
-    if (contentwarehouse IN_LIST enabled_features)
-        list(INSERT enabled_features 0 documentai)
+    if (contentwarehouse IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 documentai)
     endif ()
-    if (pubsublite IN_LIST enabled_features)
-        list(INSERT enabled_features 0 pubsub)
+    if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 pubsub)
     endif ()
-    if (pubsub IN_LIST enabled_features)
-        list(INSERT enabled_features 0 iam)
+    if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)
     endif ()
     if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT enabled_features 0 storage)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
     endif ()
     if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT enabled_features 0 trace)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 trace)
     endif ()
-
-    set(GOOGLE_CLOUD_CPP_ENABLE
-        "${enabled_features}"
-        PARENT_SCOPE)
-endfunction ()
+endmacro ()
 
 # Cleanup the "GOOGLE_CLOUD_CPP_ENABLE" variable. Remove duplicates, and set
 # backwards compatibility flags.
-function (google_cloud_cpp_enable_cleanup)
+macro (google_cloud_cpp_enable_cleanup)
     # Remove any library that's been disabled from the list.
     foreach (library IN LISTS GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
         string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
@@ -230,12 +239,10 @@ function (google_cloud_cpp_enable_cleanup)
 
     set(grpc_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(REMOVE_ITEM grpc_features ${GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES})
-    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC OFF)
     if (grpc_features)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
     endif ()
 
-    set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
     if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
@@ -244,17 +251,7 @@ function (google_cloud_cpp_enable_cleanup)
         OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
-
-    set(GOOGLE_CLOUD_CPP_ENABLE
-        "${GOOGLE_CLOUD_CPP_ENABLE}"
-        PARENT_SCOPE)
-    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC
-        "${GOOGLE_CLOUD_CPP_ENABLE_GRPC}"
-        PARENT_SCOPE)
-    set(GOOGLE_CLOUD_CPP_ENABLE_REST
-        "${GOOGLE_CLOUD_CPP_ENABLE_REST}"
-        PARENT_SCOPE)
-endfunction ()
+endmacro ()
 
 # Configure CMake to build the features listed in `GOOGLE_CLOUD_CPP_ENABLE`.
 # Most of them are subdirectories in `google/cloud/`. Some number of them have
@@ -381,13 +378,10 @@ function (google_cloud_cpp_define_legacy_feature_options)
     mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
 endfunction ()
 
-function (google_cloud_cpp_apply_legacy_feature_options)
+macro (google_cloud_cpp_apply_legacy_feature_options)
     # We no longer build the generator by default, but if it was explicitly
     # requested, we add it to the list of enabled libraries.
     if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE "generator")
     endif ()
-    set(GOOGLE_CLOUD_CPP_ENABLE
-        "${GOOGLE_CLOUD_CPP_ENABLE}"
-        PARENT_SCOPE)
-endfunction ()
+endmacro ()
