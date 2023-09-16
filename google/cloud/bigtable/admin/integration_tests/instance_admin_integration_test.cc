@@ -24,6 +24,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/location.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -73,16 +74,16 @@ class InstanceAdminIntegrationTest
 
   StatusOr<std::vector<std::string>> ListInstances(
       BigtableInstanceAdminClient& client) {
-    auto const project_name = Project(project_id_).FullName();
-    auto sor = client.ListInstances(project_name);
+    auto const project = Project(project_id_);
+    auto sor = client.ListInstances(project.FullName());
     if (!sor) return std::move(sor).status();
     auto resp = *std::move(sor);
 
     // If either zone_a_ or zone_b_ are in the list of failed locations then we
     // cannot proceed.
     EXPECT_THAT(resp.failed_locations(),
-                Not(AnyOf(Contains(project_name + "/locations/" + zone_a_),
-                          Contains(project_name + "/locations/" + zone_b_))));
+                Not(AnyOf(Contains(Location(project, zone_a_).FullName()),
+                          Contains(Location(project, zone_b_).FullName()))));
     std::vector<std::string> names;
     names.reserve(resp.instances_size());
     auto& instances = *resp.mutable_instances();
@@ -118,21 +119,22 @@ class InstanceAdminIntegrationTest
 };
 
 btadmin::CreateInstanceRequest IntegrationTestConfig(
-    std::string const& project, std::string const& instance_id,
-    std::string const& location,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& location_id,
     btadmin::Instance::Type type = btadmin::Instance::DEVELOPMENT,
     int32_t serve_nodes = 0) {
+  auto const project = Project(project_id);
+  auto const location = Location(project, location_id);
   // The description cannot exceed 30 characters
   auto const display_name = ("IT " + instance_id).substr(0, 30);
-  auto const project_name = Project(project).FullName();
 
   btadmin::Cluster c;
-  c.set_location(project_name + "/locations/" + location);
+  c.set_location(location.FullName());
   c.set_serve_nodes(serve_nodes);
   c.set_default_storage_type(btadmin::StorageType::HDD);
 
   btadmin::CreateInstanceRequest r;
-  r.set_parent(std::move(project_name));
+  r.set_parent(project.FullName());
   r.set_instance_id(instance_id);
   r.mutable_instance()->set_type(type);
   r.mutable_instance()->set_display_name(std::move(display_name));
@@ -326,7 +328,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   auto const instance_id = RandomInstanceId(generator_);
   auto const cluster_id = instance_id + "-cl2";
-  auto const project_name = Project(project_id_).FullName();
+  auto const project = Project(project_id_);
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
   auto const cluster_name =
       bigtable::ClusterName(project_id_, instance_id, cluster_id);
@@ -339,7 +341,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 
   // Create cluster
   btadmin::Cluster c;
-  c.set_location(project_name + "/locations/" + zone_b_);
+  c.set_location(Location(project, zone_b_).FullName());
   c.set_serve_nodes(3);
   c.set_default_storage_type(btadmin::StorageType::HDD);
   auto cluster = client_.CreateCluster(instance_name, cluster_id, c).get();

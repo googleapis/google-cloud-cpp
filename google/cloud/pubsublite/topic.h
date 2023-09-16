@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_H
 
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/location.h"
 #include "google/cloud/version.h"
 #include <utility>
 
@@ -48,7 +49,7 @@ class Topic {
    * "projects/<project-id>/locations/<location>/topics/<topic-id>"
    */
   std::string FullName() const {
-    return absl::StrCat("projects/", project_id_, "/locations/", location_id_,
+    return absl::StrCat(Location(project_id_, location_id_).FullName(),
                         "/topics/", topic_id_);
   }
 

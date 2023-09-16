@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/location.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
 #include <iterator>
@@ -34,12 +35,14 @@ void CreateInstance(
   //! [create instance] [START bigtable_create_prod_instance]
   namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::future;
+  using ::google::cloud::Location;
   using ::google::cloud::Project;
   using ::google::cloud::StatusOr;
   [](cbta::BigtableInstanceAdminClient instance_admin,
      std::string const& project_id, std::string const& instance_id,
      std::string const& zone) {
-    std::string project_name = Project(project_id).FullName();
+    auto const project = Project(project_id);
+    std::string project_name = project.FullName();
     std::string cluster_id = instance_id + "-c1";
 
     google::bigtable::admin::v2::Instance in;
@@ -47,7 +50,7 @@ void CreateInstance(
     in.set_display_name("Put description here");
 
     google::bigtable::admin::v2::Cluster cluster;
-    cluster.set_location(project_name + "/locations/" + zone);
+    cluster.set_location(Location(project, zone).FullName());
     cluster.set_serve_nodes(3);
     cluster.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
@@ -76,13 +79,15 @@ void CreateDevInstance(
   //! [create dev instance] [START bigtable_create_dev_instance]
   namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::future;
+  using ::google::cloud::Location;
   using ::google::cloud::Project;
   using ::google::cloud::StatusOr;
 
   [](cbta::BigtableInstanceAdminClient instance_admin,
      std::string const& project_id, std::string const& instance_id,
      std::string const& zone) {
-    std::string project_name = Project(project_id).FullName();
+    auto const project = Project(project_id);
+    std::string project_name = project.FullName();
     std::string cluster_id = instance_id + "-c1";
 
     google::bigtable::admin::v2::Instance in;
@@ -90,7 +95,7 @@ void CreateDevInstance(
     in.set_display_name("Put description here");
 
     google::bigtable::admin::v2::Cluster cluster;
-    cluster.set_location(project_name + "/locations/" + zone);
+    cluster.set_location(Location(project, zone).FullName());
     cluster.set_serve_nodes(0);
     cluster.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
@@ -119,13 +124,15 @@ void CreateReplicatedInstance(
   // [START bigtable_create_replicated_cluster]
   namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::future;
+  using ::google::cloud::Location;
   using ::google::cloud::Project;
   using ::google::cloud::StatusOr;
 
   [](cbta::BigtableInstanceAdminClient instance_admin,
      std::string const& project_id, std::string const& instance_id,
      std::string const& zone_a, std::string const& zone_b) {
-    std::string project_name = Project(project_id).FullName();
+    auto const project = Project(project_id);
+    std::string project_name = project.FullName();
     std::string c1 = instance_id + "-c1";
     std::string c2 = instance_id + "-c2";
 
@@ -134,12 +141,12 @@ void CreateReplicatedInstance(
     in.set_display_name("Put description here");
 
     google::bigtable::admin::v2::Cluster cluster1;
-    cluster1.set_location(project_name + "/locations/" + zone_a);
+    cluster1.set_location(Location(project, zone_a).FullName());
     cluster1.set_serve_nodes(3);
     cluster1.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
     google::bigtable::admin::v2::Cluster cluster2;
-    cluster2.set_location(project_name + "/locations/" + zone_b);
+    cluster2.set_location(Location(project, zone_b).FullName());
     cluster2.set_serve_nodes(3);
     cluster2.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
@@ -296,16 +303,17 @@ void CreateCluster(
   namespace cbt = ::google::cloud::bigtable;
   namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::future;
+  using ::google::cloud::Location;
   using ::google::cloud::Project;
   using ::google::cloud::StatusOr;
   [](cbta::BigtableInstanceAdminClient instance_admin,
      std::string const& project_id, std::string const& instance_id,
      std::string const& cluster_id, std::string const& zone) {
-    std::string project_name = Project(project_id).FullName();
+    auto const project = Project(project_id);
     std::string instance_name = cbt::InstanceName(project_id, instance_id);
 
     google::bigtable::admin::v2::Cluster c;
-    c.set_location(project_name + "/locations/" + zone);
+    c.set_location(Location(project, zone).FullName());
     c.set_serve_nodes(3);
     c.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
