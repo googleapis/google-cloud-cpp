@@ -14,8 +14,6 @@
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
-#include "google/cloud/location.h"
-#include "google/cloud/project.h"
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
@@ -152,14 +150,13 @@ TEST(ExternalAccount, ParseAwsSuccess) {
       "https://sts.{region}.aws.example.com"
       "?Action=GetCallerIdentity&Version=2011-06-15";
   auto constexpr kTestTokenType = "urn:ietf:params:aws:token-type:aws4_request";
-  auto const k_test_audience =
-      std::string{"//iam.googleapis.com/" +
-                  Location(Project("$PROJECT_NUMBER"), "global").FullName() +
-                  "/workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto constexpr kTestAudience =
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID";
 
   auto const configuration = nlohmann::json{
       {"type", "external_account"},
-      {"audience", k_test_audience},
+      {"audience", kTestAudience},
       {"subject_token_type", kTestTokenType},
       {"token_url", "test-token-url"},
       {"credential_source",
@@ -176,7 +173,7 @@ TEST(ExternalAccount, ParseAwsSuccess) {
   auto const actual =
       ParseExternalAccountConfiguration(configuration.dump(), ec);
   ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(actual->audience, k_test_audience);
+  EXPECT_EQ(actual->audience, kTestAudience);
   EXPECT_EQ(actual->subject_token_type, kTestTokenType);
   EXPECT_EQ(actual->token_url, "test-token-url");
 

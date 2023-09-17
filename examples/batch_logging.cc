@@ -56,7 +56,7 @@ void JobLogs(std::vector<std::string> const& argv) {
 
     auto logging = google::cloud::logging_v2::LoggingServiceV2Client(
         google::cloud::logging_v2::MakeLoggingServiceV2Connection());
-    auto const log_name = "projects/" + project_id + "/logs/batch_task_logs";
+    auto const log_name = project.FullName() + "/logs/batch_task_logs";
     google::logging::v2::ListLogEntriesRequest request;
     request.mutable_resource_names()->Add(project.FullName());
     request.set_filter("logName=\"" + log_name +
