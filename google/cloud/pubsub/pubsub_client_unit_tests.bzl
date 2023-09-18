@@ -23,6 +23,7 @@ pubsub_client_unit_tests = [
     "exactly_once_ack_handler_test.cc",
     "internal/ack_handler_wrapper_test.cc",
     "internal/batching_publisher_connection_test.cc",
+    "internal/batching_publisher_tracing_connection_test.cc",
     "internal/default_batch_sink_test.cc",
     "internal/default_pull_ack_handler_test.cc",
     "internal/defaults_test.cc",

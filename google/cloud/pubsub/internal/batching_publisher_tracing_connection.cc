@@ -12,12 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
+#include "google/cloud/pubsub/internal/batching_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
-#include <opentelemetry/trace/context.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -25,20 +22,19 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 namespace {
-class FlowControlledPublisherTracingConnection
-    : public pubsub::PublisherConnection {
+
+class BatchingPublisherTracingConnection : public pubsub::PublisherConnection {
  public:
-  explicit FlowControlledPublisherTracingConnection(
+  explicit BatchingPublisherTracingConnection(
       std::shared_ptr<pubsub::PublisherConnection> child)
       : child_(std::move(child)) {}
 
-  ~FlowControlledPublisherTracingConnection() override = default;
+  ~BatchingPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
-    auto span = internal::MakeSpan(
-        "pubsub::FlowControlledPublisherConnection::Publish");
+    auto span =
+        internal::MakeSpan("pubsub::BatchingPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
     return result;
@@ -46,14 +42,14 @@ class FlowControlledPublisherTracingConnection
 
   void Flush(FlushParams p) override {
     auto span =
-        internal::MakeSpan("pubsub::FlowControlledPublisherConnection::Flush");
+        internal::MakeSpan("pubsub::BatchingPublisherConnection::Flush");
     child_->Flush(std::move(p));
     internal::EndSpan(*span);
   }
 
   void ResumePublish(ResumePublishParams p) override {
     auto span = internal::MakeSpan(
-        "pubsub::FlowControlledPublisherConnection::ResumePublish");
+        "pubsub::BatchingPublisherConnection::ResumePublish");
     child_->ResumePublish(std::move(p));
     internal::EndSpan(*span);
   }
@@ -65,16 +61,16 @@ class FlowControlledPublisherTracingConnection
 }  // namespace
 
 std::shared_ptr<pubsub::PublisherConnection>
-MakeFlowControlledPublisherTracingConnection(
+MakeBatchingPublisherTracingConnection(
     std::shared_ptr<pubsub::PublisherConnection> connection) {
-  return std::make_shared<FlowControlledPublisherTracingConnection>(
+  return std::make_shared<BatchingPublisherTracingConnection>(
       std::move(connection));
 }
 
 #else  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<pubsub::PublisherConnection>
-MakeFlowControlledPublisherTracingConnection(
+MakeBatchingPublisherTracingConnection(
     std::shared_ptr<pubsub::PublisherConnection> connection) {
   return connection;
 }

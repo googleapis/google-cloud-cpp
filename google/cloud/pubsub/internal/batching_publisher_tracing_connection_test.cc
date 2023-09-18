@@ -14,7 +14,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#include "google/cloud/pubsub/internal/flow_controlled_publisher_tracing_connection.h"
+#include "google/cloud/pubsub/internal/batching_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -22,14 +22,14 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 namespace {
 
 using ::google::cloud::pubsub::PublisherConnection;
-using ::google::cloud::pubsub_internal::
-    MakeFlowControlledPublisherTracingConnection;
+using ::google::cloud::pubsub_internal::MakeBatchingPublisherTracingConnection;
 using ::google::cloud::pubsub_mocks::MockPublisherConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
@@ -38,20 +38,19 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::SizeIs;
 
-TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
+TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
       .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+        EXPECT_FALSE(ThereIsAnActiveSpan());
         return google::cloud::make_ready_future(
             google::cloud::StatusOr<std::string>("test-id-0"));
       });
-  auto connection =
-      MakeFlowControlledPublisherTracingConnection(std::move(mock));
+  auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   auto response = connection
                       ->Publish({pubsub::MessageBuilder{}
@@ -60,22 +59,23 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
                                      .Build()})
                       .get();
 
-  EXPECT_THAT(response, StatusIs(StatusCode::kOk));
+  EXPECT_STATUS_OK(response);
   EXPECT_THAT(
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::Publish"),
+          SpanNamed("pubsub::BatchingPublisherConnection::Publish"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
+TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, Flush).Times(1);
-  auto connection =
-      MakeFlowControlledPublisherTracingConnection(std::move(mock));
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+  });
+  auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   connection->Flush(PublisherConnection::FlushParams{});
 
@@ -83,17 +83,19 @@ TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
+          SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST(FlowControlledPublisher, ResumePublishSpan) {
+TEST(BatchingPublisherTracingConnectionTest, ResumePublishSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, ResumePublish).Times(1);
-  auto connection =
-      MakeFlowControlledPublisherTracingConnection(std::move(mock));
+  EXPECT_CALL(*mock, ResumePublish).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+  });
+
+  auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   connection->ResumePublish(PublisherConnection::ResumePublishParams{});
 
@@ -101,20 +103,18 @@ TEST(FlowControlledPublisher, ResumePublishSpan) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::ResumePublish"),
+          SpanNamed("pubsub::BatchingPublisherConnection::ResumePublish"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST(MakeFlowControlledPublisherTracingConnectionTest,
-     CreateTracingConnection) {
+TEST(MakeBatchingPublisherTracingConnectionTest, CreateTracingConnection) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Flush).WillOnce([] {
     EXPECT_FALSE(ThereIsAnActiveSpan());
   });
-  auto connection =
-      MakeFlowControlledPublisherTracingConnection(std::move(mock));
+  auto connection = MakeBatchingPublisherTracingConnection(std::move(mock));
 
   connection->Flush(PublisherConnection::FlushParams{});
   EXPECT_THAT(span_catcher->GetSpans(), SizeIs(1));
