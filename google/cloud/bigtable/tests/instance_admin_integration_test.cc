@@ -125,8 +125,8 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   // Wait for instance creation
   auto instance_1 = instance_1_fut.get();
   auto instance_2 = instance_2_fut.get();
-  EXPECT_STATUS_OK(instance_1);
-  EXPECT_STATUS_OK(instance_2);
+  ASSERT_STATUS_OK(instance_1);
+  ASSERT_STATUS_OK(instance_2);
 
   EXPECT_EQ(instance_1->name(), name_1);
   EXPECT_EQ(instance_2->name(), name_2);
