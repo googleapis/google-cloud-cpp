@@ -55,6 +55,7 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
 StatusOr<GetTableResponse> GetTableResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
   auto json = parse_json(http_response.payload);
+
   if (!json) return std::move(json).status();
 
   if (!valid_table(*json)) {
@@ -85,7 +86,8 @@ StatusOr<ListTablesResponse> ListTablesResponse::BuildFromHttpResponse(
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
   result.next_page_token = json->value("nextPageToken", "");
-  if (!absl::SimpleAtoi(json->value("totalItems", "0"), &result.total_items)) {
+  result.total_items = json->value("totalItems", 0);
+  if (result.total_items < 0) {
     return internal::InternalError("Invalid value for totalItems",
                                    GCP_ERROR_INFO());
   }

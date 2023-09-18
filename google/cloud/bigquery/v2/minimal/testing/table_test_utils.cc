@@ -82,18 +82,18 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   expected.max_staleness = "stale";
   expected.require_partition_filter = true;
   expected.labels = labels;
-  expected.num_time_travel_physical_bytes = 1;
-  expected.num_total_logical_bytes = 1;
-  expected.num_active_logical_bytes = 1;
-  expected.num_long_term_logical_bytes = 1;
-  expected.num_total_physical_bytes = 1;
-  expected.num_active_physical_bytes = 1;
-  expected.num_long_term_physical_bytes = 1;
-  expected.num_partitions = 1;
-  expected.num_bytes = 1;
-  expected.num_physical_bytes = 1;
-  expected.num_long_term_bytes = 1;
-  expected.num_rows = 1;
+  expected.num_time_travel_physical_bytes = "1";
+  expected.num_total_logical_bytes = "1";
+  expected.num_active_logical_bytes = "1";
+  expected.num_long_term_logical_bytes = "1";
+  expected.num_total_physical_bytes = "1";
+  expected.num_active_physical_bytes = "1";
+  expected.num_long_term_physical_bytes = "1";
+  expected.num_partitions = "1";
+  expected.num_bytes = "1";
+  expected.num_physical_bytes = "1";
+  expected.num_long_term_bytes = "1";
+  expected.num_rows = "1";
 
   expected.creation_time =
       std::chrono::system_clock::time_point(std::chrono::milliseconds(1));
@@ -285,10 +285,10 @@ std::string MakeTableJsonText() {
          R"(,"labels":{"l1":"v1","l2":"v2"},"lastModifiedTime":"1","location":"t-location")"
          R"(,"materializedView":{"enableRefresh":true,"lastRefreshTime":"0","query":"select 1;")"
          R"(,"refreshIntervalMs":"0"},"materializedViewStatus":{"lastRefreshStatus":{"location":"","message":"")"
-         R"(,"reason":""},"refreshWatermark":"123"},"maxStaleness":"stale","numActiveLogicalBytes":1)"
-         R"(,"numActivePhysicalBytes":1,"numBytes":1,"numLongTermBytes":1,"numLongTermLogicalBytes":1)"
-         R"(,"numLongTermPhysicalBytes":1,"numPartitions":1,"numPhysicalBytes":1,"numRows":1)"
-         R"(,"numTimeTravelPhysicalBytes":1,"numTotalLogicalBytes":1,"numTotalPhysicalBytes":1)"
+         R"(,"reason":""},"refreshWatermark":"123"},"maxStaleness":"stale","numActiveLogicalBytes":"1")"
+         R"(,"numActivePhysicalBytes":"1","numBytes":"1","numLongTermBytes":"1","numLongTermLogicalBytes":"1")"
+         R"(,"numLongTermPhysicalBytes":"1","numPartitions":"1","numPhysicalBytes":"1","numRows":"1")"
+         R"(,"numTimeTravelPhysicalBytes":"1","numTotalLogicalBytes":"1","numTotalPhysicalBytes":"1")"
          R"(,"rangePartitioning":{"field":"range-partition-field","range":{"end":"","interval":"","start":""}})"
          R"(,"requirePartitionFilter":true,"schema":{"fields":[{"categories":{"names":[]})"
          R"(,"collation":"","defaultValueExpression":"","description":"","fields":{"fields":[]})"
@@ -321,7 +321,7 @@ std::string MakeListTablesResponseJsonText() {
   return R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "1",
+          "totalItems": 1,
           "tables": [)" +
          tables_json_txt + R"(]})";
 }
@@ -331,7 +331,7 @@ std::string MakeListTablesResponseNoPageTokenJsonText() {
       bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
   return R"({"etag": "tag-1",
           "kind": "kind-1",
-          "totalItems": "1",
+          "totalItems": 1,
           "tables": [)" +
          tables_json_txt + R"(]})";
 }

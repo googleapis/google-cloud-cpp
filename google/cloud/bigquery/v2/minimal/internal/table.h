@@ -55,25 +55,24 @@ struct Table {
   std::string location;
   std::string default_collation;
   std::string max_staleness;
+  std::string num_bytes;
+  std::string num_rows;
+  std::string num_long_term_bytes;
+  std::string num_time_travel_physical_bytes;
+  std::string num_total_logical_bytes;
+  std::string num_active_logical_bytes;
+  std::string num_long_term_logical_bytes;
+  std::string num_total_physical_bytes;
+  std::string num_active_physical_bytes;
+  std::string num_long_term_physical_bytes;
+  std::string num_partitions;
+  std::string num_physical_bytes;
 
   bool require_partition_filter = false;
 
   std::chrono::system_clock::time_point creation_time;
   std::chrono::system_clock::time_point expiration_time;
   std::chrono::system_clock::time_point last_modified_time;
-
-  std::int64_t num_time_travel_physical_bytes;
-  std::int64_t num_total_logical_bytes;
-  std::int64_t num_active_logical_bytes;
-  std::int64_t num_long_term_logical_bytes;
-  std::int64_t num_total_physical_bytes;
-  std::int64_t num_active_physical_bytes;
-  std::int64_t num_long_term_physical_bytes;
-  std::int64_t num_partitions;
-  std::int64_t num_bytes;
-  std::int64_t num_physical_bytes;
-  std::int64_t num_long_term_bytes;
-  std::uint64_t num_rows;
 
   std::map<std::string, std::string> labels;
 
