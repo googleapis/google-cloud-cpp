@@ -29,6 +29,86 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 # `google_cloud_cpp_grpc_utils`.
 set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES "storage;experimental-bigquery_rest")
 
+set(GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES
+    # cmake-format: sorted
+    "compute_accelerator_types"
+    "compute_addresses"
+    "compute_autoscalers"
+    "compute_backend_buckets"
+    "compute_backend_services"
+    "compute_disks"
+    "compute_disk_types"
+    "compute_external_vpn_gateways"
+    "compute_firewall_policies"
+    "compute_firewalls"
+    "compute_forwarding_rules"
+    "compute_global_addresses"
+    "compute_global_forwarding_rules"
+    "compute_global_network_endpoint_groups"
+    "compute_global_public_delegated_prefixes"
+    "compute_health_checks"
+    "compute_http_health_checks"
+    "compute_https_health_checks"
+    "compute_image_family_views"
+    "compute_images"
+    "compute_instance_group_managers"
+    "compute_instance_groups"
+    "compute_instances"
+    "compute_instance_templates"
+    "compute_interconnect_attachments"
+    "compute_interconnect_locations"
+    "compute_interconnects"
+    "compute_license_codes"
+    "compute_licenses"
+    "compute_machine_images"
+    "compute_machine_types"
+    "compute_network_attachments"
+    "compute_network_edge_security_services"
+    "compute_network_endpoint_groups"
+    "compute_network_firewall_policies"
+    "compute_networks"
+    "compute_node_groups"
+    "compute_node_templates"
+    "compute_node_types"
+    "compute_packet_mirrorings"
+    "compute_projects"
+    "compute_public_advertised_prefixes"
+    "compute_public_delegated_prefixes"
+    "compute_region_autoscalers"
+    "compute_region_backend_services"
+    "compute_region_commitments"
+    "compute_region_disks"
+    "compute_region_disk_types"
+    "compute_region_health_check_services"
+    "compute_region_health_checks"
+    "compute_region_instance_group_managers"
+    "compute_region_instance_groups"
+    "compute_region_instances"
+    "compute_region_instance_templates"
+    "compute_region_network_endpoint_groups"
+    "compute_region_network_firewall_policies"
+    "compute_region_notification_endpoints"
+    "compute_region_security_policies"
+    "compute_region_ssl_certificates"
+    "compute_ssl_policies"
+    "compute_subnetworks"
+    "compute_target_grpc_proxies"
+    "compute_target_http_proxies"
+    "compute_target_https_proxies"
+    "compute_target_instances"
+    "compute_target_pools"
+    "compute_target_ssl_proxies"
+    "compute_target_tcp_proxies"
+    "compute_target_vpn_gateways"
+    "compute_url_maps"
+    "compute_vpn_gateways"
+    "compute_vpn_tunnels"
+    "compute_zones"
+    "compute_global_operations"
+    "compute_global_organization_operations"
+    "compute_region_operations"
+    "compute_zone_operations")
+
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sorted
     "compute"
@@ -160,6 +240,28 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "workflows"
     "workstations")
 
+list(FIND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES "compute"
+     compute_experimental)
+if (NOT compute_experimental EQUAL -1)
+    list(REMOVE_ITEM GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES "compute")
+    list(APPEND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
+         ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+endif ()
+
+list(FIND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute" compute_transition)
+if (NOT compute_transition EQUAL -1)
+    list(REMOVE_ITEM GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute")
+    list(APPEND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
+         ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+endif ()
+
+list(FIND GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute" compute_ga)
+if (NOT compute_ga EQUAL -1)
+    list(REMOVE_ITEM GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute")
+    list(APPEND GOOGLE_CLOUD_CPP_GA_LIBRARIES
+         ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+endif ()
+
 export_list_to_bazel(
     "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES GOOGLE_CLOUD_CPP_GA_LIBRARIES)
@@ -257,6 +359,7 @@ endmacro ()
 # Most of them are subdirectories in `google/cloud/`. Some number of them have
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
+    set(compute_added FALSE)
     foreach (feature IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
         if ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
@@ -272,6 +375,11 @@ function (google_cloud_cpp_enable_features)
             continue()
         elseif ("${feature}" STREQUAL "experimental-opentelemetry")
             add_subdirectory(google/cloud/opentelemetry)
+        elseif ("${feature}" MATCHES "^compute_.*")
+            if (NOT compute_added)
+                add_subdirectory(google/cloud/compute)
+                set(compute_added TRUE)
+            endif ()
         else ()
             if (NOT IS_DIRECTORY
                 "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"

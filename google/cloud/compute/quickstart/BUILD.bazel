@@ -23,6 +23,6 @@ cc_binary(
         "-I$(BINDIR)",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-compute",
+        "@google_cloud_cpp//:experimental-compute_disks",
     ],
 )

@@ -12,22 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
-[cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
-    timeout = "long",
-    srcs = [test],
-    copts = [
-        "-I$(BINDIR)",
-    ],
-    tags = [
-        "integration-test",
-    ],
-    deps = [
-        "//:experimental-compute_disks",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-    ],
-) for test in glob(["*_test.cc"])]
+def google_cloud_cpp_library_dir_name(library):
+    if library.startswith("compute_"):
+        return "compute"
+    return library

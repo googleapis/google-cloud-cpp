@@ -21,6 +21,7 @@ exports_files([
 ])
 
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+load("//bazel:library_dir_name.bzl", "google_cloud_cpp_library_dir_name")
 load(":libraries.bzl", "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES", "GOOGLE_CLOUD_CPP_GA_LIBRARIES", "GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES")
 
 EXPERIMENTAL_LIBRARIES = GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
@@ -32,7 +33,10 @@ GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
 [cc_library(
     name = "experimental-{library}".format(library = library),
     deps = [
-        "//google/cloud/{library}:google_cloud_cpp_{library}".format(library = library),
+        "//google/cloud/{library_dir}:google_cloud_cpp_{library}".format(
+            library = library,
+            library_dir = google_cloud_cpp_library_dir_name(library),
+        ),
     ],
 ) for library in EXPERIMENTAL_LIBRARIES]
 
@@ -40,7 +44,10 @@ GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
     name = "experimental-{library}_mocks".format(library = library),
     testonly = True,
     deps = [
-        "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
+        "//google/cloud/{library_dir}:google_cloud_cpp_{library}_mocks".format(
+            library = library,
+            library_dir = google_cloud_cpp_library_dir_name(library),
+        ),
     ],
 ) for library in EXPERIMENTAL_LIBRARIES]
 
@@ -49,7 +56,10 @@ GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
     deprecation = "this library is now GA, please use //:{library} instead.".format(library = library),
     tags = ["manual"],
     deps = [
-        "//google/cloud/{library}:google_cloud_cpp_{library}".format(library = library),
+        "//google/cloud/{library_dir}:google_cloud_cpp_{library}".format(
+            library = library,
+            library_dir = google_cloud_cpp_library_dir_name(library),
+        ),
     ],
 ) for library in TRANSITION_LIBRARIES]
 
@@ -59,14 +69,20 @@ GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
     deprecation = "this library is now GA, please use //:{library}_mocks instead.".format(library = library),
     tags = ["manual"],
     deps = [
-        "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
+        "//google/cloud/{library_dir}:google_cloud_cpp_{library}_mocks".format(
+            library = library,
+            library_dir = google_cloud_cpp_library_dir_name(library),
+        ),
     ],
 ) for library in TRANSITION_LIBRARIES]
 
 [cc_library(
     name = "{library}".format(library = library),
     deps = [
-        "//google/cloud/{library}:google_cloud_cpp_{library}".format(library = library),
+        "//google/cloud/{library_dir}:google_cloud_cpp_{library}".format(
+            library = library,
+            library_dir = google_cloud_cpp_library_dir_name(library),
+        ),
     ],
 ) for library in GA_LIBRARIES + TRANSITION_LIBRARIES]
 
@@ -74,7 +90,10 @@ GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
     name = "{library}_mocks".format(library = library),
     testonly = True,
     deps = [
-        "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
+        "//google/cloud/{library_dir}:google_cloud_cpp_{library}_mocks".format(
+            library = library,
+            library_dir = google_cloud_cpp_library_dir_name(library),
+        ),
     ],
 ) for library in GA_LIBRARIES + TRANSITION_LIBRARIES]
 
