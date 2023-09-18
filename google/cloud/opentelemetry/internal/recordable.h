@@ -151,10 +151,14 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
   void SetStatusImpl(opentelemetry::trace::StatusCode code,
                      opentelemetry::nostd::string_view description);
   void SetResourceImpl(opentelemetry::sdk::resource::Resource const& resource);
+  void SetInstrumentationScopeImpl();
 
   Project project_;
   google::devtools::cloudtrace::v2::Span span_;
   bool valid_ = true;
+
+  std::string scope_name_;
+  std::string scope_version_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

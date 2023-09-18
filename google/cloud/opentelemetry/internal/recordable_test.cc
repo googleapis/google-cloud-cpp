@@ -729,6 +729,23 @@ TEST(Recordable, SetInstrumentationScopeOmitsEmptyVersion) {
                   Pair("otel.scope.name", AttributeValue("test-name")))));
 }
 
+TEST(Recordable, ConstantAttributesOnlyOnRootSpan) {
+  opentelemetry::trace::SpanId const parent(
+      std::array<uint8_t const, opentelemetry::trace::SpanId::kSize>(
+          {1, 1, 2, 2, 3, 3, 4, 4}));
+  auto scope =
+      opentelemetry::sdk::instrumentationscope::InstrumentationScope::Create(
+          "test-name");
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetInstrumentationScope(*scope);
+  rec.SetIdentity(opentelemetry::trace::SpanContext::GetInvalid(), parent);
+
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.parent_span_id(), Not(IsEmpty()));
+  EXPECT_THAT(proto.attributes(), Attributes(IsEmpty()));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
