@@ -63,6 +63,7 @@ add_library(
     internal/create_channel.h
     internal/default_batch_sink.cc
     internal/default_batch_sink.h
+    internal/default_message_batch.h
     internal/default_pull_ack_handler.cc
     internal/default_pull_ack_handler.h
     internal/defaults.cc

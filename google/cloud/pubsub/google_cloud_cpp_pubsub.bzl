@@ -32,6 +32,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "internal/containing_publisher_connection.h",
     "internal/create_channel.h",
     "internal/default_batch_sink.h",
+    "internal/default_message_batch.h",
     "internal/default_pull_ack_handler.h",
     "internal/defaults.h",
     "internal/exactly_once_policies.h",
