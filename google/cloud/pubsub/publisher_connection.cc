@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/batching_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/internal/containing_publisher_connection.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
@@ -66,6 +67,10 @@ std::shared_ptr<pubsub::PublisherConnection> ConnectionFromDecoratedStub(
   };
   auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
   auto connection = make_connection();
+  if (tracing_enabled) {
+    connection = pubsub_internal::MakeBatchingPublisherTracingConnection(
+        std::move(connection));
+  }
   if (opts.get<pubsub::FullPublisherActionOption>() !=
       pubsub::FullPublisherAction::kIgnored) {
     connection = pubsub_internal::FlowControlledPublisherConnection::Create(
