@@ -154,6 +154,7 @@ cc_proto_library(
     ),
 ] for service in service_dirs + operation_service_dirs]
 
+# Service C++ files and mocks targets
 [[
     filegroup(
         name = service.replace("/v1/", "_srcs"),
