@@ -126,7 +126,8 @@ function (export_list_to_bazel filename)
         foreach (item ${${VAR}})
             # While cmake needs compute as a feature, it confuses bazel.
             if (${item} STREQUAL "compute")
-                foreach (compute_lib ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+                foreach (compute_lib IN
+                         LISTS GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES)
                     file(APPEND "${filename}" "    \"${compute_lib}\",\n")
                 endforeach ()
             else ()

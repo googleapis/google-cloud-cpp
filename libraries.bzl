@@ -17,6 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
+    "pubsublite",
+    "sql",
     "compute_accelerator_types",
     "compute_addresses",
     "compute_autoscalers",
@@ -94,8 +96,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
     "compute_global_organization_operations",
     "compute_region_operations",
     "compute_zone_operations",
-    "pubsublite",
-    "sql",
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [

@@ -21,7 +21,7 @@ exports_files([
 ])
 
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
-load(":library_dir_name.bzl", "google_cloud_cpp_library_dir_name")
+load("//bazel:library_dir_name.bzl", "google_cloud_cpp_library_dir_name")
 load(":libraries.bzl", "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES", "GOOGLE_CLOUD_CPP_GA_LIBRARIES", "GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES")
 
 EXPERIMENTAL_LIBRARIES = GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
