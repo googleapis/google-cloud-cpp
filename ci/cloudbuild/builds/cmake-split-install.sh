@@ -48,13 +48,13 @@ io::run cmake --build cmake-out/common-libraries
 io::run cmake --install cmake-out/common-libraries --prefix "${INSTALL_PREFIX}"
 
 io::log_h2 "Building and installing popular libraries"
-mapfile -t core_cmake_args < <(cmake::common_args cmake-out/core-libraries)
+mapfile -t core_cmake_args < <(cmake::common_args cmake-out/popular-libraries)
 io::run cmake "${core_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
   -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,pubsub,spanner,storage,iam,policytroubleshooter" \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON
-io::run cmake --build cmake-out/core-libraries
-io::run cmake --install cmake-out/core-libraries --prefix "${INSTALL_PREFIX}"
+io::run cmake --build cmake-out/popular-libraries
+io::run cmake --install cmake-out/popular-libraries --prefix "${INSTALL_PREFIX}"
 
 io::log_h2 "Building and installing Compute"
 # We need a custom build directory
