@@ -63,9 +63,7 @@ class ComputeIntegrationTest
 
 TEST_F(ComputeIntegrationTest, DeleteUnknownDisk) {
   namespace disks = ::google::cloud::compute_disks_v1;
-  auto client = disks::DisksClient(
-      google::cloud::ExperimentalTag{},
-      disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
+  auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> delete_disk =
       client.DeleteDisk(project_id_, zone_, "not_found").get();
@@ -79,9 +77,7 @@ TEST_F(ComputeIntegrationTest, DeleteUnknownDisk) {
 
 TEST_F(ComputeIntegrationTest, CreateDisks) {
   namespace disks = ::google::cloud::compute_disks_v1;
-  auto client = disks::DisksClient(
-      google::cloud::ExperimentalTag{},
-      disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
+  auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
 
   google::cloud::cpp::compute::v1::Disk disk;
   disk.set_name(CreateRandomName("int-test-disk-"));
