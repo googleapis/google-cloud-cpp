@@ -248,15 +248,15 @@ if (NOT compute_experimental EQUAL -1)
          ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
 endif ()
 
-list(FIND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute" compute_experimental)
-if (NOT compute_experimental EQUAL -1)
+list(FIND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute" compute_transition)
+if (NOT compute_transition EQUAL -1)
     list(REMOVE_ITEM GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute")
     list(APPEND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
          ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
 endif ()
 
-list(FIND GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute" compute_experimental)
-if (NOT compute_experimental EQUAL -1)
+list(FIND GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute" compute_ga)
+if (NOT compute_ga EQUAL -1)
     list(REMOVE_ITEM GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute")
     list(APPEND GOOGLE_CLOUD_CPP_GA_LIBRARIES
          ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
@@ -362,6 +362,7 @@ endfunction ()
 # Most of them are subdirectories in `google/cloud/`. Some number of them have
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
+    set(compute_added FALSE)
     foreach (feature IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
         if ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
@@ -377,6 +378,11 @@ function (google_cloud_cpp_enable_features)
             continue()
         elseif ("${feature}" STREQUAL "experimental-opentelemetry")
             add_subdirectory(google/cloud/opentelemetry)
+        elseif ("${feature}" MATCHES "^compute_.*")
+            if (NOT compute_added)
+                add_subdirectory(google/cloud/compute)
+                set(compute_added TRUE)
+            endif ()
         else ()
             if (NOT IS_DIRECTORY
                 "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"
