@@ -39,12 +39,12 @@ class MessageBatch {
   // `BatchingPublisherConnection::Publish(...)`.
   virtual void SaveMessage(pubsub::Message m) = 0;
 
-  // Acts on the batch of messages before the batch is flushed. Invoked in
-  // `BatchingPublisherConnection::FlushImpl(...)`.
+  // Captures information about a batch of messages before it's flushed. Invoked
+  // in `BatchingPublisherConnection::FlushImpl(...)`.
   virtual void Flush() = 0;
 
-  // Acts on the response from the service in a callback. Invoked in the
-  // `BatchSink::AsyncPublish(...)` callback.
+  // Captures information about the response after we receive it from
+  // the server. Invoked in the `BatchSink::AsyncPublish(...)` callback.
   virtual void FlushCallback() = 0;
 };
 
