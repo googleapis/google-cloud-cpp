@@ -127,47 +127,56 @@ cc_proto_library(
 )
 
 # Service proto targets
-[filegroup(
-    name = service.replace("/v1/", "_proto_srcs"),
-    srcs = glob([service + "*.proto"]),
-) for service in service_dirs + operation_service_dirs]
+[[
+    filegroup(
+        name = service.replace("/v1/", "_proto_srcs"),
+        srcs = glob([service + "*.proto"]),
+    ),
+    proto_library(
+        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_proto"),
+        srcs = [":" + service.replace("/v1/", "_proto_srcs")],
+        visibility = ["//:__pkg__"],
+        deps = [
+            ":google_cloud_cpp_compute_internal_proto",
+            "@com_google_googleapis//google/api:annotations_proto",
+            "@com_google_googleapis//google/api:client_proto",
+            "@com_google_googleapis//google/api:field_behavior_proto",
+            "@com_google_googleapis//google/api:http_proto",
+            "@com_google_googleapis//google/api:resource_proto",
+            "@com_google_googleapis//google/api:routing_proto",
+            "@com_google_googleapis//google/cloud:extended_operations_proto",
+            "@com_google_protobuf//:empty_proto",
+        ],
+    ),
+    cc_proto_library(
+        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_cc_proto"),
+        deps = [":google_cloud_cpp_compute_" + service.replace("/v1/", "_proto")],
+    ),
+] for service in service_dirs + operation_service_dirs]
 
-[proto_library(
-    name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_proto"),
-    srcs = [":" + service.replace("/v1/", "_proto_srcs")],
-    visibility = ["//:__pkg__"],
-    deps = [
-        ":google_cloud_cpp_compute_internal_proto",
-        "@com_google_googleapis//google/api:annotations_proto",
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_googleapis//google/api:http_proto",
-        "@com_google_googleapis//google/api:resource_proto",
-        "@com_google_googleapis//google/api:routing_proto",
-        "@com_google_googleapis//google/cloud:extended_operations_proto",
-        "@com_google_protobuf//:empty_proto",
-    ],
-) for service in service_dirs + operation_service_dirs]
-
-[cc_proto_library(
-    name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_cc_proto"),
-    deps = [":google_cloud_cpp_compute_" + service.replace("/v1/", "_proto")],
-) for service in service_dirs + operation_service_dirs]
-
-[filegroup(
-    name = service.replace("/v1/", "_srcs"),
-    srcs = glob([service + "*.cc"]) + glob([service + "internal/*.cc"]),
-) for service in service_dirs + operation_service_dirs]
-
-[filegroup(
-    name = service.replace("/v1/", "_hdrs"),
-    srcs = glob([service + "*.h"]) + glob([service + "internal/*.h"]),
-) for service in service_dirs + operation_service_dirs]
-
-[filegroup(
-    name = service.replace("/v1/", "_mock_hdrs"),
-    srcs = glob([service + "mocks/*.h"]),
-) for service in service_dirs + operation_service_dirs]
+[[
+    filegroup(
+        name = service.replace("/v1/", "_srcs"),
+        srcs = glob([service + "*.cc"]) + glob([service + "internal/*.cc"]),
+    ),
+    filegroup(
+        name = service.replace("/v1/", "_hdrs"),
+        srcs = glob([service + "*.h"]) + glob([service + "internal/*.h"]),
+    ),
+    filegroup(
+        name = service.replace("/v1/", "_mock_hdrs"),
+        srcs = glob([service + "mocks/*.h"]),
+    ),
+    cc_library(
+        name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_mocks"),
+        hdrs = [":" + service.replace("/v1/", "_mock_hdrs")],
+        visibility = ["//:__pkg__"],
+        deps = [
+            ":google_cloud_cpp_compute_" + service.replace("/v1/", ""),
+            "@com_google_googletest//:gtest",
+        ],
+    ),
+] for service in service_dirs + operation_service_dirs]
 
 # Operation services
 [cc_library(
@@ -186,16 +195,6 @@ cc_proto_library(
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
     ],
 ) for service in operation_service_dirs]
-
-[cc_library(
-    name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_mocks"),
-    hdrs = [":" + service.replace("/v1/", "_mock_hdrs")],
-    visibility = ["//:__pkg__"],
-    deps = [
-        ":google_cloud_cpp_compute_" + service.replace("/v1/", ""),
-        "@com_google_googletest//:gtest",
-    ],
-) for service in service_dirs + operation_service_dirs]
 
 # Services
 [cc_library(
