@@ -17,6 +17,7 @@
 // [START batch_job_logs]
 #include "google/cloud/batch/v1/batch_client.h"
 #include "google/cloud/logging/v2/logging_service_v2_client.h"
+#include "google/cloud/location.h"
 #include "google/cloud/project.h"
 
 // [END batch_job_logs]
@@ -45,8 +46,9 @@ void JobLogs(std::vector<std::string> const& argv) {
   // [START batch_job_logs]
   [](std::string const& project_id, std::string const& location_id,
      std::string const& job_id) {
-    auto const name = "projects/" + project_id + "/locations/" + location_id +
-                      "/jobs/" + job_id;
+    auto const project = google::cloud::Project(project_id);
+    auto const location = google::cloud::Location(project, location_id);
+    auto const name = location.FullName() + "/jobs/" + job_id;
     auto batch = google::cloud::batch_v1::BatchServiceClient(
         google::cloud::batch_v1::MakeBatchServiceConnection());
     auto job = batch.GetJob(name);
@@ -54,8 +56,7 @@ void JobLogs(std::vector<std::string> const& argv) {
 
     auto logging = google::cloud::logging_v2::LoggingServiceV2Client(
         google::cloud::logging_v2::MakeLoggingServiceV2Connection());
-    auto const project = google::cloud::Project(project_id);
-    auto const log_name = "projects/" + project_id + "/logs/batch_task_logs";
+    auto const log_name = project.FullName() + "/logs/batch_task_logs";
     google::logging::v2::ListLogEntriesRequest request;
     request.mutable_resource_names()->Add(project.FullName());
     request.set_filter("logName=\"" + log_name +
@@ -78,7 +79,9 @@ google::cloud::batch::v1::Job CreateTestJob(
     std::string const& project_id, std::string const& location_id,
     std::string const& job_id) {
   google::cloud::batch::v1::CreateJobRequest request;
-  request.set_parent("projects/" + project_id + "/locations/" + location_id);
+  request.set_parent(
+      google::cloud::Location(google::cloud::Project(project_id), location_id)
+          .FullName());
   request.set_job_id(job_id);
   // Most of the job description is fixed in this example; use a string to
   // initialize it.

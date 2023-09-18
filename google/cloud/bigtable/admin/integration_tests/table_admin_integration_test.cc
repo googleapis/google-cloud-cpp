@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/location.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -251,7 +252,7 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   // to create an instance with at least 2 clusters to test it.
   auto const id = TableTestEnvironment::RandomInstanceId();
   auto const random_table_id = RandomTableId();
-  auto const project_name = Project(project_id()).FullName();
+  auto const project = Project(project_id());
   auto const instance_name = bigtable::InstanceName(project_id(), id);
   auto const table_name =
       bigtable::TableName(project_id(), id, random_table_id);
@@ -270,20 +271,18 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   in.set_display_name(std::move(display_name));
 
   btadmin::Cluster c1;
-  c1.set_location(project_name + "/locations/" +
-                  TableTestEnvironment::zone_a());
+  c1.set_location(Location(project, TableTestEnvironment::zone_a()).FullName());
   c1.set_serve_nodes(3);
   c1.set_default_storage_type(btadmin::StorageType::HDD);
 
   btadmin::Cluster c2;
-  c2.set_location(project_name + "/locations/" +
-                  TableTestEnvironment::zone_b());
+  c2.set_location(Location(project, TableTestEnvironment::zone_b()).FullName());
   c2.set_serve_nodes(3);
   c2.set_default_storage_type(btadmin::StorageType::HDD);
 
   // Create the new instance.
   auto instance = instance_admin_client
-                      .CreateInstance(project_name, id, std::move(in),
+                      .CreateInstance(project.FullName(), id, std::move(in),
                                       {{id + "-c1", std::move(c1)},
                                        {id + "-c2", std::move(c2)}})
                       .get();

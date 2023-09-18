@@ -90,8 +90,7 @@ class PublisherIntegrationTest : public testing_util::IntegrationTest {
     ASSERT_FALSE(project_id.empty()) << "GOOGLE_CLOUD_PROJECT is unset";
     auto const location_id = GetEnv("GOOGLE_CLOUD_CPP_TEST_ZONE").value_or("");
     ASSERT_FALSE(location_id.empty()) << "GOOGLE_CLOUD_CPP_TEST_ZONE is unset";
-    auto const parent =
-        std::string{"projects/"} + project_id + "/locations/" + location_id;
+    auto const parent = Location(project_id, location_id).FullName();
     auto ep = EndpointFromZone(location_id);
     ASSERT_STATUS_OK(ep);
 

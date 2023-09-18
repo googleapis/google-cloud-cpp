@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/location.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
@@ -132,9 +134,10 @@ TEST(ExternalAccountTokenSource, SourceWorking) {
       {"regional_cred_verification_url", kTestVerificationUrl},
       // {"imdsv2_session_token_url", kTestImdsv2Url},
   };
-  auto const target = std::string{
-      "//iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/"
-      "workloadIdentityPools/POOL_ID/providers/PROVIDER_ID"};
+  auto const target =
+      std::string{"//iam.googleapis.com/" +
+                  Location(Project("PROJECT_NUMBER"), "global").FullName() +
+                  "/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID"};
   auto const source = MakeExternalAccountTokenSourceAws(
       credentials_source, target, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
@@ -168,9 +171,10 @@ TEST(ExternalAccountTokenSource, SourceImdsv2Failure) {
       {"regional_cred_verification_url", kTestVerificationUrl},
       {"imdsv2_session_token_url", kTestImdsv2Url},
   };
-  auto const target = std::string{
-      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
-      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const target =
+      std::string{"//iam.googleapis.com/" +
+                  Location(Project("$PROJECT_NUMBER"), "global").FullName() +
+                  "/workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
   auto const source = MakeExternalAccountTokenSourceAws(
       credentials_source, target, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
@@ -208,9 +212,10 @@ TEST(ExternalAccountTokenSource, SourceRegionFailure) {
       {"regional_cred_verification_url", kTestVerificationUrl},
       // {"imdsv2_session_token_url", kTestImdsv2Url},
   };
-  auto const target = std::string{
-      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
-      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const target =
+      std::string{"//iam.googleapis.com/" +
+                  Location(Project("$PROJECT_NUMBER"), "global").FullName() +
+                  "/workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
   auto const source = MakeExternalAccountTokenSourceAws(
       credentials_source, target, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
@@ -245,9 +250,10 @@ TEST(ExternalAccountTokenSource, SourceSecretsFailure) {
       {"regional_cred_verification_url", kTestVerificationUrl},
       // {"imdsv2_session_token_url", kTestImdsv2Url},
   };
-  auto const target = std::string{
-      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
-      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const target =
+      std::string{"//iam.googleapis.com/" +
+                  Location(Project("$PROJECT_NUMBER"), "global").FullName() +
+                  "/workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
   auto const source = MakeExternalAccountTokenSourceAws(
       credentials_source, target, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
@@ -852,9 +858,10 @@ TEST(ExternalAccountTokenSource, ComputeSubjectToken) {
       google::cloud::internal::ParseRfc3339("2022-12-15T01:02:03.123456789Z")
           .value();
 
-  auto const target = std::string{
-      "//iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/"
-      "workloadIdentityPools/POOL_ID/providers/PROVIDER_ID"};
+  auto const target =
+      std::string{"//iam.googleapis.com/" +
+                  Location(Project("PROJECT_NUMBER"), "global").FullName() +
+                  "/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID"};
 
   auto const actual =
       ComputeSubjectToken(info, kTestRegion, secrets, tp, target);
@@ -1027,9 +1034,10 @@ TEST(ExternalAccountTokenSource, ComputeSubjectTokenWithSessionToken) {
       google::cloud::internal::ParseRfc3339("2022-12-15T01:02:03.123456789Z")
           .value();
 
-  auto const target = std::string{
-      "//iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/"
-      "workloadIdentityPools/POOL_ID/providers/PROVIDER_ID"};
+  auto const target =
+      std::string{"//iam.googleapis.com/" +
+                  Location(Project("PROJECT_NUMBER"), "global").FullName() +
+                  "/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID"};
 
   auto const actual =
       ComputeSubjectToken(info, kTestRegion, secrets, tp, target);

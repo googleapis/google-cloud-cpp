@@ -138,6 +138,8 @@ add_library(
     internal/version_info.h
     kms_key_name.cc
     kms_key_name.h
+    location.cc
+    location.h
     log.cc
     log.h
     opentelemetry_options.h
@@ -364,6 +366,7 @@ if (BUILD_TESTING)
         internal/user_agent_prefix_test.cc
         internal/utility_test.cc
         kms_key_name_test.cc
+        location_test.cc
         log_test.cc
         mocks/current_options_test.cc
         mocks/mock_stream_range_test.cc

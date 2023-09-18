@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/location.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
 #include <algorithm>
@@ -48,6 +49,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   namespace cbt = ::google::cloud::bigtable;
   namespace cbta = ::google::cloud::bigtable_admin;
   using ::google::cloud::future;
+  using ::google::cloud::Location;
   using ::google::cloud::Project;
   using ::google::cloud::Status;
   using ::google::cloud::StatusOr;
@@ -61,7 +63,8 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
   //! [check instance exists]
   std::cout << "\nCheck Instance exists:\n";
-  std::string const project_name = Project(project_id).FullName();
+  auto const project = Project(project_id);
+  std::string const project_name = project.FullName();
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> instances =
       instance_admin.ListInstances(project_name);
   if (!instances) throw std::move(instances).status();
@@ -93,7 +96,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
 
     // production instance needs at least 3 nodes
     google::bigtable::admin::v2::Cluster c;
-    c.set_location(project_name + "/locations/" + zone);
+    c.set_location(Location(project, zone).FullName());
     c.set_serve_nodes(3);
     c.set_default_storage_type(google::bigtable::admin::v2::HDD);
 
