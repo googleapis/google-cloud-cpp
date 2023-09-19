@@ -46,7 +46,7 @@ opentelemetry::nostd::string_view MessageCarrier::Get(
         }
         return opentelemetry::nostd::string_view{};
       });
-  if (result) return *std::move(result);
+  if (result) return *result;
 
   return opentelemetry::nostd::string_view{};
 }
