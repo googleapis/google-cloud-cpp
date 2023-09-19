@@ -221,6 +221,7 @@ void AddAttribute(
 }
 
 google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
+  SetInstrumentationScopeImpl();
   return std::move(span_);
 }
 
@@ -307,10 +308,10 @@ void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
 void Recordable::SetInstrumentationScope(
     opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
         instrumentation_scope) noexcept {
-  SetAttribute("otel.scope.name", instrumentation_scope.GetName());
-  if (!instrumentation_scope.GetVersion().empty()) {
-    SetAttribute("otel.scope.version", instrumentation_scope.GetVersion());
-  }
+  valid_ = valid_ && internal::NoExceptAction([&] {
+             scope_name_ = instrumentation_scope.GetName();
+             scope_version_ = instrumentation_scope.GetVersion();
+           });
 }
 
 void Recordable::SetIdentityImpl(
@@ -421,6 +422,15 @@ void Recordable::SetResourceImpl(
   for (auto const& label : mr.labels) {
     SetAttribute(absl::StrCat("g.co/r/", mr.type, "/", label.first),
                  label.second);
+  }
+}
+void Recordable::SetInstrumentationScopeImpl() {
+  if (!span_.parent_span_id().empty()) return;
+  if (!scope_name_.empty()) {
+    SetAttribute("otel.scope.name", scope_name_);
+  }
+  if (!scope_version_.empty()) {
+    SetAttribute("otel.scope.version", scope_version_);
   }
 }
 
