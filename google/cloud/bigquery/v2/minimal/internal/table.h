@@ -56,12 +56,6 @@ struct Table {
   std::string default_collation;
   std::string max_staleness;
 
-  bool require_partition_filter = false;
-
-  std::chrono::system_clock::time_point creation_time;
-  std::chrono::system_clock::time_point expiration_time;
-  std::chrono::system_clock::time_point last_modified_time;
-
   std::int64_t num_time_travel_physical_bytes;
   std::int64_t num_total_logical_bytes;
   std::int64_t num_active_logical_bytes;
@@ -74,6 +68,12 @@ struct Table {
   std::int64_t num_physical_bytes;
   std::int64_t num_long_term_bytes;
   std::uint64_t num_rows;
+
+  bool require_partition_filter = false;
+
+  std::chrono::system_clock::time_point creation_time;
+  std::chrono::system_clock::time_point expiration_time;
+  std::chrono::system_clock::time_point last_modified_time;
 
   std::map<std::string, std::string> labels;
 

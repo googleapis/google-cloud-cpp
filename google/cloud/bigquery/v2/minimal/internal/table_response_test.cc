@@ -151,7 +151,7 @@ TEST(ListTablesResponseTest, InvalidListFormatTable) {
       R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "1",
+          "totalItems": 1,
           "tables": [
               {
                 "id": "1",
@@ -171,7 +171,7 @@ TEST(ListTablesResponseTest, InvalidTotalItems) {
       R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "invalid",
+          "totalItems": -1,
           "tables": []})";
   auto const response =
       ListTablesResponse::BuildFromHttpResponse(http_response);
@@ -443,7 +443,7 @@ TEST(ListTablesResponseTest, DebugString) {
   http_response.payload = R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "1",
+          "totalItems": 1,
           "tables": [)" + tables_json_txt +
                           R"(]})";
 

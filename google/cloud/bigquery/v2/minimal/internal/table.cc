@@ -170,18 +170,21 @@ void to_json(nlohmann::json& j, Table const& t) {
       {"defaultCollation", t.default_collation},
       {"maxStaleness", t.max_staleness},
       {"requirePartitionFilter", t.require_partition_filter},
-      {"numTimeTravelPhysicalBytes", t.num_time_travel_physical_bytes},
-      {"numTotalLogicalBytes", t.num_total_logical_bytes},
-      {"numActiveLogicalBytes", t.num_active_logical_bytes},
-      {"numLongTermLogicalBytes", t.num_long_term_logical_bytes},
-      {"numTotalPhysicalBytes", t.num_total_physical_bytes},
-      {"numActivePhysicalBytes", t.num_active_physical_bytes},
-      {"numLongTermPhysicalBytes", t.num_long_term_physical_bytes},
-      {"numPartitions", t.num_partitions},
-      {"numBytes", t.num_bytes},
-      {"numPhysicalBytes", t.num_physical_bytes},
-      {"numLongTermBytes", t.num_long_term_bytes},
-      {"numRows", t.num_rows},
+      {"numTimeTravelPhysicalBytes",
+       std::to_string(t.num_time_travel_physical_bytes)},
+      {"numTotalLogicalBytes", std::to_string(t.num_total_logical_bytes)},
+      {"numActiveLogicalBytes", std::to_string(t.num_active_logical_bytes)},
+      {"numLongTermLogicalBytes",
+       std::to_string(t.num_long_term_logical_bytes)},
+      {"numTotalPhysicalBytes", std::to_string(t.num_total_physical_bytes)},
+      {"numActivePhysicalBytes", std::to_string(t.num_active_physical_bytes)},
+      {"numLongTermPhysicalBytes",
+       std::to_string(t.num_long_term_physical_bytes)},
+      {"numPartitions", std::to_string(t.num_partitions)},
+      {"numBytes", std::to_string(t.num_bytes)},
+      {"numPhysicalBytes", std::to_string(t.num_physical_bytes)},
+      {"numLongTermBytes", std::to_string(t.num_long_term_bytes)},
+      {"numRows", std::to_string(t.num_rows)},
       {"labels", t.labels},
       {"tableReference", t.table_reference},
       {"schema", t.schema},
@@ -212,18 +215,21 @@ void from_json(nlohmann::json const& j, Table& t) {
   SafeGetTo(t.default_collation, j, "defaultCollation");
   SafeGetTo(t.max_staleness, j, "maxStaleness");
   SafeGetTo(t.require_partition_filter, j, "requirePartitionFilter");
-  SafeGetTo(t.num_time_travel_physical_bytes, j, "numTimeTravelPhysicalBytes");
-  SafeGetTo(t.num_total_logical_bytes, j, "numTotalLogicalBytes");
-  SafeGetTo(t.num_active_logical_bytes, j, "numActiveLogicalBytes");
-  SafeGetTo(t.num_long_term_logical_bytes, j, "numLongTermLogicalBytes");
-  SafeGetTo(t.num_total_physical_bytes, j, "numTotalPhysicalBytes");
-  SafeGetTo(t.num_active_physical_bytes, j, "numActivePhysicalBytes");
-  SafeGetTo(t.num_long_term_physical_bytes, j, "numLongTermPhysicalBytes");
-  SafeGetTo(t.num_partitions, j, "numPartitions");
-  SafeGetTo(t.num_bytes, j, "numBytes");
-  SafeGetTo(t.num_physical_bytes, j, "numPhysicalBytes");
-  SafeGetTo(t.num_long_term_bytes, j, "numLongTermBytes");
-  SafeGetTo(t.num_rows, j, "numRows");
+  t.num_time_travel_physical_bytes =
+      GetNumberFromJson(j, "numTimeTravelPhysicalBytes");
+  t.num_total_logical_bytes = GetNumberFromJson(j, "numTotalLogicalBytes");
+  t.num_active_logical_bytes = GetNumberFromJson(j, "numActiveLogicalBytes");
+  t.num_long_term_logical_bytes =
+      GetNumberFromJson(j, "numLongTermLogicalBytes");
+  t.num_total_physical_bytes = GetNumberFromJson(j, "numTotalPhysicalBytes");
+  t.num_active_physical_bytes = GetNumberFromJson(j, "numActivePhysicalBytes");
+  t.num_long_term_physical_bytes =
+      GetNumberFromJson(j, "numLongTermPhysicalBytes");
+  t.num_partitions = GetNumberFromJson(j, "numPartitions");
+  t.num_bytes = GetNumberFromJson(j, "numBytes");
+  t.num_physical_bytes = GetNumberFromJson(j, "numPhysicalBytes");
+  t.num_long_term_bytes = GetNumberFromJson(j, "numLongTermBytes");
+  t.num_rows = GetNumberFromJson(j, "numRows");
   SafeGetTo(t.labels, j, "labels");
   SafeGetTo(t.table_reference, j, "tableReference");
   SafeGetTo(t.schema, j, "schema");
