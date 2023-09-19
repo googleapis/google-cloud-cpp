@@ -57,7 +57,6 @@ else ()
         internal/async/insert_object.cc
         internal/async/insert_object.h
         internal/async/read_payload_fwd.h
-        internal/async/read_payload_impl.cc
         internal/async/read_payload_impl.h
         internal/async/token_impl.cc
         internal/async/token_impl.h
