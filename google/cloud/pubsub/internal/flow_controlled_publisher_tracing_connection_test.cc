@@ -47,6 +47,7 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
       .WillOnce([&](pubsub::PublisherConnection::PublishParams const&) {
+        EXPECT_FALSE(ThereIsAnActiveSpan());
         return google::cloud::make_ready_future(
             google::cloud::StatusOr<std::string>("test-id-0"));
       });
@@ -73,7 +74,9 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
 TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, Flush).Times(1);
+  EXPECT_CALL(*mock, Flush).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+  });
   auto connection =
       MakeFlowControlledPublisherTracingConnection(std::move(mock));
 
@@ -91,7 +94,9 @@ TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
 TEST(FlowControlledPublisher, ResumePublishSpan) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
-  EXPECT_CALL(*mock, ResumePublish).Times(1);
+  EXPECT_CALL(*mock, ResumePublish).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+  });
   auto connection =
       MakeFlowControlledPublisherTracingConnection(std::move(mock));
 
