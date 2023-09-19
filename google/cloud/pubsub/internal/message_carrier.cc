@@ -35,13 +35,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 opentelemetry::nostd::string_view MessageCarrier::Get(
     opentelemetry::nostd::string_view key) const noexcept {
-  auto message_attributes = message_.attributes();
+  auto result =
+      internal::NoExceptAction<opentelemetry::nostd::string_view>([&] {
+        auto message_attributes = message_.attributes();
 
-  auto it = message_attributes.find(
-      absl::StrCat("googclient_", std::string(key.data(), key.size())));
-  if (it != message_attributes.end()) {
-    return opentelemetry::nostd::string_view(it->second);
-  }
+        auto it = message_attributes.find(
+            absl::StrCat("googclient_", std::string(key.data(), key.size())));
+        if (it != message_attributes.end()) {
+          return opentelemetry::nostd::string_view(it->second);
+        }
+        return opentelemetry::nostd::string_view{};
+      });
+  if (result) return *std::move(result);
+
   return opentelemetry::nostd::string_view{};
 }
 

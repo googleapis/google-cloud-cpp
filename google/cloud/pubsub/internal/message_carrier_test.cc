@@ -26,7 +26,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::Contains;
-using ::testing::ElementsAre;
 using ::testing::Pair;
 
 TEST(MessageCarrierTest, SetAttribute) {
