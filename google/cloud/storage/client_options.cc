@@ -290,9 +290,9 @@ Options DefaultOptionsWithCredentials(Options opts) {
         internal::MapCredentials(*google::cloud::MakeInsecureCredentials()),
         std::move(opts));
   }
-  return internal::DefaultOptions(
-      internal::MapCredentials(*google::cloud::MakeGoogleDefaultCredentials()),
-      std::move(opts));
+  auto credentials = internal::MapCredentials(
+      *google::cloud::MakeGoogleDefaultCredentials(opts));
+  return internal::DefaultOptions(std::move(credentials), std::move(opts));
 }
 
 }  // namespace internal

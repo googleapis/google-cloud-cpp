@@ -216,7 +216,7 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<UnifiedCredentialsOption>() &&
       !options.has<GrpcCredentialOption>()) {
     options.set<UnifiedCredentialsOption>(
-        google::cloud::MakeGoogleDefaultCredentials());
+        google::cloud::MakeGoogleDefaultCredentials(options));
   }
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
