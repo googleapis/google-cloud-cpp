@@ -83,7 +83,7 @@ See each library's `README.md` file for more information about:
 <details>
 <summary>Expand to see the full list of GA libraries</summary>
 
-<!-- inject-GA-libraries-start -->
+<!-- inject-GA-features-start -->
 
 - [Access Approval API](google/cloud/accessapproval/README.md)
   [\[quickstart\]](google/cloud/accessapproval/quickstart/README.md)
@@ -443,7 +443,7 @@ See each library's `README.md` file for more information about:
   [\[quickstart\]](google/cloud/workstations/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/workstations/latest)
 
-<!-- inject-GA-libraries-end -->
+<!-- inject-GA-features-end -->
 
 </details>
 
