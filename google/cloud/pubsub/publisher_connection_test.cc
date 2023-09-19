@@ -368,7 +368,8 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       span_catcher->GetSpans(),
       UnorderedElementsAre(
           SpanNamed("projects/test-project/topics/test-topic send"),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::Publish")));
+          SpanNamed("pubsub::FlowControlledPublisherConnection::Publish"),
+          SpanNamed("pubsub::BatchingPublisherConnection::Publish")));
 }
 
 TEST(MakePublisherConnectionTest, TracingDisabled) {
