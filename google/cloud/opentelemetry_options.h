@@ -39,9 +39,15 @@ namespace experimental {
  * Setting this option enables the generation of [traces] by the client
  * library. The library uses the global [tracer provider] to generate traces.
  *
+ * To create a client that traces, this option must be provided to the
+ * `Make*Connection(...)` factory functions. It does not have an effect when
+ * passed to a client's constructor. If you use custom credentials, this option
+ * must also be provided to the `Make*Credentials(...)` factory functions in
+ * order to trace the authentication components.
+ *
  * @par Exporting traces
- * Providing this option to a client only enables the *generation* of traces. It
- * does not enable the *export* of traces.
+ * Providing this option only enables the *generation* of traces. It does not
+ * enable the *export* of traces.
  *
  * In order to export the traces, the application must set the global tracer
  * provider. The client library recommends using
