@@ -46,6 +46,7 @@ else ()
         async_object_requests.h
         async_object_responses.cc
         async_object_responses.h
+        async_reader_connection.h
         async_token.h
         grpc_plugin.cc
         grpc_plugin.h
@@ -58,6 +59,8 @@ else ()
         internal/async/insert_object.h
         internal/async/read_payload_fwd.h
         internal/async/read_payload_impl.h
+        internal/async/reader_connection_impl.cc
+        internal/async/reader_connection_impl.h
         internal/async/token_impl.cc
         internal/async/token_impl.h
         internal/async/write_payload_fwd.h
@@ -204,6 +207,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/async/connection_impl_test.cc
         internal/async/insert_object_test.cc
         internal/async/read_payload_impl_test.cc
+        internal/async/reader_connection_impl_test.cc
         internal/async/write_payload_impl_test.cc
         internal/grpc/bucket_access_control_parser_test.cc
         internal/grpc/bucket_metadata_parser_test.cc
