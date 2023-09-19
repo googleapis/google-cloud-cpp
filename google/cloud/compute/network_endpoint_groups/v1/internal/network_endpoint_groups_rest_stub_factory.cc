@@ -41,7 +41,7 @@ std::shared_ptr<NetworkEndpointGroupsRestStub>
 CreateDefaultNetworkEndpointGroupsRestStub(Options const& options) {
   Options opts = options;
   if (!opts.has<UnifiedCredentialsOption>()) {
-    opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+    opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials(options));
   }
   if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
     opts.set<rest_internal::LongrunningEndpointOption>(
