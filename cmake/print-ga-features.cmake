@@ -18,7 +18,7 @@
 
 include(GoogleCloudCppFeatures)
 
-foreach (library IN LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES
-                          GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
-    message(${library})
+foreach (feature IN LISTS GOOGLE_CLOUD_CPP_GA_FEATURES
+                          GOOGLE_CLOUD_CPP_TRANSITION_FEATURES)
+    message(${feature})
 endforeach ()
