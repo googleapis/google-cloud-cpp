@@ -34,8 +34,7 @@ namespace compute_region_notification_endpoints_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionNotificationEndpointsConnection>
-MakeRegionNotificationEndpointsConnectionRest(ExperimentalTag,
-                                              Options options) {
+MakeRegionNotificationEndpointsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionNotificationEndpointsPolicyOptionList>(

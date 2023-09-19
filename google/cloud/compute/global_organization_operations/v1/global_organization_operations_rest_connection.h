@@ -58,8 +58,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `GlobalOrganizationOperationsConnection` created by this function.
  */
 std::shared_ptr<GlobalOrganizationOperationsConnection>
-MakeGlobalOrganizationOperationsConnectionRest(ExperimentalTag,
-                                               Options options = {});
+MakeGlobalOrganizationOperationsConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_organization_operations_v1

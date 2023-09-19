@@ -33,7 +33,7 @@ namespace compute_global_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GlobalOperationsConnection> MakeGlobalOperationsConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  GlobalOperationsPolicyOptionList>(options,

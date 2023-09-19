@@ -26,7 +26,6 @@ namespace compute_interconnect_locations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InterconnectLocationsClient::InterconnectLocationsClient(
-    ExperimentalTag,
     std::shared_ptr<InterconnectLocationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(

@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_zones_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ZonesClient::ZonesClient(ExperimentalTag,
-                         std::shared_ptr<ZonesConnection> connection,
+ZonesClient::ZonesClient(std::shared_ptr<ZonesConnection> connection,
                          Options opts)
     : connection_(std::move(connection)),
       options_(

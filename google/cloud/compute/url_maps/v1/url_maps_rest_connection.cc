@@ -32,8 +32,7 @@ namespace cloud {
 namespace compute_url_maps_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<UrlMapsConnection> MakeUrlMapsConnectionRest(ExperimentalTag,
-                                                             Options options) {
+std::shared_ptr<UrlMapsConnection> MakeUrlMapsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  UrlMapsPolicyOptionList>(options, __func__);

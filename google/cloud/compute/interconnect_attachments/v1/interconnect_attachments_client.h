@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_CLIENT_H
 
 #include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +64,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InterconnectAttachmentsClient {
  public:
   explicit InterconnectAttachmentsClient(
-      ExperimentalTag,
       std::shared_ptr<InterconnectAttachmentsConnection> connection,
       Options opts = {});
   ~InterconnectAttachmentsClient();

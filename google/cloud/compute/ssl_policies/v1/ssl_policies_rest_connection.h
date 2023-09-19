@@ -54,7 +54,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * this function.
  */
 std::shared_ptr<SslPoliciesConnection> MakeSslPoliciesConnectionRest(
-    ExperimentalTag, Options options = {});
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_ssl_policies_v1

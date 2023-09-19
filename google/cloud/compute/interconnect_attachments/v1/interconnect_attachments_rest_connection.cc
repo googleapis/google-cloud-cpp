@@ -34,7 +34,7 @@ namespace compute_interconnect_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InterconnectAttachmentsConnection>
-MakeInterconnectAttachmentsConnectionRest(ExperimentalTag, Options options) {
+MakeInterconnectAttachmentsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  InterconnectAttachmentsPolicyOptionList>(

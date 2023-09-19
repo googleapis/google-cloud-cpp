@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<RegionTargetTcpProxiesConnection>
-MakeRegionTargetTcpProxiesConnectionRest(ExperimentalTag, Options options = {});
+MakeRegionTargetTcpProxiesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_target_tcp_proxies_v1

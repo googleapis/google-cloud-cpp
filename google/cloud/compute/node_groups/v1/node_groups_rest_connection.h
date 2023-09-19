@@ -54,7 +54,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * this function.
  */
 std::shared_ptr<NodeGroupsConnection> MakeNodeGroupsConnectionRest(
-    ExperimentalTag, Options options = {});
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_node_groups_v1

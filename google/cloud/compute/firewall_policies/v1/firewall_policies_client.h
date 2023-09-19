@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallPoliciesClient {
  public:
   explicit FirewallPoliciesClient(
-      ExperimentalTag, std::shared_ptr<FirewallPoliciesConnection> connection,
+      std::shared_ptr<FirewallPoliciesConnection> connection,
       Options opts = {});
   ~FirewallPoliciesClient();
 

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_SECURITY_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/security_policies/v1/security_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecurityPoliciesClient {
  public:
   explicit SecurityPoliciesClient(
-      ExperimentalTag, std::shared_ptr<SecurityPoliciesConnection> connection,
+      std::shared_ptr<SecurityPoliciesConnection> connection,
       Options opts = {});
   ~SecurityPoliciesClient();
 

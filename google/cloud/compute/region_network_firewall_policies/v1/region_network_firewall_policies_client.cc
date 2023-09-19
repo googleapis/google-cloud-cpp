@@ -26,7 +26,6 @@ namespace compute_region_network_firewall_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionNetworkFirewallPoliciesClient::RegionNetworkFirewallPoliciesClient(
-    ExperimentalTag,
     std::shared_ptr<RegionNetworkFirewallPoliciesConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

@@ -25,8 +25,7 @@ namespace compute_autoscalers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalersClient::AutoscalersClient(
-    ExperimentalTag, std::shared_ptr<AutoscalersConnection> connection,
-    Options opts)
+    std::shared_ptr<AutoscalersConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

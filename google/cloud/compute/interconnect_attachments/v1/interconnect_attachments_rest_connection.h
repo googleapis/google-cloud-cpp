@@ -57,8 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<InterconnectAttachmentsConnection>
-MakeInterconnectAttachmentsConnectionRest(ExperimentalTag,
-                                          Options options = {});
+MakeInterconnectAttachmentsConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnect_attachments_v1

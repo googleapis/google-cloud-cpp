@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORKS_V1_NETWORKS_CLIENT_H
 
 #include "google/cloud/compute/networks/v1/networks_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -62,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NetworksClient {
  public:
-  explicit NetworksClient(ExperimentalTag,
-                          std::shared_ptr<NetworksConnection> connection,
+  explicit NetworksClient(std::shared_ptr<NetworksConnection> connection,
                           Options opts = {});
   ~NetworksClient();
 

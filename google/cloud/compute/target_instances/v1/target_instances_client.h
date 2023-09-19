@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/target_instances/v1/target_instances_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetInstancesClient {
  public:
   explicit TargetInstancesClient(
-      ExperimentalTag, std::shared_ptr<TargetInstancesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<TargetInstancesConnection> connection, Options opts = {});
   ~TargetInstancesClient();
 
   ///@{

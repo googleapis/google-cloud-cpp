@@ -32,8 +32,7 @@ namespace cloud {
 namespace compute_images_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ImagesConnection> MakeImagesConnectionRest(ExperimentalTag,
-                                                           Options options) {
+std::shared_ptr<ImagesConnection> MakeImagesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  ImagesPolicyOptionList>(options, __func__);

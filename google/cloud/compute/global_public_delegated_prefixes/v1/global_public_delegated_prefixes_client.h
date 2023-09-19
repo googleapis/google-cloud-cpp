@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_PUBLIC_DELEGATED_PREFIXES_V1_GLOBAL_PUBLIC_DELEGATED_PREFIXES_CLIENT_H
 
 #include "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GlobalPublicDelegatedPrefixesClient {
  public:
   explicit GlobalPublicDelegatedPrefixesClient(
-      ExperimentalTag,
       std::shared_ptr<GlobalPublicDelegatedPrefixesConnection> connection,
       Options opts = {});
   ~GlobalPublicDelegatedPrefixesClient();

@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<RegionSecurityPoliciesConnection>
-MakeRegionSecurityPoliciesConnectionRest(ExperimentalTag, Options options = {});
+MakeRegionSecurityPoliciesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_security_policies_v1

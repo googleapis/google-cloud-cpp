@@ -33,7 +33,7 @@ namespace compute_target_grpc_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<TargetGrpcProxiesConnection>
-MakeTargetGrpcProxiesConnectionRest(ExperimentalTag, Options options) {
+MakeTargetGrpcProxiesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  TargetGrpcProxiesPolicyOptionList>(options,

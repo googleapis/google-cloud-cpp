@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERCONNECTS_CLIENT_H
 
 #include "google/cloud/compute/interconnects/v1/interconnects_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InterconnectsClient {
  public:
   explicit InterconnectsClient(
-      ExperimentalTag, std::shared_ptr<InterconnectsConnection> connection,
-      Options opts = {});
+      std::shared_ptr<InterconnectsConnection> connection, Options opts = {});
   ~InterconnectsClient();
 
   ///@{

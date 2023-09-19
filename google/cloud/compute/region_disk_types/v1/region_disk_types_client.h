@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_REGION_DISK_TYPES_CLIENT_H
 
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionDiskTypesClient {
  public:
   explicit RegionDiskTypesClient(
-      ExperimentalTag, std::shared_ptr<RegionDiskTypesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<RegionDiskTypesConnection> connection, Options opts = {});
   ~RegionDiskTypesClient();
 
   ///@{

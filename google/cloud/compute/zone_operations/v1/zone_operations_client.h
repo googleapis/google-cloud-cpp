@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONE_OPERATIONS_V1_ZONE_OPERATIONS_CLIENT_H
 
 #include "google/cloud/compute/zone_operations/v1/zone_operations_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ZoneOperationsClient {
  public:
   explicit ZoneOperationsClient(
-      ExperimentalTag, std::shared_ptr<ZoneOperationsConnection> connection,
-      Options opts = {});
+      std::shared_ptr<ZoneOperationsConnection> connection, Options opts = {});
   ~ZoneOperationsClient();
 
   ///@{

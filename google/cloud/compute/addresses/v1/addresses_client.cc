@@ -25,8 +25,7 @@ namespace compute_addresses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AddressesClient::AddressesClient(
-    ExperimentalTag, std::shared_ptr<AddressesConnection> connection,
-    Options opts)
+    std::shared_ptr<AddressesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_BACKEND_SERVICES_V1_REGION_BACKEND_SERVICES_CLIENT_H
 
 #include "google/cloud/compute/region_backend_services/v1/region_backend_services_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +64,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionBackendServicesClient {
  public:
   explicit RegionBackendServicesClient(
-      ExperimentalTag,
       std::shared_ptr<RegionBackendServicesConnection> connection,
       Options opts = {});
   ~RegionBackendServicesClient();

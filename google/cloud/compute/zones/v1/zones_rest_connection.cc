@@ -32,8 +32,7 @@ namespace cloud {
 namespace compute_zones_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ZonesConnection> MakeZonesConnectionRest(ExperimentalTag,
-                                                         Options options) {
+std::shared_ptr<ZonesConnection> MakeZonesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  ZonesPolicyOptionList>(options, __func__);

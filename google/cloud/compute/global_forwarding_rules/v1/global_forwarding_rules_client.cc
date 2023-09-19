@@ -26,7 +26,6 @@ namespace compute_global_forwarding_rules_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalForwardingRulesClient::GlobalForwardingRulesClient(
-    ExperimentalTag,
     std::shared_ptr<GlobalForwardingRulesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(

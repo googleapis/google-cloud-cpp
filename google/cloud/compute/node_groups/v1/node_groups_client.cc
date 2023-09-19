@@ -25,8 +25,7 @@ namespace compute_node_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeGroupsClient::NodeGroupsClient(
-    ExperimentalTag, std::shared_ptr<NodeGroupsConnection> connection,
-    Options opts)
+    std::shared_ptr<NodeGroupsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

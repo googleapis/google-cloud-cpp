@@ -26,7 +26,6 @@ namespace compute_region_instance_group_managers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionInstanceGroupManagersClient::RegionInstanceGroupManagersClient(
-    ExperimentalTag,
     std::shared_ptr<RegionInstanceGroupManagersConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

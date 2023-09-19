@@ -21,7 +21,6 @@
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
@@ -44,10 +43,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client = google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient(
-      google::cloud::ExperimentalTag{},
       google::cloud::compute_region_url_maps_v1::
-          MakeRegionUrlMapsConnectionRest(google::cloud::ExperimentalTag{},
-                                          options));
+          MakeRegionUrlMapsConnectionRest(options));
   //! [set-client-endpoint]
 }
 
@@ -88,19 +85,18 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
                              /*scaling=*/2.0)
                              .clone());
   auto connection = google::cloud::compute_region_url_maps_v1::
-      MakeRegionUrlMapsConnectionRest(google::cloud::ExperimentalTag{},
-                                      options);
+      MakeRegionUrlMapsConnectionRest(options);
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient(
-      google::cloud::ExperimentalTag{}, connection);
+      connection);
   auto c2 = google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient(
-      google::cloud::ExperimentalTag{}, connection);
+      connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient(
-      google::cloud::ExperimentalTag{}, connection,
+      connection,
       google::cloud::Options{}
           .set<google::cloud::compute_region_url_maps_v1::
                    RegionUrlMapsRetryPolicyOption>(
@@ -128,10 +124,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::compute_region_url_maps_v1::RegionUrlMapsClient(
-        google::cloud::ExperimentalTag{},
         google::cloud::compute_region_url_maps_v1::
-            MakeRegionUrlMapsConnectionRest(google::cloud::ExperimentalTag{},
-                                            options));
+            MakeRegionUrlMapsConnectionRest(options));
   }
   //! [with-service-account]
   (argv.at(0));

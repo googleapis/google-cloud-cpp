@@ -33,7 +33,7 @@ namespace compute_region_ssl_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionSslPoliciesConnection>
-MakeRegionSslPoliciesConnectionRest(ExperimentalTag, Options options) {
+MakeRegionSslPoliciesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionSslPoliciesPolicyOptionList>(options,

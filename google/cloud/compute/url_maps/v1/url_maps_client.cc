@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_url_maps_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-UrlMapsClient::UrlMapsClient(ExperimentalTag,
-                             std::shared_ptr<UrlMapsConnection> connection,
+UrlMapsClient::UrlMapsClient(std::shared_ptr<UrlMapsConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
       options_(

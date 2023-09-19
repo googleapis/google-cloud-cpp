@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_NODE_GROUPS_CLIENT_H
 
 #include "google/cloud/compute/node_groups/v1/node_groups_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeGroupsClient {
  public:
-  explicit NodeGroupsClient(ExperimentalTag,
-                            std::shared_ptr<NodeGroupsConnection> connection,
+  explicit NodeGroupsClient(std::shared_ptr<NodeGroupsConnection> connection,
                             Options opts = {});
   ~NodeGroupsClient();
 

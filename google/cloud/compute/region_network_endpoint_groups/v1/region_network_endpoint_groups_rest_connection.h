@@ -57,8 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `RegionNetworkEndpointGroupsConnection` created by this function.
  */
 std::shared_ptr<RegionNetworkEndpointGroupsConnection>
-MakeRegionNetworkEndpointGroupsConnectionRest(ExperimentalTag,
-                                              Options options = {});
+MakeRegionNetworkEndpointGroupsConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_network_endpoint_groups_v1

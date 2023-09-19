@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/region_instances/v1/region_instances_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionInstancesClient {
  public:
   explicit RegionInstancesClient(
-      ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<RegionInstancesConnection> connection, Options opts = {});
   ~RegionInstancesClient();
 
   ///@{

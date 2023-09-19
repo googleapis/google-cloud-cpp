@@ -26,7 +26,6 @@ namespace compute_interconnect_remote_locations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InterconnectRemoteLocationsClient::InterconnectRemoteLocationsClient(
-    ExperimentalTag,
     std::shared_ptr<InterconnectRemoteLocationsConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

@@ -21,7 +21,6 @@
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
@@ -45,10 +44,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
       "private.googleapis.com");
   auto client =
       google::cloud::compute_target_ssl_proxies_v1::TargetSslProxiesClient(
-          google::cloud::ExperimentalTag{},
           google::cloud::compute_target_ssl_proxies_v1::
-              MakeTargetSslProxiesConnectionRest(
-                  google::cloud::ExperimentalTag{}, options));
+              MakeTargetSslProxiesConnectionRest(options));
   //! [set-client-endpoint]
 }
 
@@ -90,29 +87,27 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
                   /*scaling=*/2.0)
                   .clone());
   auto connection = google::cloud::compute_target_ssl_proxies_v1::
-      MakeTargetSslProxiesConnectionRest(google::cloud::ExperimentalTag{},
-                                         options);
+      MakeTargetSslProxiesConnectionRest(options);
 
   // c1 and c2 share the same retry policies
   auto c1 =
       google::cloud::compute_target_ssl_proxies_v1::TargetSslProxiesClient(
-          google::cloud::ExperimentalTag{}, connection);
+          connection);
   auto c2 =
       google::cloud::compute_target_ssl_proxies_v1::TargetSslProxiesClient(
-          google::cloud::ExperimentalTag{}, connection);
+          connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 =
       google::cloud::compute_target_ssl_proxies_v1::TargetSslProxiesClient(
-          google::cloud::ExperimentalTag{}, connection,
-          google::cloud::Options{}
-              .set<google::cloud::compute_target_ssl_proxies_v1::
-                       TargetSslProxiesRetryPolicyOption>(
-                  google::cloud::compute_target_ssl_proxies_v1::
-                      TargetSslProxiesLimitedTimeRetryPolicy(
-                          std::chrono::minutes(5))
-                          .clone()));
+          connection, google::cloud::Options{}
+                          .set<google::cloud::compute_target_ssl_proxies_v1::
+                                   TargetSslProxiesRetryPolicyOption>(
+                              google::cloud::compute_target_ssl_proxies_v1::
+                                  TargetSslProxiesLimitedTimeRetryPolicy(
+                                      std::chrono::minutes(5))
+                                      .clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -134,10 +129,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::compute_target_ssl_proxies_v1::TargetSslProxiesClient(
-        google::cloud::ExperimentalTag{},
         google::cloud::compute_target_ssl_proxies_v1::
-            MakeTargetSslProxiesConnectionRest(google::cloud::ExperimentalTag{},
-                                               options));
+            MakeTargetSslProxiesConnectionRest(options));
   }
   //! [with-service-account]
   (argv.at(0));

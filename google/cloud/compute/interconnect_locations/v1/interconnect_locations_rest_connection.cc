@@ -34,7 +34,7 @@ namespace compute_interconnect_locations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InterconnectLocationsConnection>
-MakeInterconnectLocationsConnectionRest(ExperimentalTag, Options options) {
+MakeInterconnectLocationsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  InterconnectLocationsPolicyOptionList>(

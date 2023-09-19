@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_CLIENT_H
 
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionAutoscalersClient {
  public:
   explicit RegionAutoscalersClient(
-      ExperimentalTag, std::shared_ptr<RegionAutoscalersConnection> connection,
+      std::shared_ptr<RegionAutoscalersConnection> connection,
       Options opts = {});
   ~RegionAutoscalersClient();
 

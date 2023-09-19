@@ -21,7 +21,6 @@
 #include "google/cloud/compute/disks/v1/disks_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
@@ -44,9 +43,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client = google::cloud::compute_disks_v1::DisksClient(
-      google::cloud::ExperimentalTag{},
-      google::cloud::compute_disks_v1::MakeDisksConnectionRest(
-          google::cloud::ExperimentalTag{}, options));
+      google::cloud::compute_disks_v1::MakeDisksConnectionRest(options));
   //! [set-client-endpoint]
 }
 
@@ -84,19 +81,17 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
                   /*maximum_delay=*/std::chrono::seconds(45),
                   /*scaling=*/2.0)
                   .clone());
-  auto connection = google::cloud::compute_disks_v1::MakeDisksConnectionRest(
-      google::cloud::ExperimentalTag{}, options);
+  auto connection =
+      google::cloud::compute_disks_v1::MakeDisksConnectionRest(options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::compute_disks_v1::DisksClient(
-      google::cloud::ExperimentalTag{}, connection);
-  auto c2 = google::cloud::compute_disks_v1::DisksClient(
-      google::cloud::ExperimentalTag{}, connection);
+  auto c1 = google::cloud::compute_disks_v1::DisksClient(connection);
+  auto c2 = google::cloud::compute_disks_v1::DisksClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::compute_disks_v1::DisksClient(
-      google::cloud::ExperimentalTag{}, connection,
+      connection,
       google::cloud::Options{}
           .set<google::cloud::compute_disks_v1::DisksRetryPolicyOption>(
               google::cloud::compute_disks_v1::DisksLimitedTimeRetryPolicy(
@@ -123,9 +118,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::compute_disks_v1::DisksClient(
-        google::cloud::ExperimentalTag{},
-        google::cloud::compute_disks_v1::MakeDisksConnectionRest(
-            google::cloud::ExperimentalTag{}, options));
+        google::cloud::compute_disks_v1::MakeDisksConnectionRest(options));
   }
   //! [with-service-account]
   (argv.at(0));

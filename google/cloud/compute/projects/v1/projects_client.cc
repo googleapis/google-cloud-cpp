@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_projects_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ProjectsClient::ProjectsClient(ExperimentalTag,
-                               std::shared_ptr<ProjectsConnection> connection,
+ProjectsClient::ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
       options_(

@@ -57,8 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `NetworkEdgeSecurityServicesConnection` created by this function.
  */
 std::shared_ptr<NetworkEdgeSecurityServicesConnection>
-MakeNetworkEdgeSecurityServicesConnectionRest(ExperimentalTag,
-                                              Options options = {});
+MakeNetworkEdgeSecurityServicesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_edge_security_services_v1

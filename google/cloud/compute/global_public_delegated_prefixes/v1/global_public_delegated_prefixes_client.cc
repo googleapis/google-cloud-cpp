@@ -26,7 +26,6 @@ namespace compute_global_public_delegated_prefixes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalPublicDelegatedPrefixesClient::GlobalPublicDelegatedPrefixesClient(
-    ExperimentalTag,
     std::shared_ptr<GlobalPublicDelegatedPrefixesConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

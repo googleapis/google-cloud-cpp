@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<ExternalVpnGatewaysConnection>
-MakeExternalVpnGatewaysConnectionRest(ExperimentalTag, Options options = {});
+MakeExternalVpnGatewaysConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_external_vpn_gateways_v1

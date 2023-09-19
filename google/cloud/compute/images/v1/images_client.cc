@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_images_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ImagesClient::ImagesClient(ExperimentalTag,
-                           std::shared_ptr<ImagesConnection> connection,
+ImagesClient::ImagesClient(std::shared_ptr<ImagesConnection> connection,
                            Options opts)
     : connection_(std::move(connection)),
       options_(

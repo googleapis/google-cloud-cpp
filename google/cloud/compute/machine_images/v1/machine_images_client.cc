@@ -25,8 +25,7 @@ namespace compute_machine_images_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineImagesClient::MachineImagesClient(
-    ExperimentalTag, std::shared_ptr<MachineImagesConnection> connection,
-    Options opts)
+    std::shared_ptr<MachineImagesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

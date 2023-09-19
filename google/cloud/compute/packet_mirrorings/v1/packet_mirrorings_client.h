@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_CLIENT_H
 
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PacketMirroringsClient {
  public:
   explicit PacketMirroringsClient(
-      ExperimentalTag, std::shared_ptr<PacketMirroringsConnection> connection,
+      std::shared_ptr<PacketMirroringsConnection> connection,
       Options opts = {});
   ~PacketMirroringsClient();
 

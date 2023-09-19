@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<RegionSslCertificatesConnection>
-MakeRegionSslCertificatesConnectionRest(ExperimentalTag, Options options = {});
+MakeRegionSslCertificatesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_ssl_certificates_v1

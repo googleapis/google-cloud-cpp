@@ -25,8 +25,7 @@ namespace compute_target_http_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetHttpProxiesClient::TargetHttpProxiesClient(
-    ExperimentalTag, std::shared_ptr<TargetHttpProxiesConnection> connection,
-    Options opts)
+    std::shared_ptr<TargetHttpProxiesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

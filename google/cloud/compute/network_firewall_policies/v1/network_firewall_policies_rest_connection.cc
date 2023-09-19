@@ -34,7 +34,7 @@ namespace compute_network_firewall_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NetworkFirewallPoliciesConnection>
-MakeNetworkFirewallPoliciesConnectionRest(ExperimentalTag, Options options) {
+MakeNetworkFirewallPoliciesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  NetworkFirewallPoliciesPolicyOptionList>(

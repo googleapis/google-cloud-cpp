@@ -26,7 +26,6 @@ namespace compute_network_edge_security_services_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworkEdgeSecurityServicesClient::NetworkEdgeSecurityServicesClient(
-    ExperimentalTag,
     std::shared_ptr<NetworkEdgeSecurityServicesConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

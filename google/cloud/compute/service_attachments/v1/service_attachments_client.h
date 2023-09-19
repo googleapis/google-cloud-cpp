@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_SERVICE_ATTACHMENTS_CLIENT_H
 
 #include "google/cloud/compute/service_attachments/v1/service_attachments_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ServiceAttachmentsClient {
  public:
   explicit ServiceAttachmentsClient(
-      ExperimentalTag, std::shared_ptr<ServiceAttachmentsConnection> connection,
+      std::shared_ptr<ServiceAttachmentsConnection> connection,
       Options opts = {});
   ~ServiceAttachmentsClient();
 

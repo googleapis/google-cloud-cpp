@@ -26,7 +26,6 @@ namespace compute_region_network_endpoint_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionNetworkEndpointGroupsClient::RegionNetworkEndpointGroupsClient(
-    ExperimentalTag,
     std::shared_ptr<RegionNetworkEndpointGroupsConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

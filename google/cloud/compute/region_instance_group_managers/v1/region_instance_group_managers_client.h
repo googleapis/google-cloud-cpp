@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUP_MANAGERS_V1_REGION_INSTANCE_GROUP_MANAGERS_CLIENT_H
 
 #include "google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionInstanceGroupManagersClient {
  public:
   explicit RegionInstanceGroupManagersClient(
-      ExperimentalTag,
       std::shared_ptr<RegionInstanceGroupManagersConnection> connection,
       Options opts = {});
   ~RegionInstanceGroupManagersClient();

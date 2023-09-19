@@ -33,7 +33,7 @@ namespace compute_vpn_tunnels_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<VpnTunnelsConnection> MakeVpnTunnelsConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  VpnTunnelsPolicyOptionList>(options, __func__);

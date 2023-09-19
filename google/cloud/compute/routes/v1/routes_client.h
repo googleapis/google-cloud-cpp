@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CLIENT_H
 
 #include "google/cloud/compute/routes/v1/routes_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -62,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RoutesClient {
  public:
-  explicit RoutesClient(ExperimentalTag,
-                        std::shared_ptr<RoutesConnection> connection,
+  explicit RoutesClient(std::shared_ptr<RoutesConnection> connection,
                         Options opts = {});
   ~RoutesClient();
 

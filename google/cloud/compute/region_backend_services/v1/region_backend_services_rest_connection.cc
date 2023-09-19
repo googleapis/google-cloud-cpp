@@ -34,7 +34,7 @@ namespace compute_region_backend_services_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionBackendServicesConnection>
-MakeRegionBackendServicesConnectionRest(ExperimentalTag, Options options) {
+MakeRegionBackendServicesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionBackendServicesPolicyOptionList>(

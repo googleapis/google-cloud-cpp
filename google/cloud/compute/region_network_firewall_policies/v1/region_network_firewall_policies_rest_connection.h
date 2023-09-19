@@ -58,8 +58,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `RegionNetworkFirewallPoliciesConnection` created by this function.
  */
 std::shared_ptr<RegionNetworkFirewallPoliciesConnection>
-MakeRegionNetworkFirewallPoliciesConnectionRest(ExperimentalTag,
-                                                Options options = {});
+MakeRegionNetworkFirewallPoliciesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_network_firewall_policies_v1

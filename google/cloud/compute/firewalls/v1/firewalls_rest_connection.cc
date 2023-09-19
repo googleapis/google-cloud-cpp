@@ -33,7 +33,7 @@ namespace compute_firewalls_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<FirewallsConnection> MakeFirewallsConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  FirewallsPolicyOptionList>(options, __func__);

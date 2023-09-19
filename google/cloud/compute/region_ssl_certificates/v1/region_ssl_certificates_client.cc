@@ -26,7 +26,6 @@ namespace compute_region_ssl_certificates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionSslCertificatesClient::RegionSslCertificatesClient(
-    ExperimentalTag,
     std::shared_ptr<RegionSslCertificatesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(

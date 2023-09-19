@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_SSL_PROXIES_V1_TARGET_SSL_PROXIES_CLIENT_H
 
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetSslProxiesClient {
  public:
   explicit TargetSslProxiesClient(
-      ExperimentalTag, std::shared_ptr<TargetSslProxiesConnection> connection,
+      std::shared_ptr<TargetSslProxiesConnection> connection,
       Options opts = {});
   ~TargetSslProxiesClient();
 

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISK_TYPES_V1_DISK_TYPES_CLIENT_H
 
 #include "google/cloud/compute/disk_types/v1/disk_types_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DiskTypesClient {
  public:
-  explicit DiskTypesClient(ExperimentalTag,
-                           std::shared_ptr<DiskTypesConnection> connection,
+  explicit DiskTypesClient(std::shared_ptr<DiskTypesConnection> connection,
                            Options opts = {});
   ~DiskTypesClient();
 

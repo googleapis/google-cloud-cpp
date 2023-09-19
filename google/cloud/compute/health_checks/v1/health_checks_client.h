@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CLIENT_H
 
 #include "google/cloud/compute/health_checks/v1/health_checks_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class HealthChecksClient {
  public:
   explicit HealthChecksClient(
-      ExperimentalTag, std::shared_ptr<HealthChecksConnection> connection,
-      Options opts = {});
+      std::shared_ptr<HealthChecksConnection> connection, Options opts = {});
   ~HealthChecksClient();
 
   ///@{

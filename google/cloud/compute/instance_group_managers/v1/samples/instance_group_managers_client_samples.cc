@@ -22,7 +22,6 @@
 #include "google/cloud/compute/instance_group_managers/v1/instance_group_managers_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
@@ -46,10 +45,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
       "private.googleapis.com");
   auto client = google::cloud::compute_instance_group_managers_v1::
       InstanceGroupManagersClient(
-          google::cloud::ExperimentalTag{},
           google::cloud::compute_instance_group_managers_v1::
-              MakeInstanceGroupManagersConnectionRest(
-                  google::cloud::ExperimentalTag{}, options));
+              MakeInstanceGroupManagersConnectionRest(options));
   //! [set-client-endpoint]
 }
 
@@ -91,20 +88,19 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
                   /*scaling=*/2.0)
                   .clone());
   auto connection = google::cloud::compute_instance_group_managers_v1::
-      MakeInstanceGroupManagersConnectionRest(google::cloud::ExperimentalTag{},
-                                              options);
+      MakeInstanceGroupManagersConnectionRest(options);
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::compute_instance_group_managers_v1::
-      InstanceGroupManagersClient(google::cloud::ExperimentalTag{}, connection);
+      InstanceGroupManagersClient(connection);
   auto c2 = google::cloud::compute_instance_group_managers_v1::
-      InstanceGroupManagersClient(google::cloud::ExperimentalTag{}, connection);
+      InstanceGroupManagersClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::compute_instance_group_managers_v1::
       InstanceGroupManagersClient(
-          google::cloud::ExperimentalTag{}, connection,
+          connection,
           google::cloud::Options{}
               .set<google::cloud::compute_instance_group_managers_v1::
                        InstanceGroupManagersRetryPolicyOption>(
@@ -134,10 +130,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::compute_instance_group_managers_v1::
         InstanceGroupManagersClient(
-            google::cloud::ExperimentalTag{},
             google::cloud::compute_instance_group_managers_v1::
-                MakeInstanceGroupManagersConnectionRest(
-                    google::cloud::ExperimentalTag{}, options));
+                MakeInstanceGroupManagersConnectionRest(options));
   }
   //! [with-service-account]
   (argv.at(0));

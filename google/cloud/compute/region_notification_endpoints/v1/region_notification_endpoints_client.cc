@@ -26,7 +26,6 @@ namespace compute_region_notification_endpoints_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionNotificationEndpointsClient::RegionNotificationEndpointsClient(
-    ExperimentalTag,
     std::shared_ptr<RegionNotificationEndpointsConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

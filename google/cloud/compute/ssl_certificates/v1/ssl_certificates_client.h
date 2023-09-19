@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_CLIENT_H
 
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SslCertificatesClient {
  public:
   explicit SslCertificatesClient(
-      ExperimentalTag, std::shared_ptr<SslCertificatesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<SslCertificatesConnection> connection, Options opts = {});
   ~SslCertificatesClient();
 
   ///@{

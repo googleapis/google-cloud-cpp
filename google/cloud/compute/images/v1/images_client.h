@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_IMAGES_CLIENT_H
 
 #include "google/cloud/compute/images/v1/images_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ImagesClient {
  public:
-  explicit ImagesClient(ExperimentalTag,
-                        std::shared_ptr<ImagesConnection> connection,
+  explicit ImagesClient(std::shared_ptr<ImagesConnection> connection,
                         Options opts = {});
   ~ImagesClient();
 

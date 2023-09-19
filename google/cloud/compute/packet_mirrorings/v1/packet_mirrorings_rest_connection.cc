@@ -33,7 +33,7 @@ namespace compute_packet_mirrorings_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<PacketMirroringsConnection> MakePacketMirroringsConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  PacketMirroringsPolicyOptionList>(options,

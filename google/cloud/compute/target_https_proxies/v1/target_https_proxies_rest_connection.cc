@@ -34,7 +34,7 @@ namespace compute_target_https_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<TargetHttpsProxiesConnection>
-MakeTargetHttpsProxiesConnectionRest(ExperimentalTag, Options options) {
+MakeTargetHttpsProxiesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  TargetHttpsProxiesPolicyOptionList>(options,
