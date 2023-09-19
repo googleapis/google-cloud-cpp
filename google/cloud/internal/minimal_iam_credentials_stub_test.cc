@@ -43,6 +43,7 @@ using ::google::iam::credentials::v1::SignBlobRequest;
 using ::google::iam::credentials::v1::SignBlobResponse;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 
 class MinimalIamCredentialsStubTest : public ::testing::Test {
@@ -72,7 +73,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenLogging) {
       });
   auto stub = DecorateMinimalIamCredentialsStub(
       mock, Options{}
-                .set<TracingComponentsOption>({"rpc"})
+                .set<TracingComponentsOption>({"auth"})
                 .set<GrpcTracingOptionsOption>(
                     TracingOptions{}.SetOptions("single_line_mode")));
   GenerateAccessTokenRequest request;
@@ -116,7 +117,7 @@ TEST_F(MinimalIamCredentialsStubTest, SignBlobLogging) {
   EXPECT_CALL(*mock, SignBlob).WillOnce(Return(expected));
   auto stub = DecorateMinimalIamCredentialsStub(
       mock, Options{}
-                .set<TracingComponentsOption>({"rpc"})
+                .set<TracingComponentsOption>({"auth"})
                 .set<GrpcTracingOptionsOption>(
                     TracingOptions{}.SetOptions("single_line_mode")));
   SignBlobRequest request;
@@ -185,6 +186,36 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenMetadata) {
   ASSERT_THAT(response, IsOk());
   auto const lines = log_.ExtractLines();
   EXPECT_THAT(lines, Not(Contains(HasSubstr("AsyncGenerateAccessToken"))));
+}
+
+TEST_F(MinimalIamCredentialsStubTest, LoggingComponentNames) {
+  struct TestCase {
+    std::set<std::string> components;
+    bool enabled;
+  };
+  // Note that "rpc" enables logging of this component for backwards
+  // compatibility reasons.
+  std::vector<TestCase> cases = {
+      {{"auth"}, true},
+      {{"rpc"}, true},
+      {{"auth", "rpc"}, true},
+      {{"rest"}, false},
+  };
+
+  for (auto const& c : cases) {
+    auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+    EXPECT_CALL(*mock, SignBlob).WillOnce(Return(SignBlobResponse{}));
+    auto stub = DecorateMinimalIamCredentialsStub(
+        mock, Options{}.set<TracingComponentsOption>(c.components));
+    grpc::ClientContext context;
+    (void)stub->SignBlob(context, SignBlobRequest{});
+    auto const lines = log_.ExtractLines();
+    if (c.enabled) {
+      EXPECT_THAT(lines, Contains(HasSubstr("SignBlob")));
+    } else {
+      EXPECT_THAT(lines, Not(Contains(HasSubstr("SignBlob"))));
+    }
+  }
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
