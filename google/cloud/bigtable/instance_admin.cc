@@ -54,7 +54,7 @@ future<StatusOr<btadmin::Instance>> InstanceAdmin::CreateInstance(
   request.set_parent(project_name());
   for (auto& kv : *request.mutable_clusters()) {
     kv.second.set_location(
-        Location(project_name(), kv.second.location()).FullName());
+        Location(project_id(), kv.second.location()).FullName());
   }
   return connection_->CreateInstance(request);
 }
@@ -64,7 +64,7 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
     std::string const& cluster_id) {
   google::cloud::internal::OptionsSpan span(options_);
   auto cluster = std::move(cluster_config).as_proto();
-  cluster.set_location(Location(project_name(), cluster.location()).FullName());
+  cluster.set_location(Location(project_id(), cluster.location()).FullName());
   btadmin::CreateClusterRequest request;
   request.mutable_cluster()->Swap(&cluster);
   request.set_parent(InstanceName(instance_id));

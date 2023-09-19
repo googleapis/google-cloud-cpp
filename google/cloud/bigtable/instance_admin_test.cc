@@ -75,7 +75,7 @@ auto const kProfileName =
     "projects/the-project/instances/the-instance/appProfiles/the-profile";
 
 std::string LocationName(std::string const& location) {
-  return Location(Project(kProjectName), location).FullName();
+  return Location(Project(kProjectId), location).FullName();
 }
 
 Status FailingStatus() { return Status(StatusCode::kPermissionDenied, "fail"); }
