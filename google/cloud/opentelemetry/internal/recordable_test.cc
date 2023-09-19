@@ -736,10 +736,13 @@ TEST(Recordable, ConstantAttributesOnlyOnRootSpan) {
   auto scope =
       opentelemetry::sdk::instrumentationscope::InstrumentationScope::Create(
           "test-name");
+  auto resource =
+      opentelemetry::sdk::resource::Resource::Create({{"key", "value"}});
 
   auto rec = Recordable(Project(kProjectId));
   rec.SetInstrumentationScope(*scope);
   rec.SetIdentity(opentelemetry::trace::SpanContext::GetInvalid(), parent);
+  rec.SetResource(resource);
 
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.parent_span_id(), Not(IsEmpty()));

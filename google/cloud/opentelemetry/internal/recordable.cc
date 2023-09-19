@@ -412,6 +412,7 @@ void Recordable::SetStatusImpl(opentelemetry::trace::StatusCode code,
 
 void Recordable::SetResourceImpl(
     opentelemetry::sdk::resource::Resource const& resource) {
+  if (!span_.parent_span_id().empty()) return;
   auto& attributes_proto = *span_.mutable_attributes();
   auto const& attributes = resource.GetAttributes();
   for (auto const& kv : attributes) {
@@ -424,6 +425,7 @@ void Recordable::SetResourceImpl(
                  label.second);
   }
 }
+
 void Recordable::SetInstrumentationScopeImpl() {
   if (!span_.parent_span_id().empty()) return;
   if (!scope_name_.empty()) {
