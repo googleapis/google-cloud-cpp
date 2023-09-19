@@ -176,12 +176,10 @@ int main(int argc, char* argv[]) {
   // Start the threads running the table benchmark test.
   auto latency_test_start = std::chrono::steady_clock::now();
   std::vector<std::future<google::cloud::StatusOr<TableBenchmarkResult>>> tasks;
+  // If the user requests only one thread, use the current thread.
+  auto launch_policy =
+      config.thread_count == 1 ? std::launch::deferred : std::launch::async;
   for (int i = 0; i != config.thread_count; ++i) {
-    auto launch_policy = std::launch::async;
-    if (config.thread_count == 1) {
-      // If the user requests only one thread, use the current thread.
-      launch_policy = std::launch::deferred;
-    }
     tasks.emplace_back(std::async(launch_policy, RunTableBenchmark,
                                   std::ref(benchmark), config.test_duration));
   }

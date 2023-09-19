@@ -19,8 +19,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace {
-
 std::int64_t GetNumberFromJson(nlohmann::json const& j, char const* name) {
   std::int64_t m = -1;
   auto const l = j.find(name);
@@ -35,8 +33,6 @@ std::int64_t GetNumberFromJson(nlohmann::json const& j, char const* name) {
   }
   return m;
 }
-
-}  // namespace
 
 void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
               char const* name) {

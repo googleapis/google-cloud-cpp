@@ -198,13 +198,13 @@ TEST(GetTableResponseTest, DebugString) {
       R"( creation_time { "1970-01-01T00:00:00.001Z" })"
       R"( expiration_time { "1970-01-01T00:00:00.001Z" })"
       R"( last_modified_time { "1970-01-01T00:00:00.001Z" })"
-      R"( num_time_travel_physical_bytes: "1")"
-      R"( num_total_logical_bytes: "1" num_active_logical_bytes: "1")"
-      R"( num_long_term_logical_bytes: "1")"
-      R"( num_total_physical_bytes: "1" num_active_physical_bytes: "1")"
-      R"( num_long_term_physical_bytes: "1")"
-      R"( num_partitions: "1" num_bytes: "1" num_physical_bytes: "1")"
-      R"( num_long_term_bytes: "1")"
+      R"( num_time_travel_physical_bytes: 1)"
+      R"( num_total_logical_bytes: 1 num_active_logical_bytes: 1)"
+      R"( num_long_term_logical_bytes: 1)"
+      R"( num_total_physical_bytes: 1 num_active_physical_bytes: 1)"
+      R"( num_long_term_physical_bytes: 1)"
+      R"( num_partitions: 1 num_bytes: 1 num_physical_bytes: 1)"
+      R"( num_long_term_bytes: 1)"
       R"( labels { key: "l1" value: "v1" } labels { key: "l2")"
       R"( value: "v2" })"
       R"( table_reference { project_id: "t-123" dataset_id: "t-123")"
@@ -250,11 +250,11 @@ TEST(GetTableResponseTest, DebugString) {
       R"( creation_time { "1970-01-01T00:00:00.001Z" })"
       R"( expiration_time { "1970-01-01T00:00:00.001Z" })"
       R"( last_modified_time { "1970-01-01T00:00:00.001Z" })"
-      R"( num_time_travel_physical_bytes: "1" num_total_logical_bytes: "1")"
-      R"( num_active_logical_bytes: "1" num_long_term_logical_bytes: "1")"
-      R"( num_total_physical_bytes: "1" num_active_physical_bytes: "1")"
-      R"( num_long_term_physical_bytes: "1" num_partitions: "1" num_bytes: "1")"
-      R"( num_physical_bytes: "1" num_long_term_bytes: "1")"
+      R"( num_time_travel_physical_bytes: 1 num_total_logical_bytes: 1)"
+      R"( num_active_logical_bytes: 1 num_long_term_logical_bytes: 1)"
+      R"( num_total_physical_bytes: 1 num_active_physical_bytes: 1)"
+      R"( num_long_term_physical_bytes: 1 num_partitions: 1 num_bytes: 1)"
+      R"( num_physical_bytes: 1 num_long_term_bytes: 1)"
       R"( labels { key: "l1" value: "v1" } labels { key: "l2" value: "v2" })"
       R"( table_reference { project_id: "t-123" dataset_id: "t-123" table_id: "t-123" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
@@ -307,17 +307,17 @@ TEST(GetTableResponseTest, DebugString) {
     last_modified_time {
       "1970-01-01T00:00:00.001Z"
     }
-    num_time_travel_physical_bytes: "1"
-    num_total_logical_bytes: "1"
-    num_active_logical_bytes: "1"
-    num_long_term_logical_bytes: "1"
-    num_total_physical_bytes: "1"
-    num_active_physical_bytes: "1"
-    num_long_term_physical_bytes: "1"
-    num_partitions: "1"
-    num_bytes: "1"
-    num_physical_bytes: "1"
-    num_long_term_bytes: "1"
+    num_time_travel_physical_bytes: 1
+    num_total_logical_bytes: 1
+    num_active_logical_bytes: 1
+    num_long_term_logical_bytes: 1
+    num_total_physical_bytes: 1
+    num_active_physical_bytes: 1
+    num_long_term_physical_bytes: 1
+    num_partitions: 1
+    num_bytes: 1
+    num_physical_bytes: 1
+    num_long_term_bytes: 1
     labels {
       key: "l1"
       value: "v1"

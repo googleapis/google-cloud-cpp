@@ -82,18 +82,18 @@ bigquery_v2_minimal_internal::Table MakeTable() {
   expected.max_staleness = "stale";
   expected.require_partition_filter = true;
   expected.labels = labels;
-  expected.num_time_travel_physical_bytes = "1";
-  expected.num_total_logical_bytes = "1";
-  expected.num_active_logical_bytes = "1";
-  expected.num_long_term_logical_bytes = "1";
-  expected.num_total_physical_bytes = "1";
-  expected.num_active_physical_bytes = "1";
-  expected.num_long_term_physical_bytes = "1";
-  expected.num_partitions = "1";
-  expected.num_bytes = "1";
-  expected.num_physical_bytes = "1";
-  expected.num_long_term_bytes = "1";
-  expected.num_rows = "1";
+  expected.num_time_travel_physical_bytes = 1;
+  expected.num_total_logical_bytes = 1;
+  expected.num_active_logical_bytes = 1;
+  expected.num_long_term_logical_bytes = 1;
+  expected.num_total_physical_bytes = 1;
+  expected.num_active_physical_bytes = 1;
+  expected.num_long_term_physical_bytes = 1;
+  expected.num_partitions = 1;
+  expected.num_bytes = 1;
+  expected.num_physical_bytes = 1;
+  expected.num_long_term_bytes = 1;
+  expected.num_rows = 1;
 
   expected.creation_time =
       std::chrono::system_clock::time_point(std::chrono::milliseconds(1));
@@ -163,19 +163,28 @@ void AssertEquals(bigquery_v2_minimal_internal::Table const& lhs,
   EXPECT_EQ(lhs.expiration_time, rhs.expiration_time);
   EXPECT_EQ(lhs.last_modified_time, rhs.last_modified_time);
 
-  EXPECT_EQ(lhs.num_time_travel_physical_bytes,
-            rhs.num_time_travel_physical_bytes);
-  EXPECT_EQ(lhs.num_total_logical_bytes, rhs.num_total_logical_bytes);
-  EXPECT_EQ(lhs.num_active_logical_bytes, rhs.num_active_logical_bytes);
-  EXPECT_EQ(lhs.num_long_term_logical_bytes, rhs.num_long_term_logical_bytes);
-  EXPECT_EQ(lhs.num_total_physical_bytes, rhs.num_total_physical_bytes);
-  EXPECT_EQ(lhs.num_active_physical_bytes, rhs.num_active_physical_bytes);
-  EXPECT_EQ(lhs.num_long_term_physical_bytes, rhs.num_long_term_physical_bytes);
-  EXPECT_EQ(lhs.num_partitions, rhs.num_partitions);
-  EXPECT_EQ(lhs.num_bytes, rhs.num_bytes);
-  EXPECT_EQ(lhs.num_physical_bytes, rhs.num_physical_bytes);
-  EXPECT_EQ(lhs.num_long_term_bytes, rhs.num_long_term_bytes);
-  EXPECT_EQ(lhs.num_rows, rhs.num_rows);
+  EXPECT_EQ(std::to_string(lhs.num_time_travel_physical_bytes),
+            std::to_string(rhs.num_time_travel_physical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_total_logical_bytes),
+            std::to_string(rhs.num_total_logical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_active_logical_bytes),
+            std::to_string(rhs.num_active_logical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_long_term_logical_bytes),
+            std::to_string(rhs.num_long_term_logical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_total_physical_bytes),
+            std::to_string(rhs.num_total_physical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_active_physical_bytes),
+            std::to_string(rhs.num_active_physical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_long_term_physical_bytes),
+            std::to_string(rhs.num_long_term_physical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_partitions),
+            std::to_string(rhs.num_partitions));
+  EXPECT_EQ(std::to_string(lhs.num_bytes), std::to_string(rhs.num_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_physical_bytes),
+            std::to_string(rhs.num_physical_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_long_term_bytes),
+            std::to_string(rhs.num_long_term_bytes));
+  EXPECT_EQ(std::to_string(lhs.num_rows), std::to_string(rhs.num_rows));
 
   EXPECT_EQ(lhs.default_rounding_mode.value, rhs.default_rounding_mode.value);
 
