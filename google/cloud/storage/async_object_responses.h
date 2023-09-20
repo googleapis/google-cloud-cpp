@@ -98,7 +98,7 @@ class ReadPayload {
   /// The object metadata.
   absl::optional<storage::ObjectMetadata> metadata() const { return metadata_; }
 
-  /// The starting offset the the current message.
+  /// The starting offset of the current message.
   std::int64_t offset() const { return offset_; }
 
   /**
