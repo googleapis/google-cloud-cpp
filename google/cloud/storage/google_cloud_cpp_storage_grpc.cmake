@@ -46,6 +46,8 @@ else ()
         async_object_requests.h
         async_object_responses.cc
         async_object_responses.h
+        async_reader.cc
+        async_reader.h
         async_reader_connection.h
         async_token.h
         grpc_plugin.cc
@@ -229,7 +231,6 @@ install(
     TARGETS google_cloud_cpp_storage_grpc_mocks
     EXPORT storage_grpc_mocks-targets
     COMPONENT google_cloud_cpp_development)
-
 install(
     FILES ${google_cloud_cpp_storage_grpc_mocks_hdrs}
     DESTINATION "include/google/cloud/storage/mocks"
@@ -264,6 +265,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     set(storage_client_grpc_unit_tests
         # cmake-format: sort
+        async_reader_test.cc
         async_token_test.cc
         grpc_plugin_test.cc
         internal/async/accumulate_read_object_test.cc
