@@ -39,7 +39,7 @@ target_link_libraries(
     storage_benchmarks
     PUBLIC storage_client_testing
            google_cloud_cpp_testing
-           google-cloud-cpp::experimental-storage-grpc
+           google-cloud-cpp::experimental-storage_grpc
            google-cloud-cpp::storage
            google-cloud-cpp::grpc_utils
            google-cloud-cpp::storage_protos

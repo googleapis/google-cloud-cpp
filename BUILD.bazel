@@ -124,10 +124,19 @@ bool_flag(
 )
 
 cc_library(
-    name = "experimental-storage-grpc",
+    name = "experimental-storage_grpc",
     tags = ["manual"],
     deps = [
         "//google/cloud/storage:google_cloud_cpp_storage_grpc",
+    ],
+)
+
+# TODO(12698) - remove transition name (experimental-storage-grpc)
+cc_library(
+    name = "experimental-storage-grpc",
+    tags = ["manual"],
+    deps = [
+        ":experimental-storage_grpc",
     ],
 )
 

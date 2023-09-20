@@ -100,7 +100,7 @@ function (add_make_quickstart_target feature library target)
 endfunction ()
 
 foreach (feature IN LISTS FEATURES)
-    if ("${feature}" STREQUAL "experimental-storage-grpc")
+    if ("${feature}" STREQUAL "experimental-storage_grpc")
         add_cmake_quickstart_target("${feature}" storage quickstart_grpc)
         add_make_quickstart_target("${feature}" storage quickstart_grpc)
         continue()
