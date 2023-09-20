@@ -34,13 +34,6 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set_target_properties(
         google_cloud_cpp_storage_protos
         PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_protos")
-    add_library(google_cloud_cpp_storage_grpc_mocks INTERFACE)
-    add_library(google-cloud-cpp::experimental-storage_grpc_mocks ALIAS
-                google_cloud_cpp_storage_grpc_mocks)
-    set_target_properties(
-        google_cloud_cpp_storage_grpc_mocks
-        PROPERTIES EXPORT_NAME
-                   "google-cloud-cpp::experimental-storage_grpc_mocks")
 else ()
     include(GoogleCloudCppLibrary)
     google_cloud_cpp_add_library_protos(storage)
