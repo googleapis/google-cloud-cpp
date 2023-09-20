@@ -20,6 +20,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.pb.h>
+#include <cstdint>
 #include <memory>
 #include <utility>
 

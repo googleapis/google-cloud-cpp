@@ -53,11 +53,15 @@ class AsyncReaderConnection {
    * Asks for more data.
    *
    * Retrieving more data can result in three outcomes:
-   * - Additional data (a `ReadPayload`) is available.
-   * - The download is interrupted with an error.
-   * - The download has completed successfully.
+   * - Additional data (a `ReadPayload`) is available: in this case the future
+   *   is satisfied with a `ReadResponse` containing a `ReadPayload`.
+   * - The download is interrupted with an error: in this case the future is
+   *   satisfied with a `ReadResponse` containing a `Status` that describes the
+   *   error.
+   * - The download has completed successfully: in this case the future is
+   *   satisfied with a `ReadResponse` containing an OK `Status`.
    *
-   * A `StatusOr<>` cannot represent the last outcome, we need an
+   * A `StatusOr<>` cannot represent the last bullet point, so we need an
    * `absl::variant<>` in this case.  We could have used
    * `StatusOr<absl::optional<ReadPayload>>` but that sounds unnecessarily
    * complicated.
