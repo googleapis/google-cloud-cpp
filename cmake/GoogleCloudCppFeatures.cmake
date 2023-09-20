@@ -290,15 +290,15 @@ macro (google_cloud_cpp_enable_deps)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
-    list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^-")
-    list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^__")
-
     set(disabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(FILTER disabled_features INCLUDE REGEX "^-")
     foreach (disabled IN LISTS disabled_features)
         string(SUBSTRING "${disabled}" 1 -1 feature)
         list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE "${feature}")
     endforeach ()
+
+    list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^-")
+    list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^__")
 
     if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
