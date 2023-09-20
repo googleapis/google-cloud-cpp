@@ -72,8 +72,8 @@ cc_library(
         "//:__pkg__",
     ],
     deps = [
-        ":google_cloud_cpp_storage_grpc",
         ":google_cloud_cpp_storage",
+        ":google_cloud_cpp_storage_grpc",
         "@com_google_googletest//:gtest",
     ],
 )
