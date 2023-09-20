@@ -52,6 +52,16 @@ class AsyncReaderConnection {
   /**
    * Asks for more data.
    *
+   * An outcome with a `Status` indicates that no more data is avaiable. Calling
+   * `Read()` after it returns a `Status` results in undefined behavior.
+   *
+   * Applications should not have more than one `Read()` pending at a time.
+   * Calling `Read()` while a previous `Read()` is pending results in undefined
+   * behavior.
+   *
+   * Applications should not destruct a `AsyncReaderConnection` until a call to
+   * `Read()` returns a `Status` response.
+   *
    * Retrieving more data can result in three outcomes:
    * - Additional data (a `ReadPayload`) is available: in this case the future
    *   is satisfied with a `ReadResponse` containing a `ReadPayload`.
