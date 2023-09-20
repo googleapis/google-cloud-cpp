@@ -76,6 +76,19 @@ TEST(ListProjectsResponseTest, SuccessSinglePage) {
   bigquery_v2_minimal_testing::AssertEquals(expected, projects[0]);
 }
 
+TEST(ListProjectsResponseTest, SuccessNoProjects) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "nextPageToken": "npt-123",
+          "totalItems": 0})";
+  auto const response =
+      ListProjectsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->total_items, 0);
+}
+
 TEST(ListProjectsResponseTest, EmptyPayload) {
   BigQueryHttpResponse http_response;
   auto const response =
@@ -113,7 +126,7 @@ TEST(ListProjectsResponseTest, InvalidProject) {
       R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "1",
+          "totalItems": 1,
           "projects": [
               {
                 "id": "1",
@@ -132,7 +145,7 @@ TEST(ListProjectsResponseTest, InvalidTotalItems) {
       R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "invalid",
+          "totalItems": -1,
           "projects": []})";
   auto const response =
       ListProjectsResponse::BuildFromHttpResponse(http_response);

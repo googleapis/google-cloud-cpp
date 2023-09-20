@@ -24,12 +24,11 @@
 using ::google::cloud::StatusCode;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::Benchmark;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::BenchmarkResult;
+using ::google::cloud::bigquery_v2_minimal_benchmarks::ConvertSteadyClockToTime;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::DatasetBenchmark;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::DatasetConfig;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::FormatDuration;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
-using std::chrono::steady_clock;
-using std::chrono::system_clock;
 
 char const kDescription[] =
     R"""(Measures the latency of Bigquery's `GetDataset()` and
@@ -90,13 +89,6 @@ OperationResult RunListDatasets(DatasetBenchmark& benchmark) {
   return Benchmark::TimeOperation(std::move(op));
 }
 
-std::time_t steady_clock_to_time_t(std::chrono::steady_clock::time_point t) {
-  return system_clock::to_time_t(
-      std::chrono::system_clock::now() +
-      std::chrono::duration_cast<system_clock::duration>(t -
-                                                         steady_clock::now()));
-}
-
 // Run an iteration of the test.
 google::cloud::StatusOr<DatasetBenchmarkResult> RunDatasetBenchmark(
     DatasetBenchmark& benchmark, std::chrono::seconds test_duration) {
@@ -123,19 +115,27 @@ google::cloud::StatusOr<DatasetBenchmarkResult> RunDatasetBenchmark(
       }
       result.list_results.operations.emplace_back(op_result);
     }
+    std::time_t start_t = ConvertSteadyClockToTime(start);
+    std::time_t end_t = ConvertSteadyClockToTime(end);
     if (now >= mark) {
       mark = now + test_duration / kBenchmarkProgressMarks;
-      std::time_t start_t = steady_clock_to_time_t(start);
-      std::time_t end_t = steady_clock_to_time_t(end);
-      std::time_t now_t = steady_clock_to_time_t(now);
-      std::time_t mark_t = steady_clock_to_time_t(mark);
+      std::time_t now_t = ConvertSteadyClockToTime(now);
+      std::time_t mark_t = ConvertSteadyClockToTime(mark);
       std::cout << "Start Time=" << std::ctime(&start_t)
                 << "Current Progress Mark=" << std::ctime(&now_t)
                 << "Next Progress Mark=" << std::ctime(&mark_t)
                 << "End Time=" << std::ctime(&end_t)
-                << "Number of GetDataset operations= "
+                << "Number of GetDataset operations performed thus far= "
                 << result.get_results.operations.size()
-                << ", Number of ListDatasets operations= "
+                << ", Number of ListDatasets operations performed thus far= "
+                << result.list_results.operations.size() << std::endl;
+      std::cout << "..." << std::endl;
+    } else if (now > end) {
+      std::cout << "Start Time=" << std::ctime(&start_t)
+                << "End Time=" << std::ctime(&end_t)
+                << "Total Number of GetDataset operations= "
+                << result.get_results.operations.size()
+                << ", Total Number of ListDatasets operations= "
                 << result.list_results.operations.size() << std::endl;
       std::cout << "..." << std::endl;
     }
