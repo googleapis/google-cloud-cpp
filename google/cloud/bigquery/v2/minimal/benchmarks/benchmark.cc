@@ -61,6 +61,8 @@ using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::Table;
 using ::google::cloud::bigquery_v2_minimal_internal::TableClient;
 using ::google::cloud::internal::MakeStreamRange;
+using std::chrono::steady_clock;
+using std::chrono::system_clock;
 
 namespace {
 double const kResultPercentiles[] = {0, 50, 90, 95, 99, 99.9, 100};
@@ -89,16 +91,30 @@ std::chrono::milliseconds ToChronoMillis(int m) {
 
 }  // anonymous namespace
 
-void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
-                                      std::string const& phase,
+// Converts TimePoint to time_t for printing progress.
+std::time_t ConvertSteadyClockToTime(std::chrono::steady_clock::time_point t) {
+  return system_clock::to_time_t(
+      std::chrono::system_clock::now() +
+      std::chrono::duration_cast<system_clock::duration>(t -
+                                                         steady_clock::now()));
+}
+
+void Benchmark::PrintThroughputResult(std::ostream& os,
+                                      std::string const& test_name,
+                                      std::string const& operation,
                                       BenchmarkResult const& result) {
   std::chrono::seconds elapsed =
       std::chrono::duration_cast<std::chrono::seconds>(result.elapsed);
   auto elapsed_dbl = static_cast<double>(elapsed.count());
   auto operations_size_dbl = static_cast<double>(result.operations.size());
   auto ops_throughput = operations_size_dbl / elapsed_dbl;
-  os << "# " << phase << " op throughput=" << ops_throughput << " ops/s"
-     << std::endl;
+  os << "# Test=" << test_name << ", " << operation
+     << ", op throughput=" << ops_throughput << " ops/s" << std::endl
+     << "# Test=" << test_name << ", " << operation
+     << ", Total number of operations performed=" << result.operations.size()
+     << std::endl
+     << "# Test=" << test_name << ", " << operation
+     << ", Total elapsed time=" << elapsed.count() << " seconds" << std::endl;
 }
 
 void Benchmark::PrintLatencyResult(std::ostream& os,

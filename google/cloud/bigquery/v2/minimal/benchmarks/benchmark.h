@@ -73,7 +73,7 @@ class Benchmark {
    */
   static void PrintThroughputResult(std::ostream& os,
                                     std::string const& test_name,
-                                    std::string const& phase,
+                                    std::string const& operation,
                                     BenchmarkResult const& result);
 
   /**
@@ -157,6 +157,11 @@ class ProjectBenchmark : public Benchmark {
   Config config_;
   std::shared_ptr<bigquery_v2_minimal_internal::ProjectClient> project_client_;
 };
+
+/**
+ * Time Conversion Utility function used by all benchmarks.
+ */
+std::time_t ConvertSteadyClockToTime(std::chrono::steady_clock::time_point t);
 
 /**
  * Helper class to pretty print durations.

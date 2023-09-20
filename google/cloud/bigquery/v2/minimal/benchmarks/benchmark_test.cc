@@ -151,6 +151,8 @@ TEST(BenchmarkTest, PrintThroughputResult) {
 
   // The output includes "XX ops/s" where XX is the operations count.
   EXPECT_THAT(output, HasSubstr("345 ops/s"));
+  EXPECT_THAT(output, HasSubstr("Total elapsed time=10 seconds"));
+  EXPECT_THAT(output, HasSubstr("Total number of operations performed=3450"));
 }
 
 TEST(BenchmarkTest, PrintLatencyResult) {
