@@ -3582,7 +3582,7 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
             .set<spanner::SpannerBackoffPolicyOption>(
                 std::make_shared<spanner::ExponentialBackoffPolicy>(
                     /*initial_delay=*/std::chrono::milliseconds(500),
-                    /*maximum_delay=*/std::chrono::seconds(64),
+                    /*maximum_delay=*/std::chrono::seconds(16),
                     /*scaling=*/1.5))));
 
     std::int64_t rows_inserted;
