@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class AsyncReaderConnection {
  public:
-  /// The value returned by `Read()`, see the function for more details.
+  /// The value returned by `Read()`. See the function for more details.
   using ReadResponse = absl::variant<ReadPayload, Status>;
 
   virtual ~AsyncReaderConnection() = default;
@@ -52,14 +52,14 @@ class AsyncReaderConnection {
   /**
    * Asks for more data.
    *
-   * An outcome with a `Status` indicates that no more data is avaiable. Calling
-   * `Read()` after it returns a `Status` results in undefined behavior.
+   * An outcome with a `Status` indicates that no more data is available.
+   * Calling `Read()` after it returns a `Status` results in undefined behavior.
    *
    * Applications should not have more than one `Read()` pending at a time.
    * Calling `Read()` while a previous `Read()` is pending results in undefined
    * behavior.
    *
-   * Applications should not destruct a `AsyncReaderConnection` until a call to
+   * Applications should not destruct an `AsyncReaderConnection` until a call to
    * `Read()` returns a `Status` response.
    *
    * Retrieving more data can result in three outcomes:
