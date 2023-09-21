@@ -32,12 +32,16 @@ namespace generator_internal {
  */
 bool IsPaginated(google::protobuf::MethodDescriptor const& method);
 
+/**
+ * Contains pagination results from interrogating the MethodDescriptor.
+ */
 struct PaginationInfo {
   std::string range_output_field_name;
   google::protobuf::Descriptor const* range_output_type;
   absl::optional<google::protobuf::FieldDescriptor const*>
       range_output_map_key_type;
 };
+
 /**
  * If method meets AIP-4233 pagination criteria, provides paginated field type
  * and field name. Failing that, attempts to apply alternate pagination

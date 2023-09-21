@@ -137,37 +137,29 @@ bool IsPaginated(MethodDescriptor const& method) {
 void AssignPaginationMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
-  if (IsPaginated(method)) {
-    auto pagination_info = DeterminePagination(method);
-    method_vars["range_output_field_name"] =
-        pagination_info->range_output_field_name;
-    // Add exception to AIP-4233 for response types that have exactly one
-    // repeated field that is of primitive type string.
-    if (pagination_info->range_output_type == nullptr) {
-      method_vars["range_output_type"] = "std::string";
-      method_vars["method_paginated_return_doxygen_link"] = "std::string";
+  if (!IsPaginated(method)) return;
+  auto pagination_info = DeterminePagination(method);
+  method_vars["range_output_field_name"] =
+      pagination_info->range_output_field_name;
+  // Add exception to AIP-4233 for response types that have exactly one
+  // repeated field that is of primitive type string.
+  if (pagination_info->range_output_type == nullptr) {
+    method_vars["range_output_type"] = "std::string";
+    method_vars["method_paginated_return_doxygen_link"] = "std::string";
+  } else {
+    if (pagination_info->range_output_map_key_type.has_value()) {
+      method_vars["range_output_type"] = absl::StrCat(
+          "std::pair<",
+          CppTypeToString(pagination_info->range_output_map_key_type.value()),
+          ", ",
+          ProtoNameToCppName(pagination_info->range_output_type->full_name()),
+          ">");
     } else {
-      if (pagination_info->range_output_map_key_type.has_value()) {
-        std::string key_type_name =
-            (*pagination_info->range_output_map_key_type)->type() ==
-                    protobuf::FieldDescriptor::TYPE_MESSAGE
-                ? ProtoNameToCppName(
-                      (*pagination_info->range_output_map_key_type)
-                          ->message_type()
-                          ->full_name())
-                : CppTypeToString(
-                      pagination_info->range_output_map_key_type.value());
-        method_vars["range_output_type"] = absl::StrCat(
-            "std::pair<", std::move(key_type_name), ", ",
-            ProtoNameToCppName(pagination_info->range_output_type->full_name()),
-            ">");
-      } else {
-        method_vars["range_output_type"] =
-            ProtoNameToCppName(pagination_info->range_output_type->full_name());
-      }
-      method_vars["method_paginated_return_doxygen_link"] =
-          FormatDoxygenLink(*pagination_info->range_output_type);
+      method_vars["range_output_type"] =
+          ProtoNameToCppName(pagination_info->range_output_type->full_name());
     }
+    method_vars["method_paginated_return_doxygen_link"] =
+        FormatDoxygenLink(*pagination_info->range_output_type);
   }
 }
 
