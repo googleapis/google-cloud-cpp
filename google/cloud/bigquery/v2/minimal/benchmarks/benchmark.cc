@@ -61,8 +61,6 @@ using ::google::cloud::bigquery_v2_minimal_internal::QueryRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::Table;
 using ::google::cloud::bigquery_v2_minimal_internal::TableClient;
 using ::google::cloud::internal::MakeStreamRange;
-using std::chrono::steady_clock;
-using std::chrono::system_clock;
 
 namespace {
 double const kResultPercentiles[] = {0, 50, 90, 95, 99, 99.9, 100};
@@ -90,14 +88,6 @@ std::chrono::milliseconds ToChronoMillis(int m) {
 }
 
 }  // anonymous namespace
-
-// Converts TimePoint to time_t for printing progress.
-std::time_t ConvertSteadyClockToTime(std::chrono::steady_clock::time_point t) {
-  return system_clock::to_time_t(
-      std::chrono::system_clock::now() +
-      std::chrono::duration_cast<system_clock::duration>(t -
-                                                         steady_clock::now()));
-}
 
 void Benchmark::PrintThroughputResult(std::ostream& os,
                                       std::string const& test_name,

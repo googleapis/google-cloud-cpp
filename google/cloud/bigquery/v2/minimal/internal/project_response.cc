@@ -69,16 +69,16 @@ StatusOr<ListProjectsResponse> ListProjectsResponse::BuildFromHttpResponse(
                                    GCP_ERROR_INFO());
   }
 
-  if (result.total_items > 0) {
-    for (auto const& kv : json->at("projects").items()) {
-      auto const& json_list_format_project_obj = kv.value();
-      if (!valid_project(json_list_format_project_obj)) {
-        return internal::InternalError("Not a valid Json Project object",
-                                       GCP_ERROR_INFO());
-      }
-      auto const& project = json_list_format_project_obj.get<Project>();
-      result.projects.push_back(project);
+  if (result.total_items == 0) return result;
+
+  for (auto const& kv : json->at("projects").items()) {
+    auto const& json_list_format_project_obj = kv.value();
+    if (!valid_project(json_list_format_project_obj)) {
+      return internal::InternalError("Not a valid Json Project object",
+                                     GCP_ERROR_INFO());
     }
+    auto const& project = json_list_format_project_obj.get<Project>();
+    result.projects.push_back(project);
   }
 
   return result;
