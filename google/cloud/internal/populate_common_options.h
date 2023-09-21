@@ -61,6 +61,16 @@ Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
 /// Compute the default value for the tracing components.
 std::set<std::string> DefaultTracingComponents();
 
+/**
+ * Given client options, returns a minimal set of matching options to be used by
+ * the authentication components.
+ *
+ * For example, if tracing is enabled in a client via the
+ * `OpenTelemetryTracingOption`, we also want to enable tracing in the auth
+ * components.
+ */
+Options MakeAuthOptions(Options const& options);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

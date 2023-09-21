@@ -19,6 +19,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
@@ -290,8 +291,9 @@ Options DefaultOptionsWithCredentials(Options opts) {
         internal::MapCredentials(*google::cloud::MakeInsecureCredentials()),
         std::move(opts));
   }
-  auto credentials = internal::MapCredentials(
-      *google::cloud::MakeGoogleDefaultCredentials(opts));
+  auto credentials =
+      internal::MapCredentials(*google::cloud::MakeGoogleDefaultCredentials(
+          google::cloud::internal::MakeAuthOptions(opts)));
   return internal::DefaultOptions(std::move(credentials), std::move(opts));
 }
 

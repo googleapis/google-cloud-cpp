@@ -37,6 +37,7 @@
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include <grpcpp/grpcpp.h>
@@ -216,7 +217,8 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<UnifiedCredentialsOption>() &&
       !options.has<GrpcCredentialOption>()) {
     options.set<UnifiedCredentialsOption>(
-        google::cloud::MakeGoogleDefaultCredentials(options));
+        google::cloud::MakeGoogleDefaultCredentials(
+            google::cloud::internal::MakeAuthOptions(options)));
   }
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
