@@ -64,9 +64,9 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   ScheduleForDelete(*insert);
 
   auto pending0 =
-      async.ReadObject(bucket_name(), object_name, 0, LoremIpsum().size());
+      async.ReadObjectRange(bucket_name(), object_name, 0, LoremIpsum().size());
   auto pending1 =
-      async.ReadObject(bucket_name(), object_name, 0, LoremIpsum().size());
+      async.ReadObjectRange(bucket_name(), object_name, 0, LoremIpsum().size());
 
   for (auto* p : {&pending1, &pending0}) {
     auto response = p->get();
@@ -116,15 +116,47 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
   EXPECT_STATUS_OK(composed);
   ScheduleForDelete(*composed);
 
-  auto read =
-      async.ReadObject(bucket_name(), destination, 0, 2 * LoremIpsum().size())
-          .get();
+  auto read = async
+                  .ReadObjectRange(bucket_name(), destination, 0,
+                                   2 * LoremIpsum().size())
+                  .get();
   ASSERT_STATUS_OK(read.status);
   auto const full_contents = std::accumulate(
       read.contents.begin(), read.contents.end(), std::string{});
   EXPECT_EQ(full_contents, LoremIpsum() + LoremIpsum());
   ASSERT_TRUE(read.object_metadata.has_value());
   EXPECT_EQ(*read.object_metadata, *composed);
+}
+
+TEST_F(AsyncClientIntegrationTest, StreamingRead) {
+  auto object_name = MakeRandomObjectName();
+  // Create a relatively large object so the streaming read makes sense.
+  auto constexpr kSize = 32 * 1024 * 1024L;
+  auto const expected_data = MakeRandomData(kSize);
+
+  auto async = AsyncClient();
+  auto insert = async
+                    .InsertObject(bucket_name(), object_name, expected_data,
+                                  gcs::IfGenerationMatch(0))
+                    .get();
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  auto r = async.ReadObject(bucket_name(), object_name).get();
+  ASSERT_STATUS_OK(r);
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = *std::move(r);
+
+  std::string actual;
+  while (token.valid()) {
+    auto p = reader.Read(std::move(token)).get();
+    ASSERT_STATUS_OK(p);
+    ReadPayload payload;
+    std::tie(payload, token) = *std::move(p);
+    for (auto v : payload.contents()) actual += std::string(v);
+  }
+  EXPECT_EQ(actual, expected_data);
 }
 
 }  // namespace

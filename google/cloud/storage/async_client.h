@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_CLIENT_H
 
 #include "google/cloud/storage/async_connection.h"
+#include "google/cloud/storage/async_reader.h"
+#include "google/cloud/storage/async_token.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
@@ -155,6 +157,43 @@ class AsyncClient {
   /**
    * Reads the contents of an object.
    *
+   * When satisfied, the returned future has a reader to asynchronously download
+   * the contents of the given object.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param args a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DisableCrc32cChecksum`,
+   *     `DisableMD5Hash`, `EncryptionKey`, `Generation`, `IfGenerationMatch`,
+   *     `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch`, `UserProject`, and `AcceptEncoding`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_async_samples.cc read-object
+   */
+  template <typename... Args>
+  future<StatusOr<std::pair<AsyncReader, AsyncToken>>> ReadObject(
+      std::string bucket_name, std::string object_name, Args&&... args) {
+    auto options = SpanOptions(std::forward<Args>(args)...);
+    return connection_
+        ->AsyncReadObject(
+            {ReadObjectRequest(std::move(bucket_name), std::move(object_name))
+                 .set_multiple_options(std::forward<Args>(args)...),
+             std::move(options)})
+        .then([](auto f) -> StatusOr<std::pair<AsyncReader, AsyncToken>> {
+          auto impl = f.get();
+          if (!impl) return std::move(impl).status();
+          auto t = storage_internal::MakeAsyncToken(impl->get());
+          return std::make_pair(AsyncReader(*std::move(impl)), std::move(t));
+        });
+  }
+
+  /**
+   * Reads the contents of an object.
+   *
    * When satisfied, the returned future has the contents of the given object
    * between @p offset and @p offset + @p limit (exclusive).
    *
@@ -176,11 +215,11 @@ class AsyncClient {
    * This is a read-only operation and is always idempotent.
    */
   template <typename... Args>
-  future<AsyncReadObjectRangeResponse> ReadObject(std::string bucket_name,
-                                                  std::string object_name,
-                                                  std::int64_t offset,
-                                                  std::int64_t limit,
-                                                  Args&&... args) {
+  future<AsyncReadObjectRangeResponse> ReadObjectRange(std::string bucket_name,
+                                                       std::string object_name,
+                                                       std::int64_t offset,
+                                                       std::int64_t limit,
+                                                       Args&&... args) {
     struct HasReadRange
         : public absl::disjunction<
               std::is_same<storage::ReadRange, std::decay_t<Args>>...> {};
