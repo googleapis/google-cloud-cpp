@@ -33,7 +33,8 @@ InterconnectAttachmentsClient::InterconnectAttachmentsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 InterconnectAttachmentsClient::~InterconnectAttachmentsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       InterconnectAttachmentsScopedList>>
 InterconnectAttachmentsClient::AggregatedListInterconnectAttachments(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -43,13 +44,14 @@ InterconnectAttachmentsClient::AggregatedListInterconnectAttachments(
   return connection_->AggregatedListInterconnectAttachments(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       InterconnectAttachmentsScopedList>>
 InterconnectAttachmentsClient::AggregatedListInterconnectAttachments(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        AggregatedListInterconnectAttachmentsRequest const& request,
+        AggregatedListInterconnectAttachmentsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListInterconnectAttachments(request);
+  return connection_->AggregatedListInterconnectAttachments(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

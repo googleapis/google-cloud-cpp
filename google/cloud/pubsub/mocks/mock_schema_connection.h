@@ -54,10 +54,10 @@ class MockSchemaServiceConnection : public pubsub::SchemaServiceConnection {
               (google::pubsub::v1::GetSchemaRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::pubsub::v1::Schema>, ListSchemas,
+  MOCK_METHOD((StreamRange<google::pubsub::v1::Schema>), ListSchemas,
               (google::pubsub::v1::ListSchemasRequest request), (override));
 
-  MOCK_METHOD(StreamRange<google::pubsub::v1::Schema>, ListSchemaRevisions,
+  MOCK_METHOD((StreamRange<google::pubsub::v1::Schema>), ListSchemaRevisions,
               (google::pubsub::v1::ListSchemaRevisionsRequest request),
               (override));
 

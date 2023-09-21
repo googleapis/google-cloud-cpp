@@ -60,7 +60,8 @@ class MockEssentialContactsServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::essentialcontacts::v1::Contact>, ListContacts,
+      (StreamRange<google::cloud::essentialcontacts::v1::Contact>),
+      ListContacts,
       (google::cloud::essentialcontacts::v1::ListContactsRequest request),
       (override));
 
@@ -75,7 +76,7 @@ class MockEssentialContactsServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::essentialcontacts::v1::Contact>,
+      (StreamRange<google::cloud::essentialcontacts::v1::Contact>),
       ComputeContacts,
       (google::cloud::essentialcontacts::v1::ComputeContactsRequest request),
       (override));

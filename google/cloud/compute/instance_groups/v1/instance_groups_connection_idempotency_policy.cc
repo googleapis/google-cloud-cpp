@@ -43,7 +43,7 @@ Idempotency InstanceGroupsConnectionIdempotencyPolicy::AddInstances(
 Idempotency
 InstanceGroupsConnectionIdempotencyPolicy::AggregatedListInstanceGroups(
     google::cloud::cpp::compute::instance_groups::v1::
-        AggregatedListInstanceGroupsRequest const&) {
+        AggregatedListInstanceGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

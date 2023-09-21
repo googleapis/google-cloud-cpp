@@ -45,7 +45,7 @@ Idempotency InstanceGroupManagersConnectionIdempotencyPolicy::AbandonInstances(
 Idempotency InstanceGroupManagersConnectionIdempotencyPolicy::
     AggregatedListInstanceGroupManagers(
         google::cloud::cpp::compute::instance_group_managers::v1::
-            AggregatedListInstanceGroupManagersRequest const&) {
+            AggregatedListInstanceGroupManagersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -67,7 +67,7 @@ class MockFirewallsConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Firewall>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Firewall>),
               ListFirewalls,
               (google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest
                    request),

@@ -54,10 +54,11 @@ class MockBackendServicesConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              BackendServicesScopedList>>),
       AggregatedListBackendServices,
       (google::cloud::cpp::compute::backend_services::v1::
-           AggregatedListBackendServicesRequest const& request),
+           AggregatedListBackendServicesRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -96,7 +97,7 @@ class MockBackendServicesConnection
                    InsertBackendServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendService>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendService>),
               ListBackendServices,
               (google::cloud::cpp::compute::backend_services::v1::
                    ListBackendServicesRequest request),

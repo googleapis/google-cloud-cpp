@@ -115,7 +115,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
          MethodPattern(
              {
                  // clang-format off
-   {"\n  MOCK_METHOD(StreamRange<$range_output_type$>,\n"
+   {"\n  MOCK_METHOD((StreamRange<$range_output_type$>),\n"
     "  $method_name$,\n"
     "  ($request_type$ request), (override));\n"},
                  // clang-format on

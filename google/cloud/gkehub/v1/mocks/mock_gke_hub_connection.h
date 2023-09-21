@@ -46,12 +46,12 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkehub::v1::Membership>,
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Membership>),
               ListMemberships,
               (google::cloud::gkehub::v1::ListMembershipsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkehub::v1::Feature>, ListFeatures,
+  MOCK_METHOD((StreamRange<google::cloud::gkehub::v1::Feature>), ListFeatures,
               (google::cloud::gkehub::v1::ListFeaturesRequest request),
               (override));
 

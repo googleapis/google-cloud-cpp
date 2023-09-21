@@ -34,16 +34,20 @@ NetworkAttachmentsTracingConnection::NetworkAttachmentsTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
 NetworkAttachmentsTracingConnection::AggregatedListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
-        AggregatedListNetworkAttachmentsRequest const& request) {
+        AggregatedListNetworkAttachmentsRequest request) {
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "AggregatedListNetworkAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListNetworkAttachments(request));
+  auto sr = child_->AggregatedListNetworkAttachments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

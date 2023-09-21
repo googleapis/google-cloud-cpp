@@ -32,15 +32,19 @@ HealthChecksTracingConnection::HealthChecksTracingConnection(
     std::shared_ptr<compute_health_checks_v1::HealthChecksConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::HealthChecksScopedList>>
 HealthChecksTracingConnection::AggregatedListHealthChecks(
     google::cloud::cpp::compute::health_checks::v1::
-        AggregatedListHealthChecksRequest const& request) {
+        AggregatedListHealthChecksRequest request) {
   auto span = internal::MakeSpan(
       "compute_health_checks_v1::HealthChecksConnection::"
       "AggregatedListHealthChecks");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListHealthChecks(request));
+  auto sr = child_->AggregatedListHealthChecks(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

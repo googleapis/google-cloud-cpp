@@ -37,7 +37,7 @@ NetworkAttachmentsConnectionIdempotencyPolicy::clone() const {
 Idempotency
 NetworkAttachmentsConnectionIdempotencyPolicy::AggregatedListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
-        AggregatedListNetworkAttachmentsRequest const&) {
+        AggregatedListNetworkAttachmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

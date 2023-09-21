@@ -40,10 +40,11 @@ class HealthChecksTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>
   AggregatedListHealthChecks(
       google::cloud::cpp::compute::health_checks::v1::
-          AggregatedListHealthChecksRequest const& request) override;
+          AggregatedListHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::

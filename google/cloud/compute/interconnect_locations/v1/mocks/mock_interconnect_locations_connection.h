@@ -56,7 +56,7 @@ class MockInterconnectLocationsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>,
+      (StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>),
       ListInterconnectLocations,
       (google::cloud::cpp::compute::interconnect_locations::v1::
            ListInterconnectLocationsRequest request),

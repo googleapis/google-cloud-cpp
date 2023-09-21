@@ -48,7 +48,7 @@ class MockEnvironmentsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Environment>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::Environment>),
       ListEnvironments,
       (google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request),
       (override));
@@ -79,7 +79,7 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Environment>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::Environment>),
       LookupEnvironmentHistory,
       (google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
            request),
@@ -94,7 +94,7 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>),
       ListContinuousTestResults,
       (google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
            request),

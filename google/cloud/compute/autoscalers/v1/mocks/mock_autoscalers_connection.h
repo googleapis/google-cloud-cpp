@@ -48,10 +48,12 @@ class MockAutoscalersConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::AutoscalersScopedList>>),
       AggregatedListAutoscalers,
       (google::cloud::cpp::compute::autoscalers::v1::
-           AggregatedListAutoscalersRequest const& request),
+           AggregatedListAutoscalersRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -73,7 +75,8 @@ class MockAutoscalersConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Autoscaler>, ListAutoscalers,
+      (StreamRange<google::cloud::cpp::compute::v1::Autoscaler>),
+      ListAutoscalers,
       (google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
            request),
       (override));

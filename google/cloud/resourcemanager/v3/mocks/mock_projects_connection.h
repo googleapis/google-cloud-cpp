@@ -51,13 +51,14 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
       (google::cloud::resourcemanager::v3::GetProjectRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::Project>,
+  MOCK_METHOD((StreamRange<google::cloud::resourcemanager::v3::Project>),
               ListProjects,
               (google::cloud::resourcemanager::v3::ListProjectsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::Project>, SearchProjects,
+      (StreamRange<google::cloud::resourcemanager::v3::Project>),
+      SearchProjects,
       (google::cloud::resourcemanager::v3::SearchProjectsRequest request),
       (override));
 

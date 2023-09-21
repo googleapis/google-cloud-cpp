@@ -47,7 +47,7 @@ class MockServiceManagerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::api::servicemanagement::v1::ManagedService>,
+  MOCK_METHOD((StreamRange<google::api::servicemanagement::v1::ManagedService>),
               ListServices,
               (google::api::servicemanagement::v1::ListServicesRequest request),
               (override));
@@ -77,7 +77,7 @@ class MockServiceManagerConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::api::Service>, ListServiceConfigs,
+      (StreamRange<google::api::Service>), ListServiceConfigs,
       (google::api::servicemanagement::v1::ListServiceConfigsRequest request),
       (override));
 
@@ -102,7 +102,7 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::api::servicemanagement::v1::Rollout>,
+      (StreamRange<google::api::servicemanagement::v1::Rollout>),
       ListServiceRollouts,
       (google::api::servicemanagement::v1::ListServiceRolloutsRequest request),
       (override));

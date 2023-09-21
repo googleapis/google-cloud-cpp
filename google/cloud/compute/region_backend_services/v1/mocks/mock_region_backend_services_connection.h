@@ -79,7 +79,7 @@ class MockRegionBackendServicesConnection
                    InsertBackendServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendService>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendService>),
               ListRegionBackendServices,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    ListRegionBackendServicesRequest request),

@@ -57,7 +57,7 @@ class MockEndpointServiceConnection
       (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Endpoint>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Endpoint>),
               ListEndpoints,
               (google::cloud::aiplatform::v1::ListEndpointsRequest request),
               (override));

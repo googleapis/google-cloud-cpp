@@ -48,10 +48,12 @@ class MockNodeTemplatesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>),
       AggregatedListNodeTemplates,
       (google::cloud::cpp::compute::node_templates::v1::
-           AggregatedListNodeTemplatesRequest const& request),
+           AggregatedListNodeTemplatesRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -78,7 +80,7 @@ class MockNodeTemplatesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>,
+      (StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>),
       ListNodeTemplates,
       (google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
            request),

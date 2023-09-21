@@ -41,20 +41,44 @@ GlobalOperationsRestConnectionImpl::GlobalOperationsRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       GlobalOperationsConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::OperationsScopedList>>
 GlobalOperationsRestConnectionImpl::AggregatedListGlobalOperations(
     google::cloud::cpp::compute::global_operations::v1::
-        AggregatedListGlobalOperationsRequest const& request) {
+        AggregatedListGlobalOperationsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListGlobalOperations(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::global_operations::v1::
-                 AggregatedListGlobalOperationsRequest const& request) {
-        return stub_->AggregatedListGlobalOperations(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListGlobalOperations(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::OperationsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_global_operations_v1::GlobalOperationsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::global_operations::v1::
+              AggregatedListGlobalOperationsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::global_operations::v1::
+                       AggregatedListGlobalOperationsRequest const& request) {
+              return stub->AggregatedListGlobalOperations(rest_context,
+                                                          request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::OperationAggregatedList r) {
+        std::vector<std::pair<
+            std::string, google::cloud::cpp::compute::v1::OperationsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 Status GlobalOperationsRestConnectionImpl::DeleteOperation(

@@ -47,7 +47,7 @@ class MockCloudFilestoreManagerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::filestore::v1::Instance>,
+  MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Instance>),
               ListInstances,
               (google::cloud::filestore::v1::ListInstancesRequest request),
               (override));
@@ -77,7 +77,7 @@ class MockCloudFilestoreManagerConnection
       (google::cloud::filestore::v1::DeleteInstanceRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::filestore::v1::Snapshot>,
+  MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Snapshot>),
               ListSnapshots,
               (google::cloud::filestore::v1::ListSnapshotsRequest request),
               (override));
@@ -102,7 +102,7 @@ class MockCloudFilestoreManagerConnection
       (google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::filestore::v1::Backup>, ListBackups,
+  MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Backup>), ListBackups,
               (google::cloud::filestore::v1::ListBackupsRequest request),
               (override));
 

@@ -59,7 +59,7 @@ class MockRepositoryManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v2::Connection>,
+      (StreamRange<google::devtools::cloudbuild::v2::Connection>),
       ListConnections,
       (google::devtools::cloudbuild::v2::ListConnectionsRequest request),
       (override));
@@ -97,7 +97,7 @@ class MockRepositoryManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v2::Repository>,
+      (StreamRange<google::devtools::cloudbuild::v2::Repository>),
       ListRepositories,
       (google::devtools::cloudbuild::v2::ListRepositoriesRequest request),
       (override));
@@ -123,7 +123,7 @@ class MockRepositoryManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v2::Repository>,
+      (StreamRange<google::devtools::cloudbuild::v2::Repository>),
       FetchLinkableRepositories,
       (google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
            request),

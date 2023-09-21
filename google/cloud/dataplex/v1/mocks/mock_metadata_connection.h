@@ -63,7 +63,7 @@ class MockMetadataServiceConnection
               (google::cloud::dataplex::v1::GetEntityRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Entity>, ListEntities,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Entity>), ListEntities,
               (google::cloud::dataplex::v1::ListEntitiesRequest request),
               (override));
 
@@ -81,7 +81,7 @@ class MockMetadataServiceConnection
               (google::cloud::dataplex::v1::GetPartitionRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Partition>,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Partition>),
               ListPartitions,
               (google::cloud::dataplex::v1::ListPartitionsRequest request),
               (override));

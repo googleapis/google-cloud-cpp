@@ -50,7 +50,7 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
               (google::cloud::eventarc::v1::GetTriggerRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Trigger>, ListTriggers,
+  MOCK_METHOD((StreamRange<google::cloud::eventarc::v1::Trigger>), ListTriggers,
               (google::cloud::eventarc::v1::ListTriggersRequest request),
               (override));
 
@@ -73,7 +73,7 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
               (google::cloud::eventarc::v1::GetChannelRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Channel>, ListChannels,
+  MOCK_METHOD((StreamRange<google::cloud::eventarc::v1::Channel>), ListChannels,
               (google::cloud::eventarc::v1::ListChannelsRequest request),
               (override));
 
@@ -96,7 +96,8 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
               (google::cloud::eventarc::v1::GetProviderRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Provider>, ListProviders,
+  MOCK_METHOD((StreamRange<google::cloud::eventarc::v1::Provider>),
+              ListProviders,
               (google::cloud::eventarc::v1::ListProvidersRequest request),
               (override));
 
@@ -107,7 +108,7 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::eventarc::v1::ChannelConnection>,
+      (StreamRange<google::cloud::eventarc::v1::ChannelConnection>),
       ListChannelConnections,
       (google::cloud::eventarc::v1::ListChannelConnectionsRequest request),
       (override));

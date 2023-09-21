@@ -70,7 +70,7 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::rapidmigrationassessment::v1::Collector>,
+      (StreamRange<google::cloud::rapidmigrationassessment::v1::Collector>),
       ListCollectors,
       (google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest
            request),

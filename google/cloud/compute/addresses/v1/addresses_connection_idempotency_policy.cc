@@ -36,7 +36,7 @@ AddressesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency AddressesConnectionIdempotencyPolicy::AggregatedListAddresses(
     google::cloud::cpp::compute::addresses::v1::
-        AggregatedListAddressesRequest const&) {
+        AggregatedListAddressesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

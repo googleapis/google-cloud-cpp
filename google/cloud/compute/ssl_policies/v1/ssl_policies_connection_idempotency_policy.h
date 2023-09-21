@@ -38,7 +38,7 @@ class SslPoliciesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListSslPolicies(
       google::cloud::cpp::compute::ssl_policies::v1::
-          AggregatedListSslPoliciesRequest const& request);
+          AggregatedListSslPoliciesRequest request);
 
   virtual google::cloud::Idempotency DeleteSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::

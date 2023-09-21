@@ -39,7 +39,7 @@ PublicDelegatedPrefixesConnectionIdempotencyPolicy::clone() const {
 Idempotency PublicDelegatedPrefixesConnectionIdempotencyPolicy::
     AggregatedListPublicDelegatedPrefixes(
         google::cloud::cpp::compute::public_delegated_prefixes::v1::
-            AggregatedListPublicDelegatedPrefixesRequest const&) {
+            AggregatedListPublicDelegatedPrefixesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

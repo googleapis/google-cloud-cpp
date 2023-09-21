@@ -47,7 +47,7 @@ class MockCommentServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::support::v2::Comment>, ListComments,
+  MOCK_METHOD((StreamRange<google::cloud::support::v2::Comment>), ListComments,
               (google::cloud::support::v2::ListCommentsRequest request),
               (override));
 

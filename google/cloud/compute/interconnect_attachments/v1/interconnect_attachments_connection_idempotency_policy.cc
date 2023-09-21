@@ -39,7 +39,7 @@ InterconnectAttachmentsConnectionIdempotencyPolicy::clone() const {
 Idempotency InterconnectAttachmentsConnectionIdempotencyPolicy::
     AggregatedListInterconnectAttachments(
         google::cloud::cpp::compute::interconnect_attachments::v1::
-            AggregatedListInterconnectAttachmentsRequest const&) {
+            AggregatedListInterconnectAttachmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

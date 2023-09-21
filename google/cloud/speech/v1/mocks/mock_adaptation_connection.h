@@ -55,7 +55,8 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
               (google::cloud::speech::v1::GetPhraseSetRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::speech::v1::PhraseSet>, ListPhraseSet,
+  MOCK_METHOD((StreamRange<google::cloud::speech::v1::PhraseSet>),
+              ListPhraseSet,
               (google::cloud::speech::v1::ListPhraseSetRequest request),
               (override));
 
@@ -78,7 +79,7 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
               (google::cloud::speech::v1::GetCustomClassRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::speech::v1::CustomClass>,
+  MOCK_METHOD((StreamRange<google::cloud::speech::v1::CustomClass>),
               ListCustomClasses,
               (google::cloud::speech::v1::ListCustomClassesRequest request),
               (override));

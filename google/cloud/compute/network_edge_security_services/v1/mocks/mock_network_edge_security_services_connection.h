@@ -50,11 +50,12 @@ class MockNetworkEdgeSecurityServicesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::
-                   NetworkEdgeSecurityServiceAggregatedList>,
+      (StreamRange<
+          std::pair<std::string, google::cloud::cpp::compute::v1::
+                                     NetworkEdgeSecurityServicesScopedList>>),
       AggregatedListNetworkEdgeSecurityServices,
       (google::cloud::cpp::compute::network_edge_security_services::v1::
-           AggregatedListNetworkEdgeSecurityServicesRequest const& request),
+           AggregatedListNetworkEdgeSecurityServicesRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

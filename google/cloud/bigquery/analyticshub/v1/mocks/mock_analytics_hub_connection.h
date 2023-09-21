@@ -48,14 +48,14 @@ class MockAnalyticsHubServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>,
+      (StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>),
       ListDataExchanges,
       (google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>,
+      (StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>),
       ListOrgDataExchanges,
       (google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
            request),
@@ -86,7 +86,7 @@ class MockAnalyticsHubServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>,
+      (StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>),
       ListListings,
       (google::cloud::bigquery::analyticshub::v1::ListListingsRequest request),
       (override));

@@ -39,7 +39,7 @@ NetworkEndpointGroupsConnectionIdempotencyPolicy::clone() const {
 Idempotency NetworkEndpointGroupsConnectionIdempotencyPolicy::
     AggregatedListNetworkEndpointGroups(
         google::cloud::cpp::compute::network_endpoint_groups::v1::
-            AggregatedListNetworkEndpointGroupsRequest const&) {
+            AggregatedListNetworkEndpointGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

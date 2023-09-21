@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpnGatewaysConnection::~VpnGatewaysConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>
 VpnGatewaysConnection::AggregatedListVpnGateways(
     google::cloud::cpp::compute::vpn_gateways::v1::
-        AggregatedListVpnGatewaysRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListVpnGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

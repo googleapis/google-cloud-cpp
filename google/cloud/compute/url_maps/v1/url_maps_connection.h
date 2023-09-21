@@ -182,9 +182,11 @@ class UrlMapsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
-  AggregatedListUrlMaps(google::cloud::cpp::compute::url_maps::v1::
-                            AggregatedListUrlMapsRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>
+  AggregatedListUrlMaps(
+      google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteUrlMap(

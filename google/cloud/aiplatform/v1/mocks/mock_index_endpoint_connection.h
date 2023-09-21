@@ -59,7 +59,7 @@ class MockIndexEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>,
+      (StreamRange<google::cloud::aiplatform::v1::IndexEndpoint>),
       ListIndexEndpoints,
       (google::cloud::aiplatform::v1::ListIndexEndpointsRequest request),
       (override));

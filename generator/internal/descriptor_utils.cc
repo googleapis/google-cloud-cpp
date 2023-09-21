@@ -48,33 +48,6 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-std::string CppTypeToString(FieldDescriptor const* field) {
-  switch (field->cpp_type()) {
-    case FieldDescriptor::CPPTYPE_INT32:
-    case FieldDescriptor::CPPTYPE_INT64:
-    case FieldDescriptor::CPPTYPE_UINT32:
-    case FieldDescriptor::CPPTYPE_UINT64:
-      return std::string("std::") + std::string(field->cpp_type_name()) + "_t";
-
-    case FieldDescriptor::CPPTYPE_DOUBLE:
-    case FieldDescriptor::CPPTYPE_FLOAT:
-    case FieldDescriptor::CPPTYPE_BOOL:
-      return std::string(field->cpp_type_name());
-    case FieldDescriptor::CPPTYPE_ENUM:
-      return ProtoNameToCppName(field->enum_type()->full_name());
-
-    case FieldDescriptor::CPPTYPE_STRING:
-      return std::string("std::") + std::string(field->cpp_type_name());
-
-    case FieldDescriptor::CPPTYPE_MESSAGE:
-      return ProtoNameToCppName(field->message_type()->full_name());
-  }
-  GCP_LOG(FATAL) << "FieldDescriptor " << field->cpp_type_name()
-                 << " not handled";
-  /*NOTREACHED*/
-  return field->cpp_type_name();
-}
-
 void SetMethodSignatureMethodVars(
     google::protobuf::ServiceDescriptor const& service,
     google::protobuf::MethodDescriptor const& method,
@@ -583,6 +556,33 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
 }
 
 }  // namespace
+
+std::string CppTypeToString(FieldDescriptor const* field) {
+  switch (field->cpp_type()) {
+    case FieldDescriptor::CPPTYPE_INT32:
+    case FieldDescriptor::CPPTYPE_INT64:
+    case FieldDescriptor::CPPTYPE_UINT32:
+    case FieldDescriptor::CPPTYPE_UINT64:
+      return std::string("std::") + std::string(field->cpp_type_name()) + "_t";
+
+    case FieldDescriptor::CPPTYPE_DOUBLE:
+    case FieldDescriptor::CPPTYPE_FLOAT:
+    case FieldDescriptor::CPPTYPE_BOOL:
+      return std::string(field->cpp_type_name());
+    case FieldDescriptor::CPPTYPE_ENUM:
+      return ProtoNameToCppName(field->enum_type()->full_name());
+
+    case FieldDescriptor::CPPTYPE_STRING:
+      return std::string("std::") + std::string(field->cpp_type_name());
+
+    case FieldDescriptor::CPPTYPE_MESSAGE:
+      return ProtoNameToCppName(field->message_type()->full_name());
+  }
+  GCP_LOG(FATAL) << "FieldDescriptor " << field->cpp_type_name()
+                 << " not handled";
+  /*NOTREACHED*/
+  return field->cpp_type_name();
+}
 
 // TODO(#11545): relocate this function to a separate TU.
 std::string FormatDoxygenLink(

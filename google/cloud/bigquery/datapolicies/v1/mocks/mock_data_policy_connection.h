@@ -82,7 +82,7 @@ class MockDataPolicyServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>,
+      (StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>),
       ListDataPolicies,
       (google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
            request),

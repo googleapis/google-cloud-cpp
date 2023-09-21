@@ -48,10 +48,12 @@ class MockReservationsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::ReservationsScopedList>>),
       AggregatedListReservations,
       (google::cloud::cpp::compute::reservations::v1::
-           AggregatedListReservationsRequest const& request),
+           AggregatedListReservationsRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -79,7 +81,7 @@ class MockReservationsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Reservation>,
+      (StreamRange<google::cloud::cpp::compute::v1::Reservation>),
       ListReservations,
       (google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
            request),

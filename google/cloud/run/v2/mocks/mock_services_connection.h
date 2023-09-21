@@ -54,7 +54,7 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::GetServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Service>, ListServices,
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Service>), ListServices,
               (google::cloud::run::v2::ListServicesRequest request),
               (override));
 

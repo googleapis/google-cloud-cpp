@@ -74,7 +74,7 @@ class MockSynonymSetServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>,
+      (StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>),
       ListSynonymSets,
       (google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request),
       (override));

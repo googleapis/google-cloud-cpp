@@ -196,11 +196,12 @@ class PublicDelegatedPrefixesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::PublicDelegatedPrefixesScopedList>>
   AggregatedListPublicDelegatedPrefixes(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          AggregatedListPublicDelegatedPrefixesRequest const& request);
+          AggregatedListPublicDelegatedPrefixesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(

@@ -32,7 +32,8 @@ AcceleratorTypesClient::AcceleratorTypesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 AcceleratorTypesClient::~AcceleratorTypesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
 AcceleratorTypesClient::AggregatedListAcceleratorTypes(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ AcceleratorTypesClient::AggregatedListAcceleratorTypes(
   return connection_->AggregatedListAcceleratorTypes(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
 AcceleratorTypesClient::AggregatedListAcceleratorTypes(
     google::cloud::cpp::compute::accelerator_types::v1::
-        AggregatedListAcceleratorTypesRequest const& request,
+        AggregatedListAcceleratorTypesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListAcceleratorTypes(request);
+  return connection_->AggregatedListAcceleratorTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>

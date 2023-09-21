@@ -70,7 +70,7 @@ class MockRuleSetServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contentwarehouse::v1::RuleSet>, ListRuleSets,
+      (StreamRange<google::cloud::contentwarehouse::v1::RuleSet>), ListRuleSets,
       (google::cloud::contentwarehouse::v1::ListRuleSetsRequest request),
       (override));
 };

@@ -46,7 +46,8 @@ class MockTraceServiceConnection : public trace_v1::TraceServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::devtools::cloudtrace::v1::Trace>, ListTraces,
+  MOCK_METHOD((StreamRange<google::devtools::cloudtrace::v1::Trace>),
+              ListTraces,
               (google::devtools::cloudtrace::v1::ListTracesRequest request),
               (override));
 

@@ -36,7 +36,7 @@ SubnetworksConnectionIdempotencyPolicy::clone() const {
 
 Idempotency SubnetworksConnectionIdempotencyPolicy::AggregatedListSubnetworks(
     google::cloud::cpp::compute::subnetworks::v1::
-        AggregatedListSubnetworksRequest const&) {
+        AggregatedListSubnetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

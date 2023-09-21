@@ -47,7 +47,7 @@ class MockAlertPolicyServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::AlertPolicy>,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::AlertPolicy>),
               ListAlertPolicies,
               (google::monitoring::v3::ListAlertPoliciesRequest request),
               (override));

@@ -42,20 +42,44 @@ NodeTemplatesRestConnectionImpl::NodeTemplatesRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       NodeTemplatesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
 NodeTemplatesRestConnectionImpl::AggregatedListNodeTemplates(
     google::cloud::cpp::compute::node_templates::v1::
-        AggregatedListNodeTemplatesRequest const& request) {
+        AggregatedListNodeTemplatesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListNodeTemplates(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_templates::v1::
-                 AggregatedListNodeTemplatesRequest const& request) {
-        return stub_->AggregatedListNodeTemplates(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListNodeTemplates(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<compute_node_templates_v1::NodeTemplatesRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::node_templates::v1::
+              AggregatedListNodeTemplatesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::node_templates::v1::
+                       AggregatedListNodeTemplatesRequest const& request) {
+              return stub->AggregatedListNodeTemplates(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::NodeTemplateAggregatedList r) {
+        std::vector<
+            std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

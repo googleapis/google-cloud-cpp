@@ -79,7 +79,7 @@ class MockWorkflowTemplateServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>,
+      (StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>),
       ListWorkflowTemplates,
       (google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request),
       (override));

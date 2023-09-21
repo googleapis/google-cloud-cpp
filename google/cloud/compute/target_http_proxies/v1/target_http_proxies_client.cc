@@ -32,7 +32,8 @@ TargetHttpProxiesClient::TargetHttpProxiesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 TargetHttpProxiesClient::~TargetHttpProxiesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
 TargetHttpProxiesClient::AggregatedListTargetHttpProxies(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ TargetHttpProxiesClient::AggregatedListTargetHttpProxies(
   return connection_->AggregatedListTargetHttpProxies(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
 TargetHttpProxiesClient::AggregatedListTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        AggregatedListTargetHttpProxiesRequest const& request,
+        AggregatedListTargetHttpProxiesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListTargetHttpProxies(request);
+  return connection_->AggregatedListTargetHttpProxies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

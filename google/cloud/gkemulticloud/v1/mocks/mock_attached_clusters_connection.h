@@ -76,7 +76,7 @@ class MockAttachedClustersConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>,
+      (StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>),
       ListAttachedClusters,
       (google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request),
       (override));

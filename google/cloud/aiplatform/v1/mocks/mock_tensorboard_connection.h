@@ -64,7 +64,7 @@ class MockTensorboardServiceConnection
       (google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Tensorboard>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Tensorboard>),
               ListTensorboards,
               (google::cloud::aiplatform::v1::ListTensorboardsRequest request),
               (override));
@@ -110,11 +110,12 @@ class MockTensorboardServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>,
-              ListTensorboardExperiments,
-              (google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>),
+      ListTensorboardExperiments,
+      (google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
@@ -150,7 +151,7 @@ class MockTensorboardServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::TensorboardRun>,
+      (StreamRange<google::cloud::aiplatform::v1::TensorboardRun>),
       ListTensorboardRuns,
       (google::cloud::aiplatform::v1::ListTensorboardRunsRequest request),
       (override));
@@ -191,7 +192,7 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>,
+      (StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>),
       ListTensorboardTimeSeries,
       (google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request),
       (override));
@@ -241,7 +242,7 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>,
+      (StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>),
       ExportTensorboardTimeSeriesData,
       (google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest
            request),

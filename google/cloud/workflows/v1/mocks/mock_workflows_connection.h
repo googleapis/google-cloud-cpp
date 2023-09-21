@@ -46,7 +46,7 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::workflows::v1::Workflow>,
+  MOCK_METHOD((StreamRange<google::cloud::workflows::v1::Workflow>),
               ListWorkflows,
               (google::cloud::workflows::v1::ListWorkflowsRequest request),
               (override));

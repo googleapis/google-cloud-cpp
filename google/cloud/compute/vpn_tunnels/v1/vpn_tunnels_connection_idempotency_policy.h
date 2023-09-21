@@ -38,7 +38,7 @@ class VpnTunnelsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListVpnTunnels(
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          AggregatedListVpnTunnelsRequest const& request);
+          AggregatedListVpnTunnelsRequest request);
 
   virtual google::cloud::Idempotency DeleteVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::

@@ -90,7 +90,7 @@ class MockRegionDisksConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Disk>, ListRegionDisks,
+      (StreamRange<google::cloud::cpp::compute::v1::Disk>), ListRegionDisks,
       (google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
            request),
       (override));

@@ -39,7 +39,7 @@ class AcceleratorTypesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListAcceleratorTypes(
       google::cloud::cpp::compute::accelerator_types::v1::
-          AggregatedListAcceleratorTypesRequest const& request);
+          AggregatedListAcceleratorTypesRequest request);
 
   virtual google::cloud::Idempotency GetAcceleratorType(
       google::cloud::cpp::compute::accelerator_types::v1::

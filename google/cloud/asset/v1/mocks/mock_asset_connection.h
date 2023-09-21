@@ -51,7 +51,7 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
               (google::cloud::asset::v1::ExportAssetsRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::asset::v1::Asset>, ListAssets,
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::Asset>), ListAssets,
               (google::cloud::asset::v1::ListAssetsRequest request),
               (override));
 
@@ -81,12 +81,12 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
               (google::cloud::asset::v1::DeleteFeedRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::asset::v1::ResourceSearchResult>,
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::ResourceSearchResult>),
               SearchAllResources,
               (google::cloud::asset::v1::SearchAllResourcesRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::asset::v1::IamPolicySearchResult>,
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::IamPolicySearchResult>),
               SearchAllIamPolicies,
               (google::cloud::asset::v1::SearchAllIamPoliciesRequest request),
               (override));
@@ -124,7 +124,7 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
               (google::cloud::asset::v1::GetSavedQueryRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::asset::v1::SavedQuery>,
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::SavedQuery>),
               ListSavedQueries,
               (google::cloud::asset::v1::ListSavedQueriesRequest request),
               (override));
@@ -146,24 +146,24 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::
-                              OrgPolicyResult>,
+  MOCK_METHOD((StreamRange<google::cloud::asset::v1::
+                               AnalyzeOrgPoliciesResponse::OrgPolicyResult>),
               AnalyzeOrgPolicies,
               (google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<
+      (StreamRange<
           google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
-              GovernedContainer>,
+              GovernedContainer>),
       AnalyzeOrgPolicyGovernedContainers,
       (google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::asset::v1::
-                      AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>,
+      (StreamRange<google::cloud::asset::v1::
+                       AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>),
       AnalyzeOrgPolicyGovernedAssets,
       (google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request),
       (override));

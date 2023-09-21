@@ -54,11 +54,11 @@ class InterconnectAttachmentsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<
-      google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         InterconnectAttachmentsScopedList>>
   AggregatedListInterconnectAttachments(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          AggregatedListInterconnectAttachmentsRequest const& request) override;
+          AggregatedListInterconnectAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnectAttachment(

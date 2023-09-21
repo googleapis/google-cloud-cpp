@@ -52,10 +52,11 @@ class SslCertificatesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
   AggregatedListSslCertificates(
       google::cloud::cpp::compute::ssl_certificates::v1::
-          AggregatedListSslCertificatesRequest const& request) override;
+          AggregatedListSslCertificatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::

@@ -68,7 +68,7 @@ class MockGlobalPublicDelegatedPrefixesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>,
+      (StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>),
       ListGlobalPublicDelegatedPrefixes,
       (google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
            ListGlobalPublicDelegatedPrefixesRequest request),

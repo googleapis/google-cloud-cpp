@@ -48,10 +48,12 @@ class MockGlobalOperationsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::OperationsScopedList>>),
       AggregatedListGlobalOperations,
       (google::cloud::cpp::compute::global_operations::v1::
-           AggregatedListGlobalOperationsRequest const& request),
+           AggregatedListGlobalOperationsRequest request),
       (override));
 
   MOCK_METHOD(Status, DeleteOperation,
@@ -65,7 +67,7 @@ class MockGlobalOperationsConnection
                    GetOperationRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Operation>),
               ListGlobalOperations,
               (google::cloud::cpp::compute::global_operations::v1::
                    ListGlobalOperationsRequest request),

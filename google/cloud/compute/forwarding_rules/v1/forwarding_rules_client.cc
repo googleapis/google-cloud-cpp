@@ -32,7 +32,8 @@ ForwardingRulesClient::ForwardingRulesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 ForwardingRulesClient::~ForwardingRulesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
 ForwardingRulesClient::AggregatedListForwardingRules(std::string const& project,
                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ ForwardingRulesClient::AggregatedListForwardingRules(std::string const& project,
   return connection_->AggregatedListForwardingRules(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
 ForwardingRulesClient::AggregatedListForwardingRules(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest const& request,
+        AggregatedListForwardingRulesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListForwardingRules(request);
+  return connection_->AggregatedListForwardingRules(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

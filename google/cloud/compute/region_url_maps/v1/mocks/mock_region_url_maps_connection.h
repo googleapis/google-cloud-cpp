@@ -65,7 +65,7 @@ class MockRegionUrlMapsConnection
                    InsertUrlMapRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::UrlMap>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::UrlMap>),
               ListRegionUrlMaps,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    ListRegionUrlMapsRequest request),

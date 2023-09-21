@@ -199,11 +199,12 @@ class InstanceGroupManagersConnection {
   AbandonInstances(google::cloud::cpp::compute::instance_group_managers::v1::
                        AbandonInstancesRequest const& request);
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>
   AggregatedListInstanceGroupManagers(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          AggregatedListInstanceGroupManagersRequest const& request);
+          AggregatedListInstanceGroupManagersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ApplyUpdatesToInstances(

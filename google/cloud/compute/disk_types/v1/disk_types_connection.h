@@ -182,9 +182,10 @@ class DiskTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
   AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::
-                              AggregatedListDiskTypesRequest const& request);
+                              AggregatedListDiskTypesRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&

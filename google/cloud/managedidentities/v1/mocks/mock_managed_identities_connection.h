@@ -62,7 +62,7 @@ class MockManagedIdentitiesServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::managedidentities::v1::Domain>, ListDomains,
+      (StreamRange<google::cloud::managedidentities::v1::Domain>), ListDomains,
       (google::cloud::managedidentities::v1::ListDomainsRequest request),
       (override));
 

@@ -80,15 +80,15 @@ class MockGlobalNetworkEndpointGroupsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>,
+      (StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>),
       ListGlobalNetworkEndpointGroups,
       (google::cloud::cpp::compute::global_network_endpoint_groups::v1::
            ListGlobalNetworkEndpointGroupsRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>,
+      (StreamRange<
+          google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>),
       ListNetworkEndpoints,
       (google::cloud::cpp::compute::global_network_endpoint_groups::v1::
            ListNetworkEndpointsRequest request),

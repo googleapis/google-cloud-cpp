@@ -52,10 +52,11 @@ class TargetTcpProxiesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>
   AggregatedListTargetTcpProxies(
       google::cloud::cpp::compute::target_tcp_proxies::v1::
-          AggregatedListTargetTcpProxiesRequest const& request) override;
+          AggregatedListTargetTcpProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetTcpProxy(google::cloud::cpp::compute::target_tcp_proxies::v1::

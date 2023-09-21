@@ -193,10 +193,10 @@ class TargetPoolsConnection {
       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
-  AggregatedListTargetPools(
-      google::cloud::cpp::compute::target_pools::v1::
-          AggregatedListTargetPoolsRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
+  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::
+                                AggregatedListTargetPoolsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::

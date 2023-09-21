@@ -48,8 +48,8 @@ class MockImageVersionsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::orchestration::airflow::service::v1::ImageVersion>,
+      (StreamRange<
+          google::cloud::orchestration::airflow::service::v1::ImageVersion>),
       ListImageVersions,
       (google::cloud::orchestration::airflow::service::v1::
            ListImageVersionsRequest request),

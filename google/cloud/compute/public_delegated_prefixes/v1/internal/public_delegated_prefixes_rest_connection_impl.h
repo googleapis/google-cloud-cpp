@@ -54,10 +54,11 @@ class PublicDelegatedPrefixesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         PublicDelegatedPrefixesScopedList>>
   AggregatedListPublicDelegatedPrefixes(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          AggregatedListPublicDelegatedPrefixesRequest const& request) override;
+          AggregatedListPublicDelegatedPrefixesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(

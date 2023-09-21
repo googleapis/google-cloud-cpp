@@ -182,9 +182,11 @@ class RoutersConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
-  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::
-                            AggregatedListRoutersRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
+  AggregatedListRouters(
+      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteRouter(

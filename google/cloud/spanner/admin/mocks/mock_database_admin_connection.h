@@ -48,7 +48,7 @@ class MockDatabaseAdminConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::spanner::admin::database::v1::Database>,
+      (StreamRange<google::spanner::admin::database::v1::Database>),
       ListDatabases,
       (google::spanner::admin::database::v1::ListDatabasesRequest request),
       (override));
@@ -134,7 +134,7 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::spanner::admin::database::v1::Backup>, ListBackups,
+      (StreamRange<google::spanner::admin::database::v1::Backup>), ListBackups,
       (google::spanner::admin::database::v1::ListBackupsRequest request),
       (override));
 
@@ -146,18 +146,19 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::longrunning::Operation>, ListDatabaseOperations,
+      (StreamRange<google::longrunning::Operation>), ListDatabaseOperations,
       (google::spanner::admin::database::v1::ListDatabaseOperationsRequest
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::longrunning::Operation>, ListBackupOperations,
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+              ListBackupOperations,
               (google::spanner::admin::database::v1::ListBackupOperationsRequest
                    request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::spanner::admin::database::v1::DatabaseRole>,
+      (StreamRange<google::spanner::admin::database::v1::DatabaseRole>),
       ListDatabaseRoles,
       (google::spanner::admin::database::v1::ListDatabaseRolesRequest request),
       (override));

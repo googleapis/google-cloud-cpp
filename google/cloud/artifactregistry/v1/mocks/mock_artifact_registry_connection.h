@@ -48,7 +48,7 @@ class MockArtifactRegistryConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::DockerImage>,
+      (StreamRange<google::devtools::artifactregistry::v1::DockerImage>),
       ListDockerImages,
       (google::devtools::artifactregistry::v1::ListDockerImagesRequest request),
       (override));
@@ -61,7 +61,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>,
+      (StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>),
       ListMavenArtifacts,
       (google::devtools::artifactregistry::v1::ListMavenArtifactsRequest
            request),
@@ -75,7 +75,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::NpmPackage>,
+      (StreamRange<google::devtools::artifactregistry::v1::NpmPackage>),
       ListNpmPackages,
       (google::devtools::artifactregistry::v1::ListNpmPackagesRequest request),
       (override));
@@ -88,7 +88,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::PythonPackage>,
+      (StreamRange<google::devtools::artifactregistry::v1::PythonPackage>),
       ListPythonPackages,
       (google::devtools::artifactregistry::v1::ListPythonPackagesRequest
            request),
@@ -118,7 +118,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::Repository>,
+      (StreamRange<google::devtools::artifactregistry::v1::Repository>),
       ListRepositories,
       (google::devtools::artifactregistry::v1::ListRepositoriesRequest request),
       (override));
@@ -153,7 +153,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::Package>,
+      (StreamRange<google::devtools::artifactregistry::v1::Package>),
       ListPackages,
       (google::devtools::artifactregistry::v1::ListPackagesRequest request),
       (override));
@@ -173,7 +173,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::Version>,
+      (StreamRange<google::devtools::artifactregistry::v1::Version>),
       ListVersions,
       (google::devtools::artifactregistry::v1::ListVersionsRequest request),
       (override));
@@ -193,7 +193,7 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::artifactregistry::v1::File>, ListFiles,
+      (StreamRange<google::devtools::artifactregistry::v1::File>), ListFiles,
       (google::devtools::artifactregistry::v1::ListFilesRequest request),
       (override));
 
@@ -202,7 +202,7 @@ class MockArtifactRegistryConnection
       (google::devtools::artifactregistry::v1::GetFileRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::devtools::artifactregistry::v1::Tag>,
+  MOCK_METHOD((StreamRange<google::devtools::artifactregistry::v1::Tag>),
               ListTags,
               (google::devtools::artifactregistry::v1::ListTagsRequest request),
               (override));

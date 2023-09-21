@@ -59,10 +59,11 @@ class TargetPoolsRestConnectionImpl
       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
   AggregatedListTargetPools(
       google::cloud::cpp::compute::target_pools::v1::
-          AggregatedListTargetPoolsRequest const& request) override;
+          AggregatedListTargetPoolsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
       google::cloud::cpp::compute::target_pools::v1::

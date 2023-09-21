@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationsConnection::~ReservationsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
 ReservationsConnection::AggregatedListReservations(
     google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::ReservationsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -48,7 +48,7 @@ class MockNotificationChannelServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::monitoring::v3::NotificationChannelDescriptor>,
+      (StreamRange<google::monitoring::v3::NotificationChannelDescriptor>),
       ListNotificationChannelDescriptors,
       (google::monitoring::v3::ListNotificationChannelDescriptorsRequest
            request),
@@ -61,7 +61,7 @@ class MockNotificationChannelServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::NotificationChannel>,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::NotificationChannel>),
               ListNotificationChannels,
               (google::monitoring::v3::ListNotificationChannelsRequest request),
               (override));

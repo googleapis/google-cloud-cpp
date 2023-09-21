@@ -67,7 +67,7 @@ class MockRegionSslCertificatesConnection
                    InsertSslCertificateRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SslCertificate>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::SslCertificate>),
               ListRegionSslCertificates,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    ListRegionSslCertificatesRequest request),

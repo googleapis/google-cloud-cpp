@@ -184,10 +184,10 @@ class SslPoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
-  AggregatedListSslPolicies(
-      google::cloud::cpp::compute::ssl_policies::v1::
-          AggregatedListSslPoliciesRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+  AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
+                                AggregatedListSslPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::

@@ -42,7 +42,7 @@ class NodeGroupsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListNodeGroups(
       google::cloud::cpp::compute::node_groups::v1::
-          AggregatedListNodeGroupsRequest const& request);
+          AggregatedListNodeGroupsRequest request);
 
   virtual google::cloud::Idempotency DeleteNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::

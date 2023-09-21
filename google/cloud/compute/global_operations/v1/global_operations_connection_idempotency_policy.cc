@@ -37,7 +37,7 @@ GlobalOperationsConnectionIdempotencyPolicy::clone() const {
 Idempotency
 GlobalOperationsConnectionIdempotencyPolicy::AggregatedListGlobalOperations(
     google::cloud::cpp::compute::global_operations::v1::
-        AggregatedListGlobalOperationsRequest const&) {
+        AggregatedListGlobalOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

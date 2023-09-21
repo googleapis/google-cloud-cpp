@@ -59,14 +59,14 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
               (google::cloud::batch::v1::DeleteJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::batch::v1::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>), ListJobs,
               (google::cloud::batch::v1::ListJobsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::batch::v1::Task>, GetTask,
               (google::cloud::batch::v1::GetTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::batch::v1::Task>, ListTasks,
+  MOCK_METHOD((StreamRange<google::cloud::batch::v1::Task>), ListTasks,
               (google::cloud::batch::v1::ListTasksRequest request), (override));
 };
 

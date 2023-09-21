@@ -47,7 +47,7 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::EntityType>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::EntityType>),
       ListEntityTypes,
       (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
       (override));

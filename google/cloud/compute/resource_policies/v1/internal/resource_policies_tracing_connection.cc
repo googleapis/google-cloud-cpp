@@ -33,16 +33,20 @@ ResourcePoliciesTracingConnection::ResourcePoliciesTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
 ResourcePoliciesTracingConnection::AggregatedListResourcePolicies(
     google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest const& request) {
+        AggregatedListResourcePoliciesRequest request) {
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "AggregatedListResourcePolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListResourcePolicies(request));
+  auto sr = child_->AggregatedListResourcePolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

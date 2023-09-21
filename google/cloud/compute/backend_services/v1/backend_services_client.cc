@@ -56,7 +56,8 @@ BackendServicesClient::AddSignedUrlKey(
   return connection_->AddSignedUrlKey(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
 BackendServicesClient::AggregatedListBackendServices(std::string const& project,
                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -66,13 +67,14 @@ BackendServicesClient::AggregatedListBackendServices(std::string const& project,
   return connection_->AggregatedListBackendServices(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
 BackendServicesClient::AggregatedListBackendServices(
     google::cloud::cpp::compute::backend_services::v1::
-        AggregatedListBackendServicesRequest const& request,
+        AggregatedListBackendServicesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListBackendServices(request);
+  return connection_->AggregatedListBackendServices(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

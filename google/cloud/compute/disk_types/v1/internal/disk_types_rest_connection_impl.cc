@@ -39,20 +39,42 @@ DiskTypesRestConnectionImpl::DiskTypesRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       DiskTypesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::DiskTypesScopedList>>
 DiskTypesRestConnectionImpl::AggregatedListDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::
-        AggregatedListDiskTypesRequest const& request) {
+    google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest
+        request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListDiskTypes(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::disk_types::v1::
-                 AggregatedListDiskTypesRequest const& request) {
-        return stub_->AggregatedListDiskTypes(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListDiskTypes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::disk_types::v1::
+              AggregatedListDiskTypesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::disk_types::v1::
+                       AggregatedListDiskTypesRequest const& request) {
+              return stub->AggregatedListDiskTypes(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::DiskTypeAggregatedList r) {
+        std::vector<std::pair<
+            std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>

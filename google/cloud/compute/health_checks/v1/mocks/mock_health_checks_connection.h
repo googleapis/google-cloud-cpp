@@ -48,10 +48,12 @@ class MockHealthChecksConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::HealthChecksScopedList>>),
       AggregatedListHealthChecks,
       (google::cloud::cpp::compute::health_checks::v1::
-           AggregatedListHealthChecksRequest const& request),
+           AggregatedListHealthChecksRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -73,7 +75,7 @@ class MockHealthChecksConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::HealthCheck>,
+      (StreamRange<google::cloud::cpp::compute::v1::HealthCheck>),
       ListHealthChecks,
       (google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest
            request),

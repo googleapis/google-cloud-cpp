@@ -48,7 +48,7 @@ class MockNetworkServicesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkservices::v1::EndpointPolicy>,
+      (StreamRange<google::cloud::networkservices::v1::EndpointPolicy>),
       ListEndpointPolicies,
       (google::cloud::networkservices::v1::ListEndpointPoliciesRequest request),
       (override));
@@ -81,7 +81,7 @@ class MockNetworkServicesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::networkservices::v1::Gateway>,
+  MOCK_METHOD((StreamRange<google::cloud::networkservices::v1::Gateway>),
               ListGateways,
               (google::cloud::networkservices::v1::ListGatewaysRequest request),
               (override));
@@ -110,7 +110,7 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkservices::v1::GrpcRoute>,
+      (StreamRange<google::cloud::networkservices::v1::GrpcRoute>),
       ListGrpcRoutes,
       (google::cloud::networkservices::v1::ListGrpcRoutesRequest request),
       (override));
@@ -140,7 +140,7 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkservices::v1::HttpRoute>,
+      (StreamRange<google::cloud::networkservices::v1::HttpRoute>),
       ListHttpRoutes,
       (google::cloud::networkservices::v1::ListHttpRoutesRequest request),
       (override));
@@ -170,7 +170,8 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkservices::v1::TcpRoute>, ListTcpRoutes,
+      (StreamRange<google::cloud::networkservices::v1::TcpRoute>),
+      ListTcpRoutes,
       (google::cloud::networkservices::v1::ListTcpRoutesRequest request),
       (override));
 
@@ -199,7 +200,8 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkservices::v1::TlsRoute>, ListTlsRoutes,
+      (StreamRange<google::cloud::networkservices::v1::TlsRoute>),
+      ListTlsRoutes,
       (google::cloud::networkservices::v1::ListTlsRoutesRequest request),
       (override));
 
@@ -228,7 +230,7 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkservices::v1::ServiceBinding>,
+      (StreamRange<google::cloud::networkservices::v1::ServiceBinding>),
       ListServiceBindings,
       (google::cloud::networkservices::v1::ListServiceBindingsRequest request),
       (override));
@@ -254,7 +256,8 @@ class MockNetworkServicesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::networkservices::v1::Mesh>, ListMeshes,
+  MOCK_METHOD((StreamRange<google::cloud::networkservices::v1::Mesh>),
+              ListMeshes,
               (google::cloud::networkservices::v1::ListMeshesRequest request),
               (override));
 

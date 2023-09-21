@@ -51,11 +51,14 @@ InstancesConnection::AddResourcePolicies(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::InstancesScopedList>>
 InstancesConnection::AggregatedListInstances(
     google::cloud::cpp::compute::instances::v1::
-        AggregatedListInstancesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstancesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

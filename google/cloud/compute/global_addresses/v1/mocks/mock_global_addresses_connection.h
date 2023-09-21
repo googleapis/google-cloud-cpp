@@ -64,7 +64,7 @@ class MockGlobalAddressesConnection
                    InsertAddressRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Address>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Address>),
               ListGlobalAddresses,
               (google::cloud::cpp::compute::global_addresses::v1::
                    ListGlobalAddressesRequest request),

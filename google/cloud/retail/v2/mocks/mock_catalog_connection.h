@@ -47,7 +47,7 @@ class MockCatalogServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::retail::v2::Catalog>, ListCatalogs,
+  MOCK_METHOD((StreamRange<google::cloud::retail::v2::Catalog>), ListCatalogs,
               (google::cloud::retail::v2::ListCatalogsRequest request),
               (override));
 

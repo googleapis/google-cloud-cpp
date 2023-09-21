@@ -188,9 +188,10 @@ class NodeGroupsConnection {
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
   AggregatedListNodeGroups(google::cloud::cpp::compute::node_groups::v1::
-                               AggregatedListNodeGroupsRequest const& request);
+                               AggregatedListNodeGroupsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeGroup(google::cloud::cpp::compute::node_groups::v1::

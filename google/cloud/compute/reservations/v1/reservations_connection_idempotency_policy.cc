@@ -36,7 +36,7 @@ ReservationsConnectionIdempotencyPolicy::clone() const {
 
 Idempotency ReservationsConnectionIdempotencyPolicy::AggregatedListReservations(
     google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest const&) {
+        AggregatedListReservationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

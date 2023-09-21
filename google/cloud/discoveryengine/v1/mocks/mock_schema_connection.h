@@ -52,7 +52,7 @@ class MockSchemaServiceConnection
       (google::cloud::discoveryengine::v1::GetSchemaRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::discoveryengine::v1::Schema>,
+  MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Schema>),
               ListSchemas,
               (google::cloud::discoveryengine::v1::ListSchemasRequest request),
               (override));

@@ -103,7 +103,7 @@ class MockNetworkFirewallPoliciesConnection
                    InsertFirewallPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>),
               ListNetworkFirewallPolicies,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
                    ListNetworkFirewallPoliciesRequest request),

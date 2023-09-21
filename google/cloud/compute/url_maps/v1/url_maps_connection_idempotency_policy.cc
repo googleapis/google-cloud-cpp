@@ -36,7 +36,7 @@ UrlMapsConnectionIdempotencyPolicy::clone() const {
 
 Idempotency UrlMapsConnectionIdempotencyPolicy::AggregatedListUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::
-        AggregatedListUrlMapsRequest const&) {
+        AggregatedListUrlMapsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

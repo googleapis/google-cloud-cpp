@@ -32,7 +32,8 @@ SslPoliciesClient::SslPoliciesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 SslPoliciesClient::~SslPoliciesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
 SslPoliciesClient::AggregatedListSslPolicies(std::string const& project,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ SslPoliciesClient::AggregatedListSslPolicies(std::string const& project,
   return connection_->AggregatedListSslPolicies(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
 SslPoliciesClient::AggregatedListSslPolicies(
     google::cloud::cpp::compute::ssl_policies::v1::
-        AggregatedListSslPoliciesRequest const& request,
+        AggregatedListSslPoliciesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListSslPolicies(request);
+  return connection_->AggregatedListSslPolicies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

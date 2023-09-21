@@ -40,20 +40,44 @@ MachineTypesRestConnectionImpl::MachineTypesRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       MachineTypesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
 MachineTypesRestConnectionImpl::AggregatedListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
-        AggregatedListMachineTypesRequest const& request) {
+        AggregatedListMachineTypesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListMachineTypes(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machine_types::v1::
-                 AggregatedListMachineTypesRequest const& request) {
-        return stub_->AggregatedListMachineTypes(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListMachineTypes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::machine_types::v1::
+              AggregatedListMachineTypesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::machine_types::v1::
+                       AggregatedListMachineTypesRequest const& request) {
+              return stub->AggregatedListMachineTypes(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::MachineTypeAggregatedList r) {
+        std::vector<
+            std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>

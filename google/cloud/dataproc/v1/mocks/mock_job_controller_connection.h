@@ -60,7 +60,7 @@ class MockJobControllerConnection
               (google::cloud::dataproc::v1::GetJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataproc::v1::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Job>), ListJobs,
               (google::cloud::dataproc::v1::ListJobsRequest request),
               (override));
 

@@ -44,11 +44,15 @@ InstanceGroupManagersConnection::AbandonInstances(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>
 InstanceGroupManagersConnection::AggregatedListInstanceGroupManagers(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        AggregatedListInstanceGroupManagersRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListInstanceGroupManagersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::
+                                 InstanceGroupManagersScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

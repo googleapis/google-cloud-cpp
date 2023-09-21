@@ -37,7 +37,7 @@ ForwardingRulesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 ForwardingRulesConnectionIdempotencyPolicy::AggregatedListForwardingRules(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest const&) {
+        AggregatedListForwardingRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

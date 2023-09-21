@@ -48,7 +48,7 @@ class MockTagBindingsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::TagBinding>,
+      (StreamRange<google::cloud::resourcemanager::v3::TagBinding>),
       ListTagBindings,
       (google::cloud::resourcemanager::v3::ListTagBindingsRequest request),
       (override));
@@ -69,7 +69,7 @@ class MockTagBindingsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>,
+      (StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>),
       ListEffectiveTags,
       (google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request),
       (override));

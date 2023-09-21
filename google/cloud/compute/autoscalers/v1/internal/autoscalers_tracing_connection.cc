@@ -32,15 +32,19 @@ AutoscalersTracingConnection::AutoscalersTracingConnection(
     std::shared_ptr<compute_autoscalers_v1::AutoscalersConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AutoscalersScopedList>>
 AutoscalersTracingConnection::AggregatedListAutoscalers(
     google::cloud::cpp::compute::autoscalers::v1::
-        AggregatedListAutoscalersRequest const& request) {
+        AggregatedListAutoscalersRequest request) {
   auto span = internal::MakeSpan(
       "compute_autoscalers_v1::AutoscalersConnection::"
       "AggregatedListAutoscalers");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListAutoscalers(request));
+  auto sr = child_->AggregatedListAutoscalers(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AutoscalersScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeTemplatesConnection::~NodeTemplatesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
 NodeTemplatesConnection::AggregatedListNodeTemplates(
     google::cloud::cpp::compute::node_templates::v1::
-        AggregatedListNodeTemplatesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListNodeTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

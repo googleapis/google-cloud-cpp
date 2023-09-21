@@ -46,7 +46,7 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::connectors::v1::Connection>,
+  MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Connection>),
               ListConnections,
               (google::cloud::connectors::v1::ListConnectionsRequest request),
               (override));
@@ -74,7 +74,7 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (google::cloud::connectors::v1::DeleteConnectionRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::connectors::v1::Provider>,
+  MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Provider>),
               ListProviders,
               (google::cloud::connectors::v1::ListProvidersRequest request),
               (override));
@@ -84,7 +84,7 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (google::cloud::connectors::v1::GetProviderRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::connectors::v1::Connector>,
+  MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Connector>),
               ListConnectors,
               (google::cloud::connectors::v1::ListConnectorsRequest request),
               (override));
@@ -95,7 +95,7 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::connectors::v1::ConnectorVersion>,
+      (StreamRange<google::cloud::connectors::v1::ConnectorVersion>),
       ListConnectorVersions,
       (google::cloud::connectors::v1::ListConnectorVersionsRequest request),
       (override));
@@ -121,13 +121,13 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>,
+      (StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>),
       ListRuntimeEntitySchemas,
       (google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>,
+      (StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>),
       ListRuntimeActionSchemas,
       (google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request),
       (override));

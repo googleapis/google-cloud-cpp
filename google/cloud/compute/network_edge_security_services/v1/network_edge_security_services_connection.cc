@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {
@@ -35,13 +36,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NetworkEdgeSecurityServicesConnection::
     ~NetworkEdgeSecurityServicesConnection() = default;
 
-StatusOr<
-    google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
-NetworkEdgeSecurityServicesConnection::
-    AggregatedListNetworkEdgeSecurityServices(
-        google::cloud::cpp::compute::network_edge_security_services::v1::
-            AggregatedListNetworkEdgeSecurityServicesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       NetworkEdgeSecurityServicesScopedList>>
+NetworkEdgeSecurityServicesConnection::AggregatedListNetworkEdgeSecurityServices(
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        AggregatedListNetworkEdgeSecurityServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::
+                                 NetworkEdgeSecurityServicesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -47,7 +47,7 @@ class MockMigrationCenterConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::migrationcenter::v1::Asset>,
+  MOCK_METHOD((StreamRange<google::cloud::migrationcenter::v1::Asset>),
               ListAssets,
               (google::cloud::migrationcenter::v1::ListAssetsRequest request),
               (override));
@@ -102,7 +102,7 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::migrationcenter::v1::ImportJob>,
+      (StreamRange<google::cloud::migrationcenter::v1::ImportJob>),
       ListImportJobs,
       (google::cloud::migrationcenter::v1::ListImportJobsRequest request),
       (override));
@@ -146,7 +146,7 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::migrationcenter::v1::ImportDataFile>,
+      (StreamRange<google::cloud::migrationcenter::v1::ImportDataFile>),
       ListImportDataFiles,
       (google::cloud::migrationcenter::v1::ListImportDataFilesRequest request),
       (override));
@@ -165,7 +165,7 @@ class MockMigrationCenterConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::migrationcenter::v1::Group>,
+  MOCK_METHOD((StreamRange<google::cloud::migrationcenter::v1::Group>),
               ListGroups,
               (google::cloud::migrationcenter::v1::ListGroupsRequest request),
               (override));
@@ -206,7 +206,7 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::migrationcenter::v1::ErrorFrame>,
+      (StreamRange<google::cloud::migrationcenter::v1::ErrorFrame>),
       ListErrorFrames,
       (google::cloud::migrationcenter::v1::ListErrorFramesRequest request),
       (override));
@@ -216,7 +216,7 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::migrationcenter::v1::Source>,
+  MOCK_METHOD((StreamRange<google::cloud::migrationcenter::v1::Source>),
               ListSources,
               (google::cloud::migrationcenter::v1::ListSourcesRequest request),
               (override));
@@ -245,7 +245,7 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>,
+      (StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>),
       ListPreferenceSets,
       (google::cloud::migrationcenter::v1::ListPreferenceSetsRequest request),
       (override));
@@ -303,7 +303,7 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::migrationcenter::v1::ReportConfig>,
+      (StreamRange<google::cloud::migrationcenter::v1::ReportConfig>),
       ListReportConfigs,
       (google::cloud::migrationcenter::v1::ListReportConfigsRequest request),
       (override));
@@ -326,7 +326,7 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::GetReportRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::migrationcenter::v1::Report>,
+  MOCK_METHOD((StreamRange<google::cloud::migrationcenter::v1::Report>),
               ListReports,
               (google::cloud::migrationcenter::v1::ListReportsRequest request),
               (override));

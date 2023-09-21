@@ -58,7 +58,8 @@ DisksClient::AddResourcePolicies(
   return connection_->AddResourcePolicies(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>
 DisksClient::AggregatedListDisks(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest request;
@@ -66,13 +67,13 @@ DisksClient::AggregatedListDisks(std::string const& project, Options opts) {
   return connection_->AggregatedListDisks(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>
 DisksClient::AggregatedListDisks(
-    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
-        request,
+    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListDisks(request);
+  return connection_->AggregatedListDisks(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

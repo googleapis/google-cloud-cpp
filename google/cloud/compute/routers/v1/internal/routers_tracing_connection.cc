@@ -32,14 +32,18 @@ RoutersTracingConnection::RoutersTracingConnection(
     std::shared_ptr<compute_routers_v1::RoutersConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
 RoutersTracingConnection::AggregatedListRouters(
-    google::cloud::cpp::compute::routers::v1::
-        AggregatedListRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+        request) {
   auto span = internal::MakeSpan(
       "compute_routers_v1::RoutersConnection::AggregatedListRouters");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListRouters(request));
+  auto sr = child_->AggregatedListRouters(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

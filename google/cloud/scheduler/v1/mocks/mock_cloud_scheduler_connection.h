@@ -47,7 +47,7 @@ class MockCloudSchedulerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::scheduler::v1::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::scheduler::v1::Job>), ListJobs,
               (google::cloud::scheduler::v1::ListJobsRequest request),
               (override));
 

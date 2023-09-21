@@ -39,7 +39,8 @@ Idempotency DisksConnectionIdempotencyPolicy::AddResourcePolicies(
 }
 
 Idempotency DisksConnectionIdempotencyPolicy::AggregatedListDisks(
-    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&) {
+    google::cloud::cpp::compute::disks::v1::
+        AggregatedListDisksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

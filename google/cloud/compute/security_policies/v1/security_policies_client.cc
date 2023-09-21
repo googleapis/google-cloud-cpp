@@ -56,7 +56,8 @@ SecurityPoliciesClient::AddRule(
   return connection_->AddRule(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
 SecurityPoliciesClient::AggregatedListSecurityPolicies(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -66,13 +67,14 @@ SecurityPoliciesClient::AggregatedListSecurityPolicies(
   return connection_->AggregatedListSecurityPolicies(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
 SecurityPoliciesClient::AggregatedListSecurityPolicies(
     google::cloud::cpp::compute::security_policies::v1::
-        AggregatedListSecurityPoliciesRequest const& request,
+        AggregatedListSecurityPoliciesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListSecurityPolicies(request);
+  return connection_->AggregatedListSecurityPolicies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

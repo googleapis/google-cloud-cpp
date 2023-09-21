@@ -56,12 +56,12 @@ class MockInterconnectRemoteLocationsConnection
            GetInterconnectRemoteLocationRequest const& request),
       (override));
 
-  MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>,
-      ListInterconnectRemoteLocations,
-      (google::cloud::cpp::compute::interconnect_remote_locations::v1::
-           ListInterconnectRemoteLocationsRequest request),
-      (override));
+  MOCK_METHOD((StreamRange<
+                  google::cloud::cpp::compute::v1::InterconnectRemoteLocation>),
+              ListInterconnectRemoteLocations,
+              (google::cloud::cpp::compute::interconnect_remote_locations::v1::
+                   ListInterconnectRemoteLocationsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

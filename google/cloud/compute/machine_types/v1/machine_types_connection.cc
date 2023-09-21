@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineTypesConnection::~MachineTypesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
 MachineTypesConnection::AggregatedListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
-        AggregatedListMachineTypesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListMachineTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::MachineTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>

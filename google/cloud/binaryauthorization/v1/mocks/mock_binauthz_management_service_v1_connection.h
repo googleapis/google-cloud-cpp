@@ -79,7 +79,7 @@ class MockBinauthzManagementServiceV1Connection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::binaryauthorization::v1::Attestor>,
+      (StreamRange<google::cloud::binaryauthorization::v1::Attestor>),
       ListAttestors,
       (google::cloud::binaryauthorization::v1::ListAttestorsRequest request),
       (override));

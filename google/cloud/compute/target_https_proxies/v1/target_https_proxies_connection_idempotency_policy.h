@@ -40,7 +40,7 @@ class TargetHttpsProxiesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListTargetHttpsProxies(
       google::cloud::cpp::compute::target_https_proxies::v1::
-          AggregatedListTargetHttpsProxiesRequest const& request);
+          AggregatedListTargetHttpsProxiesRequest request);
 
   virtual google::cloud::Idempotency DeleteTargetHttpsProxy(
       google::cloud::cpp::compute::target_https_proxies::v1::

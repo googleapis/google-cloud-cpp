@@ -37,7 +37,7 @@ NodeTemplatesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 NodeTemplatesConnectionIdempotencyPolicy::AggregatedListNodeTemplates(
     google::cloud::cpp::compute::node_templates::v1::
-        AggregatedListNodeTemplatesRequest const&) {
+        AggregatedListNodeTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

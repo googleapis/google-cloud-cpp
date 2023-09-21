@@ -43,10 +43,12 @@ class TargetHttpsProxiesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyAggregatedList>
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetHttpsProxiesScopedList>>
   AggregatedListTargetHttpsProxies(
       google::cloud::cpp::compute::target_https_proxies::v1::
-          AggregatedListTargetHttpsProxiesRequest const& request) override;
+          AggregatedListTargetHttpsProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpsProxy(

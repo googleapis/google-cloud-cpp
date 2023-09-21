@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DiskTypesConnection::~DiskTypesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::DiskTypesScopedList>>
 DiskTypesConnection::AggregatedListDiskTypes(
     google::cloud::cpp::compute::disk_types::v1::
-        AggregatedListDiskTypesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::DiskTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>

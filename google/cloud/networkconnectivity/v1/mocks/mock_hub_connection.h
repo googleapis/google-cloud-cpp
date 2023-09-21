@@ -47,7 +47,7 @@ class MockHubServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::networkconnectivity::v1::Hub>,
+  MOCK_METHOD((StreamRange<google::cloud::networkconnectivity::v1::Hub>),
               ListHubs,
               (google::cloud::networkconnectivity::v1::ListHubsRequest request),
               (override));
@@ -75,7 +75,7 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkconnectivity::v1::Spoke>, ListSpokes,
+      (StreamRange<google::cloud::networkconnectivity::v1::Spoke>), ListSpokes,
       (google::cloud::networkconnectivity::v1::ListSpokesRequest request),
       (override));
 

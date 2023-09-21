@@ -46,7 +46,7 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::iam::v2::Policy>, ListPolicies,
+  MOCK_METHOD((StreamRange<google::iam::v2::Policy>), ListPolicies,
               (google::iam::v2::ListPoliciesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v2::Policy>, GetPolicy,

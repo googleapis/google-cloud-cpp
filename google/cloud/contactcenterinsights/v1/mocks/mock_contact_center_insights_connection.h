@@ -74,7 +74,7 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contactcenterinsights::v1::Conversation>,
+      (StreamRange<google::cloud::contactcenterinsights::v1::Conversation>),
       ListConversations,
       (google::cloud::contactcenterinsights::v1::ListConversationsRequest
            request),
@@ -99,7 +99,7 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contactcenterinsights::v1::Analysis>,
+      (StreamRange<google::cloud::contactcenterinsights::v1::Analysis>),
       ListAnalyses,
       (google::cloud::contactcenterinsights::v1::ListAnalysesRequest request),
       (override));
@@ -229,7 +229,7 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>,
+      (StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>),
       ListPhraseMatchers,
       (google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
            request),
@@ -279,7 +279,7 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contactcenterinsights::v1::View>, ListViews,
+      (StreamRange<google::cloud::contactcenterinsights::v1::View>), ListViews,
       (google::cloud::contactcenterinsights::v1::ListViewsRequest request),
       (override));
 

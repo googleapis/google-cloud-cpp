@@ -62,8 +62,8 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::orchestration::airflow::service::v1::Environment>,
+      (StreamRange<
+          google::cloud::orchestration::airflow::service::v1::Environment>),
       ListEnvironments,
       (google::cloud::orchestration::airflow::service::v1::
            ListEnvironmentsRequest request),

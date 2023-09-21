@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubnetworksConnection::~SubnetworksConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
 SubnetworksConnection::AggregatedListSubnetworks(
     google::cloud::cpp::compute::subnetworks::v1::
-        AggregatedListSubnetworksRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::SubnetworksScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

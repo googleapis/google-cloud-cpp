@@ -98,14 +98,14 @@ class MockRegionInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>,
+      (StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>),
       ListRegionInstanceGroupManagers,
       (google::cloud::cpp::compute::region_instance_group_managers::v1::
            ListRegionInstanceGroupManagersRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>,
+      (StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>),
       ListErrors,
       (google::cloud::cpp::compute::region_instance_group_managers::v1::
            ListErrorsRequest request),
@@ -118,7 +118,7 @@ class MockRegionInstanceGroupManagersConnection
                    ListManagedInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>),
               ListPerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ListPerInstanceConfigsRequest request),

@@ -65,7 +65,7 @@ class MockRegionAutoscalersConnection
                    InsertAutoscalerRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Autoscaler>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Autoscaler>),
               ListRegionAutoscalers,
               (google::cloud::cpp::compute::region_autoscalers::v1::
                    ListRegionAutoscalersRequest request),

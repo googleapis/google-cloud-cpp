@@ -187,11 +187,12 @@ class InstanceTemplatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
   AggregatedListInstanceTemplates(
       google::cloud::cpp::compute::instance_templates::v1::
-          AggregatedListInstanceTemplatesRequest const& request);
+          AggregatedListInstanceTemplatesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::

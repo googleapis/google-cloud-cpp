@@ -52,10 +52,12 @@ class InstanceTemplatesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
   AggregatedListInstanceTemplates(
       google::cloud::cpp::compute::instance_templates::v1::
-          AggregatedListInstanceTemplatesRequest const& request) override;
+          AggregatedListInstanceTemplatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(

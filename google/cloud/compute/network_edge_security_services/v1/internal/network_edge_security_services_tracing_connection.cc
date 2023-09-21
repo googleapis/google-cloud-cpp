@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,19 +36,23 @@ NetworkEdgeSecurityServicesTracingConnection::
             child)
     : child_(std::move(child)) {}
 
-StatusOr<
-    google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       NetworkEdgeSecurityServicesScopedList>>
 NetworkEdgeSecurityServicesTracingConnection::
     AggregatedListNetworkEdgeSecurityServices(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
+            AggregatedListNetworkEdgeSecurityServicesRequest request) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "AggregatedListNetworkEdgeSecurityServices");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->AggregatedListNetworkEdgeSecurityServices(request));
+  auto sr =
+      child_->AggregatedListNetworkEdgeSecurityServices(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NetworkEdgeSecurityServicesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

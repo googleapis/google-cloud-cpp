@@ -43,7 +43,7 @@ class BackendServicesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListBackendServices(
       google::cloud::cpp::compute::backend_services::v1::
-          AggregatedListBackendServicesRequest const& request);
+          AggregatedListBackendServicesRequest request);
 
   virtual google::cloud::Idempotency DeleteBackendService(
       google::cloud::cpp::compute::backend_services::v1::

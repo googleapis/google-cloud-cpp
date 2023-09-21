@@ -37,8 +37,8 @@ class UrlMapsConnectionIdempotencyPolicy {
   virtual std::unique_ptr<UrlMapsConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency AggregatedListUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::
-          AggregatedListUrlMapsRequest const& request);
+      google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
+          request);
 
   virtual google::cloud::Idempotency DeleteUrlMap(
       google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&

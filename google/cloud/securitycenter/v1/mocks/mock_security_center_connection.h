@@ -153,65 +153,65 @@ class MockSecurityCenterConnection
       (google::cloud::securitycenter::v1::GetSourceRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::securitycenter::v1::GroupResult>,
+  MOCK_METHOD((StreamRange<google::cloud::securitycenter::v1::GroupResult>),
               GroupAssets,
               (google::cloud::securitycenter::v1::GroupAssetsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::securitycenter::v1::GroupResult>,
+  MOCK_METHOD((StreamRange<google::cloud::securitycenter::v1::GroupResult>),
               GroupFindings,
               (google::cloud::securitycenter::v1::GroupFindingsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::securitycenter::v1::
-                              ListAssetsResponse::ListAssetsResult>,
+  MOCK_METHOD((StreamRange<google::cloud::securitycenter::v1::
+                               ListAssetsResponse::ListAssetsResult>),
               ListAssets,
               (google::cloud::securitycenter::v1::ListAssetsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::securitycenter::v1::
-                      SecurityHealthAnalyticsCustomModule>,
+      (StreamRange<google::cloud::securitycenter::v1::
+                       SecurityHealthAnalyticsCustomModule>),
       ListDescendantSecurityHealthAnalyticsCustomModules,
       (google::cloud::securitycenter::v1::
            ListDescendantSecurityHealthAnalyticsCustomModulesRequest request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::securitycenter::v1::
-                              ListFindingsResponse::ListFindingsResult>,
+  MOCK_METHOD((StreamRange<google::cloud::securitycenter::v1::
+                               ListFindingsResponse::ListFindingsResult>),
               ListFindings,
               (google::cloud::securitycenter::v1::ListFindingsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::securitycenter::v1::MuteConfig>,
+      (StreamRange<google::cloud::securitycenter::v1::MuteConfig>),
       ListMuteConfigs,
       (google::cloud::securitycenter::v1::ListMuteConfigsRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::securitycenter::v1::NotificationConfig>,
+      (StreamRange<google::cloud::securitycenter::v1::NotificationConfig>),
       ListNotificationConfigs,
       (google::cloud::securitycenter::v1::ListNotificationConfigsRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::securitycenter::v1::
-                      EffectiveSecurityHealthAnalyticsCustomModule>,
+      (StreamRange<google::cloud::securitycenter::v1::
+                       EffectiveSecurityHealthAnalyticsCustomModule>),
       ListEffectiveSecurityHealthAnalyticsCustomModules,
       (google::cloud::securitycenter::v1::
            ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::securitycenter::v1::
-                              SecurityHealthAnalyticsCustomModule>,
+  MOCK_METHOD((StreamRange<google::cloud::securitycenter::v1::
+                               SecurityHealthAnalyticsCustomModule>),
               ListSecurityHealthAnalyticsCustomModules,
               (google::cloud::securitycenter::v1::
                    ListSecurityHealthAnalyticsCustomModulesRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::securitycenter::v1::Source>,
+  MOCK_METHOD((StreamRange<google::cloud::securitycenter::v1::Source>),
               ListSources,
               (google::cloud::securitycenter::v1::ListSourcesRequest request),
               (override));
@@ -316,7 +316,7 @@ class MockSecurityCenterConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::securitycenter::v1::BigQueryExport>,
+      (StreamRange<google::cloud::securitycenter::v1::BigQueryExport>),
       ListBigQueryExports,
       (google::cloud::securitycenter::v1::ListBigQueryExportsRequest request),
       (override));

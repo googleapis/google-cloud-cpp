@@ -55,7 +55,7 @@ class MockDataTransferServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>,
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>),
       ListDataSources,
       (google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest
            request),
@@ -88,7 +88,7 @@ class MockDataTransferServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>),
       ListTransferConfigs,
       (google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
            request),
@@ -121,14 +121,14 @@ class MockDataTransferServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>,
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>),
       ListTransferRuns,
       (google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>,
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>),
       ListTransferLogs,
       (google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
            request),

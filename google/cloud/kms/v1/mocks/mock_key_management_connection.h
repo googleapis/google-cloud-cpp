@@ -47,20 +47,20 @@ class MockKeyManagementServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::kms::v1::KeyRing>, ListKeyRings,
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::KeyRing>), ListKeyRings,
               (google::cloud::kms::v1::ListKeyRingsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::kms::v1::CryptoKey>, ListCryptoKeys,
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::CryptoKey>), ListCryptoKeys,
               (google::cloud::kms::v1::ListCryptoKeysRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::kms::v1::CryptoKeyVersion>,
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::CryptoKeyVersion>),
               ListCryptoKeyVersions,
               (google::cloud::kms::v1::ListCryptoKeyVersionsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::kms::v1::ImportJob>, ListImportJobs,
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::ImportJob>), ListImportJobs,
               (google::cloud::kms::v1::ListImportJobsRequest request),
               (override));
 

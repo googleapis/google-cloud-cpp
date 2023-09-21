@@ -60,7 +60,7 @@ class MockSpecialistPoolServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::SpecialistPool>,
+      (StreamRange<google::cloud::aiplatform::v1::SpecialistPool>),
       ListSpecialistPools,
       (google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request),
       (override));

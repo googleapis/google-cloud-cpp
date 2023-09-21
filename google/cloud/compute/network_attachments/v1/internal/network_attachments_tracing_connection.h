@@ -42,10 +42,12 @@ class NetworkAttachmentsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
   AggregatedListNetworkAttachments(
       google::cloud::cpp::compute::network_attachments::v1::
-          AggregatedListNetworkAttachmentsRequest const& request) override;
+          AggregatedListNetworkAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(

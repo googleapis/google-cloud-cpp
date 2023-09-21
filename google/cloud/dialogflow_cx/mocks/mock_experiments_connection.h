@@ -47,7 +47,7 @@ class MockExperimentsConnection : public dialogflow_cx::ExperimentsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Experiment>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::Experiment>),
       ListExperiments,
       (google::cloud::dialogflow::cx::v3::ListExperimentsRequest request),
       (override));

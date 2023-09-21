@@ -49,7 +49,7 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
   MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, GetOccurrence,
               (grafeas::v1::GetOccurrenceRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<grafeas::v1::Occurrence>, ListOccurrences,
+  MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>), ListOccurrences,
               (grafeas::v1::ListOccurrencesRequest request), (override));
 
   MOCK_METHOD(Status, DeleteOccurrence,
@@ -76,7 +76,7 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
   MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetNote,
               (grafeas::v1::GetNoteRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<grafeas::v1::Note>, ListNotes,
+  MOCK_METHOD((StreamRange<grafeas::v1::Note>), ListNotes,
               (grafeas::v1::ListNotesRequest request), (override));
 
   MOCK_METHOD(Status, DeleteNote,
@@ -92,7 +92,7 @@ class MockGrafeasConnection : public containeranalysis_v1::GrafeasConnection {
   MOCK_METHOD(StatusOr<grafeas::v1::Note>, UpdateNote,
               (grafeas::v1::UpdateNoteRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<grafeas::v1::Occurrence>, ListNoteOccurrences,
+  MOCK_METHOD((StreamRange<grafeas::v1::Occurrence>), ListNoteOccurrences,
               (grafeas::v1::ListNoteOccurrencesRequest request), (override));
 };
 

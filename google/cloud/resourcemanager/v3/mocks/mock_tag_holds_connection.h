@@ -59,7 +59,7 @@ class MockTagHoldsConnection : public resourcemanager_v3::TagHoldsConnection {
       (google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::TagHold>,
+  MOCK_METHOD((StreamRange<google::cloud::resourcemanager::v3::TagHold>),
               ListTagHolds,
               (google::cloud::resourcemanager::v3::ListTagHoldsRequest request),
               (override));

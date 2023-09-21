@@ -45,8 +45,9 @@ ResolveMethodReturn(google::protobuf::MethodDescriptor const& method) {
     auto info = DeterminePagination(method);
     // For string pagination we return nothing, there is no need to link the
     // definition of the `std::string` type.
-    if (!info->second) return absl::nullopt;
-    return std::make_pair(info->second->full_name(), Location(*info->second));
+    if (!info->range_output_type) return absl::nullopt;
+    return std::make_pair(info->range_output_type->full_name(),
+                          Location(*info->range_output_type));
   }
 
   if (IsLongrunningOperation(method)) {

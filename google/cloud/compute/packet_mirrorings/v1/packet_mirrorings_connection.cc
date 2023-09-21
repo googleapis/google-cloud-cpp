@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PacketMirroringsConnection::~PacketMirroringsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
 PacketMirroringsConnection::AggregatedListPacketMirrorings(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        AggregatedListPacketMirroringsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListPacketMirroringsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             PacketMirroringsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

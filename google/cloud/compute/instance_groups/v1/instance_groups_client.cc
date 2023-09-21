@@ -58,7 +58,8 @@ InstanceGroupsClient::AddInstances(
   return connection_->AddInstances(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
 InstanceGroupsClient::AggregatedListInstanceGroups(std::string const& project,
                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -68,13 +69,14 @@ InstanceGroupsClient::AggregatedListInstanceGroups(std::string const& project,
   return connection_->AggregatedListInstanceGroups(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
 InstanceGroupsClient::AggregatedListInstanceGroups(
     google::cloud::cpp::compute::instance_groups::v1::
-        AggregatedListInstanceGroupsRequest const& request,
+        AggregatedListInstanceGroupsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListInstanceGroups(request);
+  return connection_->AggregatedListInstanceGroups(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

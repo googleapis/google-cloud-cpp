@@ -56,10 +56,11 @@ class BackendServicesRestConnectionImpl
       google::cloud::cpp::compute::backend_services::v1::
           AddSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
   AggregatedListBackendServices(
       google::cloud::cpp::compute::backend_services::v1::
-          AggregatedListBackendServicesRequest const& request) override;
+          AggregatedListBackendServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::

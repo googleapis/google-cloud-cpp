@@ -77,7 +77,7 @@ class MockClusterControllerConnection
               (google::cloud::dataproc::v1::GetClusterRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataproc::v1::Cluster>, ListClusters,
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Cluster>), ListClusters,
               (google::cloud::dataproc::v1::ListClustersRequest request),
               (override));
 

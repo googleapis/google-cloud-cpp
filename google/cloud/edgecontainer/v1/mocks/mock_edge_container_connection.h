@@ -47,7 +47,7 @@ class MockEdgeContainerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::edgecontainer::v1::Cluster>,
+  MOCK_METHOD((StreamRange<google::cloud::edgecontainer::v1::Cluster>),
               ListClusters,
               (google::cloud::edgecontainer::v1::ListClustersRequest request),
               (override));
@@ -82,7 +82,7 @@ class MockEdgeContainerConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::edgecontainer::v1::NodePool>,
+  MOCK_METHOD((StreamRange<google::cloud::edgecontainer::v1::NodePool>),
               ListNodePools,
               (google::cloud::edgecontainer::v1::ListNodePoolsRequest request),
               (override));
@@ -110,7 +110,7 @@ class MockEdgeContainerConnection
       (google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::edgecontainer::v1::Machine>,
+  MOCK_METHOD((StreamRange<google::cloud::edgecontainer::v1::Machine>),
               ListMachines,
               (google::cloud::edgecontainer::v1::ListMachinesRequest request),
               (override));
@@ -121,7 +121,7 @@ class MockEdgeContainerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::edgecontainer::v1::VpnConnection>,
+      (StreamRange<google::cloud::edgecontainer::v1::VpnConnection>),
       ListVpnConnections,
       (google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request),
       (override));

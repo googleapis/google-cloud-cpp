@@ -32,7 +32,8 @@ ServiceAttachmentsClient::ServiceAttachmentsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServiceAttachmentsClient::~ServiceAttachmentsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
 ServiceAttachmentsClient::AggregatedListServiceAttachments(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ ServiceAttachmentsClient::AggregatedListServiceAttachments(
   return connection_->AggregatedListServiceAttachments(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
 ServiceAttachmentsClient::AggregatedListServiceAttachments(
     google::cloud::cpp::compute::service_attachments::v1::
-        AggregatedListServiceAttachmentsRequest const& request,
+        AggregatedListServiceAttachmentsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListServiceAttachments(request);
+  return connection_->AggregatedListServiceAttachments(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -65,7 +65,7 @@ class MockTargetGrpcProxiesConnection
                    InsertTargetGrpcProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>),
               ListTargetGrpcProxies,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
                    ListTargetGrpcProxiesRequest request),

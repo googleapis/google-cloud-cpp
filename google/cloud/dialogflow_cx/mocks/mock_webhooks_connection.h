@@ -46,7 +46,7 @@ class MockWebhooksConnection : public dialogflow_cx::WebhooksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Webhook>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Webhook>),
               ListWebhooks,
               (google::cloud::dialogflow::cx::v3::ListWebhooksRequest request),
               (override));

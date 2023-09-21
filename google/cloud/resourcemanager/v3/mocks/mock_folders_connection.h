@@ -51,13 +51,13 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
       (google::cloud::resourcemanager::v3::GetFolderRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::Folder>,
+  MOCK_METHOD((StreamRange<google::cloud::resourcemanager::v3::Folder>),
               ListFolders,
               (google::cloud::resourcemanager::v3::ListFoldersRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::Folder>, SearchFolders,
+      (StreamRange<google::cloud::resourcemanager::v3::Folder>), SearchFolders,
       (google::cloud::resourcemanager::v3::SearchFoldersRequest request),
       (override));
 

@@ -39,7 +39,7 @@ class PacketMirroringsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListPacketMirrorings(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          AggregatedListPacketMirroringsRequest const& request);
+          AggregatedListPacketMirroringsRequest request);
 
   virtual google::cloud::Idempotency DeletePacketMirroring(
       google::cloud::cpp::compute::packet_mirrorings::v1::

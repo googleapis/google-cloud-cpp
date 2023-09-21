@@ -54,7 +54,7 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (google::cloud::run::v2::GetJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Job>), ListJobs,
               (google::cloud::run::v2::ListJobsRequest request), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,

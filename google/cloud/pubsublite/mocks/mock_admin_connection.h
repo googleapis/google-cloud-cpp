@@ -61,7 +61,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::pubsublite::v1::Topic>, ListTopics,
+  MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Topic>), ListTopics,
               (google::cloud::pubsublite::v1::ListTopicsRequest request),
               (override));
 
@@ -76,7 +76,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<std::string>, ListTopicSubscriptions,
+      (StreamRange<std::string>), ListTopicSubscriptions,
       (google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request),
       (override));
 
@@ -90,7 +90,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (google::cloud::pubsublite::v1::GetSubscriptionRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::pubsublite::v1::Subscription>,
+  MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Subscription>),
               ListSubscriptions,
               (google::cloud::pubsublite::v1::ListSubscriptionsRequest request),
               (override));
@@ -121,7 +121,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (google::cloud::pubsublite::v1::GetReservationRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::pubsublite::v1::Reservation>,
+  MOCK_METHOD((StreamRange<google::cloud::pubsublite::v1::Reservation>),
               ListReservations,
               (google::cloud::pubsublite::v1::ListReservationsRequest request),
               (override));
@@ -137,7 +137,7 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<std::string>, ListReservationTopics,
+      (StreamRange<std::string>), ListReservationTopics,
       (google::cloud::pubsublite::v1::ListReservationTopicsRequest request),
       (override));
 

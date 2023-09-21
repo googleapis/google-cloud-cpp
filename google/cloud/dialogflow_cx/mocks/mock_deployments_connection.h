@@ -47,7 +47,7 @@ class MockDeploymentsConnection : public dialogflow_cx::DeploymentsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Deployment>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::Deployment>),
       ListDeployments,
       (google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request),
       (override));

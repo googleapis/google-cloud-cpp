@@ -40,10 +40,11 @@ class MachineTypesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
   AggregatedListMachineTypes(
       google::cloud::cpp::compute::machine_types::v1::
-          AggregatedListMachineTypesRequest const& request) override;
+          AggregatedListMachineTypesRequest request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::cpp::compute::machine_types::v1::

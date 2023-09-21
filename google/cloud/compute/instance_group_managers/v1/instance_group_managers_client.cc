@@ -62,7 +62,9 @@ InstanceGroupManagersClient::AbandonInstances(
   return connection_->AbandonInstances(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>
 InstanceGroupManagersClient::AggregatedListInstanceGroupManagers(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -72,13 +74,15 @@ InstanceGroupManagersClient::AggregatedListInstanceGroupManagers(
   return connection_->AggregatedListInstanceGroupManagers(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>
 InstanceGroupManagersClient::AggregatedListInstanceGroupManagers(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        AggregatedListInstanceGroupManagersRequest const& request,
+        AggregatedListInstanceGroupManagersRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListInstanceGroupManagers(request);
+  return connection_->AggregatedListInstanceGroupManagers(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -191,11 +191,11 @@ class SecurityPoliciesConnection {
       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
           request);
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
   AggregatedListSecurityPolicies(
       google::cloud::cpp::compute::security_policies::v1::
-          AggregatedListSecurityPoliciesRequest const& request);
+          AggregatedListSecurityPoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::

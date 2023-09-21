@@ -32,7 +32,8 @@ SslCertificatesClient::SslCertificatesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 SslCertificatesClient::~SslCertificatesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
 SslCertificatesClient::AggregatedListSslCertificates(std::string const& project,
                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ SslCertificatesClient::AggregatedListSslCertificates(std::string const& project,
   return connection_->AggregatedListSslCertificates(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
 SslCertificatesClient::AggregatedListSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest const& request,
+        AggregatedListSslCertificatesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListSslCertificates(request);
+  return connection_->AggregatedListSslCertificates(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

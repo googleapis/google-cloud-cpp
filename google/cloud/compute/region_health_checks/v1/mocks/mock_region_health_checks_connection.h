@@ -66,7 +66,7 @@ class MockRegionHealthChecksConnection
                    InsertHealthCheckRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::HealthCheck>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::HealthCheck>),
               ListRegionHealthChecks,
               (google::cloud::cpp::compute::region_health_checks::v1::
                    ListRegionHealthChecksRequest request),

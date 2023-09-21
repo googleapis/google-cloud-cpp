@@ -46,7 +46,7 @@ class MockCloudTasksConnection : public tasks_v2::CloudTasksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::tasks::v2::Queue>, ListQueues,
+  MOCK_METHOD((StreamRange<google::cloud::tasks::v2::Queue>), ListQueues,
               (google::cloud::tasks::v2::ListQueuesRequest request),
               (override));
 
@@ -91,7 +91,7 @@ class MockCloudTasksConnection : public tasks_v2::CloudTasksConnection {
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::tasks::v2::Task>, ListTasks,
+  MOCK_METHOD((StreamRange<google::cloud::tasks::v2::Task>), ListTasks,
               (google::cloud::tasks::v2::ListTasksRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Task>, GetTask,

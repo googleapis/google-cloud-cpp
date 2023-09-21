@@ -44,7 +44,7 @@ class InstanceGroupManagersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListInstanceGroupManagers(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          AggregatedListInstanceGroupManagersRequest const& request);
+          AggregatedListInstanceGroupManagersRequest request);
 
   virtual google::cloud::Idempotency ApplyUpdatesToInstances(
       google::cloud::cpp::compute::instance_group_managers::v1::

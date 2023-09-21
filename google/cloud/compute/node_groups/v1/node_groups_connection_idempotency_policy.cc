@@ -41,7 +41,7 @@ Idempotency NodeGroupsConnectionIdempotencyPolicy::AddNodes(
 
 Idempotency NodeGroupsConnectionIdempotencyPolicy::AggregatedListNodeGroups(
     google::cloud::cpp::compute::node_groups::v1::
-        AggregatedListNodeGroupsRequest const&) {
+        AggregatedListNodeGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

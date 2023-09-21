@@ -46,7 +46,7 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::test::admin::database::v1::Database>,
+  MOCK_METHOD((StreamRange<google::test::admin::database::v1::Database>),
   ListDatabases,
   (google::test::admin::database::v1::ListDatabasesRequest request), (override));
 
@@ -98,7 +98,7 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   DeleteBackup,
   (google::test::admin::database::v1::DeleteBackupRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<google::test::admin::database::v1::Backup>,
+  MOCK_METHOD((StreamRange<google::test::admin::database::v1::Backup>),
   ListBackups,
   (google::test::admin::database::v1::ListBackupsRequest request), (override));
 
@@ -106,11 +106,11 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   RestoreDatabase,
   (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<google::longrunning::Operation>,
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
   ListDatabaseOperations,
   (google::test::admin::database::v1::ListDatabaseOperationsRequest request), (override));
 
-  MOCK_METHOD(StreamRange<google::longrunning::Operation>,
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
   ListBackupOperations,
   (google::test::admin::database::v1::ListBackupOperationsRequest request), (override));
 

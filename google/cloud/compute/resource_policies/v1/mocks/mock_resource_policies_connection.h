@@ -48,10 +48,11 @@ class MockResourcePoliciesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              ResourcePoliciesScopedList>>),
       AggregatedListResourcePolicies,
       (google::cloud::cpp::compute::resource_policies::v1::
-           AggregatedListResourcePoliciesRequest const& request),
+           AggregatedListResourcePoliciesRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -77,7 +78,7 @@ class MockResourcePoliciesConnection
                    InsertResourcePolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>),
               ListResourcePolicies,
               (google::cloud::cpp::compute::resource_policies::v1::
                    ListResourcePoliciesRequest request),

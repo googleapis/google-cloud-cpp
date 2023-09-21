@@ -36,7 +36,7 @@ MachineTypesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency MachineTypesConnectionIdempotencyPolicy::AggregatedListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
-        AggregatedListMachineTypesRequest const&) {
+        AggregatedListMachineTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

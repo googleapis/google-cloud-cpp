@@ -48,10 +48,11 @@ class MockSslCertificatesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              SslCertificatesScopedList>>),
       AggregatedListSslCertificates,
       (google::cloud::cpp::compute::ssl_certificates::v1::
-           AggregatedListSslCertificatesRequest const& request),
+           AggregatedListSslCertificatesRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -72,7 +73,7 @@ class MockSslCertificatesConnection
                    InsertSslCertificateRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SslCertificate>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::SslCertificate>),
               ListSslCertificates,
               (google::cloud::cpp::compute::ssl_certificates::v1::
                    ListSslCertificatesRequest request),

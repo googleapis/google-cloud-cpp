@@ -47,7 +47,7 @@ class MockEnvironmentsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Environment>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Environment>),
               ListEnvironments,
               (google::cloud::dialogflow::v2::ListEnvironmentsRequest request),
               (override));
@@ -73,7 +73,7 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>,
+      (StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>),
       GetEnvironmentHistory,
       (google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request),
       (override));

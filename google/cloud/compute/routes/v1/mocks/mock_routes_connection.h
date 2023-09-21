@@ -64,7 +64,7 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Route>, ListRoutes,
+      (StreamRange<google::cloud::cpp::compute::v1::Route>), ListRoutes,
       (google::cloud::cpp::compute::routes::v1::ListRoutesRequest request),
       (override));
 };

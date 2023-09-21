@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeTypesConnection::~NodeTypesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
 NodeTypesConnection::AggregatedListNodeTypes(
     google::cloud::cpp::compute::node_types::v1::
-        AggregatedListNodeTypesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListNodeTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NodeTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>

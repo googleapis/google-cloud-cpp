@@ -52,10 +52,11 @@ class ResourcePoliciesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
   AggregatedListResourcePolicies(
       google::cloud::cpp::compute::resource_policies::v1::
-          AggregatedListResourcePoliciesRequest const& request) override;
+          AggregatedListResourcePoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::

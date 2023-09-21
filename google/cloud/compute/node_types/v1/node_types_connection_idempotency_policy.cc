@@ -36,7 +36,7 @@ NodeTypesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency NodeTypesConnectionIdempotencyPolicy::AggregatedListNodeTypes(
     google::cloud::cpp::compute::node_types::v1::
-        AggregatedListNodeTypesRequest const&) {
+        AggregatedListNodeTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

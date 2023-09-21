@@ -50,11 +50,11 @@ class MockCaseServiceConnection : public support_v2::CaseServiceConnection {
               (google::cloud::support::v2::GetCaseRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::support::v2::Case>, ListCases,
+  MOCK_METHOD((StreamRange<google::cloud::support::v2::Case>), ListCases,
               (google::cloud::support::v2::ListCasesRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::support::v2::Case>, SearchCases,
+  MOCK_METHOD((StreamRange<google::cloud::support::v2::Case>), SearchCases,
               (google::cloud::support::v2::SearchCasesRequest request),
               (override));
 
@@ -75,7 +75,7 @@ class MockCaseServiceConnection : public support_v2::CaseServiceConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::support::v2::CaseClassification>,
+      (StreamRange<google::cloud::support::v2::CaseClassification>),
       SearchCaseClassifications,
       (google::cloud::support::v2::SearchCaseClassificationsRequest request),
       (override));

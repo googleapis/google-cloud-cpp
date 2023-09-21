@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AcceleratorTypesConnection::~AcceleratorTypesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
 AcceleratorTypesConnection::AggregatedListAcceleratorTypes(
     google::cloud::cpp::compute::accelerator_types::v1::
-        AggregatedListAcceleratorTypesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             AcceleratorTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>

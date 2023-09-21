@@ -67,7 +67,7 @@ class MockIdentityAwareProxyOAuthServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>,
+      (StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>),
       ListIdentityAwareProxyClients,
       (google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request),
       (override));

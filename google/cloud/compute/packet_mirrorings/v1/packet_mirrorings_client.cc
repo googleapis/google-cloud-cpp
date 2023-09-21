@@ -32,7 +32,8 @@ PacketMirroringsClient::PacketMirroringsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 PacketMirroringsClient::~PacketMirroringsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
 PacketMirroringsClient::AggregatedListPacketMirrorings(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ PacketMirroringsClient::AggregatedListPacketMirrorings(
   return connection_->AggregatedListPacketMirrorings(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
 PacketMirroringsClient::AggregatedListPacketMirrorings(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        AggregatedListPacketMirroringsRequest const& request,
+        AggregatedListPacketMirroringsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListPacketMirrorings(request);
+  return connection_->AggregatedListPacketMirrorings(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -43,7 +43,7 @@ class InstanceGroupsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListInstanceGroups(
       google::cloud::cpp::compute::instance_groups::v1::
-          AggregatedListInstanceGroupsRequest const& request);
+          AggregatedListInstanceGroupsRequest request);
 
   virtual google::cloud::Idempotency DeleteInstanceGroup(
       google::cloud::cpp::compute::instance_groups::v1::

@@ -39,7 +39,7 @@ class ServiceAttachmentsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListServiceAttachments(
       google::cloud::cpp::compute::service_attachments::v1::
-          AggregatedListServiceAttachmentsRequest const& request);
+          AggregatedListServiceAttachmentsRequest request);
 
   virtual google::cloud::Idempotency DeleteServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::

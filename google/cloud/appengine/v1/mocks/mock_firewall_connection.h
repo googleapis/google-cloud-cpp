@@ -46,7 +46,7 @@ class MockFirewallConnection : public appengine_v1::FirewallConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::appengine::v1::FirewallRule>,
+  MOCK_METHOD((StreamRange<google::appengine::v1::FirewallRule>),
               ListIngressRules,
               (google::appengine::v1::ListIngressRulesRequest request),
               (override));

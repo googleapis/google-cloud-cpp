@@ -47,7 +47,7 @@ Idempotency InstancesConnectionIdempotencyPolicy::AddResourcePolicies(
 
 Idempotency InstancesConnectionIdempotencyPolicy::AggregatedListInstances(
     google::cloud::cpp::compute::instances::v1::
-        AggregatedListInstancesRequest const&) {
+        AggregatedListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

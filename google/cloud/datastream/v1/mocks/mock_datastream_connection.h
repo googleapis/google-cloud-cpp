@@ -47,7 +47,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datastream::v1::ConnectionProfile>,
+      (StreamRange<google::cloud::datastream::v1::ConnectionProfile>),
       ListConnectionProfiles,
       (google::cloud::datastream::v1::ListConnectionProfilesRequest request),
       (override));
@@ -87,7 +87,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datastream::v1::Stream>, ListStreams,
+  MOCK_METHOD((StreamRange<google::cloud::datastream::v1::Stream>), ListStreams,
               (google::cloud::datastream::v1::ListStreamsRequest request),
               (override));
 
@@ -121,7 +121,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (google::cloud::datastream::v1::LookupStreamObjectRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datastream::v1::StreamObject>,
+  MOCK_METHOD((StreamRange<google::cloud::datastream::v1::StreamObject>),
               ListStreamObjects,
               (google::cloud::datastream::v1::ListStreamObjectsRequest request),
               (override));
@@ -138,7 +138,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (google::cloud::datastream::v1::StopBackfillJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<std::string>, FetchStaticIps,
+  MOCK_METHOD((StreamRange<std::string>), FetchStaticIps,
               (google::cloud::datastream::v1::FetchStaticIpsRequest request),
               (override));
 
@@ -156,7 +156,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datastream::v1::PrivateConnection>,
+      (StreamRange<google::cloud::datastream::v1::PrivateConnection>),
       ListPrivateConnections,
       (google::cloud::datastream::v1::ListPrivateConnectionsRequest request),
       (override));
@@ -177,7 +177,7 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (google::cloud::datastream::v1::GetRouteRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datastream::v1::Route>, ListRoutes,
+  MOCK_METHOD((StreamRange<google::cloud::datastream::v1::Route>), ListRoutes,
               (google::cloud::datastream::v1::ListRoutesRequest request),
               (override));
 

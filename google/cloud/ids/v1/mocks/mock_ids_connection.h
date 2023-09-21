@@ -46,7 +46,7 @@ class MockIDSConnection : public ids_v1::IDSConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::ids::v1::Endpoint>, ListEndpoints,
+  MOCK_METHOD((StreamRange<google::cloud::ids::v1::Endpoint>), ListEndpoints,
               (google::cloud::ids::v1::ListEndpointsRequest request),
               (override));
 

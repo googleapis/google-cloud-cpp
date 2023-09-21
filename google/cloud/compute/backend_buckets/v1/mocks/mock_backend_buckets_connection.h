@@ -77,7 +77,7 @@ class MockBackendBucketsConnection
                    InsertBackendBucketRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendBucket>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendBucket>),
               ListBackendBuckets,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    ListBackendBucketsRequest request),

@@ -55,7 +55,7 @@ class MockBatchControllerConnection
               (google::cloud::dataproc::v1::GetBatchRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataproc::v1::Batch>, ListBatches,
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Batch>), ListBatches,
               (google::cloud::dataproc::v1::ListBatchesRequest request),
               (override));
 

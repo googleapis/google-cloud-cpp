@@ -62,7 +62,7 @@ class MockPolicyTagManagerConnection
       (google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::Taxonomy>,
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Taxonomy>),
               ListTaxonomies,
               (google::cloud::datacatalog::v1::ListTaxonomiesRequest request),
               (override));
@@ -87,7 +87,7 @@ class MockPolicyTagManagerConnection
       (google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::PolicyTag>,
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::PolicyTag>),
               ListPolicyTags,
               (google::cloud::datacatalog::v1::ListPolicyTagsRequest request),
               (override));

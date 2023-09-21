@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetInstancesConnection::~TargetInstancesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
 TargetInstancesConnection::AggregatedListTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
-        AggregatedListTargetInstancesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListTargetInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetInstancesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

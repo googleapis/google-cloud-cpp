@@ -33,16 +33,19 @@ RegionCommitmentsTracingConnection::RegionCommitmentsTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
 RegionCommitmentsTracingConnection::AggregatedListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest const& request) {
+        AggregatedListRegionCommitmentsRequest request) {
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "AggregatedListRegionCommitments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListRegionCommitments(request));
+  auto sr = child_->AggregatedListRegionCommitments(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>

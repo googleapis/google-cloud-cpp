@@ -65,7 +65,7 @@ class MockHttpsHealthChecksConnection
                    InsertHttpsHealthCheckRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>),
               ListHttpsHealthChecks,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    ListHttpsHealthChecksRequest request),

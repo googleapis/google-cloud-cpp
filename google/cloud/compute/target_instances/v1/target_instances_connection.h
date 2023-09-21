@@ -187,11 +187,11 @@ class TargetInstancesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
   AggregatedListTargetInstances(
       google::cloud::cpp::compute::target_instances::v1::
-          AggregatedListTargetInstancesRequest const& request);
+          AggregatedListTargetInstancesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::

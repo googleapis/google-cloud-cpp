@@ -57,7 +57,7 @@ class MockParticipantsConnection
       (google::cloud::dialogflow::v2::GetParticipantRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Participant>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Participant>),
               ListParticipants,
               (google::cloud::dialogflow::v2::ListParticipantsRequest request),
               (override));

@@ -48,7 +48,7 @@ class MockAppConnectorsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
+      (StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>),
       ListAppConnectors,
       (google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
            request),

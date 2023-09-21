@@ -36,7 +36,7 @@ HealthChecksConnectionIdempotencyPolicy::clone() const {
 
 Idempotency HealthChecksConnectionIdempotencyPolicy::AggregatedListHealthChecks(
     google::cloud::cpp::compute::health_checks::v1::
-        AggregatedListHealthChecksRequest const&) {
+        AggregatedListHealthChecksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -41,10 +41,11 @@ class TargetInstancesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
   AggregatedListTargetInstances(
       google::cloud::cpp::compute::target_instances::v1::
-          AggregatedListTargetInstancesRequest const& request) override;
+          AggregatedListTargetInstancesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::

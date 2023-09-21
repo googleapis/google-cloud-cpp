@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstanceTemplatesConnection::~InstanceTemplatesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
 InstanceTemplatesConnection::AggregatedListInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
-        AggregatedListInstanceTemplatesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListInstanceTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             InstanceTemplatesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

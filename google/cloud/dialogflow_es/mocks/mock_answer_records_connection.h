@@ -47,7 +47,7 @@ class MockAnswerRecordsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::AnswerRecord>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::AnswerRecord>),
               ListAnswerRecords,
               (google::cloud::dialogflow::v2::ListAnswerRecordsRequest request),
               (override));

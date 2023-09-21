@@ -33,7 +33,8 @@ PublicDelegatedPrefixesClient::PublicDelegatedPrefixesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 PublicDelegatedPrefixesClient::~PublicDelegatedPrefixesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       PublicDelegatedPrefixesScopedList>>
 PublicDelegatedPrefixesClient::AggregatedListPublicDelegatedPrefixes(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -43,13 +44,14 @@ PublicDelegatedPrefixesClient::AggregatedListPublicDelegatedPrefixes(
   return connection_->AggregatedListPublicDelegatedPrefixes(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       PublicDelegatedPrefixesScopedList>>
 PublicDelegatedPrefixesClient::AggregatedListPublicDelegatedPrefixes(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        AggregatedListPublicDelegatedPrefixesRequest const& request,
+        AggregatedListPublicDelegatedPrefixesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListPublicDelegatedPrefixes(request);
+  return connection_->AggregatedListPublicDelegatedPrefixes(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

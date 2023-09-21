@@ -185,7 +185,7 @@ class MockClusterManagerConnection
       (google::container::v1::SetMaintenancePolicyRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::container::v1::UsableSubnetwork>,
+  MOCK_METHOD((StreamRange<google::container::v1::UsableSubnetwork>),
               ListUsableSubnetworks,
               (google::container::v1::ListUsableSubnetworksRequest request),
               (override));

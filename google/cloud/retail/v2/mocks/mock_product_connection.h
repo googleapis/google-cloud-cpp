@@ -55,7 +55,7 @@ class MockProductServiceConnection
               (google::cloud::retail::v2::GetProductRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::retail::v2::Product>, ListProducts,
+  MOCK_METHOD((StreamRange<google::cloud::retail::v2::Product>), ListProducts,
               (google::cloud::retail::v2::ListProductsRequest request),
               (override));
 

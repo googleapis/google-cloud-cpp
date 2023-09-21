@@ -50,7 +50,7 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::api::apikeys::v2::Key>, ListKeys,
+  MOCK_METHOD((StreamRange<google::api::apikeys::v2::Key>), ListKeys,
               (google::api::apikeys::v2::ListKeysRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::api::apikeys::v2::Key>, GetKey,

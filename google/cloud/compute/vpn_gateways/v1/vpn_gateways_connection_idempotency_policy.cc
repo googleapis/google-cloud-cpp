@@ -36,7 +36,7 @@ VpnGatewaysConnectionIdempotencyPolicy::clone() const {
 
 Idempotency VpnGatewaysConnectionIdempotencyPolicy::AggregatedListVpnGateways(
     google::cloud::cpp::compute::vpn_gateways::v1::
-        AggregatedListVpnGatewaysRequest const&) {
+        AggregatedListVpnGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

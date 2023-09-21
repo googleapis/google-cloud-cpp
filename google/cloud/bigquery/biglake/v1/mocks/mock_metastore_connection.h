@@ -65,7 +65,8 @@ class MockMetastoreServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::biglake::v1::Catalog>, ListCatalogs,
+      (StreamRange<google::cloud::bigquery::biglake::v1::Catalog>),
+      ListCatalogs,
       (google::cloud::bigquery::biglake::v1::ListCatalogsRequest request),
       (override));
 
@@ -93,7 +94,7 @@ class MockMetastoreServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::biglake::v1::Database>,
+      (StreamRange<google::cloud::bigquery::biglake::v1::Database>),
       ListDatabases,
       (google::cloud::bigquery::biglake::v1::ListDatabasesRequest request),
       (override));
@@ -123,7 +124,7 @@ class MockMetastoreServiceConnection
       (google::cloud::bigquery::biglake::v1::GetTableRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::bigquery::biglake::v1::Table>,
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::biglake::v1::Table>),
               ListTables,
               (google::cloud::bigquery::biglake::v1::ListTablesRequest request),
               (override));

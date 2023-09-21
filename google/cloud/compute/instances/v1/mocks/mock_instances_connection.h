@@ -60,11 +60,13 @@ class MockInstancesConnection
                    AddResourcePoliciesRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>,
-              AggregatedListInstances,
-              (google::cloud::cpp::compute::instances::v1::
-                   AggregatedListInstancesRequest const& request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<
+           std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>),
+      AggregatedListInstances,
+      (google::cloud::cpp::compute::instances::v1::
+           AggregatedListInstancesRequest request),
+      (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AttachDisk,
@@ -148,13 +150,13 @@ class MockInstancesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Instance>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Instance>),
               ListInstances,
               (google::cloud::cpp::compute::instances::v1::ListInstancesRequest
                    request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Reference>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Reference>),
               ListReferrers,
               (google::cloud::cpp::compute::instances::v1::ListReferrersRequest
                    request),

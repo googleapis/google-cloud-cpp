@@ -47,7 +47,7 @@ class MockSecretManagerServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::secretmanager::v1::Secret>,
+  MOCK_METHOD((StreamRange<google::cloud::secretmanager::v1::Secret>),
               ListSecrets,
               (google::cloud::secretmanager::v1::ListSecretsRequest request),
               (override));
@@ -79,7 +79,7 @@ class MockSecretManagerServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::secretmanager::v1::SecretVersion>,
+      (StreamRange<google::cloud::secretmanager::v1::SecretVersion>),
       ListSecretVersions,
       (google::cloud::secretmanager::v1::ListSecretVersionsRequest request),
       (override));

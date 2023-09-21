@@ -46,7 +46,7 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::iam::admin::v1::ServiceAccount>,
+  MOCK_METHOD((StreamRange<google::iam::admin::v1::ServiceAccount>),
               ListServiceAccounts,
               (google::iam::admin::v1::ListServiceAccountsRequest request),
               (override));
@@ -138,11 +138,11 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::iam::admin::v1::Role>, QueryGrantableRoles,
+  MOCK_METHOD((StreamRange<google::iam::admin::v1::Role>), QueryGrantableRoles,
               (google::iam::admin::v1::QueryGrantableRolesRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::iam::admin::v1::Role>, ListRoles,
+  MOCK_METHOD((StreamRange<google::iam::admin::v1::Role>), ListRoles,
               (google::iam::admin::v1::ListRolesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::iam::admin::v1::Role>, GetRole,
@@ -165,7 +165,7 @@ class MockIAMConnection : public iam_admin_v1::IAMConnection {
               (google::iam::admin::v1::UndeleteRoleRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::iam::admin::v1::Permission>,
+  MOCK_METHOD((StreamRange<google::iam::admin::v1::Permission>),
               QueryTestablePermissions,
               (google::iam::admin::v1::QueryTestablePermissionsRequest request),
               (override));

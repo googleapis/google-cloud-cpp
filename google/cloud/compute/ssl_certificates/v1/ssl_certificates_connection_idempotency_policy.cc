@@ -37,7 +37,7 @@ SslCertificatesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 SslCertificatesConnectionIdempotencyPolicy::AggregatedListSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest const&) {
+        AggregatedListSslCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

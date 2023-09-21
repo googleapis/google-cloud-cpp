@@ -190,10 +190,11 @@ class InstanceGroupsConnection {
   AddInstances(google::cloud::cpp::compute::instance_groups::v1::
                    AddInstancesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
   AggregatedListInstanceGroups(
       google::cloud::cpp::compute::instance_groups::v1::
-          AggregatedListInstanceGroupsRequest const& request);
+          AggregatedListInstanceGroupsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::

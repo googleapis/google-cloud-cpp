@@ -32,14 +32,18 @@ UrlMapsTracingConnection::UrlMapsTracingConnection(
     std::shared_ptr<compute_url_maps_v1::UrlMapsConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>
 UrlMapsTracingConnection::AggregatedListUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::
-        AggregatedListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
+        request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::AggregatedListUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListUrlMaps(request));
+  auto sr = child_->AggregatedListUrlMaps(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

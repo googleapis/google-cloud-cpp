@@ -184,10 +184,10 @@ class SubnetworksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
-  AggregatedListSubnetworks(
-      google::cloud::cpp::compute::subnetworks::v1::
-          AggregatedListSubnetworksRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>
+  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
+                                AggregatedListSubnetworksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::

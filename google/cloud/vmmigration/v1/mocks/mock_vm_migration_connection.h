@@ -46,7 +46,8 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmmigration::v1::Source>, ListSources,
+  MOCK_METHOD((StreamRange<google::cloud::vmmigration::v1::Source>),
+              ListSources,
               (google::cloud::vmmigration::v1::ListSourcesRequest request),
               (override));
 
@@ -77,7 +78,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmmigration::v1::UtilizationReport>,
+      (StreamRange<google::cloud::vmmigration::v1::UtilizationReport>),
       ListUtilizationReports,
       (google::cloud::vmmigration::v1::ListUtilizationReportsRequest request),
       (override));
@@ -104,7 +105,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>,
+      (StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>),
       ListDatacenterConnectors,
       (google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request),
       (override));
@@ -143,7 +144,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmmigration::v1::MigratingVm>,
+  MOCK_METHOD((StreamRange<google::cloud::vmmigration::v1::MigratingVm>),
               ListMigratingVms,
               (google::cloud::vmmigration::v1::ListMigratingVmsRequest request),
               (override));
@@ -202,7 +203,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::CancelCloneJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmmigration::v1::CloneJob>,
+  MOCK_METHOD((StreamRange<google::cloud::vmmigration::v1::CloneJob>),
               ListCloneJobs,
               (google::cloud::vmmigration::v1::ListCloneJobsRequest request),
               (override));
@@ -225,7 +226,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmmigration::v1::CutoverJob>,
+  MOCK_METHOD((StreamRange<google::cloud::vmmigration::v1::CutoverJob>),
               ListCutoverJobs,
               (google::cloud::vmmigration::v1::ListCutoverJobsRequest request),
               (override));
@@ -235,7 +236,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetCutoverJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmmigration::v1::Group>, ListGroups,
+  MOCK_METHOD((StreamRange<google::cloud::vmmigration::v1::Group>), ListGroups,
               (google::cloud::vmmigration::v1::ListGroupsRequest request),
               (override));
 
@@ -275,7 +276,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmmigration::v1::TargetProject>,
+      (StreamRange<google::cloud::vmmigration::v1::TargetProject>),
       ListTargetProjects,
       (google::cloud::vmmigration::v1::ListTargetProjectsRequest request),
       (override));
@@ -305,7 +306,7 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>,
+      (StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>),
       ListReplicationCycles,
       (google::cloud::vmmigration::v1::ListReplicationCyclesRequest request),
       (override));

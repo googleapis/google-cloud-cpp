@@ -51,11 +51,14 @@ TargetPoolsConnection::AddInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
 TargetPoolsConnection::AggregatedListTargetPools(
     google::cloud::cpp::compute::target_pools::v1::
-        AggregatedListTargetPoolsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListTargetPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetPoolsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

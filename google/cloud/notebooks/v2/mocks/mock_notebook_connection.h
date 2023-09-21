@@ -47,7 +47,7 @@ class MockNotebookServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::notebooks::v2::Instance>,
+  MOCK_METHOD((StreamRange<google::cloud::notebooks::v2::Instance>),
               ListInstances,
               (google::cloud::notebooks::v2::ListInstancesRequest request),
               (override));

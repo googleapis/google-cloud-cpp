@@ -32,7 +32,8 @@ AutoscalersClient::AutoscalersClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 AutoscalersClient::~AutoscalersClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AutoscalersScopedList>>
 AutoscalersClient::AggregatedListAutoscalers(std::string const& project,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ AutoscalersClient::AggregatedListAutoscalers(std::string const& project,
   return connection_->AggregatedListAutoscalers(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AutoscalersScopedList>>
 AutoscalersClient::AggregatedListAutoscalers(
     google::cloud::cpp::compute::autoscalers::v1::
-        AggregatedListAutoscalersRequest const& request,
+        AggregatedListAutoscalersRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListAutoscalers(request);
+  return connection_->AggregatedListAutoscalers(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

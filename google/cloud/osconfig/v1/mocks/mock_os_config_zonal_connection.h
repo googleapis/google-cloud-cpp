@@ -68,13 +68,13 @@ class MockOsConfigZonalServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>,
+      (StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>),
       ListOSPolicyAssignments,
       (google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>,
+      (StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>),
       ListOSPolicyAssignmentRevisions,
       (google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest
            request),
@@ -96,7 +96,7 @@ class MockOsConfigZonalServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>,
+      (StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>),
       ListOSPolicyAssignmentReports,
       (google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest
            request),
@@ -106,7 +106,7 @@ class MockOsConfigZonalServiceConnection
               (google::cloud::osconfig::v1::GetInventoryRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::osconfig::v1::Inventory>,
+  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::Inventory>),
               ListInventories,
               (google::cloud::osconfig::v1::ListInventoriesRequest request),
               (override));
@@ -118,7 +118,7 @@ class MockOsConfigZonalServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>,
+      (StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>),
       ListVulnerabilityReports,
       (google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request),
       (override));

@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RoutersConnection::~RoutersConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
 RoutersConnection::AggregatedListRouters(
     google::cloud::cpp::compute::routers::v1::
-        AggregatedListRoutersRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListRoutersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

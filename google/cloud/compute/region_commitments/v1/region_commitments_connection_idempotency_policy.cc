@@ -37,7 +37,7 @@ RegionCommitmentsConnectionIdempotencyPolicy::clone() const {
 Idempotency
 RegionCommitmentsConnectionIdempotencyPolicy::AggregatedListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest const&) {
+        AggregatedListRegionCommitmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

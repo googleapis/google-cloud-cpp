@@ -41,7 +41,7 @@ class NetworkEdgeSecurityServicesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListNetworkEdgeSecurityServices(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          AggregatedListNetworkEdgeSecurityServicesRequest const& request);
+          AggregatedListNetworkEdgeSecurityServicesRequest request);
 
   virtual google::cloud::Idempotency DeleteNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::

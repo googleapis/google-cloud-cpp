@@ -55,7 +55,7 @@ class MockServiceMonitoringServiceConnection
               (google::monitoring::v3::GetServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::Service>, ListServices,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::Service>), ListServices,
               (google::monitoring::v3::ListServicesRequest request),
               (override));
 
@@ -80,7 +80,7 @@ class MockServiceMonitoringServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::monitoring::v3::ServiceLevelObjective>,
+      (StreamRange<google::monitoring::v3::ServiceLevelObjective>),
       ListServiceLevelObjectives,
       (google::monitoring::v3::ListServiceLevelObjectivesRequest request),
       (override));

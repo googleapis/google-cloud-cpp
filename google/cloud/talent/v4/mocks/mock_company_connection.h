@@ -63,7 +63,7 @@ class MockCompanyServiceConnection
               (google::cloud::talent::v4::DeleteCompanyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::talent::v4::Company>, ListCompanies,
+  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Company>), ListCompanies,
               (google::cloud::talent::v4::ListCompaniesRequest request),
               (override));
 };

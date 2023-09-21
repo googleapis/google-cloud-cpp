@@ -57,11 +57,11 @@ class MockModelServiceConnection
               (google::cloud::aiplatform::v1::GetModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Model>, ListModels,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>), ListModels,
               (google::cloud::aiplatform::v1::ListModelsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Model>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
               ListModelVersions,
               (google::cloud::aiplatform::v1::ListModelVersionsRequest request),
               (override));
@@ -137,7 +137,7 @@ class MockModelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>,
+      (StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>),
       ListModelEvaluations,
       (google::cloud::aiplatform::v1::ListModelEvaluationsRequest request),
       (override));
@@ -150,7 +150,7 @@ class MockModelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>,
+      (StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>),
       ListModelEvaluationSlices,
       (google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request),
       (override));

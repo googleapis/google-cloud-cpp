@@ -39,7 +39,7 @@ class RegionCommitmentsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListRegionCommitments(
       google::cloud::cpp::compute::region_commitments::v1::
-          AggregatedListRegionCommitmentsRequest const& request);
+          AggregatedListRegionCommitmentsRequest request);
 
   virtual google::cloud::Idempotency GetCommitment(
       google::cloud::cpp::compute::region_commitments::v1::

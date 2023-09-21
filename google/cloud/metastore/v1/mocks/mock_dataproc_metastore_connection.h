@@ -47,7 +47,8 @@ class MockDataprocMetastoreConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::metastore::v1::Service>, ListServices,
+  MOCK_METHOD((StreamRange<google::cloud::metastore::v1::Service>),
+              ListServices,
               (google::cloud::metastore::v1::ListServicesRequest request),
               (override));
 
@@ -72,7 +73,7 @@ class MockDataprocMetastoreConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::metastore::v1::MetadataImport>,
+      (StreamRange<google::cloud::metastore::v1::MetadataImport>),
       ListMetadataImports,
       (google::cloud::metastore::v1::ListMetadataImportsRequest request),
       (override));
@@ -105,7 +106,7 @@ class MockDataprocMetastoreConnection
       (google::cloud::metastore::v1::RestoreServiceRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::metastore::v1::Backup>, ListBackups,
+  MOCK_METHOD((StreamRange<google::cloud::metastore::v1::Backup>), ListBackups,
               (google::cloud::metastore::v1::ListBackupsRequest request),
               (override));
 

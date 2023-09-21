@@ -38,7 +38,7 @@ TargetHttpsProxiesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 TargetHttpsProxiesConnectionIdempotencyPolicy::AggregatedListTargetHttpsProxies(
     google::cloud::cpp::compute::target_https_proxies::v1::
-        AggregatedListTargetHttpsProxiesRequest const&) {
+        AggregatedListTargetHttpsProxiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

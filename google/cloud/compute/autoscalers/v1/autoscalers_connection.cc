@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutoscalersConnection::~AutoscalersConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AutoscalersScopedList>>
 AutoscalersConnection::AggregatedListAutoscalers(
     google::cloud::cpp::compute::autoscalers::v1::
-        AggregatedListAutoscalersRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListAutoscalersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::AutoscalersScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -32,7 +32,8 @@ SubnetworksClient::SubnetworksClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 SubnetworksClient::~SubnetworksClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
 SubnetworksClient::AggregatedListSubnetworks(std::string const& project,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ SubnetworksClient::AggregatedListSubnetworks(std::string const& project,
   return connection_->AggregatedListSubnetworks(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
 SubnetworksClient::AggregatedListSubnetworks(
     google::cloud::cpp::compute::subnetworks::v1::
-        AggregatedListSubnetworksRequest const& request,
+        AggregatedListSubnetworksRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListSubnetworks(request);
+  return connection_->AggregatedListSubnetworks(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

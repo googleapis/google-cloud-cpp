@@ -51,10 +51,11 @@ class ReservationsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>
   AggregatedListReservations(
       google::cloud::cpp::compute::reservations::v1::
-          AggregatedListReservationsRequest const& request) override;
+          AggregatedListReservationsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteReservation(google::cloud::cpp::compute::reservations::v1::

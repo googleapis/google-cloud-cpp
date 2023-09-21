@@ -32,7 +32,8 @@ HealthChecksClient::HealthChecksClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 HealthChecksClient::~HealthChecksClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::HealthChecksScopedList>>
 HealthChecksClient::AggregatedListHealthChecks(std::string const& project,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ HealthChecksClient::AggregatedListHealthChecks(std::string const& project,
   return connection_->AggregatedListHealthChecks(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::HealthChecksScopedList>>
 HealthChecksClient::AggregatedListHealthChecks(
     google::cloud::cpp::compute::health_checks::v1::
-        AggregatedListHealthChecksRequest const& request,
+        AggregatedListHealthChecksRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListHealthChecks(request);
+  return connection_->AggregatedListHealthChecks(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

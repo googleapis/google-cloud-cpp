@@ -37,7 +37,7 @@ AcceleratorTypesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 AcceleratorTypesConnectionIdempotencyPolicy::AggregatedListAcceleratorTypes(
     google::cloud::cpp::compute::accelerator_types::v1::
-        AggregatedListAcceleratorTypesRequest const&) {
+        AggregatedListAcceleratorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

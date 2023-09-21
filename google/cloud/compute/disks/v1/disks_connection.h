@@ -186,9 +186,10 @@ class DisksConnection {
       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
           request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
+  virtual StreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>
   AggregatedListDisks(
-      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

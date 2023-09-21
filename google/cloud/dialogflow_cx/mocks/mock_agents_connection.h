@@ -46,7 +46,8 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Agent>, ListAgents,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Agent>),
+              ListAgents,
               (google::cloud::dialogflow::cx::v3::ListAgentsRequest request),
               (override));
 

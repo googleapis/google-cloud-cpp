@@ -68,7 +68,7 @@ class MockPublicAdvertisedPrefixesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>,
+      (StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>),
       ListPublicAdvertisedPrefixes,
       (google::cloud::cpp::compute::public_advertised_prefixes::v1::
            ListPublicAdvertisedPrefixesRequest request),

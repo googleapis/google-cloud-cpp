@@ -47,7 +47,7 @@ class MockCaseAttachmentServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::support::v2::Attachment>,
+  MOCK_METHOD((StreamRange<google::cloud::support::v2::Attachment>),
               ListAttachments,
               (google::cloud::support::v2::ListAttachmentsRequest request),
               (override));

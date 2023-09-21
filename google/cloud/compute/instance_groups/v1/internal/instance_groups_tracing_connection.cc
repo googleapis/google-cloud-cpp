@@ -42,16 +42,19 @@ InstanceGroupsTracingConnection::AddInstances(
   return internal::EndSpan(std::move(span), child_->AddInstances(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
 InstanceGroupsTracingConnection::AggregatedListInstanceGroups(
     google::cloud::cpp::compute::instance_groups::v1::
-        AggregatedListInstanceGroupsRequest const& request) {
+        AggregatedListInstanceGroupsRequest request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::"
       "AggregatedListInstanceGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListInstanceGroups(request));
+  auto sr = child_->AggregatedListInstanceGroups(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -43,14 +43,18 @@ DisksTracingConnection::AddResourcePolicies(
                            child_->AddResourcePolicies(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>
 DisksTracingConnection::AggregatedListDisks(
-    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest
         request) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::AggregatedListDisks");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListDisks(request));
+  auto sr = child_->AggregatedListDisks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

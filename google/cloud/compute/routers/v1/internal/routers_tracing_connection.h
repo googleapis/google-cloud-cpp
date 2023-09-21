@@ -39,10 +39,11 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::RoutersScopedList>>
   AggregatedListRouters(
-      google::cloud::cpp::compute::routers::v1::
-          AggregatedListRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&

@@ -54,10 +54,11 @@ class MockInstanceGroupsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              InstanceGroupsScopedList>>),
       AggregatedListInstanceGroups,
       (google::cloud::cpp::compute::instance_groups::v1::
-           AggregatedListInstanceGroupsRequest const& request),
+           AggregatedListInstanceGroupsRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -78,14 +79,14 @@ class MockInstanceGroupsConnection
                    InsertInstanceGroupRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>),
               ListInstanceGroups,
               (google::cloud::cpp::compute::instance_groups::v1::
                    ListInstanceGroupsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>,
+      (StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>),
       ListInstances,
       (google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
            request),

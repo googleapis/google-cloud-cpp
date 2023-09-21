@@ -42,10 +42,14 @@ DisksConnection::AddResourcePolicies(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>
 DisksConnection::AggregatedListDisks(
-    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    google::cloud::cpp::compute::disks::v1::
+        AggregatedListDisksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::DisksScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

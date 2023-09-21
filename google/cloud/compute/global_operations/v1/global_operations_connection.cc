@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalOperationsConnection::~GlobalOperationsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::OperationsScopedList>>
 GlobalOperationsConnection::AggregatedListGlobalOperations(
     google::cloud::cpp::compute::global_operations::v1::
-        AggregatedListGlobalOperationsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListGlobalOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::OperationsScopedList>>>();
 }
 
 Status GlobalOperationsConnection::DeleteOperation(

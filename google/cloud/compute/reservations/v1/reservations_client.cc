@@ -32,7 +32,8 @@ ReservationsClient::ReservationsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 ReservationsClient::~ReservationsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
 ReservationsClient::AggregatedListReservations(std::string const& project,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ ReservationsClient::AggregatedListReservations(std::string const& project,
   return connection_->AggregatedListReservations(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
 ReservationsClient::AggregatedListReservations(
     google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest const& request,
+        AggregatedListReservationsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListReservations(request);
+  return connection_->AggregatedListReservations(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

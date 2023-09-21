@@ -51,7 +51,7 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (google::cloud::speech::v2::CreateRecognizerRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::speech::v2::Recognizer>,
+  MOCK_METHOD((StreamRange<google::cloud::speech::v2::Recognizer>),
               ListRecognizers,
               (google::cloud::speech::v2::ListRecognizersRequest request),
               (override));
@@ -105,7 +105,7 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (google::cloud::speech::v2::CreateCustomClassRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::speech::v2::CustomClass>,
+  MOCK_METHOD((StreamRange<google::cloud::speech::v2::CustomClass>),
               ListCustomClasses,
               (google::cloud::speech::v2::ListCustomClassesRequest request),
               (override));
@@ -137,7 +137,8 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (google::cloud::speech::v2::CreatePhraseSetRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::speech::v2::PhraseSet>, ListPhraseSets,
+  MOCK_METHOD((StreamRange<google::cloud::speech::v2::PhraseSet>),
+              ListPhraseSets,
               (google::cloud::speech::v2::ListPhraseSetsRequest request),
               (override));
 

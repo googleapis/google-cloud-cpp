@@ -33,16 +33,20 @@ PacketMirroringsTracingConnection::PacketMirroringsTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
 PacketMirroringsTracingConnection::AggregatedListPacketMirrorings(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        AggregatedListPacketMirroringsRequest const& request) {
+        AggregatedListPacketMirroringsRequest request) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "AggregatedListPacketMirrorings");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListPacketMirrorings(request));
+  auto sr = child_->AggregatedListPacketMirrorings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

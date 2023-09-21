@@ -52,7 +52,7 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkebackup::v1::BackupPlan>,
+  MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::BackupPlan>),
               ListBackupPlans,
               (google::cloud::gkebackup::v1::ListBackupPlansRequest request),
               (override));
@@ -79,7 +79,7 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::CreateBackupRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkebackup::v1::Backup>, ListBackups,
+  MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::Backup>), ListBackups,
               (google::cloud::gkebackup::v1::ListBackupsRequest request),
               (override));
 
@@ -98,7 +98,7 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::DeleteBackupRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkebackup::v1::VolumeBackup>,
+  MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::VolumeBackup>),
               ListVolumeBackups,
               (google::cloud::gkebackup::v1::ListVolumeBackupsRequest request),
               (override));
@@ -114,7 +114,7 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkebackup::v1::RestorePlan>,
+  MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::RestorePlan>),
               ListRestorePlans,
               (google::cloud::gkebackup::v1::ListRestorePlansRequest request),
               (override));
@@ -141,7 +141,8 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::CreateRestoreRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkebackup::v1::Restore>, ListRestores,
+  MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::Restore>),
+              ListRestores,
               (google::cloud::gkebackup::v1::ListRestoresRequest request),
               (override));
 
@@ -160,7 +161,7 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::DeleteRestoreRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::gkebackup::v1::VolumeRestore>,
+  MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::VolumeRestore>),
               ListVolumeRestores,
               (google::cloud::gkebackup::v1::ListVolumeRestoresRequest request),
               (override));

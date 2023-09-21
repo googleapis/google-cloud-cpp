@@ -51,7 +51,7 @@ class MockSnoozeServiceConnection
               (google::monitoring::v3::CreateSnoozeRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::Snooze>, ListSnoozes,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::Snooze>), ListSnoozes,
               (google::monitoring::v3::ListSnoozesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::monitoring::v3::Snooze>, GetSnooze,

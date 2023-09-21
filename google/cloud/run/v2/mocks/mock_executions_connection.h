@@ -50,7 +50,7 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
               (google::cloud::run::v2::GetExecutionRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Execution>, ListExecutions,
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Execution>), ListExecutions,
               (google::cloud::run::v2::ListExecutionsRequest request),
               (override));
 

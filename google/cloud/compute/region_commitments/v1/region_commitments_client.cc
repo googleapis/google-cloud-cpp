@@ -32,7 +32,8 @@ RegionCommitmentsClient::RegionCommitmentsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionCommitmentsClient::~RegionCommitmentsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
 RegionCommitmentsClient::AggregatedListRegionCommitments(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ RegionCommitmentsClient::AggregatedListRegionCommitments(
   return connection_->AggregatedListRegionCommitments(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
 RegionCommitmentsClient::AggregatedListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest const& request,
+        AggregatedListRegionCommitmentsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListRegionCommitments(request);
+  return connection_->AggregatedListRegionCommitments(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>

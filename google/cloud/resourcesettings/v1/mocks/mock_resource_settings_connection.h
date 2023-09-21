@@ -48,7 +48,7 @@ class MockResourceSettingsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcesettings::v1::Setting>, ListSettings,
+      (StreamRange<google::cloud::resourcesettings::v1::Setting>), ListSettings,
       (google::cloud::resourcesettings::v1::ListSettingsRequest request),
       (override));
 

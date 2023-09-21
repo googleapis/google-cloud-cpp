@@ -37,7 +37,7 @@ TargetInstancesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 TargetInstancesConnectionIdempotencyPolicy::AggregatedListTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
-        AggregatedListTargetInstancesRequest const&) {
+        AggregatedListTargetInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

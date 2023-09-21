@@ -32,7 +32,8 @@ TargetInstancesClient::TargetInstancesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 TargetInstancesClient::~TargetInstancesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
 TargetInstancesClient::AggregatedListTargetInstances(std::string const& project,
                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ TargetInstancesClient::AggregatedListTargetInstances(std::string const& project,
   return connection_->AggregatedListTargetInstances(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
 TargetInstancesClient::AggregatedListTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
-        AggregatedListTargetInstancesRequest const& request,
+        AggregatedListTargetInstancesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListTargetInstances(request);
+  return connection_->AggregatedListTargetInstances(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -68,7 +68,7 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>,
+      (StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>),
       ListScanConfigs,
       (google::cloud::websecurityscanner::v1::ListScanConfigsRequest request),
       (override));
@@ -92,7 +92,8 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::websecurityscanner::v1::ScanRun>, ListScanRuns,
+      (StreamRange<google::cloud::websecurityscanner::v1::ScanRun>),
+      ListScanRuns,
       (google::cloud::websecurityscanner::v1::ListScanRunsRequest request),
       (override));
 
@@ -103,7 +104,7 @@ class MockWebSecurityScannerConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>,
+      (StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>),
       ListCrawledUrls,
       (google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request),
       (override));
@@ -114,7 +115,8 @@ class MockWebSecurityScannerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::websecurityscanner::v1::Finding>, ListFindings,
+      (StreamRange<google::cloud::websecurityscanner::v1::Finding>),
+      ListFindings,
       (google::cloud::websecurityscanner::v1::ListFindingsRequest request),
       (override));
 

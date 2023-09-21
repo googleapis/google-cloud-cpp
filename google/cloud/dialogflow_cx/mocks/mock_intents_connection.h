@@ -46,7 +46,7 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Intent>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Intent>),
               ListIntents,
               (google::cloud::dialogflow::cx::v3::ListIntentsRequest request),
               (override));

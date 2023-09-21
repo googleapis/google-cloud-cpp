@@ -32,7 +32,8 @@ NodeTypesClient::NodeTypesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 NodeTypesClient::~NodeTypesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
 NodeTypesClient::AggregatedListNodeTypes(std::string const& project,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ NodeTypesClient::AggregatedListNodeTypes(std::string const& project,
   return connection_->AggregatedListNodeTypes(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
 NodeTypesClient::AggregatedListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::
-        AggregatedListNodeTypesRequest const& request,
+    google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListNodeTypes(request);
+  return connection_->AggregatedListNodeTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>

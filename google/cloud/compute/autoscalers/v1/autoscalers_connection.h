@@ -184,10 +184,10 @@ class AutoscalersConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-  AggregatedListAutoscalers(
-      google::cloud::cpp::compute::autoscalers::v1::
-          AggregatedListAutoscalersRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AutoscalersScopedList>>
+  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                                AggregatedListAutoscalersRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAutoscaler(google::cloud::cpp::compute::autoscalers::v1::

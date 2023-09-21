@@ -48,7 +48,7 @@ class MockCertificateManagerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::certificatemanager::v1::Certificate>,
+      (StreamRange<google::cloud::certificatemanager::v1::Certificate>),
       ListCertificates,
       (google::cloud::certificatemanager::v1::ListCertificatesRequest request),
       (override));
@@ -83,7 +83,7 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::certificatemanager::v1::CertificateMap>,
+      (StreamRange<google::cloud::certificatemanager::v1::CertificateMap>),
       ListCertificateMaps,
       (google::cloud::certificatemanager::v1::ListCertificateMapsRequest
            request),
@@ -119,7 +119,7 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>,
+      (StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>),
       ListCertificateMapEntries,
       (google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
            request),
@@ -157,7 +157,7 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>,
+      (StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>),
       ListDnsAuthorizations,
       (google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest
            request),
@@ -193,8 +193,8 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::certificatemanager::v1::CertificateIssuanceConfig>,
+      (StreamRange<
+          google::cloud::certificatemanager::v1::CertificateIssuanceConfig>),
       ListCertificateIssuanceConfigs,
       (google::cloud::certificatemanager::v1::
            ListCertificateIssuanceConfigsRequest request),

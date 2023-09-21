@@ -41,20 +41,43 @@ SubnetworksRestConnectionImpl::SubnetworksRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       SubnetworksConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
 SubnetworksRestConnectionImpl::AggregatedListSubnetworks(
     google::cloud::cpp::compute::subnetworks::v1::
-        AggregatedListSubnetworksRequest const& request) {
+        AggregatedListSubnetworksRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListSubnetworks(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::
-                 AggregatedListSubnetworksRequest const& request) {
-        return stub_->AggregatedListSubnetworks(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListSubnetworks(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::subnetworks::v1::
+              AggregatedListSubnetworksRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::subnetworks::v1::
+                       AggregatedListSubnetworksRequest const& request) {
+              return stub->AggregatedListSubnetworks(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::SubnetworkAggregatedList r) {
+        std::vector<
+            std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

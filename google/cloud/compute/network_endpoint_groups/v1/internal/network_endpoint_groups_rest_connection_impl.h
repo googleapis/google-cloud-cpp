@@ -54,10 +54,11 @@ class NetworkEndpointGroupsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         NetworkEndpointGroupsScopedList>>
   AggregatedListNetworkEndpointGroups(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          AggregatedListNetworkEndpointGroupsRequest const& request) override;
+          AggregatedListNetworkEndpointGroupsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachNetworkEndpoints(

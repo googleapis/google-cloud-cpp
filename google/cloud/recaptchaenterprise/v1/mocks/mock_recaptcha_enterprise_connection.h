@@ -67,7 +67,7 @@ class MockRecaptchaEnterpriseServiceConnection
       (google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::recaptchaenterprise::v1::Key>,
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::Key>),
               ListKeys,
               (google::cloud::recaptchaenterprise::v1::ListKeysRequest request),
               (override));
@@ -106,21 +106,22 @@ class MockRecaptchaEnterpriseServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>,
+      (StreamRange<
+          google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>),
       ListRelatedAccountGroups,
       (google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::recaptchaenterprise::v1::
-                              RelatedAccountGroupMembership>,
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::
+                               RelatedAccountGroupMembership>),
               ListRelatedAccountGroupMemberships,
               (google::cloud::recaptchaenterprise::v1::
                    ListRelatedAccountGroupMembershipsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::recaptchaenterprise::v1::
-                              RelatedAccountGroupMembership>,
+  MOCK_METHOD((StreamRange<google::cloud::recaptchaenterprise::v1::
+                               RelatedAccountGroupMembership>),
               SearchRelatedAccountGroupMemberships,
               (google::cloud::recaptchaenterprise::v1::
                    SearchRelatedAccountGroupMembershipsRequest request),

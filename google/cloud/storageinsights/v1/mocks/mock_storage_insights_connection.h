@@ -48,7 +48,7 @@ class MockStorageInsightsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::storageinsights::v1::ReportConfig>,
+      (StreamRange<google::cloud::storageinsights::v1::ReportConfig>),
       ListReportConfigs,
       (google::cloud::storageinsights::v1::ListReportConfigsRequest request),
       (override));
@@ -80,7 +80,7 @@ class MockStorageInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::storageinsights::v1::ReportDetail>,
+      (StreamRange<google::cloud::storageinsights::v1::ReportDetail>),
       ListReportDetails,
       (google::cloud::storageinsights::v1::ListReportDetailsRequest request),
       (override));

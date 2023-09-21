@@ -193,9 +193,11 @@ class InstancesConnection {
   AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
                           AddResourcePoliciesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
-  AggregatedListInstances(google::cloud::cpp::compute::instances::v1::
-                              AggregatedListInstancesRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>
+  AggregatedListInstances(
+      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachDisk(

@@ -73,7 +73,7 @@ class MockSnapshotsConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Snapshot>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Snapshot>),
               ListSnapshots,
               (google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest
                    request),

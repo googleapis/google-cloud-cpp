@@ -53,7 +53,8 @@ class MockDocumentServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::discoveryengine::v1::Document>, ListDocuments,
+      (StreamRange<google::cloud::discoveryengine::v1::Document>),
+      ListDocuments,
       (google::cloud::discoveryengine::v1::ListDocumentsRequest request),
       (override));
 

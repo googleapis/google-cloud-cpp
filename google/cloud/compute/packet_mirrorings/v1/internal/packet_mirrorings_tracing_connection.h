@@ -41,10 +41,11 @@ class PacketMirroringsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
   AggregatedListPacketMirrorings(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          AggregatedListPacketMirroringsRequest const& request) override;
+          AggregatedListPacketMirroringsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePacketMirroring(

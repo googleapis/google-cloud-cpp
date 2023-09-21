@@ -55,7 +55,7 @@ class MockWorkstationsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::workstations::v1::WorkstationCluster>,
+      (StreamRange<google::cloud::workstations::v1::WorkstationCluster>),
       ListWorkstationClusters,
       (google::cloud::workstations::v1::ListWorkstationClustersRequest request),
       (override));
@@ -89,13 +89,13 @@ class MockWorkstationsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::workstations::v1::WorkstationConfig>,
+      (StreamRange<google::cloud::workstations::v1::WorkstationConfig>),
       ListWorkstationConfigs,
       (google::cloud::workstations::v1::ListWorkstationConfigsRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::workstations::v1::WorkstationConfig>,
+      (StreamRange<google::cloud::workstations::v1::WorkstationConfig>),
       ListUsableWorkstationConfigs,
       (google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest
            request),
@@ -128,13 +128,13 @@ class MockWorkstationsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::workstations::v1::Workstation>,
+      (StreamRange<google::cloud::workstations::v1::Workstation>),
       ListWorkstations,
       (google::cloud::workstations::v1::ListWorkstationsRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::workstations::v1::Workstation>,
+      (StreamRange<google::cloud::workstations::v1::Workstation>),
       ListUsableWorkstations,
       (google::cloud::workstations::v1::ListUsableWorkstationsRequest request),
       (override));

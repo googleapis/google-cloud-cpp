@@ -33,16 +33,19 @@ SslCertificatesTracingConnection::SslCertificatesTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
 SslCertificatesTracingConnection::AggregatedListSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest const& request) {
+        AggregatedListSslCertificatesRequest request) {
   auto span = internal::MakeSpan(
       "compute_ssl_certificates_v1::SslCertificatesConnection::"
       "AggregatedListSslCertificates");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListSslCertificates(request));
+  auto sr = child_->AggregatedListSslCertificates(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

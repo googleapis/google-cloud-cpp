@@ -46,7 +46,7 @@ class MockConfigConnection : public config_v1::ConfigConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::config::v1::Deployment>,
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::Deployment>),
               ListDeployments,
               (google::cloud::config::v1::ListDeploymentsRequest request),
               (override));
@@ -70,7 +70,7 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       (google::cloud::config::v1::DeleteDeploymentRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::config::v1::Revision>, ListRevisions,
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::Revision>), ListRevisions,
               (google::cloud::config::v1::ListRevisionsRequest request),
               (override));
 
@@ -82,7 +82,7 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::GetResourceRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::config::v1::Resource>, ListResources,
+  MOCK_METHOD((StreamRange<google::cloud::config::v1::Resource>), ListResources,
               (google::cloud::config::v1::ListResourcesRequest request),
               (override));
 

@@ -48,8 +48,8 @@ class MockSearchServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::discoveryengine::v1::SearchResponse::SearchResult>,
+      (StreamRange<
+          google::cloud::discoveryengine::v1::SearchResponse::SearchResult>),
       Search, (google::cloud::discoveryengine::v1::SearchRequest request),
       (override));
 };

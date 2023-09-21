@@ -47,7 +47,7 @@ class MockConfigServiceV2Connection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::LogBucket>, ListBuckets,
+  MOCK_METHOD((StreamRange<google::logging::v2::LogBucket>), ListBuckets,
               (google::logging::v2::ListBucketsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>, GetBucket,
@@ -80,7 +80,7 @@ class MockConfigServiceV2Connection
               (google::logging::v2::UndeleteBucketRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::LogView>, ListViews,
+  MOCK_METHOD((StreamRange<google::logging::v2::LogView>), ListViews,
               (google::logging::v2::ListViewsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::LogView>, GetView,
@@ -98,7 +98,7 @@ class MockConfigServiceV2Connection
               (google::logging::v2::DeleteViewRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::LogSink>, ListSinks,
+  MOCK_METHOD((StreamRange<google::logging::v2::LogSink>), ListSinks,
               (google::logging::v2::ListSinksRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::LogSink>, GetSink,
@@ -124,13 +124,13 @@ class MockConfigServiceV2Connection
               (google::logging::v2::DeleteLinkRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::Link>, ListLinks,
+  MOCK_METHOD((StreamRange<google::logging::v2::Link>), ListLinks,
               (google::logging::v2::ListLinksRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::Link>, GetLink,
               (google::logging::v2::GetLinkRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::LogExclusion>, ListExclusions,
+  MOCK_METHOD((StreamRange<google::logging::v2::LogExclusion>), ListExclusions,
               (google::logging::v2::ListExclusionsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::LogExclusion>, GetExclusion,

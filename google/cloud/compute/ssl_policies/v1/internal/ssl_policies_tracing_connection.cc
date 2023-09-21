@@ -32,15 +32,19 @@ SslPoliciesTracingConnection::SslPoliciesTracingConnection(
     std::shared_ptr<compute_ssl_policies_v1::SslPoliciesConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
 SslPoliciesTracingConnection::AggregatedListSslPolicies(
     google::cloud::cpp::compute::ssl_policies::v1::
-        AggregatedListSslPoliciesRequest const& request) {
+        AggregatedListSslPoliciesRequest request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::"
       "AggregatedListSslPolicies");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListSslPolicies(request));
+  auto sr = child_->AggregatedListSslPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

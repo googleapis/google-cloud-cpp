@@ -80,7 +80,7 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
       (google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::talent::v4::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Job>), ListJobs,
               (google::cloud::talent::v4::ListJobsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,

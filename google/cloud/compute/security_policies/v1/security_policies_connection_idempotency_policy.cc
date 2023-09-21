@@ -42,7 +42,7 @@ Idempotency SecurityPoliciesConnectionIdempotencyPolicy::AddRule(
 Idempotency
 SecurityPoliciesConnectionIdempotencyPolicy::AggregatedListSecurityPolicies(
     google::cloud::cpp::compute::security_policies::v1::
-        AggregatedListSecurityPoliciesRequest const&) {
+        AggregatedListSecurityPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

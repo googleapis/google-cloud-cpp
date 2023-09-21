@@ -51,7 +51,7 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (google::cloud::vision::v1::CreateProductSetRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vision::v1::ProductSet>,
+  MOCK_METHOD((StreamRange<google::cloud::vision::v1::ProductSet>),
               ListProductSets,
               (google::cloud::vision::v1::ListProductSetsRequest request),
               (override));
@@ -74,7 +74,7 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
               (google::cloud::vision::v1::CreateProductRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vision::v1::Product>, ListProducts,
+  MOCK_METHOD((StreamRange<google::cloud::vision::v1::Product>), ListProducts,
               (google::cloud::vision::v1::ListProductsRequest request),
               (override));
 
@@ -100,7 +100,7 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (google::cloud::vision::v1::DeleteReferenceImageRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vision::v1::ReferenceImage>,
+  MOCK_METHOD((StreamRange<google::cloud::vision::v1::ReferenceImage>),
               ListReferenceImages,
               (google::cloud::vision::v1::ListReferenceImagesRequest request),
               (override));
@@ -122,7 +122,8 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vision::v1::Product>, ListProductsInProductSet,
+      (StreamRange<google::cloud::vision::v1::Product>),
+      ListProductsInProductSet,
       (google::cloud::vision::v1::ListProductsInProductSetRequest request),
       (override));
 

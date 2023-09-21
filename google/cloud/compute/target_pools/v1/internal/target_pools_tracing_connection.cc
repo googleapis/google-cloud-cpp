@@ -52,15 +52,19 @@ TargetPoolsTracingConnection::AddInstance(
   return internal::EndSpan(std::move(span), child_->AddInstance(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
 TargetPoolsTracingConnection::AggregatedListTargetPools(
     google::cloud::cpp::compute::target_pools::v1::
-        AggregatedListTargetPoolsRequest const& request) {
+        AggregatedListTargetPoolsRequest request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::"
       "AggregatedListTargetPools");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListTargetPools(request));
+  auto sr = child_->AggregatedListTargetPools(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

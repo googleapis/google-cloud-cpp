@@ -46,7 +46,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::TestCase>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::TestCase>),
               ListTestCases,
               (google::cloud::dialogflow::cx::v3::ListTestCasesRequest request),
               (override));
@@ -110,7 +110,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>),
       ListTestCaseResults,
       (google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request),
       (override));

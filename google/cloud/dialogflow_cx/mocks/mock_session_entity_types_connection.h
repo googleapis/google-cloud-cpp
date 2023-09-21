@@ -47,11 +47,12 @@ class MockSessionEntityTypesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>,
-              ListSessionEntityTypes,
-              (google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>),
+      ListSessionEntityTypes,
+      (google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>,

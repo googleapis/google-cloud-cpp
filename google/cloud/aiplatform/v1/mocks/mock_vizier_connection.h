@@ -56,7 +56,7 @@ class MockVizierServiceConnection
               (google::cloud::aiplatform::v1::GetStudyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Study>, ListStudies,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Study>), ListStudies,
               (google::cloud::aiplatform::v1::ListStudiesRequest request),
               (override));
 
@@ -85,7 +85,7 @@ class MockVizierServiceConnection
               (google::cloud::aiplatform::v1::GetTrialRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Trial>, ListTrials,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Trial>), ListTrials,
               (google::cloud::aiplatform::v1::ListTrialsRequest request),
               (override));
 

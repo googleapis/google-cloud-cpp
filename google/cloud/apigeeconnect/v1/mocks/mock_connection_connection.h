@@ -48,7 +48,7 @@ class MockConnectionServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::apigeeconnect::v1::Connection>,
+      (StreamRange<google::cloud::apigeeconnect::v1::Connection>),
       ListConnections,
       (google::cloud::apigeeconnect::v1::ListConnectionsRequest request),
       (override));

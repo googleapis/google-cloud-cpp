@@ -49,11 +49,12 @@ class MockInterconnectAttachmentsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
-                           InterconnectAttachmentAggregatedList>,
+  MOCK_METHOD((StreamRange<std::pair<std::string,
+                                     google::cloud::cpp::compute::v1::
+                                         InterconnectAttachmentsScopedList>>),
               AggregatedListInterconnectAttachments,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
-                   AggregatedListInterconnectAttachmentsRequest const& request),
+                   AggregatedListInterconnectAttachmentsRequest request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -75,7 +76,7 @@ class MockInterconnectAttachmentsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>,
+      (StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>),
       ListInterconnectAttachments,
       (google::cloud::cpp::compute::interconnect_attachments::v1::
            ListInterconnectAttachmentsRequest request),

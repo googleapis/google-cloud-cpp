@@ -58,7 +58,8 @@ NodeGroupsClient::AddNodes(
   return connection_->AddNodes(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
 NodeGroupsClient::AggregatedListNodeGroups(std::string const& project,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -68,13 +69,14 @@ NodeGroupsClient::AggregatedListNodeGroups(std::string const& project,
   return connection_->AggregatedListNodeGroups(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
 NodeGroupsClient::AggregatedListNodeGroups(
     google::cloud::cpp::compute::node_groups::v1::
-        AggregatedListNodeGroupsRequest const& request,
+        AggregatedListNodeGroupsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListNodeGroups(request);
+  return connection_->AggregatedListNodeGroups(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

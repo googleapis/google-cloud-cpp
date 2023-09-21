@@ -93,7 +93,7 @@ class MockTranslationServiceConnection
       (google::cloud::translation::v3::CreateGlossaryRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::translation::v3::Glossary>,
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::Glossary>),
               ListGlossaries,
               (google::cloud::translation::v3::ListGlossariesRequest request),
               (override));

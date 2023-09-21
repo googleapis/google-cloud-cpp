@@ -59,7 +59,7 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
       (google::cloud::dialogflow::v2::DeleteAgentRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Agent>, SearchAgents,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Agent>), SearchAgents,
               (google::cloud::dialogflow::v2::SearchAgentsRequest request),
               (override));
 

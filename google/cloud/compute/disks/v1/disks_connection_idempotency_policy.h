@@ -41,7 +41,7 @@ class DisksConnectionIdempotencyPolicy {
           request);
 
   virtual google::cloud::Idempotency AggregatedListDisks(
-      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest
           request);
 
   virtual google::cloud::Idempotency BulkInsert(

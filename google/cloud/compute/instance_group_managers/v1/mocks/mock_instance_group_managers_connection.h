@@ -56,11 +56,12 @@ class MockInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>,
+      (StreamRange<std::pair<
+           std::string,
+           google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>),
       AggregatedListInstanceGroupManagers,
       (google::cloud::cpp::compute::instance_group_managers::v1::
-           AggregatedListInstanceGroupManagersRequest const& request),
+           AggregatedListInstanceGroupManagersRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -106,14 +107,14 @@ class MockInstanceGroupManagersConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>,
+      (StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>),
       ListInstanceGroupManagers,
       (google::cloud::cpp::compute::instance_group_managers::v1::
            ListInstanceGroupManagersRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>,
+      (StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>),
       ListErrors,
       (google::cloud::cpp::compute::instance_group_managers::v1::
            ListErrorsRequest request),
@@ -126,7 +127,7 @@ class MockInstanceGroupManagersConnection
                    ListManagedInstancesRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>),
               ListPerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    ListPerInstanceConfigsRequest request),
