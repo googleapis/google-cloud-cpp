@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/async_reader.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -24,6 +25,7 @@ namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::StatusIs;
@@ -63,6 +65,29 @@ TEST(AsyncReader, Basic) {
   ASSERT_STATUS_OK(p);
   std::tie(payload, token) = *std::move(p);
   ASSERT_FALSE(token.valid());
+}
+
+TEST(AsyncReader, ErrorDuringRead) {
+  auto mock = std::make_unique<MockAsyncReaderConnection>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([] {
+        return make_ready_future(ReadResponse(ReadPayload("test-message-1")));
+      })
+      .WillOnce(
+          [] { return make_ready_future(ReadResponse(PermanentError())); });
+
+  ReadPayload payload;
+  auto token = storage_internal::MakeAsyncToken(mock.get());
+  AsyncReader reader(std::move(mock));
+
+  auto p = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(p);
+  std::tie(payload, token) = *std::move(p);
+  ASSERT_TRUE(token.valid());
+  EXPECT_THAT(payload.contents(), ElementsAre("test-message-1"));
+
+  p = reader.Read(std::move(token)).get();
+  EXPECT_THAT(p, StatusIs(PermanentError().code()));
 }
 
 TEST(AsyncReader, Discard) {
