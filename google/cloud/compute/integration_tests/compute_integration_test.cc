@@ -120,8 +120,7 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
 TEST_F(ComputeIntegrationTest, PaginatedMapField) {
   namespace disks = ::google::cloud::compute_disks_v1;
   auto client = disks::DisksClient(
-      google::cloud::ExperimentalTag{},
-      disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
+      disks::MakeDisksConnectionRest());
 
   auto disk_named = [](std::string const& name) {
     return Property(&google::cloud::cpp::compute::v1::Disk::name, Eq(name));
