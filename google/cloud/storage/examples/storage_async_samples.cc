@@ -55,7 +55,7 @@ void InsertObject(google::cloud::storage_experimental::AsyncClient& client,
      std::string object_name) {
     auto object =
         client.InsertObject(std::move(bucket_name), std::move(object_name),
-                            std::string("Hello World!"));
+                            std::string("Hello World!\n"));
     // Attach a callback, this is called when the upload completes.
     auto done = object.then([](auto f) {
       auto metadata = f.get();
@@ -164,11 +164,51 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient& client,
   //! [read-object]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
-  coro(client, argv.at(0), argv.at(1)).get();
+  auto const count = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "The object contains " << count << " lines\n";
 }
+
+void ReadObjectWithOptions(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [read-object-with-options]
+  namespace gcs = google::cloud::storage;
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro =
+      [](gcs_ex::AsyncClient& client, std::string bucket_name,
+         std::string object_name,
+         std::int64_t generation) -> google::cloud::future<std::uint64_t> {
+    auto [reader, token] = (co_await client.ReadObject(
+                                std::move(bucket_name), std::move(object_name),
+                                gcs::Generation(generation)))
+                               .value();
+    std::uint64_t count = 0;
+    while (token.valid()) {
+      auto [payload, t] = (co_await reader.Read(std::move(token))).value();
+      token = std::move(t);
+      for (auto const& buffer : payload.contents()) {
+        count += std::count(buffer.begin(), buffer.end(), '\n');
+      }
+    }
+    co_return count;
+  };
+  //! [read-object-with-options]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const count =
+      coro(client, argv.at(0), argv.at(1), std::stoll(argv.at(2))).get();
+  std::cout << "The object contains " << count << " lines\n";
+}
+
 #else
 void ReadObject(google::cloud::storage_experimental::AsyncClient&,
                 std::vector<std::string> const&) {
+  std::cerr
+      << "AsyncClient::ReadObjectStreaming() example requires coroutines\n";
+}
+
+void ReadObjectWithOptions(google::cloud::storage_experimental::AsyncClient&,
+                           std::vector<std::string> const&) {
   std::cerr
       << "AsyncClient::ReadObjectStreaming() example requires coroutines\n";
 }
@@ -275,6 +315,17 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running the ReadObject() example" << std::endl;
   ReadObject(client, {bucket_name, object_name});
 
+  std::cout << "Retrieving object metadata" << std::endl;
+  auto response = client.ReadObjectRange(bucket_name, object_name, 0, 1).get();
+  if (!response.status.ok()) throw std::move(response.status);
+
+  if (!response.object_metadata.has_value()) {
+    std::cout << "Running the ReadObjectWithOptions() example" << std::endl;
+    ReadObjectWithOptions(
+        client, {bucket_name, object_name,
+                 std::to_string(response.object_metadata->generation())});
+  }
+
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, object_name});
 
@@ -297,7 +348,8 @@ int main(int argc, char* argv[]) try {
     arg_names.insert(arg_names.begin(), "<object-name>");
     arg_names.insert(arg_names.begin(), "<bucket-name>");
     auto adapter = [=](std::vector<std::string> const& argv) {
-      if (argv.size() != 2 || (argv.size() == 2 && argv[0] == "--help")) {
+      if (argv.size() != arg_names.size() ||
+          (!argv.empty() && argv[0] == "--help")) {
         std::ostringstream os;
         os << name;
         for (auto const& a : arg_names) {
@@ -319,6 +371,8 @@ int main(int argc, char* argv[]) try {
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
       make_entry("insert-object-vector-vectors", {}, InsertObjectVectorVectors),
       make_entry("read-object", {}, ReadObject),
+      make_entry("read-object-with-options", {"<generation>"},
+                 ReadObjectWithOptions),
       make_entry("compose-object", {"<o1> <o2>"}, ComposeObject),
       make_entry("delete-object", {}, AsyncDeleteObject),
       {"auto", AutoRun},
