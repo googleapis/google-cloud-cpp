@@ -29,6 +29,7 @@ namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class AsyncReaderConnection;
 
 /**
  * The `*Connection` object for `AsyncClient`.
@@ -81,6 +82,10 @@ class AsyncConnection {
     /// per-connection options.
     Options options;
   };
+
+  /// Asynchronously create a stream to read object contents.
+  virtual future<StatusOr<std::unique_ptr<AsyncReaderConnection>>>
+  AsyncReadObject(ReadObjectParams p) = 0;
 
   /// Read a range from an object returning all the contents.
   virtual future<AsyncReadObjectRangeResponse> AsyncReadObjectRange(

@@ -34,6 +34,7 @@ namespace {
 
 using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::MockAsyncInsertStream;
+using ::google::cloud::storage::testing::MockAsyncObjectMediaStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
@@ -49,6 +50,9 @@ using AsyncWriteObjectStream =
     ::google::cloud::internal::AsyncStreamingWriteRpc<
         google::storage::v2::WriteObjectRequest,
         google::storage::v2::WriteObjectResponse>;
+
+using AsyncReadObjectStream = ::google::cloud::internal::AsyncStreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>;
 
 class AsyncConnectionImplTest : public ::testing::Test {
  protected:
@@ -78,18 +82,30 @@ std::shared_ptr<storage_experimental::AsyncConnection> MakeTestConnection(
                              DefaultOptionsGrpc(std::move(options)));
 }
 
-std::unique_ptr<AsyncWriteObjectStream> MakeErrorStream(
-    AsyncSequencer<bool>& sequencer, Status status) {
+std::unique_ptr<AsyncWriteObjectStream> MakeErrorWriteStream(
+    AsyncSequencer<bool>& sequencer, Status const& status) {
   auto stream = std::make_unique<MockAsyncInsertStream>();
   EXPECT_CALL(*stream, Start).WillOnce([&] {
     return sequencer.PushBack("Start");
   });
   EXPECT_CALL(*stream, Finish).WillOnce([&, status] {
-    return sequencer.PushBack("Finish").then([&status](auto) {
+    return sequencer.PushBack("Finish").then([status](auto) {
       return StatusOr<google::storage::v2::WriteObjectResponse>(status);
     });
   });
   return std::unique_ptr<AsyncWriteObjectStream>(std::move(stream));
+}
+
+std::unique_ptr<AsyncReadObjectStream> MakeErrorReadStream(
+    AsyncSequencer<bool>& sequencer, Status const& status) {
+  auto stream = std::make_unique<MockAsyncObjectMediaStream>();
+  EXPECT_CALL(*stream, Start).WillOnce([&] {
+    return sequencer.PushBack("Start");
+  });
+  EXPECT_CALL(*stream, Finish).WillOnce([&, status] {
+    return sequencer.PushBack("Finish").then([status](auto) { return status; });
+  });
+  return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
@@ -99,7 +115,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
       .WillOnce([&] {
         // Force at least one retry before verifying it works with successful
         // requests.
-        return MakeErrorStream(sequencer, TransientError());
+        return MakeErrorWriteStream(sequencer, TransientError());
       })
       .WillOnce([&](CompletionQueue const&,
                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -182,7 +198,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectPermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, AsyncWriteObject).WillOnce([&] {
-    return MakeErrorStream(sequencer, PermanentError());
+    return MakeErrorWriteStream(sequencer, PermanentError());
   });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
@@ -210,7 +226,7 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectTooManyTransients) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, AsyncWriteObject).Times(3).WillRepeatedly([&] {
-    return MakeErrorStream(sequencer, TransientError());
+    return MakeErrorWriteStream(sequencer, TransientError());
   });
 
   internal::AutomaticallyCreatedBackgroundThreads pool(1);
@@ -234,6 +250,163 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObjectTooManyTransients) {
 
   auto response = pending.get();
   ASSERT_THAT(response, StatusIs(TransientError().code()));
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
+  AsyncSequencer<bool> sequencer;
+  auto make_success_stream = [&](AsyncSequencer<bool>& sequencer) {
+    auto stream = std::make_unique<MockAsyncObjectMediaStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            google::storage::v2::ReadObjectResponse response;
+            response.mutable_metadata()->set_bucket(
+                "projects/_/buckets/test-bucket");
+            response.mutable_metadata()->set_name("test-object");
+            response.mutable_metadata()->set_size(4096);
+            response.mutable_content_range()->set_start(1024);
+            response.mutable_content_range()->set_end(2048);
+            return absl::make_optional(response);
+          });
+        })
+        .WillOnce([&] {
+          return sequencer.PushBack("Read").then([](auto) {
+            return absl::optional<google::storage::v2::ReadObjectResponse>();
+          });
+        });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
+    });
+    return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject)
+      .WillOnce(
+          [&] { return MakeErrorReadStream(sequencer, TransientError()); })
+      .WillOnce([&](CompletionQueue const&,
+                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                    std::shared_ptr<grpc::ClientContext> context,
+                    google::storage::v2::ReadObjectRequest const& request) {
+        // Verify at least one option is initialized with the correct
+        // values.
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(*context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.object(), "test-object");
+        return make_success_stream(sequencer);
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->AsyncReadObject(
+      {storage_experimental::ReadObjectRequest("test-bucket", "test-object")
+           .set_multiple_options(storage::Fields("field1,field2"),
+                                 storage::QuotaUser("test-quota-user")),
+       connection->options()});
+
+  // First simulate a failed `AsyncReadObject()`. This returns a streaming RPC
+  // that completes with `false` on `Start()` (i.e. never starts) and then
+  // completes with a transient error on `Finish()`.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  // Then simulate a successful `AsyncReadObject()`. This returns a streaming
+  // RPC that completes with `true` on `Start()`, then returns some data on the
+  // first `Read()`, then an unset optional on the second `Read()` (indicating
+  // 'end of the streaming RPC'), and then a success `Status` for `Finish()`.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+  auto response = data.get();
+  ASSERT_TRUE(
+      absl::holds_alternative<storage_experimental::ReadPayload>(response));
+
+  // The `Read()` and `Finish()` calls must happen before the second `Read()` is
+  // satisfied.
+  data = reader->Read();
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  response = data.get();
+  ASSERT_TRUE(absl::holds_alternative<Status>(response));
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncReadObjectPermanentError) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] {
+    return MakeErrorReadStream(sequencer, PermanentError());
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->AsyncReadObject(
+      {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
+       connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto r = pending.get();
+  EXPECT_THAT(r, StatusIs(PermanentError().code()));
+}
+
+TEST_F(AsyncConnectionImplTest, AsyncReadObjectTooManyTransients) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).Times(3).WillRepeatedly([&] {
+    return MakeErrorReadStream(sequencer, TransientError());
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto pending = connection->AsyncReadObject(
+      {storage_experimental::ReadObjectRequest("test-bucket", "test-object"),
+       connection->options()});
+
+  for (int i = 0; i != 3; ++i) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Start");
+    next.first.set_value(false);
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Finish");
+    next.first.set_value(true);
+  }
+
+  auto r = pending.get();
+  EXPECT_THAT(r, StatusIs(TransientError().code()));
 }
 
 TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
