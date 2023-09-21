@@ -76,6 +76,7 @@ Status StubFactoryRestGenerator::GenerateCc() {
       {vars("stub_factory_rest_header_path"), vars("logging_rest_header_path"),
        vars("metadata_rest_header_path"), vars("stub_rest_header_path"),
        "google/cloud/common_options.h", "google/cloud/credentials.h",
+       "google/cloud/internal/populate_common_options.h",
        "google/cloud/internal/rest_options.h", "google/cloud/rest_options.h",
        "google/cloud/internal/absl_str_cat_quiet.h",
        "google/cloud/internal/algorithm.h", "google/cloud/options.h",
@@ -91,7 +92,8 @@ std::shared_ptr<$stub_rest_class_name$>
 CreateDefault$stub_rest_class_name$(Options const& options) {
   Options opts = options;
   if (!opts.has<UnifiedCredentialsOption>()) {
-    opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials(options));
+    opts.set<UnifiedCredentialsOption>(
+        MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
   }
   if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
     opts.set<rest_internal::LongrunningEndpointOption>(

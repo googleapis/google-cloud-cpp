@@ -154,6 +154,22 @@ TEST(DefaultTracingComponents, WithValue) {
   EXPECT_THAT(actual, ElementsAre("a", "b", "c"));
 }
 
+TEST(MakeAuthOptions, WithoutTracing) {
+  auto options = Options{}.set<EndpointOption>("endpoint_option");
+  auto auth_options = MakeAuthOptions(options);
+  EXPECT_FALSE(auth_options.has<EndpointOption>());
+  EXPECT_FALSE(auth_options.get<experimental::OpenTelemetryTracingOption>());
+}
+
+TEST(MakeAuthOptions, WithTracing) {
+  auto options = Options{}
+                     .set<EndpointOption>("endpoint_option")
+                     .set<experimental::OpenTelemetryTracingOption>(true);
+  auto auth_options = MakeAuthOptions(options);
+  EXPECT_FALSE(auth_options.has<EndpointOption>());
+  EXPECT_TRUE(auth_options.get<experimental::OpenTelemetryTracingOption>());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

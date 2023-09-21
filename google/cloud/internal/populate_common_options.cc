@@ -79,6 +79,15 @@ std::set<std::string> DefaultTracingComponents() {
   return absl::StrSplit(*tracing, ',');
 }
 
+Options MakeAuthOptions(Options const& options) {
+  Options opts;
+  if (options.has<experimental::OpenTelemetryTracingOption>()) {
+    opts.set<experimental::OpenTelemetryTracingOption>(
+        options.get<experimental::OpenTelemetryTracingOption>());
+  }
+  return opts;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
