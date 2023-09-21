@@ -66,6 +66,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_storage_grpc_mocks",
+    testonly = True,
     hdrs = google_cloud_cpp_storage_grpc_mocks_hdrs,
     visibility = [
         ":__subpackages__",
