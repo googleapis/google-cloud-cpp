@@ -159,11 +159,6 @@ class ProjectBenchmark : public Benchmark {
 };
 
 /**
- * Time Conversion Utility function used by all benchmarks.
- */
-std::time_t ConvertSteadyClockToTime(std::chrono::steady_clock::time_point t);
-
-/**
  * Helper class to pretty print durations.
  */
 struct FormatDuration {
