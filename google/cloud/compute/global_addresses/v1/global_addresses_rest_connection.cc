@@ -33,7 +33,7 @@ namespace compute_global_addresses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GlobalAddressesConnection> MakeGlobalAddressesConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  GlobalAddressesPolicyOptionList>(options,

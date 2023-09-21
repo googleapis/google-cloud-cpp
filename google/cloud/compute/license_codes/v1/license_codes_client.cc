@@ -25,8 +25,7 @@ namespace compute_license_codes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicenseCodesClient::LicenseCodesClient(
-    ExperimentalTag, std::shared_ptr<LicenseCodesConnection> connection,
-    Options opts)
+    std::shared_ptr<LicenseCodesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

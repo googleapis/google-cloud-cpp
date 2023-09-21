@@ -26,7 +26,6 @@ namespace compute_region_target_tcp_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionTargetTcpProxiesClient::RegionTargetTcpProxiesClient(
-    ExperimentalTag,
     std::shared_ptr<RegionTargetTcpProxiesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(

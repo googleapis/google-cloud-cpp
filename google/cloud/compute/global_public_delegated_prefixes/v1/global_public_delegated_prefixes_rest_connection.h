@@ -58,8 +58,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `GlobalPublicDelegatedPrefixesConnection` created by this function.
  */
 std::shared_ptr<GlobalPublicDelegatedPrefixesConnection>
-MakeGlobalPublicDelegatedPrefixesConnectionRest(ExperimentalTag,
-                                                Options options = {});
+MakeGlobalPublicDelegatedPrefixesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_public_delegated_prefixes_v1

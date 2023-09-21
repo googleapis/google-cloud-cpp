@@ -33,7 +33,7 @@ namespace compute_node_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NodeTypesConnection> MakeNodeTypesConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  NodeTypesPolicyOptionList>(options, __func__);

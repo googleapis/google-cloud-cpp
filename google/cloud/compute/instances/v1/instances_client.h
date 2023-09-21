@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCES_V1_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/instances/v1/instances_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstancesClient {
  public:
-  explicit InstancesClient(ExperimentalTag,
-                           std::shared_ptr<InstancesConnection> connection,
+  explicit InstancesClient(std::shared_ptr<InstancesConnection> connection,
                            Options opts = {});
   ~InstancesClient();
 

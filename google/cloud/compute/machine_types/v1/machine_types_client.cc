@@ -25,8 +25,7 @@ namespace compute_machine_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineTypesClient::MachineTypesClient(
-    ExperimentalTag, std::shared_ptr<MachineTypesConnection> connection,
-    Options opts)
+    std::shared_ptr<MachineTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

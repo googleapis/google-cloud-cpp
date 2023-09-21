@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<InstanceGroupManagersConnection>
-MakeInstanceGroupManagersConnectionRest(ExperimentalTag, Options options = {});
+MakeInstanceGroupManagersConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_group_managers_v1

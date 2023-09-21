@@ -61,14 +61,14 @@ function (compute_service_library dir library)
     google_cloud_cpp_add_common_options(${library})
     set_target_properties(
         ${library}
-        PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-${alias}
+        PROPERTIES EXPORT_NAME google-cloud-cpp::${alias}
                    VERSION "${PROJECT_VERSION}"
                    SOVERSION "${PROJECT_VERSION_MAJOR}")
     target_compile_options(${library}
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     google_cloud_cpp_install_headers(${library} "include/google/cloud/compute")
 
-    add_library(google-cloud-cpp::experimental-${alias} ALIAS ${library})
+    add_library(google-cloud-cpp::${alias} ALIAS ${library})
 endfunction ()
 
 include(GoogleapisConfig)
@@ -215,10 +215,10 @@ foreach (dir IN LISTS service_dirs)
         google_cloud_cpp_compute_${short_dir}
         DEPS
         google-cloud-cpp::compute_${short_dir}_protos
-        google-cloud-cpp::experimental-compute_global_operations
-        google-cloud-cpp::experimental-compute_global_organization_operations
-        google-cloud-cpp::experimental-compute_region_operations
-        google-cloud-cpp::experimental-compute_zone_operations)
+        google-cloud-cpp::compute_global_operations
+        google-cloud-cpp::compute_global_organization_operations
+        google-cloud-cpp::compute_region_operations
+        google-cloud-cpp::compute_zone_operations)
     list(APPEND compute_lib_targets "google_cloud_cpp_compute_${short_dir}")
 endforeach ()
 
@@ -242,12 +242,11 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
                    INTERFACE ${mock_files})
     target_link_libraries(
         google_cloud_cpp_compute_${short_dir}_mocks
-        INTERFACE google-cloud-cpp::experimental-compute-${short_dir}
-                  GTest::gmock_main GTest::gmock GTest::gtest)
+        INTERFACE google-cloud-cpp::compute-${short_dir} GTest::gmock_main
+                  GTest::gmock GTest::gtest)
     set_target_properties(
         google_cloud_cpp_compute_${short_dir}_mocks
-        PROPERTIES EXPORT_NAME
-                   google-cloud-cpp::experimental-compute-${short_dir}_mocks)
+        PROPERTIES EXPORT_NAME google-cloud-cpp::compute-${short_dir}_mocks)
     target_include_directories(
         google_cloud_cpp_compute_${short_dir}_mocks
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -263,7 +262,7 @@ endforeach ()
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(compute_quickstart "quickstart/quickstart.cc")
     target_link_libraries(compute_quickstart
-                          PRIVATE google-cloud-cpp::experimental-compute_disks)
+                          PRIVATE google-cloud-cpp::compute_disks)
     google_cloud_cpp_add_common_options(compute_quickstart)
     add_test(
         NAME compute_quickstart

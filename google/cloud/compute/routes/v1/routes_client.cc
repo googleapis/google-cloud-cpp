@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_routes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RoutesClient::RoutesClient(ExperimentalTag,
-                           std::shared_ptr<RoutesConnection> connection,
+RoutesClient::RoutesClient(std::shared_ptr<RoutesConnection> connection,
                            Options opts)
     : connection_(std::move(connection)),
       options_(

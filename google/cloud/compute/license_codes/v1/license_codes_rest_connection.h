@@ -54,7 +54,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * this function.
  */
 std::shared_ptr<LicenseCodesConnection> MakeLicenseCodesConnectionRest(
-    ExperimentalTag, Options options = {});
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_license_codes_v1

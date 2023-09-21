@@ -25,8 +25,7 @@ namespace compute_reservations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationsClient::ReservationsClient(
-    ExperimentalTag, std::shared_ptr<ReservationsConnection> connection,
-    Options opts)
+    std::shared_ptr<ReservationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

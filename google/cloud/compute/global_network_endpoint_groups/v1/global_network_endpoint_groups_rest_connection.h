@@ -57,8 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `GlobalNetworkEndpointGroupsConnection` created by this function.
  */
 std::shared_ptr<GlobalNetworkEndpointGroupsConnection>
-MakeGlobalNetworkEndpointGroupsConnectionRest(ExperimentalTag,
-                                              Options options = {});
+MakeGlobalNetworkEndpointGroupsConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_network_endpoint_groups_v1

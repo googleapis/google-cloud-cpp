@@ -34,8 +34,7 @@ namespace compute_global_public_delegated_prefixes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GlobalPublicDelegatedPrefixesConnection>
-MakeGlobalPublicDelegatedPrefixesConnectionRest(ExperimentalTag,
-                                                Options options) {
+MakeGlobalPublicDelegatedPrefixesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  GlobalPublicDelegatedPrefixesPolicyOptionList>(

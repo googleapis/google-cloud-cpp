@@ -33,7 +33,7 @@ namespace compute_service_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ServiceAttachmentsConnection>
-MakeServiceAttachmentsConnectionRest(ExperimentalTag, Options options) {
+MakeServiceAttachmentsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  ServiceAttachmentsPolicyOptionList>(options,

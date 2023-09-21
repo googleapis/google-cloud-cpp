@@ -33,7 +33,7 @@ namespace compute_region_disk_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionDiskTypesConnection> MakeRegionDiskTypesConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionDiskTypesPolicyOptionList>(options,

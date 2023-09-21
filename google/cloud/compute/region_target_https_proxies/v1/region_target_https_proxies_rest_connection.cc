@@ -34,7 +34,7 @@ namespace compute_region_target_https_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionTargetHttpsProxiesConnection>
-MakeRegionTargetHttpsProxiesConnectionRest(ExperimentalTag, Options options) {
+MakeRegionTargetHttpsProxiesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionTargetHttpsProxiesPolicyOptionList>(

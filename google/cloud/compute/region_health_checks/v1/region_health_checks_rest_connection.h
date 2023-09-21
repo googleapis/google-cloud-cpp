@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<RegionHealthChecksConnection>
-MakeRegionHealthChecksConnectionRest(ExperimentalTag, Options options = {});
+MakeRegionHealthChecksConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_health_checks_v1

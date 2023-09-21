@@ -54,7 +54,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * this function.
  */
 std::shared_ptr<BackendBucketsConnection> MakeBackendBucketsConnectionRest(
-    ExperimentalTag, Options options = {});
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_backend_buckets_v1

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_CLIENT_H
 
 #include "google/cloud/compute/instance_templates/v1/instance_templates_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class InstanceTemplatesClient {
  public:
   explicit InstanceTemplatesClient(
-      ExperimentalTag, std::shared_ptr<InstanceTemplatesConnection> connection,
+      std::shared_ptr<InstanceTemplatesConnection> connection,
       Options opts = {});
   ~InstanceTemplatesClient();
 

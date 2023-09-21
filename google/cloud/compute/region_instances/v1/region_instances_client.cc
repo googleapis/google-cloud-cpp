@@ -25,8 +25,7 @@ namespace compute_region_instances_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionInstancesClient::RegionInstancesClient(
-    ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection,
-    Options opts)
+    std::shared_ptr<RegionInstancesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

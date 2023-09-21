@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_CLIENT_H
 
 #include "google/cloud/compute/reservations/v1/reservations_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReservationsClient {
  public:
   explicit ReservationsClient(
-      ExperimentalTag, std::shared_ptr<ReservationsConnection> connection,
-      Options opts = {});
+      std::shared_ptr<ReservationsConnection> connection, Options opts = {});
   ~ReservationsClient();
 
   ///@{

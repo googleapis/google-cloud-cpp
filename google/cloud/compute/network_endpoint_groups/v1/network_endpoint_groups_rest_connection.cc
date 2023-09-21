@@ -34,7 +34,7 @@ namespace compute_network_endpoint_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NetworkEndpointGroupsConnection>
-MakeNetworkEndpointGroupsConnectionRest(ExperimentalTag, Options options) {
+MakeNetworkEndpointGroupsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  NetworkEndpointGroupsPolicyOptionList>(

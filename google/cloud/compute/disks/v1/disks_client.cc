@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_disks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DisksClient::DisksClient(ExperimentalTag,
-                         std::shared_ptr<DisksConnection> connection,
+DisksClient::DisksClient(std::shared_ptr<DisksConnection> connection,
                          Options opts)
     : connection_(std::move(connection)),
       options_(

@@ -57,8 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * `RegionNotificationEndpointsConnection` created by this function.
  */
 std::shared_ptr<RegionNotificationEndpointsConnection>
-MakeRegionNotificationEndpointsConnectionRest(ExperimentalTag,
-                                              Options options = {});
+MakeRegionNotificationEndpointsConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_notification_endpoints_v1

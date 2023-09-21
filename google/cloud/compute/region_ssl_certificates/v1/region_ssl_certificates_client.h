@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_CERTIFICATES_V1_REGION_SSL_CERTIFICATES_CLIENT_H
 
 #include "google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionSslCertificatesClient {
  public:
   explicit RegionSslCertificatesClient(
-      ExperimentalTag,
       std::shared_ptr<RegionSslCertificatesConnection> connection,
       Options opts = {});
   ~RegionSslCertificatesClient();

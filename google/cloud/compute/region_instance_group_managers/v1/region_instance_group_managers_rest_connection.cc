@@ -34,8 +34,7 @@ namespace compute_region_instance_group_managers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionInstanceGroupManagersConnection>
-MakeRegionInstanceGroupManagersConnectionRest(ExperimentalTag,
-                                              Options options) {
+MakeRegionInstanceGroupManagersConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionInstanceGroupManagersPolicyOptionList>(

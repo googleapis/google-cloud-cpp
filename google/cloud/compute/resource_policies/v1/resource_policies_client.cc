@@ -25,8 +25,7 @@ namespace compute_resource_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ResourcePoliciesClient::ResourcePoliciesClient(
-    ExperimentalTag, std::shared_ptr<ResourcePoliciesConnection> connection,
-    Options opts)
+    std::shared_ptr<ResourcePoliciesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

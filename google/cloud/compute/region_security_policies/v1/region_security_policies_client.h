@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SECURITY_POLICIES_V1_REGION_SECURITY_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/region_security_policies/v1/region_security_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +64,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionSecurityPoliciesClient {
  public:
   explicit RegionSecurityPoliciesClient(
-      ExperimentalTag,
       std::shared_ptr<RegionSecurityPoliciesConnection> connection,
       Options opts = {});
   ~RegionSecurityPoliciesClient();

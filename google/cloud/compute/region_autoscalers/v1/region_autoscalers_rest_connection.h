@@ -56,7 +56,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * by this function.
  */
 std::shared_ptr<RegionAutoscalersConnection>
-MakeRegionAutoscalersConnectionRest(ExperimentalTag, Options options = {});
+MakeRegionAutoscalersConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_autoscalers_v1

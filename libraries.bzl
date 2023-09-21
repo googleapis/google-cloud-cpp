@@ -17,6 +17,39 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
+    "pubsublite",
+    "sql",
+]
+
+GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
+]
+
+GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
+    "accessapproval",
+    "accesscontextmanager",
+    "advisorynotifications",
+    "aiplatform",
+    "alloydb",
+    "apigateway",
+    "apigeeconnect",
+    "apikeys",
+    "appengine",
+    "artifactregistry",
+    "asset",
+    "assuredworkloads",
+    "automl",
+    "baremetalsolution",
+    "batch",
+    "beyondcorp",
+    "bigquery",
+    "bigtable",
+    "billing",
+    "binaryauthorization",
+    "certificatemanager",
+    "channel",
+    "cloudbuild",
+    "commerce",
+    "composer",
     "compute_accelerator_types",
     "compute_addresses",
     "compute_autoscalers",
@@ -94,39 +127,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
     "compute_vpn_tunnels",
     "compute_zone_operations",
     "compute_zones",
-    "pubsublite",
-    "sql",
-]
-
-GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-]
-
-GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
-    "accessapproval",
-    "accesscontextmanager",
-    "advisorynotifications",
-    "aiplatform",
-    "alloydb",
-    "apigateway",
-    "apigeeconnect",
-    "apikeys",
-    "appengine",
-    "artifactregistry",
-    "asset",
-    "assuredworkloads",
-    "automl",
-    "baremetalsolution",
-    "batch",
-    "beyondcorp",
-    "bigquery",
-    "bigtable",
-    "billing",
-    "binaryauthorization",
-    "certificatemanager",
-    "channel",
-    "cloudbuild",
-    "commerce",
-    "composer",
     "confidentialcomputing",
     "config",
     "connectors",

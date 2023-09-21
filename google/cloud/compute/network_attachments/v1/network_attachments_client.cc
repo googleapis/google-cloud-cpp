@@ -25,8 +25,7 @@ namespace compute_network_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworkAttachmentsClient::NetworkAttachmentsClient(
-    ExperimentalTag, std::shared_ptr<NetworkAttachmentsConnection> connection,
-    Options opts)
+    std::shared_ptr<NetworkAttachmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

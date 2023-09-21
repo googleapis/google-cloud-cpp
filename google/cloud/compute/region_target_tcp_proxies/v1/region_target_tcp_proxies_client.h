@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_TARGET_TCP_PROXIES_V1_REGION_TARGET_TCP_PROXIES_CLIENT_H
 
 #include "google/cloud/compute/region_target_tcp_proxies/v1/region_target_tcp_proxies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionTargetTcpProxiesClient {
  public:
   explicit RegionTargetTcpProxiesClient(
-      ExperimentalTag,
       std::shared_ptr<RegionTargetTcpProxiesConnection> connection,
       Options opts = {});
   ~RegionTargetTcpProxiesClient();

@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PUBLIC_ADVERTISED_PREFIXES_V1_PUBLIC_ADVERTISED_PREFIXES_CLIENT_H
 
 #include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PublicAdvertisedPrefixesClient {
  public:
   explicit PublicAdvertisedPrefixesClient(
-      ExperimentalTag,
       std::shared_ptr<PublicAdvertisedPrefixesConnection> connection,
       Options opts = {});
   ~PublicAdvertisedPrefixesClient();

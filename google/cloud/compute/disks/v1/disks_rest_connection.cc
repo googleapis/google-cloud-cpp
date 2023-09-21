@@ -32,8 +32,7 @@ namespace cloud {
 namespace compute_disks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DisksConnection> MakeDisksConnectionRest(ExperimentalTag,
-                                                         Options options) {
+std::shared_ptr<DisksConnection> MakeDisksConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  DisksPolicyOptionList>(options, __func__);

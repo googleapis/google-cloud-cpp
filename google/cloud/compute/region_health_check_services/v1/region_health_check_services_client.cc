@@ -26,7 +26,6 @@ namespace compute_region_health_check_services_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionHealthCheckServicesClient::RegionHealthCheckServicesClient(
-    ExperimentalTag,
     std::shared_ptr<RegionHealthCheckServicesConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

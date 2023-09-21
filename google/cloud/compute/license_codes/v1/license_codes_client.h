@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_CLIENT_H
 
 #include "google/cloud/compute/license_codes/v1/license_codes_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LicenseCodesClient {
  public:
   explicit LicenseCodesClient(
-      ExperimentalTag, std::shared_ptr<LicenseCodesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<LicenseCodesConnection> connection, Options opts = {});
   ~LicenseCodesClient();
 
   ///@{

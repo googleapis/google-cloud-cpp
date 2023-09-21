@@ -34,8 +34,7 @@ namespace compute_region_network_firewall_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionNetworkFirewallPoliciesConnection>
-MakeRegionNetworkFirewallPoliciesConnectionRest(ExperimentalTag,
-                                                Options options) {
+MakeRegionNetworkFirewallPoliciesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionNetworkFirewallPoliciesPolicyOptionList>(

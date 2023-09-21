@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_ADDRESSES_CLIENT_H
 
 #include "google/cloud/compute/addresses/v1/addresses_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AddressesClient {
  public:
-  explicit AddressesClient(ExperimentalTag,
-                           std::shared_ptr<AddressesConnection> connection,
+  explicit AddressesClient(std::shared_ptr<AddressesConnection> connection,
                            Options opts = {});
   ~AddressesClient();
 

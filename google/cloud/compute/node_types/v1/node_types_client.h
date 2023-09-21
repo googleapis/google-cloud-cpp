@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_NODE_TYPES_CLIENT_H
 
 #include "google/cloud/compute/node_types/v1/node_types_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeTypesClient {
  public:
-  explicit NodeTypesClient(ExperimentalTag,
-                           std::shared_ptr<NodeTypesConnection> connection,
+  explicit NodeTypesClient(std::shared_ptr<NodeTypesConnection> connection,
                            Options opts = {});
   ~NodeTypesClient();
 

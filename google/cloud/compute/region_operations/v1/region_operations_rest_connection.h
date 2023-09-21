@@ -55,7 +55,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * by this function.
  */
 std::shared_ptr<RegionOperationsConnection> MakeRegionOperationsConnectionRest(
-    ExperimentalTag, Options options = {});
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_operations_v1

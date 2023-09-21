@@ -25,8 +25,7 @@ namespace compute_region_commitments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionCommitmentsClient::RegionCommitmentsClient(
-    ExperimentalTag, std::shared_ptr<RegionCommitmentsConnection> connection,
-    Options opts)
+    std::shared_ptr<RegionCommitmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

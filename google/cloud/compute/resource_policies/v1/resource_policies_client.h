@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESOURCE_POLICIES_V1_RESOURCE_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/resource_policies/v1/resource_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ResourcePoliciesClient {
  public:
   explicit ResourcePoliciesClient(
-      ExperimentalTag, std::shared_ptr<ResourcePoliciesConnection> connection,
+      std::shared_ptr<ResourcePoliciesConnection> connection,
       Options opts = {});
   ~ResourcePoliciesClient();
 

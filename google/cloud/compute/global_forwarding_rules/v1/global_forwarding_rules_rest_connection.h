@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<GlobalForwardingRulesConnection>
-MakeGlobalForwardingRulesConnectionRest(ExperimentalTag, Options options = {});
+MakeGlobalForwardingRulesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_forwarding_rules_v1

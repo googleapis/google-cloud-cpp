@@ -57,7 +57,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * created by this function.
  */
 std::shared_ptr<TargetHttpsProxiesConnection>
-MakeTargetHttpsProxiesConnectionRest(ExperimentalTag, Options options = {});
+MakeTargetHttpsProxiesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_https_proxies_v1

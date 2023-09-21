@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_TYPES_V1_MACHINE_TYPES_CLIENT_H
 
 #include "google/cloud/compute/machine_types/v1/machine_types_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MachineTypesClient {
  public:
   explicit MachineTypesClient(
-      ExperimentalTag, std::shared_ptr<MachineTypesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<MachineTypesConnection> connection, Options opts = {});
   ~MachineTypesClient();
 
   ///@{

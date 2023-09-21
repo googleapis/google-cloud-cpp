@@ -24,9 +24,7 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace disks = ::google::cloud::compute_disks_v1;
-  auto client = disks::DisksClient(
-      google::cloud::ExperimentalTag{},
-      disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
+  auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
 
   for (auto disk : client.ListDisks(argv[1], argv[2])) {
     if (!disk) throw std::move(disk).status();

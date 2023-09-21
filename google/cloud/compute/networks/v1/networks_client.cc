@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_networks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-NetworksClient::NetworksClient(ExperimentalTag,
-                               std::shared_ptr<NetworksConnection> connection,
+NetworksClient::NetworksClient(std::shared_ptr<NetworksConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
       options_(

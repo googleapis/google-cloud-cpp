@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_CLIENT_H
 
 #include "google/cloud/compute/target_pools/v1/target_pools_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetPoolsClient {
  public:
-  explicit TargetPoolsClient(ExperimentalTag,
-                             std::shared_ptr<TargetPoolsConnection> connection,
+  explicit TargetPoolsClient(std::shared_ptr<TargetPoolsConnection> connection,
                              Options opts = {});
   ~TargetPoolsClient();
 

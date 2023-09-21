@@ -25,8 +25,7 @@ namespace compute_target_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetVpnGatewaysClient::TargetVpnGatewaysClient(
-    ExperimentalTag, std::shared_ptr<TargetVpnGatewaysConnection> connection,
-    Options opts)
+    std::shared_ptr<TargetVpnGatewaysConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

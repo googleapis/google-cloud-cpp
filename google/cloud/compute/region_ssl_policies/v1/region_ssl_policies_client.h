@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_REGION_SSL_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionSslPoliciesClient {
  public:
   explicit RegionSslPoliciesClient(
-      ExperimentalTag, std::shared_ptr<RegionSslPoliciesConnection> connection,
+      std::shared_ptr<RegionSslPoliciesConnection> connection,
       Options opts = {});
   ~RegionSslPoliciesClient();
 

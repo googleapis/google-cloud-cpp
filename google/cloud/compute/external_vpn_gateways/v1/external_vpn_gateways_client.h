@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_EXTERNAL_VPN_GATEWAYS_V1_EXTERNAL_VPN_GATEWAYS_CLIENT_H
 
 #include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +64,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ExternalVpnGatewaysClient {
  public:
   explicit ExternalVpnGatewaysClient(
-      ExperimentalTag,
       std::shared_ptr<ExternalVpnGatewaysConnection> connection,
       Options opts = {});
   ~ExternalVpnGatewaysClient();

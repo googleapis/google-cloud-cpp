@@ -33,7 +33,7 @@ namespace compute_instance_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InstanceTemplatesConnection>
-MakeInstanceTemplatesConnectionRest(ExperimentalTag, Options options) {
+MakeInstanceTemplatesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  InstanceTemplatesPolicyOptionList>(options,

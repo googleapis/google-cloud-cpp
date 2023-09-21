@@ -34,7 +34,7 @@ namespace compute_region_instance_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionInstanceTemplatesConnection>
-MakeRegionInstanceTemplatesConnectionRest(ExperimentalTag, Options options) {
+MakeRegionInstanceTemplatesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionInstanceTemplatesPolicyOptionList>(

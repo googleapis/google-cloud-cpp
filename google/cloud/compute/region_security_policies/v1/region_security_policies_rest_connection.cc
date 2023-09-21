@@ -34,7 +34,7 @@ namespace compute_region_security_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionSecurityPoliciesConnection>
-MakeRegionSecurityPoliciesConnectionRest(ExperimentalTag, Options options) {
+MakeRegionSecurityPoliciesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionSecurityPoliciesPolicyOptionList>(

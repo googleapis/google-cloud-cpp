@@ -25,8 +25,7 @@ namespace compute_http_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HttpHealthChecksClient::HttpHealthChecksClient(
-    ExperimentalTag, std::shared_ptr<HttpHealthChecksConnection> connection,
-    Options opts)
+    std::shared_ptr<HttpHealthChecksConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

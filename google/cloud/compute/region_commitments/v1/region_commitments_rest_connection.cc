@@ -33,7 +33,7 @@ namespace compute_region_commitments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionCommitmentsConnection>
-MakeRegionCommitmentsConnectionRest(ExperimentalTag, Options options) {
+MakeRegionCommitmentsConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionCommitmentsPolicyOptionList>(options,

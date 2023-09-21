@@ -25,8 +25,7 @@ namespace compute_disk_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DiskTypesClient::DiskTypesClient(
-    ExperimentalTag, std::shared_ptr<DiskTypesConnection> connection,
-    Options opts)
+    std::shared_ptr<DiskTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

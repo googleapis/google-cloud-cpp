@@ -25,8 +25,7 @@ namespace compute_security_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecurityPoliciesClient::SecurityPoliciesClient(
-    ExperimentalTag, std::shared_ptr<SecurityPoliciesConnection> connection,
-    Options opts)
+    std::shared_ptr<SecurityPoliciesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

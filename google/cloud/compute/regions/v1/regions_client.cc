@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_regions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RegionsClient::RegionsClient(ExperimentalTag,
-                             std::shared_ptr<RegionsConnection> connection,
+RegionsClient::RegionsClient(std::shared_ptr<RegionsConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
       options_(

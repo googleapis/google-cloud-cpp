@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_OPERATIONS_V1_REGION_OPERATIONS_CLIENT_H
 
 #include "google/cloud/compute/region_operations/v1/region_operations_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionOperationsClient {
  public:
   explicit RegionOperationsClient(
-      ExperimentalTag, std::shared_ptr<RegionOperationsConnection> connection,
+      std::shared_ptr<RegionOperationsConnection> connection,
       Options opts = {});
   ~RegionOperationsClient();
 

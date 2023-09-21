@@ -25,8 +25,7 @@ namespace compute_image_family_views_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageFamilyViewsClient::ImageFamilyViewsClient(
-    ExperimentalTag, std::shared_ptr<ImageFamilyViewsConnection> connection,
-    Options opts)
+    std::shared_ptr<ImageFamilyViewsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

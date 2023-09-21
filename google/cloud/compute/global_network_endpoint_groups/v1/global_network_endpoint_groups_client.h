@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_NETWORK_ENDPOINT_GROUPS_V1_GLOBAL_NETWORK_ENDPOINT_GROUPS_CLIENT_H
 
 #include "google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +64,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GlobalNetworkEndpointGroupsClient {
  public:
   explicit GlobalNetworkEndpointGroupsClient(
-      ExperimentalTag,
       std::shared_ptr<GlobalNetworkEndpointGroupsConnection> connection,
       Options opts = {});
   ~GlobalNetworkEndpointGroupsClient();

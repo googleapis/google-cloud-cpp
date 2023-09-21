@@ -25,8 +25,7 @@ namespace compute_region_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionOperationsClient::RegionOperationsClient(
-    ExperimentalTag, std::shared_ptr<RegionOperationsConnection> connection,
-    Options opts)
+    std::shared_ptr<RegionOperationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

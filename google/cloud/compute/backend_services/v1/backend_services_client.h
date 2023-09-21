@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_BACKEND_SERVICES_CLIENT_H
 
 #include "google/cloud/compute/backend_services/v1/backend_services_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BackendServicesClient {
  public:
   explicit BackendServicesClient(
-      ExperimentalTag, std::shared_ptr<BackendServicesConnection> connection,
-      Options opts = {});
+      std::shared_ptr<BackendServicesConnection> connection, Options opts = {});
   ~BackendServicesClient();
 
   ///@{

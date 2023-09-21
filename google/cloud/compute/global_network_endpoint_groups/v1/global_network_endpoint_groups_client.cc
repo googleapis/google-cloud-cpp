@@ -26,7 +26,6 @@ namespace compute_global_network_endpoint_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalNetworkEndpointGroupsClient::GlobalNetworkEndpointGroupsClient(
-    ExperimentalTag,
     std::shared_ptr<GlobalNetworkEndpointGroupsConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

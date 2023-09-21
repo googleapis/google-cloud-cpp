@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_CLIENT_H
 
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VpnTunnelsClient {
  public:
-  explicit VpnTunnelsClient(ExperimentalTag,
-                            std::shared_ptr<VpnTunnelsConnection> connection,
+  explicit VpnTunnelsClient(std::shared_ptr<VpnTunnelsConnection> connection,
                             Options opts = {});
   ~VpnTunnelsClient();
 

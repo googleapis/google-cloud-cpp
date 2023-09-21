@@ -56,7 +56,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * by this function.
  */
 std::shared_ptr<TargetGrpcProxiesConnection>
-MakeTargetGrpcProxiesConnectionRest(ExperimentalTag, Options options = {});
+MakeTargetGrpcProxiesConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_grpc_proxies_v1

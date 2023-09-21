@@ -33,7 +33,7 @@ namespace compute_node_templates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NodeTemplatesConnection> MakeNodeTemplatesConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  NodeTemplatesPolicyOptionList>(options,

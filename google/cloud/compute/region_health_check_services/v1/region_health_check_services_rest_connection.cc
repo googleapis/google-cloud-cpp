@@ -34,7 +34,7 @@ namespace compute_region_health_check_services_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionHealthCheckServicesConnection>
-MakeRegionHealthCheckServicesConnectionRest(ExperimentalTag, Options options) {
+MakeRegionHealthCheckServicesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  RegionHealthCheckServicesPolicyOptionList>(

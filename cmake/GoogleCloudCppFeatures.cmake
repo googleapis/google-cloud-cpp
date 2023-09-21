@@ -29,9 +29,7 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 # `google_cloud_cpp_grpc_utils`.
 set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES "storage;experimental-bigquery_rest")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-    # cmake-format: sorted
-    "compute"
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sorted
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite" "sql")
 
@@ -65,6 +63,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "cloudbuild"
     "commerce"
     "composer"
+    "compute"
     "confidentialcomputing"
     "config"
     "connectors"

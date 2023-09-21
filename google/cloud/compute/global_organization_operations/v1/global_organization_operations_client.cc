@@ -26,7 +26,6 @@ namespace compute_global_organization_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalOrganizationOperationsClient::GlobalOrganizationOperationsClient(
-    ExperimentalTag,
     std::shared_ptr<GlobalOrganizationOperationsConnection> connection,
     Options opts)
     : connection_(std::move(connection)),

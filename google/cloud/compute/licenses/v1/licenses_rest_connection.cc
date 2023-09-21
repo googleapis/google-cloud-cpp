@@ -33,7 +33,7 @@ namespace compute_licenses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<LicensesConnection> MakeLicensesConnectionRest(
-    ExperimentalTag, Options options) {
+    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  LicensesPolicyOptionList>(options, __func__);

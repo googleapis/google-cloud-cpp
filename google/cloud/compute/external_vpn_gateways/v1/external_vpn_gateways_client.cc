@@ -26,8 +26,7 @@ namespace compute_external_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExternalVpnGatewaysClient::ExternalVpnGatewaysClient(
-    ExperimentalTag, std::shared_ptr<ExternalVpnGatewaysConnection> connection,
-    Options opts)
+    std::shared_ptr<ExternalVpnGatewaysConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

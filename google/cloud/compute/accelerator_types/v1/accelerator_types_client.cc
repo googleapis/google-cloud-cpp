@@ -25,8 +25,7 @@ namespace compute_accelerator_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AcceleratorTypesClient::AcceleratorTypesClient(
-    ExperimentalTag, std::shared_ptr<AcceleratorTypesConnection> connection,
-    Options opts)
+    std::shared_ptr<AcceleratorTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

@@ -80,7 +80,6 @@ io::run cmake --install cmake-out/features --prefix "${INSTALL_PREFIX}"
 # shellcheck disable=SC2046
 mapfile -t feature_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-features.cmake 2>&1)
 FEATURES=$(printf ";%s" "${feature_list[@]}")
-FEATURES="${FEATURES};compute"
 FEATURES="${FEATURES:1}"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \

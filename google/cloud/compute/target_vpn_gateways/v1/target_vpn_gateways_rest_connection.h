@@ -56,7 +56,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * by this function.
  */
 std::shared_ptr<TargetVpnGatewaysConnection>
-MakeTargetVpnGatewaysConnectionRest(ExperimentalTag, Options options = {});
+MakeTargetVpnGatewaysConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_vpn_gateways_v1

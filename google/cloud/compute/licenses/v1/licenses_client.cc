@@ -24,8 +24,7 @@ namespace cloud {
 namespace compute_licenses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LicensesClient::LicensesClient(ExperimentalTag,
-                               std::shared_ptr<LicensesConnection> connection,
+LicensesClient::LicensesClient(std::shared_ptr<LicensesConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
       options_(

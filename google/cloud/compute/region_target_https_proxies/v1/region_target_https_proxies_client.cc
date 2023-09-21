@@ -26,7 +26,6 @@ namespace compute_region_target_https_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionTargetHttpsProxiesClient::RegionTargetHttpsProxiesClient(
-    ExperimentalTag,
     std::shared_ptr<RegionTargetHttpsProxiesConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
