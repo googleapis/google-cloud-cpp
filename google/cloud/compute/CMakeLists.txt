@@ -242,12 +242,11 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
                    INTERFACE ${mock_files})
     target_link_libraries(
         google_cloud_cpp_compute_${short_dir}_mocks
-        INTERFACE google-cloud-cpp::compute-${short_dir}
-                  GTest::gmock_main GTest::gmock GTest::gtest)
+        INTERFACE google-cloud-cpp::compute-${short_dir} GTest::gmock_main
+                  GTest::gmock GTest::gtest)
     set_target_properties(
         google_cloud_cpp_compute_${short_dir}_mocks
-        PROPERTIES EXPORT_NAME
-                   google-cloud-cpp::compute-${short_dir}_mocks)
+        PROPERTIES EXPORT_NAME google-cloud-cpp::compute-${short_dir}_mocks)
     target_include_directories(
         google_cloud_cpp_compute_${short_dir}_mocks
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
