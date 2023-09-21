@@ -15,6 +15,7 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
 
@@ -35,8 +36,8 @@ bool FieldExistsAndIsType(Descriptor const& d, std::string const& field_name,
 }
 
 // https://google.aip.dev/client-libraries/4233
-google::cloud::optional<std::pair<std::string, Descriptor const*>>
-DetermineAIP4233Pagination(MethodDescriptor const& method) {
+google::cloud::optional<PaginationInfo> DetermineAIP4233Pagination(
+    MethodDescriptor const& method) {
   Descriptor const* request_message = method.input_type();
   Descriptor const* response_message = method.output_type();
 
@@ -68,7 +69,8 @@ DetermineAIP4233Pagination(MethodDescriptor const& method) {
     // Add exception to AIP-4233 for response types that have exactly one
     // repeated field that is of primitive type string.
     if (repeated_string_fields.size() != 1) return {};
-    return repeated_string_fields[0];
+    return PaginationInfo{
+        repeated_string_fields[0].first, repeated_string_fields[0].second, {}};
   }
 
   if (repeated_message_fields.size() > 1) {
@@ -85,15 +87,16 @@ DetermineAIP4233Pagination(MethodDescriptor const& method) {
                      << method.full_name();
     }
   }
-  return std::make_pair(std::get<0>(repeated_message_fields[0]),
-                        std::get<1>(repeated_message_fields[0]));
+  return PaginationInfo{std::get<0>(repeated_message_fields[0]),
+                        std::get<1>(repeated_message_fields[0]),
+                        {}};
 }
 
 // For both the sqladmin and compute proto definitions, the paging conventions
 // do not adhere to aip-4233, but the intent is there. If we can make it work,
 // add pagination for any such methods.
-google::cloud::optional<std::pair<std::string, Descriptor const*>>
-DetermineAlternatePagination(MethodDescriptor const& method) {
+google::cloud::optional<PaginationInfo> DetermineAlternatePagination(
+    MethodDescriptor const& method) {
   Descriptor const* request_message = method.input_type();
   Descriptor const* response_message = method.output_type();
   if (!FieldExistsAndIsType(*request_message, "max_results",
@@ -109,17 +112,19 @@ DetermineAlternatePagination(MethodDescriptor const& method) {
 
   FieldDescriptor const* items = response_message->FindFieldByName("items");
   if (!items->is_repeated()) return {};
-  // TODO(#11660): For map<K, V> types we need to add functionality to treat
-  // them as a repeated struct which contains two fields corresponding to
-  // K and V.
-  if (items->is_map()) return {};
-  return std::make_pair(items->name(), items->message_type());
+
+  if (items->is_map()) {
+    return PaginationInfo{items->name(),
+                          items->message_type()->map_value()->message_type(),
+                          items->message_type()->map_key()};
+  }
+  return PaginationInfo{items->name(), items->message_type(), {}};
 }
 
 }  // namespace
 
-google::cloud::optional<std::pair<std::string, Descriptor const*>>
-DeterminePagination(MethodDescriptor const& method) {
+google::cloud::optional<PaginationInfo> DeterminePagination(
+    MethodDescriptor const& method) {
   auto result = DetermineAIP4233Pagination(method);
   if (result) return result;
   return DetermineAlternatePagination(method);
@@ -134,18 +139,34 @@ void AssignPaginationMethodVars(
     VarsDictionary& method_vars) {
   if (IsPaginated(method)) {
     auto pagination_info = DeterminePagination(method);
-    method_vars["range_output_field_name"] = pagination_info->first;
+    method_vars["range_output_field_name"] =
+        pagination_info->range_output_field_name;
     // Add exception to AIP-4233 for response types that have exactly one
     // repeated field that is of primitive type string.
-    method_vars["range_output_type"] =
-        pagination_info->second == nullptr
-            ? "std::string"
-            : ProtoNameToCppName(pagination_info->second->full_name());
-    if (pagination_info->second) {
-      method_vars["method_paginated_return_doxygen_link"] =
-          FormatDoxygenLink(*pagination_info->second);
-    } else {
+    if (pagination_info->range_output_type == nullptr) {
+      method_vars["range_output_type"] = "std::string";
       method_vars["method_paginated_return_doxygen_link"] = "std::string";
+    } else {
+      if (pagination_info->range_output_map_key_type.has_value()) {
+        std::string key_type_name =
+            (*pagination_info->range_output_map_key_type)->type() ==
+                    protobuf::FieldDescriptor::TYPE_MESSAGE
+                ? ProtoNameToCppName(
+                      (*pagination_info->range_output_map_key_type)
+                          ->message_type()
+                          ->full_name())
+                : CppTypeToString(
+                      pagination_info->range_output_map_key_type.value());
+        method_vars["range_output_type"] = absl::StrCat(
+            "std::pair<", std::move(key_type_name), ", ",
+            ProtoNameToCppName(pagination_info->range_output_type->full_name()),
+            ">");
+      } else {
+        method_vars["range_output_type"] =
+            ProtoNameToCppName(pagination_info->range_output_type->full_name());
+      }
+      method_vars["method_paginated_return_doxygen_link"] =
+          FormatDoxygenLink(*pagination_info->range_output_type);
     }
   }
 }

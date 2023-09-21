@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "generator/internal/pagination.h"
+#include "generator/testing/descriptor_pool_fixture.h"
+#include "generator/testing/error_collectors.h"
+#include "generator/testing/fake_source_tree.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/text_format.h>
@@ -26,6 +29,7 @@ namespace {
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::testing::Eq;
 
 TEST(PaginationTest, PaginationAIP4233Success) {
   FileDescriptorProto service_file;
@@ -68,8 +72,8 @@ TEST(PaginationTest, PaginationAIP4233Success) {
   auto result =
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
-  EXPECT_EQ(result->first, "repeated_field");
-  EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
+  EXPECT_EQ(result->range_output_field_name, "repeated_field");
+  EXPECT_EQ(result->range_output_type->full_name(), "google.protobuf.Bar");
 }
 
 TEST(PaginationTest, PaginationAIP4233NoPageSize) {
@@ -286,8 +290,8 @@ TEST(PaginationTest, PaginationAIP4233ExactlyOneRepatedStringResponse) {
   auto result =
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
-  EXPECT_EQ(result->first, "repeated_field");
-  EXPECT_EQ(result->second, nullptr);
+  EXPECT_EQ(result->range_output_field_name, "repeated_field");
+  EXPECT_EQ(result->range_output_type, nullptr);
 }
 
 TEST(PaginationTest, PaginationRestSuccess) {
@@ -331,8 +335,8 @@ TEST(PaginationTest, PaginationRestSuccess) {
   auto result =
       DeterminePagination(*service_file_descriptor->service(0)->method(0));
   EXPECT_TRUE(result.has_value());
-  EXPECT_EQ(result->first, "items");
-  EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
+  EXPECT_EQ(result->range_output_field_name, "items");
+  EXPECT_EQ(result->range_output_type->full_name(), "google.protobuf.Bar");
 }
 
 TEST(PaginationTest, PaginationRestNoMaxResults) {
@@ -569,6 +573,130 @@ TEST(PaginationTest, PaginationRestItemsNotRepeated) {
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+auto constexpr kAnnotationsProto = R"""(
+    syntax = "proto3";
+    package google.api;
+    import "google/api/http.proto";
+    import "google/protobuf/descriptor.proto";
+    extend google.protobuf.MethodOptions {
+      // See `HttpRule`.
+      HttpRule http = 72295728;
+    };
+)""";
+
+auto constexpr kHttpProto = R"""(
+    syntax = "proto3";
+    package google.api;
+    option cc_enable_arenas = true;
+    message Http {
+      repeated HttpRule rules = 1;
+      bool fully_decode_reserved_expansion = 2;
+    }
+    message HttpRule {
+      string selector = 1;
+      oneof pattern {
+        string get = 2;
+        string put = 3;
+        string post = 4;
+        string delete = 5;
+        string patch = 6;
+        CustomHttpPattern custom = 8;
+      }
+      string body = 7;
+      string response_body = 12;
+      repeated HttpRule additional_bindings = 11;
+    }
+    message CustomHttpPattern {
+      string kind = 1;
+      string path = 2;
+    };
+)""";
+
+auto constexpr kServiceProto = R"""(
+syntax = "proto3";
+package test;
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+// Request message for AggregatedListDisks.
+message AggregatedListFoosRequest {
+  optional uint32 max_results = 1;
+  optional string page_token = 2;
+}
+
+message Foo {
+  optional string name = 1;
+}
+
+message FooAggregatedList {
+  map<string, Foo> items = 1;
+  optional string next_page_token = 2;
+}
+// Leading comments about service Service0.
+service Service0 {
+  // Leading comments about rpc Method0$.
+  rpc Method0(AggregatedListFoosRequest) returns (FooAggregatedList) {
+    option (google.api.http) = {
+       patch: "/v1/{parent=projects/*/instances/*}/databases"
+       body: "*"
+    };
+  }
+};
+)""";
+
+class PaginationDescriptorTest : public ::testing::Test {
+ public:
+  PaginationDescriptorTest()
+      : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/api/http.proto"), kHttpProto},
+            {std::string("google/api/annotations.proto"), kAnnotationsProto},
+            {std::string("google/foo/v1/service.proto"), kServiceProto}}),
+        source_tree_db_(&source_tree_),
+        merged_db_(&simple_db_, &source_tree_db_),
+        pool_(&merged_db_, &collector_) {
+    // we need descriptor.proto to be accessible by the pool
+    // since our test file imports it
+    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
+    simple_db_.Add(file_proto_);
+  }
+
+ private:
+  FileDescriptorProto file_proto_;
+  generator_testing::ErrorCollector collector_;
+  generator_testing::FakeSourceTree source_tree_;
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
+  google::protobuf::MergedDescriptorDatabase merged_db_;
+
+ protected:
+  DescriptorPool pool_;
+};
+
+TEST_F(PaginationDescriptorTest, MapPagination) {
+  auto const* file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  auto pagination_info =
+      DeterminePagination(*file_descriptor->service(0)->method(0));
+  ASSERT_TRUE(pagination_info.has_value());
+  EXPECT_THAT(pagination_info->range_output_field_name, Eq("items"));
+  EXPECT_THAT(pagination_info->range_output_type->name(), Eq("Foo"));
+  ASSERT_TRUE(pagination_info->range_output_map_key_type.has_value());
+  EXPECT_THAT((*pagination_info->range_output_map_key_type)->cpp_type_name(),
+              Eq(std::string("string")));
+}
+
+TEST_F(PaginationDescriptorTest, AssignMapPaginationMethodVars) {
+  VarsDictionary method_vars;
+  auto const* file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  AssignPaginationMethodVars(*file_descriptor->service(0)->method(0),
+                             method_vars);
+  EXPECT_THAT(method_vars["range_output_type"],
+              Eq("std::pair<std::string, test::Foo>"));
+  EXPECT_THAT(
+      method_vars["method_paginated_return_doxygen_link"],
+      Eq("@googleapis_link{test::Foo,google/foo/v1/service.proto#L12}"));
 }
 
 }  // namespace

@@ -31,8 +31,11 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::Property;
 
 class ComputeIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -114,6 +117,27 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
           *creation_timestamp < create_threshold) {
         (void)client.DeleteDisk(project_id_, zone_, d->name()).get();
       }
+    }
+  }
+}
+
+TEST_F(ComputeIntegrationTest, PaginatedMapField) {
+  namespace disks = ::google::cloud::compute_disks_v1;
+  auto client = disks::DisksClient(
+      google::cloud::ExperimentalTag{},
+      disks::MakeDisksConnectionRest(google::cloud::ExperimentalTag{}));
+
+  auto disk_named = [](std::string const& name) {
+    return Property(&google::cloud::cpp::compute::v1::Disk::name, Eq(name));
+  };
+
+  for (auto const& list : client.AggregatedListDisks(project_id_)) {
+    ASSERT_STATUS_OK(list);
+    if (list->first == zone_) {
+      EXPECT_THAT(list->second.disks(),
+                  Contains(disk_named("test-e2-micro-instance")));
+      EXPECT_THAT(list->second.disks(),
+                  Contains(disk_named("test2-e2-micro-instance")));
     }
   }
 }
