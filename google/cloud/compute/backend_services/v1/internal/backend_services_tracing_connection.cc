@@ -44,16 +44,19 @@ BackendServicesTracingConnection::AddSignedUrlKey(
   return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
 BackendServicesTracingConnection::AggregatedListBackendServices(
     google::cloud::cpp::compute::backend_services::v1::
-        AggregatedListBackendServicesRequest const& request) {
+        AggregatedListBackendServicesRequest request) {
   auto span = internal::MakeSpan(
       "compute_backend_services_v1::BackendServicesConnection::"
       "AggregatedListBackendServices");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListBackendServices(request));
+  auto sr = child_->AggregatedListBackendServices(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

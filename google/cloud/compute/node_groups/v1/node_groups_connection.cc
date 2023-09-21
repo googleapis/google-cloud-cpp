@@ -42,11 +42,14 @@ NodeGroupsConnection::AddNodes(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
 NodeGroupsConnection::AggregatedListNodeGroups(
     google::cloud::cpp::compute::node_groups::v1::
-        AggregatedListNodeGroupsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListNodeGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NodeGroupsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

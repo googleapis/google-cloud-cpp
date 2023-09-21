@@ -36,7 +36,7 @@ AutoscalersConnectionIdempotencyPolicy::clone() const {
 
 Idempotency AutoscalersConnectionIdempotencyPolicy::AggregatedListAutoscalers(
     google::cloud::cpp::compute::autoscalers::v1::
-        AggregatedListAutoscalersRequest const&) {
+        AggregatedListAutoscalersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -187,11 +187,11 @@ class ForwardingRulesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
   AggregatedListForwardingRules(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          AggregatedListForwardingRulesRequest const& request);
+          AggregatedListForwardingRulesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::

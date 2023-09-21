@@ -40,10 +40,11 @@ class SubnetworksTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::SubnetworksScopedList>>
   AggregatedListSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::
-          AggregatedListSubnetworksRequest const& request) override;
+          AggregatedListSubnetworksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::

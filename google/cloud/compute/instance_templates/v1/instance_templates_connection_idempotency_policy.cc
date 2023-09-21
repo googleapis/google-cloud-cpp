@@ -37,7 +37,7 @@ InstanceTemplatesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 InstanceTemplatesConnectionIdempotencyPolicy::AggregatedListInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
-        AggregatedListInstanceTemplatesRequest const&) {
+        AggregatedListInstanceTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

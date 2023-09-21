@@ -47,12 +47,13 @@ class MockTargetTcpProxiesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>,
-      AggregatedListTargetTcpProxies,
-      (google::cloud::cpp::compute::target_tcp_proxies::v1::
-           AggregatedListTargetTcpProxiesRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<std::pair<
+                  std::string,
+                  google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>,
+              AggregatedListTargetTcpProxies,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   AggregatedListTargetTcpProxiesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetTcpProxy,

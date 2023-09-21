@@ -46,7 +46,7 @@ class TargetPoolsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListTargetPools(
       google::cloud::cpp::compute::target_pools::v1::
-          AggregatedListTargetPoolsRequest const& request);
+          AggregatedListTargetPoolsRequest request);
 
   virtual google::cloud::Idempotency DeleteTargetPool(
       google::cloud::cpp::compute::target_pools::v1::

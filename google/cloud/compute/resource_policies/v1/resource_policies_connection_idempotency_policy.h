@@ -39,7 +39,7 @@ class ResourcePoliciesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListResourcePolicies(
       google::cloud::cpp::compute::resource_policies::v1::
-          AggregatedListResourcePoliciesRequest const& request);
+          AggregatedListResourcePoliciesRequest request);
 
   virtual google::cloud::Idempotency DeleteResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::

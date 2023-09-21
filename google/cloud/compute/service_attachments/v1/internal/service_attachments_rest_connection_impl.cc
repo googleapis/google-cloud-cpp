@@ -43,20 +43,45 @@ ServiceAttachmentsRestConnectionImpl::ServiceAttachmentsRestConnectionImpl(
       options_(internal::MergeOptions(
           std::move(options), ServiceAttachmentsConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
 ServiceAttachmentsRestConnectionImpl::AggregatedListServiceAttachments(
     google::cloud::cpp::compute::service_attachments::v1::
-        AggregatedListServiceAttachmentsRequest const& request) {
+        AggregatedListServiceAttachmentsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListServiceAttachments(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::service_attachments::v1::
-                 AggregatedListServiceAttachmentsRequest const& request) {
-        return stub_->AggregatedListServiceAttachments(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListServiceAttachments(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_service_attachments_v1::ServiceAttachmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::service_attachments::v1::
+              AggregatedListServiceAttachmentsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::service_attachments::v1::
+                       AggregatedListServiceAttachmentsRequest const& request) {
+              return stub->AggregatedListServiceAttachments(rest_context,
+                                                            request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               ServiceAttachmentsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

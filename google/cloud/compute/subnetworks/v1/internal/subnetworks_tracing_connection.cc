@@ -32,15 +32,19 @@ SubnetworksTracingConnection::SubnetworksTracingConnection(
     std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
 SubnetworksTracingConnection::AggregatedListSubnetworks(
     google::cloud::cpp::compute::subnetworks::v1::
-        AggregatedListSubnetworksRequest const& request) {
+        AggregatedListSubnetworksRequest request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::"
       "AggregatedListSubnetworks");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListSubnetworks(request));
+  auto sr = child_->AggregatedListSubnetworks(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

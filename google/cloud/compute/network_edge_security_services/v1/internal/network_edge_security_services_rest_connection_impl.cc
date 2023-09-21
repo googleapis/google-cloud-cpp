@@ -23,6 +23,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
 #include <memory>
@@ -45,25 +46,51 @@ NetworkEdgeSecurityServicesRestConnectionImpl::
           std::move(options),
           NetworkEdgeSecurityServicesConnection::options())) {}
 
-StatusOr<
-    google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       NetworkEdgeSecurityServicesScopedList>>
 NetworkEdgeSecurityServicesRestConnectionImpl::
     AggregatedListNetworkEdgeSecurityServices(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
+            AggregatedListNetworkEdgeSecurityServicesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
+  auto idempotency =
       idempotency_policy(*current)->AggregatedListNetworkEdgeSecurityServices(
-          request),
-      [this](
-          rest_internal::RestContext& rest_context,
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NetworkEdgeSecurityServicesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_network_edge_security_services_v1::
+                                   NetworkEdgeSecurityServicesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           google::cloud::cpp::compute::network_edge_security_services::v1::
-              AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
-        return stub_->AggregatedListNetworkEdgeSecurityServices(rest_context,
-                                                                request);
+              AggregatedListNetworkEdgeSecurityServicesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                rest_internal::RestContext& rest_context,
+                google::cloud::cpp::compute::network_edge_security_services::
+                    v1::AggregatedListNetworkEdgeSecurityServicesRequest const&
+                        request) {
+              return stub->AggregatedListNetworkEdgeSecurityServices(
+                  rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::
+             NetworkEdgeSecurityServiceAggregatedList r) {
+        std::vector<
+            std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       NetworkEdgeSecurityServicesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

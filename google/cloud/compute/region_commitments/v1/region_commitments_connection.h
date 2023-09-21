@@ -187,10 +187,11 @@ class RegionCommitmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>
   AggregatedListRegionCommitments(
       google::cloud::cpp::compute::region_commitments::v1::
-          AggregatedListRegionCommitmentsRequest const& request);
+          AggregatedListRegionCommitmentsRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
       google::cloud::cpp::compute::region_commitments::v1::

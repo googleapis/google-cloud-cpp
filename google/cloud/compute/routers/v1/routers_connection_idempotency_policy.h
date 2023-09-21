@@ -37,8 +37,8 @@ class RoutersConnectionIdempotencyPolicy {
   virtual std::unique_ptr<RoutersConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency AggregatedListRouters(
-      google::cloud::cpp::compute::routers::v1::
-          AggregatedListRoutersRequest const& request);
+      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+          request);
 
   virtual google::cloud::Idempotency DeleteRouter(
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&

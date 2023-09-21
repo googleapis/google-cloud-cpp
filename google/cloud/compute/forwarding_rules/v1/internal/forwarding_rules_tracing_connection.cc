@@ -33,16 +33,19 @@ ForwardingRulesTracingConnection::ForwardingRulesTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
 ForwardingRulesTracingConnection::AggregatedListForwardingRules(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest const& request) {
+        AggregatedListForwardingRulesRequest request) {
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "AggregatedListForwardingRules");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListForwardingRules(request));
+  auto sr = child_->AggregatedListForwardingRules(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

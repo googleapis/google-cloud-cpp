@@ -45,8 +45,8 @@ class InstancesConnectionIdempotencyPolicy {
           AddResourcePoliciesRequest const& request);
 
   virtual google::cloud::Idempotency AggregatedListInstances(
-      google::cloud::cpp::compute::instances::v1::
-          AggregatedListInstancesRequest const& request);
+      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+          request);
 
   virtual google::cloud::Idempotency AttachDisk(
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&

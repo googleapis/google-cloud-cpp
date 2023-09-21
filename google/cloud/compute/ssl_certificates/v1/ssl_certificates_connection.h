@@ -187,11 +187,11 @@ class SslCertificatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
   AggregatedListSslCertificates(
       google::cloud::cpp::compute::ssl_certificates::v1::
-          AggregatedListSslCertificatesRequest const& request);
+          AggregatedListSslCertificatesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::

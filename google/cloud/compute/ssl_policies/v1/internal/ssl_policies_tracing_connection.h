@@ -40,10 +40,11 @@ class SslPoliciesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
   AggregatedListSslPolicies(
       google::cloud::cpp::compute::ssl_policies::v1::
-          AggregatedListSslPoliciesRequest const& request) override;
+          AggregatedListSslPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::

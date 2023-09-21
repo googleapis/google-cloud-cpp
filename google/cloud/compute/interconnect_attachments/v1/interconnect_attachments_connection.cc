@@ -36,11 +36,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InterconnectAttachmentsConnection::~InterconnectAttachmentsConnection() =
     default;
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       InterconnectAttachmentsScopedList>>
 InterconnectAttachmentsConnection::AggregatedListInterconnectAttachments(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        AggregatedListInterconnectAttachmentsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListInterconnectAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::
+                                 InterconnectAttachmentsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

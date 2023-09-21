@@ -39,7 +39,7 @@ class TargetInstancesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListTargetInstances(
       google::cloud::cpp::compute::target_instances::v1::
-          AggregatedListTargetInstancesRequest const& request);
+          AggregatedListTargetInstancesRequest request);
 
   virtual google::cloud::Idempotency DeleteTargetInstance(
       google::cloud::cpp::compute::target_instances::v1::

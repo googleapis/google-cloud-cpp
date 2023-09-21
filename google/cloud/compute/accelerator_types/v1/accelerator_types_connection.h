@@ -185,11 +185,11 @@ class AcceleratorTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
   AggregatedListAcceleratorTypes(
       google::cloud::cpp::compute::accelerator_types::v1::
-          AggregatedListAcceleratorTypesRequest const& request);
+          AggregatedListAcceleratorTypesRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
   GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::

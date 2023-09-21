@@ -43,11 +43,14 @@ BackendServicesConnection::AddSignedUrlKey(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
 BackendServicesConnection::AggregatedListBackendServices(
     google::cloud::cpp::compute::backend_services::v1::
-        AggregatedListBackendServicesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListBackendServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::BackendServicesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

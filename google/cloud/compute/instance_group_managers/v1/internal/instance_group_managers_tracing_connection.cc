@@ -46,16 +46,21 @@ InstanceGroupManagersTracingConnection::AbandonInstances(
   return internal::EndSpan(std::move(span), child_->AbandonInstances(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>
 InstanceGroupManagersTracingConnection::AggregatedListInstanceGroupManagers(
     google::cloud::cpp::compute::instance_group_managers::v1::
-        AggregatedListInstanceGroupManagersRequest const& request) {
+        AggregatedListInstanceGroupManagersRequest request) {
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "AggregatedListInstanceGroupManagers");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->AggregatedListInstanceGroupManagers(request));
+  auto sr = child_->AggregatedListInstanceGroupManagers(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

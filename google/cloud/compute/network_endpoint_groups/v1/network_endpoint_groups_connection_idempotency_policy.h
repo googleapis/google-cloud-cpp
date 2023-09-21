@@ -40,7 +40,7 @@ class NetworkEndpointGroupsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListNetworkEndpointGroups(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          AggregatedListNetworkEndpointGroupsRequest const& request);
+          AggregatedListNetworkEndpointGroupsRequest request);
 
   virtual google::cloud::Idempotency AttachNetworkEndpoints(
       google::cloud::cpp::compute::network_endpoint_groups::v1::

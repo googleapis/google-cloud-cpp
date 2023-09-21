@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionCommitmentsConnection::~RegionCommitmentsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
 RegionCommitmentsConnection::AggregatedListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::CommitmentsScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>

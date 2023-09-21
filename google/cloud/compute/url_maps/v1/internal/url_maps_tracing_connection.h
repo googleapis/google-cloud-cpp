@@ -39,10 +39,11 @@ class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::UrlMapsScopedList>>
   AggregatedListUrlMaps(
-      google::cloud::cpp::compute::url_maps::v1::
-          AggregatedListUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
       google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&

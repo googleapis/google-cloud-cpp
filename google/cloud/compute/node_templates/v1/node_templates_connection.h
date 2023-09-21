@@ -186,10 +186,10 @@ class NodeTemplatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
-  AggregatedListNodeTemplates(
-      google::cloud::cpp::compute::node_templates::v1::
-          AggregatedListNodeTemplatesRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
+  AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                                  AggregatedListNodeTemplatesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::

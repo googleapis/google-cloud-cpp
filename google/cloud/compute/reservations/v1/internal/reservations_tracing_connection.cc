@@ -32,15 +32,19 @@ ReservationsTracingConnection::ReservationsTracingConnection(
     std::shared_ptr<compute_reservations_v1::ReservationsConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
 ReservationsTracingConnection::AggregatedListReservations(
     google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest const& request) {
+        AggregatedListReservationsRequest request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::"
       "AggregatedListReservations");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListReservations(request));
+  auto sr = child_->AggregatedListReservations(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

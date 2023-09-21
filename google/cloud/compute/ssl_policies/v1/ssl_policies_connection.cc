@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SslPoliciesConnection::~SslPoliciesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
 SslPoliciesConnection::AggregatedListSslPolicies(
     google::cloud::cpp::compute::ssl_policies::v1::
-        AggregatedListSslPoliciesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListSslPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::SslPoliciesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

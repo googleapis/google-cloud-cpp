@@ -48,10 +48,11 @@ class InstancesTracingConnection
   AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
                           AddResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::InstancesScopedList>>
   AggregatedListInstances(
-      google::cloud::cpp::compute::instances::v1::
-          AggregatedListInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&

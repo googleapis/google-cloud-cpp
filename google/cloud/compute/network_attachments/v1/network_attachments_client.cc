@@ -32,7 +32,8 @@ NetworkAttachmentsClient::NetworkAttachmentsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 NetworkAttachmentsClient::~NetworkAttachmentsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
 NetworkAttachmentsClient::AggregatedListNetworkAttachments(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ NetworkAttachmentsClient::AggregatedListNetworkAttachments(
   return connection_->AggregatedListNetworkAttachments(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
 NetworkAttachmentsClient::AggregatedListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
-        AggregatedListNetworkAttachmentsRequest const& request,
+        AggregatedListNetworkAttachmentsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListNetworkAttachments(request);
+  return connection_->AggregatedListNetworkAttachments(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

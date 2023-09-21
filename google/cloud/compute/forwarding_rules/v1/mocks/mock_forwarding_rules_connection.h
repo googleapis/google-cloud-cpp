@@ -47,12 +47,13 @@ class MockForwardingRulesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>,
-      AggregatedListForwardingRules,
-      (google::cloud::cpp::compute::forwarding_rules::v1::
-           AggregatedListForwardingRulesRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<std::pair<
+                  std::string,
+                  google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>,
+              AggregatedListForwardingRules,
+              (google::cloud::cpp::compute::forwarding_rules::v1::
+                   AggregatedListForwardingRulesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteForwardingRule,

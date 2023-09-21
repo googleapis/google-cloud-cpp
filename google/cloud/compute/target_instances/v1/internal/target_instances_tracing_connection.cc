@@ -33,16 +33,19 @@ TargetInstancesTracingConnection::TargetInstancesTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
 TargetInstancesTracingConnection::AggregatedListTargetInstances(
     google::cloud::cpp::compute::target_instances::v1::
-        AggregatedListTargetInstancesRequest const& request) {
+        AggregatedListTargetInstancesRequest request) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "AggregatedListTargetInstances");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListTargetInstances(request));
+  auto sr = child_->AggregatedListTargetInstances(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

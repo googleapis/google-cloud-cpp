@@ -47,12 +47,13 @@ class MockResourcePoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>,
-      AggregatedListResourcePolicies,
-      (google::cloud::cpp::compute::resource_policies::v1::
-           AggregatedListResourcePoliciesRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<std::pair<
+                  std::string,
+                  google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>,
+              AggregatedListResourcePolicies,
+              (google::cloud::cpp::compute::resource_policies::v1::
+                   AggregatedListResourcePoliciesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteResourcePolicy,

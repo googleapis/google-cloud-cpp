@@ -40,7 +40,7 @@ class InterconnectAttachmentsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListInterconnectAttachments(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          AggregatedListInterconnectAttachmentsRequest const& request);
+          AggregatedListInterconnectAttachmentsRequest request);
 
   virtual google::cloud::Idempotency DeleteInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::

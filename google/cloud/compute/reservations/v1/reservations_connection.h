@@ -185,10 +185,10 @@ class ReservationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
-  AggregatedListReservations(
-      google::cloud::cpp::compute::reservations::v1::
-          AggregatedListReservationsRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>
+  AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::
+                                 AggregatedListReservationsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteReservation(google::cloud::cpp::compute::reservations::v1::

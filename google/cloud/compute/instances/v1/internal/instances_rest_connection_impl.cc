@@ -149,20 +149,42 @@ InstancesRestConnectionImpl::AddResourcePolicies(
       });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::InstancesScopedList>>
 InstancesRestConnectionImpl::AggregatedListInstances(
-    google::cloud::cpp::compute::instances::v1::
-        AggregatedListInstancesRequest const& request) {
+    google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+        request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListInstances(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::instances::v1::
-                 AggregatedListInstancesRequest const& request) {
-        return stub_->AggregatedListInstances(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListInstances(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_instances_v1::InstancesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::instances::v1::
+              AggregatedListInstancesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::instances::v1::
+                       AggregatedListInstancesRequest const& request) {
+              return stub->AggregatedListInstances(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::InstanceAggregatedList r) {
+        std::vector<std::pair<
+            std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

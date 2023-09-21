@@ -32,7 +32,8 @@ MachineTypesClient::MachineTypesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 MachineTypesClient::~MachineTypesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
 MachineTypesClient::AggregatedListMachineTypes(std::string const& project,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ MachineTypesClient::AggregatedListMachineTypes(std::string const& project,
   return connection_->AggregatedListMachineTypes(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
 MachineTypesClient::AggregatedListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
-        AggregatedListMachineTypesRequest const& request,
+        AggregatedListMachineTypesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListMachineTypes(request);
+  return connection_->AggregatedListMachineTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>

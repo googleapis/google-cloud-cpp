@@ -32,7 +32,8 @@ UrlMapsClient::UrlMapsClient(ExperimentalTag,
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 UrlMapsClient::~UrlMapsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>
 UrlMapsClient::AggregatedListUrlMaps(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
@@ -41,13 +42,14 @@ UrlMapsClient::AggregatedListUrlMaps(std::string const& project, Options opts) {
   return connection_->AggregatedListUrlMaps(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>
 UrlMapsClient::AggregatedListUrlMaps(
-    google::cloud::cpp::compute::url_maps::v1::
-        AggregatedListUrlMapsRequest const& request,
+    google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListUrlMaps(request);
+  return connection_->AggregatedListUrlMaps(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

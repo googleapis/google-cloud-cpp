@@ -43,7 +43,7 @@ Idempotency BackendServicesConnectionIdempotencyPolicy::AddSignedUrlKey(
 Idempotency
 BackendServicesConnectionIdempotencyPolicy::AggregatedListBackendServices(
     google::cloud::cpp::compute::backend_services::v1::
-        AggregatedListBackendServicesRequest const&) {
+        AggregatedListBackendServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

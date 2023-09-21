@@ -45,23 +45,50 @@ InterconnectAttachmentsRestConnectionImpl::
       options_(internal::MergeOptions(
           std::move(options), InterconnectAttachmentsConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       InterconnectAttachmentsScopedList>>
 InterconnectAttachmentsRestConnectionImpl::
     AggregatedListInterconnectAttachments(
         google::cloud::cpp::compute::interconnect_attachments::v1::
-            AggregatedListInterconnectAttachmentsRequest const& request) {
+            AggregatedListInterconnectAttachmentsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
+  auto idempotency =
       idempotency_policy(*current)->AggregatedListInterconnectAttachments(
-          request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnect_attachments::v1::
-                 AggregatedListInterconnectAttachmentsRequest const& request) {
-        return stub_->AggregatedListInterconnectAttachments(rest_context,
-                                                            request);
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::InterconnectAttachmentsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_interconnect_attachments_v1::
+                                   InterconnectAttachmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::interconnect_attachments::v1::
+              AggregatedListInterconnectAttachmentsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::interconnect_attachments::v1::
+                       AggregatedListInterconnectAttachmentsRequest const&
+                           request) {
+              return stub->AggregatedListInterconnectAttachments(rest_context,
+                                                                 request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList
+             r) {
+        std::vector<std::pair<
+            std::string,
+            google::cloud::cpp::compute::v1::InterconnectAttachmentsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

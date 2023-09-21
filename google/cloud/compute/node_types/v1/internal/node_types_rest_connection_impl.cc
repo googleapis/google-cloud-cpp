@@ -39,20 +39,42 @@ NodeTypesRestConnectionImpl::NodeTypesRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       NodeTypesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
 NodeTypesRestConnectionImpl::AggregatedListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::
-        AggregatedListNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest
+        request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListNodeTypes(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::node_types::v1::
-                 AggregatedListNodeTypesRequest const& request) {
-        return stub_->AggregatedListNodeTypes(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListNodeTypes(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_node_types_v1::NodeTypesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::node_types::v1::
+              AggregatedListNodeTypesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::node_types::v1::
+                       AggregatedListNodeTypesRequest const& request) {
+              return stub->AggregatedListNodeTypes(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::NodeTypeAggregatedList r) {
+        std::vector<std::pair<
+            std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>

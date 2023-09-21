@@ -39,7 +39,7 @@ class HealthChecksConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListHealthChecks(
       google::cloud::cpp::compute::health_checks::v1::
-          AggregatedListHealthChecksRequest const& request);
+          AggregatedListHealthChecksRequest request);
 
   virtual google::cloud::Idempotency DeleteHealthCheck(
       google::cloud::cpp::compute::health_checks::v1::

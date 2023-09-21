@@ -37,7 +37,7 @@ ResourcePoliciesConnectionIdempotencyPolicy::clone() const {
 Idempotency
 ResourcePoliciesConnectionIdempotencyPolicy::AggregatedListResourcePolicies(
     google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest const&) {
+        AggregatedListResourcePoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

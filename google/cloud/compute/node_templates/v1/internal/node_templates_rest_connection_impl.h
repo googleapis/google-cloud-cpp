@@ -51,10 +51,11 @@ class NodeTemplatesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
   AggregatedListNodeTemplates(
       google::cloud::cpp::compute::node_templates::v1::
-          AggregatedListNodeTemplatesRequest const& request) override;
+          AggregatedListNodeTemplatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::

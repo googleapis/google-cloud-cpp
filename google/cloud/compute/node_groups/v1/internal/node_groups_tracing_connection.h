@@ -44,10 +44,11 @@ class NodeGroupsTracingConnection
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
   AggregatedListNodeGroups(
       google::cloud::cpp::compute::node_groups::v1::
-          AggregatedListNodeGroupsRequest const& request) override;
+          AggregatedListNodeGroupsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::

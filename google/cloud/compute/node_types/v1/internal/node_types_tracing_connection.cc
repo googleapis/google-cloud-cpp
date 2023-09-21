@@ -32,14 +32,18 @@ NodeTypesTracingConnection::NodeTypesTracingConnection(
     std::shared_ptr<compute_node_types_v1::NodeTypesConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTypesScopedList>>
 NodeTypesTracingConnection::AggregatedListNodeTypes(
-    google::cloud::cpp::compute::node_types::v1::
-        AggregatedListNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest
+        request) {
   auto span = internal::MakeSpan(
       "compute_node_types_v1::NodeTypesConnection::AggregatedListNodeTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListNodeTypes(request));
+  auto sr = child_->AggregatedListNodeTypes(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>

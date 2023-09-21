@@ -41,10 +41,11 @@ class GlobalOperationsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::OperationsScopedList>>
   AggregatedListGlobalOperations(
       google::cloud::cpp::compute::global_operations::v1::
-          AggregatedListGlobalOperationsRequest const& request) override;
+          AggregatedListGlobalOperationsRequest request) override;
 
   Status DeleteOperation(google::cloud::cpp::compute::global_operations::v1::
                              DeleteOperationRequest const& request) override;

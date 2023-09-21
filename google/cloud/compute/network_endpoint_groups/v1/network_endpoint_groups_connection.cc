@@ -35,11 +35,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworkEndpointGroupsConnection::~NetworkEndpointGroupsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>
 NetworkEndpointGroupsConnection::AggregatedListNetworkEndpointGroups(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        AggregatedListNetworkEndpointGroupsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListNetworkEndpointGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string, google::cloud::cpp::compute::v1::
+                                 NetworkEndpointGroupsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

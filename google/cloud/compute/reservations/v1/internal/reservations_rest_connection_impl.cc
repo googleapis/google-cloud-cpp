@@ -42,20 +42,44 @@ ReservationsRestConnectionImpl::ReservationsRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       ReservationsConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
 ReservationsRestConnectionImpl::AggregatedListReservations(
     google::cloud::cpp::compute::reservations::v1::
-        AggregatedListReservationsRequest const& request) {
+        AggregatedListReservationsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListReservations(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::reservations::v1::
-                 AggregatedListReservationsRequest const& request) {
-        return stub_->AggregatedListReservations(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListReservations(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<compute_reservations_v1::ReservationsRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::reservations::v1::
+              AggregatedListReservationsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::reservations::v1::
+                       AggregatedListReservationsRequest const& request) {
+              return stub->AggregatedListReservations(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::ReservationAggregatedList r) {
+        std::vector<
+            std::pair<std::string,
+                      google::cloud::cpp::compute::v1::ReservationsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

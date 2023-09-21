@@ -43,20 +43,45 @@ RegionCommitmentsRestConnectionImpl::RegionCommitmentsRestConnectionImpl(
       options_(internal::MergeOptions(
           std::move(options), RegionCommitmentsConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
 RegionCommitmentsRestConnectionImpl::AggregatedListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
-        AggregatedListRegionCommitmentsRequest const& request) {
+        AggregatedListRegionCommitmentsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListRegionCommitments(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::region_commitments::v1::
-                 AggregatedListRegionCommitmentsRequest const& request) {
-        return stub_->AggregatedListRegionCommitments(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListRegionCommitments(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_region_commitments_v1::RegionCommitmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::region_commitments::v1::
+              AggregatedListRegionCommitmentsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::region_commitments::v1::
+                       AggregatedListRegionCommitmentsRequest const& request) {
+              return stub->AggregatedListRegionCommitments(rest_context,
+                                                           request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::CommitmentAggregatedList r) {
+        std::vector<
+            std::pair<std::string,
+                      google::cloud::cpp::compute::v1::CommitmentsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>

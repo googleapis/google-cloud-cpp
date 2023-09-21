@@ -36,16 +36,20 @@ PublicDelegatedPrefixesTracingConnection::
             child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       PublicDelegatedPrefixesScopedList>>
 PublicDelegatedPrefixesTracingConnection::AggregatedListPublicDelegatedPrefixes(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        AggregatedListPublicDelegatedPrefixesRequest const& request) {
+        AggregatedListPublicDelegatedPrefixesRequest request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":AggregatedListPublicDelegatedPrefixes");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->AggregatedListPublicDelegatedPrefixes(request));
+  auto sr = child_->AggregatedListPublicDelegatedPrefixes(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::PublicDelegatedPrefixesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

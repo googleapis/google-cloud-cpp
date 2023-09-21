@@ -38,7 +38,7 @@ class SubnetworksConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::
-          AggregatedListSubnetworksRequest const& request);
+          AggregatedListSubnetworksRequest request);
 
   virtual google::cloud::Idempotency DeleteSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::

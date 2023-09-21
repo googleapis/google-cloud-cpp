@@ -41,10 +41,11 @@ class AcceleratorTypesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
   AggregatedListAcceleratorTypes(
       google::cloud::cpp::compute::accelerator_types::v1::
-          AggregatedListAcceleratorTypesRequest const& request) override;
+          AggregatedListAcceleratorTypesRequest request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
       google::cloud::cpp::compute::accelerator_types::v1::

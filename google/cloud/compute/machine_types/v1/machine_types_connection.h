@@ -184,10 +184,10 @@ class MachineTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
-  AggregatedListMachineTypes(
-      google::cloud::cpp::compute::machine_types::v1::
-          AggregatedListMachineTypesRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::
+                                 AggregatedListMachineTypesRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::cpp::compute::machine_types::v1::

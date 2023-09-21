@@ -39,7 +39,7 @@ class InstanceTemplatesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListInstanceTemplates(
       google::cloud::cpp::compute::instance_templates::v1::
-          AggregatedListInstanceTemplatesRequest const& request);
+          AggregatedListInstanceTemplatesRequest request);
 
   virtual google::cloud::Idempotency DeleteInstanceTemplate(
       google::cloud::cpp::compute::instance_templates::v1::

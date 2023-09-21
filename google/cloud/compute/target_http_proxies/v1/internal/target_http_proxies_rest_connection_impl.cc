@@ -43,20 +43,45 @@ TargetHttpProxiesRestConnectionImpl::TargetHttpProxiesRestConnectionImpl(
       options_(internal::MergeOptions(
           std::move(options), TargetHttpProxiesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
 TargetHttpProxiesRestConnectionImpl::AggregatedListTargetHttpProxies(
     google::cloud::cpp::compute::target_http_proxies::v1::
-        AggregatedListTargetHttpProxiesRequest const& request) {
+        AggregatedListTargetHttpProxiesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListTargetHttpProxies(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::target_http_proxies::v1::
-                 AggregatedListTargetHttpProxiesRequest const& request) {
-        return stub_->AggregatedListTargetHttpProxies(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListTargetHttpProxies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::target_http_proxies::v1::
+              AggregatedListTargetHttpProxiesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::target_http_proxies::v1::
+                       AggregatedListTargetHttpProxiesRequest const& request) {
+              return stub->AggregatedListTargetHttpProxies(rest_context,
+                                                           request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               TargetHttpProxiesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

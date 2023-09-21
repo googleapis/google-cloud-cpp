@@ -48,10 +48,11 @@ class MockSubnetworksConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>,
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>,
       AggregatedListSubnetworks,
       (google::cloud::cpp::compute::subnetworks::v1::
-           AggregatedListSubnetworksRequest const& request),
+           AggregatedListSubnetworksRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

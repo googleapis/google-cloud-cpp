@@ -53,12 +53,13 @@ class MockSecurityPoliciesConnection
            request),
       (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>,
-      AggregatedListSecurityPolicies,
-      (google::cloud::cpp::compute::security_policies::v1::
-           AggregatedListSecurityPoliciesRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<std::pair<
+                  std::string,
+                  google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>,
+              AggregatedListSecurityPolicies,
+              (google::cloud::cpp::compute::security_policies::v1::
+                   AggregatedListSecurityPoliciesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSecurityPolicy,

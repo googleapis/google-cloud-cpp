@@ -43,7 +43,7 @@ class SecurityPoliciesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListSecurityPolicies(
       google::cloud::cpp::compute::security_policies::v1::
-          AggregatedListSecurityPoliciesRequest const& request);
+          AggregatedListSecurityPoliciesRequest request);
 
   virtual google::cloud::Idempotency DeleteSecurityPolicy(
       google::cloud::cpp::compute::security_policies::v1::

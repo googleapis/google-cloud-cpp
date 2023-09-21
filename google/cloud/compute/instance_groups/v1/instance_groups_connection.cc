@@ -43,11 +43,14 @@ InstanceGroupsConnection::AddInstances(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
 InstanceGroupsConnection::AggregatedListInstanceGroups(
     google::cloud::cpp::compute::instance_groups::v1::
-        AggregatedListInstanceGroupsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListInstanceGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ForwardingRulesConnection::~ForwardingRulesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
 ForwardingRulesConnection::AggregatedListForwardingRules(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListForwardingRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

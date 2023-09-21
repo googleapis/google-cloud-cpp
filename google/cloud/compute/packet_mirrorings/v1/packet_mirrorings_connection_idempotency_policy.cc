@@ -37,7 +37,7 @@ PacketMirroringsConnectionIdempotencyPolicy::clone() const {
 Idempotency
 PacketMirroringsConnectionIdempotencyPolicy::AggregatedListPacketMirrorings(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        AggregatedListPacketMirroringsRequest const&) {
+        AggregatedListPacketMirroringsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

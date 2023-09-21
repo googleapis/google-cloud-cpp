@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AddressesConnection::~AddressesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AddressesScopedList>>
 AddressesConnection::AggregatedListAddresses(
     google::cloud::cpp::compute::addresses::v1::
-        AggregatedListAddressesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListAddressesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::AddressesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -52,10 +52,11 @@ class RegionCommitmentsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::CommitmentsScopedList>>
   AggregatedListRegionCommitments(
       google::cloud::cpp::compute::region_commitments::v1::
-          AggregatedListRegionCommitmentsRequest const& request) override;
+          AggregatedListRegionCommitmentsRequest request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
       google::cloud::cpp::compute::region_commitments::v1::

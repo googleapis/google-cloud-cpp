@@ -39,7 +39,7 @@ NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::clone() const {
 Idempotency NetworkEdgeSecurityServicesConnectionIdempotencyPolicy::
     AggregatedListNetworkEdgeSecurityServices(
         google::cloud::cpp::compute::network_edge_security_services::v1::
-            AggregatedListNetworkEdgeSecurityServicesRequest const&) {
+            AggregatedListNetworkEdgeSecurityServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

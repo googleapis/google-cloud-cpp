@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworkAttachmentsConnection::~NetworkAttachmentsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
 NetworkAttachmentsConnection::AggregatedListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
-        AggregatedListNetworkAttachmentsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListNetworkAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             NetworkAttachmentsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

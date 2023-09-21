@@ -32,7 +32,8 @@ GlobalOperationsClient::GlobalOperationsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 GlobalOperationsClient::~GlobalOperationsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::OperationsScopedList>>
 GlobalOperationsClient::AggregatedListGlobalOperations(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ GlobalOperationsClient::AggregatedListGlobalOperations(
   return connection_->AggregatedListGlobalOperations(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::OperationsScopedList>>
 GlobalOperationsClient::AggregatedListGlobalOperations(
     google::cloud::cpp::compute::global_operations::v1::
-        AggregatedListGlobalOperationsRequest const& request,
+        AggregatedListGlobalOperationsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListGlobalOperations(request);
+  return connection_->AggregatedListGlobalOperations(std::move(request));
 }
 
 Status GlobalOperationsClient::DeleteOperation(std::string const& project,

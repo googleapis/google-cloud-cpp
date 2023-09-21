@@ -38,7 +38,7 @@ class AutoscalersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListAutoscalers(
       google::cloud::cpp::compute::autoscalers::v1::
-          AggregatedListAutoscalersRequest const& request);
+          AggregatedListAutoscalersRequest request);
 
   virtual google::cloud::Idempotency DeleteAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::

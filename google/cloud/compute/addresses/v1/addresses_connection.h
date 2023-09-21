@@ -184,9 +184,11 @@ class AddressesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::
-                              AggregatedListAddressesRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>
+  AggregatedListAddresses(
+      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAddress(

@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SslCertificatesConnection::~SslCertificatesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>
 SslCertificatesConnection::AggregatedListSslCertificates(
     google::cloud::cpp::compute::ssl_certificates::v1::
-        AggregatedListSslCertificatesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListSslCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::SslCertificatesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

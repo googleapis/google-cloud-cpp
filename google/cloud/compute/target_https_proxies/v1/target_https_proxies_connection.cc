@@ -35,11 +35,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetHttpsProxiesConnection::~TargetHttpsProxiesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetHttpsProxiesScopedList>>
 TargetHttpsProxiesConnection::AggregatedListTargetHttpsProxies(
     google::cloud::cpp::compute::target_https_proxies::v1::
-        AggregatedListTargetHttpsProxiesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListTargetHttpsProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             TargetHttpsProxiesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

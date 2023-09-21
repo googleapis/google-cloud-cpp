@@ -32,15 +32,19 @@ VpnGatewaysTracingConnection::VpnGatewaysTracingConnection(
     std::shared_ptr<compute_vpn_gateways_v1::VpnGatewaysConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>
 VpnGatewaysTracingConnection::AggregatedListVpnGateways(
     google::cloud::cpp::compute::vpn_gateways::v1::
-        AggregatedListVpnGatewaysRequest const& request) {
+        AggregatedListVpnGatewaysRequest request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::"
       "AggregatedListVpnGateways");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListVpnGateways(request));
+  auto sr = child_->AggregatedListVpnGateways(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

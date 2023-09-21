@@ -187,11 +187,11 @@ class PacketMirroringsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
   AggregatedListPacketMirrorings(
       google::cloud::cpp::compute::packet_mirrorings::v1::
-          AggregatedListPacketMirroringsRequest const& request);
+          AggregatedListPacketMirroringsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::

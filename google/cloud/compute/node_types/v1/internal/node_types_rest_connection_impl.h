@@ -49,10 +49,10 @@ class NodeTypesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-  AggregatedListNodeTypes(
-      google::cloud::cpp::compute::node_types::v1::
-          AggregatedListNodeTypesRequest const& request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
+                              AggregatedListNodeTypesRequest request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&

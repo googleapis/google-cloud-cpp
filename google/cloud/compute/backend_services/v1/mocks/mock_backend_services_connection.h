@@ -53,12 +53,13 @@ class MockBackendServicesConnection
                    AddSignedUrlKeyRequest const& request),
               (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>,
-      AggregatedListBackendServices,
-      (google::cloud::cpp::compute::backend_services::v1::
-           AggregatedListBackendServicesRequest const& request),
-      (override));
+  MOCK_METHOD(StreamRange<std::pair<
+                  std::string,
+                  google::cloud::cpp::compute::v1::BackendServicesScopedList>>,
+              AggregatedListBackendServices,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   AggregatedListBackendServicesRequest request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendService,

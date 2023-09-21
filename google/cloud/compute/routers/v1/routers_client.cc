@@ -32,7 +32,8 @@ RoutersClient::RoutersClient(ExperimentalTag,
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 RoutersClient::~RoutersClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
 RoutersClient::AggregatedListRouters(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
@@ -41,13 +42,14 @@ RoutersClient::AggregatedListRouters(std::string const& project, Options opts) {
   return connection_->AggregatedListRouters(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
 RoutersClient::AggregatedListRouters(
-    google::cloud::cpp::compute::routers::v1::
-        AggregatedListRoutersRequest const& request,
+    google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListRouters(request);
+  return connection_->AggregatedListRouters(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

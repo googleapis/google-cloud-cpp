@@ -40,10 +40,11 @@ class VpnTunnelsTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>
   AggregatedListVpnTunnels(
       google::cloud::cpp::compute::vpn_tunnels::v1::
-          AggregatedListVpnTunnelsRequest const& request) override;
+          AggregatedListVpnTunnelsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::

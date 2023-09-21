@@ -54,10 +54,11 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>,
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::NodeGroupsScopedList>>,
       AggregatedListNodeGroups,
       (google::cloud::cpp::compute::node_groups::v1::
-           AggregatedListNodeGroupsRequest const& request),
+           AggregatedListNodeGroupsRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

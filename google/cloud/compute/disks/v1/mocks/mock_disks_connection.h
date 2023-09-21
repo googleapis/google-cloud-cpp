@@ -54,9 +54,10 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>,
+      StreamRange<std::pair<std::string,
+                            google::cloud::cpp::compute::v1::DisksScopedList>>,
       AggregatedListDisks,
-      (google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+      (google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest
            request),
       (override));
 

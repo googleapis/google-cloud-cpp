@@ -39,7 +39,7 @@ class ReservationsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListReservations(
       google::cloud::cpp::compute::reservations::v1::
-          AggregatedListReservationsRequest const& request);
+          AggregatedListReservationsRequest request);
 
   virtual google::cloud::Idempotency DeleteReservation(
       google::cloud::cpp::compute::reservations::v1::

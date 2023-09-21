@@ -35,16 +35,21 @@ NetworkEndpointGroupsTracingConnection::NetworkEndpointGroupsTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>
 NetworkEndpointGroupsTracingConnection::AggregatedListNetworkEndpointGroups(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        AggregatedListNetworkEndpointGroupsRequest const& request) {
+        AggregatedListNetworkEndpointGroupsRequest request) {
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "AggregatedListNetworkEndpointGroups");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->AggregatedListNetworkEndpointGroups(request));
+  auto sr = child_->AggregatedListNetworkEndpointGroups(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

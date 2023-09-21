@@ -186,10 +186,10 @@ class HealthChecksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
-  AggregatedListHealthChecks(
-      google::cloud::cpp::compute::health_checks::v1::
-          AggregatedListHealthChecksRequest const& request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>
+  AggregatedListHealthChecks(google::cloud::cpp::compute::health_checks::v1::
+                                 AggregatedListHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::

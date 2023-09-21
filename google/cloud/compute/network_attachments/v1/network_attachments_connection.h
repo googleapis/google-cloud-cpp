@@ -189,11 +189,12 @@ class NetworkAttachmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
   AggregatedListNetworkAttachments(
       google::cloud::cpp::compute::network_attachments::v1::
-          AggregatedListNetworkAttachmentsRequest const& request);
+          AggregatedListNetworkAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::

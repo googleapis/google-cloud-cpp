@@ -35,8 +35,8 @@ NetworkEdgeSecurityServicesClient::NetworkEdgeSecurityServicesClient(
 NetworkEdgeSecurityServicesClient::~NetworkEdgeSecurityServicesClient() =
     default;
 
-StatusOr<
-    google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       NetworkEdgeSecurityServicesScopedList>>
 NetworkEdgeSecurityServicesClient::AggregatedListNetworkEdgeSecurityServices(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -46,14 +46,15 @@ NetworkEdgeSecurityServicesClient::AggregatedListNetworkEdgeSecurityServices(
   return connection_->AggregatedListNetworkEdgeSecurityServices(request);
 }
 
-StatusOr<
-    google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       NetworkEdgeSecurityServicesScopedList>>
 NetworkEdgeSecurityServicesClient::AggregatedListNetworkEdgeSecurityServices(
     google::cloud::cpp::compute::network_edge_security_services::v1::
-        AggregatedListNetworkEdgeSecurityServicesRequest const& request,
+        AggregatedListNetworkEdgeSecurityServicesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListNetworkEdgeSecurityServices(request);
+  return connection_->AggregatedListNetworkEdgeSecurityServices(
+      std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

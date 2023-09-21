@@ -39,7 +39,7 @@ class ForwardingRulesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListForwardingRules(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          AggregatedListForwardingRulesRequest const& request);
+          AggregatedListForwardingRulesRequest request);
 
   virtual google::cloud::Idempotency DeleteForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::

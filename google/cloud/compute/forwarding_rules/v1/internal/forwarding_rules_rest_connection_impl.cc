@@ -43,20 +43,44 @@ ForwardingRulesRestConnectionImpl::ForwardingRulesRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       ForwardingRulesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
 ForwardingRulesRestConnectionImpl::AggregatedListForwardingRules(
     google::cloud::cpp::compute::forwarding_rules::v1::
-        AggregatedListForwardingRulesRequest const& request) {
+        AggregatedListForwardingRulesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListForwardingRules(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::forwarding_rules::v1::
-                 AggregatedListForwardingRulesRequest const& request) {
-        return stub_->AggregatedListForwardingRules(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListForwardingRules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_forwarding_rules_v1::ForwardingRulesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::forwarding_rules::v1::
+              AggregatedListForwardingRulesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::forwarding_rules::v1::
+                       AggregatedListForwardingRulesRequest const& request) {
+              return stub->AggregatedListForwardingRules(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               ForwardingRulesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

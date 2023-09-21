@@ -40,10 +40,10 @@ class DiskTypesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
-  AggregatedListDiskTypes(
-      google::cloud::cpp::compute::disk_types::v1::
-          AggregatedListDiskTypesRequest const& request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::
+                              AggregatedListDiskTypesRequest request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&

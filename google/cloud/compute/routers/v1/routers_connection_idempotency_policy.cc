@@ -36,7 +36,7 @@ RoutersConnectionIdempotencyPolicy::clone() const {
 
 Idempotency RoutersConnectionIdempotencyPolicy::AggregatedListRouters(
     google::cloud::cpp::compute::routers::v1::
-        AggregatedListRoutersRequest const&) {
+        AggregatedListRoutersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

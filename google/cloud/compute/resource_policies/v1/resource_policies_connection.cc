@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ResourcePoliciesConnection::~ResourcePoliciesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
 ResourcePoliciesConnection::AggregatedListResourcePolicies(
     google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListResourcePoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             ResourcePoliciesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

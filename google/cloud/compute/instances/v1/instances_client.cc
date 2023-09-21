@@ -84,7 +84,8 @@ InstancesClient::AddResourcePolicies(
   return connection_->AddResourcePolicies(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::InstancesScopedList>>
 InstancesClient::AggregatedListInstances(std::string const& project,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -94,13 +95,14 @@ InstancesClient::AggregatedListInstances(std::string const& project,
   return connection_->AggregatedListInstances(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::InstancesScopedList>>
 InstancesClient::AggregatedListInstances(
-    google::cloud::cpp::compute::instances::v1::
-        AggregatedListInstancesRequest const& request,
+    google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListInstances(request);
+  return connection_->AggregatedListInstances(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -33,7 +33,9 @@ NetworkEndpointGroupsClient::NetworkEndpointGroupsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 NetworkEndpointGroupsClient::~NetworkEndpointGroupsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>
 NetworkEndpointGroupsClient::AggregatedListNetworkEndpointGroups(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -43,13 +45,15 @@ NetworkEndpointGroupsClient::AggregatedListNetworkEndpointGroups(
   return connection_->AggregatedListNetworkEndpointGroups(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
+StreamRange<
+    std::pair<std::string,
+              google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>
 NetworkEndpointGroupsClient::AggregatedListNetworkEndpointGroups(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
-        AggregatedListNetworkEndpointGroupsRequest const& request,
+        AggregatedListNetworkEndpointGroupsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListNetworkEndpointGroups(request);
+  return connection_->AggregatedListNetworkEndpointGroups(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

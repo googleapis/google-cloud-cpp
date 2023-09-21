@@ -185,10 +185,11 @@ class GlobalOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::OperationsScopedList>>
   AggregatedListGlobalOperations(
       google::cloud::cpp::compute::global_operations::v1::
-          AggregatedListGlobalOperationsRequest const& request);
+          AggregatedListGlobalOperationsRequest request);
 
   virtual Status DeleteOperation(
       google::cloud::cpp::compute::global_operations::v1::

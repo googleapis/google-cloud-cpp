@@ -38,7 +38,7 @@ class DiskTypesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListDiskTypes(
       google::cloud::cpp::compute::disk_types::v1::
-          AggregatedListDiskTypesRequest const& request);
+          AggregatedListDiskTypesRequest request);
 
   virtual google::cloud::Idempotency GetDiskType(
       google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&

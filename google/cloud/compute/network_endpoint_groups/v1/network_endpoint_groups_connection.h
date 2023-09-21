@@ -195,11 +195,12 @@ class NetworkEndpointGroupsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>
   AggregatedListNetworkEndpointGroups(
       google::cloud::cpp::compute::network_endpoint_groups::v1::
-          AggregatedListNetworkEndpointGroupsRequest const& request);
+          AggregatedListNetworkEndpointGroupsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachNetworkEndpoints(google::cloud::cpp::compute::network_endpoint_groups::

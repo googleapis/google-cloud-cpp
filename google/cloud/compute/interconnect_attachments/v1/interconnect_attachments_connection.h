@@ -196,11 +196,12 @@ class InterconnectAttachmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::InterconnectAttachmentsScopedList>>
   AggregatedListInterconnectAttachments(
       google::cloud::cpp::compute::interconnect_attachments::v1::
-          AggregatedListInterconnectAttachmentsRequest const& request);
+          AggregatedListInterconnectAttachmentsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnectAttachment(

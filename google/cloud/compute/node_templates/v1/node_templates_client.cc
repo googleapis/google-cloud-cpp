@@ -32,7 +32,8 @@ NodeTemplatesClient::NodeTemplatesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 NodeTemplatesClient::~NodeTemplatesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
 NodeTemplatesClient::AggregatedListNodeTemplates(std::string const& project,
                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ NodeTemplatesClient::AggregatedListNodeTemplates(std::string const& project,
   return connection_->AggregatedListNodeTemplates(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
 NodeTemplatesClient::AggregatedListNodeTemplates(
     google::cloud::cpp::compute::node_templates::v1::
-        AggregatedListNodeTemplatesRequest const& request,
+        AggregatedListNodeTemplatesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListNodeTemplates(request);
+  return connection_->AggregatedListNodeTemplates(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

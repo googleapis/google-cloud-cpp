@@ -33,16 +33,20 @@ InstanceTemplatesTracingConnection::InstanceTemplatesTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
 InstanceTemplatesTracingConnection::AggregatedListInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
-        AggregatedListInstanceTemplatesRequest const& request) {
+        AggregatedListInstanceTemplatesRequest request) {
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "AggregatedListInstanceTemplates");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListInstanceTemplates(request));
+  auto sr = child_->AggregatedListInstanceTemplates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

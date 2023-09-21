@@ -40,7 +40,7 @@ class PublicDelegatedPrefixesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AggregatedListPublicDelegatedPrefixes(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          AggregatedListPublicDelegatedPrefixesRequest const& request);
+          AggregatedListPublicDelegatedPrefixesRequest request);
 
   virtual google::cloud::Idempotency DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::public_delegated_prefixes::v1::

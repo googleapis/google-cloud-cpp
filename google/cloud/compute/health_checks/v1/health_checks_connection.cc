@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HealthChecksConnection::~HealthChecksConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::HealthChecksScopedList>>
 HealthChecksConnection::AggregatedListHealthChecks(
     google::cloud::cpp::compute::health_checks::v1::
-        AggregatedListHealthChecksRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListHealthChecksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::HealthChecksScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -58,10 +58,11 @@ class InstanceGroupManagersRestConnectionImpl
       google::cloud::cpp::compute::instance_group_managers::v1::
           AbandonInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         InstanceGroupManagersScopedList>>
   AggregatedListInstanceGroupManagers(
       google::cloud::cpp::compute::instance_group_managers::v1::
-          AggregatedListInstanceGroupManagersRequest const& request) override;
+          AggregatedListInstanceGroupManagersRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ApplyUpdatesToInstances(

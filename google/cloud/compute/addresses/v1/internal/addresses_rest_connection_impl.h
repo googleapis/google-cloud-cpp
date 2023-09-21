@@ -50,10 +50,11 @@ class AddressesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::AddressesScopedList>>
   AggregatedListAddresses(
-      google::cloud::cpp::compute::addresses::v1::
-          AggregatedListAddressesRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&

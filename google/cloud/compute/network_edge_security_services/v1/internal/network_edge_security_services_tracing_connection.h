@@ -44,12 +44,11 @@ class NetworkEdgeSecurityServicesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<
-      google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         NetworkEdgeSecurityServicesScopedList>>
   AggregatedListNetworkEdgeSecurityServices(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          AggregatedListNetworkEdgeSecurityServicesRequest const& request)
-      override;
+          AggregatedListNetworkEdgeSecurityServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEdgeSecurityService(

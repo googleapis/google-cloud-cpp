@@ -43,20 +43,45 @@ PacketMirroringsRestConnectionImpl::PacketMirroringsRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       PacketMirroringsConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>
 PacketMirroringsRestConnectionImpl::AggregatedListPacketMirrorings(
     google::cloud::cpp::compute::packet_mirrorings::v1::
-        AggregatedListPacketMirroringsRequest const& request) {
+        AggregatedListPacketMirroringsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListPacketMirrorings(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packet_mirrorings::v1::
-                 AggregatedListPacketMirroringsRequest const& request) {
-        return stub_->AggregatedListPacketMirrorings(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListPacketMirrorings(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::packet_mirrorings::v1::
+              AggregatedListPacketMirroringsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::packet_mirrorings::v1::
+                       AggregatedListPacketMirroringsRequest const& request) {
+              return stub->AggregatedListPacketMirrorings(rest_context,
+                                                          request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::PacketMirroringAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               PacketMirroringsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

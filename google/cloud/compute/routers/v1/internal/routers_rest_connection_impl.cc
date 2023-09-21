@@ -41,20 +41,42 @@ RoutersRestConnectionImpl::RoutersRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       RoutersConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
 RoutersRestConnectionImpl::AggregatedListRouters(
-    google::cloud::cpp::compute::routers::v1::
-        AggregatedListRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+        request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListRouters(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::
-                 AggregatedListRoutersRequest const& request) {
-        return stub_->AggregatedListRouters(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListRouters(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_routers_v1::RoutersRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::routers::v1::
+              AggregatedListRoutersRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::routers::v1::
+                       AggregatedListRoutersRequest const& request) {
+              return stub->AggregatedListRouters(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::RouterAggregatedList r) {
+        std::vector<std::pair<
+            std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

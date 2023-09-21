@@ -53,14 +53,18 @@ InstancesTracingConnection::AddResourcePolicies(
                            child_->AddResourcePolicies(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::InstancesScopedList>>
 InstancesTracingConnection::AggregatedListInstances(
-    google::cloud::cpp::compute::instances::v1::
-        AggregatedListInstancesRequest const& request) {
+    google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+        request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::AggregatedListInstances");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListInstances(request));
+  auto sr = child_->AggregatedListInstances(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -187,11 +187,12 @@ class TargetVpnGatewaysConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
   AggregatedListTargetVpnGateways(
       google::cloud::cpp::compute::target_vpn_gateways::v1::
-          AggregatedListTargetVpnGatewaysRequest const& request);
+          AggregatedListTargetVpnGatewaysRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::

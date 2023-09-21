@@ -187,11 +187,11 @@ class ResourcePoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
   AggregatedListResourcePolicies(
       google::cloud::cpp::compute::resource_policies::v1::
-          AggregatedListResourcePoliciesRequest const& request);
+          AggregatedListResourcePoliciesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::

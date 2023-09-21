@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 UrlMapsConnection::~UrlMapsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+StreamRange<
+    std::pair<std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>
 UrlMapsConnection::AggregatedListUrlMaps(
     google::cloud::cpp::compute::url_maps::v1::
-        AggregatedListUrlMapsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListUrlMapsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

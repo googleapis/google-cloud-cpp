@@ -45,10 +45,11 @@ class SecurityPoliciesTracingConnection
       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
           request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
   AggregatedListSecurityPolicies(
       google::cloud::cpp::compute::security_policies::v1::
-          AggregatedListSecurityPoliciesRequest const& request) override;
+          AggregatedListSecurityPoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::

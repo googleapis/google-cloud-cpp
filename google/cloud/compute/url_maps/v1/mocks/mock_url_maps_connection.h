@@ -46,11 +46,13 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>,
-              AggregatedListUrlMaps,
-              (google::cloud::cpp::compute::url_maps::v1::
-                   AggregatedListUrlMapsRequest const& request),
-              (override));
+  MOCK_METHOD(
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>,
+      AggregatedListUrlMaps,
+      (google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

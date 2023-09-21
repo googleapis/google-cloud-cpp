@@ -48,10 +48,11 @@ class MockVpnGatewaysConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>,
+      StreamRange<std::pair<
+          std::string, google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>,
       AggregatedListVpnGateways,
       (google::cloud::cpp::compute::vpn_gateways::v1::
-           AggregatedListVpnGatewaysRequest const& request),
+           AggregatedListVpnGatewaysRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

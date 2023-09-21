@@ -182,9 +182,10 @@ class NodeTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
   AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
-                              AggregatedListNodeTypesRequest const& request);
+                              AggregatedListNodeTypesRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&

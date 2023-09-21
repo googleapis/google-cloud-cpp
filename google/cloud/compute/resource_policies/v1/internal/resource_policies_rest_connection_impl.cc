@@ -43,20 +43,45 @@ ResourcePoliciesRestConnectionImpl::ResourcePoliciesRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       ResourcePoliciesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
 ResourcePoliciesRestConnectionImpl::AggregatedListResourcePolicies(
     google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest const& request) {
+        AggregatedListResourcePoliciesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListResourcePolicies(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::resource_policies::v1::
-                 AggregatedListResourcePoliciesRequest const& request) {
-        return stub_->AggregatedListResourcePolicies(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListResourcePolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_resource_policies_v1::ResourcePoliciesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::resource_policies::v1::
+              AggregatedListResourcePoliciesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::resource_policies::v1::
+                       AggregatedListResourcePoliciesRequest const& request) {
+              return stub->AggregatedListResourcePolicies(rest_context,
+                                                          request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               ResourcePoliciesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

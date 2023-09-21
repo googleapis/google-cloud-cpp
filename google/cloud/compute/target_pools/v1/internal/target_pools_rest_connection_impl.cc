@@ -149,20 +149,43 @@ TargetPoolsRestConnectionImpl::AddInstance(
       });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
 TargetPoolsRestConnectionImpl::AggregatedListTargetPools(
     google::cloud::cpp::compute::target_pools::v1::
-        AggregatedListTargetPoolsRequest const& request) {
+        AggregatedListTargetPoolsRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListTargetPools(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::target_pools::v1::
-                 AggregatedListTargetPoolsRequest const& request) {
-        return stub_->AggregatedListTargetPools(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListTargetPools(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::target_pools::v1::
+              AggregatedListTargetPoolsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::target_pools::v1::
+                       AggregatedListTargetPoolsRequest const& request) {
+              return stub->AggregatedListTargetPools(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::TargetPoolAggregatedList r) {
+        std::vector<
+            std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -45,23 +45,50 @@ PublicDelegatedPrefixesRestConnectionImpl::
       options_(internal::MergeOptions(
           std::move(options), PublicDelegatedPrefixesConnection::options())) {}
 
-StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       PublicDelegatedPrefixesScopedList>>
 PublicDelegatedPrefixesRestConnectionImpl::
     AggregatedListPublicDelegatedPrefixes(
         google::cloud::cpp::compute::public_delegated_prefixes::v1::
-            AggregatedListPublicDelegatedPrefixesRequest const& request) {
+            AggregatedListPublicDelegatedPrefixesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
+  auto idempotency =
       idempotency_policy(*current)->AggregatedListPublicDelegatedPrefixes(
-          request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::public_delegated_prefixes::v1::
-                 AggregatedListPublicDelegatedPrefixesRequest const& request) {
-        return stub_->AggregatedListPublicDelegatedPrefixes(rest_context,
-                                                            request);
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::PublicDelegatedPrefixesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_public_delegated_prefixes_v1::
+                                   PublicDelegatedPrefixesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::public_delegated_prefixes::v1::
+              AggregatedListPublicDelegatedPrefixesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                       AggregatedListPublicDelegatedPrefixesRequest const&
+                           request) {
+              return stub->AggregatedListPublicDelegatedPrefixes(rest_context,
+                                                                 request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList
+             r) {
+        std::vector<std::pair<
+            std::string,
+            google::cloud::cpp::compute::v1::PublicDelegatedPrefixesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

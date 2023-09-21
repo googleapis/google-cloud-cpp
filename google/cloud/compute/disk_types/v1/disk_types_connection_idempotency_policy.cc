@@ -36,7 +36,7 @@ DiskTypesConnectionIdempotencyPolicy::clone() const {
 
 Idempotency DiskTypesConnectionIdempotencyPolicy::AggregatedListDiskTypes(
     google::cloud::cpp::compute::disk_types::v1::
-        AggregatedListDiskTypesRequest const&) {
+        AggregatedListDiskTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

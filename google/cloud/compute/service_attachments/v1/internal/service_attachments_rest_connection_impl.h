@@ -52,10 +52,12 @@ class ServiceAttachmentsRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::ServiceAttachmentsScopedList>>
   AggregatedListServiceAttachments(
       google::cloud::cpp::compute::service_attachments::v1::
-          AggregatedListServiceAttachmentsRequest const& request) override;
+          AggregatedListServiceAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteServiceAttachment(

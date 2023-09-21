@@ -48,11 +48,11 @@ class MockServiceAttachmentsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>,
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             ServiceAttachmentsScopedList>>,
       AggregatedListServiceAttachments,
       (google::cloud::cpp::compute::service_attachments::v1::
-           AggregatedListServiceAttachmentsRequest const& request),
+           AggregatedListServiceAttachmentsRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

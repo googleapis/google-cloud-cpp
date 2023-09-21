@@ -36,16 +36,20 @@ InterconnectAttachmentsTracingConnection::
             child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
+StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                       InterconnectAttachmentsScopedList>>
 InterconnectAttachmentsTracingConnection::AggregatedListInterconnectAttachments(
     google::cloud::cpp::compute::interconnect_attachments::v1::
-        AggregatedListInterconnectAttachmentsRequest const& request) {
+        AggregatedListInterconnectAttachmentsRequest request) {
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "AggregatedListInterconnectAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->AggregatedListInterconnectAttachments(request));
+  auto sr = child_->AggregatedListInterconnectAttachments(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::InterconnectAttachmentsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

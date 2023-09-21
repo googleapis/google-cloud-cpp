@@ -47,7 +47,7 @@ Idempotency TargetPoolsConnectionIdempotencyPolicy::AddInstance(
 
 Idempotency TargetPoolsConnectionIdempotencyPolicy::AggregatedListTargetPools(
     google::cloud::cpp::compute::target_pools::v1::
-        AggregatedListTargetPoolsRequest const&) {
+        AggregatedListTargetPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

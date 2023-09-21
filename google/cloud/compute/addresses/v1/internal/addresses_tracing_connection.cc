@@ -32,14 +32,18 @@ AddressesTracingConnection::AddressesTracingConnection(
     std::shared_ptr<compute_addresses_v1::AddressesConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AddressesScopedList>>
 AddressesTracingConnection::AggregatedListAddresses(
-    google::cloud::cpp::compute::addresses::v1::
-        AggregatedListAddressesRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+        request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::AggregatedListAddresses");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListAddresses(request));
+  auto sr = child_->AggregatedListAddresses(std::move(request));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

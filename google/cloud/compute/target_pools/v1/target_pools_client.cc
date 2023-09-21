@@ -84,7 +84,8 @@ TargetPoolsClient::AddInstance(
   return connection_->AddInstance(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
 TargetPoolsClient::AggregatedListTargetPools(std::string const& project,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -94,13 +95,14 @@ TargetPoolsClient::AggregatedListTargetPools(std::string const& project,
   return connection_->AggregatedListTargetPools(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
 TargetPoolsClient::AggregatedListTargetPools(
     google::cloud::cpp::compute::target_pools::v1::
-        AggregatedListTargetPoolsRequest const& request,
+        AggregatedListTargetPoolsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListTargetPools(request);
+  return connection_->AggregatedListTargetPools(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

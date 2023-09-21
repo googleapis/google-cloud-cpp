@@ -41,10 +41,11 @@ class ForwardingRulesTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
   AggregatedListForwardingRules(
       google::cloud::cpp::compute::forwarding_rules::v1::
-          AggregatedListForwardingRulesRequest const& request) override;
+          AggregatedListForwardingRulesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::

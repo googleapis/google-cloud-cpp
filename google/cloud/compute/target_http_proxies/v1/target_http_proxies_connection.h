@@ -187,11 +187,12 @@ class TargetHttpProxiesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
   AggregatedListTargetHttpProxies(
       google::cloud::cpp::compute::target_http_proxies::v1::
-          AggregatedListTargetHttpProxiesRequest const& request);
+          AggregatedListTargetHttpProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::

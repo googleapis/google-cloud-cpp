@@ -40,10 +40,11 @@ class AutoscalersTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::AutoscalersScopedList>>
   AggregatedListAutoscalers(
       google::cloud::cpp::compute::autoscalers::v1::
-          AggregatedListAutoscalersRequest const& request) override;
+          AggregatedListAutoscalersRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::

@@ -29,6 +29,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.pb.h>
 #include <memory>
@@ -53,12 +54,11 @@ class NetworkEdgeSecurityServicesRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<
-      google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                         NetworkEdgeSecurityServicesScopedList>>
   AggregatedListNetworkEdgeSecurityServices(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          AggregatedListNetworkEdgeSecurityServicesRequest const& request)
-      override;
+          AggregatedListNetworkEdgeSecurityServicesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEdgeSecurityService(

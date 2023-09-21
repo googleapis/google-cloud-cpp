@@ -32,7 +32,8 @@ InstanceTemplatesClient::InstanceTemplatesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 InstanceTemplatesClient::~InstanceTemplatesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
 InstanceTemplatesClient::AggregatedListInstanceTemplates(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ InstanceTemplatesClient::AggregatedListInstanceTemplates(
   return connection_->AggregatedListInstanceTemplates(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
 InstanceTemplatesClient::AggregatedListInstanceTemplates(
     google::cloud::cpp::compute::instance_templates::v1::
-        AggregatedListInstanceTemplatesRequest const& request,
+        AggregatedListInstanceTemplatesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListInstanceTemplates(request);
+  return connection_->AggregatedListInstanceTemplates(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

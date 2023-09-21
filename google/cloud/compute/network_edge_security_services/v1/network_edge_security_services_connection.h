@@ -29,6 +29,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
 #include <memory>
@@ -204,11 +205,12 @@ class NetworkEdgeSecurityServicesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<
-      google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
+  virtual StreamRange<std::pair<
+      std::string,
+      google::cloud::cpp::compute::v1::NetworkEdgeSecurityServicesScopedList>>
   AggregatedListNetworkEdgeSecurityServices(
       google::cloud::cpp::compute::network_edge_security_services::v1::
-          AggregatedListNetworkEdgeSecurityServicesRequest const& request);
+          AggregatedListNetworkEdgeSecurityServicesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEdgeSecurityService(

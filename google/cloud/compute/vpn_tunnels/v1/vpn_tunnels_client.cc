@@ -32,7 +32,8 @@ VpnTunnelsClient::VpnTunnelsClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 VpnTunnelsClient::~VpnTunnelsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>
 VpnTunnelsClient::AggregatedListVpnTunnels(std::string const& project,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ VpnTunnelsClient::AggregatedListVpnTunnels(std::string const& project,
   return connection_->AggregatedListVpnTunnels(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>
 VpnTunnelsClient::AggregatedListVpnTunnels(
     google::cloud::cpp::compute::vpn_tunnels::v1::
-        AggregatedListVpnTunnelsRequest const& request,
+        AggregatedListVpnTunnelsRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListVpnTunnels(request);
+  return connection_->AggregatedListVpnTunnels(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

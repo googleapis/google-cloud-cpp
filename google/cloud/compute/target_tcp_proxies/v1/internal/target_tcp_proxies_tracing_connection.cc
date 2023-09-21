@@ -33,16 +33,20 @@ TargetTcpProxiesTracingConnection::TargetTcpProxiesTracingConnection(
         child)
     : child_(std::move(child)) {}
 
-StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>
 TargetTcpProxiesTracingConnection::AggregatedListTargetTcpProxies(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
-        AggregatedListTargetTcpProxiesRequest const& request) {
+        AggregatedListTargetTcpProxiesRequest request) {
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "AggregatedListTargetTcpProxies");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->AggregatedListTargetTcpProxies(request));
+  auto sr = child_->AggregatedListTargetTcpProxies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

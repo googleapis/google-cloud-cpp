@@ -50,11 +50,12 @@ class MockPublicDelegatedPrefixesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StatusOr<
-          google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>,
+      StreamRange<std::pair<
+          std::string,
+          google::cloud::cpp::compute::v1::PublicDelegatedPrefixesScopedList>>,
       AggregatedListPublicDelegatedPrefixes,
       (google::cloud::cpp::compute::public_delegated_prefixes::v1::
-           AggregatedListPublicDelegatedPrefixesRequest const& request),
+           AggregatedListPublicDelegatedPrefixesRequest request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,

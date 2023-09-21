@@ -37,8 +37,8 @@ class AddressesConnectionIdempotencyPolicy {
   virtual std::unique_ptr<AddressesConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency AggregatedListAddresses(
-      google::cloud::cpp::compute::addresses::v1::
-          AggregatedListAddressesRequest const& request);
+      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+          request);
 
   virtual google::cloud::Idempotency DeleteAddress(
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&

@@ -42,11 +42,14 @@ SecurityPoliciesConnection::AddRule(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
 SecurityPoliciesConnection::AggregatedListSecurityPolicies(
     google::cloud::cpp::compute::security_policies::v1::
-        AggregatedListSecurityPoliciesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+        AggregatedListSecurityPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             SecurityPoliciesScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

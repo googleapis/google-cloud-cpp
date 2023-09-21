@@ -32,7 +32,8 @@ AddressesClient::AddressesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 AddressesClient::~AddressesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AddressesScopedList>>
 AddressesClient::AggregatedListAddresses(std::string const& project,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ AddressesClient::AggregatedListAddresses(std::string const& project,
   return connection_->AggregatedListAddresses(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::AddressesScopedList>>
 AddressesClient::AggregatedListAddresses(
-    google::cloud::cpp::compute::addresses::v1::
-        AggregatedListAddressesRequest const& request,
+    google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+        request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListAddresses(request);
+  return connection_->AggregatedListAddresses(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

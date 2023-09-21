@@ -95,20 +95,44 @@ BackendServicesRestConnectionImpl::AddSignedUrlKey(
       });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
 BackendServicesRestConnectionImpl::AggregatedListBackendServices(
     google::cloud::cpp::compute::backend_services::v1::
-        AggregatedListBackendServicesRequest const& request) {
+        AggregatedListBackendServicesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AggregatedListBackendServices(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backend_services::v1::
-                 AggregatedListBackendServicesRequest const& request) {
-        return stub_->AggregatedListBackendServices(rest_context, request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListBackendServices(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::BackendServicesScopedList>>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           compute_backend_services_v1::BackendServicesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::cpp::compute::backend_services::v1::
+              AggregatedListBackendServicesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::backend_services::v1::
+                       AggregatedListBackendServicesRequest const& request) {
+              return stub->AggregatedListBackendServices(rest_context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::cpp::compute::v1::BackendServiceAggregatedList r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               BackendServicesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

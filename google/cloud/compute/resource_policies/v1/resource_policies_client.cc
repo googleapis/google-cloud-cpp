@@ -32,7 +32,8 @@ ResourcePoliciesClient::ResourcePoliciesClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 ResourcePoliciesClient::~ResourcePoliciesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
 ResourcePoliciesClient::AggregatedListResourcePolicies(
     std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -42,13 +43,14 @@ ResourcePoliciesClient::AggregatedListResourcePolicies(
   return connection_->AggregatedListResourcePolicies(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
 ResourcePoliciesClient::AggregatedListResourcePolicies(
     google::cloud::cpp::compute::resource_policies::v1::
-        AggregatedListResourcePoliciesRequest const& request,
+        AggregatedListResourcePoliciesRequest request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AggregatedListResourcePolicies(request);
+  return connection_->AggregatedListResourcePolicies(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

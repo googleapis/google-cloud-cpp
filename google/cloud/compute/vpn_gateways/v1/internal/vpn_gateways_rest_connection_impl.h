@@ -51,10 +51,11 @@ class VpnGatewaysRestConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::VpnGatewaysScopedList>>
   AggregatedListVpnGateways(
       google::cloud::cpp::compute::vpn_gateways::v1::
-          AggregatedListVpnGatewaysRequest const& request) override;
+          AggregatedListVpnGatewaysRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnGateway(
       google::cloud::cpp::compute::vpn_gateways::v1::
