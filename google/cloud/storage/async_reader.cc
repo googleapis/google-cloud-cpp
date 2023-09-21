@@ -43,10 +43,7 @@ class Discard : public std::enable_shared_from_this<Discard> {
     self->impl_->Read().then([self](auto f) mutable {
       auto s = std::move(self);
       auto response = f.get();
-      if (absl::holds_alternative<Status>(response)) {
-        s.reset();
-        return;
-      }
+      if (absl::holds_alternative<Status>(response)) return;
       s->Loop();
     });
   }

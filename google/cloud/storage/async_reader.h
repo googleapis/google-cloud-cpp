@@ -19,6 +19,7 @@
 #include "google/cloud/storage/async_reader_connection.h"
 #include "google/cloud/storage/async_token.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <memory>
 #include <utility>
 
@@ -30,11 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A handle for streaming downloads.
  *
- * Application use this object to handle asynchronous streaming downloads. The
+ * Applications use this object to handle asynchronous streaming downloads. The
  * application repeatedly calls `Read()` until it has received all the data it
  * wants.
- *
- * The destructor of this object
  */
 class AsyncReader {
  public:
@@ -53,7 +52,16 @@ class AsyncReader {
   AsyncReader& operator=(AsyncReader const&) = delete;
   ///@}
 
-  /// Destructor.
+  /**
+   * Destructor.
+   *
+   * If the download has not completed, the destructor cancels the underlying
+   * `AsyncReaderConnection` and discards any remaining data in the background.
+   *
+   * The destructor returns as soon as this background task is scheduled. It
+   * does **not** block waiting for the download to cancel. This may delay the
+   * termination of the associated completion queue.
+   */
   ~AsyncReader();
 
   /**
@@ -69,7 +77,7 @@ class AsyncReader {
    * future<std::int64_t> CountLines(AsyncReader reader, AsyncToken token) {
    *   std::int64_t result = 0;
    *   while (token.valid()) {
-   *     // await for next chunk and throw on error.
+   *     // Wait for next chunk and throw on error.
    *     auto [payload, t_] = (co_await reader.Read(std::move(token))).value();
    *     token = std::move(t_);
    *     for (absl::string_view c : payload.contents()) {
