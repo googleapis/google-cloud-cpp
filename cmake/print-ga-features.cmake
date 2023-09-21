@@ -18,7 +18,16 @@
 
 include(GoogleCloudCppFeatures)
 
-foreach (library IN LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES
+set(emitted_compute_feature FALSE)
+foreach (feature IN LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES
                           GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
-    message(${library})
+    string(REGEX MATCH "^compute_.*" compute_regex_match ${feature})
+    if (compute_regex_match)
+        if (NOT emitted_compute_feature)
+            message("compute")
+            set(emitted_compute_feature TRUE)
+        endif ()
+    else ()
+        message(${feature})
+    endif ()
 endforeach ()

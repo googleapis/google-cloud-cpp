@@ -34,13 +34,13 @@ file="README.md"
 ) | sponge "${file}"
 
 (
-  mapfile -t libraries < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1 | LC_ALL=C sort)
-  sed '/<!-- inject-GA-libraries-start -->/q' "${file}"
-  for library in "${libraries[@]}"; do
-    description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${library}/README.md")"
-    printf -- '- [%s](google/cloud/%s/README.md)\n' "${description}" "${library}"
-    printf -- '  [[quickstart]](google/cloud/%s/quickstart/README.md)\n' "${library}"
-    printf -- '  [[reference]](https://cloud.google.com/cpp/docs/reference/%s/latest)\n' "${library}"
+  mapfile -t features < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-features.cmake 2>&1 | LC_ALL=C sort)
+  sed '/<!-- inject-GA-features-start -->/q' "${file}"
+  for feature in "${features[@]}"; do
+    description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${feature}/README.md")"
+    printf -- '- [%s](google/cloud/%s/README.md)\n' "${description}" "${feature}"
+    printf -- '  [[quickstart]](google/cloud/%s/quickstart/README.md)\n' "${feature}"
+    printf -- '  [[reference]](https://cloud.google.com/cpp/docs/reference/%s/latest)\n' "${feature}"
   done
-  sed -n '/<!-- inject-GA-libraries-end -->/,$p' "${file}"
+  sed -n '/<!-- inject-GA-features-end -->/,$p' "${file}"
 ) | sponge "${file}"
