@@ -24,6 +24,7 @@ GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
 
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
 load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
+load(":google_cloud_cpp_storage_grpc_mocks.bzl", "google_cloud_cpp_storage_grpc_mocks_hdrs")
 
 config_setting(
     name = "ctype_cord_workaround_enabled",
@@ -60,6 +61,21 @@ cc_library(
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
         # Do not sort: grpc++ must come last
         "@com_github_grpc_grpc//:grpc++",
+    ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_storage_grpc_mocks",
+    testonly = True,
+    hdrs = google_cloud_cpp_storage_grpc_mocks_hdrs,
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
+    deps = [
+        ":google_cloud_cpp_storage",
+        ":google_cloud_cpp_storage_grpc",
+        "@com_google_googletest//:gtest",
     ],
 )
 

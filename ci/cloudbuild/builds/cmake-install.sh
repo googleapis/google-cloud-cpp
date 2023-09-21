@@ -117,6 +117,7 @@ expected_dirs+=(
   ./include/google/cloud/storage/internal/curl
   ./include/google/cloud/storage/internal/grpc
   ./include/google/cloud/storage/internal/rest
+  ./include/google/cloud/storage/mocks
   ./include/google/cloud/storage/oauth2
   ./include/google/cloud/storage/testing
   # no gRPC services in google/cloud/workflows/type.
@@ -146,6 +147,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
+  ./lib64/cmake/google_cloud_cpp_storage_grpc_mocks
   ./lib64/pkgconfig
 )
 
