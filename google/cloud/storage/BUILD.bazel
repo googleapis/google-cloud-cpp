@@ -177,6 +177,7 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
     }),
     deps = [
         ":google_cloud_cpp_storage",
+        ":google_cloud_cpp_storage_grpc_mocks",
         ":storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
