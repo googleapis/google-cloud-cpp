@@ -35,7 +35,7 @@ StatusOr<std::pair<ReadPayload, AsyncToken>> ClosedStreamError(
 
 class Discard : public std::enable_shared_from_this<Discard> {
  public:
-  Discard(std::unique_ptr<AsyncReaderConnection> impl)
+  explicit Discard(std::unique_ptr<AsyncReaderConnection> impl)
       : impl_(std::move(impl)) {}
 
   void Loop() {
