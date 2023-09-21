@@ -153,8 +153,8 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient& client,
                                .value();
     std::uint64_t count = 0;
     while (token.valid()) {
-      auto [payload, t_] = (co_await reader.Read(std::move(token))).value();
-      token = std::move(t_);
+      auto [payload, t] = (co_await reader.Read(std::move(token))).value();
+      token = std::move(t);
       for (auto const& buffer : payload.contents()) {
         count += std::count(buffer.begin(), buffer.end(), '\n');
       }

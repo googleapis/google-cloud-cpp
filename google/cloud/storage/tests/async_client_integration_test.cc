@@ -150,19 +150,13 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
 
   std::string actual;
   while (token.valid()) {
-    ReadPayload payload;
     auto p = reader.Read(std::move(token)).get();
     ASSERT_STATUS_OK(p);
+    ReadPayload payload;
     std::tie(payload, token) = *std::move(p);
     for (auto v : payload.contents()) actual += std::string(v);
   }
   EXPECT_EQ(actual, expected_data);
-
-  auto status = async
-                    .DeleteObject(bucket_name(), object_name,
-                                  gcs::Generation(insert->generation()))
-                    .get();
-  EXPECT_STATUS_OK(status);
 }
 
 }  // namespace
