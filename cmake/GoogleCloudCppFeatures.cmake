@@ -29,16 +29,16 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 # `google_cloud_cpp_grpc_utils`.
 set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES "storage;experimental-bigquery_rest")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES 
     # cmake-format: sorted
     "compute"
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite" "sql")
 
-set(GOOGLE_CLOUD_CPP_TRANSITION_FEATURES # cmake-format: sorted
+set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
 )
 
-set(GOOGLE_CLOUD_CPP_GA_FEATURES
+set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted
     "accessapproval"
     "accesscontextmanager"
@@ -240,8 +240,6 @@ set(GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES
     "compute_region_operations"
     "compute_zone_operations")
 
-list(APPEND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-     ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES})
 list(FIND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES "compute"
      compute_experimental)
 if (NOT compute_experimental EQUAL -1)
@@ -251,8 +249,6 @@ if (NOT compute_experimental EQUAL -1)
     list(SORT GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES)
 endif ()
 
-list(APPEND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
-     ${GOOGLE_CLOUD_CPP_TRANSITION_FEATURES})
 list(FIND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute" compute_transition)
 if (NOT compute_transition EQUAL -1)
     list(REMOVE_ITEM GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute")
@@ -261,7 +257,6 @@ if (NOT compute_transition EQUAL -1)
     list(SORT GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
 endif ()
 
-list(APPEND GOOGLE_CLOUD_CPP_GA_LIBRARIES ${GOOGLE_CLOUD_CPP_GA_FEATURES})
 list(FIND GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute" compute_ga)
 if (NOT compute_ga EQUAL -1)
     list(REMOVE_ITEM GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute")
@@ -390,11 +385,6 @@ function (google_cloud_cpp_enable_features)
             continue()
         elseif ("${feature}" STREQUAL "experimental-opentelemetry")
             add_subdirectory(google/cloud/opentelemetry)
-        elseif ("${feature}" STREQUAL "compute")
-            if (NOT compute_added)
-                add_subdirectory(google/cloud/compute)
-                set(compute_added TRUE)
-            endif ()
         elseif ("${feature}" MATCHES "^compute_.*")
             if (NOT compute_added)
                 add_subdirectory(google/cloud/compute)
