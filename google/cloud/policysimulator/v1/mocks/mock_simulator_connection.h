@@ -58,7 +58,7 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::policysimulator::v1::ReplayResult>,
+      (StreamRange<google::cloud::policysimulator::v1::ReplayResult>),
       ListReplayResults,
       (google::cloud::policysimulator::v1::ListReplayResultsRequest request),
       (override));

@@ -48,7 +48,7 @@ class MockKeyDashboardServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::kms::v1::CryptoKey>, ListCryptoKeys,
+      (StreamRange<google::cloud::kms::v1::CryptoKey>), ListCryptoKeys,
       (google::cloud::kms::inventory::v1::ListCryptoKeysRequest request),
       (override));
 };

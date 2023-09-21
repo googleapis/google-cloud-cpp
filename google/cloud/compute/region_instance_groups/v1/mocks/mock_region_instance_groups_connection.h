@@ -54,14 +54,14 @@ class MockRegionInstanceGroupsConnection
                    GetInstanceGroupRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>),
               ListRegionInstanceGroups,
               (google::cloud::cpp::compute::region_instance_groups::v1::
                    ListRegionInstanceGroupsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>,
+      (StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>),
       ListInstances,
       (google::cloud::cpp::compute::region_instance_groups::v1::
            ListInstancesRequest request),

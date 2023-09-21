@@ -46,7 +46,7 @@ class MockPagesConnection : public dialogflow_cx::PagesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Page>, ListPages,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Page>), ListPages,
               (google::cloud::dialogflow::cx::v3::ListPagesRequest request),
               (override));
 

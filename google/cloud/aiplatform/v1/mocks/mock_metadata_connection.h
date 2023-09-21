@@ -59,7 +59,7 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::MetadataStore>,
+      (StreamRange<google::cloud::aiplatform::v1::MetadataStore>),
       ListMetadataStores,
       (google::cloud::aiplatform::v1::ListMetadataStoresRequest request),
       (override));
@@ -82,7 +82,7 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::GetArtifactRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Artifact>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Artifact>),
               ListArtifacts,
               (google::cloud::aiplatform::v1::ListArtifactsRequest request),
               (override));
@@ -113,7 +113,8 @@ class MockMetadataServiceConnection
               (google::cloud::aiplatform::v1::GetContextRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Context>, ListContexts,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Context>),
+              ListContexts,
               (google::cloud::aiplatform::v1::ListContextsRequest request),
               (override));
 
@@ -171,7 +172,7 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::GetExecutionRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Execution>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Execution>),
               ListExecutions,
               (google::cloud::aiplatform::v1::ListExecutionsRequest request),
               (override));
@@ -218,7 +219,7 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::MetadataSchema>,
+      (StreamRange<google::cloud::aiplatform::v1::MetadataSchema>),
       ListMetadataSchemas,
       (google::cloud::aiplatform::v1::ListMetadataSchemasRequest request),
       (override));

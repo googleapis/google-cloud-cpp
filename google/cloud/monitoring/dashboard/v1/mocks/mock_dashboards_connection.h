@@ -54,7 +54,8 @@ class MockDashboardsServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::monitoring::dashboard::v1::Dashboard>, ListDashboards,
+      (StreamRange<google::monitoring::dashboard::v1::Dashboard>),
+      ListDashboards,
       (google::monitoring::dashboard::v1::ListDashboardsRequest request),
       (override));
 

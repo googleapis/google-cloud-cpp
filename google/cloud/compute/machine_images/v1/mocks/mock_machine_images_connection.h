@@ -71,7 +71,7 @@ class MockMachineImagesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::MachineImage>,
+      (StreamRange<google::cloud::cpp::compute::v1::MachineImage>),
       ListMachineImages,
       (google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
            request),

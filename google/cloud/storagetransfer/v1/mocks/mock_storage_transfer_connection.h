@@ -69,7 +69,7 @@ class MockStorageTransferServiceConnection
       (google::storagetransfer::v1::GetTransferJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::storagetransfer::v1::TransferJob>,
+  MOCK_METHOD((StreamRange<google::storagetransfer::v1::TransferJob>),
               ListTransferJobs,
               (google::storagetransfer::v1::ListTransferJobsRequest request),
               (override));
@@ -110,7 +110,7 @@ class MockStorageTransferServiceConnection
               (google::storagetransfer::v1::GetAgentPoolRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::storagetransfer::v1::AgentPool>,
+  MOCK_METHOD((StreamRange<google::storagetransfer::v1::AgentPool>),
               ListAgentPools,
               (google::storagetransfer::v1::ListAgentPoolsRequest request),
               (override));

@@ -46,10 +46,11 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>,
-              SearchCatalog,
-              (google::cloud::datacatalog::v1::SearchCatalogRequest request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>),
+      SearchCatalog,
+      (google::cloud::datacatalog::v1::SearchCatalogRequest request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::datacatalog::v1::EntryGroup>, CreateEntryGroup,
@@ -71,7 +72,7 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
       (google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::EntryGroup>,
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::EntryGroup>),
               ListEntryGroups,
               (google::cloud::datacatalog::v1::ListEntryGroupsRequest request),
               (override));
@@ -100,7 +101,7 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
       (google::cloud::datacatalog::v1::LookupEntryRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::Entry>, ListEntries,
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Entry>), ListEntries,
               (google::cloud::datacatalog::v1::ListEntriesRequest request),
               (override));
 
@@ -181,7 +182,7 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               (google::cloud::datacatalog::v1::DeleteTagRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::Tag>, ListTags,
+  MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Tag>), ListTags,
               (google::cloud::datacatalog::v1::ListTagsRequest request),
               (override));
 

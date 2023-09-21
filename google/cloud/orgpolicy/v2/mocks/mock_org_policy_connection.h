@@ -46,12 +46,12 @@ class MockOrgPolicyConnection : public orgpolicy_v2::OrgPolicyConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::orgpolicy::v2::Constraint>,
+  MOCK_METHOD((StreamRange<google::cloud::orgpolicy::v2::Constraint>),
               ListConstraints,
               (google::cloud::orgpolicy::v2::ListConstraintsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::orgpolicy::v2::Policy>, ListPolicies,
+  MOCK_METHOD((StreamRange<google::cloud::orgpolicy::v2::Policy>), ListPolicies,
               (google::cloud::orgpolicy::v2::ListPoliciesRequest request),
               (override));
 

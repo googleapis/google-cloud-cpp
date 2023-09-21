@@ -68,7 +68,7 @@ class MockAutoscalingPolicyServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>,
+      (StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>),
       ListAutoscalingPolicies,
       (google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request),
       (override));

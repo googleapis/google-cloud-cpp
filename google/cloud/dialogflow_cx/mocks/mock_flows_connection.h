@@ -56,7 +56,7 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
       (google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Flow>, ListFlows,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Flow>), ListFlows,
               (google::cloud::dialogflow::cx::v3::ListFlowsRequest request),
               (override));
 

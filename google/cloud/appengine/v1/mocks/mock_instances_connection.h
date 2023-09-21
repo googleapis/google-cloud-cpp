@@ -46,7 +46,7 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::appengine::v1::Instance>, ListInstances,
+  MOCK_METHOD((StreamRange<google::appengine::v1::Instance>), ListInstances,
               (google::appengine::v1::ListInstancesRequest request),
               (override));
 

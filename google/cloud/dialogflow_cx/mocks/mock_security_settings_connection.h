@@ -69,7 +69,7 @@ class MockSecuritySettingsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>),
       ListSecuritySettings,
       (google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request),
       (override));

@@ -46,7 +46,7 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::alloydb::v1::Cluster>, ListClusters,
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Cluster>), ListClusters,
               (google::cloud::alloydb::v1::ListClustersRequest request),
               (override));
 
@@ -85,7 +85,8 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                    request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::alloydb::v1::Instance>, ListInstances,
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Instance>),
+              ListInstances,
               (google::cloud::alloydb::v1::ListInstancesRequest request),
               (override));
 
@@ -137,7 +138,7 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
       (google::cloud::alloydb::v1::RestartInstanceRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::alloydb::v1::Backup>, ListBackups,
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Backup>), ListBackups,
               (google::cloud::alloydb::v1::ListBackupsRequest request),
               (override));
 
@@ -161,12 +162,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>,
+      (StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>),
       ListSupportedDatabaseFlags,
       (google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::alloydb::v1::User>, ListUsers,
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::User>), ListUsers,
               (google::cloud::alloydb::v1::ListUsersRequest request),
               (override));
 

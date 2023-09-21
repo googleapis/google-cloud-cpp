@@ -54,7 +54,8 @@ class MockLivestreamServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::video::livestream::v1::Channel>, ListChannels,
+      (StreamRange<google::cloud::video::livestream::v1::Channel>),
+      ListChannels,
       (google::cloud::video::livestream::v1::ListChannelsRequest request),
       (override));
 
@@ -97,7 +98,7 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::CreateInputRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::video::livestream::v1::Input>,
+  MOCK_METHOD((StreamRange<google::cloud::video::livestream::v1::Input>),
               ListInputs,
               (google::cloud::video::livestream::v1::ListInputsRequest request),
               (override));
@@ -124,7 +125,7 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::CreateEventRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::video::livestream::v1::Event>,
+  MOCK_METHOD((StreamRange<google::cloud::video::livestream::v1::Event>),
               ListEvents,
               (google::cloud::video::livestream::v1::ListEventsRequest request),
               (override));
@@ -156,7 +157,7 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::GetAssetRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::video::livestream::v1::Asset>,
+  MOCK_METHOD((StreamRange<google::cloud::video::livestream::v1::Asset>),
               ListAssets,
               (google::cloud::video::livestream::v1::ListAssetsRequest request),
               (override));

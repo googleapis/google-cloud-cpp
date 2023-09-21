@@ -55,7 +55,7 @@ class MockKeyTrackingServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>,
+      (StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>),
       SearchProtectedResources,
       (google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
            request),

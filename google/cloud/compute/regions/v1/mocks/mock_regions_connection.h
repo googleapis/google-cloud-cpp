@@ -52,7 +52,7 @@ class MockRegionsConnection : public compute_regions_v1::RegionsConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Region>, ListRegions,
+      (StreamRange<google::cloud::cpp::compute::v1::Region>), ListRegions,
       (google::cloud::cpp::compute::regions::v1::ListRegionsRequest request),
       (override));
 };

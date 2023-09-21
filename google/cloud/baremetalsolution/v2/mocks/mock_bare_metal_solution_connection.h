@@ -48,7 +48,7 @@ class MockBareMetalSolutionConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::Instance>,
+      (StreamRange<google::cloud::baremetalsolution::v2::Instance>),
       ListInstances,
       (google::cloud::baremetalsolution::v2::ListInstancesRequest request),
       (override));
@@ -114,7 +114,7 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::SSHKey>, ListSSHKeys,
+      (StreamRange<google::cloud::baremetalsolution::v2::SSHKey>), ListSSHKeys,
       (google::cloud::baremetalsolution::v2::ListSSHKeysRequest request),
       (override));
 
@@ -130,7 +130,7 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::Volume>, ListVolumes,
+      (StreamRange<google::cloud::baremetalsolution::v2::Volume>), ListVolumes,
       (google::cloud::baremetalsolution::v2::ListVolumesRequest request),
       (override));
 
@@ -164,7 +164,8 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::Network>, ListNetworks,
+      (StreamRange<google::cloud::baremetalsolution::v2::Network>),
+      ListNetworks,
       (google::cloud::baremetalsolution::v2::ListNetworksRequest request),
       (override));
 
@@ -213,18 +214,20 @@ class MockBareMetalSolutionConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>,
-              ListVolumeSnapshots,
-              (google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>),
+      ListVolumeSnapshots,
+      (google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::baremetalsolution::v2::Lun>, GetLun,
       (google::cloud::baremetalsolution::v2::GetLunRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::baremetalsolution::v2::Lun>, ListLuns,
+  MOCK_METHOD((StreamRange<google::cloud::baremetalsolution::v2::Lun>),
+              ListLuns,
               (google::cloud::baremetalsolution::v2::ListLunsRequest request),
               (override));
 
@@ -240,7 +243,7 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::NfsShare>,
+      (StreamRange<google::cloud::baremetalsolution::v2::NfsShare>),
       ListNfsShares,
       (google::cloud::baremetalsolution::v2::ListNfsSharesRequest request),
       (override));
@@ -273,7 +276,7 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>,
+      (StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>),
       ListProvisioningQuotas,
       (google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
            request),
@@ -314,7 +317,8 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::baremetalsolution::v2::OSImage>, ListOSImages,
+      (StreamRange<google::cloud::baremetalsolution::v2::OSImage>),
+      ListOSImages,
       (google::cloud::baremetalsolution::v2::ListOSImagesRequest request),
       (override));
 };

@@ -50,7 +50,7 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
               (google::cloud::run::v2::GetRevisionRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Revision>, ListRevisions,
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Revision>), ListRevisions,
               (google::cloud::run::v2::ListRevisionsRequest request),
               (override));
 

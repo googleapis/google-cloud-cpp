@@ -62,7 +62,7 @@ class MockMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
+      (StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>),
       ListMigrationWorkflows,
       (google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
            request),
@@ -86,7 +86,7 @@ class MockMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>,
+      (StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>),
       ListMigrationSubtasks,
       (google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
            request),

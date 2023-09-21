@@ -67,7 +67,7 @@ class MockRegionSecurityPoliciesConnection
                    InsertSecurityPolicyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>),
               ListRegionSecurityPolicies,
               (google::cloud::cpp::compute::region_security_policies::v1::
                    ListRegionSecurityPoliciesRequest request),

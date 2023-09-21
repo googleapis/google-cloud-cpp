@@ -47,7 +47,8 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::TagValue>, ListTagValues,
+      (StreamRange<google::cloud::resourcemanager::v3::TagValue>),
+      ListTagValues,
       (google::cloud::resourcemanager::v3::ListTagValuesRequest request),
       (override));
 

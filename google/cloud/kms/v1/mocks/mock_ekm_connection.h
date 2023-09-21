@@ -46,7 +46,7 @@ class MockEkmServiceConnection : public kms_v1::EkmServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::kms::v1::EkmConnection>,
+  MOCK_METHOD((StreamRange<google::cloud::kms::v1::EkmConnection>),
               ListEkmConnections,
               (google::cloud::kms::v1::ListEkmConnectionsRequest request),
               (override));

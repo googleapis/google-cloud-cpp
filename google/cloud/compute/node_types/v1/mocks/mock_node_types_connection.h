@@ -48,8 +48,8 @@ class MockNodeTypesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>,
+      (StreamRange<std::pair<
+           std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>),
       AggregatedListNodeTypes,
       (google::cloud::cpp::compute::node_types::v1::
            AggregatedListNodeTypesRequest request),
@@ -61,7 +61,7 @@ class MockNodeTypesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NodeType>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::NodeType>),
               ListNodeTypes,
               (google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest
                    request),

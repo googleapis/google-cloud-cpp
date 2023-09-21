@@ -47,7 +47,8 @@ class MockChangelogsConnection : public dialogflow_cx::ChangelogsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::Changelog>, ListChangelogs,
+      (StreamRange<google::cloud::dialogflow::cx::v3::Changelog>),
+      ListChangelogs,
       (google::cloud::dialogflow::cx::v3::ListChangelogsRequest request),
       (override));
 

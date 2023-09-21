@@ -51,7 +51,7 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::CreateTableRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::Table>, ListTables,
+  MOCK_METHOD((StreamRange<google::bigtable::admin::v2::Table>), ListTables,
               (google::bigtable::admin::v2::ListTablesRequest request),
               (override));
 
@@ -111,7 +111,7 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::DeleteBackupRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::Backup>, ListBackups,
+  MOCK_METHOD((StreamRange<google::bigtable::admin::v2::Backup>), ListBackups,
               (google::bigtable::admin::v2::ListBackupsRequest request),
               (override));
 

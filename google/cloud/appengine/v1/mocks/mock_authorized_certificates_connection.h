@@ -48,7 +48,7 @@ class MockAuthorizedCertificatesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::appengine::v1::AuthorizedCertificate>,
+      (StreamRange<google::appengine::v1::AuthorizedCertificate>),
       ListAuthorizedCertificates,
       (google::appengine::v1::ListAuthorizedCertificatesRequest request),
       (override));

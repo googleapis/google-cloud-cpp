@@ -48,7 +48,7 @@ class MockSessionEntityTypesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::v2::SessionEntityType>,
+      (StreamRange<google::cloud::dialogflow::v2::SessionEntityType>),
       ListSessionEntityTypes,
       (google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request),
       (override));

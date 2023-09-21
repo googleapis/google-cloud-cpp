@@ -55,7 +55,7 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::GetDatasetRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::automl::v1::Dataset>, ListDatasets,
+  MOCK_METHOD((StreamRange<google::cloud::automl::v1::Dataset>), ListDatasets,
               (google::cloud::automl::v1::ListDatasetsRequest request),
               (override));
 
@@ -91,7 +91,7 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::GetModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::automl::v1::Model>, ListModels,
+  MOCK_METHOD((StreamRange<google::cloud::automl::v1::Model>), ListModels,
               (google::cloud::automl::v1::ListModelsRequest request),
               (override));
 
@@ -124,7 +124,7 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
       (google::cloud::automl::v1::GetModelEvaluationRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::automl::v1::ModelEvaluation>,
+  MOCK_METHOD((StreamRange<google::cloud::automl::v1::ModelEvaluation>),
               ListModelEvaluations,
               (google::cloud::automl::v1::ListModelEvaluationsRequest request),
               (override));

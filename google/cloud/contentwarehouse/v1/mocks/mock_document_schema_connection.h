@@ -75,7 +75,7 @@ class MockDocumentSchemaServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      (StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>),
       ListDocumentSchemas,
       (google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request),
       (override));

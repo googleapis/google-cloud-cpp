@@ -47,13 +47,13 @@ class MockForwardingRulesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<std::pair<
-                  std::string,
-                  google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>,
-              AggregatedListForwardingRules,
-              (google::cloud::cpp::compute::forwarding_rules::v1::
-                   AggregatedListForwardingRulesRequest request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              ForwardingRulesScopedList>>),
+      AggregatedListForwardingRules,
+      (google::cloud::cpp::compute::forwarding_rules::v1::
+           AggregatedListForwardingRulesRequest request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteForwardingRule,
@@ -73,7 +73,7 @@ class MockForwardingRulesConnection
                    InsertForwardingRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>),
               ListForwardingRules,
               (google::cloud::cpp::compute::forwarding_rules::v1::
                    ListForwardingRulesRequest request),

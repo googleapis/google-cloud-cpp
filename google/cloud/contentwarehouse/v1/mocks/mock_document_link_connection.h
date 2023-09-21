@@ -55,7 +55,7 @@ class MockDocumentLinkServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>,
+      (StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>),
       ListLinkedSources,
       (google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request),
       (override));

@@ -46,7 +46,7 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::appengine::v1::Service>, ListServices,
+  MOCK_METHOD((StreamRange<google::appengine::v1::Service>), ListServices,
               (google::appengine::v1::ListServicesRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::appengine::v1::Service>, GetService,

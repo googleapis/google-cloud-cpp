@@ -61,12 +61,13 @@ class MockOsConfigServiceConnection
       (google::cloud::osconfig::v1::CancelPatchJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::osconfig::v1::PatchJob>, ListPatchJobs,
+  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::PatchJob>),
+              ListPatchJobs,
               (google::cloud::osconfig::v1::ListPatchJobsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>,
+      (StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>),
       ListPatchJobInstanceDetails,
       (google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request),
       (override));
@@ -84,7 +85,7 @@ class MockOsConfigServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::PatchDeployment>,
+      (StreamRange<google::cloud::osconfig::v1::PatchDeployment>),
       ListPatchDeployments,
       (google::cloud::osconfig::v1::ListPatchDeploymentsRequest request),
       (override));

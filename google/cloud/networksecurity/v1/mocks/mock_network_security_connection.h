@@ -48,7 +48,7 @@ class MockNetworkSecurityConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>,
+      (StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>),
       ListAuthorizationPolicies,
       (google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest
            request),
@@ -82,11 +82,12 @@ class MockNetworkSecurityConnection
            DeleteAuthorizationPolicyRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>,
-              ListServerTlsPolicies,
-              (google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>),
+      ListServerTlsPolicies,
+      (google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>,
@@ -116,11 +117,12 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>,
-              ListClientTlsPolicies,
-              (google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>),
+      ListClientTlsPolicies,
+      (google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>,

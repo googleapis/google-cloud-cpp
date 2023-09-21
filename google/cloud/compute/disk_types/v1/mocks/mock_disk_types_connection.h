@@ -48,8 +48,8 @@ class MockDiskTypesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>,
+      (StreamRange<std::pair<
+           std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>),
       AggregatedListDiskTypes,
       (google::cloud::cpp::compute::disk_types::v1::
            AggregatedListDiskTypesRequest request),
@@ -61,7 +61,7 @@ class MockDiskTypesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::DiskType>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::DiskType>),
               ListDiskTypes,
               (google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest
                    request),

@@ -66,7 +66,7 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
               (google::cloud::retail::v2::DeleteModelRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::retail::v2::Model>, ListModels,
+  MOCK_METHOD((StreamRange<google::cloud::retail::v2::Model>), ListModels,
               (google::cloud::retail::v2::ListModelsRequest request),
               (override));
 

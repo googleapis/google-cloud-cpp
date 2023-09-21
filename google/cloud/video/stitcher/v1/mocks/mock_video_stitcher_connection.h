@@ -53,7 +53,7 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::video::stitcher::v1::CdnKey>,
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::CdnKey>),
               ListCdnKeys,
               (google::cloud::video::stitcher::v1::ListCdnKeysRequest request),
               (override));
@@ -88,7 +88,7 @@ class MockVideoStitcherServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>,
+      (StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>),
       ListVodStitchDetails,
       (google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request),
       (override));
@@ -101,7 +101,7 @@ class MockVideoStitcherServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>,
+      (StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>),
       ListVodAdTagDetails,
       (google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request),
       (override));
@@ -114,7 +114,7 @@ class MockVideoStitcherServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>,
+      (StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>),
       ListLiveAdTagDetails,
       (google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request),
       (override));
@@ -131,7 +131,7 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::CreateSlateRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::video::stitcher::v1::Slate>,
+  MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::Slate>),
               ListSlates,
               (google::cloud::video::stitcher::v1::ListSlatesRequest request),
               (override));
@@ -173,7 +173,7 @@ class MockVideoStitcherServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::video::stitcher::v1::LiveConfig>,
+      (StreamRange<google::cloud::video::stitcher::v1::LiveConfig>),
       ListLiveConfigs,
       (google::cloud::video::stitcher::v1::ListLiveConfigsRequest request),
       (override));

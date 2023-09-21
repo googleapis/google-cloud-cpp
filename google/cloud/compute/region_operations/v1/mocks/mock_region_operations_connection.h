@@ -58,7 +58,7 @@ class MockRegionOperationsConnection
                    GetOperationRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Operation>),
               ListRegionOperations,
               (google::cloud::cpp::compute::region_operations::v1::
                    ListRegionOperationsRequest request),

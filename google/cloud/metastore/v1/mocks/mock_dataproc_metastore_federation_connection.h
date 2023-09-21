@@ -47,7 +47,7 @@ class MockDataprocMetastoreFederationConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::metastore::v1::Federation>,
+  MOCK_METHOD((StreamRange<google::cloud::metastore::v1::Federation>),
               ListFederations,
               (google::cloud::metastore::v1::ListFederationsRequest request),
               (override));

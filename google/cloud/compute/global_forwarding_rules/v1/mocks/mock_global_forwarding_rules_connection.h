@@ -67,7 +67,7 @@ class MockGlobalForwardingRulesConnection
                    InsertForwardingRuleRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>),
               ListGlobalForwardingRules,
               (google::cloud::cpp::compute::global_forwarding_rules::v1::
                    ListGlobalForwardingRulesRequest request),

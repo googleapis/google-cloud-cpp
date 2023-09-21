@@ -48,7 +48,7 @@ class MockVmwareEngineConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>,
+      (StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>),
       ListPrivateClouds,
       (google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request),
       (override));
@@ -83,7 +83,7 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::Cluster>,
+  MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::Cluster>),
               ListClusters,
               (google::cloud::vmwareengine::v1::ListClustersRequest request),
               (override));
@@ -109,7 +109,8 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::DeleteClusterRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::Subnet>, ListSubnets,
+  MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::Subnet>),
+              ListSubnets,
               (google::cloud::vmwareengine::v1::ListSubnetsRequest request),
               (override));
 
@@ -123,7 +124,7 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::NodeType>,
+  MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::NodeType>),
               ListNodeTypes,
               (google::cloud::vmwareengine::v1::ListNodeTypesRequest request),
               (override));
@@ -168,7 +169,7 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>,
+      (StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>),
       ListHcxActivationKeys,
       (google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request),
       (override));
@@ -187,7 +188,7 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>,
+      (StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>),
       ListNetworkPolicies,
       (google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request),
       (override));
@@ -241,11 +242,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>,
-              ListVmwareEngineNetworks,
-              (google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>),
+      ListVmwareEngineNetworks,
+      (google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
@@ -262,7 +264,7 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>,
+      (StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>),
       ListPrivateConnections,
       (google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request),
       (override));
@@ -281,7 +283,7 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>,
+  MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>),
               ListPrivateConnectionPeeringRoutes,
               (google::cloud::vmwareengine::v1::
                    ListPrivateConnectionPeeringRoutesRequest request),

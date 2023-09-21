@@ -47,7 +47,7 @@ class MockDomainMappingsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::appengine::v1::DomainMapping>,
+  MOCK_METHOD((StreamRange<google::appengine::v1::DomainMapping>),
               ListDomainMappings,
               (google::appengine::v1::ListDomainMappingsRequest request),
               (override));

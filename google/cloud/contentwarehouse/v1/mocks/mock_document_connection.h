@@ -72,8 +72,8 @@ class MockDocumentServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
-                      MatchingDocument>,
+      (StreamRange<google::cloud::contentwarehouse::v1::
+                       SearchDocumentsResponse::MatchingDocument>),
       SearchDocuments,
       (google::cloud::contentwarehouse::v1::SearchDocumentsRequest request),
       (override));

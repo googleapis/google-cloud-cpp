@@ -46,7 +46,7 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Document>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Document>),
               ListDocuments,
               (google::cloud::dialogflow::v2::ListDocumentsRequest request),
               (override));

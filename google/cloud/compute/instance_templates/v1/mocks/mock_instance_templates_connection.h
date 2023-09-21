@@ -48,8 +48,8 @@ class MockInstanceTemplatesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                             InstanceTemplatesScopedList>>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              InstanceTemplatesScopedList>>),
       AggregatedListInstanceTemplates,
       (google::cloud::cpp::compute::instance_templates::v1::
            AggregatedListInstanceTemplatesRequest request),
@@ -78,7 +78,7 @@ class MockInstanceTemplatesConnection
                    InsertInstanceTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>),
               ListInstanceTemplates,
               (google::cloud::cpp::compute::instance_templates::v1::
                    ListInstanceTemplatesRequest request),

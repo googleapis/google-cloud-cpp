@@ -62,7 +62,7 @@ class MockConversationDatasetsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::v2::ConversationDataset>,
+      (StreamRange<google::cloud::dialogflow::v2::ConversationDataset>),
       ListConversationDatasets,
       (google::cloud::dialogflow::v2::ListConversationDatasetsRequest request),
       (override));

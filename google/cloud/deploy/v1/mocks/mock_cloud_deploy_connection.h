@@ -46,7 +46,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::deploy::v1::DeliveryPipeline>,
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::DeliveryPipeline>),
               ListDeliveryPipelines,
               (google::cloud::deploy::v1::ListDeliveryPipelinesRequest request),
               (override));
@@ -75,7 +75,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
       (google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::deploy::v1::Target>, ListTargets,
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::Target>), ListTargets,
               (google::cloud::deploy::v1::ListTargetsRequest request),
               (override));
 
@@ -96,7 +96,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::DeleteTargetRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::deploy::v1::Release>, ListReleases,
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::Release>), ListReleases,
               (google::cloud::deploy::v1::ListReleasesRequest request),
               (override));
 
@@ -129,7 +129,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::CancelRolloutRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::deploy::v1::Rollout>, ListRollouts,
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::Rollout>), ListRollouts,
               (google::cloud::deploy::v1::ListRolloutsRequest request),
               (override));
 
@@ -150,7 +150,7 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::RetryJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::deploy::v1::JobRun>, ListJobRuns,
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::JobRun>), ListJobRuns,
               (google::cloud::deploy::v1::ListJobRunsRequest request),
               (override));
 

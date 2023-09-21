@@ -47,7 +47,8 @@ class MockApiGatewayServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::Gateway>, ListGateways,
+  MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Gateway>),
+              ListGateways,
               (google::cloud::apigateway::v1::ListGatewaysRequest request),
               (override));
 
@@ -71,7 +72,7 @@ class MockApiGatewayServiceConnection
       (google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::Api>, ListApis,
+  MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Api>), ListApis,
               (google::cloud::apigateway::v1::ListApisRequest request),
               (override));
 
@@ -93,7 +94,7 @@ class MockApiGatewayServiceConnection
       (google::cloud::apigateway::v1::DeleteApiRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::ApiConfig>,
+  MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::ApiConfig>),
               ListApiConfigs,
               (google::cloud::apigateway::v1::ListApiConfigsRequest request),
               (override));

@@ -62,7 +62,7 @@ class MockConnectionServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::connection::v1::Connection>,
+      (StreamRange<google::cloud::bigquery::connection::v1::Connection>),
       ListConnections,
       (google::cloud::bigquery::connection::v1::ListConnectionsRequest request),
       (override));

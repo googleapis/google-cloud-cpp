@@ -46,7 +46,7 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::appengine::v1::Version>, ListVersions,
+  MOCK_METHOD((StreamRange<google::appengine::v1::Version>), ListVersions,
               (google::appengine::v1::ListVersionsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::appengine::v1::Version>, GetVersion,

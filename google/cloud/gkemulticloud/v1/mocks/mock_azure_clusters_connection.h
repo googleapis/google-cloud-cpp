@@ -59,7 +59,7 @@ class MockAzureClustersConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::gkemulticloud::v1::AzureClient>,
+      (StreamRange<google::cloud::gkemulticloud::v1::AzureClient>),
       ListAzureClients,
       (google::cloud::gkemulticloud::v1::ListAzureClientsRequest request),
       (override));
@@ -91,7 +91,7 @@ class MockAzureClustersConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>,
+      (StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>),
       ListAzureClusters,
       (google::cloud::gkemulticloud::v1::ListAzureClustersRequest request),
       (override));
@@ -132,7 +132,7 @@ class MockAzureClustersConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>,
+      (StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>),
       ListAzureNodePools,
       (google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request),
       (override));

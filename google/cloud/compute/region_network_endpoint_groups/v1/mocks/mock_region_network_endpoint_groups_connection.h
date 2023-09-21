@@ -68,7 +68,7 @@ class MockRegionNetworkEndpointGroupsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>,
+      (StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>),
       ListRegionNetworkEndpointGroups,
       (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
            ListRegionNetworkEndpointGroupsRequest request),

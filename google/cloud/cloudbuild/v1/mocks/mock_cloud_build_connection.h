@@ -56,7 +56,8 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       (google::devtools::cloudbuild::v1::GetBuildRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::devtools::cloudbuild::v1::Build>, ListBuilds,
+  MOCK_METHOD((StreamRange<google::devtools::cloudbuild::v1::Build>),
+              ListBuilds,
               (google::devtools::cloudbuild::v1::ListBuildsRequest request),
               (override));
 
@@ -88,7 +89,7 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>,
+      (StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>),
       ListBuildTriggers,
       (google::devtools::cloudbuild::v1::ListBuildTriggersRequest request),
       (override));
@@ -145,7 +146,7 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v1::WorkerPool>,
+      (StreamRange<google::devtools::cloudbuild::v1::WorkerPool>),
       ListWorkerPools,
       (google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request),
       (override));

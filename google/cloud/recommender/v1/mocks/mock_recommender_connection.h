@@ -46,7 +46,7 @@ class MockRecommenderConnection : public recommender_v1::RecommenderConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::recommender::v1::Insight>,
+  MOCK_METHOD((StreamRange<google::cloud::recommender::v1::Insight>),
               ListInsights,
               (google::cloud::recommender::v1::ListInsightsRequest request),
               (override));
@@ -63,7 +63,7 @@ class MockRecommenderConnection : public recommender_v1::RecommenderConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::recommender::v1::Recommendation>,
+      (StreamRange<google::cloud::recommender::v1::Recommendation>),
       ListRecommendations,
       (google::cloud::recommender::v1::ListRecommendationsRequest request),
       (override));

@@ -65,7 +65,7 @@ class MockConsumerProcurementServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>,
+      (StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>),
       ListOrders,
       (google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
            request),

@@ -68,7 +68,7 @@ class MockRegionNotificationEndpointsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>,
+      (StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>),
       ListRegionNotificationEndpoints,
       (google::cloud::cpp::compute::region_notification_endpoints::v1::
            ListRegionNotificationEndpointsRequest request),

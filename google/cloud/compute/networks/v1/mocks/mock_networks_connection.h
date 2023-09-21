@@ -80,12 +80,12 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Network>, ListNetworks,
+      (StreamRange<google::cloud::cpp::compute::v1::Network>), ListNetworks,
       (google::cloud::cpp::compute::networks::v1::ListNetworksRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>,
+      (StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>),
       ListPeeringRoutes,
       (google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
            request),

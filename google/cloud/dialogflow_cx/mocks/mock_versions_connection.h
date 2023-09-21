@@ -46,7 +46,7 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::cx::v3::Version>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Version>),
               ListVersions,
               (google::cloud::dialogflow::cx::v3::ListVersionsRequest request),
               (override));

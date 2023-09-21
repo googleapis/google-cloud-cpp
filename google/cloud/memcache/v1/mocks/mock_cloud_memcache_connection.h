@@ -47,7 +47,8 @@ class MockCloudMemcacheConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::memcache::v1::Instance>, ListInstances,
+  MOCK_METHOD((StreamRange<google::cloud::memcache::v1::Instance>),
+              ListInstances,
               (google::cloud::memcache::v1::ListInstancesRequest request),
               (override));
 

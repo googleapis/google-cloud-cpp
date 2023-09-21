@@ -47,13 +47,13 @@ class MockPacketMirroringsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<std::pair<
-                  std::string,
-                  google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>,
-              AggregatedListPacketMirrorings,
-              (google::cloud::cpp::compute::packet_mirrorings::v1::
-                   AggregatedListPacketMirroringsRequest request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              PacketMirroringsScopedList>>),
+      AggregatedListPacketMirrorings,
+      (google::cloud::cpp::compute::packet_mirrorings::v1::
+           AggregatedListPacketMirroringsRequest request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePacketMirroring,
@@ -73,7 +73,7 @@ class MockPacketMirroringsConnection
                    InsertPacketMirroringRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>),
               ListPacketMirrorings,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
                    ListPacketMirroringsRequest request),

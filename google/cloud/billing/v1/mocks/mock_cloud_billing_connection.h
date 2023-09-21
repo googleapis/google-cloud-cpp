@@ -51,7 +51,7 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
       (google::cloud::billing::v1::GetBillingAccountRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::billing::v1::BillingAccount>,
+  MOCK_METHOD((StreamRange<google::cloud::billing::v1::BillingAccount>),
               ListBillingAccounts,
               (google::cloud::billing::v1::ListBillingAccountsRequest request),
               (override));
@@ -69,7 +69,7 @@ class MockCloudBillingConnection : public billing_v1::CloudBillingConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::billing::v1::ProjectBillingInfo>,
+      (StreamRange<google::cloud::billing::v1::ProjectBillingInfo>),
       ListProjectBillingInfo,
       (google::cloud::billing::v1::ListProjectBillingInfoRequest request),
       (override));

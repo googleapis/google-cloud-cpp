@@ -48,8 +48,9 @@ class MockRegionCommitmentsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::CommitmentsScopedList>>),
       AggregatedListRegionCommitments,
       (google::cloud::cpp::compute::region_commitments::v1::
            AggregatedListRegionCommitmentsRequest request),
@@ -67,7 +68,7 @@ class MockRegionCommitmentsConnection
                    InsertCommitmentRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Commitment>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Commitment>),
               ListRegionCommitments,
               (google::cloud::cpp::compute::region_commitments::v1::
                    ListRegionCommitmentsRequest request),

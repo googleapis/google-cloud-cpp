@@ -95,7 +95,7 @@ class MockSqlInstancesServiceConnection
       (google::cloud::sql::v1::SqlInstancesInsertRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::sql::v1::DatabaseInstance>, List,
+  MOCK_METHOD((StreamRange<google::cloud::sql::v1::DatabaseInstance>), List,
               (google::cloud::sql::v1::SqlInstancesListRequest request),
               (override));
 

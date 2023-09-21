@@ -90,7 +90,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (google::privacy::dlp::v2::GetInspectTemplateRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::privacy::dlp::v2::InspectTemplate>,
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::InspectTemplate>),
               ListInspectTemplates,
               (google::privacy::dlp::v2::ListInspectTemplatesRequest request),
               (override));
@@ -119,7 +119,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>,
+      (StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>),
       ListDeidentifyTemplates,
       (google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request),
       (override));
@@ -149,7 +149,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
               (google::privacy::dlp::v2::GetJobTriggerRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::privacy::dlp::v2::JobTrigger>,
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::JobTrigger>),
               ListJobTriggers,
               (google::privacy::dlp::v2::ListJobTriggersRequest request),
               (override));
@@ -168,7 +168,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
               (google::privacy::dlp::v2::CreateDlpJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::privacy::dlp::v2::DlpJob>, ListDlpJobs,
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::DlpJob>), ListDlpJobs,
               (google::privacy::dlp::v2::ListDlpJobsRequest request),
               (override));
 
@@ -199,7 +199,7 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::privacy::dlp::v2::StoredInfoType>,
+  MOCK_METHOD((StreamRange<google::privacy::dlp::v2::StoredInfoType>),
               ListStoredInfoTypes,
               (google::privacy::dlp::v2::ListStoredInfoTypesRequest request),
               (override));

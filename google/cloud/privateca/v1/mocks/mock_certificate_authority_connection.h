@@ -62,7 +62,7 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::security::privateca::v1::Certificate>,
+      (StreamRange<google::cloud::security::privateca::v1::Certificate>),
       ListCertificates,
       (google::cloud::security::privateca::v1::ListCertificatesRequest request),
       (override));
@@ -128,7 +128,8 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>,
+      (StreamRange<
+          google::cloud::security::privateca::v1::CertificateAuthority>),
       ListCertificateAuthorities,
       (google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
            request),
@@ -178,7 +179,8 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::security::privateca::v1::CaPool>, ListCaPools,
+      (StreamRange<google::cloud::security::privateca::v1::CaPool>),
+      ListCaPools,
       (google::cloud::security::privateca::v1::ListCaPoolsRequest request),
       (override));
 
@@ -206,8 +208,8 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::cloud::security::privateca::v1::CertificateRevocationList>,
+      (StreamRange<
+          google::cloud::security::privateca::v1::CertificateRevocationList>),
       ListCertificateRevocationLists,
       (google::cloud::security::privateca::v1::
            ListCertificateRevocationListsRequest request),
@@ -244,7 +246,8 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>,
+      (StreamRange<
+          google::cloud::security::privateca::v1::CertificateTemplate>),
       ListCertificateTemplates,
       (google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
            request),

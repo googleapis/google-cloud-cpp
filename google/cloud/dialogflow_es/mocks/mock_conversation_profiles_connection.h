@@ -48,7 +48,7 @@ class MockConversationProfilesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::v2::ConversationProfile>,
+      (StreamRange<google::cloud::dialogflow::v2::ConversationProfile>),
       ListConversationProfiles,
       (google::cloud::dialogflow::v2::ListConversationProfilesRequest request),
       (override));

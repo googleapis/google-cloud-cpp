@@ -62,7 +62,7 @@ class MockTenantServiceConnection : public talent_v4::TenantServiceConnection {
               (google::cloud::talent::v4::DeleteTenantRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::talent::v4::Tenant>, ListTenants,
+  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Tenant>), ListTenants,
               (google::cloud::talent::v4::ListTenantsRequest request),
               (override));
 };

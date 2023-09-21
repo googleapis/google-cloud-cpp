@@ -48,8 +48,9 @@ class MockVpnTunnelsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>),
       AggregatedListVpnTunnels,
       (google::cloud::cpp::compute::vpn_tunnels::v1::
            AggregatedListVpnTunnelsRequest request),
@@ -74,7 +75,7 @@ class MockVpnTunnelsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>, ListVpnTunnels,
+      (StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>), ListVpnTunnels,
       (google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
            request),
       (override));

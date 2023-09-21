@@ -47,7 +47,7 @@ class MockUptimeCheckServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::UptimeCheckConfig>,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::UptimeCheckConfig>),
               ListUptimeCheckConfigs,
               (google::monitoring::v3::ListUptimeCheckConfigsRequest request),
               (override));
@@ -74,7 +74,7 @@ class MockUptimeCheckServiceConnection
       (google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::UptimeCheckIp>,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::UptimeCheckIp>),
               ListUptimeCheckIps,
               (google::monitoring::v3::ListUptimeCheckIpsRequest request),
               (override));

@@ -61,7 +61,7 @@ class MockPipelineServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>,
+      (StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>),
       ListTrainingPipelines,
       (google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request),
       (override));
@@ -89,7 +89,7 @@ class MockPipelineServiceConnection
       (google::cloud::aiplatform::v1::GetPipelineJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::PipelineJob>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::PipelineJob>),
               ListPipelineJobs,
               (google::cloud::aiplatform::v1::ListPipelineJobsRequest request),
               (override));

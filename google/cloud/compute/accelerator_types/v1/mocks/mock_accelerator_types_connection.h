@@ -47,13 +47,13 @@ class MockAcceleratorTypesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<std::pair<
-                  std::string,
-                  google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>,
-              AggregatedListAcceleratorTypes,
-              (google::cloud::cpp::compute::accelerator_types::v1::
-                   AggregatedListAcceleratorTypesRequest request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              AcceleratorTypesScopedList>>),
+      AggregatedListAcceleratorTypes,
+      (google::cloud::cpp::compute::accelerator_types::v1::
+           AggregatedListAcceleratorTypesRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>,
               GetAcceleratorType,
@@ -61,7 +61,7 @@ class MockAcceleratorTypesConnection
                    GetAcceleratorTypeRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>),
               ListAcceleratorTypes,
               (google::cloud::cpp::compute::accelerator_types::v1::
                    ListAcceleratorTypesRequest request),

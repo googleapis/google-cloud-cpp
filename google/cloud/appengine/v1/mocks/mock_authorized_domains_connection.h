@@ -47,7 +47,7 @@ class MockAuthorizedDomainsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::appengine::v1::AuthorizedDomain>,
+  MOCK_METHOD((StreamRange<google::appengine::v1::AuthorizedDomain>),
               ListAuthorizedDomains,
               (google::appengine::v1::ListAuthorizedDomainsRequest request),
               (override));

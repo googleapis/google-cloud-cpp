@@ -48,7 +48,8 @@ class MockTimeseriesInsightsControllerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::timeseriesinsights::v1::DataSet>, ListDataSets,
+      (StreamRange<google::cloud::timeseriesinsights::v1::DataSet>),
+      ListDataSets,
       (google::cloud::timeseriesinsights::v1::ListDataSetsRequest request),
       (override));
 

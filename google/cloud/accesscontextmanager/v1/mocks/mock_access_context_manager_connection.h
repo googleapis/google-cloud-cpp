@@ -48,7 +48,7 @@ class MockAccessContextManagerConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>,
+      (StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>),
       ListAccessPolicies,
       (google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
            request),
@@ -84,7 +84,7 @@ class MockAccessContextManagerConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>,
+      (StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>),
       ListAccessLevels,
       (google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
            request),
@@ -126,7 +126,8 @@ class MockAccessContextManagerConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>,
+      (StreamRange<
+          google::identity::accesscontextmanager::v1::ServicePerimeter>),
       ListServicePerimeters,
       (google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
            request),
@@ -177,8 +178,8 @@ class MockAccessContextManagerConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<
-          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>,
+      (StreamRange<
+          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>),
       ListGcpUserAccessBindings,
       (google::identity::accesscontextmanager::v1::
            ListGcpUserAccessBindingsRequest request),

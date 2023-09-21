@@ -48,7 +48,7 @@ class MockAdvisoryNotificationsServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::advisorynotifications::v1::Notification>,
+      (StreamRange<google::cloud::advisorynotifications::v1::Notification>),
       ListNotifications,
       (google::cloud::advisorynotifications::v1::ListNotificationsRequest
            request),

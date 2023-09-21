@@ -48,8 +48,8 @@ class MockNetworkAttachmentsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                             NetworkAttachmentsScopedList>>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              NetworkAttachmentsScopedList>>),
       AggregatedListNetworkAttachments,
       (google::cloud::cpp::compute::network_attachments::v1::
            AggregatedListNetworkAttachmentsRequest request),
@@ -78,7 +78,7 @@ class MockNetworkAttachmentsConnection
                    InsertNetworkAttachmentRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>),
               ListNetworkAttachments,
               (google::cloud::cpp::compute::network_attachments::v1::
                    ListNetworkAttachmentsRequest request),

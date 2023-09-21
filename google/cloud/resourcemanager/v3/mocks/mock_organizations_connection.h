@@ -54,7 +54,7 @@ class MockOrganizationsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::Organization>,
+      (StreamRange<google::cloud::resourcemanager::v3::Organization>),
       SearchOrganizations,
       (google::cloud::resourcemanager::v3::SearchOrganizationsRequest request),
       (override));

@@ -56,7 +56,7 @@ class MockIndexServiceConnection
               (google::cloud::aiplatform::v1::GetIndexRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Index>, ListIndexes,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Index>), ListIndexes,
               (google::cloud::aiplatform::v1::ListIndexesRequest request),
               (override));
 

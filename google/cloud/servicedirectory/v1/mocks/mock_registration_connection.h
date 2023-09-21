@@ -54,7 +54,7 @@ class MockRegistrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::servicedirectory::v1::Namespace>,
+      (StreamRange<google::cloud::servicedirectory::v1::Namespace>),
       ListNamespaces,
       (google::cloud::servicedirectory::v1::ListNamespacesRequest request),
       (override));
@@ -83,7 +83,7 @@ class MockRegistrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::servicedirectory::v1::Service>, ListServices,
+      (StreamRange<google::cloud::servicedirectory::v1::Service>), ListServices,
       (google::cloud::servicedirectory::v1::ListServicesRequest request),
       (override));
 
@@ -110,7 +110,8 @@ class MockRegistrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::servicedirectory::v1::Endpoint>, ListEndpoints,
+      (StreamRange<google::cloud::servicedirectory::v1::Endpoint>),
+      ListEndpoints,
       (google::cloud::servicedirectory::v1::ListEndpointsRequest request),
       (override));
 

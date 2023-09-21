@@ -48,7 +48,7 @@ class MockKnowledgeBasesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>,
+      (StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>),
       ListKnowledgeBases,
       (google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request),
       (override));

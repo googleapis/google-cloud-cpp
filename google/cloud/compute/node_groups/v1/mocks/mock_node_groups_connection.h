@@ -54,8 +54,9 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::NodeGroupsScopedList>>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::NodeGroupsScopedList>>),
       AggregatedListNodeGroups,
       (google::cloud::cpp::compute::node_groups::v1::
            AggregatedListNodeGroupsRequest request),
@@ -92,13 +93,13 @@ class MockNodeGroupsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::NodeGroup>, ListNodeGroups,
+      (StreamRange<google::cloud::cpp::compute::v1::NodeGroup>), ListNodeGroups,
       (google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>, ListNodes,
+      (StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>), ListNodes,
       (google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request),
       (override));
 

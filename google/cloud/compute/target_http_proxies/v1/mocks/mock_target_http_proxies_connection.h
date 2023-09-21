@@ -48,8 +48,8 @@ class MockTargetHttpProxiesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
-                                             TargetHttpProxiesScopedList>>,
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              TargetHttpProxiesScopedList>>),
       AggregatedListTargetHttpProxies,
       (google::cloud::cpp::compute::target_http_proxies::v1::
            AggregatedListTargetHttpProxiesRequest request),
@@ -73,7 +73,7 @@ class MockTargetHttpProxiesConnection
                    InsertTargetHttpProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>),
               ListTargetHttpProxies,
               (google::cloud::cpp::compute::target_http_proxies::v1::
                    ListTargetHttpProxiesRequest request),

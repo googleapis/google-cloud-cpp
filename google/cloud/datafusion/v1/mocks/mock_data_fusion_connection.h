@@ -47,12 +47,12 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datafusion::v1::Version>,
+      (StreamRange<google::cloud::datafusion::v1::Version>),
       ListAvailableVersions,
       (google::cloud::datafusion::v1::ListAvailableVersionsRequest request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::datafusion::v1::Instance>,
+  MOCK_METHOD((StreamRange<google::cloud::datafusion::v1::Instance>),
               ListInstances,
               (google::cloud::datafusion::v1::ListInstancesRequest request),
               (override));

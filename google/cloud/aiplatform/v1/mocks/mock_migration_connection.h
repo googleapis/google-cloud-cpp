@@ -48,7 +48,7 @@ class MockMigrationServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::MigratableResource>,
+      (StreamRange<google::cloud::aiplatform::v1::MigratableResource>),
       SearchMigratableResources,
       (google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request),
       (override));

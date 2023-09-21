@@ -52,7 +52,8 @@ class MockTranscoderServiceConnection
       (google::cloud::video::transcoder::v1::CreateJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::video::transcoder::v1::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::video::transcoder::v1::Job>),
+              ListJobs,
               (google::cloud::video::transcoder::v1::ListJobsRequest request),
               (override));
 
@@ -74,7 +75,7 @@ class MockTranscoderServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::video::transcoder::v1::JobTemplate>,
+      (StreamRange<google::cloud::video::transcoder::v1::JobTemplate>),
       ListJobTemplates,
       (google::cloud::video::transcoder::v1::ListJobTemplatesRequest request),
       (override));

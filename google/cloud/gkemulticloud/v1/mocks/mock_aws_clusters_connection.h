@@ -65,7 +65,7 @@ class MockAwsClustersConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>,
+      (StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>),
       ListAwsClusters,
       (google::cloud::gkemulticloud::v1::ListAwsClustersRequest request),
       (override));
@@ -103,7 +103,7 @@ class MockAwsClustersConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>,
+      (StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>),
       ListAwsNodePools,
       (google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request),
       (override));

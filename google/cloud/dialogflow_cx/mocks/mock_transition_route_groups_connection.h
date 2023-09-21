@@ -48,7 +48,7 @@ class MockTransitionRouteGroupsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>,
+      (StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>),
       ListTransitionRouteGroups,
       (google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
            request),

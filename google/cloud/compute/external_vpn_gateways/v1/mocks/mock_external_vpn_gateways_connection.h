@@ -66,11 +66,12 @@ class MockExternalVpnGatewaysConnection
                    InsertExternalVpnGatewayRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>,
-              ListExternalVpnGateways,
-              (google::cloud::cpp::compute::external_vpn_gateways::v1::
-                   ListExternalVpnGatewaysRequest request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>),
+      ListExternalVpnGateways,
+      (google::cloud::cpp::compute::external_vpn_gateways::v1::
+           ListExternalVpnGatewaysRequest request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,

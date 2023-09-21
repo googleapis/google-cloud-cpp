@@ -60,7 +60,7 @@ class MockGlobalOrganizationOperationsConnection
                    GetOperationRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Operation>),
               ListGlobalOrganizationOperations,
               (google::cloud::cpp::compute::global_organization_operations::v1::
                    ListGlobalOrganizationOperationsRequest request),

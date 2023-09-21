@@ -117,7 +117,7 @@ class MockBigtableInstanceAdminConnection
       (google::bigtable::admin::v2::GetAppProfileRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::AppProfile>,
+  MOCK_METHOD((StreamRange<google::bigtable::admin::v2::AppProfile>),
               ListAppProfiles,
               (google::bigtable::admin::v2::ListAppProfilesRequest request),
               (override));
@@ -146,7 +146,7 @@ class MockBigtableInstanceAdminConnection
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::HotTablet>,
+  MOCK_METHOD((StreamRange<google::bigtable::admin::v2::HotTablet>),
               ListHotTablets,
               (google::bigtable::admin::v2::ListHotTabletsRequest request),
               (override));

@@ -52,7 +52,7 @@ class MockConversationsConnection
       (google::cloud::dialogflow::v2::CreateConversationRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Conversation>,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Conversation>),
               ListConversations,
               (google::cloud::dialogflow::v2::ListConversationsRequest request),
               (override));
@@ -68,7 +68,8 @@ class MockConversationsConnection
                    request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Message>, ListMessages,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Message>),
+              ListMessages,
               (google::cloud::dialogflow::v2::ListMessagesRequest request),
               (override));
 

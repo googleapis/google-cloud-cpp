@@ -79,7 +79,7 @@ class MockContentServiceConnection
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Content>, ListContent,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Content>), ListContent,
               (google::cloud::dataplex::v1::ListContentRequest request),
               (override));
 };

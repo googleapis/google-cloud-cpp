@@ -65,7 +65,7 @@ class MockTargetSslProxiesConnection
                    InsertTargetSslProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>),
               ListTargetSslProxies,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
                    ListTargetSslProxiesRequest request),

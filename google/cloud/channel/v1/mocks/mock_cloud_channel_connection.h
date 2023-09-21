@@ -47,7 +47,8 @@ class MockCloudChannelServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Customer>, ListCustomers,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Customer>),
+              ListCustomers,
               (google::cloud::channel::v1::ListCustomersRequest request),
               (override));
 
@@ -89,18 +90,18 @@ class MockCloudChannelServiceConnection
                    request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Entitlement>,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Entitlement>),
               ListEntitlements,
               (google::cloud::channel::v1::ListEntitlementsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::TransferableSku>,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::TransferableSku>),
               ListTransferableSkus,
               (google::cloud::channel::v1::ListTransferableSkusRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::TransferableOffer>,
+      (StreamRange<google::cloud::channel::v1::TransferableOffer>),
       ListTransferableOffers,
       (google::cloud::channel::v1::ListTransferableOffersRequest request),
       (override));
@@ -172,7 +173,7 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::ChannelPartnerLink>,
+      (StreamRange<google::cloud::channel::v1::ChannelPartnerLink>),
       ListChannelPartnerLinks,
       (google::cloud::channel::v1::ListChannelPartnerLinksRequest request),
       (override));
@@ -205,7 +206,7 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>,
+      (StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>),
       ListCustomerRepricingConfigs,
       (google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request),
       (override));
@@ -238,7 +239,7 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      (StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>),
       ListChannelPartnerRepricingConfigs,
       (google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
            request),
@@ -263,12 +264,13 @@ class MockCloudChannelServiceConnection
                    DeleteChannelPartnerRepricingConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::SkuGroup>, ListSkuGroups,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::SkuGroup>),
+              ListSkuGroups,
               (google::cloud::channel::v1::ListSkuGroupsRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::BillableSku>,
+      (StreamRange<google::cloud::channel::v1::BillableSku>),
       ListSkuGroupBillableSkus,
       (google::cloud::channel::v1::ListSkuGroupBillableSkusRequest request),
       (override));
@@ -277,25 +279,25 @@ class MockCloudChannelServiceConnection
               (google::cloud::channel::v1::LookupOfferRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Product>, ListProducts,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Product>), ListProducts,
               (google::cloud::channel::v1::ListProductsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Sku>, ListSkus,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Sku>), ListSkus,
               (google::cloud::channel::v1::ListSkusRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Offer>, ListOffers,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Offer>), ListOffers,
               (google::cloud::channel::v1::ListOffersRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::PurchasableSku>,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::PurchasableSku>),
               ListPurchasableSkus,
               (google::cloud::channel::v1::ListPurchasableSkusRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::PurchasableOffer>,
+      (StreamRange<google::cloud::channel::v1::PurchasableOffer>),
       ListPurchasableOffers,
       (google::cloud::channel::v1::ListPurchasableOffersRequest request),
       (override));
@@ -320,12 +322,12 @@ class MockCloudChannelServiceConnection
       (google::cloud::channel::v1::UnregisterSubscriberRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<std::string>, ListSubscribers,
+  MOCK_METHOD((StreamRange<std::string>), ListSubscribers,
               (google::cloud::channel::v1::ListSubscribersRequest request),
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::channel::v1::EntitlementChange>,
+      (StreamRange<google::cloud::channel::v1::EntitlementChange>),
       ListEntitlementChanges,
       (google::cloud::channel::v1::ListEntitlementChangesRequest request),
       (override));

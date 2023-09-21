@@ -47,11 +47,12 @@ class MockInstanceAdminConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::spanner::admin::instance::v1::InstanceConfig>,
-              ListInstanceConfigs,
-              (google::spanner::admin::instance::v1::ListInstanceConfigsRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::spanner::admin::instance::v1::InstanceConfig>),
+      ListInstanceConfigs,
+      (google::spanner::admin::instance::v1::ListInstanceConfigsRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::spanner::admin::instance::v1::InstanceConfig>,
@@ -81,13 +82,14 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::longrunning::Operation>, ListInstanceConfigOperations,
+      (StreamRange<google::longrunning::Operation>),
+      ListInstanceConfigOperations,
       (google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::spanner::admin::instance::v1::Instance>,
+      (StreamRange<google::spanner::admin::instance::v1::Instance>),
       ListInstances,
       (google::spanner::admin::instance::v1::ListInstancesRequest request),
       (override));

@@ -60,7 +60,7 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::DeleteLakeRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Lake>, ListLakes,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Lake>), ListLakes,
               (google::cloud::dataplex::v1::ListLakesRequest request),
               (override));
 
@@ -68,7 +68,8 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::GetLakeRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Action>, ListLakeActions,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Action>),
+              ListLakeActions,
               (google::cloud::dataplex::v1::ListLakeActionsRequest request),
               (override));
 
@@ -85,7 +86,7 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::DeleteZoneRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Zone>, ListZones,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Zone>), ListZones,
               (google::cloud::dataplex::v1::ListZonesRequest request),
               (override));
 
@@ -93,7 +94,8 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::GetZoneRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Action>, ListZoneActions,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Action>),
+              ListZoneActions,
               (google::cloud::dataplex::v1::ListZoneActionsRequest request),
               (override));
 
@@ -110,7 +112,7 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::DeleteAssetRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Asset>, ListAssets,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Asset>), ListAssets,
               (google::cloud::dataplex::v1::ListAssetsRequest request),
               (override));
 
@@ -118,7 +120,7 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::GetAssetRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Action>,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Action>),
               ListAssetActions,
               (google::cloud::dataplex::v1::ListAssetActionsRequest request),
               (override));
@@ -136,7 +138,7 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::DeleteTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Task>, ListTasks,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Task>), ListTasks,
               (google::cloud::dataplex::v1::ListTasksRequest request),
               (override));
 
@@ -144,7 +146,7 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::GetTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Job>, ListJobs,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Job>), ListJobs,
               (google::cloud::dataplex::v1::ListJobsRequest request),
               (override));
 
@@ -178,7 +180,7 @@ class MockDataplexServiceConnection
       (google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Environment>,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Environment>),
               ListEnvironments,
               (google::cloud::dataplex::v1::ListEnvironmentsRequest request),
               (override));
@@ -188,7 +190,7 @@ class MockDataplexServiceConnection
       (google::cloud::dataplex::v1::GetEnvironmentRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Session>, ListSessions,
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Session>), ListSessions,
               (google::cloud::dataplex::v1::ListSessionsRequest request),
               (override));
 };

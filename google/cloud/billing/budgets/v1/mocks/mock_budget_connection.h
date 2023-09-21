@@ -62,7 +62,7 @@ class MockBudgetServiceConnection
       (google::cloud::billing::budgets::v1::GetBudgetRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::billing::budgets::v1::Budget>,
+  MOCK_METHOD((StreamRange<google::cloud::billing::budgets::v1::Budget>),
               ListBudgets,
               (google::cloud::billing::budgets::v1::ListBudgetsRequest request),
               (override));

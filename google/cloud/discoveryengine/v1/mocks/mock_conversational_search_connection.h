@@ -82,7 +82,7 @@ class MockConversationalSearchServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::discoveryengine::v1::Conversation>,
+      (StreamRange<google::cloud::discoveryengine::v1::Conversation>),
       ListConversations,
       (google::cloud::discoveryengine::v1::ListConversationsRequest request),
       (override));

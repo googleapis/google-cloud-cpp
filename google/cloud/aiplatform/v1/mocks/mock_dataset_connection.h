@@ -61,7 +61,8 @@ class MockDatasetServiceConnection
       (google::cloud::aiplatform::v1::UpdateDatasetRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Dataset>, ListDatasets,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Dataset>),
+              ListDatasets,
               (google::cloud::aiplatform::v1::ListDatasetsRequest request),
               (override));
 
@@ -83,17 +84,17 @@ class MockDatasetServiceConnection
       (google::cloud::aiplatform::v1::ExportDataRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::DataItem>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DataItem>),
               ListDataItems,
               (google::cloud::aiplatform::v1::ListDataItemsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::DataItemView>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DataItemView>),
               SearchDataItems,
               (google::cloud::aiplatform::v1::SearchDataItemsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::SavedQuery>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::SavedQuery>),
               ListSavedQueries,
               (google::cloud::aiplatform::v1::ListSavedQueriesRequest request),
               (override));
@@ -110,7 +111,7 @@ class MockDatasetServiceConnection
       (google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Annotation>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Annotation>),
               ListAnnotations,
               (google::cloud::aiplatform::v1::ListAnnotationsRequest request),
               (override));

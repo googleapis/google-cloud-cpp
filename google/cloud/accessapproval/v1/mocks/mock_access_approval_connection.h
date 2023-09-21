@@ -48,7 +48,7 @@ class MockAccessApprovalConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>,
+      (StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>),
       ListApprovalRequests,
       (google::cloud::accessapproval::v1::ListApprovalRequestsMessage request),
       (override));

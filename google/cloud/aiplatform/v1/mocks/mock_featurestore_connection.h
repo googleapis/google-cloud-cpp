@@ -58,7 +58,7 @@ class MockFeaturestoreServiceConnection
       (google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Featurestore>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Featurestore>),
               ListFeaturestores,
               (google::cloud::aiplatform::v1::ListFeaturestoresRequest request),
               (override));
@@ -86,7 +86,7 @@ class MockFeaturestoreServiceConnection
       (google::cloud::aiplatform::v1::GetEntityTypeRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::EntityType>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::EntityType>),
               ListEntityTypes,
               (google::cloud::aiplatform::v1::ListEntityTypesRequest request),
               (override));
@@ -119,7 +119,8 @@ class MockFeaturestoreServiceConnection
               (google::cloud::aiplatform::v1::GetFeatureRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Feature>, ListFeatures,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Feature>),
+              ListFeatures,
               (google::cloud::aiplatform::v1::ListFeaturesRequest request),
               (override));
 
@@ -166,7 +167,7 @@ class MockFeaturestoreServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::Feature>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Feature>),
               SearchFeatures,
               (google::cloud::aiplatform::v1::SearchFeaturesRequest request),
               (override));

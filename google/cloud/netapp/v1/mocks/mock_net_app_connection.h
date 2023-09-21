@@ -46,7 +46,7 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::netapp::v1::StoragePool>,
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::StoragePool>),
               ListStoragePools,
               (google::cloud::netapp::v1::ListStoragePoolsRequest request),
               (override));
@@ -73,7 +73,7 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
       (google::cloud::netapp::v1::DeleteStoragePoolRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::netapp::v1::Volume>, ListVolumes,
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::Volume>), ListVolumes,
               (google::cloud::netapp::v1::ListVolumesRequest request),
               (override));
 
@@ -98,7 +98,7 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::RevertVolumeRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::netapp::v1::Snapshot>, ListSnapshots,
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::Snapshot>), ListSnapshots,
               (google::cloud::netapp::v1::ListSnapshotsRequest request),
               (override));
 
@@ -121,7 +121,7 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::UpdateSnapshotRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::netapp::v1::ActiveDirectory>,
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::ActiveDirectory>),
               ListActiveDirectories,
               (google::cloud::netapp::v1::ListActiveDirectoriesRequest request),
               (override));
@@ -149,7 +149,8 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
       (google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::netapp::v1::KmsConfig>, ListKmsConfigs,
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::KmsConfig>),
+              ListKmsConfigs,
               (google::cloud::netapp::v1::ListKmsConfigsRequest request),
               (override));
 
@@ -184,7 +185,7 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
       (google::cloud::netapp::v1::DeleteKmsConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::netapp::v1::Replication>,
+  MOCK_METHOD((StreamRange<google::cloud::netapp::v1::Replication>),
               ListReplications,
               (google::cloud::netapp::v1::ListReplicationsRequest request),
               (override));

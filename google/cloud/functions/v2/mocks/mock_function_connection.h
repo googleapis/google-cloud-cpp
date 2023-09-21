@@ -51,7 +51,7 @@ class MockFunctionServiceConnection
               (google::cloud::functions::v2::GetFunctionRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::functions::v2::Function>,
+  MOCK_METHOD((StreamRange<google::cloud::functions::v2::Function>),
               ListFunctions,
               (google::cloud::functions::v2::ListFunctionsRequest request),
               (override));

@@ -65,7 +65,7 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datacatalog::lineage::v1::Process>,
+      (StreamRange<google::cloud::datacatalog::lineage::v1::Process>),
       ListProcesses,
       (google::cloud::datacatalog::lineage::v1::ListProcessesRequest request),
       (override));
@@ -94,7 +94,7 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datacatalog::lineage::v1::Run>, ListRuns,
+      (StreamRange<google::cloud::datacatalog::lineage::v1::Run>), ListRuns,
       (google::cloud::datacatalog::lineage::v1::ListRunsRequest request),
       (override));
 
@@ -121,7 +121,7 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>,
+      (StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>),
       ListLineageEvents,
       (google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest
            request),
@@ -134,12 +134,12 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datacatalog::lineage::v1::Link>, SearchLinks,
+      (StreamRange<google::cloud::datacatalog::lineage::v1::Link>), SearchLinks,
       (google::cloud::datacatalog::lineage::v1::SearchLinksRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>,
+      (StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>),
       BatchSearchLinkProcesses,
       (google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
            request),

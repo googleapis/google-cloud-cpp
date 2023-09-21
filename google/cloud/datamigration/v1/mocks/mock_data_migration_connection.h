@@ -47,7 +47,7 @@ class MockDataMigrationServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::clouddms::v1::MigrationJob>,
+  MOCK_METHOD((StreamRange<google::cloud::clouddms::v1::MigrationJob>),
               ListMigrationJobs,
               (google::cloud::clouddms::v1::ListMigrationJobsRequest request),
               (override));
@@ -123,7 +123,7 @@ class MockDataMigrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::clouddms::v1::ConnectionProfile>,
+      (StreamRange<google::cloud::clouddms::v1::ConnectionProfile>),
       ListConnectionProfiles,
       (google::cloud::clouddms::v1::ListConnectionProfilesRequest request),
       (override));
@@ -169,7 +169,7 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::clouddms::v1::PrivateConnection>,
+      (StreamRange<google::cloud::clouddms::v1::PrivateConnection>),
       ListPrivateConnections,
       (google::cloud::clouddms::v1::ListPrivateConnectionsRequest request),
       (override));
@@ -188,7 +188,7 @@ class MockDataMigrationServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>,
+      (StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>),
       ListConversionWorkspaces,
       (google::cloud::clouddms::v1::ListConversionWorkspacesRequest request),
       (override));
@@ -224,7 +224,7 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::clouddms::v1::MappingRule>,
+  MOCK_METHOD((StreamRange<google::cloud::clouddms::v1::MappingRule>),
               ListMappingRules,
               (google::cloud::clouddms::v1::ListMappingRulesRequest request),
               (override));
@@ -276,7 +276,7 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::clouddms::v1::DatabaseEntity>,
+      (StreamRange<google::cloud::clouddms::v1::DatabaseEntity>),
       DescribeDatabaseEntities,
       (google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request),
       (override));
@@ -294,7 +294,7 @@ class MockDataMigrationServiceConnection
                    DescribeConversionWorkspaceRevisionsRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<std::string>, FetchStaticIps,
+  MOCK_METHOD((StreamRange<std::string>), FetchStaticIps,
               (google::cloud::clouddms::v1::FetchStaticIpsRequest request),
               (override));
 };

@@ -50,7 +50,7 @@ class MockTasksConnection : public run_v2::TasksConnection {
               (google::cloud::run::v2::GetTaskRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Task>, ListTasks,
+  MOCK_METHOD((StreamRange<google::cloud::run::v2::Task>), ListTasks,
               (google::cloud::run::v2::ListTasksRequest request), (override));
 };
 

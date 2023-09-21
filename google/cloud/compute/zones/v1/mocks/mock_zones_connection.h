@@ -52,7 +52,7 @@ class MockZonesConnection : public compute_zones_v1::ZonesConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Zone>, ListZones,
+      (StreamRange<google::cloud::cpp::compute::v1::Zone>), ListZones,
       (google::cloud::cpp::compute::zones::v1::ListZonesRequest request),
       (override));
 };

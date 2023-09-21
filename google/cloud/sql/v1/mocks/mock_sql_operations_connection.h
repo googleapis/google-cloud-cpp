@@ -51,7 +51,7 @@ class MockSqlOperationsServiceConnection
               (google::cloud::sql::v1::SqlOperationsGetRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::sql::v1::Operation>, List,
+  MOCK_METHOD((StreamRange<google::cloud::sql::v1::Operation>), List,
               (google::cloud::sql::v1::SqlOperationsListRequest request),
               (override));
 

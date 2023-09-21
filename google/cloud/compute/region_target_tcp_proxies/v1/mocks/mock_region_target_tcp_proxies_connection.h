@@ -67,7 +67,7 @@ class MockRegionTargetTcpProxiesConnection
                    InsertTargetTcpProxyRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>),
               ListRegionTargetTcpProxies,
               (google::cloud::cpp::compute::region_target_tcp_proxies::v1::
                    ListRegionTargetTcpProxiesRequest request),

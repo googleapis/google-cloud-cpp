@@ -67,7 +67,7 @@ class MockServingConfigServiceConnection
       (google::cloud::retail::v2::GetServingConfigRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::retail::v2::ServingConfig>,
+  MOCK_METHOD((StreamRange<google::cloud::retail::v2::ServingConfig>),
               ListServingConfigs,
               (google::cloud::retail::v2::ListServingConfigsRequest request),
               (override));

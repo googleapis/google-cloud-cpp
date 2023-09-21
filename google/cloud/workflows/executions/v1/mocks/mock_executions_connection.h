@@ -48,7 +48,7 @@ class MockExecutionsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::workflows::executions::v1::Execution>,
+      (StreamRange<google::cloud::workflows::executions::v1::Execution>),
       ListExecutions,
       (google::cloud::workflows::executions::v1::ListExecutionsRequest request),
       (override));

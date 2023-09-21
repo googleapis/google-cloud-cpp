@@ -55,7 +55,7 @@ class MockReservationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::reservation::v1::Reservation>,
+      (StreamRange<google::cloud::bigquery::reservation::v1::Reservation>),
       ListReservations,
       (google::cloud::bigquery::reservation::v1::ListReservationsRequest
            request),
@@ -89,7 +89,8 @@ class MockReservationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>,
+      (StreamRange<
+          google::cloud::bigquery::reservation::v1::CapacityCommitment>),
       ListCapacityCommitments,
       (google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
            request),
@@ -135,11 +136,12 @@ class MockReservationServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::bigquery::reservation::v1::Assignment>,
-              ListAssignments,
-              (google::cloud::bigquery::reservation::v1::ListAssignmentsRequest
-                   request),
-              (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::reservation::v1::Assignment>),
+      ListAssignments,
+      (google::cloud::bigquery::reservation::v1::ListAssignmentsRequest
+           request),
+      (override));
 
   MOCK_METHOD(
       Status, DeleteAssignment,
@@ -148,14 +150,14 @@ class MockReservationServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::reservation::v1::Assignment>,
+      (StreamRange<google::cloud::bigquery::reservation::v1::Assignment>),
       SearchAssignments,
       (google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::reservation::v1::Assignment>,
+      (StreamRange<google::cloud::bigquery::reservation::v1::Assignment>),
       SearchAllAssignments,
       (google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
            request),

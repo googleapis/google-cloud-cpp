@@ -48,7 +48,7 @@ class MockMetricServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::api::MonitoredResourceDescriptor>,
+      (StreamRange<google::api::MonitoredResourceDescriptor>),
       ListMonitoredResourceDescriptors,
       (google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request),
       (override));
@@ -60,7 +60,8 @@ class MockMetricServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::api::MetricDescriptor>, ListMetricDescriptors,
+  MOCK_METHOD((StreamRange<google::api::MetricDescriptor>),
+              ListMetricDescriptors,
               (google::monitoring::v3::ListMetricDescriptorsRequest request),
               (override));
 
@@ -79,7 +80,7 @@ class MockMetricServiceConnection
       (google::monitoring::v3::DeleteMetricDescriptorRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::TimeSeries>, ListTimeSeries,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::TimeSeries>), ListTimeSeries,
               (google::monitoring::v3::ListTimeSeriesRequest request),
               (override));
 

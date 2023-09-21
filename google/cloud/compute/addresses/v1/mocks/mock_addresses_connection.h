@@ -48,8 +48,8 @@ class MockAddressesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>,
+      (StreamRange<std::pair<
+           std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>),
       AggregatedListAddresses,
       (google::cloud::cpp::compute::addresses::v1::
            AggregatedListAddressesRequest request),
@@ -75,7 +75,7 @@ class MockAddressesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Address>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Address>),
               ListAddresses,
               (google::cloud::cpp::compute::addresses::v1::ListAddressesRequest
                    request),

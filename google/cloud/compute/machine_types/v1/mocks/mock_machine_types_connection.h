@@ -48,9 +48,9 @@ class MockMachineTypesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<
+      (StreamRange<
           std::pair<std::string,
-                    google::cloud::cpp::compute::v1::MachineTypesScopedList>>,
+                    google::cloud::cpp::compute::v1::MachineTypesScopedList>>),
       AggregatedListMachineTypes,
       (google::cloud::cpp::compute::machine_types::v1::
            AggregatedListMachineTypesRequest request),
@@ -63,7 +63,7 @@ class MockMachineTypesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::MachineType>,
+      (StreamRange<google::cloud::cpp::compute::v1::MachineType>),
       ListMachineTypes,
       (google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
            request),

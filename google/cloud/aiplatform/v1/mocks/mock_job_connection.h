@@ -56,7 +56,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (google::cloud::aiplatform::v1::GetCustomJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::CustomJob>,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::CustomJob>),
               ListCustomJobs,
               (google::cloud::aiplatform::v1::ListCustomJobsRequest request),
               (override));
@@ -86,7 +86,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>,
+      (StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>),
       ListDataLabelingJobs,
       (google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request),
       (override));
@@ -118,7 +118,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>,
+      (StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>),
       ListHyperparameterTuningJobs,
       (google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest
            request),
@@ -145,7 +145,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
               (google::cloud::aiplatform::v1::GetNasJobRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::aiplatform::v1::NasJob>, ListNasJobs,
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::NasJob>), ListNasJobs,
               (google::cloud::aiplatform::v1::ListNasJobsRequest request),
               (override));
 
@@ -167,7 +167,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>,
+      (StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>),
       ListNasTrialDetails,
       (google::cloud::aiplatform::v1::ListNasTrialDetailsRequest request),
       (override));
@@ -187,7 +187,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>,
+      (StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>),
       ListBatchPredictionJobs,
       (google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request),
       (override));
@@ -213,7 +213,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>,
+      (StreamRange<
+          google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>),
       SearchModelDeploymentMonitoringStatsAnomalies,
       (google::cloud::aiplatform::v1::
            SearchModelDeploymentMonitoringStatsAnomaliesRequest request),
@@ -227,7 +228,8 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>,
+      (StreamRange<
+          google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>),
       ListModelDeploymentMonitoringJobs,
       (google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest
            request),

@@ -60,8 +60,9 @@ class MockTargetPoolsConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::TargetPoolsScopedList>>),
       AggregatedListTargetPools,
       (google::cloud::cpp::compute::target_pools::v1::
            AggregatedListTargetPoolsRequest request),
@@ -93,7 +94,8 @@ class MockTargetPoolsConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::TargetPool>, ListTargetPools,
+      (StreamRange<google::cloud::cpp::compute::v1::TargetPool>),
+      ListTargetPools,
       (google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
            request),
       (override));

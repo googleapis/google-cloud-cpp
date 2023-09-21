@@ -48,7 +48,7 @@ class MockAppGatewaysServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
+      (StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>),
       ListAppGateways,
       (google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
            request),

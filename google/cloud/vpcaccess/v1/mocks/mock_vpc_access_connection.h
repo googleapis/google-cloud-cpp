@@ -58,7 +58,7 @@ class MockVpcAccessServiceConnection
       (google::cloud::vpcaccess::v1::GetConnectorRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::vpcaccess::v1::Connector>,
+  MOCK_METHOD((StreamRange<google::cloud::vpcaccess::v1::Connector>),
               ListConnectors,
               (google::cloud::vpcaccess::v1::ListConnectorsRequest request),
               (override));

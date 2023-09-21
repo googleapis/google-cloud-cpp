@@ -53,11 +53,12 @@ class MockCloudChannelReportsServiceConnection
       (google::cloud::channel::v1::RunReportJobRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Row>, FetchReportResults,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Row>),
+              FetchReportResults,
               (google::cloud::channel::v1::FetchReportResultsRequest request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::channel::v1::Report>, ListReports,
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Report>), ListReports,
               (google::cloud::channel::v1::ListReportsRequest request),
               (override));
 };

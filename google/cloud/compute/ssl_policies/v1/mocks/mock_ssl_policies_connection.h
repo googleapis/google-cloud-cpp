@@ -48,8 +48,9 @@ class MockSslPoliciesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::SslPoliciesScopedList>>),
       AggregatedListSslPolicies,
       (google::cloud::cpp::compute::ssl_policies::v1::
            AggregatedListSslPoliciesRequest request),
@@ -74,7 +75,8 @@ class MockSslPoliciesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::SslPolicy>, ListSslPolicies,
+      (StreamRange<google::cloud::cpp::compute::v1::SslPolicy>),
+      ListSslPolicies,
       (google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
            request),
       (override));

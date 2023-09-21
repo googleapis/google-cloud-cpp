@@ -48,7 +48,7 @@ class MockReachabilityServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>,
+      (StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>),
       ListConnectivityTests,
       (google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
            request),

@@ -66,7 +66,7 @@ class MockDocumentProcessorServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::documentai::v1::ProcessorType>,
+      (StreamRange<google::cloud::documentai::v1::ProcessorType>),
       ListProcessorTypes,
       (google::cloud::documentai::v1::ListProcessorTypesRequest request),
       (override));
@@ -76,7 +76,7 @@ class MockDocumentProcessorServiceConnection
       (google::cloud::documentai::v1::GetProcessorTypeRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::documentai::v1::Processor>,
+  MOCK_METHOD((StreamRange<google::cloud::documentai::v1::Processor>),
               ListProcessors,
               (google::cloud::documentai::v1::ListProcessorsRequest request),
               (override));
@@ -101,7 +101,7 @@ class MockDocumentProcessorServiceConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::documentai::v1::ProcessorVersion>,
+      (StreamRange<google::cloud::documentai::v1::ProcessorVersion>),
       ListProcessorVersions,
       (google::cloud::documentai::v1::ListProcessorVersionsRequest request),
       (override));
@@ -180,7 +180,7 @@ class MockDocumentProcessorServiceConnection
       (google::cloud::documentai::v1::GetEvaluationRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::documentai::v1::Evaluation>,
+  MOCK_METHOD((StreamRange<google::cloud::documentai::v1::Evaluation>),
               ListEvaluations,
               (google::cloud::documentai::v1::ListEvaluationsRequest request),
               (override));

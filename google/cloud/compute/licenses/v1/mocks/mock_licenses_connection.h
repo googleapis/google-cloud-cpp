@@ -73,7 +73,7 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::License>, ListLicenses,
+      (StreamRange<google::cloud::cpp::compute::v1::License>), ListLicenses,
       (google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request),
       (override));
 

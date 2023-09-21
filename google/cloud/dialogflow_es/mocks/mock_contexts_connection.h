@@ -46,7 +46,8 @@ class MockContextsConnection : public dialogflow_es::ContextsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Context>, ListContexts,
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Context>),
+              ListContexts,
               (google::cloud::dialogflow::v2::ListContextsRequest request),
               (override));
 

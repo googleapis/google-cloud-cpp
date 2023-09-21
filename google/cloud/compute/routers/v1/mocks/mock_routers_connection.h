@@ -47,8 +47,8 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>,
+      (StreamRange<std::pair<
+           std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>),
       AggregatedListRouters,
       (google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
            request),
@@ -88,7 +88,7 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Router>, ListRouters,
+      (StreamRange<google::cloud::cpp::compute::v1::Router>), ListRouters,
       (google::cloud::cpp::compute::routers::v1::ListRoutersRequest request),
       (override));
 

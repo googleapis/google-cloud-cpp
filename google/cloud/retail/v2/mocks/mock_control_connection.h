@@ -63,7 +63,7 @@ class MockControlServiceConnection
               (google::cloud::retail::v2::GetControlRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::retail::v2::Control>, ListControls,
+  MOCK_METHOD((StreamRange<google::cloud::retail::v2::Control>), ListControls,
               (google::cloud::retail::v2::ListControlsRequest request),
               (override));
 };

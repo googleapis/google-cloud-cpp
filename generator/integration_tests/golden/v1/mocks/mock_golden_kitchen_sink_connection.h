@@ -58,7 +58,7 @@ class MockGoldenKitchenSinkConnection : public golden_v1::GoldenKitchenSinkConne
   WriteLogEntries,
   (google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
 
-  MOCK_METHOD(StreamRange<std::string>,
+  MOCK_METHOD((StreamRange<std::string>),
   ListLogs,
   (google::test::admin::database::v1::ListLogsRequest request), (override));
 

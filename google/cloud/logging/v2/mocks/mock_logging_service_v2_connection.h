@@ -56,16 +56,16 @@ class MockLoggingServiceV2Connection
               (google::logging::v2::WriteLogEntriesRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::LogEntry>, ListLogEntries,
+  MOCK_METHOD((StreamRange<google::logging::v2::LogEntry>), ListLogEntries,
               (google::logging::v2::ListLogEntriesRequest request), (override));
 
   MOCK_METHOD(
-      StreamRange<google::api::MonitoredResourceDescriptor>,
+      (StreamRange<google::api::MonitoredResourceDescriptor>),
       ListMonitoredResourceDescriptors,
       (google::logging::v2::ListMonitoredResourceDescriptorsRequest request),
       (override));
 
-  MOCK_METHOD(StreamRange<std::string>, ListLogs,
+  MOCK_METHOD((StreamRange<std::string>), ListLogs,
               (google::logging::v2::ListLogsRequest request), (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

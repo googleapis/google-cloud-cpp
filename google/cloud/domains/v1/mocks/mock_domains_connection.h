@@ -77,7 +77,7 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       (google::cloud::domains::v1::TransferDomainRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::domains::v1::Registration>,
+  MOCK_METHOD((StreamRange<google::cloud::domains::v1::Registration>),
               ListRegistrations,
               (google::cloud::domains::v1::ListRegistrationsRequest request),
               (override));

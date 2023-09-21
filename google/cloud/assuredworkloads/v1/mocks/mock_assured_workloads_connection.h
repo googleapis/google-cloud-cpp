@@ -77,12 +77,13 @@ class MockAssuredWorkloadsServiceConnection
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::assuredworkloads::v1::Workload>, ListWorkloads,
+      (StreamRange<google::cloud::assuredworkloads::v1::Workload>),
+      ListWorkloads,
       (google::cloud::assuredworkloads::v1::ListWorkloadsRequest request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::assuredworkloads::v1::Violation>,
+      (StreamRange<google::cloud::assuredworkloads::v1::Violation>),
       ListViolations,
       (google::cloud::assuredworkloads::v1::ListViolationsRequest request),
       (override));

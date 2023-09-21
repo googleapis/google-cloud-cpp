@@ -47,7 +47,7 @@ class MockMetricsServiceV2Connection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::logging::v2::LogMetric>, ListLogMetrics,
+  MOCK_METHOD((StreamRange<google::logging::v2::LogMetric>), ListLogMetrics,
               (google::logging::v2::ListLogMetricsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::LogMetric>, GetLogMetric,

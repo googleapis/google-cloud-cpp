@@ -61,8 +61,8 @@ class MockInstancesConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>,
+      (StreamRange<std::pair<
+           std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>),
       AggregatedListInstances,
       (google::cloud::cpp::compute::instances::v1::
            AggregatedListInstancesRequest request),
@@ -150,13 +150,13 @@ class MockInstancesConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Instance>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Instance>),
               ListInstances,
               (google::cloud::cpp::compute::instances::v1::ListInstancesRequest
                    request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Reference>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Reference>),
               ListReferrers,
               (google::cloud::cpp::compute::instances::v1::ListReferrersRequest
                    request),

@@ -47,7 +47,7 @@ class MockNotebookServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::notebooks::v1::Instance>,
+  MOCK_METHOD((StreamRange<google::cloud::notebooks::v1::Instance>),
               ListInstances,
               (google::cloud::notebooks::v1::ListInstancesRequest request),
               (override));
@@ -172,7 +172,7 @@ class MockNotebookServiceConnection
            request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::notebooks::v1::Environment>,
+  MOCK_METHOD((StreamRange<google::cloud::notebooks::v1::Environment>),
               ListEnvironments,
               (google::cloud::notebooks::v1::ListEnvironmentsRequest request),
               (override));
@@ -194,7 +194,7 @@ class MockNotebookServiceConnection
       (google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::notebooks::v1::Schedule>,
+  MOCK_METHOD((StreamRange<google::cloud::notebooks::v1::Schedule>),
               ListSchedules,
               (google::cloud::notebooks::v1::ListSchedulesRequest request),
               (override));
@@ -219,7 +219,7 @@ class MockNotebookServiceConnection
       (google::cloud::notebooks::v1::TriggerScheduleRequest const& request),
       (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::notebooks::v1::Execution>,
+  MOCK_METHOD((StreamRange<google::cloud::notebooks::v1::Execution>),
               ListExecutions,
               (google::cloud::notebooks::v1::ListExecutionsRequest request),
               (override));

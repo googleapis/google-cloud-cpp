@@ -47,7 +47,7 @@ class MockQueryServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StreamRange<google::monitoring::v3::TimeSeriesData>,
+  MOCK_METHOD((StreamRange<google::monitoring::v3::TimeSeriesData>),
               QueryTimeSeries,
               (google::monitoring::v3::QueryTimeSeriesRequest request),
               (override));

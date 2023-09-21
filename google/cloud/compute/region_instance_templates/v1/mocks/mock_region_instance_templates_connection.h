@@ -67,7 +67,7 @@ class MockRegionInstanceTemplatesConnection
                    InsertInstanceTemplateRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>,
+  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>),
               ListRegionInstanceTemplates,
               (google::cloud::cpp::compute::region_instance_templates::v1::
                    ListRegionInstanceTemplatesRequest request),

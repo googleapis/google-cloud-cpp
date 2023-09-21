@@ -92,7 +92,7 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Project>, ListXpnHosts,
+      (StreamRange<google::cloud::cpp::compute::v1::Project>), ListXpnHosts,
       (google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request),
       (override));
 

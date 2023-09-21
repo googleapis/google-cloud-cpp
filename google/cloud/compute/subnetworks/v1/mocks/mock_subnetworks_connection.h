@@ -48,8 +48,9 @@ class MockSubnetworksConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
-      StreamRange<std::pair<
-          std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>,
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::SubnetworksScopedList>>),
       AggregatedListSubnetworks,
       (google::cloud::cpp::compute::subnetworks::v1::
            AggregatedListSubnetworksRequest request),
@@ -86,13 +87,14 @@ class MockSubnetworksConnection
               (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::Subnetwork>, ListSubnetworks,
+      (StreamRange<google::cloud::cpp::compute::v1::Subnetwork>),
+      ListSubnetworks,
       (google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>,
+      (StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>),
       ListUsable,
       (google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request),
       (override));

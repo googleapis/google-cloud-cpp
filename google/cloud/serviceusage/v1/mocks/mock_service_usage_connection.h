@@ -63,7 +63,8 @@ class MockServiceUsageConnection
               (google::api::serviceusage::v1::GetServiceRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<google::api::serviceusage::v1::Service>, ListServices,
+  MOCK_METHOD((StreamRange<google::api::serviceusage::v1::Service>),
+              ListServices,
               (google::api::serviceusage::v1::ListServicesRequest request),
               (override));
 
