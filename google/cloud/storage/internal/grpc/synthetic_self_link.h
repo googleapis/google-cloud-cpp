@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/options.h"
+#include <cstdint>
 #include <string>
 
 namespace google {

@@ -34,7 +34,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
 using ::testing::Property;
 
 class ComputeIntegrationTest
