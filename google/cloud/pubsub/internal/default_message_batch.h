@@ -38,6 +38,9 @@ class DefaultMessageBatch : public MessageBatch {
   void Flush(){};
 
   void FlushCallback(){};
+
+ private:
+  DefaultMessageBatch();
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
