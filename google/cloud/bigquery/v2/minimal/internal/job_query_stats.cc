@@ -143,13 +143,14 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
   j = nlohmann::json{
       {"name", q.name},
       {"status", q.status},
-      {"id", q.id},
-      {"shuffleOutputBytes", q.shuffle_output_bytes},
-      {"shuffleOutputBytesSpilled", q.shuffle_output_bytes_spilled},
-      {"recordsRead", q.records_read},
-      {"recordsWritten", q.records_written},
-      {"parallelInputs", q.parallel_inputs},
-      {"completedParallelInputs", q.completed_parallel_inputs},
+      {"id", std::to_string(q.id)},
+      {"shuffleOutputBytes", std::to_string(q.shuffle_output_bytes)},
+      {"shuffleOutputBytesSpilled",
+       std::to_string(q.shuffle_output_bytes_spilled)},
+      {"recordsRead", std::to_string(q.records_read)},
+      {"recordsWritten", std::to_string(q.records_written)},
+      {"parallelInputs", std::to_string(q.parallel_inputs)},
+      {"completedParallelInputs", std::to_string(q.completed_parallel_inputs)},
       {"inputStages", q.input_stages},
       {"waitRatioAvg", q.wait_ratio_avg},
       {"waitRatioMax", q.wait_ratio_max},
@@ -160,7 +161,7 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
       {"writeRatioAvg", q.write_ratio_avg},
       {"writeRatioMax", q.write_ratio_max},
       {"steps", q.steps},
-      {"computeMode", q.compute_mode}};
+      {"computeMode", q.compute_mode.value}};
 
   ToJson(q.start_time, j, "startMs");
   ToJson(q.end_time, j, "endMs");
@@ -178,13 +179,14 @@ void to_json(nlohmann::json& j, ExplainQueryStage const& q) {
 void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
   SafeGetTo(q.name, j, "name");
   SafeGetTo(q.status, j, "status");
-  SafeGetTo(q.id, j, "id");
-  SafeGetTo(q.shuffle_output_bytes, j, "shuffleOutputBytes");
-  SafeGetTo(q.shuffle_output_bytes_spilled, j, "shuffleOutputBytesSpilled");
-  SafeGetTo(q.records_read, j, "recordsRead");
-  SafeGetTo(q.records_written, j, "recordsWritten");
-  SafeGetTo(q.parallel_inputs, j, "parallelInputs");
-  SafeGetTo(q.completed_parallel_inputs, j, "completedParallelInputs");
+  q.id = GetNumberFromJson(j, "id");
+  q.shuffle_output_bytes = GetNumberFromJson(j, "shuffleOutputBytes");
+  q.shuffle_output_bytes_spilled =
+      GetNumberFromJson(j, "shuffleOutputBytesSpilled");
+  q.records_read = GetNumberFromJson(j, "recordsRead");
+  q.records_written = GetNumberFromJson(j, "recordsWritten");
+  q.parallel_inputs = GetNumberFromJson(j, "parallelInputs");
+  q.completed_parallel_inputs = GetNumberFromJson(j, "completedParallelInputs");
   SafeGetTo(q.input_stages, j, "inputStages");
   SafeGetTo(q.wait_ratio_avg, j, "waitRatioAvg");
   SafeGetTo(q.wait_ratio_max, j, "waitRatioMax");
@@ -195,7 +197,7 @@ void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
   SafeGetTo(q.write_ratio_avg, j, "writeRatioAvg");
   SafeGetTo(q.write_ratio_max, j, "writeRatioMax");
   SafeGetTo(q.steps, j, "steps");
-  SafeGetTo(q.compute_mode, j, "computeMode");
+  SafeGetTo(q.compute_mode.value, j, "computeMode");
 
   FromJson(q.start_time, j, "startMs");
   FromJson(q.end_time, j, "endMs");
@@ -211,20 +213,21 @@ void from_json(nlohmann::json const& j, ExplainQueryStage& q) {
 }
 
 void to_json(nlohmann::json& j, QueryTimelineSample const& q) {
-  j = nlohmann::json{{"pendingUnits", q.pending_units},
-                     {"completedUnits", q.completed_units},
-                     {"activeUnits", q.active_units},
-                     {"estimatedRunnableUnits", q.estimated_runnable_units}};
+  j = nlohmann::json{
+      {"pendingUnits", std::to_string(q.pending_units)},
+      {"completedUnits", std::to_string(q.completed_units)},
+      {"activeUnits", std::to_string(q.active_units)},
+      {"estimatedRunnableUnits", std::to_string(q.estimated_runnable_units)}};
 
   ToJson(q.elapsed_time, j, "elapsedMs");
   ToJson(q.total_slot_time, j, "totalSlotMs");
 }
 
 void from_json(nlohmann::json const& j, QueryTimelineSample& q) {
-  SafeGetTo(q.pending_units, j, "pendingUnits");
-  SafeGetTo(q.completed_units, j, "completedUnits");
-  SafeGetTo(q.active_units, j, "activeUnits");
-  SafeGetTo(q.estimated_runnable_units, j, "estimatedRunnableUnits");
+  q.pending_units = GetNumberFromJson(j, "pendingUnits");
+  q.completed_units = GetNumberFromJson(j, "completedUnits");
+  q.active_units = GetNumberFromJson(j, "activeUnits");
+  q.estimated_runnable_units = GetNumberFromJson(j, "estimatedRunnableUnits");
 
   FromJson(q.elapsed_time, j, "elapsedMs");
   FromJson(q.total_slot_time, j, "totalSlotMs");
@@ -250,15 +253,16 @@ void from_json(nlohmann::json const& j, PerformanceInsights& p) {
 
 void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
   j = nlohmann::json{
-      {"estimatedBytesProcessed", q.estimated_bytes_processed},
-      {"totalPartitionsProcessed", q.total_partitions_processed},
-      {"totalBytesProcessed", q.total_bytes_processed},
-      {"totalBytesBilled", q.total_bytes_billed},
+      {"estimatedBytesProcessed", std::to_string(q.estimated_bytes_processed)},
+      {"totalPartitionsProcessed",
+       std::to_string(q.total_partitions_processed)},
+      {"totalBytesProcessed", std::to_string(q.total_bytes_processed)},
+      {"totalBytesBilled", std::to_string(q.total_bytes_billed)},
       {"billingTier", q.billing_tier},
-      {"numDmlAffectedRows", q.num_dml_affected_rows},
+      {"numDmlAffectedRows", std::to_string(q.num_dml_affected_rows)},
       {"ddlAffectedRowAccessPolicyCount",
-       q.ddl_affected_row_access_policy_count},
-      {"transferredBytes", q.transferred_bytes},
+       std::to_string(q.ddl_affected_row_access_policy_count)},
+      {"transferredBytes", std::to_string(q.transferred_bytes)},
       {"totalBytesProcessedAccuracy", q.total_bytes_processed_accuracy},
       {"statementType", q.statement_type},
       {"ddlOperationPerformed", q.ddl_operation_performed},
@@ -286,15 +290,16 @@ void to_json(nlohmann::json& j, JobQueryStatistics const& q) {
 }
 
 void from_json(nlohmann::json const& j, JobQueryStatistics& q) {
-  SafeGetTo(q.estimated_bytes_processed, j, "estimatedBytesProcessed");
-  SafeGetTo(q.total_partitions_processed, j, "totalPartitionsProcessed");
-  SafeGetTo(q.total_bytes_processed, j, "totalBytesProcessed");
-  SafeGetTo(q.total_bytes_billed, j, "totalBytesBilled");
+  q.estimated_bytes_processed = GetNumberFromJson(j, "estimatedBytesProcessed");
+  q.total_partitions_processed =
+      GetNumberFromJson(j, "totalPartitionsProcessed");
+  q.total_bytes_processed = GetNumberFromJson(j, "totalBytesProcessed");
+  q.total_bytes_billed = GetNumberFromJson(j, "totalBytesBilled");
   SafeGetTo(q.billing_tier, j, "billingTier");
-  SafeGetTo(q.num_dml_affected_rows, j, "numDmlAffectedRows");
-  SafeGetTo(q.ddl_affected_row_access_policy_count, j,
-            "ddlAffectedRowAccessPolicyCount");
-  SafeGetTo(q.transferred_bytes, j, "transferredBytes");
+  q.num_dml_affected_rows = GetNumberFromJson(j, "numDmlAffectedRows");
+  q.ddl_affected_row_access_policy_count =
+      GetNumberFromJson(j, "ddlAffectedRowAccessPolicyCount");
+  q.transferred_bytes = GetNumberFromJson(j, "transferredBytes");
   SafeGetTo(q.total_bytes_processed_accuracy, j, "totalBytesProcessedAccuracy");
   SafeGetTo(q.statement_type, j, "statementType");
   SafeGetTo(q.ddl_operation_performed, j, "ddlOperationPerformed");
@@ -695,12 +700,12 @@ void from_json(nlohmann::json const& j, MetadataCacheStatistics& m) {
 void to_json(nlohmann::json& j, TableMetadataCacheUsage const& t) {
   j = nlohmann::json{{"explanation", t.explanation},
                      {"tableReference", t.table_reference},
-                     {"unusedReason", t.unused_reason}};
+                     {"unusedReason", t.unused_reason.value}};
 }
 void from_json(nlohmann::json const& j, TableMetadataCacheUsage& t) {
   SafeGetTo(t.explanation, j, "explanation");
   SafeGetTo(t.table_reference, j, "tableReference");
-  SafeGetTo(t.unused_reason, j, "unusedReason");
+  SafeGetTo(t.unused_reason.value, j, "unusedReason");
 }
 
 void to_json(nlohmann::json& j, MaterializedViewStatistics const& m) {
@@ -711,36 +716,37 @@ void from_json(nlohmann::json const& j, MaterializedViewStatistics& m) {
 }
 
 void to_json(nlohmann::json& j, MaterializedView const& m) {
-  j = nlohmann::json{{"chosen", m.chosen},
-                     {"estimatedBytesSaved", m.estimated_bytes_saved},
-                     {"rejectedReason", m.rejected_reason},
-                     {"tableReference", m.table_reference}};
+  j = nlohmann::json{
+      {"chosen", m.chosen},
+      {"estimatedBytesSaved", std::to_string(m.estimated_bytes_saved)},
+      {"rejectedReason", m.rejected_reason.value},
+      {"tableReference", m.table_reference}};
 }
 void from_json(nlohmann::json const& j, MaterializedView& m) {
   SafeGetTo(m.chosen, j, "chosen");
-  SafeGetTo(m.estimated_bytes_saved, j, "estimatedBytesSaved");
-  SafeGetTo(m.rejected_reason, j, "rejectedReason");
+  m.estimated_bytes_saved = GetNumberFromJson(j, "estimatedBytesSaved");
+  SafeGetTo(m.rejected_reason.value, j, "rejectedReason");
   SafeGetTo(m.table_reference, j, "tableReference");
 }
 
 void to_json(nlohmann::json& j, StagePerformanceStandaloneInsight const& s) {
   j = nlohmann::json{
-      {"stageId", s.stage_id},
+      {"stageId", std::to_string(s.stage_id)},
       {"slotContention", s.slot_contention},
       {"insufficientShuffleQuota", s.insufficient_shuffle_quota}};
 }
 void from_json(nlohmann::json const& j, StagePerformanceStandaloneInsight& s) {
-  SafeGetTo(s.stage_id, j, "stageId");
+  s.stage_id = GetNumberFromJson(j, "stageId");
   SafeGetTo(s.slot_contention, j, "slotContention");
   SafeGetTo(s.insufficient_shuffle_quota, j, "insufficientShuffleQuota");
 }
 
 void to_json(nlohmann::json& j, StagePerformanceChangeInsight const& s) {
-  j = nlohmann::json{{"stageId", s.stage_id},
+  j = nlohmann::json{{"stageId", std::to_string(s.stage_id)},
                      {"inputDataChange", s.input_data_change}};
 }
 void from_json(nlohmann::json const& j, StagePerformanceChangeInsight& s) {
-  SafeGetTo(s.stage_id, j, "stageId");
+  s.stage_id = GetNumberFromJson(j, "stageId");
   SafeGetTo(s.input_data_change, j, "inputDataChange");
 }
 
@@ -753,11 +759,11 @@ void from_json(nlohmann::json const& j, InputDataChange& i) {
 }
 
 void to_json(nlohmann::json& j, SearchStatistics const& s) {
-  j = nlohmann::json{{"indexUsageMode", s.index_usage_mode},
+  j = nlohmann::json{{"indexUsageMode", s.index_usage_mode.value},
                      {"indexUnusedReasons", s.index_unused_reasons}};
 }
 void from_json(nlohmann::json const& j, SearchStatistics& s) {
-  SafeGetTo(s.index_usage_mode, j, "indexUsageMode");
+  SafeGetTo(s.index_usage_mode.value, j, "indexUsageMode");
   SafeGetTo(s.index_unused_reasons, j, "indexUnusedReasons");
 }
 
@@ -765,13 +771,13 @@ void to_json(nlohmann::json& j, IndexUnusedReason const& i) {
   j = nlohmann::json{{"message", i.message},
                      {"indexName", i.index_name},
                      {"baseTable", i.base_table},
-                     {"code", i.code}};
+                     {"code", i.code.value}};
 }
 void from_json(nlohmann::json const& j, IndexUnusedReason& i) {
   SafeGetTo(i.message, j, "message");
   SafeGetTo(i.index_name, j, "indexName");
   SafeGetTo(i.base_table, j, "baseTable");
-  SafeGetTo(i.code, j, "code");
+  SafeGetTo(i.code.value, j, "code");
 }
 
 void to_json(nlohmann::json& j, RowAccessPolicyReference const& r) {
@@ -788,14 +794,14 @@ void from_json(nlohmann::json const& j, RowAccessPolicyReference& r) {
 }
 
 void to_json(nlohmann::json& j, DmlStats const& d) {
-  j = nlohmann::json{{"insertedRowCount", d.inserted_row_count},
-                     {"deletedRowCount", d.deleted_row_count},
-                     {"updatedRowCount", d.updated_row_count}};
+  j = nlohmann::json{{"insertedRowCount", std::to_string(d.inserted_row_count)},
+                     {"deletedRowCount", std::to_string(d.deleted_row_count)},
+                     {"updatedRowCount", std::to_string(d.updated_row_count)}};
 }
 void from_json(nlohmann::json const& j, DmlStats& d) {
-  SafeGetTo(d.inserted_row_count, j, "insertedRowCount");
-  SafeGetTo(d.deleted_row_count, j, "deletedRowCount");
-  SafeGetTo(d.updated_row_count, j, "updatedRowCount");
+  d.inserted_row_count = GetNumberFromJson(j, "insertedRowCount");
+  d.deleted_row_count = GetNumberFromJson(j, "deletedRowCount");
+  d.updated_row_count = GetNumberFromJson(j, "updatedRowCount");
 }
 
 void to_json(nlohmann::json& j, ExplainQueryStep const& q) {
