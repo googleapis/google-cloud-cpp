@@ -937,10 +937,9 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
   for (auto const& value : {spanner::MakeNumeric(998)}) {
     auto rows = conn->ExecuteQuery(
         {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-         spanner::SqlStatement(
-             "SELECT Column FROM Table"
-             " WHERE Column > @value",
-             {{"value", spanner::Value(std::move(value.value()))}})});
+         spanner::SqlStatement("SELECT Column FROM Table"
+                               " WHERE Column > @value",
+                               {{"value", spanner::Value(value.value())}})});
     using RowType = std::tuple<spanner::Numeric>;
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     EXPECT_EQ(*row, RowType(spanner::MakeNumeric(1998).value()));
@@ -949,10 +948,9 @@ TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
        {spanner::MakePgNumeric(999), spanner::MakePgNumeric("NaN")}) {
     auto rows = conn->ExecuteQuery(
         {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
-         spanner::SqlStatement(
-             "SELECT Column FROM Table"
-             " WHERE Column > @value",
-             {{"value", spanner::Value(std::move(value.value()))}})});
+         spanner::SqlStatement("SELECT Column FROM Table"
+                               " WHERE Column > @value",
+                               {{"value", spanner::Value(value.value())}})});
     using RowType = std::tuple<spanner::PgNumeric>;
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     EXPECT_EQ(*row, RowType(spanner::MakePgNumeric(1999).value()));
