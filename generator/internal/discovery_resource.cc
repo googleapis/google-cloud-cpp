@@ -138,21 +138,31 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   }
   rpc_options.push_back(absl::StrCat(http_option, "    };"));
 
-  std::vector<std::string> params =
+  std::vector<std::string> parameter_order =
       method_json.value("parameterOrder", std::vector<std::string>{});
-  if (!params.empty()) {
-    if (!request_resource_field_name.empty()) {
-      params.push_back(request_resource_field_name);
+  if (!parameter_order.empty()) {
+    // Workaround for necessary, but not marked REQUIRED, mask field for update
+    // methods.
+    if (verb == "patch") {
+      nlohmann::json parameters =
+          method_json.value("parameters", nlohmann::json());
+      if (parameters.find("updateMask") != parameters.end()) {
+        parameter_order.emplace_back("updateMask");
+      }
     }
-    rpc_options.push_back(absl::StrFormat(
-        "    option (google.api.method_signature) = \"%s\";",
-        absl::StrJoin(params, ",", [](std::string* s, std::string const& p) {
-          *s += CamelCaseToSnakeCase(p);
-        })));
+    if (!request_resource_field_name.empty()) {
+      parameter_order.push_back(request_resource_field_name);
+    }
+    rpc_options.push_back(
+        absl::StrFormat("    option (google.api.method_signature) = \"%s\";",
+                        absl::StrJoin(parameter_order, ",",
+                                      [](std::string* s, std::string const& p) {
+                                        *s += CamelCaseToSnakeCase(p);
+                                      })));
   }
 
   auto longrunning_operation_service = DetermineLongRunningOperationService(
-      method_json, params, operation_services, name_);
+      method_json, parameter_order, operation_services, name_);
   if (longrunning_operation_service) {
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
