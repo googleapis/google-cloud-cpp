@@ -91,7 +91,7 @@ service RegionCommitments {
       body: "commitment_resource"
     };
     option (google.api.method_signature) =
-        "project,region,commitment,commitment_resource";
+        "project,region,commitment,update_mask,commitment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }

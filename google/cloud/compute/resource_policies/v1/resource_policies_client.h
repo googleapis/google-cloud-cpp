@@ -532,6 +532,7 @@ class ResourcePoliciesClient {
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
   /// @param resource_policy  Id of the resource policy to patch.
+  /// @param update_mask  update_mask indicates fields to be updated as part of this request.
   /// @param resource_policy_resource  The ResourcePolicy for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -559,6 +560,7 @@ class ResourcePoliciesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchResourcePolicy(std::string const& project, std::string const& region,
                       std::string const& resource_policy,
+                      std::string const& update_mask,
                       google::cloud::cpp::compute::v1::ResourcePolicy const&
                           resource_policy_resource,
                       Options opts = {});

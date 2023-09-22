@@ -418,13 +418,14 @@ RegionDisksClient::TestIamPermissions(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::UpdateDisk(
     std::string const& project, std::string const& region,
-    std::string const& disk,
+    std::string const& disk, std::string const& update_mask,
     google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_disk(disk);
+  request.set_update_mask(update_mask);
   *request.mutable_disk_resource() = disk_resource;
   return connection_->UpdateDisk(request);
 }

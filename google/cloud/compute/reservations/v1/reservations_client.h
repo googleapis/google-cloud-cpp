@@ -746,6 +746,7 @@ class ReservationsClient {
   /// @param project  Project ID for this request.
   /// @param zone  Name of the zone for this request.
   /// @param reservation  Name of the reservation to update.
+  /// @param update_mask  Update_mask indicates fields to be updated as part of this request.
   /// @param reservation_resource  The Reservation for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -773,7 +774,7 @@ class ReservationsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(
       std::string const& project, std::string const& zone,
-      std::string const& reservation,
+      std::string const& reservation, std::string const& update_mask,
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
       Options opts = {});
 

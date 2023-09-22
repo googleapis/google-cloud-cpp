@@ -154,7 +154,7 @@ service Reservations {
       body: "reservation_resource"
     };
     option (google.api.method_signature) =
-        "project,zone,reservation,reservation_resource";
+        "project,zone,reservation,update_mask,reservation_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 }
