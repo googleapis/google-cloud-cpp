@@ -102,7 +102,14 @@ instrumentation to collect distributed traces.
 
 See the [OpenTelemetry quickstart] for more details.
 
+### Workarounds
+
+gRPC circa 1.58.1 fails to build with Bazel and Clang >= 16 (see [grpc#34482]).
+Add the `--features=-layering_check` option to your Bazel command-line or add
+`build: --features=-layering_check` to your `.bazelrc` file.
+
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
 [github discussion]: https://github.com/googleapis/google-cloud-cpp/discussions
+[grpc#34482]: https://github.com/grpc/grpc/issues/34482
 [opentelemetry]: https://opentelemetry.io/
 [opentelemetry quickstart]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry/quickstart

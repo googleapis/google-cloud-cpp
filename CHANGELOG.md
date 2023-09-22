@@ -127,6 +127,11 @@ New `*Client` for conversational search.
 Remove `PoliciesClient`. This client was placed in the wrong library. The
 correct location is google/cloud/iam/v2.
 
+### Known issues
+
+Compiling gRPC with Bazel and Clang >= 16 requires `--features=-layering_check`
+in your Bazel command-line. For more details, see [grpc#34482].
+
 ## v2.15.0 - 2023-09
 
 ### New Libraries
@@ -4379,6 +4384,7 @@ releases. The relevant notes are:
 [functions-v2]: https://cloud.google.com/functions/docs/concepts/version-comparison
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
+[grpc#34482]: https://github.com/grpc/grpc/issues/34482
 [guac-dox]: https://cloud.google.com/cpp/docs/reference/common/latest/group__guac
 [howto-mock-data-api]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-mocking
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
