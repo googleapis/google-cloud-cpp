@@ -261,10 +261,11 @@ Status StubRestGenerator::GenerateCc() {
                    "google/cloud/internal/absl_str_cat_quiet.h",
                    "google/cloud/internal/rest_stub_helpers.h",
                    "google/cloud/status_or.h"});
-  CcSystemIncludes(
-      {vars("proto_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
-       "memory"});
+  CcSystemIncludes({vars("proto_header_path"),
+                    HasLongrunningMethod()
+                        ? vars("longrunning_operation_include_header")
+                        : "",
+                    "memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
