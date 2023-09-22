@@ -33,8 +33,8 @@ EvaluationKind EvaluationKind::Expression() {
 
 void to_json(nlohmann::json& j, JobStatistics const& s) {
   j = nlohmann::json{
-      {"totalBytesProcessed", s.total_bytes_processed},
-      {"numChildJobs", s.num_child_jobs},
+      {"totalBytesProcessed", std::to_string(s.total_bytes_processed)},
+      {"numChildJobs", std::to_string(s.num_child_jobs)},
       {"parentJobId", s.parent_job_id},
       {"sessionInfo", s.session_info},
       {"transactionInfo", s.transaction_info},
@@ -54,8 +54,8 @@ void to_json(nlohmann::json& j, JobStatistics const& s) {
 }
 
 void from_json(nlohmann::json const& j, JobStatistics& s) {
-  SafeGetTo(s.total_bytes_processed, j, "totalBytesProcessed");
-  SafeGetTo(s.num_child_jobs, j, "numChildJobs");
+  s.total_bytes_processed = GetNumberFromJson(j, "totalBytesProcessed");
+  s.num_child_jobs = GetNumberFromJson(j, "numChildJobs");
   SafeGetTo(s.parent_job_id, j, "parentJobId");
   SafeGetTo(s.session_info, j, "sessionInfo");
   SafeGetTo(s.transaction_info, j, "transactionInfo");
@@ -180,11 +180,11 @@ void from_json(nlohmann::json const& j, TransactionInfo& t) {
 }
 
 void to_json(nlohmann::json& j, ScriptStatistics const& s) {
-  j = nlohmann::json{{"evaluationKind", s.evaluation_kind},
+  j = nlohmann::json{{"evaluationKind", s.evaluation_kind.value},
                      {"stackFrames", s.stack_frames}};
 }
 void from_json(nlohmann::json const& j, ScriptStatistics& s) {
-  SafeGetTo(s.evaluation_kind, j, "evaluationKind");
+  SafeGetTo(s.evaluation_kind.value, j, "evaluationKind");
   SafeGetTo(s.stack_frames, j, "stackFrames");
 }
 

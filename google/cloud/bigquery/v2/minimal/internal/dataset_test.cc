@@ -48,7 +48,7 @@ Access MakeAccess(std::string role, std::string project_id,
   access.routine.routine_id = std::move(routine_id);
   access.dataset.dataset =
       MakeDatasetReference(std::move(project_id), std::move(dataset_id));
-  access.dataset.target_types.push_back(std::move(type));
+  access.dataset.target_types.push_back(std::move(type.value));
   return access;
 }
 
@@ -155,7 +155,7 @@ std::string MakeDatasetJsonText() {
   return R"({"access":[
     {"dataset":{
          "dataset":{"datasetId":"d123","projectId":"p123"},
-         "targetTypes":[{"value":"VIEWS"}]},
+         "targetTypes":["VIEWS"]},
          "domain":"",
          "groupByEmail":"",
          "iamMember":"",
@@ -169,7 +169,7 @@ std::string MakeDatasetJsonText() {
     "datasetReference":{"datasetId":"d123","projectId":"p123"},
     "defaultCollation":"ddefaultcollation",
     "defaultPartitionExpirationMs":"0",
-    "defaultRoundingMode":{"value":"ROUND_HALF_EVEN"},
+    "defaultRoundingMode":"ROUND_HALF_EVEN",
     "defaultTableExpirationMs":"0",
     "description":"ddescription",
     "etag":"detag",
@@ -187,7 +187,7 @@ std::string MakeDatasetJsonText() {
     "maxTimeTravelHours":"0",
     "published":false,
     "selfLink":"dselflink",
-    "storageBillingModel":{"value":"LOGICAL"},
+    "storageBillingModel":"LOGICAL",
     "tags":[{"tagKey":"t1","tagValue":"t2"}],
     "type":"dtype"})";
 }
@@ -329,7 +329,7 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( view { project_id: "p123" dataset_id: "d123" table_id: "t123" })"
       R"( routine { project_id: "p123" dataset_id: "d123" routine_id: "r123" })"
       R"( dataset { dataset { project_id: "p123" dataset_id: "d123" })"
-      R"( target_types { target_type_value: "VIEWS" })"
+      R"( target_types: "VIEWS")"
       R"( })"
       R"( })"
       R"( tags { tag_key: "t1" tag_value: "t2" })"
@@ -376,7 +376,7 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( view { project_id: "p123" dataset_id: "d123" table_id: "t123" })"
       R"( routine { project_id: "p123" dataset_id: "d123" routine_id: "r123" })"
       R"( dataset { dataset { project_id: "p123" dataset_id: "d123" })"
-      R"( target_types { target_type_value: "VIEWS" })"
+      R"( target_types: "VIEWS")"
       R"( })"
       R"( })"
       R"( tags { tag_key: "t1" tag_value: "t2" })"
@@ -449,9 +449,7 @@ TEST(DatasetTest, DatasetDebugString) {
         project_id: "p123"
         dataset_id: "d123"
       }
-      target_types {
-        target_type_value: "VIEWS"
-      }
+      target_types: "VIEWS"
     }
   }
   tags {

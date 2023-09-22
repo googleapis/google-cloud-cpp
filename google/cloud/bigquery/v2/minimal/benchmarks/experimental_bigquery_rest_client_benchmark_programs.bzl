@@ -18,7 +18,8 @@
 
 experimental_bigquery_rest_client_benchmark_programs = [
     "dataset_benchmark_programs.cc",
-    "job_benchmark_programs.cc",
+    "job_mutating_benchmark_programs.cc",
+    "job_readonly_benchmark_programs.cc",
     "project_benchmark_programs.cc",
     "table_benchmark_programs.cc",
 ]

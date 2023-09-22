@@ -18,7 +18,6 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <cctype>
-#include <chrono>
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -27,22 +26,22 @@ using ::google::cloud::StatusCode;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::Benchmark;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::BenchmarkResult;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::FormatDuration;
+using ::google::cloud::bigquery_v2_minimal_benchmarks::JobBenchmark;
+using ::google::cloud::bigquery_v2_minimal_benchmarks::JobConfig;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
-using ::google::cloud::bigquery_v2_minimal_benchmarks::TableBenchmark;
-using ::google::cloud::bigquery_v2_minimal_benchmarks::TableConfig;
 
 char const kDescription[] =
-    R"""(Measures the latency of Bigquery's `GetTable()` and
-    `ListTables()` apis.
+    R"""(Measures the latency of Bigquery's `GetJob()` and
+    `ListJobs()` apis.
 
-This benchmark measures the latency of Bigquery's `GetTable()` and
-    `ListTables()` apis.  The benchmark:
+This benchmark measures the latency of Bigquery's `GetJob()` and
+    `ListJobs()` apis.  The benchmark:
 - Starts T threads as supplied in the command-line, executing the
   following loop:
 - Runs for the test duration as supplied in the command-line, constantly
   executing this basic block:
-  - Randomly, with 50% probability, makes a rest call to `GetTable()`
-    and `ListTables()` apis alternatively.
+  - Randomly, with 50% probability, makes a rest call to `GetJob()`
+    and `ListJobs()` apis alternatively.
   - If either call fail, the test returns with the failure message.
   - Reports progress based on the total executing time and where the
     test is currently.
@@ -55,31 +54,31 @@ The test then waits for all the threads to finish and:
   p100 (maximum) latencies.
 )""";
 
-// Helper functions and types for table benchmark program.
+// Helper functions and types for job benchmark program.
 namespace {
 // Number of Progress report threads.
 constexpr int kBenchmarkProgressMarks = 4;
 
-struct TableBenchmarkResult {
+struct JobBenchmarkResult {
   BenchmarkResult get_results;
   BenchmarkResult list_results;
 };
 
-// Gets a single table.
-OperationResult RunGetTable(TableBenchmark& benchmark) {
+// Gets a single job.
+OperationResult RunGetJob(JobBenchmark& benchmark) {
   auto op = [&benchmark]() -> google::cloud::Status {
-    return benchmark.GetTable().status();
+    return benchmark.GetJob().status();
   };
   return Benchmark::TimeOperation(std::move(op));
 }
 
-// Gets a lists of tables.
-OperationResult RunListTables(TableBenchmark& benchmark) {
+// Gets a lists of jobs.
+OperationResult RunListJobs(JobBenchmark& benchmark) {
   std::deque<OperationResult> operations;
   auto op = [&benchmark]() -> ::google::cloud::Status {
-    auto tables = benchmark.ListTables();
-    for (auto& table : tables) {
-      auto op_status = table.status();
+    auto jobs = benchmark.ListJobs();
+    for (auto& job : jobs) {
+      auto op_status = job.status();
       if (!op_status.ok()) {
         return op_status;
       }
@@ -91,9 +90,9 @@ OperationResult RunListTables(TableBenchmark& benchmark) {
 }
 
 // Run an iteration of the test.
-google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
-    TableBenchmark& benchmark, absl::Duration test_duration) {
-  TableBenchmarkResult result = {};
+google::cloud::StatusOr<JobBenchmarkResult> RunJobBenchmark(
+    JobBenchmark& benchmark, absl::Duration test_duration) {
+  JobBenchmarkResult result = {};
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<int> prng_operation(0, 1);
 
@@ -103,15 +102,15 @@ google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
   auto local_time_zone = absl::LocalTimeZone();
   for (auto now = start; now < end; now = absl::Now()) {
     if (prng_operation(generator) == 0) {
-      // Call GetTable.
-      auto op_result = RunGetTable(benchmark);
+      // Call GetJob.
+      auto op_result = RunGetJob(benchmark);
       if (!op_result.status.ok()) {
         return op_result.status;
       }
       result.get_results.operations.emplace_back(op_result);
     } else {
-      // Call ListTables.
-      auto op_result = RunListTables(benchmark);
+      // Call ListJobs.
+      auto op_result = RunListJobs(benchmark);
       if (!op_result.status.ok()) {
         return op_result.status;
       }
@@ -125,17 +124,17 @@ google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
                 << "\nNext Progress Mark="
                 << absl::FormatTime(mark, local_time_zone)
                 << "\nEnd Time=" << absl::FormatTime(end, local_time_zone)
-                << "\nNumber of GetTable operations performed thus far= "
+                << "\nNumber of GetJob operations performed thus far= "
                 << result.get_results.operations.size()
-                << "\nNumber of ListTables operations performed thus far= "
+                << "\nNumber of ListJobs operations performed thus far= "
                 << result.list_results.operations.size() << "\n...\n"
                 << std::flush;
     } else if (now > end) {
       std::cout << "\nStart Time=" << absl::FormatTime(start, local_time_zone)
                 << "\nEnd Time=" << absl::FormatTime(end, local_time_zone)
-                << "\nTotal Number of GetTable operations= "
+                << "\nTotal Number of GetJob operations= "
                 << result.get_results.operations.size()
-                << "\nTotal Number of ListTables operations= "
+                << "\nTotal Number of ListJobs operations= "
                 << result.list_results.operations.size() << "\n...\n"
                 << std::flush;
     }
@@ -145,7 +144,7 @@ google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  TableConfig config;
+  JobConfig config;
   {
     std::vector<std::string> args{argv, argv + argc};
     auto c = config.ParseArgs(args);
@@ -163,6 +162,12 @@ int main(int argc, char* argv[]) {
       std::cout << kDescription << "\n" << std::flush;
     }
     if (config.wants_help) {
+      std::cout
+          << "The usage information for Job benchmark lists out all the "
+             "flags needed by all the apis being benchmarked, namely: GetJob, "
+             "ListJobs, Query, GetqueryResults and InsertJob."
+          << "\n"
+          << std::flush;
       config.PrintUsage();
     }
     std::cout << "Exiting..."
@@ -170,30 +175,30 @@ int main(int argc, char* argv[]) {
               << std::flush;
     return 0;
   }
-  std::cout << "# Table Benchmark STARTED For GetTable() and "
-               "ListTables() apis with test duration as ["
+  std::cout << "# Job Benchmark STARTED For GetJob() and "
+               "ListJobs() apis with test duration as ["
             << config.test_duration.count() << "] seconds"
             << "\n"
             << std::flush;
 
-  TableBenchmark benchmark(config);
-  // Start the threads running the table benchmark test.
+  JobBenchmark benchmark(config);
+  // Start the threads running the job benchmark test.
   auto latency_test_start = absl::Now();
-  std::vector<std::future<google::cloud::StatusOr<TableBenchmarkResult>>> tasks;
+  std::vector<std::future<google::cloud::StatusOr<JobBenchmarkResult>>> tasks;
   // If the user requests only one thread, use the current thread.
   auto launch_policy =
       config.thread_count == 1 ? std::launch::deferred : std::launch::async;
   for (int i = 0; i != config.thread_count; ++i) {
-    tasks.emplace_back(std::async(launch_policy, RunTableBenchmark,
+    tasks.emplace_back(std::async(launch_policy, RunJobBenchmark,
                                   std::ref(benchmark),
                                   absl::FromChrono(config.test_duration)));
   }
 
   // Wait for the threads and combine all the results.
-  TableBenchmarkResult combined{};
+  JobBenchmarkResult combined{};
   int count = 0;
-  auto append = [](TableBenchmarkResult& destination,
-                   TableBenchmarkResult const& source) {
+  auto append = [](JobBenchmarkResult& destination,
+                   JobBenchmarkResult const& source) {
     auto append_ops = [](BenchmarkResult& d, BenchmarkResult const& s) {
       d.operations.insert(d.operations.end(), s.operations.begin(),
                           s.operations.end());
@@ -220,16 +225,16 @@ int main(int argc, char* argv[]) {
             << FormatDuration(latency_test_elapsed) << "\n"
             << std::flush;
 
-  Benchmark::PrintLatencyResult(std::cout, "Latency-Results", "GetTable()",
+  Benchmark::PrintLatencyResult(std::cout, "Latency-Results", "GetJob()",
                                 combined.get_results);
-  Benchmark::PrintLatencyResult(std::cout, "Latency-Results", "ListTables()",
+  Benchmark::PrintLatencyResult(std::cout, "Latency-Results", "ListJobs()",
                                 combined.list_results);
 
+  Benchmark::PrintThroughputResult(std::cout, "Throughput-Results", "GetJob()",
+                                   combined.get_results);
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
-                                   "GetTable()", combined.get_results);
-  Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
-                                   "ListTables()", combined.list_results);
-  std::cout << "# Table Benchmark ENDED"
+                                   "ListJobs()", combined.list_results);
+  std::cout << "# Job Benchmark ENDED"
             << "\n"
             << std::flush;
 

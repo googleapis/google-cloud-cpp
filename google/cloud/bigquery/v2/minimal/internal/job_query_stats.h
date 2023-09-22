@@ -86,7 +86,7 @@ struct ExplainQueryStage {
   std::int64_t records_written = 0;
   std::int64_t parallel_inputs = 0;
   std::int64_t completed_parallel_inputs = 0;
-  std::vector<std::int64_t> input_stages;
+  std::vector<std::string> input_stages;  // Can sometimes be alphanumeric.
 
   std::chrono::milliseconds start_time = std::chrono::milliseconds(0);
   std::chrono::milliseconds end_time = std::chrono::milliseconds(0);

@@ -108,7 +108,7 @@ void to_json(nlohmann::json& j, TableFieldSchema const& t) {
                      {"fields", t.fields},
                      {"categories", t.categories},
                      {"policyTags", t.policy_tags},
-                     {"roundingMode", t.rounding_mode},
+                     {"roundingMode", t.rounding_mode.value},
                      {"rangeElementType", t.range_element_type}};
 }
 
@@ -125,7 +125,7 @@ void from_json(nlohmann::json const& j, TableFieldSchema& t) {
   SafeGetTo(t.fields, j, "fields");
   SafeGetTo(t.categories, j, "categories");
   SafeGetTo(t.policy_tags, j, "policyTags");
-  SafeGetTo(t.rounding_mode, j, "roundingMode");
+  SafeGetTo(t.rounding_mode.value, j, "roundingMode");
   SafeGetTo(t.range_element_type, j, "rangeElementType");
 }
 
