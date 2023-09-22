@@ -61,6 +61,17 @@ Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
   return {};
 }
 
+rest_internal::RestRequest CreateRestRequest(
+    std::string path,
+    std::vector<std::pair<std::string, std::string>> query_params) {
+  rest_internal::RestRequest rest_request;
+  rest_request.SetPath(std::move(path));
+  for (auto& p : query_params) {
+    rest_request.AddQueryParameter(std::move(p));
+  }
+  return rest_request;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
