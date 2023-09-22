@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <cctype>
 #include <chrono>
@@ -29,7 +30,6 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::FormatDuration;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::TableBenchmark;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::TableConfig;
-using std::chrono::system_clock;
 
 char const kDescription[] =
     R"""(Measures the latency of Bigquery's `GetTable()` and
@@ -92,15 +92,16 @@ OperationResult RunListTables(TableBenchmark& benchmark) {
 
 // Run an iteration of the test.
 google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
-    TableBenchmark& benchmark, std::chrono::seconds test_duration) {
+    TableBenchmark& benchmark, absl::Duration test_duration) {
   TableBenchmarkResult result = {};
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<int> prng_operation(0, 1);
 
-  auto start = system_clock::now();
+  auto start = absl::Now();
   auto mark = start + test_duration / kBenchmarkProgressMarks;
   auto end = start + test_duration;
-  for (auto now = start; now < end; now = system_clock::now()) {
+  auto local_time_zone = absl::LocalTimeZone();
+  for (auto now = start; now < end; now = absl::Now()) {
     if (prng_operation(generator) == 0) {
       // Call GetTable.
       auto op_result = RunGetTable(benchmark);
@@ -116,27 +117,15 @@ google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
       }
       result.list_results.operations.emplace_back(op_result);
     }
-    std::time_t start_t = system_clock::to_time_t(start);
-    auto start_time = absl::FromTimeT(start_t);
-    std::time_t end_t = system_clock::to_time_t(end);
-    auto end_time = absl::FromTimeT(end_t);
-    std::time_t now_t = system_clock::to_time_t(now);
-    auto now_time = absl::FromTimeT(now_t);
     if (now >= mark) {
       mark = now + test_duration / kBenchmarkProgressMarks;
-      std::time_t mark_t = system_clock::to_time_t(mark);
-      auto mark_time = absl::FromTimeT(mark_t);
-      std::cout << "Start Time="
-                << absl::FormatTime(start_time, absl::LocalTimeZone())
+      std::cout << "Start Time=" << absl::FormatTime(start, local_time_zone)
                 << std::endl
                 << "Current Progress Mark="
-                << absl::FormatTime(now_time, absl::LocalTimeZone())
-                << std::endl
+                << absl::FormatTime(now, local_time_zone) << std::endl
                 << "Next Progress Mark="
-                << absl::FormatTime(mark_time, absl::LocalTimeZone())
-                << std::endl
-                << "End Time="
-                << absl::FormatTime(end_time, absl::LocalTimeZone())
+                << absl::FormatTime(mark, local_time_zone) << std::endl
+                << "End Time=" << absl::FormatTime(end, local_time_zone)
                 << std::endl
                 << "Number of GetTable operations performed thus far= "
                 << result.get_results.operations.size()
@@ -144,11 +133,9 @@ google::cloud::StatusOr<TableBenchmarkResult> RunTableBenchmark(
                 << result.list_results.operations.size() << std::endl;
       std::cout << "..." << std::endl;
     } else if (now > end) {
-      std::cout << "Start Time="
-                << absl::FormatTime(start_time, absl::LocalTimeZone())
+      std::cout << "Start Time=" << absl::FormatTime(start, local_time_zone)
                 << std::endl
-                << "End Time="
-                << absl::FormatTime(end_time, absl::LocalTimeZone())
+                << "End Time=" << absl::FormatTime(end, local_time_zone)
                 << std::endl
                 << "Total Number of GetTable operations= "
                 << result.get_results.operations.size()
@@ -190,14 +177,15 @@ int main(int argc, char* argv[]) {
 
   TableBenchmark benchmark(config);
   // Start the threads running the table benchmark test.
-  auto latency_test_start = system_clock::now();
+  auto latency_test_start = absl::Now();
   std::vector<std::future<google::cloud::StatusOr<TableBenchmarkResult>>> tasks;
   // If the user requests only one thread, use the current thread.
   auto launch_policy =
       config.thread_count == 1 ? std::launch::deferred : std::launch::async;
   for (int i = 0; i != config.thread_count; ++i) {
     tasks.emplace_back(std::async(launch_policy, RunTableBenchmark,
-                                  std::ref(benchmark), config.test_duration));
+                                  std::ref(benchmark),
+                                  absl::FromChrono(config.test_duration)));
   }
 
   // Wait for the threads and combine all the results.
@@ -223,8 +211,7 @@ int main(int argc, char* argv[]) {
     ++count;
   }
   auto latency_test_elapsed =
-      std::chrono::duration_cast<std::chrono::milliseconds>(
-          system_clock::now() - latency_test_start);
+      absl::ToChronoMilliseconds(absl::Now() - latency_test_start);
   combined.get_results.elapsed = latency_test_elapsed;
   combined.list_results.elapsed = latency_test_elapsed;
   std::cout << " DONE. Elapsed Test Duration="
