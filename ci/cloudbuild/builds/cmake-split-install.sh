@@ -81,7 +81,7 @@ io::run cmake --install cmake-out/features --prefix "${INSTALL_PREFIX}"
 mapfile -t feature_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-features.cmake 2>&1)
 FEATURES=$(printf ";%s" "${feature_list[@]}")
 FEATURES="${FEATURES:1}"
-cmake -G Ninja \
+io::run cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \

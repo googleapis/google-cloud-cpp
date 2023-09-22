@@ -34,3 +34,9 @@ if (NOT TARGET CURL::libcurl)
 endif ()
 
 include("${CMAKE_CURRENT_LIST_DIR}/storage-targets.cmake")
+
+# TODO(12698) - remove transition name (experimental-storage-grpc)
+if (NOT TARGET google-cloud-cpp::experimental-storage-grpc)
+    add_library(google-cloud-cpp::experimental-storage-grpc INTERFACE IMPORTED)
+    target_link_libraries(google-cloud-cpp::experimental-storage-grpc INTERFACE google-cloud-cpp::experimental-storage_grpc)
+endif ()

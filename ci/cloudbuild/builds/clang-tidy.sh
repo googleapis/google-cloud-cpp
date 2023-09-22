@@ -30,7 +30,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 read -r ENABLED_FEATURES < <(features::always_build_cmake)
 # Add some features that we don't always build, but we want to run clang-tidy
 # over them.
-ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc"
+ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage_grpc"
 ENABLED_FEATURES="${ENABLED_FEATURES},generator"
 readonly ENABLED_FEATURES
 
