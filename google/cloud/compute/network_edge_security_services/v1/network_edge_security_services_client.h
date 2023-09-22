@@ -403,6 +403,7 @@ class NetworkEdgeSecurityServicesClient {
   /// @param project  Project ID for this request.
   /// @param region  Name of the region scoping this request.
   /// @param network_edge_security_service  Name of the network edge security service to update.
+  /// @param update_mask  Indicates fields to be updated as part of this request.
   /// @param network_edge_security_service_resource  The NetworkEdgeSecurityService for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -431,6 +432,7 @@ class NetworkEdgeSecurityServicesClient {
   PatchNetworkEdgeSecurityService(
       std::string const& project, std::string const& region,
       std::string const& network_edge_security_service,
+      std::string const& update_mask,
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
           network_edge_security_service_resource,
       Options opts = {});

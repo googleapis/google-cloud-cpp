@@ -129,6 +129,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
     std::string const& project, std::string const& region,
     std::string const& network_edge_security_service,
+    std::string const& update_mask,
     google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
         network_edge_security_service_resource,
     Options opts) {
@@ -138,6 +139,7 @@ NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
   request.set_project(project);
   request.set_region(region);
   request.set_network_edge_security_service(network_edge_security_service);
+  request.set_update_mask(update_mask);
   *request.mutable_network_edge_security_service_resource() =
       network_edge_security_service_resource;
   return connection_->PatchNetworkEdgeSecurityService(request);

@@ -115,7 +115,7 @@ service ResourcePolicies {
       body: "resource_policy_resource"
     };
     option (google.api.method_signature) =
-        "project,region,resource_policy,resource_policy_resource";
+        "project,region,resource_policy,update_mask,resource_policy_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 

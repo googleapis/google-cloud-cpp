@@ -270,7 +270,8 @@ service Disks {
       patch: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
       body: "disk_resource"
     };
-    option (google.api.method_signature) = "project,zone,disk,disk_resource";
+    option (google.api.method_signature) =
+        "project,zone,disk,update_mask,disk_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 }

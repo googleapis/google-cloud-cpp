@@ -257,7 +257,8 @@ service RegionDisks {
       patch: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
       body: "disk_resource"
     };
-    option (google.api.method_signature) = "project,region,disk,disk_resource";
+    option (google.api.method_signature) =
+        "project,region,disk,update_mask,disk_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
