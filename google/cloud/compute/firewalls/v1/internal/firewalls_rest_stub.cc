@@ -22,7 +22,7 @@
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/firewalls/v1/firewalls.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <memory>
 
 namespace google {

@@ -23,7 +23,7 @@
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/region_instance_groups/v1/region_instance_groups.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
 
 namespace google {
