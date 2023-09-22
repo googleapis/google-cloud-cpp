@@ -276,4 +276,5 @@ def google_cloud_cpp_deps(name = None):
         ],
         sha256 = "f30cd88bf898a5726d245eba882b8e81012021eb00df34109f4dfb203f005cea",
         strip_prefix = "opentelemetry-cpp-1.11.0",
+        repo_mapping = {"@curl": "@com_github_curl_curl"},
     )
