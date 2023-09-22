@@ -38,7 +38,7 @@ Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
 
 rest_internal::RestRequest CreateRestRequest(
     std::string path,
-    std::vector<std::pair<std::string, std::string>> query_params = {});
+    std::vector<std::pair<std::string, std::string>> query_params);
 
 template <typename Response>
 StatusOr<Response> RestResponseToProto(RestResponse&& rest_response) {
