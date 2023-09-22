@@ -285,8 +285,8 @@ TEST(Options, OverrideTracingOptions) {
 
 TEST(Options, AppendToUserAgent) {
   Options opts;
-  opts.lookup<UserAgentProductsOption>().push_back("product-a/1.2.3");
-  opts.lookup<UserAgentProductsOption>().push_back("product-b/4.5.6");
+  opts.lookup<UserAgentProductsOption>().emplace_back("product-a/1.2.3");
+  opts.lookup<UserAgentProductsOption>().emplace_back("product-b/4.5.6");
 
   opts = spanner_internal::DefaultOptions(std::move(opts));
   // The gcloud user-agent string should be first.
