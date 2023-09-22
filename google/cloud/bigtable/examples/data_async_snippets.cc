@@ -290,7 +290,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table, std::string const& row_key) {
     future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
-        std::move(row_key),
+        row_key,
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
     row_future

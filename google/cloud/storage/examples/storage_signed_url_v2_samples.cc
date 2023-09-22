@@ -27,7 +27,7 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& signing_account) {
     StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
-        "GET", std::move(bucket_name), std::move(object_name),
+        "GET", bucket_name, object_name,
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)),
         gcs::SigningAccount(signing_account));
@@ -49,7 +49,7 @@ void CreatePutSignedUrlV2(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& object_name, std::string const& signing_account) {
     StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
-        "PUT", std::move(bucket_name), std::move(object_name),
+        "PUT", bucket_name, object_name,
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)),
         gcs::ContentType("application/octet-stream"),

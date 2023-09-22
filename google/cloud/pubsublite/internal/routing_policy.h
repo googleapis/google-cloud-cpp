@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_ROUTING_POLICY_H
 
 #include "google/cloud/version.h"
+#include <cstdint>
+#include <string>
 
 namespace google {
 namespace cloud {

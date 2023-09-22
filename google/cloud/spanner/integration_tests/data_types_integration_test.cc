@@ -590,7 +590,7 @@ TEST_F(DataTypeIntegrationTest, DmlReturning) {
                      ('Id-Ret-4', 4)
               THEN RETURN Id, Int64Value
         )""");
-        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
         insert_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
@@ -611,7 +611,7 @@ TEST_F(DataTypeIntegrationTest, DmlReturning) {
               WHERE Id LIKE 'Id-Ret-%%'
               THEN RETURN Id, Int64Value
         )""");
-        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
         update_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
@@ -632,7 +632,7 @@ TEST_F(DataTypeIntegrationTest, DmlReturning) {
               WHERE Id LIKE 'Id-Ret-%%'
               THEN RETURN Id, Int64Value
         )""");
-        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
         delete_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
@@ -665,7 +665,7 @@ TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
                      ('Id-Ret-4', 4)
               RETURNING Id, Int64Value
         )""");
-        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
         insert_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
@@ -686,7 +686,7 @@ TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
               WHERE Id LIKE 'Id-Ret-%%'
               RETURNING Id, Int64Value
         )""");
-        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
         update_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
@@ -707,7 +707,7 @@ TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
               WHERE Id LIKE 'Id-Ret-%%'
               RETURNING Id, Int64Value
         )""");
-        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        auto rows = client.ExecuteQuery(txn, std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
         delete_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {

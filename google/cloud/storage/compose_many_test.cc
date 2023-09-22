@@ -64,8 +64,8 @@ TEST(ComposeMany, One) {
         auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
         EXPECT_EQ(1, source_objects.size());
-        EXPECT_EQ(42, source_objects[0]["generation"]);
-        EXPECT_EQ("1", source_objects[0]["name"]);
+        EXPECT_EQ(42, source_objects[0].value("generation", 0));
+        EXPECT_EQ("1", source_objects[0].value("name", ""));
 
         return MockObject("test-bucket", "test-object", 42);
       });
@@ -99,12 +99,12 @@ TEST(ComposeMany, Three) {
         auto parsed = nlohmann::json::parse(req.JsonPayload());
         auto source_objects = parsed["sourceObjects"];
         EXPECT_EQ(3, source_objects.size());
-        EXPECT_EQ(42, source_objects[0]["generation"]);
-        EXPECT_EQ("1", source_objects[0]["name"]);
-        EXPECT_EQ(43, source_objects[1]["generation"]);
-        EXPECT_EQ("2", source_objects[1]["name"]);
-        EXPECT_EQ(44, source_objects[2]["generation"]);
-        EXPECT_EQ("3", source_objects[2]["name"]);
+        EXPECT_EQ(42, source_objects[0].value("generation", 0));
+        EXPECT_EQ("1", source_objects[0].value("name", ""));
+        EXPECT_EQ(43, source_objects[1].value("generation", 0));
+        EXPECT_EQ("2", source_objects[1].value("name", ""));
+        EXPECT_EQ(44, source_objects[2].value("generation", 0));
+        EXPECT_EQ("3", source_objects[2].value("name", ""));
 
         return MockObject("test-bucket", "test-object", 42);
       });
@@ -147,7 +147,7 @@ TEST(ComposeMany, ThreeLayers) {
         EXPECT_EQ(32, source_objects.size());
 
         for (int i = 0; i != 32; ++i) {
-          EXPECT_EQ(std::to_string(i), source_objects[i]["name"]);
+          EXPECT_EQ(std::to_string(i), source_objects[i].value("name", ""));
         }
 
         return MockObject(req.bucket_name(), req.object_name(), 42);
@@ -162,7 +162,8 @@ TEST(ComposeMany, ThreeLayers) {
         EXPECT_EQ(31, source_objects.size());
 
         for (int i = 0; i != 31; ++i) {
-          EXPECT_EQ(std::to_string(i + 32), source_objects[i]["name"]);
+          EXPECT_EQ(std::to_string(i + 32),
+                    source_objects[i].value("name", ""));
         }
 
         return MockObject(req.bucket_name(), req.object_name(), 42);
@@ -175,8 +176,8 @@ TEST(ComposeMany, ThreeLayers) {
         auto source_objects = parsed["sourceObjects"];
 
         EXPECT_EQ(2, source_objects.size());
-        EXPECT_EQ("prefix.compose-tmp-0", source_objects[0]["name"]);
-        EXPECT_EQ("prefix.compose-tmp-1", source_objects[1]["name"]);
+        EXPECT_EQ("prefix.compose-tmp-0", source_objects[0].value("name", ""));
+        EXPECT_EQ("prefix.compose-tmp-1", source_objects[1].value("name", ""));
 
         return MockObject(req.bucket_name(), req.object_name(), 42);
       });
