@@ -31,7 +31,7 @@ bool valid_project(nlohmann::json const& j) {
 }
 
 bool valid_projects_list(nlohmann::json const& j) {
-  return (j.contains("kind") && j.contains("etag") && j.contains("projects"));
+  return (j.contains("kind") && j.contains("etag") && j.contains("totalItems"));
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
@@ -63,10 +63,13 @@ StatusOr<ListProjectsResponse> ListProjectsResponse::BuildFromHttpResponse(
   result.kind = json->value("kind", "");
   result.etag = json->value("etag", "");
   result.next_page_token = json->value("nextPageToken", "");
-  if (!absl::SimpleAtoi(json->value("totalItems", "0"), &result.total_items)) {
+  result.total_items = json->value("totalItems", 0);
+  if (result.total_items < 0) {
     return internal::InternalError("Invalid value for totalItems",
                                    GCP_ERROR_INFO());
   }
+
+  if (result.total_items == 0) return result;
 
   for (auto const& kv : json->at("projects").items()) {
     auto const& json_list_format_project_obj = kv.value();

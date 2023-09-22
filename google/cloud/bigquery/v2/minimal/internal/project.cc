@@ -53,14 +53,14 @@ void to_json(nlohmann::json& j, Project const& p) {
   j = nlohmann::json{{"kind", p.kind},
                      {"id", p.id},
                      {"friendlyName", p.friendly_name},
-                     {"numericId", p.numeric_id},
+                     {"numericId", std::to_string(p.numeric_id)},
                      {"projectReference", p.project_reference}};
 }
 void from_json(nlohmann::json const& j, Project& p) {
   SafeGetTo(p.kind, j, "kind");
   SafeGetTo(p.id, j, "id");
   SafeGetTo(p.friendly_name, j, "friendlyName");
-  SafeGetTo(p.numeric_id, j, "numericId");
+  p.numeric_id = GetNumberFromJson(j, "numericId");
   SafeGetTo(p.project_reference, j, "projectReference");
 }
 

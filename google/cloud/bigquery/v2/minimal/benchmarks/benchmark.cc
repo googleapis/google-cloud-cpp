@@ -89,16 +89,22 @@ std::chrono::milliseconds ToChronoMillis(int m) {
 
 }  // anonymous namespace
 
-void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
-                                      std::string const& phase,
+void Benchmark::PrintThroughputResult(std::ostream& os,
+                                      std::string const& test_name,
+                                      std::string const& operation,
                                       BenchmarkResult const& result) {
   std::chrono::seconds elapsed =
       std::chrono::duration_cast<std::chrono::seconds>(result.elapsed);
   auto elapsed_dbl = static_cast<double>(elapsed.count());
   auto operations_size_dbl = static_cast<double>(result.operations.size());
   auto ops_throughput = operations_size_dbl / elapsed_dbl;
-  os << "# " << phase << " op throughput=" << ops_throughput << " ops/s"
-     << std::endl;
+  os << "# Test=" << test_name << ", " << operation
+     << ", op throughput=" << ops_throughput << " ops/s" << std::endl
+     << "# Test=" << test_name << ", " << operation
+     << ", Total number of operations performed=" << result.operations.size()
+     << std::endl
+     << "# Test=" << test_name << ", " << operation
+     << ", Total elapsed time=" << elapsed.count() << " seconds" << std::endl;
 }
 
 void Benchmark::PrintLatencyResult(std::ostream& os,

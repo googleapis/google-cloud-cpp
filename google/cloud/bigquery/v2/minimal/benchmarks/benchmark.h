@@ -73,7 +73,7 @@ class Benchmark {
    */
   static void PrintThroughputResult(std::ostream& os,
                                     std::string const& test_name,
-                                    std::string const& phase,
+                                    std::string const& operation,
                                     BenchmarkResult const& result);
 
   /**

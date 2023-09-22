@@ -45,7 +45,7 @@ std::string MakeProjectJsonText() {
   return R"({"kind":"p-kind")"
          R"(,"id":"p-id")"
          R"(,"friendlyName":"p-friendly-name")"
-         R"(,"numericId":123)"
+         R"(,"numericId":"123")"
          R"(,"projectReference":{)"
          R"("projectId":"p-project-id")"
          R"(})"
@@ -57,7 +57,7 @@ std::string MakeListProjectsResponseJsonText() {
   return R"({"etag": "tag-1",
           "kind": "kind-1",
           "nextPageToken": "npt-123",
-          "totalItems": "1",
+          "totalItems": 1,
           "projects": [)" +
          projects_json_txt + R"(]})";
 }
@@ -66,7 +66,7 @@ std::string MakeListProjectsResponseNoPageTokenJsonText() {
   auto projects_json_txt = MakeProjectJsonText();
   return R"({"etag": "tag-1",
           "kind": "kind-1",
-          "totalItems": "1",
+          "totalItems": 1,
           "projects": [)" +
          projects_json_txt + R"(]})";
 }

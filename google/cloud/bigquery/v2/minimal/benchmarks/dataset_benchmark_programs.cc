@@ -15,6 +15,8 @@
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmarks_config.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <cctype>
 #include <chrono>
 #include <future>
@@ -28,8 +30,6 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::DatasetBenchmark;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::DatasetConfig;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::FormatDuration;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
-using std::chrono::steady_clock;
-using std::chrono::system_clock;
 
 char const kDescription[] =
     R"""(Measures the latency of Bigquery's `GetDataset()` and
@@ -90,24 +90,18 @@ OperationResult RunListDatasets(DatasetBenchmark& benchmark) {
   return Benchmark::TimeOperation(std::move(op));
 }
 
-std::time_t steady_clock_to_time_t(std::chrono::steady_clock::time_point t) {
-  return system_clock::to_time_t(
-      std::chrono::system_clock::now() +
-      std::chrono::duration_cast<system_clock::duration>(t -
-                                                         steady_clock::now()));
-}
-
 // Run an iteration of the test.
 google::cloud::StatusOr<DatasetBenchmarkResult> RunDatasetBenchmark(
-    DatasetBenchmark& benchmark, std::chrono::seconds test_duration) {
+    DatasetBenchmark& benchmark, absl::Duration test_duration) {
   DatasetBenchmarkResult result = {};
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::uniform_int_distribution<int> prng_operation(0, 1);
 
-  auto start = std::chrono::steady_clock::now();
+  auto start = absl::Now();
   auto mark = start + test_duration / kBenchmarkProgressMarks;
   auto end = start + test_duration;
-  for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
+  auto local_time_zone = absl::LocalTimeZone();
+  for (auto now = start; now < end; now = absl::Now()) {
     if (prng_operation(generator) == 0) {
       // Call GetDataset.
       auto op_result = RunGetDataset(benchmark);
@@ -125,17 +119,27 @@ google::cloud::StatusOr<DatasetBenchmarkResult> RunDatasetBenchmark(
     }
     if (now >= mark) {
       mark = now + test_duration / kBenchmarkProgressMarks;
-      std::time_t start_t = steady_clock_to_time_t(start);
-      std::time_t end_t = steady_clock_to_time_t(end);
-      std::time_t now_t = steady_clock_to_time_t(now);
-      std::time_t mark_t = steady_clock_to_time_t(mark);
-      std::cout << "Start Time=" << std::ctime(&start_t)
-                << "Current Progress Mark=" << std::ctime(&now_t)
-                << "Next Progress Mark=" << std::ctime(&mark_t)
-                << "End Time=" << std::ctime(&end_t)
-                << "Number of GetDataset operations= "
+      std::cout << "Start Time=" << absl::FormatTime(start, local_time_zone)
+                << std::endl
+                << "Current Progress Mark="
+                << absl::FormatTime(now, local_time_zone) << std::endl
+                << "Next Progress Mark="
+                << absl::FormatTime(mark, local_time_zone) << std::endl
+                << "End Time=" << absl::FormatTime(end, local_time_zone)
+                << std::endl
+                << "Number of GetDataset operations performed thus far= "
                 << result.get_results.operations.size()
-                << ", Number of ListDatasets operations= "
+                << ", Number of ListDatasets operations performed thus far= "
+                << result.list_results.operations.size() << std::endl;
+      std::cout << "..." << std::endl;
+    } else if (now > end) {
+      std::cout << "Start Time=" << absl::FormatTime(start, local_time_zone)
+                << std::endl
+                << "End Time=" << absl::FormatTime(end, local_time_zone)
+                << std::endl
+                << "Total Number of GetDataset operations= "
+                << result.get_results.operations.size()
+                << ", Total Number of ListDatasets operations= "
                 << result.list_results.operations.size() << std::endl;
       std::cout << "..." << std::endl;
     }
@@ -173,7 +177,7 @@ int main(int argc, char* argv[]) {
 
   DatasetBenchmark benchmark(config);
   // Start the threads running the dataset benchmark test.
-  auto latency_test_start = std::chrono::steady_clock::now();
+  auto latency_test_start = absl::Now();
   std::vector<std::future<google::cloud::StatusOr<DatasetBenchmarkResult>>>
       tasks;
   for (int i = 0; i != config.thread_count; ++i) {
@@ -183,7 +187,8 @@ int main(int argc, char* argv[]) {
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunDatasetBenchmark,
-                                  std::ref(benchmark), config.test_duration));
+                                  std::ref(benchmark),
+                                  absl::FromChrono(config.test_duration)));
   }
 
   // Wait for the threads and combine all the results.
@@ -209,8 +214,7 @@ int main(int argc, char* argv[]) {
     ++count;
   }
   auto latency_test_elapsed =
-      std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::steady_clock::now() - latency_test_start);
+      absl::ToChronoMilliseconds(absl::Now() - latency_test_start);
   combined.get_results.elapsed = latency_test_elapsed;
   combined.list_results.elapsed = latency_test_elapsed;
   std::cout << " DONE. Elapsed Test Duration="
