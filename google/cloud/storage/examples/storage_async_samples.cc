@@ -358,7 +358,7 @@ int main(int argc, char* argv[]) try {
         throw examples::Usage{std::move(os).str()};
       }
       auto client = google::cloud::storage_experimental::AsyncClient();
-      command(client, std::move(argv));
+      command(client, argv);
     };
     return {name, std::move(adapter)};
   };

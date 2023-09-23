@@ -40,6 +40,8 @@ function features::always_build() {
     # Build our code with OpenTelemetry. This feature includes both the client
     # library instrumentation, and the GCP exporters.
     experimental-opentelemetry
+    # Enable storage_grpc in most builds.
+    experimental-storage_grpc
   )
   printf "%s\n" "${list[@]}" | sort -u
 }
