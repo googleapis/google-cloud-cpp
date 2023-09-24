@@ -19,6 +19,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <numeric>
 
 namespace google {
@@ -130,17 +131,28 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
 
 TEST_F(AsyncClientIntegrationTest, StreamingRead) {
   auto object_name = MakeRandomObjectName();
-  // Create a relatively large object so the streaming read makes sense.
-  auto constexpr kSize = 32 * 1024 * 1024L;
-  auto const expected_data = MakeRandomData(kSize);
+  // Create a relatively large object so the streaming read makes sense. We
+  // aim for something around 5MiB, enough for 3 `Read()` calls.
+  auto constexpr kLineSize = 64;
+  auto constexpr kLineCount = 5 * 1024 * 1024 / kLineSize;
+  auto const block = MakeRandomData(kLineSize);
+  std::vector<std::string> insert_data(kLineCount);
+  std::generate(insert_data.begin(), insert_data.end(), [&, n = 0]() mutable {
+    return std::to_string(++n) + ": " + block;
+  });
+  auto const expected_size = std::accumulate(
+      insert_data.begin(), insert_data.end(), static_cast<std::size_t>(0),
+      [](auto a, auto const& b) { return a + b.size(); });
 
   auto async = AsyncClient();
   auto insert = async
-                    .InsertObject(bucket_name(), object_name, expected_data,
+                    .InsertObject(bucket_name(), object_name, insert_data,
                                   gcs::IfGenerationMatch(0))
                     .get();
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
+
+  ASSERT_EQ(insert->size(), expected_size);
 
   auto r = async.ReadObject(bucket_name(), object_name).get();
   ASSERT_STATUS_OK(r);
@@ -156,7 +168,14 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
     std::tie(payload, token) = *std::move(p);
     for (auto v : payload.contents()) actual += std::string(v);
   }
-  EXPECT_EQ(actual, expected_data);
+  EXPECT_EQ(actual.size(), expected_size);
+  auto view = absl::string_view(actual);
+  for (auto const& expected : insert_data) {
+    ASSERT_GE(view.size(), expected.size());
+    ASSERT_EQ(expected, view.substr(0, expected.size()));
+    view = view.substr(expected.size());
+  }
+  ASSERT_EQ(view, absl::string_view{});
 }
 
 }  // namespace

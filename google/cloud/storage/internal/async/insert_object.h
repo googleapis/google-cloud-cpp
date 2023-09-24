@@ -117,7 +117,7 @@ class InsertObject : public std::enable_shared_from_this<InsertObject> {
   void OnStart(bool ok);
   void Write();
   void OnError(Status status);
-  void OnWrite(bool ok);
+  void OnWrite(std::size_t n, bool ok);
   void OnFinish(StatusOr<google::storage::v2::WriteObjectResponse> response);
 
   std::weak_ptr<InsertObject> WeakFromThis() { return shared_from_this(); }

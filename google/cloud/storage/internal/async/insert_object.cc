@@ -85,12 +85,9 @@ void InsertObject::Write() {
     if (!status.ok()) return OnError(std::move(status));
   }
   (void)rpc_->Write(request_, std::move(wopt))
-      .then([w = WeakFromThis()](auto f) {
-        if (auto self = w.lock()) self->OnWrite(f.get());
+      .then([n, w = WeakFromThis()](auto f) {
+        if (auto self = w.lock()) self->OnWrite(n, f.get());
       });
-  // Prepare for the next Write() request.
-  request_.clear_first_message();
-  request_.set_write_offset(request_.write_offset() + n);
 }
 
 void InsertObject::OnError(Status status) {
@@ -101,7 +98,10 @@ void InsertObject::OnError(Status status) {
       });
 }
 
-void InsertObject::OnWrite(bool ok) {
+void InsertObject::OnWrite(std::size_t n, bool ok) {
+  // Prepare for the next Write() request.
+  request_.clear_first_message();
+  request_.set_write_offset(request_.write_offset() + n);
   if (ok && !data_.empty()) return Write();
   (void)rpc_->Finish().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnFinish(f.get());
