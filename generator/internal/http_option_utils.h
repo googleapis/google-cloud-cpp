@@ -72,7 +72,7 @@ void SetHttpDerivedMethodVars(
  * Sets the "method_http_query_parameters" value in method_vars based on the
  * parsed_http_info.
  */
-void SetHttpGetQueryParameters(
+void SetHttpQueryParameters(
     absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
         parsed_http_info,
     google::protobuf::MethodDescriptor const& method,

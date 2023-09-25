@@ -30,6 +30,9 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::vector<std::pair<std::string, std::string>> TrimEmptyQueryParameters(
+    std::vector<std::pair<std::string, std::string>> query_params);
+
 Status RestResponseToProto(google::protobuf::Message& destination,
                            RestResponse&& rest_response);
 

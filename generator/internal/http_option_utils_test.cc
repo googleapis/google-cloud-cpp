@@ -467,25 +467,25 @@ TEST_F(HttpOptionUtilsTest,
       Eq(R"""(absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
-TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersNonGet) {
+TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersNoParams) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(2);
+      service_file_descriptor->service(0)->method(5);
   VarsDictionary vars;
-  SetHttpGetQueryParameters(ParseHttpExtension(*method), *method, vars);
+  SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(""));
 }
 
-TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGet) {
+TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersGetWithParams) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(4);
   VarsDictionary vars;
-  SetHttpGetQueryParameters(ParseHttpExtension(*method), *method, vars);
+  SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
-      {std::make_pair("not_used_anymore", request.not_used_anymore())})"""));
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("not_used_anymore", request.not_used_anymore())}))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
@@ -494,12 +494,12 @@ TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(3);
   VarsDictionary vars;
-  SetHttpGetQueryParameters(ParseHttpExtension(*method), *method, vars);
+  SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
-      {std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("name", request.name()),
-       std::make_pair("include_foo", request.include_foo() ? "1" : "0")})"""));
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
+        std::make_pair("page_token", request.page_token()),
+        std::make_pair("name", request.name()),
+        std::make_pair("include_foo", request.include_foo() ? "1" : "0")}))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, HasHttpAnnotationRoutingHeaderSuccess) {

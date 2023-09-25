@@ -53,8 +53,9 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "instanceConfigs"),
-      {std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
@@ -65,7 +66,7 @@ DefaultInstanceAdminRestStub::GetInstanceConfig(
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstanceConfig>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.name()), {});
+      absl::StrCat("/", "v1", "/", request.name()));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -81,7 +82,12 @@ DefaultInstanceAdminRestStub::AsyncCreateInstanceConfig(
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
             absl::StrCat("/", "v1", "/", request.parent(), "/",
-                         "instanceConfigs")));
+                         "instanceConfigs"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("instance_config_id",
+                                request.instance_config_id()),
+                 std::make_pair("validate_only",
+                                request.validate_only() ? "1" : "0")})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -102,7 +108,9 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstanceConfig(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/", "v1", "/", request.instance_config().name())));
+            absl::StrCat("/", "v1", "/", request.instance_config().name()),
+            rest_internal::TrimEmptyQueryParameters({std::make_pair(
+                "validate_only", request.validate_only() ? "1" : "0")})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -115,8 +123,13 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
-  return rest_internal::Delete(*service_, rest_context, request,
-                               absl::StrCat("/", "v1", "/", request.name()));
+  return rest_internal::Delete(
+      *service_, rest_context, request,
+      absl::StrCat("/", "v1", "/", request.name()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("etag", request.etag()),
+           std::make_pair("validate_only",
+                          request.validate_only() ? "1" : "0")}));
 }
 
 StatusOr<
@@ -130,9 +143,10 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/",
                    "instanceConfigOperations"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
@@ -143,9 +157,10 @@ DefaultInstanceAdminRestStub::ListInstances(
       google::spanner::admin::instance::v1::ListInstancesResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "instances"),
-      {std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("filter", request.filter())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("filter", request.filter())}));
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
@@ -154,7 +169,7 @@ DefaultInstanceAdminRestStub::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.name()), {});
+      absl::StrCat("/", "v1", "/", request.name()));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -169,7 +184,9 @@ DefaultInstanceAdminRestStub::AsyncCreateInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "instances")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "instances"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("instance_id", request.instance_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
