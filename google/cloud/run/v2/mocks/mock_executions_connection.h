@@ -58,6 +58,11 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
               DeleteExecution,
               (google::cloud::run::v2::DeleteExecutionRequest const& request),
               (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+              CancelExecution,
+              (google::cloud::run::v2::CancelExecutionRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,7 +19,9 @@
 #include "google/cloud/run/v2/internal/jobs_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/job.grpc.pb.h>
@@ -46,24 +48,81 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncCreateJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::CreateJobRequest const& request) {
-  SetMetadata(*context,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::CreateJobRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::CreateJobRequest const& request)
+                 -> std::string const& { return request.parent(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->AsyncCreateJob(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::run::v2::Job> JobsMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetJobRequest const& request) {
-  SetMetadata(context,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::GetJobRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::GetJobRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->GetJob(context, request);
 }
 
 StatusOr<google::cloud::run::v2::ListJobsResponse> JobsMetadata::ListJobs(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListJobsRequest const& request) {
-  SetMetadata(context,
-              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::ListJobsRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::ListJobsRequest const& request)
+                 -> std::string const& { return request.parent(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context);
+  } else {
+    SetMetadata(context, absl::StrJoin(params, "&"));
+  }
   return child_->ListJobs(context, request);
 }
 
@@ -71,9 +130,27 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncUpdateJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::UpdateJobRequest const& request) {
-  SetMetadata(
-      *context,
-      absl::StrCat("job.name=", internal::UrlEncode(request.job().name())));
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::UpdateJobRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::UpdateJobRequest const& request)
+                 -> std::string const& { return request.job().name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->AsyncUpdateJob(cq, std::move(context), request);
 }
 
@@ -81,8 +158,27 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::DeleteJobRequest const& request) {
-  SetMetadata(*context,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::DeleteJobRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::DeleteJobRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->AsyncDeleteJob(cq, std::move(context), request);
 }
 
@@ -90,8 +186,27 @@ future<StatusOr<google::longrunning::Operation>> JobsMetadata::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::RunJobRequest const& request) {
-  SetMetadata(*context,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::RunJobRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::RunJobRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
   return child_->AsyncRunJob(cq, std::move(context), request);
 }
 

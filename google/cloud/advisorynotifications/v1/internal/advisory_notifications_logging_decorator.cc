@@ -62,6 +62,31 @@ AdvisoryNotificationsServiceLogging::GetNotification(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceLogging::GetSettings(
+    grpc::ClientContext& context,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+                 request) { return child_->GetSettings(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceLogging::UpdateSettings(
+    grpc::ClientContext& context,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+              request) { return child_->UpdateSettings(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1_internal
 }  // namespace cloud

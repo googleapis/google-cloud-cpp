@@ -125,6 +125,56 @@ class MockAnalyticsHubServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
+                                  SubscribeDataExchangeResponse>>,
+              SubscribeDataExchange,
+              (google::cloud::bigquery::analyticshub::v1::
+                   SubscribeDataExchangeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
+                                  RefreshSubscriptionResponse>>,
+              RefreshSubscription,
+              (google::cloud::bigquery::analyticshub::v1::
+                   RefreshSubscriptionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>,
+      GetSubscription,
+      (google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>),
+      ListSubscriptions,
+      (google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>),
+      ListSharedResourceSubscriptions,
+      (google::cloud::bigquery::analyticshub::v1::
+           ListSharedResourceSubscriptionsRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::
+                           RevokeSubscriptionResponse>,
+              RevokeSubscription,
+              (google::cloud::bigquery::analyticshub::v1::
+                   RevokeSubscriptionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
+      DeleteSubscription,
+      (google::cloud::bigquery::analyticshub::v1::
+           DeleteSubscriptionRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),
               (override));

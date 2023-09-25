@@ -210,6 +210,16 @@ class AdvisoryNotificationsServiceConnection {
   GetNotification(
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request);
+
+  virtual StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request);
 };
 
 /**

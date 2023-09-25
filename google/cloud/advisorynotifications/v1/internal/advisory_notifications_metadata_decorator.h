@@ -51,6 +51,16 @@ class AdvisoryNotificationsServiceMetadata
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request) override;
 
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      grpc::ClientContext& context,
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      grpc::ClientContext& context,
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

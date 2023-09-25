@@ -60,6 +60,15 @@ ExecutionsTracingConnection::DeleteExecution(
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
 
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsTracingConnection::CancelExecution(
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CancelExecution(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<run_v2::ExecutionsConnection> MakeExecutionsTracingConnection(

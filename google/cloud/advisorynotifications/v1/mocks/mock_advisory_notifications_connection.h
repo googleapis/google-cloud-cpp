@@ -60,6 +60,19 @@ class MockAdvisoryNotificationsServiceConnection
       (google::cloud::advisorynotifications::v1::GetNotificationRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::advisorynotifications::v1::Settings>, GetSettings,
+      (google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::advisorynotifications::v1::Settings>,
+      UpdateSettings,
+      (google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

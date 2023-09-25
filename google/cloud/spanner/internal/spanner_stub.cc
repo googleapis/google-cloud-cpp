@@ -168,6 +168,17 @@ DefaultSpannerStub::PartitionRead(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::BatchWriteResponse>>
+DefaultSpannerStub::BatchWrite(
+    std::shared_ptr<grpc::ClientContext> client_context,
+    google::spanner::v1::BatchWriteRequest const& request) {
+  auto stream = grpc_stub_->BatchWrite(client_context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::spanner::v1::BatchWriteResponse>>(std::move(client_context),
+                                                std::move(stream));
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 DefaultSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

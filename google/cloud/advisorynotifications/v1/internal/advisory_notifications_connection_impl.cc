@@ -124,6 +124,35 @@ AdvisoryNotificationsServiceConnectionImpl::GetNotification(
       request, __func__);
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceConnectionImpl::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetSettings(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+                 request) { return stub_->GetSettings(context, request); },
+      request, __func__);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceConnectionImpl::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSettings(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+              request) { return stub_->UpdateSettings(context, request); },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1_internal
 }  // namespace cloud

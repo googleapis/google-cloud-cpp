@@ -36,7 +36,7 @@ namespace rapidmigrationassessment_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Rapid Migration Assessment service
+/// Service describing handlers for resources.
 ///
 /// @par Equality
 ///
@@ -120,7 +120,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.CreateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L194}
+  /// [google.cloud.rapidmigrationassessment.v1.CreateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -161,7 +161,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.CreateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L194}
+  /// [google.cloud.rapidmigrationassessment.v1.CreateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -197,7 +197,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Annotation]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L137}
-  /// [google.cloud.rapidmigrationassessment.v1.CreateAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L166}
+  /// [google.cloud.rapidmigrationassessment.v1.CreateAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L167}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
@@ -237,7 +237,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Annotation]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L137}
-  /// [google.cloud.rapidmigrationassessment.v1.CreateAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L166}
+  /// [google.cloud.rapidmigrationassessment.v1.CreateAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L167}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
@@ -264,7 +264,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Annotation]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L137}
-  /// [google.cloud.rapidmigrationassessment.v1.GetAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L183}
+  /// [google.cloud.rapidmigrationassessment.v1.GetAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L184}
   ///
   // clang-format on
   StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -294,7 +294,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Annotation]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L137}
-  /// [google.cloud.rapidmigrationassessment.v1.GetAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L183}
+  /// [google.cloud.rapidmigrationassessment.v1.GetAnnotationRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L184}
   ///
   // clang-format on
   StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -331,7 +331,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.ListCollectorsRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L214}
+  /// [google.cloud.rapidmigrationassessment.v1.ListCollectorsRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L215}
   ///
   // clang-format on
   StreamRange<google::cloud::rapidmigrationassessment::v1::Collector>
@@ -370,7 +370,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.ListCollectorsRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L214}
+  /// [google.cloud.rapidmigrationassessment.v1.ListCollectorsRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L215}
   ///
   // clang-format on
   StreamRange<google::cloud::rapidmigrationassessment::v1::Collector>
@@ -398,7 +398,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.GetCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L250}
+  /// [google.cloud.rapidmigrationassessment.v1.GetCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L251}
   ///
   // clang-format on
   StatusOr<google::cloud::rapidmigrationassessment::v1::Collector> GetCollector(
@@ -428,7 +428,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.GetCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L250}
+  /// [google.cloud.rapidmigrationassessment.v1.GetCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L251}
   ///
   // clang-format on
   StatusOr<google::cloud::rapidmigrationassessment::v1::Collector> GetCollector(
@@ -467,7 +467,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.UpdateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L287}
+  /// [google.cloud.rapidmigrationassessment.v1.UpdateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L288}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -506,7 +506,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.UpdateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L287}
+  /// [google.cloud.rapidmigrationassessment.v1.UpdateCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L288}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -518,6 +518,7 @@ class RapidMigrationAssessmentClient {
   // clang-format off
   ///
   /// Deletes a single Collector - changes state of collector to "Deleting".
+  /// Background jobs does final deletion thorugh producer api.
   ///
   /// @param name  Required. Name of the resource.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -541,7 +542,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.DeleteCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L261}
+  /// [google.cloud.rapidmigrationassessment.v1.DeleteCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L262}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -550,6 +551,7 @@ class RapidMigrationAssessmentClient {
   // clang-format off
   ///
   /// Deletes a single Collector - changes state of collector to "Deleting".
+  /// Background jobs does final deletion thorugh producer api.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -578,7 +580,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.DeleteCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L261}
+  /// [google.cloud.rapidmigrationassessment.v1.DeleteCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L262}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -613,7 +615,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.ResumeCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L316}
+  /// [google.cloud.rapidmigrationassessment.v1.ResumeCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L317}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -650,7 +652,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.ResumeCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L316}
+  /// [google.cloud.rapidmigrationassessment.v1.ResumeCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L317}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -685,7 +687,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.RegisterCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L342}
+  /// [google.cloud.rapidmigrationassessment.v1.RegisterCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L343}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -722,7 +724,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.RegisterCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L342}
+  /// [google.cloud.rapidmigrationassessment.v1.RegisterCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L343}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -756,7 +758,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.PauseCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L368}
+  /// [google.cloud.rapidmigrationassessment.v1.PauseCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L369}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -793,7 +795,7 @@ class RapidMigrationAssessmentClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.rapidmigrationassessment.v1.Collector]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/api_entities.proto#L44}
-  /// [google.cloud.rapidmigrationassessment.v1.PauseCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L368}
+  /// [google.cloud.rapidmigrationassessment.v1.PauseCollectorRequest]: @googleapis_reference_link{google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.proto#L369}
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>

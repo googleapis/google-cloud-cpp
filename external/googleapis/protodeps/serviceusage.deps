@@ -9,6 +9,7 @@
 @com_google_googleapis//google/api:monitored_resource_proto
 @com_google_googleapis//google/api:monitoring_proto
 @com_google_googleapis//google/api:quota_proto
+@com_google_googleapis//google/api:resource_proto
 @com_google_googleapis//google/api:usage_proto
 @com_google_googleapis//google/api:visibility_proto
 @com_google_googleapis//google/longrunning:operations_proto

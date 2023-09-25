@@ -57,6 +57,32 @@ DefaultAdvisoryNotificationsServiceStub::GetNotification(
   return response;
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+DefaultAdvisoryNotificationsServiceStub::GetSettings(
+    grpc::ClientContext& client_context,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  google::cloud::advisorynotifications::v1::Settings response;
+  auto status = grpc_stub_->GetSettings(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+DefaultAdvisoryNotificationsServiceStub::UpdateSettings(
+    grpc::ClientContext& client_context,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  google::cloud::advisorynotifications::v1::Settings response;
+  auto status = grpc_stub_->UpdateSettings(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1_internal
 }  // namespace cloud

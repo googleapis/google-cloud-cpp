@@ -197,6 +197,115 @@ AnalyticsHubServiceTracingStub::SubscribeListing(
                            child_->SubscribeListing(context, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceTracingStub::AsyncSubscribeDataExchange(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "SubscribeDataExchange");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, *propagator_);
+  }
+  auto f = child_->AsyncSubscribeDataExchange(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceTracingStub::AsyncRefreshSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "RefreshSubscription");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, *propagator_);
+  }
+  auto f = child_->AsyncRefreshSubscription(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceTracingStub::GetSubscription(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "GetSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetSubscription(context, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
+AnalyticsHubServiceTracingStub::ListSubscriptions(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "ListSubscriptions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListSubscriptions(context, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::
+             ListSharedResourceSubscriptionsResponse>
+AnalyticsHubServiceTracingStub::ListSharedResourceSubscriptions(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "ListSharedResourceSubscriptions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListSharedResourceSubscriptions(context, request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceTracingStub::RevokeSubscription(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "RevokeSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RevokeSubscription(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceTracingStub::AsyncDeleteSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.analyticshub.v1.AnalyticsHubService",
+      "DeleteSubscription");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, *propagator_);
+  }
+  auto f = child_->AsyncDeleteSubscription(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -232,6 +341,35 @@ AnalyticsHubServiceTracingStub::TestIamPermissions(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TestIamPermissions(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceTracingStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, *propagator_);
+  }
+  auto f = child_->AsyncGetOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<Status> AnalyticsHubServiceTracingStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, *propagator_);
+  }
+  auto f = child_->AsyncCancelOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

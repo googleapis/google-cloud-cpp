@@ -22,6 +22,7 @@
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -103,6 +104,49 @@ class AnalyticsHubServiceAuth : public AnalyticsHubServiceStub {
       google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncSubscribeDataExchange(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::bigquery::analyticshub::v1::
+          SubscribeDataExchangeRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRefreshSubscription(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::bigquery::analyticshub::v1::
+          RefreshSubscriptionRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+  GetSubscription(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
+  ListSubscriptions(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::bigquery::analyticshub::v1::
+               ListSharedResourceSubscriptionsResponse>
+  ListSharedResourceSubscriptions(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::analyticshub::v1::
+          ListSharedResourceSubscriptionsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+  RevokeSubscription(grpc::ClientContext& context,
+                     google::cloud::bigquery::analyticshub::v1::
+                         RevokeSubscriptionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubscription(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteSubscriptionRequest const& request) override;
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
@@ -114,6 +158,16 @@ class AnalyticsHubServiceAuth : public AnalyticsHubServiceStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

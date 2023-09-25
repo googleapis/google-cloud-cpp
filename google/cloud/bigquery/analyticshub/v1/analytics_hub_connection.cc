@@ -115,6 +115,65 @@ AnalyticsHubServiceConnection::SubscribeListing(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceConnection::SubscribeDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::bigquery::analyticshub::v1::
+                   SubscribeDataExchangeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceConnection::RefreshSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        RefreshSubscriptionRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceConnection::GetSubscription(
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceConnection::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>();
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceConnection::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>();
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceConnection::RevokeSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        RevokeSubscriptionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+AnalyticsHubServiceConnection::DeleteSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteSubscriptionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

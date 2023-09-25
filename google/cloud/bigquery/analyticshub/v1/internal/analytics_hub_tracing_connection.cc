@@ -166,6 +166,94 @@ AnalyticsHubServiceTracingConnection::SubscribeListing(
   return internal::EndSpan(*span, child_->SubscribeListing(request));
 }
 
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeDataExchange");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SubscribeDataExchange(request));
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceTracingConnection::RefreshSubscription(
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RefreshSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RefreshSubscription(request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceTracingConnection::GetSubscription(
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "GetSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSubscription(request));
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceTracingConnection::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListSubscriptions");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListSubscriptions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::Subscription>(std::move(span),
+                                                               std::move(sr));
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceTracingConnection::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListSharedResourceSubscriptions");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListSharedResourceSubscriptions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::Subscription>(std::move(span),
+                                                               std::move(sr));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceTracingConnection::RevokeSubscription(
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RevokeSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RevokeSubscription(request));
+}
+
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+AnalyticsHubServiceTracingConnection::DeleteSubscription(
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteSubscription(request));
+}
+
 StatusOr<google::iam::v1::Policy>
 AnalyticsHubServiceTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {

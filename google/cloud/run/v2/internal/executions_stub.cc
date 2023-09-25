@@ -71,6 +71,23 @@ DefaultExecutionsStub::AsyncDeleteExecution(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultExecutionsStub::AsyncCancelExecution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::run::v2::CancelExecutionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::run::v2::CancelExecutionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCancelExecution(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultExecutionsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

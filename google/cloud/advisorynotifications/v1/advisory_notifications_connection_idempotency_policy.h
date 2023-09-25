@@ -45,6 +45,14 @@ class AdvisoryNotificationsServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetNotification(
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request);
 };
 
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>

@@ -50,6 +50,26 @@ AdvisoryNotificationsServiceAuth::GetNotification(
   return child_->GetNotification(context, request);
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceAuth::GetSettings(
+    grpc::ClientContext& context,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSettings(context, request);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceAuth::UpdateSettings(
+    grpc::ClientContext& context,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSettings(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1_internal
 }  // namespace cloud

@@ -2666,7 +2666,7 @@ class MigrationCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.migrationcenter.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L2091}
-  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3649}
+  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3803}
   ///
   // clang-format on
   StatusOr<google::cloud::migrationcenter::v1::Settings> GetSettings(
@@ -2696,7 +2696,7 @@ class MigrationCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.migrationcenter.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L2091}
-  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3649}
+  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3803}
   ///
   // clang-format on
   StatusOr<google::cloud::migrationcenter::v1::Settings> GetSettings(
@@ -2734,7 +2734,7 @@ class MigrationCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3649}
+  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3803}
   /// [google.cloud.migrationcenter.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L2102}
   ///
   // clang-format on
@@ -2772,7 +2772,7 @@ class MigrationCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3649}
+  /// [google.cloud.migrationcenter.v1.Settings]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L3803}
   /// [google.cloud.migrationcenter.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/migrationcenter/v1/migrationcenter.proto#L2102}
   ///
   // clang-format on

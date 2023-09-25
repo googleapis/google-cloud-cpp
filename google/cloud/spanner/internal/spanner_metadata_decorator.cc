@@ -145,6 +145,16 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerMetadata::PartitionRead(
   return child_->PartitionRead(context, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::BatchWriteResponse>>
+SpannerMetadata::BatchWrite(
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::v1::BatchWriteRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("session=", internal::UrlEncode(request.session())));
+  return child_->BatchWrite(std::move(context), request);
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerMetadata::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

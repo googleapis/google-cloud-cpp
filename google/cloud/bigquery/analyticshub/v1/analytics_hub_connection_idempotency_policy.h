@@ -84,6 +84,34 @@ class AnalyticsHubServiceConnectionIdempotencyPolicy {
       google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
           request);
 
+  virtual google::cloud::Idempotency SubscribeDataExchange(
+      google::cloud::bigquery::analyticshub::v1::
+          SubscribeDataExchangeRequest const& request);
+
+  virtual google::cloud::Idempotency RefreshSubscription(
+      google::cloud::bigquery::analyticshub::v1::
+          RefreshSubscriptionRequest const& request);
+
+  virtual google::cloud::Idempotency GetSubscription(
+      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListSubscriptions(
+      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
+          request);
+
+  virtual google::cloud::Idempotency ListSharedResourceSubscriptions(
+      google::cloud::bigquery::analyticshub::v1::
+          ListSharedResourceSubscriptionsRequest request);
+
+  virtual google::cloud::Idempotency RevokeSubscription(
+      google::cloud::bigquery::analyticshub::v1::
+          RevokeSubscriptionRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteSubscription(
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteSubscriptionRequest const& request);
+
   virtual google::cloud::Idempotency GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 

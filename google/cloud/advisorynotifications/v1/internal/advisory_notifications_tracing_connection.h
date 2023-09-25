@@ -52,6 +52,14 @@ class AdvisoryNotificationsServiceTracingConnection
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request) override;
 
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) override;
+
  private:
   std::shared_ptr<
       advisorynotifications_v1::AdvisoryNotificationsServiceConnection>

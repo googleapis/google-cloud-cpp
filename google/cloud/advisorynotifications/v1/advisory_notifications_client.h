@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 
 namespace google {
@@ -117,8 +118,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L212}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
+  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L229}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
@@ -156,8 +157,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L212}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
+  /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L229}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
   ///
   // clang-format on
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
@@ -186,8 +187,8 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L259}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
+  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L276}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
@@ -216,13 +217,130 @@ class AdvisoryNotificationsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L259}
-  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L115}
+  /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L276}
+  /// [google.cloud.advisorynotifications.v1.Notification]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
   GetNotification(
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get notification settings.
+  ///
+  /// @param name  Required. The resource name of the settings to retrieve.
+  ///  Format:
+  ///  organizations/{organization}/locations/{location}/settings.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.advisorynotifications.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.advisorynotifications.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L327}
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get notification settings.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.advisorynotifications.v1.GetSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.advisorynotifications.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.advisorynotifications.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L327}
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update notification settings.
+  ///
+  /// @param settings  Required. New settings.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.advisorynotifications.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
+  /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L340}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      google::cloud::advisorynotifications::v1::Settings const& settings,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update notification settings.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.advisorynotifications.v1.UpdateSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.advisorynotifications.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.advisorynotifications.v1.Settings]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L296}
+  /// [google.cloud.advisorynotifications.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L340}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
           request,
       Options opts = {});
 

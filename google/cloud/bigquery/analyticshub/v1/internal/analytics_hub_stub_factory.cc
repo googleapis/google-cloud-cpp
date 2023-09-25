@@ -47,7 +47,8 @@ std::shared_ptr<AnalyticsHubServiceStub> CreateDefaultAnalyticsHubServiceStub(
           channel);
   std::shared_ptr<AnalyticsHubServiceStub> stub =
       std::make_shared<DefaultAnalyticsHubServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<AnalyticsHubServiceAuth>(std::move(auth),

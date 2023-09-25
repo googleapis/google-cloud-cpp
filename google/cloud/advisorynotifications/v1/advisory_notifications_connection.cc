@@ -51,6 +51,18 @@ AdvisoryNotificationsServiceConnection::GetNotification(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceConnection::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceConnection::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AdvisoryNotificationsServiceConnection>
 MakeAdvisoryNotificationsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

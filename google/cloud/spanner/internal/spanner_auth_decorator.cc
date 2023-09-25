@@ -135,6 +135,17 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerAuth::PartitionRead(
   return child_->PartitionRead(context, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::BatchWriteResponse>>
+SpannerAuth::BatchWrite(std::shared_ptr<grpc::ClientContext> context,
+                        google::spanner::v1::BatchWriteRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::spanner::v1::BatchWriteResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->BatchWrite(std::move(context), request);
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerAuth::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

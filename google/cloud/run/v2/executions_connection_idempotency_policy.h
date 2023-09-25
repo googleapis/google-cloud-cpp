@@ -44,6 +44,9 @@ class ExecutionsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteExecution(
       google::cloud::run::v2::DeleteExecutionRequest const& request);
+
+  virtual google::cloud::Idempotency CancelExecution(
+      google::cloud::run::v2::CancelExecutionRequest const& request);
 };
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>

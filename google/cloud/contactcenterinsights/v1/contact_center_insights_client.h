@@ -220,7 +220,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
+  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L663}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -253,7 +253,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
+  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L663}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -281,7 +281,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
+  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L649}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -311,7 +311,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
+  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L649}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -348,7 +348,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
+  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L609}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
@@ -387,7 +387,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L46}
-  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
+  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L609}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
@@ -412,7 +412,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
+  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L672}
   ///
   // clang-format on
   Status DeleteConversation(std::string const& name, Options opts = {});
@@ -438,7 +438,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
+  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L672}
   ///
   // clang-format on
   Status DeleteConversation(
@@ -474,7 +474,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L228}
-  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L783}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
@@ -515,7 +515,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L228}
-  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L783}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
@@ -543,7 +543,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L228}
-  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L833}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
@@ -573,7 +573,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L228}
-  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L833}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
@@ -609,7 +609,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L228}
-  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L797}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
@@ -648,7 +648,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L228}
-  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L797}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
@@ -671,7 +671,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L844}
   ///
   // clang-format on
   Status DeleteAnalysis(std::string const& name, Options opts = {});
@@ -697,7 +697,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L844}
   ///
   // clang-format on
   Status DeleteAnalysis(
@@ -733,8 +733,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L855}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L899}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -772,8 +772,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L855}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L899}
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -808,8 +808,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L688}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L780}
   ///
   // clang-format on
   future<StatusOr<
@@ -847,8 +847,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L688}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L780}
   ///
   // clang-format on
   future<StatusOr<
@@ -882,8 +882,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L908}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L986}
   ///
   // clang-format on
   future<StatusOr<
@@ -920,8 +920,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L908}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L986}
   ///
   // clang-format on
   future<StatusOr<
@@ -957,7 +957,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
+  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L989}
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L613}
   ///
   // clang-format on
@@ -997,7 +997,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
+  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L989}
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L613}
   ///
   // clang-format on
@@ -1027,7 +1027,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L613}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1017}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -1059,7 +1059,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L613}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1017}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -1086,7 +1086,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1043}
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L613}
   ///
   // clang-format on
@@ -1116,7 +1116,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1043}
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L613}
   ///
   // clang-format on
@@ -1143,8 +1143,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1026}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1037}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
@@ -1173,8 +1173,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1026}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1037}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
@@ -1208,8 +1208,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1065}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1054}
   ///
   // clang-format on
   future<StatusOr<
@@ -1246,8 +1246,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1065}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1054}
   ///
   // clang-format on
   future<StatusOr<
@@ -1283,8 +1283,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1079}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1090}
   ///
   // clang-format on
   future<StatusOr<
@@ -1322,8 +1322,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1079}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1090}
   ///
   // clang-format on
   future<StatusOr<
@@ -1359,8 +1359,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1107}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1118}
   ///
   // clang-format on
   future<StatusOr<
@@ -1398,8 +1398,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1107}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1118}
   ///
   // clang-format on
   future<StatusOr<
@@ -1427,7 +1427,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1135}
   /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L709}
   ///
   // clang-format on
@@ -1457,7 +1457,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
+  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1135}
   /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L709}
   ///
   // clang-format on
@@ -1483,8 +1483,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1146}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1157}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
@@ -1513,8 +1513,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1146}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1157}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
@@ -1542,7 +1542,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L709}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1163}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
@@ -1573,7 +1573,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L709}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1163}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
@@ -1597,7 +1597,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1172}
   ///
   // clang-format on
   Status DeleteIssue(std::string const& name, Options opts = {});
@@ -1623,7 +1623,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1172}
   ///
   // clang-format on
   Status DeleteIssue(
@@ -1649,8 +1649,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1183}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1194}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::
@@ -1680,8 +1680,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1183}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1194}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::
@@ -1712,7 +1712,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
+  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1201}
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
   ///
   // clang-format on
@@ -1746,7 +1746,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
+  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1201}
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
   ///
   // clang-format on
@@ -1773,7 +1773,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
+  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1254}
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
   ///
   // clang-format on
@@ -1803,7 +1803,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
+  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1254}
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
   ///
   // clang-format on
@@ -1840,7 +1840,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
+  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1218}
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
   ///
   // clang-format on
@@ -1879,7 +1879,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
+  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1218}
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
   ///
   // clang-format on
@@ -1905,7 +1905,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1265}
   ///
   // clang-format on
   Status DeletePhraseMatcher(std::string const& name, Options opts = {});
@@ -1931,7 +1931,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1265}
   ///
   // clang-format on
   Status DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::
@@ -1958,7 +1958,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
-  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
+  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1276}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -1991,7 +1991,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L765}
-  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
+  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1276}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
@@ -2075,7 +2075,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
+  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1285}
   /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L886}
   ///
   // clang-format on
@@ -2105,7 +2105,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
+  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1285}
   /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L886}
   ///
   // clang-format on
@@ -2134,7 +2134,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L886}
-  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
+  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
@@ -2165,7 +2165,7 @@ class ContactCenterInsightsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L886}
-  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
+  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
@@ -2195,8 +2195,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1306}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
@@ -2227,8 +2227,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1306}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
@@ -2254,8 +2254,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1323}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
@@ -2284,8 +2284,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1323}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
@@ -2319,8 +2319,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1334}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
@@ -2358,8 +2358,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1334}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
@@ -2385,8 +2385,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1366}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
@@ -2416,8 +2416,8 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
-  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1219}
+  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1366}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1233}
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
@@ -2441,7 +2441,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
+  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1375}
   ///
   // clang-format on
   Status DeleteView(std::string const& name, Options opts = {});
@@ -2467,7 +2467,7 @@ class ContactCenterInsightsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
+  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1375}
   ///
   // clang-format on
   Status DeleteView(

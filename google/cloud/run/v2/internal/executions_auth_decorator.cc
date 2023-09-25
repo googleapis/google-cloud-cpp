@@ -67,6 +67,25 @@ ExecutionsAuth::AsyncDeleteExecution(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ExecutionsAuth::AsyncCancelExecution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCancelExecution(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ExecutionsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

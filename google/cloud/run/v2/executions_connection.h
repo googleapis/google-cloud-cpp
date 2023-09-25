@@ -192,6 +192,9 @@ class ExecutionsConnection {
 
   virtual future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       google::cloud::run::v2::DeleteExecutionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::cloud::run::v2::CancelExecutionRequest const& request);
 };
 
 /**

@@ -101,6 +101,49 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeListing(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::RefreshSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        RefreshSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetSubscription(
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSubscriptionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+AnalyticsHubServiceConnectionIdempotencyPolicy::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::RevokeSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        RevokeSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteSubscriptionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
