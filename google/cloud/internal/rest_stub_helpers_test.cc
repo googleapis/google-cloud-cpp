@@ -39,7 +39,9 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::IsEmpty;
 using ::testing::Pair;
 
 using Request = google::protobuf::Duration;
@@ -457,6 +459,34 @@ TEST(RestStubHelpers, Put) {
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));
+}
+
+TEST(TrimEmptyQueryParameters, RemoveEmptyPairFirst) {
+  auto trimmed_params =
+      TrimEmptyQueryParameters({{"not_empty", "not_empty"}, {"", "empty"}});
+  EXPECT_THAT(trimmed_params, ElementsAre(Pair("not_empty", "not_empty")));
+}
+
+TEST(TrimEmptyQueryParameters, RemoveEmptyPairSecond) {
+  auto trimmed_params =
+      TrimEmptyQueryParameters({{"not_empty", "not_empty"}, {"empty", ""}});
+  EXPECT_THAT(trimmed_params, ElementsAre(Pair("not_empty", "not_empty")));
+}
+
+TEST(TrimEmptyQueryParameters, RemoveEmptyPairFirstAndSecond) {
+  auto trimmed_params =
+      TrimEmptyQueryParameters({{"", ""}, {"not_empty", "not_empty"}});
+  EXPECT_THAT(trimmed_params, ElementsAre(Pair("not_empty", "not_empty")));
+}
+
+TEST(TrimEmptyQueryParameters, RemovingEmptyPairProduceEmptyVector) {
+  auto trimmed_params = TrimEmptyQueryParameters({{"empty", ""}});
+  EXPECT_THAT(trimmed_params, IsEmpty());
+}
+
+TEST(TrimEmptyQueryParameters, EmptyInput) {
+  auto trimmed_params = TrimEmptyQueryParameters({});
+  EXPECT_THAT(trimmed_params, IsEmpty());
 }
 
 }  // namespace

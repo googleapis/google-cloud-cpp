@@ -52,8 +52,9 @@ DefaultDatabaseAdminRestStub::ListDatabases(
       google::spanner::admin::database::v1::ListDatabasesResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
-      {std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -68,7 +69,11 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "databases")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("create_statement", request.create_statement()),
+                 std::make_pair("database_dialect",
+                                std::to_string(request.database_dialect()))})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -83,7 +88,7 @@ DefaultDatabaseAdminRestStub::GetDatabase(
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   return rest_internal::Get<google::spanner::admin::database::v1::Database>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.name()), {});
+      absl::StrCat("/", "v1", "/", request.name()));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,7 +124,9 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request,
-            absl::StrCat("/", "v1", "/", request.database(), "/", "ddl")));
+            absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("operation_id", request.operation_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -144,7 +151,7 @@ DefaultDatabaseAdminRestStub::GetDatabaseDdl(
   return rest_internal::Get<
       google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"), {});
+      absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::SetIamPolicy(
@@ -183,7 +190,9 @@ DefaultDatabaseAdminRestStub::AsyncCreateBackup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request.backup(),
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "backups")));
+            absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("backup_id", request.backup_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -204,7 +213,10 @@ DefaultDatabaseAdminRestStub::AsyncCopyBackup(
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
             absl::StrCat("/", "v1", "/", request.parent(), "/", "backups",
-                         ":copy")));
+                         ":copy"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("backup_id", request.backup_id()),
+                 std::make_pair("source_backup", request.source_backup())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -219,7 +231,7 @@ DefaultDatabaseAdminRestStub::GetBackup(
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
   return rest_internal::Get<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.name()), {});
+      absl::StrCat("/", "v1", "/", request.name()));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -246,9 +258,10 @@ DefaultDatabaseAdminRestStub::ListBackups(
       google::spanner::admin::database::v1::ListBackupsResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -264,7 +277,10 @@ DefaultDatabaseAdminRestStub::AsyncRestoreDatabase(
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request,
             absl::StrCat("/", "v1", "/", request.parent(), "/", "databases",
-                         ":restore")));
+                         ":restore"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("database_id", request.database_id()),
+                 std::make_pair("backup", request.backup())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -282,9 +298,10 @@ DefaultDatabaseAdminRestStub::ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseOperations"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
@@ -296,9 +313,10 @@ DefaultDatabaseAdminRestStub::ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "backupOperations"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
@@ -310,8 +328,9 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
       google::spanner::admin::database::v1::ListDatabaseRolesResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseRoles"),
-      {std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 future<StatusOr<google::longrunning::Operation>>

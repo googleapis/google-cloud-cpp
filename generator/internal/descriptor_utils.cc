@@ -916,7 +916,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["request_resource"] =
         FormatRequestResource(*method.input_type(), parsed_http_info);
     SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
-    SetHttpGetQueryParameters(parsed_http_info, method, method_vars);
+    SetHttpQueryParameters(parsed_http_info, method, method_vars);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
