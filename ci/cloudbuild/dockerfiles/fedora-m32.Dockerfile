@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:37
+FROM fedora:38
 ARG NCPU=4
 
 # Install the minimal development tools:
@@ -20,7 +20,7 @@ RUN dnf makecache && \
     dnf install -y cmake curl diffutils findutils gcc-c++ git make \
         ninja-build patch tar unzip wget which zip
 
-# Fedora 37 includes packages, with recent enough versions, for most of the
+# Fedora 38 includes packages, with recent enough versions, for most of the
 # direct dependencies of `google-cloud-cpp`. We will install those directly.
 
 # First install the "host" (64-bit) version of the protobuf compiler and gRPC
@@ -73,11 +73,6 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig
-
-# The version of RE2 included with this distro hard-codes C++11 in its
-# pkg-config file. This is fixed in later versions, and it is unnecessary as
-# Fedora's compiler defaults to C++17.
-RUN sed -i 's/-std=c\+\+11 //' /usr/lib/pkgconfig/re2.pc
 
 # The following steps will install libraries and tools in `/usr/local`. By
 # default, pkg-config does not search in these directories. Note how this build
