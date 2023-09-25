@@ -46,8 +46,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.name(), ":generateAccessToken"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("not_used_anymore", request.not_used_anymore())}));
+      absl::StrCat("/", "v1", "/", request.name(), ":generateAccessToken"));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
