@@ -242,7 +242,7 @@ ReservationsClient::TestIamPermissions(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsClient::UpdateReservation(
     std::string const& project, std::string const& zone,
-    std::string const& reservation,
+    std::string const& reservation, std::string const& update_mask,
     google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -251,6 +251,7 @@ ReservationsClient::UpdateReservation(
   request.set_project(project);
   request.set_zone(zone);
   request.set_reservation(reservation);
+  request.set_update_mask(update_mask);
   *request.mutable_reservation_resource() = reservation_resource;
   return connection_->UpdateReservation(request);
 }

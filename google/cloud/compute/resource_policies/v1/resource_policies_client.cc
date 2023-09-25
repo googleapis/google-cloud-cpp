@@ -169,7 +169,7 @@ ResourcePoliciesClient::ListResourcePolicies(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesClient::PatchResourcePolicy(
     std::string const& project, std::string const& region,
-    std::string const& resource_policy,
+    std::string const& resource_policy, std::string const& update_mask,
     google::cloud::cpp::compute::v1::ResourcePolicy const&
         resource_policy_resource,
     Options opts) {
@@ -179,6 +179,7 @@ ResourcePoliciesClient::PatchResourcePolicy(
   request.set_project(project);
   request.set_region(region);
   request.set_resource_policy(resource_policy);
+  request.set_update_mask(update_mask);
   *request.mutable_resource_policy_resource() = resource_policy_resource;
   return connection_->PatchResourcePolicy(request);
 }

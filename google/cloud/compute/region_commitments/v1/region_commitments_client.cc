@@ -122,7 +122,7 @@ RegionCommitmentsClient::ListRegionCommitments(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsClient::UpdateCommitment(
     std::string const& project, std::string const& region,
-    std::string const& commitment,
+    std::string const& commitment, std::string const& update_mask,
     google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -131,6 +131,7 @@ RegionCommitmentsClient::UpdateCommitment(
   request.set_project(project);
   request.set_region(region);
   request.set_commitment(commitment);
+  request.set_update_mask(update_mask);
   *request.mutable_commitment_resource() = commitment_resource;
   return connection_->UpdateCommitment(request);
 }

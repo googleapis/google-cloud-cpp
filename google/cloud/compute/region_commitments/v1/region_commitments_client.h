@@ -396,6 +396,7 @@ class RegionCommitmentsClient {
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
   /// @param commitment  Name of the commitment for which auto renew is being updated.
+  /// @param update_mask  update_mask indicates fields to be updated as part of this request.
   /// @param commitment_resource  The Commitment for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -422,7 +423,7 @@ class RegionCommitmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
       std::string const& project, std::string const& region,
-      std::string const& commitment,
+      std::string const& commitment, std::string const& update_mask,
       google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
       Options opts = {});
 

@@ -96,7 +96,7 @@ service NetworkEdgeSecurityServices {
       body: "network_edge_security_service_resource"
     };
     option (google.api.method_signature) =
-        "project,region,network_edge_security_service,network_edge_security_service_resource";
+        "project,region,network_edge_security_service,update_mask,network_edge_security_service_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
