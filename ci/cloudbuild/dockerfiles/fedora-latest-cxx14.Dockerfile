@@ -57,14 +57,17 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
     ldconfig
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
-# Install Abseil, remove the downloaded files and the temporary artifacts
-# after a successful build to keep the image smaller (and with fewer layers).
+# Download and install direct dependencies of `google-cloud-cpp`. Including
+# development dependencies.  In each case, remove the downloaded files and the
+# temporary artifacts after a successful build to keep the image smaller (and
+# with fewer layers)
+
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=14 \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
@@ -72,17 +75,12 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | 
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# Download and install direct dependencies of `google-cloud-cpp`. Including
-# development dependencies.  In each case, remove the downloaded files and the
-# temporary artifacts after a successful build to keep the image smaller (and
-# with fewer layers)
-
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/googletest/archive/v1.14.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=14 \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
     cmake --build cmake-out && cmake --install cmake-out && \
@@ -94,7 +92,7 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
-        -DCMAKE_BUILD_TYPE="Release" \
+        -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
         -S . -B cmake-out && \
