@@ -165,6 +165,80 @@ AnalyticsHubServiceMetadata::SubscribeListing(
   return child_->SubscribeListing(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceMetadata::AsyncSubscribeDataExchange(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncSubscribeDataExchange(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceMetadata::AsyncRefreshSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRefreshSubscription(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceMetadata::GetSubscription(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSubscription(context, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
+AnalyticsHubServiceMetadata::ListSubscriptions(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListSubscriptions(context, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::
+             ListSharedResourceSubscriptionsResponse>
+AnalyticsHubServiceMetadata::ListSharedResourceSubscriptions(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest const& request) {
+  SetMetadata(context, absl::StrCat("resource=",
+                                    internal::UrlEncode(request.resource())));
+  return child_->ListSharedResourceSubscriptions(context, request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceMetadata::RevokeSubscription(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RevokeSubscription(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceMetadata::AsyncDeleteSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSubscription(cq, std::move(context), request);
+}
+
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -188,6 +262,25 @@ AnalyticsHubServiceMetadata::TestIamPermissions(
   SetMetadata(context, absl::StrCat("resource=",
                                     internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetOperation(cq, std::move(context), request);
+}
+
+future<Status> AnalyticsHubServiceMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void AnalyticsHubServiceMetadata::SetMetadata(

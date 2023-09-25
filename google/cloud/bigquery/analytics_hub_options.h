@@ -29,6 +29,11 @@ namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServicePollingPolicyOption;
+
+/// @deprecated Use
 /// bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption directly.
 using ::google::cloud::bigquery_analyticshub_v1::
     AnalyticsHubServiceBackoffPolicyOption;

@@ -22,12 +22,15 @@
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/analyticshub/v1/analyticshub.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -240,6 +243,41 @@ class AnalyticsHubServiceConnection {
   SubscribeListing(
       google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
           request);
+
+  virtual future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::
+                            SubscribeDataExchangeRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  RefreshSubscription(google::cloud::bigquery::analyticshub::v1::
+                          RefreshSubscriptionRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+  GetSubscription(
+      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+  ListSubscriptions(
+      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
+          request);
+
+  virtual StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+  ListSharedResourceSubscriptions(
+      google::cloud::bigquery::analyticshub::v1::
+          ListSharedResourceSubscriptionsRequest request);
+
+  virtual StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+  RevokeSubscription(google::cloud::bigquery::analyticshub::v1::
+                         RevokeSubscriptionRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+  DeleteSubscription(google::cloud::bigquery::analyticshub::v1::
+                         DeleteSubscriptionRequest const& request);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);

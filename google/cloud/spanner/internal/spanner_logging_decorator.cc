@@ -192,6 +192,29 @@ StatusOr<google::spanner::v1::PartitionResponse> SpannerLogging::PartitionRead(
       context, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::BatchWriteResponse>>
+SpannerLogging::BatchWrite(
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::v1::BatchWriteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::shared_ptr<grpc::ClientContext> context,
+             google::spanner::v1::BatchWriteRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::spanner::v1::BatchWriteResponse>> {
+        auto stream = child_->BatchWrite(std::move(context), request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::spanner::v1::BatchWriteResponse>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerLogging::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

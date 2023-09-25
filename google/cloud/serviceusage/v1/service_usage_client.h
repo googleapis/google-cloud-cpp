@@ -120,8 +120,8 @@ class ServiceUsageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.serviceusage.v1.EnableServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L124}
-  /// [google.api.serviceusage.v1.EnableServiceResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L142}
+  /// [google.api.serviceusage.v1.EnableServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L128}
+  /// [google.api.serviceusage.v1.EnableServiceResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L146}
   ///
   // clang-format on
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
@@ -165,8 +165,8 @@ class ServiceUsageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.serviceusage.v1.DisableServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L148}
-  /// [google.api.serviceusage.v1.DisableServiceResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L187}
+  /// [google.api.serviceusage.v1.DisableServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L152}
+  /// [google.api.serviceusage.v1.DisableServiceResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L191}
   ///
   // clang-format on
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
@@ -197,8 +197,8 @@ class ServiceUsageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.serviceusage.v1.GetServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L193}
-  /// [google.api.serviceusage.v1.Service]: @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
+  /// [google.api.serviceusage.v1.GetServiceRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L197}
+  /// [google.api.serviceusage.v1.Service]: @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L38}
   ///
   // clang-format on
   StatusOr<google::api::serviceusage::v1::Service> GetService(
@@ -249,8 +249,8 @@ class ServiceUsageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.serviceusage.v1.ListServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L203}
-  /// [google.api.serviceusage.v1.Service]: @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
+  /// [google.api.serviceusage.v1.ListServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L207}
+  /// [google.api.serviceusage.v1.Service]: @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L38}
   ///
   // clang-format on
   StreamRange<google::api::serviceusage::v1::Service> ListServices(
@@ -289,8 +289,8 @@ class ServiceUsageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.serviceusage.v1.BatchEnableServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L235}
-  /// [google.api.serviceusage.v1.BatchEnableServicesResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L261}
+  /// [google.api.serviceusage.v1.BatchEnableServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L239}
+  /// [google.api.serviceusage.v1.BatchEnableServicesResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L265}
   ///
   // clang-format on
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
@@ -322,8 +322,8 @@ class ServiceUsageClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.serviceusage.v1.BatchGetServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L280}
-  /// [google.api.serviceusage.v1.BatchGetServicesResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L298}
+  /// [google.api.serviceusage.v1.BatchGetServicesRequest]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L284}
+  /// [google.api.serviceusage.v1.BatchGetServicesResponse]: @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L302}
   ///
   // clang-format on
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

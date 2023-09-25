@@ -68,6 +68,42 @@ AdvisoryNotificationsServiceClient::GetNotification(
   return connection_->GetNotification(request);
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceClient::GetSettings(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::advisorynotifications::v1::GetSettingsRequest request;
+  request.set_name(name);
+  return connection_->GetSettings(request);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceClient::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSettings(request);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceClient::UpdateSettings(
+    google::cloud::advisorynotifications::v1::Settings const& settings,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::advisorynotifications::v1::UpdateSettingsRequest request;
+  *request.mutable_settings() = settings;
+  return connection_->UpdateSettings(request);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceClient::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSettings(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1
 }  // namespace cloud

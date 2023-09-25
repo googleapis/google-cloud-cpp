@@ -62,6 +62,27 @@ AdvisoryNotificationsServiceMetadata::GetNotification(
   return child_->GetNotification(context, request);
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceMetadata::GetSettings(
+    grpc::ClientContext& context,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSettings(context, request);
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceMetadata::UpdateSettings(
+    grpc::ClientContext& context,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  SetMetadata(context,
+              absl::StrCat("settings.name=",
+                           internal::UrlEncode(request.settings().name())));
+  return child_->UpdateSettings(context, request);
+}
+
 void AdvisoryNotificationsServiceMetadata::SetMetadata(
     grpc::ClientContext& context, std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

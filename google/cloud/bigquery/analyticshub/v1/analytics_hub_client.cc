@@ -252,6 +252,137 @@ AnalyticsHubServiceClient::SubscribeListing(
   return connection_->SubscribeListing(request);
 }
 
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceClient::SubscribeDataExchange(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest
+      request;
+  request.set_name(name);
+  return connection_->SubscribeDataExchange(request);
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceClient::SubscribeDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubscribeDataExchange(request);
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceClient::RefreshSubscription(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest request;
+  request.set_name(name);
+  return connection_->RefreshSubscription(request);
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceClient::RefreshSubscription(
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RefreshSubscription(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceClient::GetSubscription(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest request;
+  request.set_name(name);
+  return connection_->GetSubscription(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceClient::GetSubscription(
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSubscription(request);
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceClient::ListSubscriptions(std::string const& parent,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListSubscriptions(request);
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceClient::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSubscriptions(std::move(request));
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceClient::ListSharedResourceSubscriptions(
+    std::string const& resource, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::
+      ListSharedResourceSubscriptionsRequest request;
+  request.set_resource(resource);
+  return connection_->ListSharedResourceSubscriptions(request);
+}
+
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceClient::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSharedResourceSubscriptions(std::move(request));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceClient::RevokeSubscription(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest request;
+  request.set_name(name);
+  return connection_->RevokeSubscription(request);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceClient::RevokeSubscription(
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RevokeSubscription(request);
+}
+
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+AnalyticsHubServiceClient::DeleteSubscription(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest request;
+  request.set_name(name);
+  return connection_->DeleteSubscription(request);
+}
+
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+AnalyticsHubServiceClient::DeleteSubscription(
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSubscription(request);
+}
+
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceClient::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

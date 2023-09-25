@@ -89,6 +89,11 @@ class SpannerStub {
       grpc::ClientContext& context,
       google::spanner::v1::PartitionReadRequest const& request) = 0;
 
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::BatchWriteResponse>>
+  BatchWrite(std::shared_ptr<grpc::ClientContext> context,
+             google::spanner::v1::BatchWriteRequest const& request) = 0;
+
   virtual future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
@@ -162,6 +167,11 @@ class DefaultSpannerStub : public SpannerStub {
   StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
       grpc::ClientContext& client_context,
       google::spanner::v1::PartitionReadRequest const& request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::BatchWriteResponse>>
+  BatchWrite(std::shared_ptr<grpc::ClientContext> client_context,
+             google::spanner::v1::BatchWriteRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(

@@ -75,6 +75,22 @@ ExecutionsClient::DeleteExecution(
   return connection_->DeleteExecution(request);
 }
 
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsClient::CancelExecution(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::run::v2::CancelExecutionRequest request;
+  request.set_name(name);
+  return connection_->CancelExecution(request);
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsClient::CancelExecution(
+    google::cloud::run::v2::CancelExecutionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelExecution(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2
 }  // namespace cloud

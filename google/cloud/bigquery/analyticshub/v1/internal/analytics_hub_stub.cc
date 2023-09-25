@@ -20,6 +20,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -192,6 +193,122 @@ DefaultAnalyticsHubServiceStub::SubscribeListing(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultAnalyticsHubServiceStub::AsyncSubscribeDataExchange(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::bigquery::analyticshub::v1::
+                 SubscribeDataExchangeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSubscribeDataExchange(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAnalyticsHubServiceStub::AsyncRefreshSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::bigquery::analyticshub::v1::
+                 RefreshSubscriptionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRefreshSubscription(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+DefaultAnalyticsHubServiceStub::GetSubscription(
+    grpc::ClientContext& client_context,
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::Subscription response;
+  auto status =
+      grpc_stub_->GetSubscription(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
+DefaultAnalyticsHubServiceStub::ListSubscriptions(
+    grpc::ClientContext& client_context,
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse response;
+  auto status =
+      grpc_stub_->ListSubscriptions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::
+             ListSharedResourceSubscriptionsResponse>
+DefaultAnalyticsHubServiceStub::ListSharedResourceSubscriptions(
+    grpc::ClientContext& client_context,
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest const& request) {
+  google::cloud::bigquery::analyticshub::v1::
+      ListSharedResourceSubscriptionsResponse response;
+  auto status = grpc_stub_->ListSharedResourceSubscriptions(&client_context,
+                                                            request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+DefaultAnalyticsHubServiceStub::RevokeSubscription(
+    grpc::ClientContext& client_context,
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request) {
+  google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse
+      response;
+  auto status =
+      grpc_stub_->RevokeSubscription(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAnalyticsHubServiceStub::AsyncDeleteSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::bigquery::analyticshub::v1::
+                 DeleteSubscriptionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteSubscription(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::iam::v1::Policy> DefaultAnalyticsHubServiceStub::GetIamPolicy(
     grpc::ClientContext& client_context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -225,6 +342,40 @@ DefaultAnalyticsHubServiceStub::TestIamPermissions(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultAnalyticsHubServiceStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncGetOperation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status> DefaultAnalyticsHubServiceStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -70,6 +70,16 @@ ExecutionsMetadata::AsyncDeleteExecution(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ExecutionsMetadata::AsyncCancelExecution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  SetMetadata(*context,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelExecution(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ExecutionsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

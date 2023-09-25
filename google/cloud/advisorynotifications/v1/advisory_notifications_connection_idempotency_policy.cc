@@ -48,6 +48,18 @@ AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetNotification(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+AdvisoryNotificationsServiceConnectionIdempotencyPolicy::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
 MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

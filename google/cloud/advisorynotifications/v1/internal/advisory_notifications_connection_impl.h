@@ -61,6 +61,14 @@ class AdvisoryNotificationsServiceConnectionImpl
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request) override;
 
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<

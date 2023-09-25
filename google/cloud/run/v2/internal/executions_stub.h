@@ -50,6 +50,11 @@ class ExecutionsStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::run::v2::DeleteExecutionRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCancelExecution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::run::v2::CancelExecutionRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -82,6 +87,11 @@ class DefaultExecutionsStub : public ExecutionsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCancelExecution(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

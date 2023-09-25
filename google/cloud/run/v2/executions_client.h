@@ -90,8 +90,8 @@ class ExecutionsClient {
   ///
   /// @param name  Required. The full name of the Execution.
   ///  Format:
-  ///  projects/{project}/locations/{location}/jobs/{job}/executions/{execution},
-  ///  where {project} can be project id or number.
+  ///  `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`,
+  ///  where `{project}` can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -105,8 +105,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
-  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L71}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L85}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
@@ -135,8 +135,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
-  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L71}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L85}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
@@ -149,8 +149,8 @@ class ExecutionsClient {
   ///
   /// @param parent  Required. The Execution from which the Executions should be listed.
   ///  To list all Executions across Jobs, use "-" instead of Job name.
-  ///  Format: projects/{project}/locations/{location}/jobs/{job}, where {project}
-  ///  can be project id or number.
+  ///  Format: `projects/{project}/locations/{location}/jobs/{job}`, where
+  ///  `{project}` can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -173,8 +173,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
-  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L83}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L97}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Execution> ListExecutions(
@@ -212,8 +212,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
-  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L83}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L97}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Execution> ListExecutions(
@@ -225,8 +225,8 @@ class ExecutionsClient {
   ///
   /// @param name  Required. The name of the Execution to delete.
   ///  Format:
-  ///  projects/{project}/locations/{location}/jobs/{job}/executions/{execution},
-  ///  where {project} can be project id or number.
+  ///  `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`,
+  ///  where `{project}` can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -247,8 +247,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L117}
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
+  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L131}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
@@ -284,12 +284,85 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L117}
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L139}
+  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L131}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       google::cloud::run::v2::DeleteExecutionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels an Execution.
+  ///
+  /// @param name  Required. The name of the Execution to cancel.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`,
+  ///  where `{project}` can be project id or number.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Execution] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L151}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels an Execution.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.run.v2.CancelExecutionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.run.v2.Execution] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L151}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::cloud::run::v2::CancelExecutionRequest const& request,
       Options opts = {});
 
  private:

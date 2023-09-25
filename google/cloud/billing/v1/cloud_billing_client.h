@@ -310,7 +310,7 @@ class CloudBillingClient {
   /// typically given to billing account
   /// [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
   /// This method will return an error if the parent account has not been
-  /// provisioned as a reseller account.
+  /// provisioned for subaccounts.
   ///
   /// @param billing_account  Required. The billing account resource to create.
   ///  Currently CreateBillingAccount only supports subaccount creation, so
@@ -353,7 +353,7 @@ class CloudBillingClient {
   /// typically given to billing account
   /// [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
   /// This method will return an error if the parent account has not been
-  /// provisioned as a reseller account.
+  /// provisioned for subaccounts.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all

@@ -60,6 +60,28 @@ AdvisoryNotificationsServiceTracingConnection::GetNotification(
   return internal::EndSpan(*span, child_->GetNotification(request));
 }
 
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceTracingConnection::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
+      "GetSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSettings(request));
+}
+
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceTracingConnection::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
+      "UpdateSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSettings(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<

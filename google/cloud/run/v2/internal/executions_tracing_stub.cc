@@ -69,6 +69,21 @@ ExecutionsTracingStub::AsyncDeleteExecution(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ExecutionsTracingStub::AsyncCancelExecution(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
+                                     "CancelExecution");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, *propagator_);
+  }
+  auto f = child_->AsyncCancelExecution(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ExecutionsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

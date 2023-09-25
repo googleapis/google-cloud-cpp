@@ -725,7 +725,8 @@ class ArtifactRegistryClient {
   ///
   /// Lists repositories.
   ///
-  /// @param parent  Required. The name of the parent resource whose repositories will be listed.
+  /// @param parent  Required. The name of the parent resource whose repositories will be
+  ///  listed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -814,7 +815,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L154}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L155}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
   // clang-format on
@@ -844,7 +845,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L154}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L155}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
   // clang-format on
@@ -858,7 +859,8 @@ class ArtifactRegistryClient {
   /// Creates a repository. The returned Operation will finish once the
   /// repository has been created. Its response will be the created Repository.
   ///
-  /// @param parent  Required. The name of the parent resource where the repository will be created.
+  /// @param parent  Required. The name of the parent resource where the repository will be
+  ///  created.
   /// @param repository  The repository to be created.
   /// @param repository_id  The repository id to use for this repository.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -881,7 +883,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L165}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L166}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
   // clang-format on
@@ -922,7 +924,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L165}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L166}
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
   // clang-format on
@@ -954,7 +956,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L182}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L184}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -985,7 +987,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L182}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L184}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1020,7 +1022,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L193}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L195}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L400}
   ///
   // clang-format on
@@ -1059,7 +1061,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L193}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L195}
   /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L400}
   ///
   // clang-format on

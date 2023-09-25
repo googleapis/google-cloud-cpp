@@ -195,6 +195,113 @@ AnalyticsHubServiceLogging::SubscribeListing(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceLogging::AsyncSubscribeDataExchange(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::bigquery::analyticshub::v1::
+                 SubscribeDataExchangeRequest const& request) {
+        return child_->AsyncSubscribeDataExchange(cq, std::move(context),
+                                                  request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceLogging::AsyncRefreshSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::bigquery::analyticshub::v1::
+                 RefreshSubscriptionRequest const& request) {
+        return child_->AsyncRefreshSubscription(cq, std::move(context),
+                                                request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceLogging::GetSubscription(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::analyticshub::v1::
+                 GetSubscriptionRequest const& request) {
+        return child_->GetSubscription(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
+AnalyticsHubServiceLogging::ListSubscriptions(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::analyticshub::v1::
+                 ListSubscriptionsRequest const& request) {
+        return child_->ListSubscriptions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::
+             ListSharedResourceSubscriptionsResponse>
+AnalyticsHubServiceLogging::ListSharedResourceSubscriptions(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::analyticshub::v1::
+                 ListSharedResourceSubscriptionsRequest const& request) {
+        return child_->ListSharedResourceSubscriptions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+AnalyticsHubServiceLogging::RevokeSubscription(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::analyticshub::v1::
+                 RevokeSubscriptionRequest const& request) {
+        return child_->RevokeSubscription(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceLogging::AsyncDeleteSubscription(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::bigquery::analyticshub::v1::
+                 DeleteSubscriptionRequest const& request) {
+        return child_->AsyncDeleteSubscription(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceLogging::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -227,6 +334,33 @@ AnalyticsHubServiceLogging::TestIamPermissions(
         return child_->TestIamPermissions(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+AnalyticsHubServiceLogging::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<Status> AnalyticsHubServiceLogging::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

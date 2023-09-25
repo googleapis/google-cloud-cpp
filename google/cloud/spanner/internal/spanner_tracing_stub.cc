@@ -169,6 +169,20 @@ SpannerTracingStub::PartitionRead(
                            child_->PartitionRead(context, request));
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::BatchWriteResponse>>
+SpannerTracingStub::BatchWrite(
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::v1::BatchWriteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner", "BatchWrite");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->BatchWrite(context, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::spanner::v1::BatchWriteResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerTracingStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,

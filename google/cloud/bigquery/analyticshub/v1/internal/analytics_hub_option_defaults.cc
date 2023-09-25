@@ -55,6 +55,23 @@ Options AnalyticsHubServiceDefaultOptions(Options options) {
                 std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
                 .clone());
   }
+  if (!options.has<
+          bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>()) {
+    options.set<
+        bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>(
+        GenericPollingPolicy<bigquery_analyticshub_v1::
+                                 AnalyticsHubServiceRetryPolicyOption::Type,
+                             bigquery_analyticshub_v1::
+                                 AnalyticsHubServiceBackoffPolicyOption::Type>(
+            options
+                .get<bigquery_analyticshub_v1::
+                         AnalyticsHubServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options
            .has<bigquery_analyticshub_v1::
                     AnalyticsHubServiceConnectionIdempotencyPolicyOption>()) {

@@ -139,6 +139,37 @@ ExecutionsConnectionImpl::DeleteExecution(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsConnectionImpl::CancelExecution(
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::run::v2::Execution>(
+      background_->cq(), request,
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::run::v2::CancelExecutionRequest const& request) {
+        return stub->AsyncCancelExecution(cq, std::move(context), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Execution>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelExecution(request),
+      polling_policy(*current), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal
 }  // namespace cloud

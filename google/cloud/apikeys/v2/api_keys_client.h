@@ -124,7 +124,7 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.CreateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L154}
+  /// [google.api.apikeys.v2.CreateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L155}
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
@@ -165,7 +165,7 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.CreateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L154}
+  /// [google.api.apikeys.v2.CreateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L155}
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
@@ -205,7 +205,7 @@ class ApiKeysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
+  /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L182}
   ///
   // clang-format on
   StreamRange<google::api::apikeys::v2::Key> ListKeys(std::string const& parent,
@@ -248,7 +248,7 @@ class ApiKeysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
+  /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L182}
   ///
   // clang-format on
   StreamRange<google::api::apikeys::v2::Key> ListKeys(
@@ -276,7 +276,7 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.GetKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L211}
+  /// [google.api.apikeys.v2.GetKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L212}
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
@@ -310,7 +310,7 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.GetKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L211}
+  /// [google.api.apikeys.v2.GetKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L212}
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
@@ -339,8 +339,8 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.GetKeyStringRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L220}
-  /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L229}
+  /// [google.api.apikeys.v2.GetKeyStringRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L221}
+  /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L230}
   ///
   // clang-format on
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
@@ -372,8 +372,8 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.GetKeyStringRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L220}
-  /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L229}
+  /// [google.api.apikeys.v2.GetKeyStringRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L221}
+  /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L230}
   ///
   // clang-format on
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
@@ -419,7 +419,7 @@ class ApiKeysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
+  /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
@@ -461,7 +461,7 @@ class ApiKeysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
+  /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
@@ -497,7 +497,7 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.DeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L252}
+  /// [google.api.apikeys.v2.DeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L253}
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
@@ -538,7 +538,7 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.DeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L252}
+  /// [google.api.apikeys.v2.DeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L253}
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
@@ -580,7 +580,7 @@ class ApiKeysClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
-  /// [google.api.apikeys.v2.UndeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L265}
+  /// [google.api.apikeys.v2.UndeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L266}
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
@@ -614,8 +614,8 @@ class ApiKeysClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.apikeys.v2.LookupKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L274}
-  /// [google.api.apikeys.v2.LookupKeyResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L280}
+  /// [google.api.apikeys.v2.LookupKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L275}
+  /// [google.api.apikeys.v2.LookupKeyResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L281}
   ///
   // clang-format on
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(

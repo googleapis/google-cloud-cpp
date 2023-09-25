@@ -49,6 +49,11 @@ Idempotency ExecutionsConnectionIdempotencyPolicy::DeleteExecution(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ExecutionsConnectionIdempotencyPolicy::CancelExecution(
+    google::cloud::run::v2::CancelExecutionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
 MakeDefaultExecutionsConnectionIdempotencyPolicy() {
   return std::make_unique<ExecutionsConnectionIdempotencyPolicy>();

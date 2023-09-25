@@ -57,6 +57,14 @@ ExecutionsConnection::DeleteExecution(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsConnection::CancelExecution(
+    google::cloud::run::v2::CancelExecutionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::run::v2::Execution>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
