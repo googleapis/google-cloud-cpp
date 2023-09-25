@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "gtest/gtest.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <sstream>
@@ -261,6 +262,17 @@ TEST(Message, SetAttributeFriend) {
 
   EXPECT_THAT(m0.attributes(),
               UnorderedElementsAre(Pair("k1", "v1"), Pair("k2", "v3")));
+}
+
+TEST(Message, GetAttributeFriend) {
+  auto m0 = MessageBuilder{}.SetAttributes({{"k0", "v0"}}).Build();
+
+  auto v0 = pubsub_internal::GetAttributeValue("k0", m0);
+  auto v1 = pubsub_internal::GetAttributeValue("k1", m0);
+
+  ASSERT_NE(v0, nullptr);
+  EXPECT_EQ(std::string(v0), "v0");
+  EXPECT_EQ(v1, nullptr);
 }
 
 }  // namespace
