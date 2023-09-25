@@ -169,7 +169,6 @@ void SetHttpQueryParameters(
                     VarsDictionary& method_vars)
         : method(method), method_vars(method_vars) {}
     void FormatQueryParameterCode(
-        std::string const& http_verb,
         std::vector<std::string> const& param_field_names) {
       std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
           remaining_request_fields;
@@ -180,8 +179,10 @@ void SetHttpQueryParameters(
         if (!field->is_repeated() &&
             field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
           if (!internal::Contains(param_field_names, field->name())) {
-            remaining_request_fields.emplace_back(field->name(),
-                                                  field->cpp_type());
+            if (!field->options().deprecated()) {
+              remaining_request_fields.emplace_back(field->name(),
+                                                    field->cpp_type());
+            }
           }
         }
       }
@@ -221,7 +222,7 @@ void SetHttpQueryParameters(
     // the request and are already present in the url. No need to duplicate
     // these fields as query parameters.
     void operator()(HttpExtensionInfo const& info) {
-      FormatQueryParameterCode(info.http_verb, [&] {
+      FormatQueryParameterCode([&] {
         std::vector<std::string> param_field_names;
         param_field_names.reserve(info.field_substitutions.size());
         for (auto const& p : info.field_substitutions) {
@@ -235,9 +236,7 @@ void SetHttpQueryParameters(
     // url:
     //   get: "/v1/foo/bar"
     // In this case, all non-repeated, simple fields should be query parameters.
-    void operator()(HttpSimpleInfo const& info) {
-      FormatQueryParameterCode(info.http_verb, {});
-    }
+    void operator()(HttpSimpleInfo const&) { FormatQueryParameterCode({}); }
 
     // This visitor is an error diagnostic, in case we encounter an url that the
     // generator does not currently parse. Emitting the method name causes code

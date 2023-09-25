@@ -1030,8 +1030,7 @@ INSTANTIATE_TEST_SUITE_P(
             "google.protobuf.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
-                             "method_http_query_parameters", R"""(,
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("not_used_anymore", request.not_used_anymore())}))"""),
+                             "method_http_query_parameters", ""),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
