@@ -188,7 +188,7 @@ void to_json(nlohmann::json& j, Table const& t) {
       {"labels", t.labels},
       {"tableReference", t.table_reference},
       {"schema", t.schema},
-      {"defaultRoundingMode", t.default_rounding_mode},
+      {"defaultRoundingMode", t.default_rounding_mode.value},
       {"timePartitioning", t.time_partitioning},
       {"rangePartitioning", t.range_partitioning},
       {"clustering", t.clustering},
@@ -233,7 +233,7 @@ void from_json(nlohmann::json const& j, Table& t) {
   SafeGetTo(t.labels, j, "labels");
   SafeGetTo(t.table_reference, j, "tableReference");
   SafeGetTo(t.schema, j, "schema");
-  SafeGetTo(t.default_rounding_mode, j, "defaultRoundingMode");
+  SafeGetTo(t.default_rounding_mode.value, j, "defaultRoundingMode");
   SafeGetTo(t.time_partitioning, j, "timePartitioning");
   SafeGetTo(t.range_partitioning, j, "rangePartitioning");
   SafeGetTo(t.clustering, j, "clustering");

@@ -72,7 +72,7 @@ void from_json(nlohmann::json const& j, LinkedDatasetSource& d);
 
 struct DatasetAccessEntry {
   DatasetReference dataset;
-  std::vector<TargetType> target_types;
+  std::vector<std::string> target_types;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

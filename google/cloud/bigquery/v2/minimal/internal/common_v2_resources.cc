@@ -94,7 +94,7 @@ void from_json(nlohmann::json const& j, StandardSqlStructType& t) {
 
 void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
   if (t.sub_type.valueless_by_exception()) {
-    j = nlohmann::json{{"typeKind", t.type_kind}};
+    j = nlohmann::json{{"typeKind", t.type_kind.value}};
     return;
   }
 
@@ -103,15 +103,15 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
     nlohmann::json& j;
 
     void operator()(absl::monostate const&) {
-      j = nlohmann::json{{"typeKind", std::move(type_kind)}};
+      j = nlohmann::json{{"typeKind", std::move(type_kind.value)}};
     }
     void operator()(std::shared_ptr<StandardSqlDataType> const& type) {
-      j = nlohmann::json{{"typeKind", std::move(type_kind)},
+      j = nlohmann::json{{"typeKind", std::move(type_kind.value)},
                          {"arrayElementType", *type},
                          {"sub_type_index", 1}};
     }
     void operator()(StandardSqlStructType const& type) {
-      j = nlohmann::json{{"typeKind", std::move(type_kind)},
+      j = nlohmann::json{{"typeKind", std::move(type_kind.value)},
                          {"structType", type},
                          {"sub_type_index", 2}};
     }
@@ -121,7 +121,7 @@ void to_json(nlohmann::json& j, StandardSqlDataType const& t) {
 }
 
 void from_json(nlohmann::json const& j, StandardSqlDataType& t) {
-  SafeGetTo(t.type_kind, j, "typeKind");
+  SafeGetTo(t.type_kind.value, j, "typeKind");
   int index;
   auto index_exists = SafeGetTo(index, j, "sub_type_index");
   if (index_exists) {
@@ -591,13 +591,13 @@ void from_json(nlohmann::json const& j, EncryptionConfiguration& ec) {
 
 void to_json(nlohmann::json& j, ScriptOptions const& s) {
   j = nlohmann::json{{"statementByteBudget", s.statement_byte_budget},
-                     {"keyResultStatement", s.key_result_statement}};
+                     {"keyResultStatement", s.key_result_statement.value}};
 
   ToJson(s.statement_timeout, j, "statementTimeoutMs");
 }
 void from_json(nlohmann::json const& j, ScriptOptions& s) {
   SafeGetTo(s.statement_byte_budget, j, "statementByteBudget");
-  SafeGetTo(s.key_result_statement, j, "keyResultStatement");
+  SafeGetTo(s.key_result_statement.value, j, "keyResultStatement");
 
   FromJson(s.statement_timeout, j, "statementTimeoutMs");
 }

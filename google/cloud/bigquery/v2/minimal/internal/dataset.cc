@@ -59,8 +59,8 @@ void to_json(nlohmann::json& j, Dataset const& d) {
                      {"tags", d.tags},
                      {"datasetReference", d.dataset_reference},
                      {"linkedDatasetSource", d.linked_dataset_source},
-                     {"defaultRoundingMode", d.default_rounding_mode},
-                     {"storageBillingModel", d.storage_billing_model}};
+                     {"defaultRoundingMode", d.default_rounding_mode.value},
+                     {"storageBillingModel", d.storage_billing_model.value}};
 
   ToJson(d.default_table_expiration, j, "defaultTableExpirationMs");
   ToJson(d.default_partition_expiration, j, "defaultPartitionExpirationMs");
@@ -86,8 +86,8 @@ void from_json(nlohmann::json const& j, Dataset& d) {
   SafeGetTo(d.tags, j, "tags");
   SafeGetTo(d.dataset_reference, j, "datasetReference");
   SafeGetTo(d.linked_dataset_source, j, "linkedDatasetSource");
-  SafeGetTo(d.default_rounding_mode, j, "defaultRoundingMode");
-  SafeGetTo(d.storage_billing_model, j, "storageBillingModel");
+  SafeGetTo(d.default_rounding_mode.value, j, "defaultRoundingMode");
+  SafeGetTo(d.storage_billing_model.value, j, "storageBillingModel");
 
   FromJson(d.default_table_expiration, j, "defaultTableExpirationMs");
   FromJson(d.default_partition_expiration, j, "defaultPartitionExpirationMs");

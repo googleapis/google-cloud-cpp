@@ -83,7 +83,7 @@ ExplainQueryStage MakeExplainQueryStage() {
   e.records_written = kDefaultTestInt;
   e.parallel_inputs = kDefaultTestInt;
   e.completed_parallel_inputs = kDefaultTestInt;
-  e.input_stages = {kDefaultTestInt};
+  e.input_stages = {"1234"};
 
   e.start_time = kDefaultTestTime;
   e.end_time = kDefaultTestTime;
