@@ -61,7 +61,9 @@ DefaultBackendBucketsRestStub::AsyncAddSignedUrlKey(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket(),
-                             "/", "addSignedUrlKey")));
+                             "/", "addSignedUrlKey"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -86,7 +88,9 @@ DefaultBackendBucketsRestStub::AsyncDeleteBackendBucket(
                 *service, *rest_context, request,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "backendBuckets", "/", request.backend_bucket())));
+                             "backendBuckets", "/", request.backend_bucket()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -112,7 +116,10 @@ DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket(),
-                             "/", "deleteSignedUrlKey")));
+                             "/", "deleteSignedUrlKey"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("key_name", request.key_name()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -130,8 +137,7 @@ DefaultBackendBucketsRestStub::GetBackendBucket(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "backendBuckets", "/",
-                   request.backend_bucket()),
-      {});
+                   request.backend_bucket()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -150,7 +156,9 @@ DefaultBackendBucketsRestStub::AsyncInsertBackendBucket(
                 *service, *rest_context, request.backend_bucket_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "backendBuckets")));
+                             "backendBuckets"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -168,12 +176,13 @@ DefaultBackendBucketsRestStub::ListBackendBuckets(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "backendBuckets"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -192,7 +201,9 @@ DefaultBackendBucketsRestStub::AsyncPatchBackendBucket(
                 *service, *rest_context, request.backend_bucket_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "backendBuckets", "/", request.backend_bucket())));
+                             "backendBuckets", "/", request.backend_bucket()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -219,7 +230,9 @@ DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket(),
-                             "/", "setEdgeSecurityPolicy")));
+                             "/", "setEdgeSecurityPolicy"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -244,7 +257,9 @@ DefaultBackendBucketsRestStub::AsyncUpdateBackendBucket(
                 *service, *rest_context, request.backend_bucket_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "backendBuckets", "/", request.backend_bucket())));
+                             "backendBuckets", "/", request.backend_bucket()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

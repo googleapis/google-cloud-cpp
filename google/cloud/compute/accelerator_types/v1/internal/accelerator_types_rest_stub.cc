@@ -50,14 +50,15 @@ DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "acceleratorTypes"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
@@ -69,8 +70,7 @@ DefaultAcceleratorTypesRestStub::GetAcceleratorType(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
-                   "acceleratorTypes", "/", request.accelerator_type()),
-      {});
+                   "acceleratorTypes", "/", request.accelerator_type()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
@@ -84,12 +84,13 @@ DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "acceleratorTypes"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

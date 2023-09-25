@@ -61,7 +61,9 @@ DefaultNetworksRestStub::AsyncAddPeering(
                 request.networks_add_peering_request_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
-                             "/", request.network(), "/", "addPeering")));
+                             "/", request.network(), "/", "addPeering"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -86,7 +88,9 @@ DefaultNetworksRestStub::AsyncDeleteNetwork(
                 *service, *rest_context, request,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
-                             "/", request.network())));
+                             "/", request.network()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -104,8 +108,7 @@ DefaultNetworksRestStub::GetNetwork(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks", "/",
-                   request.network()),
-      {});
+                   request.network()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -118,8 +121,7 @@ DefaultNetworksRestStub::GetEffectiveFirewalls(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks", "/",
-                   request.network(), "/", "getEffectiveFirewalls"),
-      {});
+                   request.network(), "/", "getEffectiveFirewalls"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -137,8 +139,9 @@ DefaultNetworksRestStub::AsyncInsertNetwork(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.network_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "global", "/",
-                             "networks")));
+                             request.project(), "/", "global", "/", "networks"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -156,12 +159,13 @@ DefaultNetworksRestStub::ListNetworks(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
@@ -175,15 +179,16 @@ DefaultNetworksRestStub::ListPeeringRoutes(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks", "/",
                    request.network(), "/", "listPeeringRoutes"),
-      {std::make_pair("direction", request.direction()),
-       std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("peering_name", request.peering_name()),
-       std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("direction", request.direction()),
+           std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("peering_name", request.peering_name()),
+           std::make_pair("region", request.region()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -202,7 +207,9 @@ DefaultNetworksRestStub::AsyncPatchNetwork(
                 *service, *rest_context, request.network_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
-                             "/", request.network())));
+                             "/", request.network()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -228,7 +235,9 @@ DefaultNetworksRestStub::AsyncRemovePeering(
                 request.networks_remove_peering_request_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
-                             "/", request.network(), "/", "removePeering")));
+                             "/", request.network(), "/", "removePeering"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -253,8 +262,9 @@ DefaultNetworksRestStub::AsyncSwitchToCustomMode(
                 *service, *rest_context, request,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
-                             "/", request.network(), "/",
-                             "switchToCustomMode")));
+                             "/", request.network(), "/", "switchToCustomMode"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -280,7 +290,9 @@ DefaultNetworksRestStub::AsyncUpdatePeering(
                 request.networks_update_peering_request_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
-                             "/", request.network(), "/", "updatePeering")));
+                             "/", request.network(), "/", "updatePeering"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

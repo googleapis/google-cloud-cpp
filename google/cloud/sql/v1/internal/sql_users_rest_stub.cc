@@ -45,7 +45,10 @@ DefaultSqlUsersServiceRestStub::Delete(
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"));
+                   "instances", "/", request.instance(), "/", "users"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("host", request.host()),
+           std::make_pair("name", request.name())}));
 }
 
 StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
@@ -56,7 +59,8 @@ StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "users", "/",
                    request.name()),
-      {std::make_pair("host", request.host())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("host", request.host())}));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -76,8 +80,7 @@ DefaultSqlUsersServiceRestStub::List(
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"),
-      {});
+                   "instances", "/", request.instance(), "/", "users"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -87,7 +90,10 @@ DefaultSqlUsersServiceRestStub::Update(
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(),
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"));
+                   "instances", "/", request.instance(), "/", "users"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("host", request.host()),
+           std::make_pair("name", request.name())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

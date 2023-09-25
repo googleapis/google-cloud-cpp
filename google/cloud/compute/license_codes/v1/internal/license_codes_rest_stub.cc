@@ -47,8 +47,7 @@ DefaultLicenseCodesRestStub::GetLicenseCode(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "licenseCodes", "/",
-                   request.license_code()),
-      {});
+                   request.license_code()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

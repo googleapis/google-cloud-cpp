@@ -61,7 +61,11 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "addAccessConfig")));
+                             request.instance(), "/", "addAccessConfig"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("network_interface",
+                                    request.network_interface()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -88,7 +92,9 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "addResourcePolicies")));
+                             request.instance(), "/", "addResourcePolicies"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -107,14 +113,15 @@ DefaultInstancesRestStub::AggregatedListInstances(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "instances"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -134,7 +141,11 @@ DefaultInstancesRestStub::AsyncAttachDisk(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "attachDisk")));
+                             request.instance(), "/", "attachDisk"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("force_attach",
+                                    request.force_attach() ? "1" : "0"),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -161,7 +172,9 @@ DefaultInstancesRestStub::AsyncBulkInsert(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             "bulkInsert")));
+                             "bulkInsert"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -187,7 +200,9 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance())));
+                             request.instance()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -213,7 +228,12 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "deleteAccessConfig")));
+                             request.instance(), "/", "deleteAccessConfig"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("access_config", request.access_config()),
+                     std::make_pair("network_interface",
+                                    request.network_interface()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -239,7 +259,10 @@ DefaultInstancesRestStub::AsyncDetachDisk(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "detachDisk")));
+                             request.instance(), "/", "detachDisk"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("device_name", request.device_name()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -257,8 +280,7 @@ DefaultInstancesRestStub::GetInstance(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
-                   "instances", "/", request.instance()),
-      {});
+                   "instances", "/", request.instance()));
 }
 
 StatusOr<
@@ -274,7 +296,8 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
                    "getEffectiveFirewalls"),
-      {std::make_pair("network_interface", request.network_interface())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("network_interface", request.network_interface())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
@@ -288,8 +311,9 @@ DefaultInstancesRestStub::GetGuestAttributes(
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
                    "getGuestAttributes"),
-      {std::make_pair("query_path", request.query_path()),
-       std::make_pair("variable_key", request.variable_key())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("query_path", request.query_path()),
+           std::make_pair("variable_key", request.variable_key())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -302,9 +326,9 @@ DefaultInstancesRestStub::GetIamPolicy(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.resource(), "/", "getIamPolicy"),
-      {std::make_pair(
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
           "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))});
+          std::to_string(request.options_requested_policy_version()))}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Screenshot>
@@ -316,8 +340,7 @@ DefaultInstancesRestStub::GetScreenshot(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
-                   "instances", "/", request.instance(), "/", "screenshot"),
-      {});
+                   "instances", "/", request.instance(), "/", "screenshot"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -330,8 +353,9 @@ DefaultInstancesRestStub::GetSerialPortOutput(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/", "serialPort"),
-      {std::make_pair("port", std::to_string(request.port())),
-       std::make_pair("start", request.start())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("port", std::to_string(request.port())),
+           std::make_pair("start", request.start())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -345,8 +369,7 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
-                   "getShieldedInstanceIdentity"),
-      {});
+                   "getShieldedInstanceIdentity"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -365,7 +388,13 @@ DefaultInstancesRestStub::AsyncInsertInstance(
                 *service, *rest_context, request.instance_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
-                             request.zone(), "/", "instances")));
+                             request.zone(), "/", "instances"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id()),
+                     std::make_pair("source_instance_template",
+                                    request.source_instance_template()),
+                     std::make_pair("source_machine_image",
+                                    request.source_machine_image())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -384,12 +413,13 @@ DefaultInstancesRestStub::ListInstances(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
@@ -403,12 +433,13 @@ DefaultInstancesRestStub::ListReferrers(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/", "referrers"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -429,8 +460,9 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/",
-                             "removeResourcePolicies")));
+                             request.instance(), "/", "removeResourcePolicies"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -455,7 +487,9 @@ DefaultInstancesRestStub::AsyncReset(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "reset")));
+                             request.instance(), "/", "reset"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -480,7 +514,9 @@ DefaultInstancesRestStub::AsyncResume(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "resume")));
+                             request.instance(), "/", "resume"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -518,8 +554,11 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.resource(), "/",
-                             "setDeletionProtection")));
+                             request.resource(), "/", "setDeletionProtection"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("deletion_protection",
+                                    request.deletion_protection() ? "1" : "0"),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -545,7 +584,12 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setDiskAutoDelete")));
+                             request.instance(), "/", "setDiskAutoDelete"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("auto_delete",
+                                    request.auto_delete() ? "1" : "0"),
+                     std::make_pair("device_name", request.device_name()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -584,7 +628,9 @@ DefaultInstancesRestStub::AsyncSetLabels(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setLabels")));
+                             request.instance(), "/", "setLabels"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -611,7 +657,9 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setMachineResources")));
+                             request.instance(), "/", "setMachineResources"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -638,7 +686,9 @@ DefaultInstancesRestStub::AsyncSetMachineType(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setMachineType")));
+                             request.instance(), "/", "setMachineType"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -664,7 +714,9 @@ DefaultInstancesRestStub::AsyncSetMetadata(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setMetadata")));
+                             request.instance(), "/", "setMetadata"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -691,7 +743,9 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setMinCpuPlatform")));
+                             request.instance(), "/", "setMinCpuPlatform"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -717,7 +771,9 @@ DefaultInstancesRestStub::AsyncSetName(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setName")));
+                             request.instance(), "/", "setName"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -743,7 +799,9 @@ DefaultInstancesRestStub::AsyncSetScheduling(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setScheduling")));
+                             request.instance(), "/", "setScheduling"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -770,7 +828,9 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setServiceAccount")));
+                             request.instance(), "/", "setServiceAccount"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -798,7 +858,9 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
                              request.instance(), "/",
-                             "setShieldedInstanceIntegrityPolicy")));
+                             "setShieldedInstanceIntegrityPolicy"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -823,7 +885,9 @@ DefaultInstancesRestStub::AsyncSetTags(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "setTags")));
+                             request.instance(), "/", "setTags"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -850,7 +914,9 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
                              request.instance(), "/",
-                             "simulateMaintenanceEvent")));
+                             "simulateMaintenanceEvent"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -875,7 +941,9 @@ DefaultInstancesRestStub::AsyncStart(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "start")));
+                             request.instance(), "/", "start"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -902,8 +970,9 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/",
-                             "startWithEncryptionKey")));
+                             request.instance(), "/", "startWithEncryptionKey"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -928,7 +997,11 @@ DefaultInstancesRestStub::AsyncStop(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "stop")));
+                             request.instance(), "/", "stop"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("discard_local_ssd",
+                                    request.discard_local_ssd() ? "1" : "0"),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -953,7 +1026,11 @@ DefaultInstancesRestStub::AsyncSuspend(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "suspend")));
+                             request.instance(), "/", "suspend"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("discard_local_ssd",
+                                    request.discard_local_ssd() ? "1" : "0"),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -993,7 +1070,12 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance())));
+                             request.instance()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("minimal_action", request.minimal_action()),
+                     std::make_pair("most_disruptive_allowed_action",
+                                    request.most_disruptive_allowed_action()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1019,7 +1101,11 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "updateAccessConfig")));
+                             request.instance(), "/", "updateAccessConfig"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("network_interface",
+                                    request.network_interface()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1045,7 +1131,9 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/", "updateDisplayDevice")));
+                             request.instance(), "/", "updateDisplayDevice"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1071,8 +1159,11 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
-                             request.instance(), "/",
-                             "updateNetworkInterface")));
+                             request.instance(), "/", "updateNetworkInterface"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("network_interface",
+                                    request.network_interface()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -1100,7 +1191,9 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
                              request.instance(), "/",
-                             "updateShieldedInstanceConfig")));
+                             "updateShieldedInstanceConfig"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

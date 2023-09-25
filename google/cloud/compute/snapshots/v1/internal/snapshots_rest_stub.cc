@@ -60,7 +60,9 @@ DefaultSnapshotsRestStub::AsyncDeleteSnapshot(
                 *service, *rest_context, request,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "snapshots",
-                             "/", request.snapshot())));
+                             "/", request.snapshot()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -78,8 +80,7 @@ DefaultSnapshotsRestStub::GetSnapshot(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots", "/",
-                   request.snapshot()),
-      {});
+                   request.snapshot()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -92,9 +93,9 @@ DefaultSnapshotsRestStub::GetIamPolicy(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots", "/",
                    request.resource(), "/", "getIamPolicy"),
-      {std::make_pair(
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
           "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))});
+          std::to_string(request.options_requested_policy_version()))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -113,7 +114,9 @@ DefaultSnapshotsRestStub::AsyncInsertSnapshot(
                 *service, *rest_context, request.snapshot_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "snapshots")));
+                             "snapshots"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -131,12 +134,13 @@ DefaultSnapshotsRestStub::ListSnapshots(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

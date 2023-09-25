@@ -57,14 +57,15 @@ DefaultPublicDelegatedPrefixesRestStub::AggregatedListPublicDelegatedPrefixes(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "publicDelegatedPrefixes"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -84,7 +85,9 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "publicDelegatedPrefixes",
-                             "/", request.public_delegated_prefix())));
+                             "/", request.public_delegated_prefix()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -104,8 +107,7 @@ DefaultPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "publicDelegatedPrefixes", "/",
-                   request.public_delegated_prefix()),
-      {});
+                   request.public_delegated_prefix()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -125,8 +127,9 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
                 request.public_delegated_prefix_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
-                             request.region(), "/",
-                             "publicDelegatedPrefixes")));
+                             request.region(), "/", "publicDelegatedPrefixes"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -146,12 +149,13 @@ DefaultPublicDelegatedPrefixesRestStub::ListPublicDelegatedPrefixes(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "publicDelegatedPrefixes"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -172,7 +176,9 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "publicDelegatedPrefixes",
-                             "/", request.public_delegated_prefix())));
+                             "/", request.public_delegated_prefix()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

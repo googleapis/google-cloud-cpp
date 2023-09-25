@@ -54,14 +54,15 @@ DefaultVpnTunnelsRestStub::AggregatedListVpnTunnels(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "vpnTunnels"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -81,7 +82,9 @@ DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnel(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "vpnTunnels", "/",
-                             request.vpn_tunnel())));
+                             request.vpn_tunnel()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -99,8 +102,7 @@ DefaultVpnTunnelsRestStub::GetVpnTunnel(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
-                   "/", "vpnTunnels", "/", request.vpn_tunnel()),
-      {});
+                   "/", "vpnTunnels", "/", request.vpn_tunnel()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -119,7 +121,9 @@ DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnel(
                 *service, *rest_context, request.vpn_tunnel_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
-                             request.region(), "/", "vpnTunnels")));
+                             request.region(), "/", "vpnTunnels"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -138,12 +142,13 @@ DefaultVpnTunnelsRestStub::ListVpnTunnels(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "vpnTunnels"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -164,7 +169,9 @@ DefaultVpnTunnelsRestStub::AsyncSetLabels(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "vpnTunnels", "/",
-                             request.resource(), "/", "setLabels")));
+                             request.resource(), "/", "setLabels"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

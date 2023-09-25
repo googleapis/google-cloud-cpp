@@ -67,7 +67,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncAbandonInstances(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "abandonInstances")));
+                         "abandonInstances"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -125,7 +127,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncCreateInstances(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "createInstances")));
+                         "createInstances"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -151,7 +155,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
-                             "/", request.instance_group_manager())));
+                             "/", request.instance_group_manager()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -180,7 +186,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstances(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "deleteInstances")));
+                         "deleteInstances"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -229,8 +237,7 @@ DefaultRegionInstanceGroupManagersRestStub::GetInstanceGroupManager(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroupManagers", "/",
-                   request.instance_group_manager()),
-      {});
+                   request.instance_group_manager()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -250,7 +257,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
                 request.instance_group_manager_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
-                             request.region(), "/", "instanceGroupManagers")));
+                             request.region(), "/", "instanceGroupManagers"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -270,12 +279,13 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroupManagers"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -291,12 +301,13 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "listErrors"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -312,7 +323,14 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
       absl::StrCat(
           "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
           "/", "regions", "/", request.region(), "/", "instanceGroupManagers",
-          "/", request.instance_group_manager(), "/", "listManagedInstances"));
+          "/", request.instance_group_manager(), "/", "listManagedInstances"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -325,11 +343,17 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstanceConfigsResp>(
       *service_, rest_context, request,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "instanceGroupManagers", "/",
-                   request.instance_group_manager(), "/",
-                   "listPerInstanceConfigs"));
+      absl::StrCat(
+          "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
+          "/", "regions", "/", request.region(), "/", "instanceGroupManagers",
+          "/", request.instance_group_manager(), "/", "listPerInstanceConfigs"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -350,7 +374,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
-                             "/", request.instance_group_manager())));
+                             "/", request.instance_group_manager()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -379,7 +405,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "patchPerInstanceConfigs")));
+                         "patchPerInstanceConfigs"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -408,7 +436,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncRecreateInstances(
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
                              "/", request.instance_group_manager(), "/",
-                             "recreateInstances")));
+                             "recreateInstances"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -435,7 +465,10 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncResize(
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
                              "/", request.instance_group_manager(), "/",
-                             "resize")));
+                             "resize"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id()),
+                     std::make_pair("size", std::to_string(request.size()))})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -464,7 +497,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "setInstanceTemplate")));
+                         "setInstanceTemplate"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -493,7 +528,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetTargetPools(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "setTargetPools")));
+                         "setTargetPools"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -522,7 +559,9 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "updatePerInstanceConfigs")));
+                         "updatePerInstanceConfigs"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

@@ -58,8 +58,7 @@ DefaultSqlDatabasesServiceRestStub::Get(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "databases", "/",
-                   request.database()),
-      {});
+                   request.database()));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -79,8 +78,7 @@ DefaultSqlDatabasesServiceRestStub::List(
   return rest_internal::Get<google::cloud::sql::v1::DatabasesListResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases"),
-      {});
+                   "instances", "/", request.instance(), "/", "databases"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>

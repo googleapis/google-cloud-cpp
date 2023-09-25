@@ -62,7 +62,9 @@ DefaultTargetPoolsRestStub::AsyncAddHealthCheck(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
-                             request.target_pool(), "/", "addHealthCheck")));
+                             request.target_pool(), "/", "addHealthCheck"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -89,7 +91,9 @@ DefaultTargetPoolsRestStub::AsyncAddInstance(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
-                             request.target_pool(), "/", "addInstance")));
+                             request.target_pool(), "/", "addInstance"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -108,14 +112,15 @@ DefaultTargetPoolsRestStub::AggregatedListTargetPools(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "targetPools"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -135,7 +140,9 @@ DefaultTargetPoolsRestStub::AsyncDeleteTargetPool(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
-                             request.target_pool())));
+                             request.target_pool()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -153,8 +160,7 @@ DefaultTargetPoolsRestStub::GetTargetPool(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
-                   "/", "targetPools", "/", request.target_pool()),
-      {});
+                   "/", "targetPools", "/", request.target_pool()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
@@ -187,7 +193,9 @@ DefaultTargetPoolsRestStub::AsyncInsertTargetPool(
                 *service, *rest_context, request.target_pool_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
-                             request.region(), "/", "targetPools")));
+                             request.region(), "/", "targetPools"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -206,12 +214,13 @@ DefaultTargetPoolsRestStub::ListTargetPools(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "targetPools"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -232,7 +241,9 @@ DefaultTargetPoolsRestStub::AsyncRemoveHealthCheck(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
-                             request.target_pool(), "/", "removeHealthCheck")));
+                             request.target_pool(), "/", "removeHealthCheck"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -259,7 +270,9 @@ DefaultTargetPoolsRestStub::AsyncRemoveInstance(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
-                             request.target_pool(), "/", "removeInstance")));
+                             request.target_pool(), "/", "removeInstance"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -285,7 +298,11 @@ DefaultTargetPoolsRestStub::AsyncSetBackup(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
-                             request.target_pool(), "/", "setBackup")));
+                             request.target_pool(), "/", "setBackup"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("failover_ratio",
+                                    std::to_string(request.failover_ratio())),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

@@ -54,14 +54,15 @@ DefaultAutoscalersRestStub::AggregatedListAutoscalers(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "autoscalers"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -81,7 +82,9 @@ DefaultAutoscalersRestStub::AsyncDeleteAutoscaler(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "autoscalers", "/",
-                             request.autoscaler())));
+                             request.autoscaler()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -99,8 +102,7 @@ DefaultAutoscalersRestStub::GetAutoscaler(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
-                   "autoscalers", "/", request.autoscaler()),
-      {});
+                   "autoscalers", "/", request.autoscaler()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -119,7 +121,9 @@ DefaultAutoscalersRestStub::AsyncInsertAutoscaler(
                 *service, *rest_context, request.autoscaler_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
-                             request.zone(), "/", "autoscalers")));
+                             request.zone(), "/", "autoscalers"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -138,12 +142,13 @@ DefaultAutoscalersRestStub::ListAutoscalers(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "autoscalers"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,7 +167,10 @@ DefaultAutoscalersRestStub::AsyncPatchAutoscaler(
                 *service, *rest_context, request.autoscaler_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
-                             request.zone(), "/", "autoscalers")));
+                             request.zone(), "/", "autoscalers"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("autoscaler", request.autoscaler()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -187,7 +195,10 @@ DefaultAutoscalersRestStub::AsyncUpdateAutoscaler(
                 *service, *rest_context, request.autoscaler_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
-                             request.zone(), "/", "autoscalers")));
+                             request.zone(), "/", "autoscalers"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("autoscaler", request.autoscaler()),
+                     std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
