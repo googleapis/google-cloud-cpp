@@ -27,9 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class NoOpMessageBatch : public MessageBatch {
  public:
-  static std::shared_ptr<NoOpMessageBatch> Create() {
-    return std::shared_ptr<NoOpMessageBatch>(new NoOpMessageBatch());
-  }
+  NoOpMessageBatch() = default;
 
   ~NoOpMessageBatch() override = default;
 
@@ -38,9 +36,6 @@ class NoOpMessageBatch : public MessageBatch {
   void Flush(){};
 
   void FlushCallback(){};
-
- private:
-  NoOpMessageBatch() = default;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
