@@ -42,7 +42,7 @@ std::size_t MessageSize(pubsub::Message const&);
 void SetAttribute(std::string const& key, std::string value, pubsub::Message&);
 // For Open Telemetry tracing only. Gets a pointer to the value of an given
 // attribute key on the message.
-char const* GetAttributeValue(std::string const& key, pubsub::Message& m);
+std::string GetAttributeValue(std::string const& key, pubsub::Message& m);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
@@ -132,7 +132,7 @@ class Message {
   friend void pubsub_internal::SetAttribute(std::string const& key,
                                             std::string value,
                                             pubsub::Message&);
-  friend char const* pubsub_internal::GetAttributeValue(std::string const& key,
+  friend std::string pubsub_internal::GetAttributeValue(std::string const& key,
                                                         pubsub::Message&);
 
   /// Construct `Message` objects.
@@ -300,13 +300,13 @@ inline void SetAttribute(std::string const& key, std::string value,
   (*m.proto_.mutable_attributes())[key] = std::move(value);
 }
 
-inline char const* GetAttributeValue(std::string const& key,
+inline std::string GetAttributeValue(std::string const& key,
                                      pubsub::Message& m) {
   auto value = m.proto_.attributes().find(key);
   if (value != m.proto_.attributes().end()) {
-    return value->second.data();
+    return value->second;
   }
-  return nullptr;
+  return "";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
