@@ -173,9 +173,9 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
   for (auto const& expected : insert_data) {
     ASSERT_GE(view.size(), expected.size());
     ASSERT_EQ(expected, view.substr(0, expected.size()));
-    view = view.substr(expected.size());
+    view.remove_prefix(expected.size());
   }
-  ASSERT_EQ(view, absl::string_view{});
+  EXPECT_EQ(view, absl::string_view{});
 }
 
 }  // namespace
