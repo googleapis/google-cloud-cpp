@@ -78,7 +78,8 @@ OperationResult RunListProjects(ProjectBenchmark& benchmark) {
 
     std::cout << "#"
               << " ListProjects(): Total Items fetched: " << project_count
-              << std::endl;
+              << "\n"
+              << std::flush;
 
     return ::google::cloud::Status(StatusCode::kOk, "");
   };
@@ -106,24 +107,20 @@ google::cloud::StatusOr<ProjectBenchmarkResult> RunProjectBenchmark(
     if (now >= mark) {
       mark = now + test_duration / kBenchmarkProgressMarks;
       std::cout << "Start Time=" << absl::FormatTime(start, local_time_zone)
-                << std::endl
-                << "Current Progress Mark="
-                << absl::FormatTime(now, local_time_zone) << std::endl
-                << "Next Progress Mark="
-                << absl::FormatTime(mark, local_time_zone) << std::endl
-                << "End Time=" << absl::FormatTime(end, local_time_zone)
-                << std::endl
-                << ", Number of ListProjects operations performed thus far= "
-                << result.list_results.operations.size() << std::endl;
-      std::cout << "..." << std::endl;
+                << "\nCurrent Progress Mark="
+                << absl::FormatTime(now, local_time_zone)
+                << "\nNext Progress Mark="
+                << absl::FormatTime(mark, local_time_zone)
+                << "\nEnd Time=" << absl::FormatTime(end, local_time_zone)
+                << "\nNumber of ListProjects operations performed thus far= "
+                << result.list_results.operations.size() << "\n...\n"
+                << std::flush;
     } else if (now > end) {
-      std::cout << "Start Time=" << absl::FormatTime(start, local_time_zone)
-                << std::endl
-                << "End Time=" << absl::FormatTime(end, local_time_zone)
-                << std::endl
-                << ", Total Number of ListProjects operations= "
-                << result.list_results.operations.size() << std::endl;
-      std::cout << "..." << std::endl;
+      std::cout << "\nStart Time=" << absl::FormatTime(start, local_time_zone)
+                << "\nEnd Time=" << absl::FormatTime(end, local_time_zone)
+                << "\nTotal Number of ListProjects operations= "
+                << result.list_results.operations.size() << "\n...\n"
+                << std::flush;
     }
   }
   return result;
@@ -137,7 +134,8 @@ int main(int argc, char* argv[]) {
     auto c = config.ParseArgs(args);
     if (!c) {
       std::cerr << "Error parsing command-line arguments: " << c.status()
-                << std::endl;
+                << "\n"
+                << std::flush;
       return 1;
     }
     config = *std::move(c);
@@ -145,17 +143,21 @@ int main(int argc, char* argv[]) {
 
   if (config.ExitAfterParse()) {
     if (config.wants_description) {
-      std::cout << kDescription << std::endl;
+      std::cout << kDescription << "\n" << std::flush;
     }
     if (config.wants_help) {
       config.PrintUsage();
     }
-    std::cout << "Exiting..." << std::endl;
+    std::cout << "Exiting..."
+              << "\n"
+              << std::flush;
     return 0;
   }
   std::cout << "# Project Benchmark STARTED For ListProjects() api with test "
                "duration as ["
-            << config.test_duration.count() << "] seconds" << std::endl;
+            << config.test_duration.count() << "] seconds"
+            << "\n"
+            << std::flush;
 
   ProjectBenchmark benchmark(config);
   // Start the threads running the project benchmark test.
@@ -186,7 +188,8 @@ int main(int argc, char* argv[]) {
     auto result = future.get();
     if (!result) {
       std::cerr << "Standard exception raised by task[" << count
-                << "]: " << result.status() << std::endl;
+                << "]: " << result.status() << "\n"
+                << std::flush;
     } else {
       append(combined, *result);
     }
@@ -196,14 +199,17 @@ int main(int argc, char* argv[]) {
       absl::ToChronoMilliseconds(absl::Now() - latency_test_start);
   combined.list_results.elapsed = latency_test_elapsed;
   std::cout << " DONE. Elapsed Test Duration="
-            << FormatDuration(latency_test_elapsed) << std::endl;
+            << FormatDuration(latency_test_elapsed) << "\n"
+            << std::flush;
 
   Benchmark::PrintLatencyResult(std::cout, "Latency-Results", "ListProjects()",
                                 combined.list_results);
 
   Benchmark::PrintThroughputResult(std::cout, "Throughput-Results",
                                    "ListProjects()", combined.list_results);
-  std::cout << "# Project Benchmark ENDED" << std::endl;
+  std::cout << "# Project Benchmark ENDED"
+            << "\n"
+            << std::flush;
 
   return 0;
 }
