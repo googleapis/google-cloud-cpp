@@ -67,11 +67,8 @@ endforeach ()
 # Runs benchmark integration tests.
 set(experimental_bigquery_rest_client_benchmark_programs
     # cmake-format: sort
-    dataset_benchmark_programs.cc
-    job_mutating_benchmark_programs.cc
-    job_readonly_benchmark_programs.cc
-    project_benchmark_programs.cc
-    table_benchmark_programs.cc)
+    dataset_benchmark_programs.cc job_readonly_benchmark_programs.cc
+    project_benchmark_programs.cc table_benchmark_programs.cc)
 
 # Export the list of benchmark integration tests to a .bzl file so we do not
 # need to maintain the list in two places.
