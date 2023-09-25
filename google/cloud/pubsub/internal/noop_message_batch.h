@@ -31,11 +31,11 @@ class NoOpMessageBatch : public MessageBatch {
 
   ~NoOpMessageBatch() override = default;
 
-  void SaveMessage(pubsub::Message m) {} override;
+  void SaveMessage(pubsub::Message m) override{};
 
-  void Flush() {} override;
+  void Flush() override{};
 
-  void FlushCallback() {} override;
+  void FlushCallback() override{};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
