@@ -484,8 +484,7 @@ TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersGetWithParams) {
       service_file_descriptor->service(0)->method(4);
   VarsDictionary vars;
   SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("not_used_anymore", request.not_used_anymore())}))"""));
+  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
