@@ -75,6 +75,7 @@ add_library(
     internal/flow_controlled_publisher_connection.h
     internal/flow_controlled_publisher_tracing_connection.cc
     internal/flow_controlled_publisher_tracing_connection.h
+    internal/noop_message_batch.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
     internal/publisher_auth_decorator.cc
