@@ -57,14 +57,15 @@ DefaultTargetHttpsProxiesRestStub::AggregatedListTargetHttpsProxies(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "targetHttpsProxies"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -84,7 +85,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetHttpsProxies", "/",
-                             request.target_https_proxy())));
+                             request.target_https_proxy()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -102,8 +105,7 @@ DefaultTargetHttpsProxiesRestStub::GetTargetHttpsProxy(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "targetHttpsProxies",
-                   "/", request.target_https_proxy()),
-      {});
+                   "/", request.target_https_proxy()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -122,7 +124,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
                 *service, *rest_context, request.target_https_proxy_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "targetHttpsProxies")));
+                             "targetHttpsProxies"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -141,12 +145,13 @@ DefaultTargetHttpsProxiesRestStub::ListTargetHttpsProxies(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "targetHttpsProxies"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -166,7 +171,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncPatchTargetHttpsProxy(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetHttpsProxies", "/",
-                             request.target_https_proxy())));
+                             request.target_https_proxy()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -193,7 +200,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetCertificateMap(
             absl::StrCat(
                 "/", "compute", "/", "v1", "/", "projects", "/",
                 request.project(), "/", "global", "/", "targetHttpsProxies",
-                "/", request.target_https_proxy(), "/", "setCertificateMap")));
+                "/", request.target_https_proxy(), "/", "setCertificateMap"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -218,11 +227,12 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetQuicOverride(
                 *service, *rest_context,
                 request
                     .target_https_proxies_set_quic_override_request_resource(),
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "global", "/",
-                             "targetHttpsProxies", "/",
-                             request.target_https_proxy(), "/",
-                             "setQuicOverride")));
+                absl::StrCat(
+                    "/", "compute", "/", "v1", "/", "projects", "/",
+                    request.project(), "/", "global", "/", "targetHttpsProxies",
+                    "/", request.target_https_proxy(), "/", "setQuicOverride"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -250,7 +260,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "targetHttpsProxies", "/",
                          request.target_https_proxy(), "/",
-                         "setSslCertificates")));
+                         "setSslCertificates"),
+            rest_internal::TrimEmptyQueryParameters(
+                {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -274,10 +286,12 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslPolicy(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.ssl_policy_reference_resource(),
-                absl::StrCat(
-                    "/", "compute", "/", "v1", "/", "projects", "/",
-                    request.project(), "/", "global", "/", "targetHttpsProxies",
-                    "/", request.target_https_proxy(), "/", "setSslPolicy")));
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "global", "/",
+                             "targetHttpsProxies", "/",
+                             request.target_https_proxy(), "/", "setSslPolicy"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -302,7 +316,9 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetUrlMap(
                 *service, *rest_context, request.url_map_reference_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "targetHttpsProxies", "/",
-                             request.target_https_proxy(), "/", "setUrlMap")));
+                             request.target_https_proxy(), "/", "setUrlMap"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

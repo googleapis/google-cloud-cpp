@@ -62,7 +62,9 @@ DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk(), "/", "addResourcePolicies")));
+                             request.disk(), "/", "addResourcePolicies"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -87,8 +89,9 @@ DefaultRegionDisksRestStub::AsyncBulkInsert(
                 *service, *rest_context, request.bulk_insert_disk_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
-                             request.region(), "/", "disks", "/",
-                             "bulkInsert")));
+                             request.region(), "/", "disks", "/", "bulkInsert"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -114,7 +117,9 @@ DefaultRegionDisksRestStub::AsyncCreateSnapshot(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk(), "/", "createSnapshot")));
+                             request.disk(), "/", "createSnapshot"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -140,7 +145,9 @@ DefaultRegionDisksRestStub::AsyncDeleteDisk(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk())));
+                             request.disk()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -158,8 +165,7 @@ DefaultRegionDisksRestStub::GetDisk(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
-                   "/", "disks", "/", request.disk()),
-      {});
+                   "/", "disks", "/", request.disk()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -172,9 +178,9 @@ DefaultRegionDisksRestStub::GetIamPolicy(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks", "/", request.resource(), "/", "getIamPolicy"),
-      {std::make_pair(
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
           "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))});
+          std::to_string(request.options_requested_policy_version()))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -193,7 +199,10 @@ DefaultRegionDisksRestStub::AsyncInsertDisk(
                 *service, *rest_context, request.disk_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
-                             request.region(), "/", "disks")));
+                             request.region(), "/", "disks"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id()),
+                     std::make_pair("source_image", request.source_image())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -212,12 +221,13 @@ DefaultRegionDisksRestStub::ListRegionDisks(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -239,7 +249,9 @@ DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk(), "/", "removeResourcePolicies")));
+                             request.disk(), "/", "removeResourcePolicies"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -266,7 +278,9 @@ DefaultRegionDisksRestStub::AsyncResize(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk(), "/", "resize")));
+                             request.disk(), "/", "resize"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -305,7 +319,9 @@ DefaultRegionDisksRestStub::AsyncSetLabels(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.resource(), "/", "setLabels")));
+                             request.resource(), "/", "setLabels"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -332,7 +348,9 @@ DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk(), "/", "startAsyncReplication")));
+                             request.disk(), "/", "startAsyncReplication"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -358,7 +376,9 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk(), "/", "stopAsyncReplication")));
+                             request.disk(), "/", "stopAsyncReplication"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -385,7 +405,9 @@ DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             "stopGroupAsyncReplication")));
+                             "stopGroupAsyncReplication"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -425,7 +447,11 @@ DefaultRegionDisksRestStub::AsyncUpdateDisk(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
-                             request.disk())));
+                             request.disk()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("paths", request.paths()),
+                     std::make_pair("request_id", request.request_id()),
+                     std::make_pair("update_mask", request.update_mask())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

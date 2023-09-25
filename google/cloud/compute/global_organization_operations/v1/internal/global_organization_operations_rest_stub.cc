@@ -48,7 +48,9 @@ Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
   return rest_internal::Delete(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
-                   "/", "operations", "/", request.operation()));
+                   "/", "operations", "/", request.operation()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("parent_id", request.parent_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -60,7 +62,8 @@ DefaultGlobalOrganizationOperationsRestStub::GetOperation(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
                    "/", "operations", "/", request.operation()),
-      {std::make_pair("parent_id", request.parent_id())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("parent_id", request.parent_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
@@ -71,13 +74,14 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/operations",
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("parent_id", request.parent_id()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("parent_id", request.parent_id()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

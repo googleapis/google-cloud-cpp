@@ -58,8 +58,7 @@ DefaultSqlSslCertsServiceRestStub::Get(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "sslCerts", "/",
-                   request.sha1_fingerprint()),
-      {});
+                   request.sha1_fingerprint()));
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
@@ -79,8 +78,7 @@ DefaultSqlSslCertsServiceRestStub::List(
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "sslCerts"),
-      {});
+                   "instances", "/", request.instance(), "/", "sslCerts"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

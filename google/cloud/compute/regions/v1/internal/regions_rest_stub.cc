@@ -45,8 +45,7 @@ DefaultRegionsRestStub::GetRegion(
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region()),
-      {});
+                   request.project(), "/", "regions", "/", request.region()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>
@@ -58,12 +57,13 @@ DefaultRegionsRestStub::ListRegions(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

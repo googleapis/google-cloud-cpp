@@ -47,8 +47,7 @@ DefaultSqlConnectServiceRestStub::GetConnectSettings(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/",
-                   "connectSettings"),
-      {});
+                   "connectSettings"));
 }
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
@@ -60,7 +59,10 @@ DefaultSqlConnectServiceRestStub::GenerateEphemeralCert(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(),
-                   ":generateEphemeralCert"));
+                   ":generateEphemeralCert"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("public_key", request.public_key()),
+           std::make_pair("access_token", request.access_token())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
