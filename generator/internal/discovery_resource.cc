@@ -142,8 +142,8 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
       method_json.value("parameterOrder", std::vector<std::string>{});
   if (!parameter_order.empty()) {
     // Workaround for necessary, but not marked REQUIRED, mask field for update
-    // methods.
-    if (verb == "patch") {
+    // methods. AIP-134 indicates that the update mask should be provided.
+    if (verb == "patch" && !internal::Contains(parameter_order, "updateMask")) {
       nlohmann::json parameters =
           method_json.value("parameters", nlohmann::json());
       if (parameters.find("updateMask") != parameters.end()) {
