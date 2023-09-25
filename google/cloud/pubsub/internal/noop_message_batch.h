@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_MESSAGE_BATCH_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_MESSAGE_BATCH_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_BATCH_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_BATCH_H
 
 #include "google/cloud/pubsub/internal/message_batch.h"
 
@@ -23,15 +23,15 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A default no-op implementation of `MessageBatch`
+ * A no-op implementation of `MessageBatch`
  */
-class DefaultMessageBatch : public MessageBatch {
+class NoOpMessageBatch : public MessageBatch {
  public:
-  static std::shared_ptr<DefaultMessageBatch> Create() {
-    return std::shared_ptr<DefaultMessageBatch>(new DefaultMessageBatch());
+  static std::shared_ptr<NoOpMessageBatch> Create() {
+    return std::shared_ptr<NoOpMessageBatch>(new NoOpMessageBatch());
   }
 
-  ~DefaultMessageBatch() override = default;
+  ~NoOpMessageBatch() override = default;
 
   void SaveMessage(pubsub::Message m){};
 
@@ -40,7 +40,7 @@ class DefaultMessageBatch : public MessageBatch {
   void FlushCallback(){};
 
  private:
-  DefaultMessageBatch() = default;
+  NoOpMessageBatch() = default;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -48,4 +48,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_MESSAGE_BATCH_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_NOOP_MESSAGE_BATCH_H
