@@ -16,11 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_WRITE_PAYLOAD_IMPL_H
 
 #include "google/cloud/storage/async_object_requests.h"
+#include "google/cloud/storage/internal/grpc/make_cord.h"
 #include "google/cloud/version.h"
-#include "absl/meta/type_traits.h"
-#include <algorithm>
-#include <cstddef>
-#include <cstdint>
+#include "absl/strings/cord.h"
 #include <numeric>
 
 namespace google {
@@ -38,28 +36,6 @@ struct WritePayloadImpl {
     return p.impl_;
   }
 };
-
-template <typename T>
-using IsPayloadType = absl::disjunction<
-#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201703L
-    std::is_same<T, std::byte>,
-#endif
-    std::is_same<T, char>, std::is_same<T, signed char>,
-    std::is_same<T, unsigned char>, std::is_same<T, std::uint8_t>>;
-
-/// Create an `absl::Cord`, without copying the data in @p p.
-absl::Cord MakeCord(std::string p);
-
-/// Create an `absl::Cord`, without copying the data in @p p.
-template <typename T>
-absl::Cord MakeCord(std::vector<T> p) {
-  static_assert(IsPayloadType<T>::value, "unexpected value type");
-  auto holder = std::make_shared<std::vector<T>>(std::move(p));
-  auto contents = absl::string_view(
-      reinterpret_cast<char const*>(holder->data()), holder->size());
-  return absl::MakeCordFromExternal(contents,
-                                    [b = std::move(holder)]() mutable {});
-}
 
 storage_experimental::WritePayload MakeWritePayload(std::string p);
 template <typename T,

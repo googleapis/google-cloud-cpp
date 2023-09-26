@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RANDOM_H
 
 #include "google/cloud/version.h"
+#include <algorithm>
 #include <random>
 #include <string>
 #include <vector>
@@ -57,6 +58,35 @@ inline DefaultPRNG MakeDefaultPRNG() {
  * population may appear multiple times.
  */
 std::string Sample(DefaultPRNG& gen, int n, std::string const& population);
+
+template <typename Collection,
+          typename std::enable_if<std::is_same<Collection, std::string>::value,
+                                  int>::type = 0>
+std::string RandomDataToCollection(std::string v) {
+  // This is not motivated by a desire to optimize this function (though that is
+  // nice). The issue is that I (coryan@) could not figure out how to write a
+  // generic version of this function that works with `std::vector<std::byte>`
+  // and `std::string`.
+  return v;
+}
+
+template <typename Collection,
+          typename std::enable_if<!std::is_same<Collection, std::string>::value,
+                                  int>::type = 0>
+Collection RandomDataToCollection(std::string v) {
+  Collection result(v.size());
+  std::transform(v.begin(), v.end(), result.begin(), [](auto c) {
+    return static_cast<typename Collection::value_type>(c);
+  });
+  return result;
+}
+
+template <typename Collection>
+Collection RandomData(DefaultPRNG& generator, std::size_t size) {
+  auto data = Sample(generator, static_cast<int>(size),
+                     "abcdefghijklmnopqrstuvwxyz0123456789");
+  return RandomDataToCollection<Collection>(std::move(data));
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
