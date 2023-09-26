@@ -52,7 +52,7 @@ DefaultTargetTcpProxiesRestStub::AggregatedListTargetTcpProxies(
         AggregatedListTargetTcpProxiesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "targetTcpProxies"),
@@ -80,7 +80,7 @@ DefaultTargetTcpProxiesRestStub::AsyncDeleteTargetTcpProxy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetTcpProxies", "/",
@@ -101,7 +101,7 @@ DefaultTargetTcpProxiesRestStub::GetTargetTcpProxy(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         GetTargetTcpProxyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetTcpProxy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "targetTcpProxies",
                    "/", request.target_tcp_proxy()));
@@ -121,6 +121,7 @@ DefaultTargetTcpProxiesRestStub::AsyncInsertTargetTcpProxy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_tcp_proxy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetTcpProxies"),
@@ -141,7 +142,7 @@ DefaultTargetTcpProxiesRestStub::ListTargetTcpProxies(
         ListTargetTcpProxiesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetTcpProxyList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "targetTcpProxies"),
       rest_internal::TrimEmptyQueryParameters(
@@ -169,6 +170,7 @@ DefaultTargetTcpProxiesRestStub::AsyncSetBackendService(
                 *service, *rest_context,
                 request
                     .target_tcp_proxies_set_backend_service_request_resource(),
+                false,
                 absl::StrCat(
                     "/", "compute", "/", "v1", "/", "projects", "/",
                     request.project(), "/", "global", "/", "targetTcpProxies",
@@ -198,6 +200,7 @@ DefaultTargetTcpProxiesRestStub::AsyncSetProxyHeader(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_tcp_proxies_set_proxy_header_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetTcpProxies", "/",
@@ -225,7 +228,7 @@ DefaultTargetTcpProxiesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -246,7 +249,7 @@ future<Status> DefaultTargetTcpProxiesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

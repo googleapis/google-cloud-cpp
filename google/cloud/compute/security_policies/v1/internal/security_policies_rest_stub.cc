@@ -59,7 +59,7 @@ DefaultSecurityPoliciesRestStub::AsyncAddRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.security_policy_rule_resource(),
+                request.security_policy_rule_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.security_policy(),
@@ -81,7 +81,7 @@ DefaultSecurityPoliciesRestStub::AggregatedListSecurityPolicies(
         AggregatedListSecurityPoliciesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "securityPolicies"),
@@ -109,7 +109,7 @@ DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/",
@@ -130,7 +130,7 @@ DefaultSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::cpp::compute::security_policies::v1::
         GetSecurityPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies",
                    "/", request.security_policy()));
@@ -143,7 +143,7 @@ DefaultSecurityPoliciesRestStub::GetRule(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyRule>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies",
                    "/", request.security_policy(), "/", "getRule"),
@@ -165,6 +165,7 @@ DefaultSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies"),
@@ -187,7 +188,7 @@ DefaultSecurityPoliciesRestStub::ListSecurityPolicies(
         ListSecurityPoliciesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies"),
       rest_internal::TrimEmptyQueryParameters(
@@ -208,7 +209,7 @@ DefaultSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::
           SecurityPoliciesListPreconfiguredExpressionSetsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies",
                    "/", "listPreconfiguredExpressionSets"),
@@ -235,6 +236,7 @@ DefaultSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/",
@@ -263,7 +265,7 @@ DefaultSecurityPoliciesRestStub::AsyncPatchRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.security_policy_rule_resource(),
+                request.security_policy_rule_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.security_policy(),
@@ -294,7 +296,7 @@ DefaultSecurityPoliciesRestStub::AsyncRemoveRule(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.security_policy(),
@@ -323,7 +325,7 @@ DefaultSecurityPoliciesRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_set_labels_request_resource(),
+                request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.resource(), "/",
@@ -349,7 +351,7 @@ DefaultSecurityPoliciesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -370,7 +372,7 @@ future<Status> DefaultSecurityPoliciesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

@@ -51,7 +51,7 @@ DefaultHealthChecksRestStub::AggregatedListHealthChecks(
         AggregatedListHealthChecksRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthChecksAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "healthChecks"),
       rest_internal::TrimEmptyQueryParameters(
@@ -78,7 +78,7 @@ DefaultHealthChecksRestStub::AsyncDeleteHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "healthChecks", "/", request.health_check()),
@@ -98,7 +98,7 @@ DefaultHealthChecksRestStub::GetHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "healthChecks", "/",
                    request.health_check()));
@@ -117,7 +117,7 @@ DefaultHealthChecksRestStub::AsyncInsertHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.health_check_resource(),
+                *service, *rest_context, request.health_check_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "healthChecks"),
@@ -137,7 +137,7 @@ DefaultHealthChecksRestStub::ListHealthChecks(
     google::cloud::cpp::compute::health_checks::v1::
         ListHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheckList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "healthChecks"),
       rest_internal::TrimEmptyQueryParameters(
@@ -162,7 +162,7 @@ DefaultHealthChecksRestStub::AsyncPatchHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.health_check_resource(),
+                *service, *rest_context, request.health_check_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "healthChecks", "/", request.health_check()),
@@ -189,7 +189,7 @@ DefaultHealthChecksRestStub::AsyncUpdateHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.health_check_resource(),
+                *service, *rest_context, request.health_check_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "healthChecks", "/", request.health_check()),
@@ -216,7 +216,7 @@ DefaultHealthChecksRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -237,7 +237,7 @@ future<Status> DefaultHealthChecksRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

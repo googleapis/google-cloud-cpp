@@ -43,7 +43,7 @@ DefaultSqlTiersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlTiersListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::TiersListResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "tiers"));
 }

@@ -58,6 +58,7 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.access_config_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -89,6 +90,7 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_add_resource_policies_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -110,7 +112,7 @@ DefaultInstancesRestStub::AggregatedListInstances(
         AggregatedListInstancesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "instances"),
       rest_internal::TrimEmptyQueryParameters(
@@ -138,6 +140,7 @@ DefaultInstancesRestStub::AsyncAttachDisk(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.attached_disk_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -168,7 +171,7 @@ DefaultInstancesRestStub::AsyncBulkInsert(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.bulk_insert_instance_resource(),
+                request.bulk_insert_instance_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -196,7 +199,7 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -224,7 +227,7 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -255,7 +258,7 @@ DefaultInstancesRestStub::AsyncDetachDisk(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -277,7 +280,7 @@ DefaultInstancesRestStub::GetInstance(
     google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Instance>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance()));
@@ -291,7 +294,7 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
         GetEffectiveFirewallsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
@@ -306,7 +309,7 @@ DefaultInstancesRestStub::GetGuestAttributes(
     google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::GuestAttributes>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
@@ -322,7 +325,7 @@ DefaultInstancesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.resource(), "/", "getIamPolicy"),
@@ -337,7 +340,7 @@ DefaultInstancesRestStub::GetScreenshot(
     google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Screenshot>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/", "screenshot"));
@@ -349,7 +352,7 @@ DefaultInstancesRestStub::GetSerialPortOutput(
     google::cloud::cpp::compute::instances::v1::
         GetSerialPortOutputRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SerialPortOutput>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/", "serialPort"),
@@ -365,7 +368,7 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
         GetShieldedInstanceIdentityRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
@@ -385,7 +388,7 @@ DefaultInstancesRestStub::AsyncInsertInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.instance_resource(),
+                *service, *rest_context, request.instance_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances"),
@@ -409,7 +412,7 @@ DefaultInstancesRestStub::ListInstances(
     google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances"),
@@ -429,7 +432,7 @@ DefaultInstancesRestStub::ListReferrers(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceListReferrers>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/", "referrers"),
@@ -457,6 +460,7 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_remove_resource_policies_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -483,7 +487,7 @@ DefaultInstancesRestStub::AsyncReset(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -510,7 +514,7 @@ DefaultInstancesRestStub::AsyncResume(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -530,7 +534,7 @@ Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
     google::cloud::cpp::compute::instances::v1::
         SendDiagnosticInterruptRequest const& request) {
   return rest_internal::Post(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.instance(), "/",
@@ -550,7 +554,7 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -580,7 +584,7 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -605,6 +609,7 @@ DefaultInstancesRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.resource(), "/", "setIamPolicy"));
@@ -624,7 +629,7 @@ DefaultInstancesRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instances_set_labels_request_resource(),
+                request.instances_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -654,6 +659,7 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_machine_resources_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -682,7 +688,7 @@ DefaultInstancesRestStub::AsyncSetMachineType(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instances_set_machine_type_request_resource(),
+                request.instances_set_machine_type_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -710,7 +716,7 @@ DefaultInstancesRestStub::AsyncSetMetadata(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.metadata_resource(),
+                *service, *rest_context, request.metadata_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -740,6 +746,7 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_set_min_cpu_platform_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -767,7 +774,7 @@ DefaultInstancesRestStub::AsyncSetName(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instances_set_name_request_resource(),
+                request.instances_set_name_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -795,7 +802,7 @@ DefaultInstancesRestStub::AsyncSetScheduling(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.scheduling_resource(),
+                *service, *rest_context, request.scheduling_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -824,7 +831,7 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instances_set_service_account_request_resource(),
+                request.instances_set_service_account_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -853,7 +860,7 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.shielded_instance_integrity_policy_resource(),
+                request.shielded_instance_integrity_policy_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -881,7 +888,7 @@ DefaultInstancesRestStub::AsyncSetTags(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.tags_resource(),
+                *service, *rest_context, request.tags_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -909,7 +916,7 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -937,7 +944,7 @@ DefaultInstancesRestStub::AsyncStart(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -967,6 +974,7 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.instances_start_with_encryption_key_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -993,7 +1001,7 @@ DefaultInstancesRestStub::AsyncStop(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1022,7 +1030,7 @@ DefaultInstancesRestStub::AsyncSuspend(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1047,6 +1055,7 @@ DefaultInstancesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "instances", "/", request.resource(), "/",
@@ -1066,7 +1075,7 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.instance_resource(),
+                *service, *rest_context, request.instance_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1098,6 +1107,7 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.access_config_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1128,6 +1138,7 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.display_device_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1156,6 +1167,7 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.network_interface_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1186,7 +1198,7 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.shielded_instance_config_resource(),
+                request.shielded_instance_config_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
@@ -1215,7 +1227,7 @@ DefaultInstancesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/zones/", request.zone(), "/operations/",
                              request.operation())));
@@ -1237,7 +1249,7 @@ future<Status> DefaultInstancesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },

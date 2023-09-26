@@ -45,7 +45,7 @@ DefaultNodeTypesRestStub::AggregatedListNodeTypes(
         AggregatedListNodeTypesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTypeAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "nodeTypes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -65,7 +65,7 @@ DefaultNodeTypesRestStub::GetNodeType(
     google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeType>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeTypes", "/", request.node_type()));
@@ -77,7 +77,7 @@ DefaultNodeTypesRestStub::ListNodeTypes(
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTypeList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeTypes"),

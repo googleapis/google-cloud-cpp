@@ -51,7 +51,7 @@ DefaultForwardingRulesRestStub::AggregatedListForwardingRules(
         AggregatedListForwardingRulesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "forwardingRules"),
@@ -79,7 +79,7 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "forwardingRules", "/",
@@ -100,7 +100,7 @@ DefaultForwardingRulesRestStub::GetForwardingRule(
     google::cloud::cpp::compute::forwarding_rules::v1::
         GetForwardingRuleRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "forwardingRules", "/", request.forwarding_rule()));
@@ -120,6 +120,7 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.forwarding_rule_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "forwardingRules"),
@@ -140,7 +141,7 @@ DefaultForwardingRulesRestStub::ListForwardingRules(
         ListForwardingRulesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "forwardingRules"),
@@ -167,6 +168,7 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.forwarding_rule_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "forwardingRules", "/",
@@ -195,7 +197,7 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.region_set_labels_request_resource(),
+                request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "forwardingRules", "/",
@@ -224,6 +226,7 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_reference_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "forwardingRules", "/",
@@ -251,7 +254,7 @@ DefaultForwardingRulesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -272,7 +275,7 @@ future<Status> DefaultForwardingRulesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

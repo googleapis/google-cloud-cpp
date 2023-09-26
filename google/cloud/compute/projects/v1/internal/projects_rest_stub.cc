@@ -57,7 +57,7 @@ DefaultProjectsRestStub::AsyncDisableXpnHost(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "disableXpnHost"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -84,7 +84,7 @@ DefaultProjectsRestStub::AsyncDisableXpnResource(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.projects_disable_xpn_resource_request_resource(),
+                request.projects_disable_xpn_resource_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "disableXpnResource"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -110,7 +110,7 @@ DefaultProjectsRestStub::AsyncEnableXpnHost(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "enableXpnHost"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -137,7 +137,7 @@ DefaultProjectsRestStub::AsyncEnableXpnResource(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.projects_enable_xpn_resource_request_resource(),
+                request.projects_enable_xpn_resource_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "enableXpnResource"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -156,7 +156,7 @@ DefaultProjectsRestStub::GetProject(
     google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project()));
 }
@@ -167,7 +167,7 @@ DefaultProjectsRestStub::GetXpnHost(
     google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "getXpnHost"));
 }
@@ -179,7 +179,7 @@ DefaultProjectsRestStub::GetXpnResources(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ProjectsGetXpnResources>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "getXpnResources"),
       rest_internal::TrimEmptyQueryParameters(
@@ -198,7 +198,7 @@ DefaultProjectsRestStub::ListXpnHosts(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::XpnHostList>(
       *service_, rest_context,
-      request.projects_list_xpn_hosts_request_resource(),
+      request.projects_list_xpn_hosts_request_resource(), false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "listXpnHosts"),
       rest_internal::TrimEmptyQueryParameters(
@@ -223,6 +223,7 @@ DefaultProjectsRestStub::AsyncMoveDisk(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_move_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "moveDisk"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -249,7 +250,7 @@ DefaultProjectsRestStub::AsyncMoveInstance(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instance_move_request_resource(),
+                request.instance_move_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "moveInstance"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -275,7 +276,7 @@ DefaultProjectsRestStub::AsyncSetCommonInstanceMetadata(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.metadata_resource(),
+                *service, *rest_context, request.metadata_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/",
                              "setCommonInstanceMetadata"),
@@ -304,6 +305,7 @@ DefaultProjectsRestStub::AsyncSetDefaultNetworkTier(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.projects_set_default_network_tier_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "setDefaultNetworkTier"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -330,7 +332,7 @@ DefaultProjectsRestStub::AsyncSetUsageExportBucket(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.usage_export_location_resource(),
+                request.usage_export_location_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "setUsageExportBucket"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -356,7 +358,7 @@ DefaultProjectsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -377,7 +379,7 @@ future<Status> DefaultProjectsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

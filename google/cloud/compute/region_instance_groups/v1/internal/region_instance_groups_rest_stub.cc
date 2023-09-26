@@ -52,7 +52,7 @@ DefaultRegionInstanceGroupsRestStub::GetInstanceGroup(
     google::cloud::cpp::compute::region_instance_groups::v1::
         GetInstanceGroupRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroups", "/", request.instance_group()));
@@ -65,7 +65,7 @@ DefaultRegionInstanceGroupsRestStub::ListRegionInstanceGroups(
         ListRegionInstanceGroupsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroups"),
@@ -86,7 +86,7 @@ DefaultRegionInstanceGroupsRestStub::ListInstances(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>(
       *service_, rest_context,
-      request.region_instance_groups_list_instances_request_resource(),
+      request.region_instance_groups_list_instances_request_resource(), false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroups", "/", request.instance_group(), "/",
@@ -116,6 +116,7 @@ DefaultRegionInstanceGroupsRestStub::AsyncSetNamedPorts(
                 *service, *rest_context,
                 request
                     .region_instance_groups_set_named_ports_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroups", "/",
@@ -143,7 +144,7 @@ DefaultRegionInstanceGroupsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -164,7 +165,7 @@ future<Status> DefaultRegionInstanceGroupsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

@@ -43,7 +43,7 @@ DefaultRegionsRestStub::GetRegion(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region()));
 }
@@ -54,7 +54,7 @@ DefaultRegionsRestStub::ListRegions(
     google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RegionList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions"),
       rest_internal::TrimEmptyQueryParameters(

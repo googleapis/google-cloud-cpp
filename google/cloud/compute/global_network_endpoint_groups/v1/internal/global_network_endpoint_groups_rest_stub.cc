@@ -63,6 +63,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
             *service, *rest_context,
             request
                 .global_network_endpoint_groups_attach_endpoints_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "global", "/",
                          "networkEndpointGroups", "/",
@@ -91,7 +92,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "networkEndpointGroups", "/",
@@ -122,6 +123,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
             *service, *rest_context,
             request
                 .global_network_endpoint_groups_detach_endpoints_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "global", "/",
                          "networkEndpointGroups", "/",
@@ -144,7 +146,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
         GetNetworkEndpointGroupRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "networkEndpointGroups", "/",
@@ -165,7 +167,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.network_endpoint_group_resource(),
+                request.network_endpoint_group_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "networkEndpointGroups"),
@@ -186,7 +188,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
         ListGlobalNetworkEndpointGroupsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "networkEndpointGroups"),
@@ -207,7 +209,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
         ListNetworkEndpointsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat(
           "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
           "/", "global", "/", "networkEndpointGroups", "/",
@@ -234,7 +236,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -255,7 +257,7 @@ future<Status> DefaultGlobalNetworkEndpointGroupsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

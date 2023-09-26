@@ -42,7 +42,7 @@ StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZone(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Zone>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone()));
 }
@@ -52,7 +52,7 @@ DefaultZonesRestStub::ListZones(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ZoneList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones"),
       rest_internal::TrimEmptyQueryParameters(

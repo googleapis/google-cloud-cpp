@@ -51,7 +51,7 @@ DefaultTargetInstancesRestStub::AggregatedListTargetInstances(
         AggregatedListTargetInstancesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "targetInstances"),
@@ -79,7 +79,7 @@ DefaultTargetInstancesRestStub::AsyncDeleteTargetInstance(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "targetInstances", "/",
@@ -100,7 +100,7 @@ DefaultTargetInstancesRestStub::GetTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
         GetTargetInstanceRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstance>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "targetInstances", "/", request.target_instance()));
@@ -120,6 +120,7 @@ DefaultTargetInstancesRestStub::AsyncInsertTargetInstance(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_instance_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "targetInstances"),
@@ -140,7 +141,7 @@ DefaultTargetInstancesRestStub::ListTargetInstances(
         ListTargetInstancesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetInstanceList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "targetInstances"),
@@ -166,7 +167,7 @@ DefaultTargetInstancesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/zones/", request.zone(), "/operations/",
                              request.operation())));
@@ -188,7 +189,7 @@ future<Status> DefaultTargetInstancesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },

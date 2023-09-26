@@ -44,7 +44,7 @@ DefaultSqlSslCertsServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "sslCerts", "/",
                    request.sha1_fingerprint()));
@@ -55,7 +55,7 @@ DefaultSqlSslCertsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::SslCert>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "sslCerts", "/",
                    request.sha1_fingerprint()));
@@ -66,7 +66,7 @@ DefaultSqlSslCertsServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::SslCertsInsertResponse>(
-      *service_, rest_context, request.body(),
+      *service_, rest_context, request.body(), true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "sslCerts"));
 }
@@ -76,7 +76,7 @@ DefaultSqlSslCertsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "sslCerts"));
 }

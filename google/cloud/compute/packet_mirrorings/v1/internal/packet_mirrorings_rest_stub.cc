@@ -52,7 +52,7 @@ DefaultPacketMirroringsRestStub::AggregatedListPacketMirrorings(
         AggregatedListPacketMirroringsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "packetMirrorings"),
@@ -80,7 +80,7 @@ DefaultPacketMirroringsRestStub::AsyncDeletePacketMirroring(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "packetMirrorings", "/",
@@ -101,7 +101,7 @@ DefaultPacketMirroringsRestStub::GetPacketMirroring(
     google::cloud::cpp::compute::packet_mirrorings::v1::
         GetPacketMirroringRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroring>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "packetMirrorings", "/", request.packet_mirroring()));
@@ -121,6 +121,7 @@ DefaultPacketMirroringsRestStub::AsyncInsertPacketMirroring(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.packet_mirroring_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "packetMirrorings"),
@@ -141,7 +142,7 @@ DefaultPacketMirroringsRestStub::ListPacketMirrorings(
         ListPacketMirroringsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PacketMirroringList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "packetMirrorings"),
@@ -168,6 +169,7 @@ DefaultPacketMirroringsRestStub::AsyncPatchPacketMirroring(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.packet_mirroring_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "packetMirrorings", "/",
@@ -190,6 +192,7 @@ DefaultPacketMirroringsRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "packetMirrorings", "/", request.resource(), "/",
@@ -209,7 +212,7 @@ DefaultPacketMirroringsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -230,7 +233,7 @@ future<Status> DefaultPacketMirroringsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

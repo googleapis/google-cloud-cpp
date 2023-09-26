@@ -51,7 +51,7 @@ DefaultVpnGatewaysRestStub::AggregatedListVpnGateways(
         AggregatedListVpnGatewaysRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "vpnGateways"),
       rest_internal::TrimEmptyQueryParameters(
@@ -78,7 +78,7 @@ DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateway(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "vpnGateways", "/",
@@ -99,7 +99,7 @@ DefaultVpnGatewaysRestStub::GetVpnGateway(
     google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGateway>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "vpnGateways", "/", request.vpn_gateway()));
@@ -112,7 +112,7 @@ DefaultVpnGatewaysRestStub::GetStatus(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "vpnGateways", "/", request.vpn_gateway(), "/",
@@ -132,7 +132,7 @@ DefaultVpnGatewaysRestStub::AsyncInsertVpnGateway(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.vpn_gateway_resource(),
+                *service, *rest_context, request.vpn_gateway_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "vpnGateways"),
@@ -152,7 +152,7 @@ DefaultVpnGatewaysRestStub::ListVpnGateways(
     google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGatewayList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "vpnGateways"),
@@ -179,7 +179,7 @@ DefaultVpnGatewaysRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.region_set_labels_request_resource(),
+                request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "vpnGateways", "/",
@@ -202,6 +202,7 @@ DefaultVpnGatewaysRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "vpnGateways", "/", request.resource(), "/",
@@ -221,7 +222,7 @@ DefaultVpnGatewaysRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -242,7 +243,7 @@ future<Status> DefaultVpnGatewaysRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

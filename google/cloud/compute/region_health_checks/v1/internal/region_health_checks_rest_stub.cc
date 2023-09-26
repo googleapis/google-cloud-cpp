@@ -59,7 +59,7 @@ DefaultRegionHealthChecksRestStub::AsyncDeleteHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "healthChecks", "/",
@@ -80,7 +80,7 @@ DefaultRegionHealthChecksRestStub::GetHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
         GetHealthCheckRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "healthChecks", "/", request.health_check()));
@@ -99,7 +99,7 @@ DefaultRegionHealthChecksRestStub::AsyncInsertHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.health_check_resource(),
+                *service, *rest_context, request.health_check_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "healthChecks"),
@@ -119,7 +119,7 @@ DefaultRegionHealthChecksRestStub::ListRegionHealthChecks(
     google::cloud::cpp::compute::region_health_checks::v1::
         ListRegionHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheckList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "healthChecks"),
@@ -145,7 +145,7 @@ DefaultRegionHealthChecksRestStub::AsyncPatchHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.health_check_resource(),
+                *service, *rest_context, request.health_check_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "healthChecks", "/",
@@ -173,7 +173,7 @@ DefaultRegionHealthChecksRestStub::AsyncUpdateHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.health_check_resource(),
+                *service, *rest_context, request.health_check_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "healthChecks", "/",
@@ -201,7 +201,7 @@ DefaultRegionHealthChecksRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -222,7 +222,7 @@ future<Status> DefaultRegionHealthChecksRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

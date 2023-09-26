@@ -58,7 +58,7 @@ DefaultNodeGroupsRestStub::AsyncAddNodes(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.node_groups_add_nodes_request_resource(),
+                request.node_groups_add_nodes_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups", "/",
@@ -80,7 +80,7 @@ DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
         AggregatedListNodeGroupsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "nodeGroups"),
       rest_internal::TrimEmptyQueryParameters(
@@ -107,7 +107,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups", "/",
@@ -136,7 +136,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.node_groups_delete_nodes_request_resource(),
+                request.node_groups_delete_nodes_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups", "/",
@@ -157,7 +157,7 @@ DefaultNodeGroupsRestStub::GetNodeGroup(
     google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeGroups", "/", request.node_group()));
@@ -169,7 +169,7 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
     google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeGroups", "/", request.resource(), "/", "getIamPolicy"),
@@ -191,7 +191,7 @@ DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.node_group_resource(),
+                *service, *rest_context, request.node_group_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups"),
@@ -214,7 +214,7 @@ DefaultNodeGroupsRestStub::ListNodeGroups(
     google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeGroups"),
@@ -234,7 +234,7 @@ DefaultNodeGroupsRestStub::ListNodes(
         request) {
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeGroups", "/", request.node_group(), "/", "listNodes"),
@@ -260,7 +260,7 @@ DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.node_group_resource(),
+                *service, *rest_context, request.node_group_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups", "/",
@@ -282,6 +282,7 @@ DefaultNodeGroupsRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeGroups", "/", request.resource(), "/", "setIamPolicy"));
@@ -301,7 +302,7 @@ DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.node_groups_set_node_template_request_resource(),
+                request.node_groups_set_node_template_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups", "/",
@@ -332,6 +333,7 @@ DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
                 *service, *rest_context,
                 request
                     .node_groups_simulate_maintenance_event_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "nodeGroups", "/",
@@ -355,6 +357,7 @@ DefaultNodeGroupsRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "nodeGroups", "/", request.resource(), "/",
@@ -374,7 +377,7 @@ DefaultNodeGroupsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/zones/", request.zone(), "/operations/",
                              request.operation())));
@@ -396,7 +399,7 @@ future<Status> DefaultNodeGroupsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },

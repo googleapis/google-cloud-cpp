@@ -57,7 +57,7 @@ DefaultInterconnectsRestStub::AsyncDeleteInterconnect(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "interconnects", "/", request.interconnect()),
@@ -77,7 +77,7 @@ DefaultInterconnectsRestStub::GetInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
         GetInterconnectRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Interconnect>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "interconnects", "/",
                    request.interconnect()));
@@ -90,7 +90,7 @@ DefaultInterconnectsRestStub::GetDiagnostics(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "interconnects", "/",
                    request.interconnect(), "/", "getDiagnostics"));
@@ -109,7 +109,7 @@ DefaultInterconnectsRestStub::AsyncInsertInterconnect(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.interconnect_resource(),
+                *service, *rest_context, request.interconnect_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "interconnects"),
@@ -129,7 +129,7 @@ DefaultInterconnectsRestStub::ListInterconnects(
     google::cloud::cpp::compute::interconnects::v1::
         ListInterconnectsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InterconnectList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "interconnects"),
       rest_internal::TrimEmptyQueryParameters(
@@ -154,7 +154,7 @@ DefaultInterconnectsRestStub::AsyncPatchInterconnect(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.interconnect_resource(),
+                *service, *rest_context, request.interconnect_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "interconnects", "/", request.interconnect()),
@@ -182,7 +182,7 @@ DefaultInterconnectsRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_set_labels_request_resource(),
+                request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "interconnects", "/", request.resource(), "/",
@@ -208,7 +208,7 @@ DefaultInterconnectsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -229,7 +229,7 @@ future<Status> DefaultInterconnectsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

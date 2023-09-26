@@ -59,7 +59,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "securityPolicies", "/",
@@ -80,7 +80,7 @@ DefaultRegionSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         GetSecurityPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "securityPolicies", "/", request.security_policy()));
@@ -100,6 +100,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "securityPolicies"),
@@ -122,7 +123,7 @@ DefaultRegionSecurityPoliciesRestStub::ListRegionSecurityPolicies(
         ListRegionSecurityPoliciesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "securityPolicies"),
@@ -149,6 +150,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "securityPolicies", "/",
@@ -176,7 +178,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -197,7 +199,7 @@ future<Status> DefaultRegionSecurityPoliciesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

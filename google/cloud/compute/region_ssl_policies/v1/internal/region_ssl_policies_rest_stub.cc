@@ -58,7 +58,7 @@ DefaultRegionSslPoliciesRestStub::AsyncDeleteSslPolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "sslPolicies", "/",
@@ -79,7 +79,7 @@ DefaultRegionSslPoliciesRestStub::GetSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
         GetSslPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "sslPolicies", "/", request.ssl_policy()));
@@ -98,7 +98,7 @@ DefaultRegionSslPoliciesRestStub::AsyncInsertSslPolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.ssl_policy_resource(),
+                *service, *rest_context, request.ssl_policy_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "sslPolicies"),
@@ -118,7 +118,7 @@ DefaultRegionSslPoliciesRestStub::ListRegionSslPolicies(
     google::cloud::cpp::compute::region_ssl_policies::v1::
         ListRegionSslPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "sslPolicies"),
@@ -139,7 +139,7 @@ DefaultRegionSslPoliciesRestStub::ListAvailableFeatures(
         ListAvailableFeaturesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "sslPolicies", "/", "listAvailableFeatures"),
@@ -165,7 +165,7 @@ DefaultRegionSslPoliciesRestStub::AsyncPatchSslPolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.ssl_policy_resource(),
+                *service, *rest_context, request.ssl_policy_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "sslPolicies", "/",
@@ -193,7 +193,7 @@ DefaultRegionSslPoliciesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -214,7 +214,7 @@ future<Status> DefaultRegionSslPoliciesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

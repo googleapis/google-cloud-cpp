@@ -52,7 +52,7 @@ DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
         AggregatedListResourcePoliciesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "resourcePolicies"),
@@ -80,7 +80,7 @@ DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "resourcePolicies", "/",
@@ -101,7 +101,7 @@ DefaultResourcePoliciesRestStub::GetResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
         GetResourcePolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "resourcePolicies", "/", request.resource_policy()));
@@ -113,7 +113,7 @@ DefaultResourcePoliciesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::resource_policies::v1::
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "resourcePolicies", "/", request.resource(), "/",
@@ -137,6 +137,7 @@ DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.resource_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "resourcePolicies"),
@@ -157,7 +158,7 @@ DefaultResourcePoliciesRestStub::ListResourcePolicies(
         ListResourcePoliciesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "resourcePolicies"),
@@ -184,6 +185,7 @@ DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.resource_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "resourcePolicies", "/",
@@ -206,6 +208,7 @@ DefaultResourcePoliciesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "resourcePolicies", "/", request.resource(), "/",
@@ -220,6 +223,7 @@ DefaultResourcePoliciesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "resourcePolicies", "/", request.resource(), "/",
@@ -239,7 +243,7 @@ DefaultResourcePoliciesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -260,7 +264,7 @@ future<Status> DefaultResourcePoliciesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

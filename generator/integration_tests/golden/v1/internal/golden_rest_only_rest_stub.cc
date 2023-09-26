@@ -44,7 +44,7 @@ Status DefaultGoldenRestOnlyRestStub::Noop(
       google::cloud::rest_internal::RestContext& rest_context,
       google::protobuf::Empty const& request) {
   return rest_internal::Post(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       "/v1/noop");
 }
 

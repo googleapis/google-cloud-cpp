@@ -57,7 +57,7 @@ DefaultRoutesRestStub::AsyncDeleteRoute(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "routes",
                              "/", request.route()),
@@ -76,7 +76,7 @@ DefaultRoutesRestStub::GetRoute(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Route>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "routes", "/",
                    request.route()));
@@ -95,7 +95,7 @@ DefaultRoutesRestStub::AsyncInsertRoute(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.route_resource(),
+                *service, *rest_context, request.route_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "routes"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -113,7 +113,7 @@ DefaultRoutesRestStub::ListRoutes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouteList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "routes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -138,7 +138,7 @@ DefaultRoutesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -159,7 +159,7 @@ future<Status> DefaultRoutesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

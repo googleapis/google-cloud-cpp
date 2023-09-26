@@ -58,7 +58,7 @@ DefaultHttpsHealthChecksRestStub::AsyncDeleteHttpsHealthCheck(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpsHealthChecks", "/",
@@ -79,7 +79,7 @@ DefaultHttpsHealthChecksRestStub::GetHttpsHealthCheck(
     google::cloud::cpp::compute::https_health_checks::v1::
         GetHttpsHealthCheckRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpsHealthCheck>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "httpsHealthChecks",
                    "/", request.https_health_check()));
@@ -99,6 +99,7 @@ DefaultHttpsHealthChecksRestStub::AsyncInsertHttpsHealthCheck(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.https_health_check_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpsHealthChecks"),
@@ -119,7 +120,7 @@ DefaultHttpsHealthChecksRestStub::ListHttpsHealthChecks(
         ListHttpsHealthChecksRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HttpsHealthCheckList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "httpsHealthChecks"),
       rest_internal::TrimEmptyQueryParameters(
@@ -145,6 +146,7 @@ DefaultHttpsHealthChecksRestStub::AsyncPatchHttpsHealthCheck(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.https_health_check_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpsHealthChecks", "/",
@@ -173,6 +175,7 @@ DefaultHttpsHealthChecksRestStub::AsyncUpdateHttpsHealthCheck(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.https_health_check_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpsHealthChecks", "/",
@@ -200,7 +203,7 @@ DefaultHttpsHealthChecksRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -221,7 +224,7 @@ future<Status> DefaultHttpsHealthChecksRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

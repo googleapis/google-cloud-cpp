@@ -59,7 +59,7 @@ DefaultRegionBackendServicesRestStub::AsyncDeleteBackendService(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "backendServices", "/",
@@ -80,7 +80,7 @@ DefaultRegionBackendServicesRestStub::GetBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
         GetBackendServiceRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "backendServices", "/", request.backend_service()));
@@ -94,6 +94,7 @@ DefaultRegionBackendServicesRestStub::GetHealth(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request.resource_group_reference_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "backendServices", "/", request.backend_service(), "/",
@@ -106,7 +107,7 @@ DefaultRegionBackendServicesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::region_backend_services::v1::
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "backendServices", "/", request.resource(), "/",
@@ -130,6 +131,7 @@ DefaultRegionBackendServicesRestStub::AsyncInsertBackendService(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "backendServices"),
@@ -150,7 +152,7 @@ DefaultRegionBackendServicesRestStub::ListRegionBackendServices(
         ListRegionBackendServicesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "backendServices"),
@@ -177,6 +179,7 @@ DefaultRegionBackendServicesRestStub::AsyncPatchBackendService(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "backendServices", "/",
@@ -198,6 +201,7 @@ DefaultRegionBackendServicesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "backendServices", "/", request.resource(), "/",
@@ -218,6 +222,7 @@ DefaultRegionBackendServicesRestStub::AsyncUpdateBackendService(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_service_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "backendServices", "/",
@@ -245,7 +250,7 @@ DefaultRegionBackendServicesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -266,7 +271,7 @@ future<Status> DefaultRegionBackendServicesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

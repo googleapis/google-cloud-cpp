@@ -43,7 +43,7 @@ Status DefaultZoneOperationsRestStub::DeleteOperation(
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
   return rest_internal::Delete(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "operations", "/", request.operation()));
@@ -55,7 +55,7 @@ DefaultZoneOperationsRestStub::GetOperation(
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "operations", "/", request.operation()));
@@ -67,7 +67,7 @@ DefaultZoneOperationsRestStub::ListZoneOperations(
     google::cloud::cpp::compute::zone_operations::v1::
         ListZoneOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "operations"),
@@ -86,7 +86,7 @@ DefaultZoneOperationsRestStub::Wait(
     google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "operations", "/", request.operation(), "/", "wait"));

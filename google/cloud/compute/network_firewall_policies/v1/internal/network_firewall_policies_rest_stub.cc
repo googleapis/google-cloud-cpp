@@ -60,7 +60,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncAddAssociation(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.firewall_policy_association_resource(),
+                request.firewall_policy_association_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/", request.firewall_policy(),
@@ -92,7 +92,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncAddRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.firewall_policy_rule_resource(),
+                request.firewall_policy_rule_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/", request.firewall_policy(),
@@ -124,7 +124,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncCloneRules(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/", request.firewall_policy(),
@@ -154,7 +154,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncDeleteFirewallPolicy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/",
@@ -175,7 +175,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetFirewallPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetFirewallPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies",
                    "/", request.firewall_policy()));
@@ -188,7 +188,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetAssociation(
         GetAssociationRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies",
                    "/", request.firewall_policy(), "/", "getAssociation"),
@@ -202,7 +202,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies",
                    "/", request.resource(), "/", "getIamPolicy"),
@@ -218,7 +218,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetRule(
         GetRuleRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyRule>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies",
                    "/", request.firewall_policy(), "/", "getRule"),
@@ -240,6 +240,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncInsertFirewallPolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies"),
@@ -260,7 +261,7 @@ DefaultNetworkFirewallPoliciesRestStub::ListNetworkFirewallPolicies(
         ListNetworkFirewallPoliciesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies"),
       rest_internal::TrimEmptyQueryParameters(
@@ -286,6 +287,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncPatchFirewallPolicy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.firewall_policy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/",
@@ -314,7 +316,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncPatchRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.firewall_policy_rule_resource(),
+                request.firewall_policy_rule_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/", request.firewall_policy(),
@@ -344,7 +346,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveAssociation(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/", request.firewall_policy(),
@@ -373,7 +375,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveRule(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewallPolicies", "/", request.firewall_policy(),
@@ -397,6 +399,7 @@ DefaultNetworkFirewallPoliciesRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies",
                    "/", request.resource(), "/", "setIamPolicy"));
@@ -410,6 +413,7 @@ DefaultNetworkFirewallPoliciesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewallPolicies",
                    "/", request.resource(), "/", "testIamPermissions"));
@@ -428,7 +432,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -449,7 +453,7 @@ future<Status> DefaultNetworkFirewallPoliciesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },
