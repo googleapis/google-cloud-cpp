@@ -271,7 +271,7 @@ TEST(RestStubHelpers, ProtoRequestToJsonPayloadSuccess) {
   proto_request.set_response_type("response_value");
   proto_request.set_metadata_type("metadata_value");
 
-  auto status = ProtoRequestToJsonPayload(proto_request, json_payload, true);
+  auto status = ProtoRequestToJsonPayload(proto_request, true, json_payload);
   ASSERT_THAT(status, IsOk());
   EXPECT_THAT(json_payload, Eq(kJsonUpdatePayload));
 }
