@@ -12,27 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/async/write_payload_impl.h"
-#include <numeric>
+#include "google/cloud/storage/internal/grpc/make_cord.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-storage_experimental::WritePayload MakeWritePayload(std::string p) {
-  return WritePayloadImpl::Make(MakeCord(std::move(p)));
-}
-
-storage_experimental::WritePayload MakeWritePayload(
-    std::vector<std::string> p) {
-  auto full = std::accumulate(std::make_move_iterator(p.begin()),
-                              std::make_move_iterator(p.end()), absl::Cord(),
-                              [](absl::Cord a, std::string b) {
-                                a.Append(MakeCord(std::move(b)));
-                                return a;
-                              });
-  return WritePayloadImpl::Make(std::move(full));
+absl::Cord MakeCord(std::string p) {
+  // The absl::Cord constructor from `std::string` splits the string into many
+  // small buffers (and allocates a container for each). We want to avoid copies
+  // and allocations.
+  auto holder = std::make_shared<std::string>(std::move(p));
+  auto contents = absl::string_view(holder->data(), holder->size());
+  return absl::MakeCordFromExternal(contents,
+                                    [b = std::move(holder)]() mutable {});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
