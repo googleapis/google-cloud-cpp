@@ -90,7 +90,7 @@ Without these flags, the above `bazel build ...` command would fail.
 build --@io_opentelemetry_cpp//api:with_abseil
 
 # Enables tracing instrumentation in google-cloud-cpp
-build --@google_cloud_cpp//:enable-experimental-opentelemetry
+build --@google_cloud_cpp//:enable_opentelemetry
 ```
 
 Also note that we explicitly load OpenTelemetry's dependencies in the

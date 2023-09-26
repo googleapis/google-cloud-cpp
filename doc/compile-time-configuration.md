@@ -94,13 +94,15 @@ The `--host_cxxopt` may be unfamiliar. This is required to support Protobuf and
 gRPC, which compile code generators for the "host" environment, and generate
 libraries for the "target" environment.
 
-### Disabling OpenTelemetry
+### Enabling OpenTelemetry
 
-[OpenTelemetry] is enabled by default. Turning this off may reduce your build
-times but will also lose the benefits of instrumenting the libraries for
-distributed tracing. Add `--//:experimental-opentelemetry=false` to your Bazel
-command-line parameters to disable Open Telemetry.
+[OpenTelemetry] is disabled by default. Add `--//:enable_opentelemetry` to your
+Bazel command-line parameters to enable OpenTelemetry features, such as
+instrumentation to collect distributed traces.
+
+See the [OpenTelemetry quickstart] for more details.
 
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
 [github discussion]: https://github.com/googleapis/google-cloud-cpp/discussions
 [opentelemetry]: https://opentelemetry.io/
+[opentelemetry quickstart]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry/quickstart
