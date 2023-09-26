@@ -13,21 +13,12 @@
 // limitations under the License.
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #include "google/cloud/pubsub/internal/message_carrier.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/options.h"
-#include "absl/strings/match.h"
-#include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/propagation/http_trace_context.h>
-#include <opentelemetry/trace/provider.h>
-#include <opentelemetry/trace/semantic_conventions.h>
-#include <opentelemetry/trace/span_metadata.h>
-#include <opentelemetry/trace/span_startoptions.h>
+
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
@@ -37,12 +28,11 @@ opentelemetry::nostd::string_view MessageCarrier::Get(
     opentelemetry::nostd::string_view key) const noexcept {
   auto result =
       internal::NoExceptAction<opentelemetry::nostd::string_view>([&] {
-        auto message_attributes = message_.attributes();
-
-        auto it = message_attributes.find(
-            absl::StrCat("googclient_", std::string(key.data(), key.size())));
-        if (it != message_attributes.end()) {
-          return opentelemetry::nostd::string_view(it->second);
+        auto value = GetAttribute(
+            absl::StrCat("googclient_", std::string(key.data(), key.size())),
+            message_);
+        if (!value.empty()) {
+          return opentelemetry::nostd::string_view(value.data(), value.size());
         }
         return opentelemetry::nostd::string_view{};
       });

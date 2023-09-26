@@ -40,6 +40,9 @@ class MessageCarrier
  public:
   explicit MessageCarrier(pubsub::Message& message) : message_(message) {}
 
+  // Returns a string_view to the value for a given key or a null string_view.
+  // Note: the returned string_view is only valid as long message as the
+  // lifetime of the message.
   opentelemetry::nostd::string_view Get(
       opentelemetry::nostd::string_view key) const noexcept override;
 
