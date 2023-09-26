@@ -37,8 +37,8 @@ Status RestResponseToProto(google::protobuf::Message& destination,
                            RestResponse&& rest_response);
 
 Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
-                                 std::string& json_payload,
-                                 bool preserve_proto_field_names);
+                                 bool preserve_proto_field_names,
+                                 std::string& json_payload);
 
 rest_internal::RestRequest CreateRestRequest(
     std::string path,
@@ -94,8 +94,8 @@ StatusOr<Response> Patch(
     Request const& request, bool preserve_proto_field_names, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   std::string json_payload;
-  auto status = ProtoRequestToJsonPayload(request, json_payload,
-                                          preserve_proto_field_names);
+  auto status = ProtoRequestToJsonPayload(request, preserve_proto_field_names,
+                                          json_payload);
   if (!status.ok()) return status;
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
@@ -112,8 +112,8 @@ StatusOr<Response> Post(
     Request const& request, bool preserve_proto_field_names, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   std::string json_payload;
-  auto status = ProtoRequestToJsonPayload(request, json_payload,
-                                          preserve_proto_field_names);
+  auto status = ProtoRequestToJsonPayload(request, preserve_proto_field_names,
+                                          json_payload);
   if (!status.ok()) return status;
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
@@ -130,8 +130,8 @@ Status Post(
     Request const& request, bool preserve_proto_field_names, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   std::string json_payload;
-  auto status = ProtoRequestToJsonPayload(request, json_payload,
-                                          preserve_proto_field_names);
+  auto status = ProtoRequestToJsonPayload(request, preserve_proto_field_names,
+                                          json_payload);
   if (!status.ok()) return status;
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
@@ -148,8 +148,8 @@ StatusOr<Response> Put(
     Request const& request, bool preserve_proto_field_names, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   std::string json_payload;
-  auto status = ProtoRequestToJsonPayload(request, json_payload,
-                                          preserve_proto_field_names);
+  auto status = ProtoRequestToJsonPayload(request, preserve_proto_field_names,
+                                          json_payload);
   if (!status.ok()) return status;
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));

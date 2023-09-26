@@ -46,8 +46,8 @@ Status RestResponseToProto(google::protobuf::Message& destination,
 }
 
 Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
-                                 std::string& json_payload,
-                                 bool preserve_proto_field_names) {
+                                 bool preserve_proto_field_names,
+                                 std::string& json_payload) {
   google::protobuf::util::JsonPrintOptions print_options;
   print_options.preserve_proto_field_names = preserve_proto_field_names;
   auto proto_to_json_status = google::protobuf::util::MessageToJsonString(
