@@ -37,7 +37,6 @@ TEST(Message, Empty) {
   EXPECT_THAT(m.data(), IsEmpty());
 
   EXPECT_THAT(m.attributes(), IsEmpty());
-
 }
 
 TEST(Message, SetDataSimple) {
@@ -47,7 +46,6 @@ TEST(Message, SetDataSimple) {
   EXPECT_THAT(m0.ordering_key(), IsEmpty());
 
   EXPECT_THAT(m0.message_id(), IsEmpty());
-
 
   auto const m1 = MessageBuilder{}.SetData("contents-1").Build();
   EXPECT_EQ("contents-1", m1.data());
@@ -62,11 +60,10 @@ TEST(Message, SetDataSimple) {
 TEST(Message, SetOrderingKey) {
   auto const m0 = MessageBuilder{}.SetOrderingKey("key-0").Build();
   EXPECT_EQ("key-0", m0.ordering_key());
-  EXPECT_THAT(m0.attributes(), IsEmpty());  
+  EXPECT_THAT(m0.attributes(), IsEmpty());
   EXPECT_THAT(m0.data(), IsEmpty());
 
   EXPECT_THAT(m0.message_id(), IsEmpty());
-
 
   auto const m1 = MessageBuilder{}.SetOrderingKey("key-1").Build();
   EXPECT_EQ("key-1", m1.ordering_key());
@@ -91,7 +88,6 @@ TEST(Message, InsertAttributeSimple) {
   EXPECT_THAT(m0.ordering_key(), IsEmpty());
 
   EXPECT_THAT(m0.message_id(), IsEmpty());
-
 }
 
 TEST(Message, SetAttributeSimple) {
@@ -107,7 +103,6 @@ TEST(Message, SetAttributeSimple) {
   EXPECT_THAT(m0.ordering_key(), IsEmpty());
 
   EXPECT_THAT(m0.message_id(), IsEmpty());
-
 }
 
 TEST(Message, SetAttributesIteratorSimple) {
@@ -124,7 +119,6 @@ TEST(Message, SetAttributesIteratorSimple) {
   EXPECT_THAT(m0.ordering_key(), IsEmpty());
 
   EXPECT_THAT(m0.message_id(), IsEmpty());
-
 }
 
 TEST(Message, SetAttributesVectorStdPairSimple) {
@@ -137,7 +131,6 @@ TEST(Message, SetAttributesVectorStdPairSimple) {
   EXPECT_THAT(m0.ordering_key(), IsEmpty());
 
   EXPECT_THAT(m0.message_id(), IsEmpty());
-
 }
 
 TEST(Message, SetAttributesVectorStdTupleSimple) {
