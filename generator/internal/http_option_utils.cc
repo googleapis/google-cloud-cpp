@@ -176,13 +176,11 @@ void SetHttpQueryParameters(
       for (int i = 0; i < request->field_count(); ++i) {
         auto const* field = request->field(i);
         // Only attempt to make non-repeated, simple fields query parameters.
-        if (!field->is_repeated() &&
+        if (!field->is_repeated() && !field->options().deprecated() &&
             field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
           if (!internal::Contains(param_field_names, field->name())) {
-            if (!field->options().deprecated()) {
-              remaining_request_fields.emplace_back(field->name(),
-                                                    field->cpp_type());
-            }
+            remaining_request_fields.emplace_back(field->name(),
+                                                  field->cpp_type());
           }
         }
       }
