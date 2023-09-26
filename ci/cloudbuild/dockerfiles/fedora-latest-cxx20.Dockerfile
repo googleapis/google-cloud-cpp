@@ -21,19 +21,19 @@ ARG ARCH=amd64
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y autoconf automake \
-        clang clang-analyzer clang-tools-extra \
-        cmake diffutils findutils gcc-c++ git \
-        libcurl-devel llvm make ninja-build \
-        openssl-devel patch python python3 \
+        clang cmake diffutils findutils gcc-c++ git \
+        make ninja-build patch python3 \
         python-pip tar unzip wget which zip zlib-devel
+
+# Install the development packages for libcurl and OpenSSL. Neither are affected
+# by the C++ version, so we can use the pre-built binaries.
+RUN dnf makecache && \
+    dnf install -y libcurl-devel openssl-devel
 
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
-
-# This is needed to install gRPC
-RUN dnf makecache && dnf install -y c-ares-devel
 
 # The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
 # Bazel needs the '-devel' version with javac.
@@ -59,23 +59,24 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
     ldconfig
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
-# Install Abseil, remove the downloaded files and the temporary artifacts
-# after a successful build to keep the image smaller (and with fewer layers)
+# Download and install direct dependencies of `google-cloud-cpp`. Including
+# development dependencies.  In each case, remove the downloaded files and the
+# temporary artifacts after a successful build to keep the image smaller (and
+# with fewer layers).
+
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=20 \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# Install googletest, remove the downloaded files and the temporary artifacts
-# after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/googletest/archive/v1.14.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -84,11 +85,10 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.14.0.tar.gz | \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
@@ -97,8 +97,8 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.3.tar.gz | \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -DBENCHMARK_ENABLE_TESTING=OFF \
-        -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+        -S . -B cmake-out && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -113,7 +113,7 @@ RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -127,7 +127,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
       -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -141,25 +141,12 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v24.3.tar.gz 
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# The version of RE2 installed with Fedora:37 forces C++11 in its pkg-config
-# files. This may be fixed in Fedora:38, but until then it is easier to just
-# install the source code.
-WORKDIR /var/tmp/build/re2
-RUN curl -fsSL https://github.com/google/re2/archive/2023-09-01.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DRE2_BUILD_TESTING=OFF \
-        -S . -B cmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-
 WORKDIR /var/tmp/build/grpc
+RUN dnf makecache && dnf install -y c-ares-devel re2-devel
 RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.58.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
@@ -175,7 +162,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.58.1.tar.gz | \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
@@ -191,8 +178,8 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.11
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
-        -S . -B cmake-out -GNinja && \
-    cmake --build cmake-out --target install && \
+        -GNinja -S . -B cmake-out && \
+    cmake --build cmake-out && cmake --install cmake-out && \
     ldconfig && cd /var/tmp && rm -fr build
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
