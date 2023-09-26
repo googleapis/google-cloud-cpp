@@ -7,7 +7,7 @@ github:
 name: cmake-install-ci
 substitutions:
   _BUILD_NAME: cmake-install
-  _DISTRO: fedora-37-cmake
+  _DISTRO: fedora-latest-cmake
   _TRIGGER_TYPE: ci
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
