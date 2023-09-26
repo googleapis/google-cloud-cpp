@@ -22,6 +22,21 @@ namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+::google::pubsub::v1::PubsubMessage const& ToProto(pubsub::Message const& m) {
+  return m.proto_;
+}
+
+::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&& m) {
+  return std::move(m.proto_);
+}
+
+pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage m) {
+  return pubsub::Message(std::move(m));
+}
+
+std::size_t MessageSize(pubsub::Message const& m) { return m.MessageSize(); }
+
 std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m) {
   // see https://cloud.google.com/pubsub/pricing
   auto constexpr kTimestampOverhead = 20;
@@ -33,6 +48,20 @@ std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m) {
   }
   return s;
 }
+
+void SetAttribute(std::string const& key, std::string value,
+                  pubsub::Message& m) {
+  (*m.proto_.mutable_attributes())[key] = std::move(value);
+}
+
+std::string GetAttribute(std::string const& key, pubsub::Message& m) {
+  auto value = m.proto_.attributes().find(key);
+  if (value != m.proto_.attributes().end()) {
+    return value->second;
+  }
+  return std::string{};
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
 

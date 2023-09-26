@@ -28,9 +28,9 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
-using ::testing::IsEmpty;
 
 TEST(Message, Empty) {
   auto const m = MessageBuilder{}.Build();

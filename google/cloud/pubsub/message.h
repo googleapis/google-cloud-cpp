@@ -38,9 +38,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage);
 /// Estimate the size of a message.
 std::size_t MessageSize(pubsub::Message const&);
+std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
 // For Open Telemetry tracing only. Inserts or sets an attribute on the message.
 void SetAttribute(std::string const& key, std::string value, pubsub::Message&);
-// For Open Telemetry tracing only. Gets the value of an given attribute key on the message.
+// For Open Telemetry tracing only. Gets the value for a given attribute key on
+// the message.
 std::string GetAttribute(std::string const& key, pubsub::Message& m);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -132,7 +134,7 @@ class Message {
                                             std::string value,
                                             pubsub::Message&);
   friend std::string pubsub_internal::GetAttribute(std::string const& key,
-                                                        pubsub::Message&);
+                                                   pubsub::Message&);
 
   /// Construct `Message` objects.
   friend class MessageBuilder;
@@ -272,44 +274,6 @@ class MessageBuilder {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
-
-namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-inline ::google::pubsub::v1::PubsubMessage const& ToProto(
-    pubsub::Message const& m) {
-  return m.proto_;
-}
-
-inline ::google::pubsub::v1::PubsubMessage&& ToProto(pubsub::Message&& m) {
-  return std::move(m.proto_);
-}
-
-inline pubsub::Message FromProto(::google::pubsub::v1::PubsubMessage m) {
-  return pubsub::Message(std::move(m));
-}
-
-inline std::size_t MessageSize(pubsub::Message const& m) {
-  return m.MessageSize();
-}
-
-std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
-
-inline void SetAttribute(std::string const& key, std::string value,
-                         pubsub::Message& m) {
-  (*m.proto_.mutable_attributes())[key] = std::move(value);
-}
-
-inline std::string GetAttribute(std::string const& key,
-                                     pubsub::Message& m) {
-  auto value = m.proto_.attributes().find(key);
-  if (value != m.proto_.attributes().end()) {
-    return value->second;
-  }
-  return std::string{};
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 
