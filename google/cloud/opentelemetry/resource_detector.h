@@ -27,7 +27,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Make an OpenTelemetry Resource Detector for Google Cloud Platform.
 std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
-MakeResourceDetector(Options options = {});
+MakeResourceDetector();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel

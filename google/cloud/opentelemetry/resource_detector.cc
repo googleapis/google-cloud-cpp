@@ -23,7 +23,7 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
-MakeResourceDetector(Options options) {
+MakeResourceDetector() {
   auto retry = internal::LimitedTimeRetryPolicy<otel_internal::StatusTraits>(
       std::chrono::seconds(10));
   auto backoff =
@@ -33,7 +33,7 @@ MakeResourceDetector(Options options) {
       [](Options const& options) {
         return rest_internal::MakeDefaultRestClient("", options);
       },
-      retry.clone(), backoff.clone(), std::move(options));
+      retry.clone(), backoff.clone(), Options{});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

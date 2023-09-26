@@ -60,7 +60,7 @@ std::unique_ptr<BasicTracingConfiguration> ConfigureBasicTracing(
   auto ratio = options.has<BasicTracingRateOption>()
                    ? options.get<BasicTracingRateOption>()
                    : 1.0;
-  auto detector = MakeResourceDetector(options);
+  auto detector = MakeResourceDetector();
   auto processor =
       std::make_unique<opentelemetry::sdk::trace::BatchSpanProcessor>(
           MakeTraceExporter(std::move(project), std::move(options)),
