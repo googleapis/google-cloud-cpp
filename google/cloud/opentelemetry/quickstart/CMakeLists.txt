@@ -30,5 +30,5 @@ endif ()
 
 # Once the packages are found, define the targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::experimental-opentelemetry
+target_link_libraries(quickstart google-cloud-cpp::opentelemetry
                       google-cloud-cpp::storage)

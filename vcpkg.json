@@ -29,7 +29,7 @@
     "benchmark",
     "gtest",
     {
-      "$description": "Only used for the experimental-opentelemetry feature.",
+      "$description": "Only used for the opentelemetry feature.",
       "name": "opentelemetry-cpp"
     },
     {

@@ -57,10 +57,10 @@ target_compile_options(google_cloud_cpp_opentelemetry
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
     google_cloud_cpp_opentelemetry
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-opentelemetry"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::opentelemetry"
                VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
-add_library(google-cloud-cpp::experimental-opentelemetry ALIAS
+add_library(google-cloud-cpp::opentelemetry ALIAS
             google_cloud_cpp_opentelemetry)
 create_bazel_config(google_cloud_cpp_opentelemetry YEAR 2023)
 
@@ -109,7 +109,6 @@ if (NOT BUILD_TESTING)
 endif ()
 
 add_subdirectory(integration_tests)
-add_subdirectory(samples)
 
 set(opentelemetry_unit_tests
     # cmake-format: sort
@@ -130,7 +129,7 @@ foreach (fname ${opentelemetry_unit_tests})
         PRIVATE google_cloud_cpp_testing
                 google_cloud_cpp_testing_grpc
                 google_cloud_cpp_testing_rest
-                google-cloud-cpp::experimental-opentelemetry
+                google-cloud-cpp::opentelemetry
                 google_cloud_cpp_trace_mocks
                 GTest::gmock_main
                 GTest::gmock
@@ -149,9 +148,8 @@ endif ()
 include(CTest)
 add_executable(opentelemetry_quickstart "quickstart/quickstart.cc")
 target_link_libraries(
-    opentelemetry_quickstart
-    PRIVATE google-cloud-cpp::experimental-opentelemetry
-            google-cloud-cpp::storage)
+    opentelemetry_quickstart PRIVATE google-cloud-cpp::opentelemetry
+                                     google-cloud-cpp::storage)
 google_cloud_cpp_add_common_options(opentelemetry_quickstart)
 add_test(
     NAME opentelemetry_quickstart

@@ -105,7 +105,7 @@ foreach (feature IN LISTS FEATURES)
         add_make_quickstart_target("${feature}" storage quickstart_grpc)
         continue()
     endif ()
-    if ("${feature}" STREQUAL "experimental-opentelemetry")
+    if ("${feature}" STREQUAL "opentelemetry")
         add_cmake_quickstart_target("${feature}" opentelemetry quickstart)
         # TODO(#10795) - sort out opentelemetry-cpp pkgconfig
         # add_make_quickstart_target("${feature}" opentelemetry quickstart)

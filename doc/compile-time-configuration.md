@@ -39,7 +39,7 @@ customers will need to use these. If you have specific questions please start a
   team if you want to use this feature or are interested in the GA timeline.
 - `experimental-http-transcoding` enables support for HTTP/1.1 transport (as
   opposed to gRPC over HTTP/2) in some libraries.
-- `experimental-opentelemetry` enables support for [OpenTelemetry].
+- `opentelemetry` enables support for [OpenTelemetry].
 
 ### Override Protobuf compiler and gRPC's plugin
 
