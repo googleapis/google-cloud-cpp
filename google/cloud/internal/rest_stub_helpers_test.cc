@@ -155,13 +155,13 @@ TEST(RestStubHelpers, DeleteWithEmptyResponse) {
 
   RestContext context;
   Request request;
-  auto result = Delete(*mock_client, context, request, "/v1/delete/");
+  auto result = Delete(*mock_client, context, request, false, "/v1/delete/");
   EXPECT_THAT(result, IsOk());
 
-  result = Delete(*mock_client, context, request, "/v1/delete/");
+  result = Delete(*mock_client, context, request, false, "/v1/delete/");
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Delete(*mock_client, context, request, "/v1/delete/");
+  result = Delete(*mock_client, context, request, false, "/v1/delete/");
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
   EXPECT_THAT(result.message(), Eq("Permission foo denied on resource bar."));
   EXPECT_THAT(result.error_info().domain(), Eq("googleapis.com"));
@@ -200,10 +200,12 @@ TEST(RestStubHelpers, DeleteWithNonEmptyResponse) {
 
   RestContext context;
   Request request;
-  auto result = Delete<Response>(*mock_client, context, request, "/v1/delete/");
+  auto result =
+      Delete<Response>(*mock_client, context, request, false, "/v1/delete/");
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Delete<Response>(*mock_client, context, request, "/v1/delete/");
+  result =
+      Delete<Response>(*mock_client, context, request, false, "/v1/delete/");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));
@@ -242,11 +244,12 @@ TEST(RestStubHelpers, Get) {
   RestContext context;
   std::vector<std::pair<std::string, std::string>> params = {
       {"seconds", std::to_string(proto_request.seconds())}};
-  auto result =
-      Get<Response>(*mock_client, context, proto_request, "/v1/", params);
+  auto result = Get<Response>(*mock_client, context, proto_request, false,
+                              "/v1/", params);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Get<Response>(*mock_client, context, proto_request, "/v1/", params);
+  result = Get<Response>(*mock_client, context, proto_request, false, "/v1/",
+                         params);
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));
@@ -268,7 +271,7 @@ TEST(RestStubHelpers, ProtoRequestToJsonPayloadSuccess) {
   proto_request.set_response_type("response_value");
   proto_request.set_metadata_type("metadata_value");
 
-  auto status = ProtoRequestToJsonPayload(proto_request, json_payload);
+  auto status = ProtoRequestToJsonPayload(proto_request, json_payload, true);
   ASSERT_THAT(status, IsOk());
   EXPECT_THAT(json_payload, Eq(kJsonUpdatePayload));
 }
@@ -307,11 +310,12 @@ TEST(RestStubHelpers, Patch) {
       });
 
   RestContext context;
-  auto result = Patch<Response>(*mock_client, context, proto_request, "/v1/");
+  auto result =
+      Patch<Response>(*mock_client, context, proto_request, true, "/v1/");
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
   context.AddHeader("custom", "header");
-  result = Patch<Response>(*mock_client, context, proto_request, "/v1/");
+  result = Patch<Response>(*mock_client, context, proto_request, true, "/v1/");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));
@@ -360,11 +364,12 @@ TEST(RestStubHelpers, PostWithNonEmptyResponse) {
   RestContext context;
   std::vector<std::pair<std::string, std::string>> params = {
       {"response_type", proto_request.response_type()}, {"foo", "bar"}};
-  auto result =
-      Post<Response>(*mock_client, context, proto_request, "/v1/", params);
+  auto result = Post<Response>(*mock_client, context, proto_request, true,
+                               "/v1/", params);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Post<Response>(*mock_client, context, proto_request, "/v1/", params);
+  result = Post<Response>(*mock_client, context, proto_request, true, "/v1/",
+                          params);
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));
@@ -410,10 +415,11 @@ TEST(RestStubHelpers, PostWithEmptyResponse) {
   RestContext context;
   std::vector<std::pair<std::string, std::string>> params = {
       {"response_type", proto_request.response_type()}, {"foo", "bar"}};
-  auto result = Post(*mock_client, context, proto_request, "/v1/", params);
+  auto result =
+      Post(*mock_client, context, proto_request, true, "/v1/", params);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Post(*mock_client, context, proto_request, "/v1/", params);
+  result = Post(*mock_client, context, proto_request, true, "/v1/", params);
   EXPECT_THAT(result, IsOk());
 }
 
@@ -452,10 +458,11 @@ TEST(RestStubHelpers, Put) {
       });
 
   RestContext context;
-  auto result = Put<Response>(*mock_client, context, proto_request, "/v1/");
+  auto result =
+      Put<Response>(*mock_client, context, proto_request, true, "/v1/");
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Put<Response>(*mock_client, context, proto_request, "/v1/");
+  result = Put<Response>(*mock_client, context, proto_request, true, "/v1/");
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));

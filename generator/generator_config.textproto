@@ -2988,6 +2988,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -2998,6 +2999,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3008,6 +3010,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3018,6 +3021,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3028,6 +3032,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3038,6 +3043,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3048,6 +3054,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3058,6 +3065,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 service {
@@ -3068,6 +3076,7 @@ service {
   experimental: true
   generate_rest_transport: true
   generate_grpc_transport: false
+  preserve_proto_field_names_in_json: true
 }
 
 # Storage

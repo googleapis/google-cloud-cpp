@@ -186,6 +186,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasGenerateGrpcTransport() const;
 
   /**
+   * Determines if protobuf to JSON transcoding should preserve field names as
+   * they appear in the proto definition or render the field names in camelCase.
+   */
+  bool HasPreserveProtoFieldNamesInJson() const;
+
+  /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per
    * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
