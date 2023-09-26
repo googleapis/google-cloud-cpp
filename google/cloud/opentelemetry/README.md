@@ -46,8 +46,7 @@ int main(int argc, char* argv[]) {
   auto configuration = gc::otel::ConfigureBasicTracing(project);
 
   // Create a client with OpenTelemetry tracing enabled.
-  auto options =
-      gc::Options{}.set<gc::experimental::OpenTelemetryTracingOption>(true);
+  auto options = gc::Options{}.set<gc::OpenTelemetryTracingOption>(true);
   auto client = gcs::Client(options);
 
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");

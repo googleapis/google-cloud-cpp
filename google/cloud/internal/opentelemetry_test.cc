@@ -277,10 +277,10 @@ TEST(OpenTelemetry, TracingEnabled) {
   auto options = Options{};
   EXPECT_FALSE(TracingEnabled(options));
 
-  options.set<experimental::OpenTelemetryTracingOption>(false);
+  options.set<OpenTelemetryTracingOption>(false);
   EXPECT_FALSE(TracingEnabled(options));
 
-  options.set<experimental::OpenTelemetryTracingOption>(true);
+  options.set<OpenTelemetryTracingOption>(true);
   EXPECT_TRUE(TracingEnabled(options));
 }
 
