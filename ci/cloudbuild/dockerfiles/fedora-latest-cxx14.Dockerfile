@@ -60,7 +60,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # Download and install direct dependencies of `google-cloud-cpp`. Including
 # development dependencies.  In each case, remove the downloaded files and the
 # temporary artifacts after a successful build to keep the image smaller (and
-# with fewer layers)
+# with fewer layers).
 
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
