@@ -160,8 +160,7 @@ message ServiceConfiguration {
   // generator to emit field names as they are defined in the proto files,
   // which by style convention is typically snake_case. When false, the field
   // names will be converted to camelCase.
-  // The generator will default this flag to false if no value is provided.
-  optional bool preserve_proto_field_names_in_json = 25;
+  bool preserve_proto_field_names_in_json = 25;
 }
 
 message DiscoveryDocumentDefinedProduct {

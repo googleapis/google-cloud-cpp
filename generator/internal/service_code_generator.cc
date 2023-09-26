@@ -200,13 +200,6 @@ bool ServiceCodeGenerator::HasGenerateGrpcTransport() const {
          generate_grpc_transport->second == "true";
 }
 
-bool ServiceCodeGenerator::HasPreserveProtoFieldNamesInJson() const {
-  auto const preserve_proto_field_names_in_json =
-      service_vars_.find("preserve_proto_field_names_in_json");
-  return preserve_proto_field_names_in_json != service_vars_.end() &&
-         preserve_proto_field_names_in_json->second == "true";
-}
-
 std::vector<std::string>
 ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;

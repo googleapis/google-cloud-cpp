@@ -347,8 +347,7 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
 
     // Unless preserve_proto_field_names_in_json has been explicitly set to
     // true, treat it as having a default value of false.
-    if (service.has_preserve_proto_field_names_in_json() &&
-        service.preserve_proto_field_names_in_json()) {
+    if (service.preserve_proto_field_names_in_json()) {
       args.emplace_back(
           "--cpp_codegen_opt=preserve_proto_field_names_in_json=true");
     } else {
