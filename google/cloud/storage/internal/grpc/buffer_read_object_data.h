@@ -65,7 +65,6 @@ class GrpcBufferReadObjectData {
 
  private:
   absl::Cord contents_;
-  absl::Cord spill_view_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
