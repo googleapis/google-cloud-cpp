@@ -58,8 +58,7 @@ DefaultSqlBackupRunsServiceRestStub::Get(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "backupRuns", "/",
-                   request.id()),
-      {});
+                   request.id()));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -80,8 +79,9 @@ DefaultSqlBackupRunsServiceRestStub::List(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "backupRuns"),
-      {std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

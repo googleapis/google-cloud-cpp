@@ -72,6 +72,17 @@ rest_internal::RestRequest CreateRestRequest(
   return rest_request;
 }
 
+std::vector<std::pair<std::string, std::string>> TrimEmptyQueryParameters(
+    std::vector<std::pair<std::string, std::string>> query_params) {
+  std::vector<std::pair<std::string, std::string>> trimmed_params;
+  for (auto& qp : query_params) {
+    if (!qp.first.empty() && !qp.second.empty()) {
+      trimmed_params.push_back(std::move(qp));
+    }
+  }
+  return trimmed_params;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

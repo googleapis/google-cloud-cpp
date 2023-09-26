@@ -62,7 +62,9 @@ DefaultRegionInstancesRestStub::AsyncBulkInsert(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instances", "/",
-                             "bulkInsert")));
+                             "bulkInsert"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

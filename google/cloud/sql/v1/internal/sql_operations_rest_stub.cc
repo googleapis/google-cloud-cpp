@@ -46,8 +46,7 @@ DefaultSqlOperationsServiceRestStub::Get(
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "operations", "/", request.operation()),
-      {});
+                   "operations", "/", request.operation()));
 }
 
 StatusOr<google::cloud::sql::v1::OperationsListResponse>
@@ -58,9 +57,10 @@ DefaultSqlOperationsServiceRestStub::List(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "operations"),
-      {std::make_pair("instance", request.instance()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("instance", request.instance()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 Status DefaultSqlOperationsServiceRestStub::Cancel(

@@ -62,7 +62,9 @@ DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthCheck(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpHealthChecks", "/",
-                             request.http_health_check())));
+                             request.http_health_check()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -80,8 +82,7 @@ DefaultHttpHealthChecksRestStub::GetHttpHealthCheck(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "httpHealthChecks",
-                   "/", request.http_health_check()),
-      {});
+                   "/", request.http_health_check()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -100,7 +101,9 @@ DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthCheck(
                 *service, *rest_context, request.http_health_check_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "httpHealthChecks")));
+                             "httpHealthChecks"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -119,12 +122,13 @@ DefaultHttpHealthChecksRestStub::ListHttpHealthChecks(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "httpHealthChecks"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -144,7 +148,9 @@ DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthCheck(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpHealthChecks", "/",
-                             request.http_health_check())));
+                             request.http_health_check()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -170,7 +176,9 @@ DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthCheck(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "httpHealthChecks", "/",
-                             request.http_health_check())));
+                             request.http_health_check()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

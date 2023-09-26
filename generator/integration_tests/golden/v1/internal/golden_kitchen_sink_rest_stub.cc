@@ -55,7 +55,10 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request,
-      "/v1/token:generate");
+      "/v1/token:generate",
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("name", request.name()),
+        std::make_pair("audience", request.audience()),
+        std::make_pair("include_email", request.include_email() ? "1" : "0")}));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -64,7 +67,8 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request,
-      "/v2/entries:write");
+      "/v2/entries:write",
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("log_name", request.log_name())}));
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
@@ -74,8 +78,8 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v2", "/", request.parent(), "/", "logs"),
-      {std::make_pair("page_size", std::to_string(request.page_size())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
+        std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
@@ -84,7 +88,7 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.name(), "/", "keys"), {});
+      absl::StrCat("/", "v1", "/", request.name(), "/", "keys"));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::DoNothing(
@@ -100,7 +104,9 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.table_name(), ":explicitRouting1"));
+      absl::StrCat("/", "v1", "/", request.table_name(), ":explicitRouting1"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
+        std::make_pair("no_regex_needed", request.no_regex_needed())}));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
@@ -108,7 +114,9 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post(
       *service_, rest_context, request,
-      absl::StrCat("/", "v1", "/", request.table_name(), ":explicitRouting2"));
+      absl::StrCat("/", "v1", "/", request.table_name(), ":explicitRouting2"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
+        std::make_pair("no_regex_needed", request.no_regex_needed())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

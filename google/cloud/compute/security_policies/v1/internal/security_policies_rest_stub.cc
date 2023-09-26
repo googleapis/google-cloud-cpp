@@ -63,7 +63,9 @@ DefaultSecurityPoliciesRestStub::AsyncAddRule(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.security_policy(),
-                             "/", "addRule")));
+                             "/", "addRule"),
+                rest_internal::TrimEmptyQueryParameters({std::make_pair(
+                    "validate_only", request.validate_only() ? "1" : "0")})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -83,14 +85,15 @@ DefaultSecurityPoliciesRestStub::AggregatedListSecurityPolicies(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "securityPolicies"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes",
-                      request.include_all_scopes() ? "1" : "0"),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("include_all_scopes",
+                          request.include_all_scopes() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -110,7 +113,9 @@ DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/",
-                             request.security_policy())));
+                             request.security_policy()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -128,8 +133,7 @@ DefaultSecurityPoliciesRestStub::GetSecurityPolicy(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies",
-                   "/", request.security_policy()),
-      {});
+                   "/", request.security_policy()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
@@ -143,7 +147,8 @@ DefaultSecurityPoliciesRestStub::GetRule(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies",
                    "/", request.security_policy(), "/", "getRule"),
-      {std::make_pair("priority", std::to_string(request.priority()))});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("priority", std::to_string(request.priority()))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,7 +167,11 @@ DefaultSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
                 *service, *rest_context, request.security_policy_resource(),
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
-                             "securityPolicies")));
+                             "securityPolicies"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id()),
+                     std::make_pair("validate_only",
+                                    request.validate_only() ? "1" : "0")})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -181,12 +190,13 @@ DefaultSecurityPoliciesRestStub::ListSecurityPolicies(
       *service_, rest_context, request,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -202,12 +212,13 @@ DefaultSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "securityPolicies",
                    "/", "listPreconfiguredExpressionSets"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("order_by", request.order_by()),
-       std::make_pair("page_token", request.page_token()),
-       std::make_pair("return_partial_success",
-                      request.return_partial_success() ? "1" : "0")});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("order_by", request.order_by()),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("return_partial_success",
+                          request.return_partial_success() ? "1" : "0")}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -227,7 +238,9 @@ DefaultSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/",
-                             request.security_policy())));
+                             request.security_policy()),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -254,7 +267,12 @@ DefaultSecurityPoliciesRestStub::AsyncPatchRule(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.security_policy(),
-                             "/", "patchRule")));
+                             "/", "patchRule"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("priority",
+                                    std::to_string(request.priority())),
+                     std::make_pair("validate_only",
+                                    request.validate_only() ? "1" : "0")})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -280,7 +298,9 @@ DefaultSecurityPoliciesRestStub::AsyncRemoveRule(
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "securityPolicies", "/", request.security_policy(),
-                             "/", "removeRule")));
+                             "/", "removeRule"),
+                rest_internal::TrimEmptyQueryParameters({std::make_pair(
+                    "priority", std::to_string(request.priority()))})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

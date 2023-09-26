@@ -154,11 +154,12 @@ void SetHttpDerivedMethodVars(
   absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
-// RestClient::Get does not use request body, so per
-// https://cloud.google.com/apis/design/standard_methods, for HTTP transcoding
-// we need to turn the request fields into query parameters.
+// Request fields not appering in the path may not wind up as part of the json
+// request body, so per https://cloud.google.com/apis/design/standard_methods,
+// for HTTP transcoding we need to turn the request fields into query
+// parameters.
 // TODO(#10176): Consider adding support for repeated simple fields.
-void SetHttpGetQueryParameters(
+void SetHttpQueryParameters(
     absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
         parsed_http_info,
     google::protobuf::MethodDescriptor const& method,
@@ -168,47 +169,44 @@ void SetHttpGetQueryParameters(
                     VarsDictionary& method_vars)
         : method(method), method_vars(method_vars) {}
     void FormatQueryParameterCode(
-        std::string const& http_verb,
         std::vector<std::string> const& param_field_names) {
-      if (http_verb == "Get") {
-        std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
-            remaining_request_fields;
-        auto const* request = method.input_type();
-        for (int i = 0; i < request->field_count(); ++i) {
-          auto const* field = request->field(i);
-          // Only attempt to make non-repeated, simple fields query parameters.
-          if (!field->is_repeated() &&
-              field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
-            if (!internal::Contains(param_field_names, field->name())) {
-              remaining_request_fields.emplace_back(field->name(),
-                                                    field->cpp_type());
-            }
+      std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
+          remaining_request_fields;
+      auto const* request = method.input_type();
+      for (int i = 0; i < request->field_count(); ++i) {
+        auto const* field = request->field(i);
+        // Only attempt to make non-repeated, simple fields query parameters.
+        if (!field->is_repeated() && !field->options().deprecated() &&
+            field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+          if (!internal::Contains(param_field_names, field->name())) {
+            remaining_request_fields.emplace_back(field->name(),
+                                                  field->cpp_type());
           }
         }
-        auto format = [](auto* out, auto const& i) {
-          if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
-            out->append(absl::StrFormat("std::make_pair(\"%s\", request.%s())",
-                                        i.first, i.first));
-            return;
-          }
-          if (i.second == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
-            out->append(absl::StrFormat(
-                R"""(std::make_pair("%s", request.%s() ? "1" : "0"))""",
-                i.first, i.first));
-            return;
-          }
+      }
+      auto format = [](auto* out, auto const& i) {
+        if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
+          out->append(absl::StrFormat("std::make_pair(\"%s\", request.%s())",
+                                      i.first, i.first));
+          return;
+        }
+        if (i.second == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
           out->append(absl::StrFormat(
-              "std::make_pair(\"%s\", std::to_string(request.%s()))", i.first,
+              R"""(std::make_pair("%s", request.%s() ? "1" : "0"))""", i.first,
               i.first));
-        };
-        if (remaining_request_fields.empty()) {
-          method_vars["method_http_query_parameters"] = ", {}";
-        } else {
-          method_vars["method_http_query_parameters"] = absl::StrCat(
-              ",\n      {",
-              absl::StrJoin(remaining_request_fields, ",\n       ", format),
-              "}");
+          return;
         }
+        out->append(absl::StrFormat(
+            "std::make_pair(\"%s\", std::to_string(request.%s()))", i.first,
+            i.first));
+      };
+      if (remaining_request_fields.empty()) {
+        method_vars["method_http_query_parameters"] = "";
+      } else {
+        method_vars["method_http_query_parameters"] = absl::StrCat(
+            ",\n      rest_internal::TrimEmptyQueryParameters({",
+            absl::StrJoin(remaining_request_fields, ",\n        ", format),
+            "})");
       }
     }
 
@@ -222,7 +220,7 @@ void SetHttpGetQueryParameters(
     // the request and are already present in the url. No need to duplicate
     // these fields as query parameters.
     void operator()(HttpExtensionInfo const& info) {
-      FormatQueryParameterCode(info.http_verb, [&] {
+      FormatQueryParameterCode([&] {
         std::vector<std::string> param_field_names;
         param_field_names.reserve(info.field_substitutions.size());
         for (auto const& p : info.field_substitutions) {
@@ -236,9 +234,7 @@ void SetHttpGetQueryParameters(
     // url:
     //   get: "/v1/foo/bar"
     // In this case, all non-repeated, simple fields should be query parameters.
-    void operator()(HttpSimpleInfo const& info) {
-      FormatQueryParameterCode(info.http_verb, {});
-    }
+    void operator()(HttpSimpleInfo const&) { FormatQueryParameterCode({}); }
 
     // This visitor is an error diagnostic, in case we encounter an url that the
     // generator does not currently parse. Emitting the method name causes code

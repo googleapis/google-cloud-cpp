@@ -116,8 +116,7 @@ DefaultSqlInstancesServiceRestStub::Get(
   return rest_internal::Get<google::cloud::sql::v1::DatabaseInstance>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance()),
-      {});
+                   "instances", "/", request.instance()));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -148,9 +147,10 @@ DefaultSqlInstancesServiceRestStub::List(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances"),
-      {std::make_pair("filter", request.filter()),
-       std::make_pair("max_results", std::to_string(request.max_results())),
-       std::make_pair("page_token", request.page_token())});
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
@@ -161,8 +161,7 @@ DefaultSqlInstancesServiceRestStub::ListServerCas(
       google::cloud::sql::v1::InstancesListServerCasResponse>(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "listServerCas"),
-      {});
+                   "instances", "/", request.instance(), "/", "listServerCas"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -302,7 +301,13 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/",
-                   "verifyExternalSyncSettings"));
+                   "verifyExternalSyncSettings"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("verify_connection_only",
+                          request.verify_connection_only() ? "1" : "0"),
+           std::make_pair("sync_mode", std::to_string(request.sync_mode())),
+           std::make_pair("verify_replication_only",
+                          request.verify_replication_only() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -314,7 +319,13 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/",
-                   "startExternalSync"));
+                   "startExternalSync"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("sync_mode", std::to_string(request.sync_mode())),
+           std::make_pair("skip_verification",
+                          request.skip_verification() ? "1" : "0"),
+           std::make_pair("sync_parallel_level",
+                          std::to_string(request.sync_parallel_level()))}));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -339,8 +350,7 @@ DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/",
-                   "getDiskShrinkConfig"),
-      {});
+                   "getDiskShrinkConfig"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -365,8 +375,7 @@ DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
       *service_, rest_context, request,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/",
-                   "getLatestRecoveryTime"),
-      {});
+                   "getLatestRecoveryTime"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

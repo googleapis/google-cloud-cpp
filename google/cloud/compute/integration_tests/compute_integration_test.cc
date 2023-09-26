@@ -135,6 +135,41 @@ TEST_F(ComputeIntegrationTest, PaginatedMapField) {
   }
 }
 
+TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
+  namespace disks = ::google::cloud::compute_disks_v1;
+  auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
+
+  google::cloud::cpp::compute::v1::Disk disk;
+  disk.set_name(CreateRandomName("int-test-disk-"));
+  disk.set_size_gb("10");
+  (*disk.mutable_labels())["test"] = "test";
+  auto result = client.InsertDisk(project_id_, zone_, disk).get();
+  ASSERT_THAT(result, testing_util::IsOk());
+
+  google::cloud::cpp::compute::v1::Disk disk_update = disk;
+  disk_update.mutable_labels()->clear();
+
+  google::cloud::cpp::compute::disks::v1::UpdateDiskRequest update_request;
+  update_request.set_project(project_id_);
+  update_request.set_zone(zone_);
+  update_request.set_disk(disk.name());
+  *(update_request.mutable_disk_resource()) = disk_update;
+  auto update_disk = client.UpdateDisk(update_request).get();
+
+  EXPECT_THAT(update_disk,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Empty updateMask is not supported")));
+
+  update_request.set_update_mask("labels");
+  update_disk = client.UpdateDisk(update_request).get();
+  EXPECT_THAT(update_disk,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Updating labels is not supported")));
+
+  auto delete_disk = client.DeleteDisk(project_id_, zone_, disk.name()).get();
+  EXPECT_STATUS_OK(delete_disk);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_v1
