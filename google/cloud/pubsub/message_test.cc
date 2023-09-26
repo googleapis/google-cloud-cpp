@@ -30,6 +30,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
+using ::testing::IsEmpty;
 
 TEST(Message, Empty) {
   auto const m = MessageBuilder{}.Build();
@@ -267,11 +268,11 @@ TEST(Message, SetAttributeFriend) {
 TEST(Message, GetAttributeFriend) {
   auto m0 = MessageBuilder{}.SetAttributes({{"k0", "v0"}}).Build();
 
-  auto const v0 = pubsub_internal::GetAttributeValue("k0", m0);
-  auto const v1 = pubsub_internal::GetAttributeValue("k1", m0);
+  auto const v0 = pubsub_internal::GetAttribute("k0", m0);
+  auto const v1 = pubsub_internal::GetAttribute("k1", m0);
 
   EXPECT_EQ(v0, "v0");
-  EXPECT_TRUE(v1.empty());
+  EXPECT_THAT(v1, IsEmpty());
 }
 
 }  // namespace
