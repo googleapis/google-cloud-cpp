@@ -205,6 +205,39 @@ TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
   EXPECT_FALSE(SafeGetTo(val, json, key));
 }
 
+TEST(JsonUtilsTest, RemoveKeys) {
+  std::vector<std::string> keys = {"start_time", "dataset_id"};
+  auto const* json_text =
+      R"({"start_time":"10", "project_id": "1", "dataset_id":"1"})";
+
+  auto json = RemoveJsonKeysAndEmptyFields(json_text, keys);
+  auto const* expected = R"({"project_id":"1"})";
+
+  EXPECT_EQ(expected, json.dump());
+}
+
+TEST(JsonUtilsTest, RemoveEmptyArrays) {
+  std::vector<std::string> keys = {"start_time", "query_parameters"};
+  auto const* json_text =
+      R"({"start_time":"10", "project_id": "1", "query_parameters":[]})";
+
+  auto json = RemoveJsonKeysAndEmptyFields(json_text, keys);
+  auto const* expected = R"({"project_id":"1"})";
+
+  EXPECT_EQ(expected, json.dump());
+}
+
+TEST(JsonUtilsTest, RemoveEmptyObjects) {
+  std::vector<std::string> keys = {"start_time", "query"};
+  auto const* json_text =
+      R"({"start_time":"10", "project_id": "1", "query":{}})";
+
+  auto json = RemoveJsonKeysAndEmptyFields(json_text, keys);
+  auto const* expected = R"({"project_id":"1"})";
+
+  EXPECT_EQ(expected, json.dump());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

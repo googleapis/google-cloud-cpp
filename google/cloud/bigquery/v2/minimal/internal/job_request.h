@@ -227,6 +227,9 @@ class InsertJobRequest {
 
   std::string const& project_id() const { return project_id_; }
   Job const& job() const { return job_; }
+  std::vector<std::string> json_filter_keys() const {
+    return json_filter_keys_;
+  }
 
   InsertJobRequest& set_project_id(std::string project_id) & {
     project_id_ = std::move(project_id);
@@ -244,6 +247,14 @@ class InsertJobRequest {
     return std::move(set_job(std::move(job)));
   }
 
+  InsertJobRequest& set_json_filter_keys(std::vector<std::string> keys) & {
+    json_filter_keys_ = std::move(keys);
+    return *this;
+  }
+  InsertJobRequest&& set_json_filter_keys(std::vector<std::string> keys) && {
+    return std::move(set_json_filter_keys(std::move(keys)));
+  }
+
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
@@ -251,6 +262,7 @@ class InsertJobRequest {
  private:
   std::string project_id_;
   Job job_;
+  std::vector<std::string> json_filter_keys_;
 };
 
 class CancelJobRequest {
