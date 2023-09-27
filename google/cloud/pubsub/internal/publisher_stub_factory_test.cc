@@ -307,9 +307,6 @@ TEST_F(PublisherStubFactory, ListTopicSubscriptions) {
               Contains(HasSubstr("ListTopicSubscriptions")));
 }
 
-// ListTopicSnapshots, 5
-// ListTopicSnapshotsRequest, 2
-// ListTopicSnapshotsResponse, 1
 TEST_F(PublisherStubFactory, ListTopicSnapshots) {
   ::testing::InSequence sequence;
   MockFactory factory;
