@@ -42,9 +42,9 @@ std::size_t MessageSize(pubsub::Message const&);
 std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
 // For Open Telemetry tracing only. Inserts or sets an attribute on the message.
 void SetAttribute(std::string const& key, std::string value, pubsub::Message&);
-// For Open Telemetry tracing only. Gets the value for a given attribute key on
-// the message. Note: the string_view is only valid for the lifetime of the
-// corresponding message.
+// For Open Telemetry tracing only. Returns the value for a given attribute key
+// on the message or the null string_view when not found. Note: the string_view
+// is only valid for the lifetime of the corresponding message.
 absl::string_view GetAttribute(std::string const& key, pubsub::Message& m);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
