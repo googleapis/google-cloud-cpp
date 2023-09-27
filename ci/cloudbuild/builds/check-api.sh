@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2317
 #
 # Copyright 2021 Google LLC
 #
