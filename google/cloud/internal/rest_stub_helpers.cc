@@ -45,9 +45,9 @@ Status RestResponseToProto(google::protobuf::Message& destination,
   return {};
 }
 
-Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
-                                 bool preserve_proto_field_names,
-                                 std::string& json_payload) {
+StatusOr<std::string> ProtoRequestToJsonPayload(
+    google::protobuf::Message const& request, bool preserve_proto_field_names) {
+  std::string json_payload;
   google::protobuf::util::JsonPrintOptions print_options;
   print_options.preserve_proto_field_names = preserve_proto_field_names;
   auto proto_to_json_status = google::protobuf::util::MessageToJsonString(
@@ -60,7 +60,7 @@ Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
             .WithReason("Failure converting proto request to HTTP")
             .WithMetadata("message_type", request.GetTypeName()));
   }
-  return {};
+  return json_payload;
 }
 
 rest_internal::RestRequest CreateRestRequest(

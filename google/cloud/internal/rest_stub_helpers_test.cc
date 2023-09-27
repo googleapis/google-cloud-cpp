@@ -266,14 +266,13 @@ auto constexpr kJsonUpdateResponse = R"(
 )";
 
 TEST(RestStubHelpers, ProtoRequestToJsonPayloadSuccess) {
-  std::string json_payload;
   google::longrunning::OperationInfo proto_request;
   proto_request.set_response_type("response_value");
   proto_request.set_metadata_type("metadata_value");
 
-  auto status = ProtoRequestToJsonPayload(proto_request, true, json_payload);
-  ASSERT_THAT(status, IsOk());
-  EXPECT_THAT(json_payload, Eq(kJsonUpdatePayload));
+  auto json_payload = ProtoRequestToJsonPayload(proto_request, true);
+  ASSERT_STATUS_OK(json_payload);
+  EXPECT_THAT(*json_payload, Eq(kJsonUpdatePayload));
 }
 
 TEST(RestStubHelpers, Patch) {
