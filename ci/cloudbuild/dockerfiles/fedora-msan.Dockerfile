@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:37
+FROM fedora:38
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -40,20 +40,23 @@ RUN echo 'root:' | chpasswd
 WORKDIR /var/tmp/build
 
 # Install instructions from:
-# https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
-RUN git clone --depth=1 --branch llvmorg-15.0.7 https://github.com/llvm/llvm-project
+#     https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
+# with updates from:
+#     https://github.com/google/sanitizers/issues/1685
+RUN git clone --depth=1 --branch llvmorg-16.0.6 https://github.com/llvm/llvm-project
 WORKDIR /var/tmp/build/llvm-project
 # configure cmake
-RUN cmake -GNinja -S llvm -B build \
+RUN cmake -GNinja -S runtimes -B build \
     -DCMAKE_BUILD_TYPE=Release \
-    -DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi;libunwind" \
+    -DLLVM_ENABLE_PROJECTS="clang" \
+    -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DLLVM_USE_SANITIZER=MemoryWithOrigins \
     -DCMAKE_INSTALL_PREFIX=/usr
 # build the libraries
-RUN cmake --build build -- cxx cxxabi unwind
-RUN cmake --build build -- install-cxx install-cxxabi install-unwind
+RUN cmake --build build
+RUN cmake --install build
 # The Fedora package for LLVM does something similar:
 #     https://src.fedoraproject.org/rpms/llvm/blob/rawhide/f/llvm.spec#_374
 RUN echo "/usr/lib/x86_64-unknown-linux-gnu" >/etc/ld.so.conf.d/msan.conf
