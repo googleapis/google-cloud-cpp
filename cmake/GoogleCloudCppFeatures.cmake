@@ -34,7 +34,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sorted
     "pubsublite" "sql")
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
-)
+    "opentelemetry")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted

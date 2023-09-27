@@ -1,4 +1,4 @@
-# Google Cloud C++ OpenTelemetry Exporters
+# OpenTelemetry Exporters C++ Client Library
 
 This directory contains components to export [traces] captured with
 [OpenTelemetry] to [Cloud Trace]. Traces are a form of telemetry where calls

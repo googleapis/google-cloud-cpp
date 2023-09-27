@@ -27,6 +27,11 @@ fi
 cd "${PROJECT_ROOT}"
 readonly LIBRARY=$1
 
+# This library does not contain our typical clients.
+if [[ "${LIBRARY}" == "opentelemetry" ]]; then
+  exit 0
+fi
+
 readonly LIB="google/cloud/${LIBRARY}"
 readonly DOCDIR="google/cloud/${LIBRARY}/doc"
 # Only generated libraries have a `main.dox`, exit successfully in other cases.
@@ -42,7 +47,7 @@ readonly EXPECTED=(
 )
 for file in "${EXPECTED[@]}"; do
   if [[ ! -r "${DOCDIR}/${file}" ]]; then
-    echo "Missing ${file} for in ${DOCDIR}"
+    echo "Missing ${file} in ${DOCDIR}"
     exit 1
   fi
 done

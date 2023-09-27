@@ -176,7 +176,7 @@ int WriteInstallDirectories(
 int WriteFeatureList(
     google::cloud::cpp::generator::GeneratorConfiguration const& config,
     std::string const& output_path) {
-  std::vector<std::string> features;
+  std::vector<std::string> features = {"opentelemetry"};
   auto services = config.service();
   for (auto const& p : config.discovery_products()) {
     services.Add(p.rest_services().begin(), p.rest_services().end());

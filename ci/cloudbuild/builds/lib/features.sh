@@ -62,10 +62,10 @@ function features::libraries() {
 function features::list_full() {
   local feature_list
   mapfile -t feature_list < <(features::libraries)
-  feature_list+=(opentelemetry experimental-storage_grpc grafeas)
+  feature_list+=(experimental-storage_grpc grafeas)
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
 function features::list_full_cmake() {
-  echo "__ga_libraries__,__experimental_libraries__,experimental-storage_grpc,opentelemetry,experimental-bigquery_rest"
+  echo "__ga_libraries__,__experimental_libraries__,experimental-storage_grpc,experimental-bigquery_rest"
 }

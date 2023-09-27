@@ -203,7 +203,7 @@ time {
   done
 
   mapfile -t libraries < <(features::libraries)
-  for library in "${libraries[@]}" opentelemetry; do
+  for library in "${libraries[@]}"; do
     ci/generate-markdown/update-library-readme.sh "${library}"
   done
 }
