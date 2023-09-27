@@ -282,7 +282,7 @@ TEST(Message, GetAttributeFriend) {
   auto const v0 = pubsub_internal::GetAttribute("k0", m0);
   auto const v1 = pubsub_internal::GetAttribute("k1", m0);
 
-  EXPECT_EQ(v0, "v0");
+  EXPECT_EQ(std::string(v0.data(), v0.size()), "v0");
   EXPECT_THAT(v1, IsEmpty());
 }
 
