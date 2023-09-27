@@ -172,6 +172,15 @@ cc_library(
 
 cc_library(
     name = "experimental-opentelemetry",
+    deprecation = "this library is now GA, please use //:opentelemetry instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
+    ],
+)
+
+cc_library(
+    name = "opentelemetry",
     deps = [
         "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
     ],
@@ -186,6 +195,13 @@ cc_library(
 
 bool_flag(
     name = "enable-experimental-opentelemetry",
+    build_setting_default = False,
+    deprecation = "this flag is now GA, please use //:enable_opentelemetry instead.",
+    visibility = ["//:__subpackages__"],
+)
+
+bool_flag(
+    name = "enable_opentelemetry",
     build_setting_default = False,
     visibility = ["//:__subpackages__"],
 )

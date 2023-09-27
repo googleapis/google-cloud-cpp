@@ -23,9 +23,9 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-args+=("--//:enable-experimental-opentelemetry=false")
-# Note that we do not ignore `//:experimental-opentelemetry`, as the exporters
-# should be usable whether google-cloud-cpp is built with OpenTelemetry or not.
+args+=("--//:enable_opentelemetry=false")
+# Note that we do not ignore `//:opentelemetry`, as the exporters should be
+# usable whether google-cloud-cpp is built with OpenTelemetry or not.
 ignore=(
   # These integration tests use opentelemetry matchers out of convenience.
   "-//google/cloud/opentelemetry/integration_tests/..."

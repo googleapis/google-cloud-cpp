@@ -45,6 +45,15 @@ capture_build_info(
 config_setting(
     name = "enable_opentelemetry_valid",
     flag_values = {
+        "//:enable_opentelemetry": "true",
+        "@io_opentelemetry_cpp//api:with_abseil": "true",
+    },
+)
+
+config_setting(
+    name = "enable_opentelemetry_valid-transition",
+    flag_values = {
+        "//:enable_opentelemetry": "false",
         "//:enable-experimental-opentelemetry": "true",
         "@io_opentelemetry_cpp//api:with_abseil": "true",
     },
@@ -53,6 +62,7 @@ config_setting(
 config_setting(
     name = "disable_opentelemetry",
     flag_values = {
+        "//:enable_opentelemetry": "false",
         "//:enable-experimental-opentelemetry": "false",
     },
 )
@@ -66,11 +76,16 @@ cc_library(
             # Enable OpenTelemetry features in google-cloud-cpp
             "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
         ],
+        ":enable_opentelemetry_valid-transition": [
+            # Enable OpenTelemetry features in google-cloud-cpp
+            "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
+        ],
         "//conditions:default": [],
     }),
     target_compatible_with = select(
         {
             ":enable_opentelemetry_valid": [],
+            ":enable_opentelemetry_valid-transition": [],
             ":disable_opentelemetry": [],
         },
         # else, OpenTelemetry is enabled, but with an invalid configuration.
@@ -100,6 +115,9 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "@com_google_absl//absl/types:variant",
     ] + select({
         ":enable_opentelemetry_valid": [
+            "@io_opentelemetry_cpp//api",
+        ],
+        ":enable_opentelemetry_valid-transition": [
             "@io_opentelemetry_cpp//api",
         ],
         "//conditions:default": [],

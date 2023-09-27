@@ -22,7 +22,7 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-opentelemetry",
+        "@google_cloud_cpp//:opentelemetry",
         "@google_cloud_cpp//:storage",
     ],
 )
