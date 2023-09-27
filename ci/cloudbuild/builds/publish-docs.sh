@@ -152,12 +152,11 @@ io::log_h2 "Publishing DocFX"
 io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${docfx_bucket}"
 
-# Upload the documents for all features, including common. We need to
-# rename `experimental-opentelemetry`. Some features do not have documentation,
-# such as `experimental-storage_grpc`. These are harmless, as the
-# `stage_docfx()`` function skips missing directories without an error.
+# Upload the documents for all features, including common. Some features do not
+# have documentation, such as `experimental-storage_grpc`. These are harmless,
+# as the `stage_docfx()` function skips missing directories without an error.
 uploaded=(common)
-uploaded+=("${FEATURE_LIST[@]/experimental-opentelemetry/opentelemetry}")
+uploaded+=("${FEATURE_LIST[@]}")
 echo "${uploaded[@]}" | xargs -P "$(nproc)" -n 1 \
   bash -c "TIMEFORMAT=\"\${0} completed in %0lR\";
            time ci/retry-command.sh 3 120 stage_docfx \"\${0}\" \"${docfx_bucket}\" cmake-out \"cmake-out/\${0}.docfx.log\""

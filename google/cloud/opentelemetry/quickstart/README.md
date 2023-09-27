@@ -107,13 +107,13 @@ Also note that we explicitly load OpenTelemetry's dependencies in the
 
 The [packaging guide] contains instructions for how to build from source.
 
-The Google Cloud exporters are built as part of the `experimental-opentelemetry`
-feature. This quickstart also uses the GCS client, from the `storage` feature.
+The Google Cloud exporters are built as part of the `opentelemetry` feature.
+This quickstart also uses the GCS client, from the `storage` feature.
 
 To enable these features, add the following to your CMake configuration command:
 
 ```
--DGOOGLE_CLOUD_CPP_ENABLE="storage,experimental-opentelemetry"
+-DGOOGLE_CLOUD_CPP_ENABLE="storage,opentelemetry"
 ```
 
 #### Fetching `opentelemetry-cpp`

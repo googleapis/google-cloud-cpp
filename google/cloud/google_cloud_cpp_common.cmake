@@ -171,7 +171,7 @@ target_link_libraries(
            Threads::Threads
            OpenSSL::Crypto)
 
-if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     find_package(opentelemetry-cpp CONFIG)
     if (opentelemetry-cpp_FOUND)
         target_link_libraries(google_cloud_cpp_common
