@@ -39,7 +39,7 @@ git clone https://github.com/microsoft/vcpkg.git $HOME/vcpkg
 ```
 cd google-cloud-cpp
 cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-PUBLISH=$PWD/build-out/fedora-37-cmake-publish-docs/cmake-out/google/cloud
+PUBLISH=$PWD/build-out/fedora-latest-cmake-publish-docs/cmake-out/google/cloud
 cmake --build .build/ --target docfx/all \
   && rm -f $HOME/doc-pipeline/testdata/cpp/* \
   && env -C $HOME/doc-pipeline/testdata/cpp $PWD/.build/docfx/doxygen2docfx $PUBLISH/xml/cloud.doxygen.xml cloud 2.9.0

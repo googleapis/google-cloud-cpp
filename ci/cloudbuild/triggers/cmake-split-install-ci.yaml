@@ -7,7 +7,7 @@ github:
 name: cmake-split-install-ci
 substitutions:
   _BUILD_NAME: cmake-split-install
-  _DISTRO: fedora-37-cmake
+  _DISTRO: fedora-latest-cmake
   _TRIGGER_TYPE: ci
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
