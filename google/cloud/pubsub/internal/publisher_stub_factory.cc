@@ -47,7 +47,53 @@ std::shared_ptr<pubsub_internal::PublisherStub> DecoratePublisherStub(
   return stub;
 }
 
+std::shared_ptr<grpc::Channel> CreateGrpcChannel(
+    google::cloud::internal::GrpcAuthenticationStrategy& auth,
+    Options const& options, int channel_id) {
+  return auth.CreateChannel(
+      options.get<EndpointOption>(),
+      pubsub_internal::MakeChannelArguments(options, channel_id));
+}
+
 }  // namespace
+
+std::shared_ptr<PublisherStub> CreateDecoratedStubs(
+    google::cloud::CompletionQueue cq, Options const& options,
+    BasePublisherStubFactory const& base_factory) {
+  auto auth = google::cloud::internal::CreateAuthenticationStrategy(
+      std::move(cq), options);
+  auto child_factory = [base_factory, &auth, options](int id) {
+    auto channel = CreateGrpcChannel(*auth, options, id);
+    return base_factory(std::move(channel));
+  };
+
+  auto stub = CreateRoundRobinPublisherStub(options, std::move(child_factory));
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
+                                                            std::move(stub));
+  }
+  stub = std::make_shared<pubsub_internal::PublisherMetadata>(
+      std::move(stub), std::multimap<std::string, std::string>{},
+      internal::HandCraftedLibClientHeader());
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<pubsub_internal::PublisherLogging>(
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
+  }
+  return stub;
+}
+
+std::shared_ptr<PublisherStub> CreateRoundRobinPublisherStub(
+    Options const& options,
+    std::function<std::shared_ptr<PublisherStub>(int)> child_factory) {
+  std::vector<std::shared_ptr<PublisherStub>> children(
+      (std::max)(1, options.get<GrpcNumChannelsOption>()));
+  int id = 0;
+  std::generate(children.begin(), children.end(),
+                [&id, &child_factory] { return child_factory(id++); });
+  return std::make_shared<PublisherRoundRobin>(std::move(children));
+}
 
 std::shared_ptr<PublisherStub> MakeDefaultPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options) {
