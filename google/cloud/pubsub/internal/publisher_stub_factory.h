@@ -24,6 +24,9 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using BasePublisherStubFactory = std::function<std::shared_ptr<PublisherStub>(
+    std::shared_ptr<grpc::Channel>)>;
+
 std::shared_ptr<PublisherStub> MakeDefaultPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
@@ -33,6 +36,15 @@ std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
 std::shared_ptr<PublisherStub> MakeTestPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options,
     std::vector<std::shared_ptr<PublisherStub>> mocks);
+
+/// Used in testing to create decorated stubs.
+std::shared_ptr<PublisherStub> CreateDecoratedStubs(
+    google::cloud::CompletionQueue cq, Options const& options,
+    BasePublisherStubFactory const& base_factory);
+
+std::shared_ptr<PublisherStub> CreateRoundRobinPublisherStub(
+    Options const& options,
+    std::function<std::shared_ptr<PublisherStub>(int)> child_factory);
 
 /**
  * Creates a PublisherStub configured with @p opts and @p channel_id.

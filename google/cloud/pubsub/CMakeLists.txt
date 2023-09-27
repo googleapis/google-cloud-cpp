@@ -308,6 +308,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/flow_controlled_publisher_connection_test.cc
         internal/flow_controlled_publisher_tracing_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
+        internal/publisher_stub_factory_test.cc
         internal/publisher_tracing_connection_test.cc
         internal/pull_lease_manager_test.cc
         internal/rejects_with_ordering_key_test.cc
