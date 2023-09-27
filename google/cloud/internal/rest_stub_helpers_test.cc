@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
@@ -266,14 +267,12 @@ auto constexpr kJsonUpdateResponse = R"(
 )";
 
 TEST(RestStubHelpers, ProtoRequestToJsonPayloadSuccess) {
-  std::string json_payload;
   google::longrunning::OperationInfo proto_request;
   proto_request.set_response_type("response_value");
   proto_request.set_metadata_type("metadata_value");
 
-  auto status = ProtoRequestToJsonPayload(proto_request, true, json_payload);
-  ASSERT_THAT(status, IsOk());
-  EXPECT_THAT(json_payload, Eq(kJsonUpdatePayload));
+  auto json_payload = ProtoRequestToJsonPayload(proto_request, true);
+  EXPECT_THAT(json_payload, IsOkAndHolds(Eq(kJsonUpdatePayload)));
 }
 
 TEST(RestStubHelpers, Patch) {
