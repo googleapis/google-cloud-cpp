@@ -433,8 +433,7 @@ TEST_F(PublisherStubFactory, AsyncPublish) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, AsyncPublish)
             .WillOnce(
-                [this](google::cloud::CompletionQueue&,
-                       auto context,
+                [this](google::cloud::CompletionQueue&, auto context,
                        google::pubsub::v1::PublishRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
