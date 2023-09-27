@@ -76,7 +76,7 @@ void EndSpan(opentelemetry::trace::Span& span) { EndSpanImpl(span, Status{}); }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 bool TracingEnabled(Options const& options) {
-  return options.get<experimental::OpenTelemetryTracingOption>();
+  return options.get<OpenTelemetryTracingOption>();
 }
 #else
 bool TracingEnabled(Options const&) { return false; }

@@ -172,12 +172,12 @@ std::shared_ptr<SpanCatcher> InstallSpanCatcher() {
 }
 
 Options EnableTracing(Options options) {
-  options.set<experimental::OpenTelemetryTracingOption>(true);
+  options.set<OpenTelemetryTracingOption>(true);
   return options;
 }
 
 Options DisableTracing(Options options) {
-  options.set<experimental::OpenTelemetryTracingOption>(false);
+  options.set<OpenTelemetryTracingOption>(false);
   return options;
 }
 

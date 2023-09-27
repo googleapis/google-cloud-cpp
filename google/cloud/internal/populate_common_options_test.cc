@@ -132,13 +132,11 @@ TEST(PopulateCommonOptions, OpenTelemetryTracing) {
       {"", false},
       {"ON", true},
   };
-  auto const input =
-      Options{}.set<experimental::OpenTelemetryTracingOption>(false);
+  auto const input = Options{}.set<OpenTelemetryTracingOption>(false);
   for (auto const& test : tests) {
     ScopedEnvironment env("GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", test.env);
     auto options = PopulateCommonOptions(input, {}, {}, {}, {});
-    EXPECT_EQ(options.get<experimental::OpenTelemetryTracingOption>(),
-              test.value);
+    EXPECT_EQ(options.get<OpenTelemetryTracingOption>(), test.value);
   }
 }
 
@@ -158,16 +156,16 @@ TEST(MakeAuthOptions, WithoutTracing) {
   auto options = Options{}.set<EndpointOption>("endpoint_option");
   auto auth_options = MakeAuthOptions(options);
   EXPECT_FALSE(auth_options.has<EndpointOption>());
-  EXPECT_FALSE(auth_options.get<experimental::OpenTelemetryTracingOption>());
+  EXPECT_FALSE(auth_options.get<OpenTelemetryTracingOption>());
 }
 
 TEST(MakeAuthOptions, WithTracing) {
   auto options = Options{}
                      .set<EndpointOption>("endpoint_option")
-                     .set<experimental::OpenTelemetryTracingOption>(true);
+                     .set<OpenTelemetryTracingOption>(true);
   auto auth_options = MakeAuthOptions(options);
   EXPECT_FALSE(auth_options.has<EndpointOption>());
-  EXPECT_TRUE(auth_options.get<experimental::OpenTelemetryTracingOption>());
+  EXPECT_TRUE(auth_options.get<OpenTelemetryTracingOption>());
 }
 
 }  // namespace

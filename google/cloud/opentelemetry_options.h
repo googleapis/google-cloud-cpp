@@ -20,7 +20,6 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace experimental {
 
 /**
  * Enables tracing with [OpenTelemetry]
@@ -79,6 +78,9 @@ struct OpenTelemetryTracingOption {
   using Type = bool;
 };
 
+namespace experimental {
+/// @deprecated Use google::cloud::OpenTelemetryTracingOption instead.
+using OpenTelemetryTracingOption = ::google::cloud::OpenTelemetryTracingOption;
 }  // namespace experimental
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
