@@ -19,6 +19,7 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/integration.sh
+source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
@@ -30,7 +31,7 @@ deleted_packages="$(find google/cloud -type d -name quickstart | xargs printf ",
 mapfile -t args < <(bazel::common_args)
 args+=("--config=ubsan")
 args+=("--deleted_packages=${deleted_packages:1}")
-bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+io::run bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
