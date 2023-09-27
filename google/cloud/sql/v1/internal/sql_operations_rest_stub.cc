@@ -44,7 +44,7 @@ DefaultSqlOperationsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "operations", "/", request.operation()));
 }
@@ -54,7 +54,7 @@ DefaultSqlOperationsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::OperationsListResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "operations"),
       rest_internal::TrimEmptyQueryParameters(
@@ -67,7 +67,7 @@ Status DefaultSqlOperationsServiceRestStub::Cancel(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
   return rest_internal::Post(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "operations", "/", request.operation(), "/", "cancel"));
 }

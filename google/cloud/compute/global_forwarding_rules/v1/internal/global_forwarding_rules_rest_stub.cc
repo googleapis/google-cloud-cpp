@@ -59,7 +59,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncDeleteForwardingRule(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "forwardingRules", "/", request.forwarding_rule()),
@@ -79,7 +79,7 @@ DefaultGlobalForwardingRulesRestStub::GetForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         GetForwardingRuleRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "forwardingRules",
                    "/", request.forwarding_rule()));
@@ -99,6 +99,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncInsertForwardingRule(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.forwarding_rule_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "forwardingRules"),
@@ -119,7 +120,7 @@ DefaultGlobalForwardingRulesRestStub::ListGlobalForwardingRules(
         ListGlobalForwardingRulesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "forwardingRules"),
       rest_internal::TrimEmptyQueryParameters(
@@ -145,6 +146,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncPatchForwardingRule(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.forwarding_rule_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "forwardingRules", "/", request.forwarding_rule()),
@@ -172,7 +174,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_set_labels_request_resource(),
+                request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "forwardingRules", "/", request.resource(), "/",
@@ -199,6 +201,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncSetTarget(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_reference_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "forwardingRules", "/", request.forwarding_rule(),
@@ -226,7 +229,7 @@ DefaultGlobalForwardingRulesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -247,7 +250,7 @@ future<Status> DefaultGlobalForwardingRulesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

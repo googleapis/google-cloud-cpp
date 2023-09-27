@@ -58,7 +58,7 @@ DefaultTargetPoolsRestStub::AsyncAddHealthCheck(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.target_pools_add_health_check_request_resource(),
+                request.target_pools_add_health_check_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
@@ -87,7 +87,7 @@ DefaultTargetPoolsRestStub::AsyncAddInstance(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.target_pools_add_instance_request_resource(),
+                request.target_pools_add_instance_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
@@ -109,7 +109,7 @@ DefaultTargetPoolsRestStub::AggregatedListTargetPools(
         AggregatedListTargetPoolsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetPoolAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "targetPools"),
       rest_internal::TrimEmptyQueryParameters(
@@ -136,7 +136,7 @@ DefaultTargetPoolsRestStub::AsyncDeleteTargetPool(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
@@ -157,7 +157,7 @@ DefaultTargetPoolsRestStub::GetTargetPool(
     google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPool>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "targetPools", "/", request.target_pool()));
@@ -170,7 +170,7 @@ DefaultTargetPoolsRestStub::GetHealth(
         request) {
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>(
-      *service_, rest_context, request.instance_reference_resource(),
+      *service_, rest_context, request.instance_reference_resource(), false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "targetPools", "/", request.target_pool(), "/",
@@ -190,7 +190,7 @@ DefaultTargetPoolsRestStub::AsyncInsertTargetPool(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.target_pool_resource(),
+                *service, *rest_context, request.target_pool_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools"),
@@ -210,7 +210,7 @@ DefaultTargetPoolsRestStub::ListTargetPools(
     google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPoolList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "targetPools"),
@@ -238,6 +238,7 @@ DefaultTargetPoolsRestStub::AsyncRemoveHealthCheck(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.target_pools_remove_health_check_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
@@ -266,7 +267,7 @@ DefaultTargetPoolsRestStub::AsyncRemoveInstance(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.target_pools_remove_instance_request_resource(),
+                request.target_pools_remove_instance_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
@@ -295,6 +296,7 @@ DefaultTargetPoolsRestStub::AsyncSetBackup(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_reference_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetPools", "/",
@@ -324,7 +326,7 @@ DefaultTargetPoolsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -345,7 +347,7 @@ future<Status> DefaultTargetPoolsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

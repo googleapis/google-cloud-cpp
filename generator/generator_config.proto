@@ -154,6 +154,13 @@ message ServiceConfiguration {
     DISCOVERY_DOCUMENT = 1;
   }
   ProtoFileSource proto_file_source = 24;
+
+  // Some REST services expect JSON fields names in snake_case, while most other
+  // REST services expect JSON in camelCase. When true this flag instructs the
+  // generator to emit field names as they are defined in the proto files,
+  // which by style convention is typically snake_case. When false, the field
+  // names will be converted to camelCase.
+  bool preserve_proto_field_names_in_json = 25;
 }
 
 message DiscoveryDocumentDefinedProduct {

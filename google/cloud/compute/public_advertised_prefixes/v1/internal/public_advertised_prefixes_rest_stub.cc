@@ -60,7 +60,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefix(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "publicAdvertisedPrefixes", "/",
@@ -82,7 +82,7 @@ DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefix(
         GetPublicAdvertisedPrefixRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
@@ -103,7 +103,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncInsertPublicAdvertisedPrefix(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.public_advertised_prefix_resource(),
+                request.public_advertised_prefix_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "publicAdvertisedPrefixes"),
@@ -124,7 +124,7 @@ DefaultPublicAdvertisedPrefixesRestStub::ListPublicAdvertisedPrefixes(
         ListPublicAdvertisedPrefixesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes"),
@@ -151,7 +151,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncPatchPublicAdvertisedPrefix(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.public_advertised_prefix_resource(),
+                request.public_advertised_prefix_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "publicAdvertisedPrefixes", "/",
@@ -179,7 +179,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -200,7 +200,7 @@ future<Status> DefaultPublicAdvertisedPrefixesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

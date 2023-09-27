@@ -60,7 +60,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "notificationEndpoints",
@@ -82,7 +82,7 @@ DefaultRegionNotificationEndpointsRestStub::GetNotificationEndpoint(
         GetNotificationEndpointRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "notificationEndpoints", "/",
@@ -103,7 +103,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncInsertNotificationEndpoint(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.notification_endpoint_resource(),
+                request.notification_endpoint_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "notificationEndpoints"),
@@ -124,7 +124,7 @@ DefaultRegionNotificationEndpointsRestStub::ListRegionNotificationEndpoints(
         ListRegionNotificationEndpointsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpointList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "notificationEndpoints"),
@@ -150,7 +150,7 @@ DefaultRegionNotificationEndpointsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -171,7 +171,7 @@ future<Status> DefaultRegionNotificationEndpointsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

@@ -58,7 +58,7 @@ DefaultRegionAutoscalersRestStub::AsyncDeleteAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "autoscalers", "/",
@@ -79,7 +79,7 @@ DefaultRegionAutoscalersRestStub::GetAutoscaler(
     google::cloud::cpp::compute::region_autoscalers::v1::
         GetAutoscalerRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "autoscalers", "/", request.autoscaler()));
@@ -98,7 +98,7 @@ DefaultRegionAutoscalersRestStub::AsyncInsertAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.autoscaler_resource(),
+                *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "autoscalers"),
@@ -119,7 +119,7 @@ DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
         ListRegionAutoscalersRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionAutoscalerList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "autoscalers"),
@@ -145,7 +145,7 @@ DefaultRegionAutoscalersRestStub::AsyncPatchAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.autoscaler_resource(),
+                *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "autoscalers"),
@@ -173,7 +173,7 @@ DefaultRegionAutoscalersRestStub::AsyncUpdateAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.autoscaler_resource(),
+                *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "autoscalers"),
@@ -201,7 +201,7 @@ DefaultRegionAutoscalersRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -222,7 +222,7 @@ future<Status> DefaultRegionAutoscalersRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

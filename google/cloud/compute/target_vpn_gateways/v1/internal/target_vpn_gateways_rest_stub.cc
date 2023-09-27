@@ -52,7 +52,7 @@ DefaultTargetVpnGatewaysRestStub::AggregatedListTargetVpnGateways(
         AggregatedListTargetVpnGatewaysRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "targetVpnGateways"),
@@ -80,7 +80,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncDeleteTargetVpnGateway(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetVpnGateways", "/",
@@ -101,7 +101,7 @@ DefaultTargetVpnGatewaysRestStub::GetTargetVpnGateway(
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         GetTargetVpnGatewayRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGateway>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "targetVpnGateways", "/",
@@ -122,6 +122,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncInsertTargetVpnGateway(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_vpn_gateway_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetVpnGateways"),
@@ -142,7 +143,7 @@ DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
         ListTargetVpnGatewaysRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "targetVpnGateways"),
@@ -169,7 +170,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.region_set_labels_request_resource(),
+                request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "targetVpnGateways", "/",
@@ -197,7 +198,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -218,7 +219,7 @@ future<Status> DefaultTargetVpnGatewaysRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

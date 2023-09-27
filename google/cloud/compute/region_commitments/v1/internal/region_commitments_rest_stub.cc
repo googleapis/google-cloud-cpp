@@ -52,7 +52,7 @@ DefaultRegionCommitmentsRestStub::AggregatedListRegionCommitments(
         AggregatedListRegionCommitmentsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "commitments"),
       rest_internal::TrimEmptyQueryParameters(
@@ -72,7 +72,7 @@ DefaultRegionCommitmentsRestStub::GetCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
         GetCommitmentRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "commitments", "/", request.commitment()));
@@ -91,7 +91,7 @@ DefaultRegionCommitmentsRestStub::AsyncInsertCommitment(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.commitment_resource(),
+                *service, *rest_context, request.commitment_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "commitments"),
@@ -111,7 +111,7 @@ DefaultRegionCommitmentsRestStub::ListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
         ListRegionCommitmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "commitments"),
@@ -137,7 +137,7 @@ DefaultRegionCommitmentsRestStub::AsyncUpdateCommitment(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.commitment_resource(),
+                *service, *rest_context, request.commitment_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "commitments", "/",
@@ -167,7 +167,7 @@ DefaultRegionCommitmentsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -188,7 +188,7 @@ future<Status> DefaultRegionCommitmentsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

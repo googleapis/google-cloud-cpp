@@ -57,7 +57,7 @@ DefaultFirewallsRestStub::AsyncDeleteFirewall(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "firewalls",
                              "/", request.firewall()),
@@ -77,7 +77,7 @@ DefaultFirewallsRestStub::GetFirewall(
     google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Firewall>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewalls", "/",
                    request.firewall()));
@@ -96,7 +96,7 @@ DefaultFirewallsRestStub::AsyncInsertFirewall(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.firewall_resource(),
+                *service, *rest_context, request.firewall_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "firewalls"),
@@ -116,7 +116,7 @@ DefaultFirewallsRestStub::ListFirewalls(
     google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "firewalls"),
       rest_internal::TrimEmptyQueryParameters(
@@ -141,7 +141,7 @@ DefaultFirewallsRestStub::AsyncPatchFirewall(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.firewall_resource(),
+                *service, *rest_context, request.firewall_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "firewalls",
                              "/", request.firewall()),
@@ -168,7 +168,7 @@ DefaultFirewallsRestStub::AsyncUpdateFirewall(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.firewall_resource(),
+                *service, *rest_context, request.firewall_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "firewalls",
                              "/", request.firewall()),
@@ -195,7 +195,7 @@ DefaultFirewallsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -216,7 +216,7 @@ future<Status> DefaultFirewallsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

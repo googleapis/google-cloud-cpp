@@ -58,6 +58,7 @@ DefaultBackendBucketsRestStub::AsyncAddSignedUrlKey(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.signed_url_key_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket(),
@@ -85,7 +86,7 @@ DefaultBackendBucketsRestStub::AsyncDeleteBackendBucket(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket()),
@@ -112,7 +113,7 @@ DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket(),
@@ -134,7 +135,7 @@ DefaultBackendBucketsRestStub::GetBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
         GetBackendBucketRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucket>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "backendBuckets", "/",
                    request.backend_bucket()));
@@ -154,6 +155,7 @@ DefaultBackendBucketsRestStub::AsyncInsertBackendBucket(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_bucket_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets"),
@@ -173,7 +175,7 @@ DefaultBackendBucketsRestStub::ListBackendBuckets(
     google::cloud::cpp::compute::backend_buckets::v1::
         ListBackendBucketsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucketList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "backendBuckets"),
       rest_internal::TrimEmptyQueryParameters(
@@ -199,6 +201,7 @@ DefaultBackendBucketsRestStub::AsyncPatchBackendBucket(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_bucket_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket()),
@@ -226,7 +229,7 @@ DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.security_policy_reference_resource(),
+                request.security_policy_reference_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket(),
@@ -255,6 +258,7 @@ DefaultBackendBucketsRestStub::AsyncUpdateBackendBucket(
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.backend_bucket_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "backendBuckets", "/", request.backend_bucket()),
@@ -281,7 +285,7 @@ DefaultBackendBucketsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -302,7 +306,7 @@ future<Status> DefaultBackendBucketsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

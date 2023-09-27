@@ -57,7 +57,7 @@ DefaultGlobalAddressesRestStub::AsyncDeleteAddress(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "addresses",
                              "/", request.address()),
@@ -77,7 +77,7 @@ DefaultGlobalAddressesRestStub::GetAddress(
     google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "addresses", "/",
                    request.address()));
@@ -96,7 +96,7 @@ DefaultGlobalAddressesRestStub::AsyncInsertAddress(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.address_resource(),
+                *service, *rest_context, request.address_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "addresses"),
@@ -116,7 +116,7 @@ DefaultGlobalAddressesRestStub::ListGlobalAddresses(
     google::cloud::cpp::compute::global_addresses::v1::
         ListGlobalAddressesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AddressList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "addresses"),
       rest_internal::TrimEmptyQueryParameters(
@@ -142,7 +142,7 @@ DefaultGlobalAddressesRestStub::AsyncMove(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_addresses_move_request_resource(),
+                request.global_addresses_move_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "addresses",
                              "/", request.address(), "/", "move"),
@@ -170,7 +170,7 @@ DefaultGlobalAddressesRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_set_labels_request_resource(),
+                request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "addresses",
                              "/", request.resource(), "/", "setLabels")));
@@ -195,7 +195,7 @@ DefaultGlobalAddressesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -216,7 +216,7 @@ future<Status> DefaultGlobalAddressesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

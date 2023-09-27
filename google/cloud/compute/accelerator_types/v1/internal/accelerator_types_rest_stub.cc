@@ -46,7 +46,7 @@ DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
         AggregatedListAcceleratorTypesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "acceleratorTypes"),
@@ -67,7 +67,7 @@ DefaultAcceleratorTypesRestStub::GetAcceleratorType(
     google::cloud::cpp::compute::accelerator_types::v1::
         GetAcceleratorTypeRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorType>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "acceleratorTypes", "/", request.accelerator_type()));
@@ -80,7 +80,7 @@ DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
         ListAcceleratorTypesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "acceleratorTypes"),

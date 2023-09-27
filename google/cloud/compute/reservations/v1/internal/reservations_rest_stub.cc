@@ -51,7 +51,7 @@ DefaultReservationsRestStub::AggregatedListReservations(
         AggregatedListReservationsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ReservationAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "reservations"),
       rest_internal::TrimEmptyQueryParameters(
@@ -78,7 +78,7 @@ DefaultReservationsRestStub::AsyncDeleteReservation(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "reservations", "/",
@@ -99,7 +99,7 @@ DefaultReservationsRestStub::GetReservation(
     google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Reservation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "reservations", "/", request.reservation()));
@@ -111,7 +111,7 @@ DefaultReservationsRestStub::GetIamPolicy(
     google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "reservations", "/", request.resource(), "/",
@@ -134,7 +134,7 @@ DefaultReservationsRestStub::AsyncInsertReservation(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.reservation_resource(),
+                *service, *rest_context, request.reservation_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "reservations"),
@@ -154,7 +154,7 @@ DefaultReservationsRestStub::ListReservations(
     google::cloud::cpp::compute::reservations::v1::
         ListReservationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ReservationList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "reservations"),
@@ -181,7 +181,7 @@ DefaultReservationsRestStub::AsyncResize(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.reservations_resize_request_resource(),
+                request.reservations_resize_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "reservations", "/",
@@ -203,6 +203,7 @@ DefaultReservationsRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "reservations", "/", request.resource(), "/",
@@ -217,6 +218,7 @@ DefaultReservationsRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "reservations", "/", request.resource(), "/",
@@ -236,7 +238,7 @@ DefaultReservationsRestStub::AsyncUpdateReservation(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.reservation_resource(),
+                *service, *rest_context, request.reservation_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "reservations", "/",
@@ -266,7 +268,7 @@ DefaultReservationsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/zones/", request.zone(), "/operations/",
                              request.operation())));
@@ -288,7 +290,7 @@ future<Status> DefaultReservationsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },

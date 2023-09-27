@@ -46,7 +46,7 @@ DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
         AggregatedListGlobalOperationsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::OperationAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "operations"),
       rest_internal::TrimEmptyQueryParameters(
@@ -65,7 +65,7 @@ Status DefaultGlobalOperationsRestStub::DeleteOperation(
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
   return rest_internal::Delete(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "operations", "/",
                    request.operation()));
@@ -77,7 +77,7 @@ DefaultGlobalOperationsRestStub::GetOperation(
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "operations", "/",
                    request.operation()));
@@ -89,7 +89,7 @@ DefaultGlobalOperationsRestStub::ListGlobalOperations(
     google::cloud::cpp::compute::global_operations::v1::
         ListGlobalOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "operations"),
       rest_internal::TrimEmptyQueryParameters(
@@ -107,7 +107,7 @@ DefaultGlobalOperationsRestStub::Wait(
     google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "operations", "/",
                    request.operation(), "/", "wait"));

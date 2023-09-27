@@ -58,7 +58,7 @@ DefaultNetworksRestStub::AsyncAddPeering(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.networks_add_peering_request_resource(),
+                request.networks_add_peering_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
                              "/", request.network(), "/", "addPeering"),
@@ -85,7 +85,7 @@ DefaultNetworksRestStub::AsyncDeleteNetwork(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
                              "/", request.network()),
@@ -105,7 +105,7 @@ DefaultNetworksRestStub::GetNetwork(
     google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Network>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks", "/",
                    request.network()));
@@ -118,7 +118,7 @@ DefaultNetworksRestStub::GetEffectiveFirewalls(
         GetEffectiveFirewallsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks", "/",
                    request.network(), "/", "getEffectiveFirewalls"));
@@ -137,7 +137,7 @@ DefaultNetworksRestStub::AsyncInsertNetwork(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.network_resource(),
+                *service, *rest_context, request.network_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -156,7 +156,7 @@ DefaultNetworksRestStub::ListNetworks(
     google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks"),
       rest_internal::TrimEmptyQueryParameters(
@@ -175,7 +175,7 @@ DefaultNetworksRestStub::ListPeeringRoutes(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "networks", "/",
                    request.network(), "/", "listPeeringRoutes"),
@@ -204,7 +204,7 @@ DefaultNetworksRestStub::AsyncPatchNetwork(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.network_resource(),
+                *service, *rest_context, request.network_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
                              "/", request.network()),
@@ -232,7 +232,7 @@ DefaultNetworksRestStub::AsyncRemovePeering(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.networks_remove_peering_request_resource(),
+                request.networks_remove_peering_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
                              "/", request.network(), "/", "removePeering"),
@@ -259,7 +259,7 @@ DefaultNetworksRestStub::AsyncSwitchToCustomMode(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
                              "/", request.network(), "/", "switchToCustomMode"),
@@ -287,7 +287,7 @@ DefaultNetworksRestStub::AsyncUpdatePeering(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.networks_update_peering_request_resource(),
+                request.networks_update_peering_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "networks",
                              "/", request.network(), "/", "updatePeering"),
@@ -314,7 +314,7 @@ DefaultNetworksRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -335,7 +335,7 @@ future<Status> DefaultNetworksRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

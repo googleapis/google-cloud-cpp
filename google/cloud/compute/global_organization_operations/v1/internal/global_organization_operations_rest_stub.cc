@@ -46,7 +46,7 @@ Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
         DeleteOperationRequest const& request) {
   return rest_internal::Delete(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
                    "/", "operations", "/", request.operation()),
       rest_internal::TrimEmptyQueryParameters(
@@ -59,7 +59,7 @@ DefaultGlobalOrganizationOperationsRestStub::GetOperation(
     google::cloud::cpp::compute::global_organization_operations::v1::
         GetOperationRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "locations", "/", "global",
                    "/", "operations", "/", request.operation()),
       rest_internal::TrimEmptyQueryParameters(
@@ -72,7 +72,7 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
     google::cloud::cpp::compute::global_organization_operations::v1::
         ListGlobalOrganizationOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       "/compute/v1/locations/global/operations",
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),

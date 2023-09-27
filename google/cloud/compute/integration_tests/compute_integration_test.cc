@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/compute/disks/v1/disks_client.h"
+#include "google/cloud/compute/instances/v1/instances_client.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/parse_rfc3339.h"
@@ -168,6 +169,45 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
 
   auto delete_disk = client.DeleteDisk(project_id_, zone_, disk.name()).get();
   EXPECT_STATUS_OK(delete_disk);
+}
+
+TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
+  namespace instances = ::google::cloud::compute_instances_v1;
+  auto client =
+      instances::InstancesClient(instances::MakeInstancesConnectionRest());
+  std::string const instance_name = "test-e2-micro-instance";
+  google::cloud::cpp::compute::v1::ShieldedInstanceConfig
+      shielded_instance_config;
+
+  shielded_instance_config.set_enable_integrity_monitoring(false);
+  shielded_instance_config.set_enable_vtpm(false);
+  shielded_instance_config.set_enable_secure_boot(true);
+  auto updated_instance = client.UpdateShieldedInstanceConfig(
+      project_id_, zone_, instance_name, shielded_instance_config);
+  ASSERT_STATUS_OK(updated_instance.get());
+
+  auto get_instance = client.GetInstance(project_id_, zone_, instance_name);
+  ASSERT_THAT(get_instance, IsOk());
+  EXPECT_THAT(get_instance->name(), Eq(instance_name));
+  EXPECT_FALSE(
+      get_instance->shielded_instance_config().enable_integrity_monitoring());
+  EXPECT_FALSE(get_instance->shielded_instance_config().enable_vtpm());
+  EXPECT_TRUE(get_instance->shielded_instance_config().enable_secure_boot());
+
+  shielded_instance_config.set_enable_integrity_monitoring(true);
+  shielded_instance_config.set_enable_vtpm(true);
+  shielded_instance_config.set_enable_secure_boot(false);
+  updated_instance = client.UpdateShieldedInstanceConfig(
+      project_id_, zone_, instance_name, shielded_instance_config);
+  ASSERT_STATUS_OK(updated_instance.get());
+
+  get_instance = client.GetInstance(project_id_, zone_, instance_name);
+  ASSERT_THAT(get_instance, IsOk());
+  EXPECT_THAT(get_instance->name(), Eq(instance_name));
+  EXPECT_TRUE(
+      get_instance->shielded_instance_config().enable_integrity_monitoring());
+  EXPECT_TRUE(get_instance->shielded_instance_config().enable_vtpm());
+  EXPECT_FALSE(get_instance->shielded_instance_config().enable_secure_boot());
 }
 
 }  // namespace

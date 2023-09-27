@@ -57,7 +57,7 @@ DefaultRegionUrlMapsRestStub::AsyncDeleteUrlMap(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "urlMaps", "/",
@@ -78,7 +78,7 @@ DefaultRegionUrlMapsRestStub::GetUrlMap(
     google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "urlMaps", "/", request.url_map()));
@@ -97,7 +97,7 @@ DefaultRegionUrlMapsRestStub::AsyncInsertUrlMap(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.url_map_resource(),
+                *service, *rest_context, request.url_map_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "urlMaps"),
@@ -117,7 +117,7 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
     google::cloud::cpp::compute::region_url_maps::v1::
         ListRegionUrlMapsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "urlMaps"),
@@ -143,7 +143,7 @@ DefaultRegionUrlMapsRestStub::AsyncPatchUrlMap(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.url_map_resource(),
+                *service, *rest_context, request.url_map_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "urlMaps", "/",
@@ -171,7 +171,7 @@ DefaultRegionUrlMapsRestStub::AsyncUpdateUrlMap(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.url_map_resource(),
+                *service, *rest_context, request.url_map_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "urlMaps", "/",
@@ -194,7 +194,7 @@ DefaultRegionUrlMapsRestStub::Validate(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context,
-      request.region_url_maps_validate_request_resource(),
+      request.region_url_maps_validate_request_resource(), false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "urlMaps", "/", request.url_map(), "/", "validate"));
@@ -213,7 +213,7 @@ DefaultRegionUrlMapsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -234,7 +234,7 @@ future<Status> DefaultRegionUrlMapsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

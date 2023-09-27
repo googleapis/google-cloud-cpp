@@ -56,7 +56,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
             AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 NetworkEdgeSecurityServiceAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "networkEdgeSecurityServices"),
@@ -85,7 +85,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/",
@@ -108,7 +108,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityService(
         GetNetworkEdgeSecurityServiceRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "networkEdgeSecurityServices", "/",
@@ -130,7 +130,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.network_edge_security_service_resource(),
+                request.network_edge_security_service_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/",
@@ -162,7 +162,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.network_edge_security_service_resource(),
+                request.network_edge_security_service_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/",
@@ -193,7 +193,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -214,7 +214,7 @@ future<Status> DefaultNetworkEdgeSecurityServicesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

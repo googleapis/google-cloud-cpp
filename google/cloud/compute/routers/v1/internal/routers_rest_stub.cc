@@ -51,7 +51,7 @@ DefaultRoutersRestStub::AggregatedListRouters(
         AggregatedListRoutersRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "routers"),
       rest_internal::TrimEmptyQueryParameters(
@@ -78,7 +78,7 @@ DefaultRoutersRestStub::AsyncDeleteRouter(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "routers", "/",
@@ -98,7 +98,7 @@ DefaultRoutersRestStub::GetRouter(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "routers", "/", request.router()));
@@ -111,7 +111,7 @@ DefaultRoutersRestStub::GetNatMappingInfo(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "routers", "/", request.router(), "/",
@@ -133,7 +133,7 @@ DefaultRoutersRestStub::GetRouterStatus(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterStatusResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "routers", "/", request.router(), "/",
@@ -153,7 +153,7 @@ DefaultRoutersRestStub::AsyncInsertRouter(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.router_resource(),
+                *service, *rest_context, request.router_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "routers"),
@@ -173,7 +173,7 @@ DefaultRoutersRestStub::ListRouters(
     google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "routers"),
@@ -199,7 +199,7 @@ DefaultRoutersRestStub::AsyncPatchRouter(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.router_resource(),
+                *service, *rest_context, request.router_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "routers", "/",
@@ -220,7 +220,7 @@ DefaultRoutersRestStub::Preview(
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
-      *service_, rest_context, request.router_resource(),
+      *service_, rest_context, request.router_resource(), false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "routers", "/", request.router(), "/", "preview"));
@@ -239,7 +239,7 @@ DefaultRoutersRestStub::AsyncUpdateRouter(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.router_resource(),
+                *service, *rest_context, request.router_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "routers", "/",
@@ -267,7 +267,7 @@ DefaultRoutersRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -288,7 +288,7 @@ future<Status> DefaultRoutersRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

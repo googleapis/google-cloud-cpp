@@ -57,7 +57,7 @@ DefaultSnapshotsRestStub::AsyncDeleteSnapshot(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "snapshots",
                              "/", request.snapshot()),
@@ -77,7 +77,7 @@ DefaultSnapshotsRestStub::GetSnapshot(
     google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Snapshot>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots", "/",
                    request.snapshot()));
@@ -89,7 +89,7 @@ DefaultSnapshotsRestStub::GetIamPolicy(
     google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots", "/",
                    request.resource(), "/", "getIamPolicy"),
@@ -111,7 +111,7 @@ DefaultSnapshotsRestStub::AsyncInsertSnapshot(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.snapshot_resource(),
+                *service, *rest_context, request.snapshot_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "snapshots"),
@@ -131,7 +131,7 @@ DefaultSnapshotsRestStub::ListSnapshots(
     google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SnapshotList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots"),
       rest_internal::TrimEmptyQueryParameters(
@@ -150,6 +150,7 @@ DefaultSnapshotsRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots", "/",
                    request.resource(), "/", "setIamPolicy"));
@@ -169,7 +170,7 @@ DefaultSnapshotsRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_set_labels_request_resource(),
+                request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "snapshots",
                              "/", request.resource(), "/", "setLabels")));
@@ -189,6 +190,7 @@ DefaultSnapshotsRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "snapshots", "/",
                    request.resource(), "/", "testIamPermissions"));
@@ -207,7 +209,7 @@ DefaultSnapshotsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -228,7 +230,7 @@ future<Status> DefaultSnapshotsRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

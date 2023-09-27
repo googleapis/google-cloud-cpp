@@ -59,6 +59,7 @@ DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_disks_add_resource_policies_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -87,6 +88,7 @@ DefaultRegionDisksRestStub::AsyncBulkInsert(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.bulk_insert_disk_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/", "bulkInsert"),
@@ -113,7 +115,7 @@ DefaultRegionDisksRestStub::AsyncCreateSnapshot(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.snapshot_resource(),
+                *service, *rest_context, request.snapshot_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -141,7 +143,7 @@ DefaultRegionDisksRestStub::AsyncDeleteDisk(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -162,7 +164,7 @@ DefaultRegionDisksRestStub::GetDisk(
     google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks", "/", request.disk()));
@@ -174,7 +176,7 @@ DefaultRegionDisksRestStub::GetIamPolicy(
     google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks", "/", request.resource(), "/", "getIamPolicy"),
@@ -196,7 +198,7 @@ DefaultRegionDisksRestStub::AsyncInsertDisk(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.disk_resource(),
+                *service, *rest_context, request.disk_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks"),
@@ -217,7 +219,7 @@ DefaultRegionDisksRestStub::ListRegionDisks(
     google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks"),
@@ -246,6 +248,7 @@ DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
                 *service, *rest_context,
                 request
                     .region_disks_remove_resource_policies_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -274,7 +277,7 @@ DefaultRegionDisksRestStub::AsyncResize(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.region_disks_resize_request_resource(),
+                request.region_disks_resize_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -296,6 +299,7 @@ DefaultRegionDisksRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks", "/", request.resource(), "/", "setIamPolicy"));
@@ -315,7 +319,7 @@ DefaultRegionDisksRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.region_set_labels_request_resource(),
+                request.region_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -345,6 +349,7 @@ DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_disks_start_async_replication_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -372,7 +377,7 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -401,7 +406,7 @@ DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.disks_stop_group_async_replication_resource(),
+                request.disks_stop_group_async_replication_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -424,6 +429,7 @@ DefaultRegionDisksRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "disks", "/", request.resource(), "/",
@@ -443,7 +449,7 @@ DefaultRegionDisksRestStub::AsyncUpdateDisk(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.disk_resource(),
+                *service, *rest_context, request.disk_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "disks", "/",
@@ -473,7 +479,7 @@ DefaultRegionDisksRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -494,7 +500,7 @@ future<Status> DefaultRegionDisksRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

@@ -63,6 +63,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncAbandonInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_abandon_instances_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -94,6 +95,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_apply_updates_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -123,6 +125,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncCreateInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_create_instances_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -151,7 +154,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
@@ -182,6 +185,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstances(
             *service, *rest_context,
             request
                 .region_instance_group_managers_delete_instances_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -213,6 +217,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
             *service, *rest_context,
             request
                 .region_instance_group_manager_delete_instance_config_req_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -233,7 +238,7 @@ DefaultRegionInstanceGroupManagersRestStub::GetInstanceGroupManager(
         GetInstanceGroupManagerRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroupManagers", "/",
@@ -254,7 +259,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instance_group_manager_resource(),
+                request.instance_group_manager_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers"),
@@ -275,7 +280,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
         ListRegionInstanceGroupManagersRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupManagerList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroupManagers"),
@@ -296,7 +301,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
         ListErrorsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 RegionInstanceGroupManagersListErrorsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "instanceGroupManagers", "/",
@@ -319,7 +324,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstancesResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat(
           "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
           "/", "regions", "/", request.region(), "/", "instanceGroupManagers",
@@ -342,7 +347,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstanceConfigsResp>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat(
           "/", "compute", "/", "v1", "/", "projects", "/", request.project(),
           "/", "regions", "/", request.region(), "/", "instanceGroupManagers",
@@ -370,7 +375,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.instance_group_manager_resource(),
+                request.instance_group_manager_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
@@ -401,6 +406,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
             *service, *rest_context,
             request
                 .region_instance_group_manager_patch_instance_config_req_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -432,6 +438,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncRecreateInstances(
                 *service, *rest_context,
                 request
                     .region_instance_group_managers_recreate_request_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
@@ -460,7 +467,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncResize(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "instanceGroupManagers",
@@ -493,6 +500,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
             *service, *rest_context,
             request
                 .region_instance_group_managers_set_template_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -524,6 +532,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetTargetPools(
             *service, *rest_context,
             request
                 .region_instance_group_managers_set_target_pools_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -555,6 +564,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
             *service, *rest_context,
             request
                 .region_instance_group_manager_update_instance_config_req_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "regions", "/",
                          request.region(), "/", "instanceGroupManagers", "/",
@@ -583,7 +593,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -604,7 +614,7 @@ future<Status> DefaultRegionInstanceGroupManagersRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

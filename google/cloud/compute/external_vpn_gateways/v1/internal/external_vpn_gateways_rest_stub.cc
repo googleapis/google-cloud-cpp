@@ -59,7 +59,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncDeleteExternalVpnGateway(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "externalVpnGateways", "/",
@@ -81,7 +81,7 @@ DefaultExternalVpnGatewaysRestStub::GetExternalVpnGateway(
         GetExternalVpnGatewayRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGateway>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "externalVpnGateways",
                    "/", request.external_vpn_gateway()));
@@ -101,7 +101,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncInsertExternalVpnGateway(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.external_vpn_gateway_resource(),
+                request.external_vpn_gateway_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "externalVpnGateways"),
@@ -122,7 +122,7 @@ DefaultExternalVpnGatewaysRestStub::ListExternalVpnGateways(
         ListExternalVpnGatewaysRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGatewayList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "externalVpnGateways"),
@@ -149,7 +149,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncSetLabels(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.global_set_labels_request_resource(),
+                request.global_set_labels_request_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "externalVpnGateways", "/", request.resource(),
@@ -170,6 +170,7 @@ DefaultExternalVpnGatewaysRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "externalVpnGateways",
                    "/", request.resource(), "/", "testIamPermissions"));
@@ -188,7 +189,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -209,7 +210,7 @@ future<Status> DefaultExternalVpnGatewaysRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

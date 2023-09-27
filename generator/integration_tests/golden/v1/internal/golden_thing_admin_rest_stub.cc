@@ -50,7 +50,7 @@ DefaultGoldenThingAdminRestStub::ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListDatabasesResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
         std::make_pair("page_token", request.page_token())}));
@@ -65,7 +65,7 @@ DefaultGoldenThingAdminRestStub::AsyncCreateDatabase(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::longrunning::Operation>(
-          *service, *rest_context, request,
+          *service, *rest_context, request, false,
           absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("create_statement", request.create_statement())})));
   }, std::move(p), service_, request, std::move(rest_context)};
@@ -82,7 +82,7 @@ DefaultGoldenThingAdminRestStub::GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::Database>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.name()));
 }
 
@@ -95,7 +95,7 @@ DefaultGoldenThingAdminRestStub::AsyncUpdateDatabaseDdl(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-          *service, *rest_context, request,
+          *service, *rest_context, request, false,
           absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("operation_id", request.operation_id())})));
   }, std::move(p), service_, request, std::move(rest_context)};
@@ -111,7 +111,7 @@ Status DefaultGoldenThingAdminRestStub::DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return rest_internal::Delete(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.database()));
 }
 
@@ -120,7 +120,7 @@ DefaultGoldenThingAdminRestStub::GetDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::GetDatabaseDdlResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"));
 }
 
@@ -129,7 +129,7 @@ DefaultGoldenThingAdminRestStub::SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.resource(), ":setIamPolicy"));
 }
 
@@ -138,7 +138,7 @@ DefaultGoldenThingAdminRestStub::GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::GetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.resource(), ":getIamPolicy"));
 }
 
@@ -147,7 +147,7 @@ DefaultGoldenThingAdminRestStub::TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::TestIamPermissionsRequest const& request) {
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.resource(), ":testIamPermissions"));
 }
 
@@ -160,7 +160,7 @@ DefaultGoldenThingAdminRestStub::AsyncCreateBackup(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::longrunning::Operation>(
-          *service, *rest_context, request.backup(),
+          *service, *rest_context, request.backup(), false,
           absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("backup_id", request.backup_id())})));
   }, std::move(p), service_, request, std::move(rest_context)};
@@ -177,7 +177,7 @@ DefaultGoldenThingAdminRestStub::GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetBackupRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::Backup>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.name()));
 }
 
@@ -186,7 +186,7 @@ DefaultGoldenThingAdminRestStub::UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) {
   return rest_internal::Patch<google::test::admin::database::v1::Backup>(
-      *service_, rest_context, request.backup(),
+      *service_, rest_context, request.backup(), false,
       absl::StrCat("/", "v1", "/", request.backup().name()));
 }
 
@@ -194,7 +194,7 @@ Status DefaultGoldenThingAdminRestStub::DeleteBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DeleteBackupRequest const& request) {
   return rest_internal::Delete(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.name()));
 }
 
@@ -203,7 +203,7 @@ DefaultGoldenThingAdminRestStub::ListBackups(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListBackupsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("filter", request.filter()),
         std::make_pair("page_size", std::to_string(request.page_size())),
@@ -219,7 +219,7 @@ DefaultGoldenThingAdminRestStub::AsyncRestoreDatabase(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::longrunning::Operation>(
-          *service, *rest_context, request,
+          *service, *rest_context, request, false,
           absl::StrCat("/", "v1", "/", request.parent(), "/", "databases", ":restore"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("database_id", request.database_id()),
         std::make_pair("backup", request.backup())})));
@@ -237,7 +237,7 @@ DefaultGoldenThingAdminRestStub::ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseOperations"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("filter", request.filter()),
         std::make_pair("page_size", std::to_string(request.page_size())),
@@ -249,7 +249,7 @@ DefaultGoldenThingAdminRestStub::ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListBackupOperationsResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "v1", "/", request.parent(), "/", "backupOperations"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("filter", request.filter()),
         std::make_pair("page_size", std::to_string(request.page_size())),
@@ -265,7 +265,7 @@ DefaultGoldenThingAdminRestStub::AsyncGetDatabase(
   future<StatusOr<google::test::admin::database::v1::Database>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Get<google::test::admin::database::v1::Database>(
-          *service, *rest_context, request,
+          *service, *rest_context, request, false,
           absl::StrCat("/", "v1", "/", request.name())));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -285,7 +285,7 @@ DefaultGoldenThingAdminRestStub::AsyncDropDatabase(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::Delete<google::protobuf::Empty>(
-          *service, *rest_context, request,
+          *service, *rest_context, request, false,
           absl::StrCat("/", "v1", "/", request.database())));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -305,7 +305,7 @@ DefaultGoldenThingAdminRestStub::AsyncGetOperation(
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
       p.set_value(rest_internal::Get<google::longrunning::Operation>(
-          *operations, *rest_context, request,
+          *operations, *rest_context, request, false,
           absl::StrCat("/v1/", request.name())));
   }, std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -325,7 +325,7 @@ DefaultGoldenThingAdminRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
+          *operations, *rest_context, request, false,
           absl::StrCat("/v1/", request.name(), ":cancel")));
   }, std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

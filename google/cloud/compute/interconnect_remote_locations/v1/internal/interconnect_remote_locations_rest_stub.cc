@@ -48,7 +48,7 @@ DefaultInterconnectRemoteLocationsRestStub::GetInterconnectRemoteLocation(
         GetInterconnectRemoteLocationRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "interconnectRemoteLocations", "/",
@@ -62,7 +62,7 @@ DefaultInterconnectRemoteLocationsRestStub::ListInterconnectRemoteLocations(
         ListInterconnectRemoteLocationsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectRemoteLocationList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/",
                    "interconnectRemoteLocations"),

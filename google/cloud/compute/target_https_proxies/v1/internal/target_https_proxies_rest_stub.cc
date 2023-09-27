@@ -53,7 +53,7 @@ DefaultTargetHttpsProxiesRestStub::AggregatedListTargetHttpsProxies(
         AggregatedListTargetHttpsProxiesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "targetHttpsProxies"),
@@ -81,7 +81,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetHttpsProxies", "/",
@@ -102,7 +102,7 @@ DefaultTargetHttpsProxiesRestStub::GetTargetHttpsProxy(
     google::cloud::cpp::compute::target_https_proxies::v1::
         GetTargetHttpsProxyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "targetHttpsProxies",
                    "/", request.target_https_proxy()));
@@ -122,6 +122,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_https_proxy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetHttpsProxies"),
@@ -142,7 +143,7 @@ DefaultTargetHttpsProxiesRestStub::ListTargetHttpsProxies(
         ListTargetHttpsProxiesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "targetHttpsProxies"),
       rest_internal::TrimEmptyQueryParameters(
@@ -168,6 +169,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncPatchTargetHttpsProxy(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_https_proxy_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetHttpsProxies", "/",
@@ -197,6 +199,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetCertificateMap(
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
             request.target_https_proxies_set_certificate_map_request_resource(),
+            false,
             absl::StrCat(
                 "/", "compute", "/", "v1", "/", "projects", "/",
                 request.project(), "/", "global", "/", "targetHttpsProxies",
@@ -227,6 +230,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetQuicOverride(
                 *service, *rest_context,
                 request
                     .target_https_proxies_set_quic_override_request_resource(),
+                false,
                 absl::StrCat(
                     "/", "compute", "/", "v1", "/", "projects", "/",
                     request.project(), "/", "global", "/", "targetHttpsProxies",
@@ -257,6 +261,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
             *service, *rest_context,
             request
                 .target_https_proxies_set_ssl_certificates_request_resource(),
+            false,
             absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                          request.project(), "/", "targetHttpsProxies", "/",
                          request.target_https_proxy(), "/",
@@ -285,7 +290,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslPolicy(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
-                request.ssl_policy_reference_resource(),
+                request.ssl_policy_reference_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "targetHttpsProxies", "/",
@@ -314,6 +319,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetUrlMap(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.url_map_reference_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "targetHttpsProxies", "/",
                              request.target_https_proxy(), "/", "setUrlMap"),
@@ -340,7 +346,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -361,7 +367,7 @@ future<Status> DefaultTargetHttpsProxiesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

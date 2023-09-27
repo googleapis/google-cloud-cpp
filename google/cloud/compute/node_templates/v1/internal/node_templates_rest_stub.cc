@@ -51,7 +51,7 @@ DefaultNodeTemplatesRestStub::AggregatedListNodeTemplates(
         AggregatedListNodeTemplatesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "nodeTemplates"),
       rest_internal::TrimEmptyQueryParameters(
@@ -78,7 +78,7 @@ DefaultNodeTemplatesRestStub::AsyncDeleteNodeTemplate(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "nodeTemplates", "/",
@@ -99,7 +99,7 @@ DefaultNodeTemplatesRestStub::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
         GetNodeTemplateRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplate>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "nodeTemplates", "/", request.node_template()));
@@ -111,7 +111,7 @@ DefaultNodeTemplatesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "nodeTemplates", "/", request.resource(), "/",
@@ -135,6 +135,7 @@ DefaultNodeTemplatesRestStub::AsyncInsertNodeTemplate(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.node_template_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "nodeTemplates"),
@@ -154,7 +155,7 @@ DefaultNodeTemplatesRestStub::ListNodeTemplates(
     google::cloud::cpp::compute::node_templates::v1::
         ListNodeTemplatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplateList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "nodeTemplates"),
@@ -174,6 +175,7 @@ DefaultNodeTemplatesRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "nodeTemplates", "/", request.resource(), "/",
@@ -188,6 +190,7 @@ DefaultNodeTemplatesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "nodeTemplates", "/", request.resource(), "/",
@@ -207,7 +210,7 @@ DefaultNodeTemplatesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -228,7 +231,7 @@ future<Status> DefaultNodeTemplatesRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

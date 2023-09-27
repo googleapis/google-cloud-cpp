@@ -57,7 +57,7 @@ DefaultMachineImagesRestStub::AsyncDeleteMachineImage(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "machineImages", "/", request.machine_image()),
@@ -77,7 +77,7 @@ DefaultMachineImagesRestStub::GetMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
         GetMachineImageRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImage>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "machineImages", "/",
                    request.machine_image()));
@@ -89,7 +89,7 @@ DefaultMachineImagesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "machineImages", "/",
                    request.resource(), "/", "getIamPolicy"),
@@ -112,6 +112,7 @@ DefaultMachineImagesRestStub::AsyncInsertMachineImage(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.machine_image_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/",
                              "machineImages"),
@@ -133,7 +134,7 @@ DefaultMachineImagesRestStub::ListMachineImages(
     google::cloud::cpp::compute::machine_images::v1::
         ListMachineImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImageList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "machineImages"),
       rest_internal::TrimEmptyQueryParameters(
@@ -152,6 +153,7 @@ DefaultMachineImagesRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "machineImages", "/",
                    request.resource(), "/", "setIamPolicy"));
@@ -165,6 +167,7 @@ DefaultMachineImagesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "machineImages", "/",
                    request.resource(), "/", "testIamPermissions"));
@@ -183,7 +186,7 @@ DefaultMachineImagesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -204,7 +207,7 @@ future<Status> DefaultMachineImagesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

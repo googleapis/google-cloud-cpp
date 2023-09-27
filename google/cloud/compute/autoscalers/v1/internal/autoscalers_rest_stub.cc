@@ -51,7 +51,7 @@ DefaultAutoscalersRestStub::AggregatedListAutoscalers(
         AggregatedListAutoscalersRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AutoscalerAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "autoscalers"),
       rest_internal::TrimEmptyQueryParameters(
@@ -78,7 +78,7 @@ DefaultAutoscalersRestStub::AsyncDeleteAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "autoscalers", "/",
@@ -99,7 +99,7 @@ DefaultAutoscalersRestStub::GetAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "autoscalers", "/", request.autoscaler()));
@@ -118,7 +118,7 @@ DefaultAutoscalersRestStub::AsyncInsertAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.autoscaler_resource(),
+                *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "autoscalers"),
@@ -138,7 +138,7 @@ DefaultAutoscalersRestStub::ListAutoscalers(
     google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AutoscalerList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "autoscalers"),
@@ -164,7 +164,7 @@ DefaultAutoscalersRestStub::AsyncPatchAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.autoscaler_resource(),
+                *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "autoscalers"),
@@ -192,7 +192,7 @@ DefaultAutoscalersRestStub::AsyncUpdateAutoscaler(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.autoscaler_resource(),
+                *service, *rest_context, request.autoscaler_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "autoscalers"),
@@ -220,7 +220,7 @@ DefaultAutoscalersRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/zones/", request.zone(), "/operations/",
                              request.operation())));
@@ -242,7 +242,7 @@ future<Status> DefaultAutoscalersRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(), "/zones/",
                          request.zone(), "/operations/", request.operation())));
       },

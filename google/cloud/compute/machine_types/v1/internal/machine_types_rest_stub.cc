@@ -45,7 +45,7 @@ DefaultMachineTypesRestStub::AggregatedListMachineTypes(
         AggregatedListMachineTypesRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::MachineTypeAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/", "machineTypes"),
       rest_internal::TrimEmptyQueryParameters(
@@ -65,7 +65,7 @@ DefaultMachineTypesRestStub::GetMachineType(
     google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineType>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "machineTypes", "/", request.machine_type()));
@@ -77,7 +77,7 @@ DefaultMachineTypesRestStub::ListMachineTypes(
     google::cloud::cpp::compute::machine_types::v1::
         ListMachineTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineTypeList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "zones", "/", request.zone(), "/",
                    "machineTypes"),

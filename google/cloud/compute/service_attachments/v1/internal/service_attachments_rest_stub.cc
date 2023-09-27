@@ -52,7 +52,7 @@ DefaultServiceAttachmentsRestStub::AggregatedListServiceAttachments(
         AggregatedListServiceAttachmentsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "aggregated", "/",
                    "serviceAttachments"),
@@ -80,7 +80,7 @@ DefaultServiceAttachmentsRestStub::AsyncDeleteServiceAttachment(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "serviceAttachments", "/",
@@ -101,7 +101,7 @@ DefaultServiceAttachmentsRestStub::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
         GetServiceAttachmentRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachment>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "serviceAttachments", "/",
@@ -114,7 +114,7 @@ DefaultServiceAttachmentsRestStub::GetIamPolicy(
     google::cloud::cpp::compute::service_attachments::v1::
         GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "serviceAttachments", "/", request.resource(), "/",
@@ -138,6 +138,7 @@ DefaultServiceAttachmentsRestStub::AsyncInsertServiceAttachment(
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.service_attachment_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "serviceAttachments"),
@@ -158,7 +159,7 @@ DefaultServiceAttachmentsRestStub::ListServiceAttachments(
         ListServiceAttachmentsRequest const& request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ServiceAttachmentList>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "serviceAttachments"),
@@ -185,6 +186,7 @@ DefaultServiceAttachmentsRestStub::AsyncPatchServiceAttachment(
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.service_attachment_resource(),
+                false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "regions", "/",
                              request.region(), "/", "serviceAttachments", "/",
@@ -206,6 +208,7 @@ DefaultServiceAttachmentsRestStub::SetIamPolicy(
         SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "serviceAttachments", "/", request.resource(), "/",
@@ -220,6 +223,7 @@ DefaultServiceAttachmentsRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "serviceAttachments", "/", request.resource(), "/",
@@ -239,7 +243,7 @@ DefaultServiceAttachmentsRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/regions/", request.region(), "/operations/",
                              request.operation())));
@@ -260,7 +264,7 @@ future<Status> DefaultServiceAttachmentsRestStub::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
                   p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request,
+                      *operations, *rest_context, request, false,
                       absl::StrCat("/compute/v1/projects/", request.project(),
                                    "/regions/", request.region(),
                                    "/operations/", request.operation())));

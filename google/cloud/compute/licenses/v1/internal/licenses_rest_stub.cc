@@ -57,7 +57,7 @@ DefaultLicensesRestStub::AsyncDeleteLicense(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request,
+                *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "licenses",
                              "/", request.license()),
@@ -77,7 +77,7 @@ DefaultLicensesRestStub::GetLicense(
     google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "licenses", "/",
                    request.license()));
@@ -89,7 +89,7 @@ DefaultLicensesRestStub::GetIamPolicy(
     google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
         request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "licenses", "/",
                    request.resource(), "/", "getIamPolicy"),
@@ -111,7 +111,7 @@ DefaultLicensesRestStub::AsyncInsertLicense(
       [](auto p, auto service, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-                *service, *rest_context, request.license_resource(),
+                *service, *rest_context, request.license_resource(), false,
                 absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                              request.project(), "/", "global", "/", "licenses"),
                 rest_internal::TrimEmptyQueryParameters(
@@ -131,7 +131,7 @@ DefaultLicensesRestStub::ListLicenses(
         request) {
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::LicensesListResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "licenses"),
       rest_internal::TrimEmptyQueryParameters(
@@ -150,6 +150,7 @@ DefaultLicensesRestStub::SetIamPolicy(
         request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "licenses", "/",
                    request.resource(), "/", "setIamPolicy"));
@@ -163,6 +164,7 @@ DefaultLicensesRestStub::TestIamPermissions(
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
+      false,
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "global", "/", "licenses", "/",
                    request.resource(), "/", "testIamPermissions"));
@@ -181,7 +183,7 @@ DefaultLicensesRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-                *operations, *rest_context, request,
+                *operations, *rest_context, request, false,
                 absl::StrCat("/compute/v1/projects/", request.project(),
                              "/global/operations/", request.operation())));
       },
@@ -202,7 +204,7 @@ future<Status> DefaultLicensesRestStub::AsyncCancelOperation(
   std::thread t{
       [](auto p, auto operations, auto request, auto rest_context) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations, *rest_context, request,
+            *operations, *rest_context, request, false,
             absl::StrCat("/compute/v1/projects/", request.project(),
                          "/global/operations/", request.operation())));
       },

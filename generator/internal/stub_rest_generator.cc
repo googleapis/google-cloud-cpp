@@ -326,7 +326,7 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
-          *service, *rest_context, $request_resource$,
+          *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path$$method_http_query_parameters$));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -344,7 +344,7 @@ Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$(
-      *service_, rest_context, $request_resource$,
+      *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
@@ -355,7 +355,7 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$<$response_type$>(
-      *service_, rest_context, $request_resource$,
+      *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
@@ -377,7 +377,7 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
-          *service, *rest_context, $request_resource$,
+          *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path$$method_http_query_parameters$));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -399,7 +399,7 @@ Default$stub_rest_class_name$::Async$method_name$(
   future<StatusOr<$response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto service, auto request, auto rest_context) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
-          *service, *rest_context, $request_resource$,
+          *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path$$method_http_query_parameters$));
   }, std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -425,7 +425,7 @@ Default$stub_rest_class_name$::AsyncGetOperation(
   future<StatusOr<$longrunning_response_type$>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
       p.set_value(rest_internal::Get<$longrunning_response_type$>(
-          *operations, *rest_context, request,
+          *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
           $longrunning_get_operation_path$));
   }, std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {
@@ -445,7 +445,7 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
   std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request,
+          *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
           $longrunning_cancel_operation_path$));
   }, std::move(p), operations_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

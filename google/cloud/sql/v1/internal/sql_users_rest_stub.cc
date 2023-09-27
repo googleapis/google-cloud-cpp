@@ -43,7 +43,7 @@ DefaultSqlUsersServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "users"),
       rest_internal::TrimEmptyQueryParameters(
@@ -55,7 +55,7 @@ StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersGetRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::User>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "users", "/",
                    request.name()),
@@ -68,7 +68,7 @@ DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(),
+      *service_, rest_context, request.body(), true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "users"));
 }
@@ -78,7 +78,7 @@ DefaultSqlUsersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
-      *service_, rest_context, request,
+      *service_, rest_context, request, true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "users"));
 }
@@ -88,7 +88,7 @@ DefaultSqlUsersServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
-      *service_, rest_context, request.body(),
+      *service_, rest_context, request.body(), true,
       absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
                    "instances", "/", request.instance(), "/", "users"),
       rest_internal::TrimEmptyQueryParameters(
