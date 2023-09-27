@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MESSAGE_H
 
 #include "google/cloud/pubsub/version.h"
+#include "absl/strings/string_view.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <chrono>
 #include <iosfwd>
@@ -41,9 +42,10 @@ std::size_t MessageSize(pubsub::Message const&);
 std::size_t MessageProtoSize(::google::pubsub::v1::PubsubMessage const& m);
 // For Open Telemetry tracing only. Inserts or sets an attribute on the message.
 void SetAttribute(std::string const& key, std::string value, pubsub::Message&);
-// For Open Telemetry tracing only. Gets the value for a given attribute key on
-// the message.
-std::string GetAttribute(std::string const& key, pubsub::Message& m);
+// For Open Telemetry tracing only. Returns the value for a given attribute key
+// on the message or the null string_view when not found. Note: the string_view
+// is only valid for the lifetime of the corresponding message.
+absl::string_view GetAttribute(std::string const& key, pubsub::Message& m);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
@@ -133,8 +135,8 @@ class Message {
   friend void pubsub_internal::SetAttribute(std::string const& key,
                                             std::string value,
                                             pubsub::Message&);
-  friend std::string pubsub_internal::GetAttribute(std::string const& key,
-                                                   pubsub::Message&);
+  friend absl::string_view pubsub_internal::GetAttribute(std::string const& key,
+                                                         pubsub::Message&);
 
   /// Construct `Message` objects.
   friend class MessageBuilder;

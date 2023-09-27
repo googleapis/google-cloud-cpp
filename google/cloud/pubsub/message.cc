@@ -54,12 +54,12 @@ void SetAttribute(std::string const& key, std::string value,
   (*m.proto_.mutable_attributes())[key] = std::move(value);
 }
 
-std::string GetAttribute(std::string const& key, pubsub::Message& m) {
+absl::string_view GetAttribute(std::string const& key, pubsub::Message& m) {
   auto value = m.proto_.attributes().find(key);
   if (value != m.proto_.attributes().end()) {
-    return value->second;
+    return absl::string_view(value->second.data(), value->second.size());
   }
-  return std::string{};
+  return absl::string_view{};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
