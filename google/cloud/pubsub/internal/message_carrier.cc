@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "absl/strings/str_cat.h"
 
 namespace google {
 namespace cloud {
