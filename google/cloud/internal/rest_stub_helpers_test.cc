@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
@@ -271,8 +272,7 @@ TEST(RestStubHelpers, ProtoRequestToJsonPayloadSuccess) {
   proto_request.set_metadata_type("metadata_value");
 
   auto json_payload = ProtoRequestToJsonPayload(proto_request, true);
-  ASSERT_STATUS_OK(json_payload);
-  EXPECT_THAT(*json_payload, Eq(kJsonUpdatePayload));
+  EXPECT_THAT(json_payload, IsOkAndHolds(Eq(kJsonUpdatePayload)));
 }
 
 TEST(RestStubHelpers, Patch) {

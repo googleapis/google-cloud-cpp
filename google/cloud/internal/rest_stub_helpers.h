@@ -94,7 +94,7 @@ StatusOr<Response> Patch(
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   auto json_payload =
       ProtoRequestToJsonPayload(request, preserve_proto_field_names);
-  if (!json_payload.ok()) return std::move(json_payload.status());
+  if (!json_payload.ok()) return std::move(json_payload).status();
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
   rest_request.AddHeader("content-type", "application/json");
@@ -111,7 +111,7 @@ StatusOr<Response> Post(
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   auto json_payload =
       ProtoRequestToJsonPayload(request, preserve_proto_field_names);
-  if (!json_payload.ok()) return std::move(json_payload.status());
+  if (!json_payload.ok()) return std::move(json_payload).status();
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
   rest_request.AddHeader("content-type", "application/json");
@@ -128,7 +128,7 @@ Status Post(
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   auto json_payload =
       ProtoRequestToJsonPayload(request, preserve_proto_field_names);
-  if (!json_payload.ok()) return std::move(json_payload.status());
+  if (!json_payload.ok()) return std::move(json_payload).status();
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
   rest_request.AddHeader("content-type", "application/json");
@@ -145,7 +145,7 @@ StatusOr<Response> Put(
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
   auto json_payload =
       ProtoRequestToJsonPayload(request, preserve_proto_field_names);
-  if (!json_payload.ok()) return std::move(json_payload.status());
+  if (!json_payload.ok()) return std::move(json_payload).status();
   auto rest_request =
       CreateRestRequest(std::move(path), std::move(query_params));
   rest_request.AddHeader("content-type", "application/json");
