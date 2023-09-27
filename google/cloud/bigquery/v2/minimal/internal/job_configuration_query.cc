@@ -54,30 +54,31 @@ std::string JobConfigurationQuery::DebugString(absl::string_view name,
 }
 
 void to_json(nlohmann::json& j, JobConfigurationQuery const& c) {
-  j = nlohmann::json{{"query", c.query},
-                     {"createDisposition", c.create_disposition},
-                     {"writeDisposition", c.write_disposition},
-                     {"priority", c.priority},
-                     {"parameterMode", c.parameter_mode},
-                     {"preserveNulls", c.preserve_nulls},
-                     {"allowLargeResults", c.allow_large_results},
-                     {"useQueryCache", c.use_query_cache},
-                     {"flattenResults", c.flatten_results},
-                     {"useLegacySql", c.use_legacy_sql},
-                     {"createSession", c.create_session},
-                     {"maximumBytesBilled", c.maximum_bytes_billed},
-                     {"queryParameters", c.query_parameters},
-                     {"schemaUpdateOptions", c.schema_update_options},
-                     {"connectionProperties", c.connection_properties},
-                     {"defaultDataset", c.default_dataset},
-                     {"destinationTable", c.destination_table},
-                     {"timePartitioning", c.time_partitioning},
-                     {"rangePartitioning", c.range_partitioning},
-                     {"clustering", c.clustering},
-                     {"destinationEncryptionConfiguration",
-                      c.destination_encryption_configuration},
-                     {"scriptOptions", c.script_options},
-                     {"systemVariables", c.system_variables}};
+  j = nlohmann::json{
+      {"query", c.query},
+      {"createDisposition", c.create_disposition},
+      {"writeDisposition", c.write_disposition},
+      {"priority", c.priority},
+      {"parameterMode", c.parameter_mode},
+      {"preserveNulls", c.preserve_nulls},
+      {"allowLargeResults", c.allow_large_results},
+      {"useQueryCache", c.use_query_cache},
+      {"flattenResults", c.flatten_results},
+      {"useLegacySql", c.use_legacy_sql},
+      {"createSession", c.create_session},
+      {"maximumBytesBilled", std::to_string(c.maximum_bytes_billed)},
+      {"queryParameters", c.query_parameters},
+      {"schemaUpdateOptions", c.schema_update_options},
+      {"connectionProperties", c.connection_properties},
+      {"defaultDataset", c.default_dataset},
+      {"destinationTable", c.destination_table},
+      {"timePartitioning", c.time_partitioning},
+      {"rangePartitioning", c.range_partitioning},
+      {"clustering", c.clustering},
+      {"destinationEncryptionConfiguration",
+       c.destination_encryption_configuration},
+      {"scriptOptions", c.script_options},
+      {"systemVariables", c.system_variables}};
 }
 void from_json(nlohmann::json const& j, JobConfigurationQuery& c) {
   SafeGetTo(c.query, j, "query");
@@ -91,7 +92,7 @@ void from_json(nlohmann::json const& j, JobConfigurationQuery& c) {
   SafeGetTo(c.flatten_results, j, "flattenResults");
   SafeGetTo(c.use_legacy_sql, j, "useLegacySql");
   SafeGetTo(c.create_session, j, "createSession");
-  SafeGetTo(c.maximum_bytes_billed, j, "maximumBytesBilled");
+  c.maximum_bytes_billed = GetNumberFromJson(j, "maximumBytesBilled");
   SafeGetTo(c.query_parameters, j, "queryParameters");
   SafeGetTo(c.schema_update_options, j, "schemaUpdateOptions");
   SafeGetTo(c.connection_properties, j, "connectionProperties");
