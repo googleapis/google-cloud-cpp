@@ -122,10 +122,21 @@ the APIs in these libraries are stable, and are ready for production use.
 
 New `*Client` for conversational search.
 
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+Features to instrument the Google Cloud C++ libraries for [distributed tracing]
+using [OpenTelemetry] are now GA. See the [quickstart][otel-quickstart] within
+the library to learn more about these tools.
+
 ### [Policy Troubleshooter](/google/cloud/policytroubleshooter/README.md)
 
 Remove `PoliciesClient`. This client was placed in the wrong library. The
 correct location is google/cloud/iam/v2.
+
+### Known issues
+
+Compiling gRPC with Bazel and Clang >= 16 requires `--features=-layering_check`
+in your Bazel command-line. For more details, see [grpc#34482].
 
 ## v2.15.0 - 2023-09
 
@@ -4376,9 +4387,11 @@ releases. The relevant notes are:
 [cloud-iot-shutdown]: https://cloud.google.com/iot/docs/release-notes#August_16_2022
 [cloud-run-jobs]: https://cloud.google.com/run/docs/managing/job-executions
 [dataproc-node-groups]: https://cloud.google.com/dataproc/docs/guides/node-groups/dataproc-driver-node-groups
+[distributed tracing]: https://opentelemetry.io/docs/concepts/observability-primer/#distributed-traces
 [functions-v2]: https://cloud.google.com/functions/docs/concepts/version-comparison
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
 [google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
+[grpc#34482]: https://github.com/grpc/grpc/issues/34482
 [guac-dox]: https://cloud.google.com/cpp/docs/reference/common/latest/group__guac
 [howto-mock-data-api]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/bigtable-mocking
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
@@ -4389,7 +4402,9 @@ releases. The relevant notes are:
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
 [monitoring-snooze]: https://cloud.google.com/monitoring/alerts/snooze
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
+[opentelemetry]: https://opentelemetry.io/
 [oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
+[otel-quickstart]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/opentelemetry/quickstart
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-manager-tags]: https://cloud.google.com/resource-manager/docs/tags/tags-overview

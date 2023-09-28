@@ -10,9 +10,8 @@ The C++ client libraries are already instrumented to collect traces. You can
 enable the collection and export of traces with minimal changes to your
 application. It is not necessary to instrument your application too.
 
-:construction:
-
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

@@ -39,8 +39,8 @@ RUN dnf makecache && dnf install -y java-latest-openjdk
 RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
 RUN dnf makecache && dnf debuginfo-install -y libstdc++
 
-# This is used by the docfx tool.
-RUN dnf makecache && dnf install -y pugixml-devel
+# These are used by the docfx tool.
+RUN dnf makecache && dnf install -y pugixml-devel yaml-cpp-devel
 
 # This is used in the `publish-docs` build
 RUN dnf makecache && dnf install -y libxslt
@@ -66,22 +66,8 @@ RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.
     ldconfig
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
-# Installs the yaml-cpp-devel from source. The version included with Fedora:37
-# leaves trailing whitespace in the output:
-#     https://github.com/jbeder/yaml-cpp/pull/1005
-WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=ON \
-      -DBUILD_TESTING=OFF \
-      -GNinja -S . -B cmake-out && \
-    cmake --build cmake-out --target install && \
-    ldconfig && cd /var/tmp && rm -fr build
-
-# We expose `absl::optional<>` in our public API. An Abseil LTS update will
-# break our `check-api` build, unless we disable the inline namespace.
+# We disable the inline namespace because otherwise Abseil LTS updates break our
+# `check-api` build.
 WORKDIR /var/tmp/build
 RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
     tar -xzf - --strip-components=1 && \

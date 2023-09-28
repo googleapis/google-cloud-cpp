@@ -38,6 +38,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "internal/extend_leases_with_retry.h",
     "internal/flow_controlled_publisher_connection.h",
     "internal/flow_controlled_publisher_tracing_connection.h",
+    "internal/message_batch.h",
     "internal/message_carrier.h",
     "internal/noop_message_batch.h",
     "internal/ordering_key_publisher_connection.h",
