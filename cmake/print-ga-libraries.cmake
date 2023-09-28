@@ -20,6 +20,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 include(GoogleCloudCppFeatures)
 
 set(GOOGLE_CLOUD_CPP_ENABLE __ga_libraries__)
+set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES) # Disable warnings
 google_cloud_cpp_enable_deps()
 google_cloud_cpp_enable_cleanup()
 
