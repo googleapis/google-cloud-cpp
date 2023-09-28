@@ -36,23 +36,21 @@ python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
 rm -f /dev/shm/roots.pem
 ci/retry-command.sh 3 120 curl -fsSL -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 
-# Outputs a list of Bazel arguments that should be used when running integration
-# tests under code coverage. With code coverage the `--flaky_test_attempts`
-# works in unexpected ways. A flake produces an empty `coverage.dat` file, which
-# breaks the build when trying to consolidate all the `coverage.dat` files.
-#
-# This combination of a "successful" test (because the flake is retried) and a
-# failure later in the consolidation of coverage results easily leads the
-# developer astray.
+# Outputs a list of Bazel arguments that should be used when running
+# integration tests. These do not include the common `bazel::common_args`.
 #
 # Example usage:
 #
 #   mapfile -t args < <(bazel::common_args)
-#   mapfile -t integration_args < <(integration::bazel_coverage_args)
+#   mapfile -t integration_args < <(integration::bazel_args)
 #   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
 #
-function integration::bazel_coverage_args() {
+function integration::bazel_args() {
   declare -a args
+
+  # Integration tests are inherently flaky. Make up to three attempts to get the
+  # test passing.
+  args+=(--flaky_test_attempts=3)
 
   args+=(
     # Common settings
@@ -131,24 +129,6 @@ function integration::bazel_coverage_args() {
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
   )
   printf "%s\n" "${args[@]}"
-}
-
-# Outputs a list of Bazel arguments that should be used when running
-# integration tests. These do not include the common `bazel::common_args`.
-#
-# Example usage:
-#
-#   mapfile -t args < <(bazel::common_args)
-#   mapfile -t integration_args < <(integration::bazel_args)
-#   integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
-#
-function integration::bazel_args() {
-  declare -a args
-  mapfile -t args < <(integration::bazel_coverage_args)
-
-  # Integration tests are inherently flaky. Make up to three attempts to get the
-  # test passing.
-  printf "%s\n" "--flaky_test_attempts=3" "${args[@]}"
 }
 
 # Runs integration tests with bazel using emulators when possible. This

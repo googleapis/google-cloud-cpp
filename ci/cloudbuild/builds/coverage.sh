@@ -53,7 +53,23 @@ io::log_h2 "Running coverage on non-integration tests."
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
-mapfile -t integration_args < <(integration::bazel_coverage_args)
+mapfile -t integration_args < <(integration::bazel_args)
+# With code coverage the `--flaky_test_attempts` flag works in unexpected ways.
+# A flake produces an empty `coverage.dat` file, which breaks the build when
+# trying to consolidate all the `coverage.dat` files.
+#
+# This combination of a "successful" test (because the flake is retried) and a
+# failure in the consolidation of coverage results, which happens much later
+# in the build, easily leads the developer astray.
+i=0
+for arg in "${integration_args[@]}"; do
+  case "${arg}" in
+  --flaky_test_attempts=*)
+    unset integration_args[$i]
+    ;;
+  esac
+  i=$(( ++i ))
+done
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 
 # Where does this token come from? For triggered ci/pr builds GCB will securely
