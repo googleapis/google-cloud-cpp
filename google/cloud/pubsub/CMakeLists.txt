@@ -76,6 +76,8 @@ add_library(
     internal/flow_controlled_publisher_tracing_connection.cc
     internal/flow_controlled_publisher_tracing_connection.h
     internal/message_batch.h
+    internal/message_carrier.cc
+    internal/message_carrier.h
     internal/noop_message_batch.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
@@ -307,6 +309,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/flow_controlled_publisher_tracing_connection_test.cc
+        internal/message_carrier_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_stub_factory_test.cc
         internal/publisher_tracing_connection_test.cc

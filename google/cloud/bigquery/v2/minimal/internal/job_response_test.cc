@@ -282,7 +282,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning {)"
       R"( type: "" expiration_time { "0" } field: "" } range_partitioning {)"
@@ -335,7 +335,7 @@ TEST(GetJobResponseTest, DebugString) {
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning { type: "")"
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
@@ -408,7 +408,7 @@ TEST(GetJobResponseTest, DebugString) {
         flatten_results: false
         use_legacy_sql: false
         create_session: false
-        maximum_bytes_billed: 0
+        maximum_bytes_billed: -1
         default_dataset {
           project_id: ""
           dataset_id: ""
@@ -618,7 +618,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false)"
       R"( use_legacy_sql: false create_session: false)"
-      R"( maximum_bytes_billed: 0 default_dataset { project_id: "")"
+      R"( maximum_bytes_billed: -1 default_dataset { project_id: "")"
       R"( dataset_id: "" } destination_table { project_id: "")"
       R"( dataset_id: "" table_id: "" } time_partitioning { type: "")"
       R"( expiration_time { "0" } field: "" } range_partitioning {)"
@@ -672,7 +672,7 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( write_disposition: "" priority: "" parameter_mode: "")"
       R"( preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning { type: "")"
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
@@ -740,7 +740,7 @@ TEST(ListJobsResponseTest, DebugString) {
         flatten_results: false
         use_legacy_sql: false
         create_session: false
-        maximum_bytes_billed: 0
+        maximum_bytes_billed: -1
         default_dataset {
           project_id: ""
           dataset_id: ""
@@ -942,7 +942,7 @@ TEST(InsertJobResponseTest, Success) {
       R"(,"defaultDataset":{"datasetId":"1","projectId":"2"})"
       R"(,"destinationEncryptionConfiguration":{"kmsKeyName":"encryption-key-name"})"
       R"(,"destinationTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
-      R"(,"flattenResults":true,"maximumBytesBilled":0,"parameterMode":"job-param-mode")"
+      R"(,"flattenResults":true,"maximumBytesBilled":"0","parameterMode":"job-param-mode")"
       R"(,"preserveNulls":true,"priority":"job-priority","query":"select 1;")"
       R"(,"queryParameters":[{"name":"query-parameter-name")"
       R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
@@ -1110,7 +1110,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning {)"
       R"( type: "" expiration_time { "0" } field: "" } range_partitioning {)"
@@ -1163,7 +1163,7 @@ TEST(InsertJobResponseTest, DebugString) {
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning { type: "")"
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
@@ -1237,7 +1237,7 @@ TEST(InsertJobResponseTest, DebugString) {
         flatten_results: false
         use_legacy_sql: false
         create_session: false
-        maximum_bytes_billed: 0
+        maximum_bytes_billed: -1
         default_dataset {
           project_id: ""
           dataset_id: ""
@@ -1424,7 +1424,7 @@ TEST(CancelJobResponseTest, Success) {
       R"(,"defaultDataset":{"datasetId":"1","projectId":"2"})"
       R"(,"destinationEncryptionConfiguration":{"kmsKeyName":"encryption-key-name"})"
       R"(,"destinationTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
-      R"(,"flattenResults":true,"maximumBytesBilled":0,"parameterMode":"job-param-mode")"
+      R"(,"flattenResults":true,"maximumBytesBilled":"0","parameterMode":"job-param-mode")"
       R"(,"preserveNulls":true,"priority":"job-priority","query":"select 1;")"
       R"(,"queryParameters":[{"name":"query-parameter-name")"
       R"(,"parameterType":{"arrayType":{"structTypes":[{"description":"array-struct-description")"
@@ -1611,7 +1611,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning {)"
       R"( type: "" expiration_time { "0" } field: "" } range_partitioning {)"
@@ -1666,7 +1666,7 @@ TEST(CancelJobResponseTest, DebugString) {
       R"( create_disposition: "" write_disposition: "" priority: "")"
       R"( parameter_mode: "" preserve_nulls: false allow_large_results: false)"
       R"( use_query_cache: false flatten_results: false use_legacy_sql: false)"
-      R"( create_session: false maximum_bytes_billed: 0)"
+      R"( create_session: false maximum_bytes_billed: -1)"
       R"( default_dataset { project_id: "" dataset_id: "" } destination_table {)"
       R"( project_id: "" dataset_id: "" table_id: "" } time_partitioning { type: "")"
       R"( expiration_time { "0" } field: "" } range_partitioning { field: "" range {)"
@@ -1741,7 +1741,7 @@ TEST(CancelJobResponseTest, DebugString) {
         flatten_results: false
         use_legacy_sql: false
         create_session: false
-        maximum_bytes_billed: 0
+        maximum_bytes_billed: -1
         default_dataset {
           project_id: ""
           dataset_id: ""

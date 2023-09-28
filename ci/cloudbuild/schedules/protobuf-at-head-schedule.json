@@ -1,0 +1,26 @@
+{
+  "attemptDeadline": "180s",
+  "httpTarget": {
+    "headers": {
+      "User-Agent": "Google-Cloud-Scheduler"
+    },
+    "httpMethod": "POST",
+    "oauthToken": {
+      "scope": "https://www.googleapis.com/auth/cloud-platform",
+      "serviceAccountEmail": "cloud-build-trigger-scheduler@cloud-cpp-testing-resources.iam.gserviceaccount.com"
+    },
+    "uri": "https://cloudbuild.googleapis.com/v1/projects/cloud-cpp-testing-resources/locations/global/triggers/7dc9cea4-9d0b-4d0f-9947-5b79bfee5c12:run"
+  },
+  "lastAttemptTime": "2023-09-28T02:23:00.078719Z",
+  "name": "projects/cloud-cpp-testing-resources/locations/us-central1/jobs/protobuf-at-head-schedule",
+  "retryConfig": {
+    "maxBackoffDuration": "3600s",
+    "maxDoublings": 5,
+    "maxRetryDuration": "0s",
+    "minBackoffDuration": "5s"
+  },
+  "schedule": "23 2 * * *",
+  "state": "PAUSED",
+  "timeZone": "Etc/UTC",
+  "userUpdateTime": "2023-09-28T13:26:17Z"
+}

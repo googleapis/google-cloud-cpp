@@ -85,6 +85,30 @@ void ToJson(std::chrono::system_clock::time_point const& field,
   j[name] = std::to_string(m);
 }
 
+nlohmann::json RemoveJsonKeysAndEmptyFields(
+    std::string const& json_payload, std::vector<std::string> const& keys) {
+  nlohmann::json::parser_callback_t remove_empty_call_back =
+      [keys](int depth, nlohmann::json::parse_event_t event,
+             nlohmann::json& parsed) {
+        (void)depth;
+
+        if (event == nlohmann::json::parse_event_t::key) {
+          auto const discard = std::any_of(
+              keys.begin(), keys.end(),
+              [&parsed](std::string const& key) { return parsed == key; });
+          return !discard;
+        }
+        if (event == nlohmann::json::parse_event_t::object_end) {
+          return parsed != nullptr && !parsed.empty();
+        }
+        if (event == nlohmann::json::parse_event_t::array_end) {
+          return !parsed.empty();
+        }
+        return true;
+      };
+  return nlohmann::json::parse(json_payload, remove_empty_call_back, false);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

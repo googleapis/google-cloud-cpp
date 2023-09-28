@@ -31,6 +31,7 @@ pubsub_client_unit_tests = [
     "internal/extend_leases_with_retry_test.cc",
     "internal/flow_controlled_publisher_connection_test.cc",
     "internal/flow_controlled_publisher_tracing_connection_test.cc",
+    "internal/message_carrier_test.cc",
     "internal/ordering_key_publisher_connection_test.cc",
     "internal/publisher_stub_factory_test.cc",
     "internal/publisher_tracing_connection_test.cc",

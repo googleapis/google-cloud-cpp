@@ -314,7 +314,7 @@ TEST(InsertJobRequestTest, EmptyProjectId) {
                                HasSubstr("Project Id is empty")));
 }
 
-TEST(InsertJobRequestTest, Invalidjob) {
+TEST(InsertJobRequestTest, EmptyQuery) {
   InsertJobRequest request;
   request.set_project_id("1234");
 

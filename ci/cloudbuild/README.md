@@ -124,4 +124,18 @@ $ gcloud beta builds worker-pools create \
 Details of the pool can be changed with the **`update`** (rather than `create`)
 command.
 
+## Scheduled Jobs
+
+A small number of builds run on a schedule as opposed to running on each PR and
+CI (push) event. These builds typically use some limited resource (such as
+production quota), or are very slow, or we created to help other teams.
+
+The jobs can be saved using:
+
+```shell
+for job in $(ci/cloudbuild/schedule.sh --ids); do \
+    ci/cloudbuild/schedule.sh --export "${job}" >ci/cloudbuild/schedules/${job}.json
+done
+```
+
 [custom-worker-pool]: https://cloud.google.com/build/docs/custom-workers/run-builds-in-custom-worker-pool
