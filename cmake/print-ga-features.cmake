@@ -15,19 +15,11 @@
 # ~~~
 
 # A CMake script to print the GA features.
-
+cmake_minimum_required(VERSION 3.13...3.24)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 include(GoogleCloudCppFeatures)
 
-set(emitted_compute_feature FALSE)
 foreach (feature IN LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES
                           GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
-    string(REGEX MATCH "^compute_.*" compute_regex_match ${feature})
-    if (compute_regex_match)
-        if (NOT emitted_compute_feature)
-            message("compute")
-            set(emitted_compute_feature TRUE)
-        endif ()
-    else ()
-        message(${feature})
-    endif ()
+    message(${feature})
 endforeach ()

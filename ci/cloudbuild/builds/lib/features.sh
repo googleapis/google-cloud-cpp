@@ -55,7 +55,7 @@ function features::always_build_cmake() {
 
 function features::libraries() {
   local feature_list
-  mapfile -t feature_list <ci/etc/full_feature_list
+  mapfile -t feature_list < <(cmake -P cmake/print-all-features.cmake 2>&1)
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
@@ -63,7 +63,6 @@ function features::_internal_extra() {
   local list=(
     experimental-bigquery_rest
     experimental-storage_grpc
-    oauth2
     opentelemetry
   )
   printf "%s\n" "${list[@]}"

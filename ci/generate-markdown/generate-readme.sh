@@ -34,7 +34,7 @@ file="README.md"
 ) | sponge "${file}"
 
 (
-  mapfile -t features < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-features.cmake 2>&1 | LC_ALL=C sort)
+  mapfile -t features < <(cmake -P cmake/print-ga-features.cmake 2>&1 | LC_ALL=C sort)
   sed '/<!-- inject-GA-features-start -->/q' "${file}"
   for feature in "${features[@]}"; do
     if [[ "${feature}" == "oauth2" ]]; then
