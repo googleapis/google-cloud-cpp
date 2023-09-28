@@ -173,6 +173,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "networksecurity",
     "networkservices",
     "notebooks",
+    "oauth2",
     "optimization",
     "orgpolicy",
     "osconfig",

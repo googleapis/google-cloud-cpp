@@ -19,7 +19,11 @@ set(DOXYGEN_PROJECT_NAME "OAuth2 Access Token Generation Library")
 set(DOXYGEN_PROJECT_BRIEF
     "Create OAuth2 Access Tokens for any GCP authentication mechanism")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("oauth2" DEPENDS cloud-docs)
 
 add_library(google_cloud_cpp_oauth2 # cmake-format: sort
             access_token_generator.cc access_token_generator.h)
@@ -58,7 +62,8 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_headers(google_cloud_cpp_oauth2 include/google/cloud)
+google_cloud_cpp_install_headers(google_cloud_cpp_oauth2
+                                 include/google/cloud/oauth2)
 
 google_cloud_cpp_add_pkgconfig(
     oauth2 "${DOXYGEN_PROJECT_NAME}" "${DOXYGEN_PROJECT_BRIEF}"
@@ -105,3 +110,16 @@ foreach (fname IN LISTS google_cloud_cpp_oauth2_unit_tests)
     google_cloud_cpp_add_common_options(${target})
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
+
+if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    return()
+endif ()
+
+add_executable(oauth2_quickstart "quickstart/quickstart.cc")
+target_link_libraries(oauth2_quickstart PRIVATE google-cloud-cpp::oauth2)
+google_cloud_cpp_add_common_options(oauth2_quickstart)
+add_test(NAME oauth2_quickstart
+         COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                 $<TARGET_FILE:oauth2_quickstart>)
+set_tests_properties(oauth2_quickstart PROPERTIES LABELS
+                                                  "integration-test;quickstart")

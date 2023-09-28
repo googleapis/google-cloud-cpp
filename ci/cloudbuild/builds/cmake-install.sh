@@ -96,8 +96,9 @@ expected_dirs+=(
   # no RPC services in google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging/v1
-  # mocks and opentelemetry/* are hand-crafted directories
+  # mocks, oauth2, and opentelemetry/* are hand-crafted directories
   ./include/google/cloud/mocks
+  ./include/google/cloud/oauth2
   ./include/google/cloud/opentelemetry
   ./include/google/cloud/opentelemetry/internal
   # orgpolicy/v1 is not automatically added. It is used by
@@ -200,8 +201,8 @@ env -C "${out_dir}" ctest "${ctest_args[@]}"
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
 feature_list="$(printf "%s;" $(features::libraries))"
-# GCS+gRPC and OpenTelemetry also have quickstarts.
-feature_list="${feature_list}experimental-storage_grpc;opentelemetry"
+# GCS+gRPC, OAuth2, and OpenTelemetry also have quickstarts.
+feature_list="${feature_list}experimental-storage_grpc;oauth2;opentelemetry"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
