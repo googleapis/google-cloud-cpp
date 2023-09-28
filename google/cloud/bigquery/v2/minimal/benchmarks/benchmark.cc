@@ -13,9 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/benchmarks/benchmark.h"
+#include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/stream_range.h"
 #include "absl/time/time.h"
@@ -34,14 +37,17 @@ using ::google::cloud::bigquery_v2_minimal_internal::Dataset;
 using ::google::cloud::bigquery_v2_minimal_internal::DatasetClient;
 using ::google::cloud::bigquery_v2_minimal_internal::
     DatasetConnectionPoolSizeOption;
+using ::google::cloud::bigquery_v2_minimal_internal::EvaluationKind;
 using ::google::cloud::bigquery_v2_minimal_internal::GetDatasetRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::GetJobRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::GetTableRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::IndexUsageMode;
 using ::google::cloud::bigquery_v2_minimal_internal::InsertJobRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::Job;
 using ::google::cloud::bigquery_v2_minimal_internal::JobClient;
+using ::google::cloud::bigquery_v2_minimal_internal::KeyResultStatementKind;
 using ::google::cloud::bigquery_v2_minimal_internal::ListDatasetsRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::ListFormatDataset;
 using ::google::cloud::bigquery_v2_minimal_internal::ListFormatJob;
@@ -85,6 +91,20 @@ std::chrono::system_clock::time_point StrToTimepoint(std::string const& str) {
 
 std::chrono::milliseconds ToChronoMillis(int m) {
   return std::chrono::milliseconds(m);
+}
+
+std::string GenerateJobId(std::string const& prefix = "") {
+  auto constexpr kJobPrefix = "bqOdbcJob_benchmark_test_";
+  std::string job_prefix = kJobPrefix;
+  if (!prefix.empty()) {
+    absl::StrAppend(&job_prefix, "_", prefix);
+  }
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  auto id = google::cloud::internal::Sample(generator, 32,
+                                            "abcdefghijklmnopqrstuvwxyz");
+  std::string job_id;
+  absl::StrAppend(&job_id, job_prefix, "_", id);
+  return job_id;
 }
 
 }  // anonymous namespace
@@ -352,15 +372,50 @@ StatusOr<Job> JobBenchmark::InsertJob() {
   // Set request body.
   Job job;
   std::string request_body;
+  std::string job_id;
   if (config_.dry_run) {
     request_body = JobConfig::GetInsertJobDryRunRequestBody();
+    job_id = GenerateJobId("dry-run");
   } else {
     request_body = JobConfig::GetInsertJobRequestBody();
+    job_id = GenerateJobId("real-run");
   }
   auto json = nlohmann::json::parse(request_body, nullptr, false);
+  if (!json.is_object()) {
+    return internal::InternalError(
+        "Invalid JSON: Unable to parse request body: " + request_body,
+        GCP_ERROR_INFO());
+  }
   from_json(json, job);
-  request.set_job(job);
 
+  // Set Job Id;
+  job.job_reference.job_id = job_id;
+
+  // Make sure some of the required enum fields are not empty.
+  if (job.configuration.query.script_options.key_result_statement.value
+          .empty()) {
+    job.configuration.query.script_options.key_result_statement =
+        KeyResultStatementKind::UnSpecified();
+  }
+  if (job.statistics.job_query_stats.search_statistics.index_usage_mode.value
+          .empty()) {
+    job.statistics.job_query_stats.search_statistics.index_usage_mode =
+        IndexUsageMode::UnSpecified();
+  }
+  if (job.statistics.script_statistics.evaluation_kind.value.empty()) {
+    job.statistics.script_statistics.evaluation_kind =
+        EvaluationKind::UnSpecified();
+  }
+  request.set_job(job);
+  // Remove Json fields that shouldn't be part of the InsertJob payload for
+  // this test case.
+  request.set_json_filter_keys(
+      {"statistics", "status", "labels", "destinationTable",
+       "maximumBytesBilled", "userDefinedFunctionResources", "defaultDataset",
+       "schemaUpdateOptions", "timePartitioning", "rangePartitioning",
+       "clustering", "destinationEncryptionConfiguration", "scriptOptions",
+       "connectionProperties", "systemVariables", "structTypes",
+       "structValues"});
   return job_client_->InsertJob(request);
 }
 
