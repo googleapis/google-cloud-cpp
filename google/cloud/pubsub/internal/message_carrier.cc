@@ -19,6 +19,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -28,18 +29,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 opentelemetry::nostd::string_view MessageCarrier::Get(
     opentelemetry::nostd::string_view key) const noexcept {
   auto result =
-      internal::NoExceptAction<opentelemetry::nostd::string_view>([&] {
+      internal::NoExceptAction<opentelemetry::nostd::string_view>([this, key] {
         auto value = GetAttribute(
-            absl::StrCat("googclient_", std::string(key.data(), key.size())),
+            absl::StrCat("googclient_", absl::string_view(key.data(), key.size())),
             message_);
-        if (!value.empty()) {
           return opentelemetry::nostd::string_view(value.data(), value.size());
-        }
-        return opentelemetry::nostd::string_view{};
       });
-  if (result) return *result;
-
-  return opentelemetry::nostd::string_view{};
+return result ? *result : opentelemetry::nostd::string_view{};
 }
 
 void MessageCarrier::Set(opentelemetry::nostd::string_view key,
@@ -47,7 +43,7 @@ void MessageCarrier::Set(opentelemetry::nostd::string_view key,
   internal::NoExceptAction([this, key, value] {
     SetAttribute(
         absl::StrCat("googclient_", std::string(key.data(), key.size())),
-        value.data(), message_);
+        std::string(value.data(), value.size()), message_);
   });
 }
 

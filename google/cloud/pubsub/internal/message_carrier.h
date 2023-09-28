@@ -18,10 +18,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_MESSAGE_CARRIER_H
 
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 #include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/nostd/shared_ptr.h>
-#include <opentelemetry/trace/span.h>
+#include <opentelemetry/nostd/string_view.h>
 
 namespace google {
 namespace cloud {
@@ -29,9 +28,10 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A [carrier] for a Pub/Sub Message. This injects the key/value into the
- * message attributes.
- *
+ * A [carrier] for a Pub/Sub Message. 
+ * 
+ * This class sets and accesses key value pairs stored in the Message attributes with the key prefix "googclient_".
+ * 
  * [carrier]:
  * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#carrier
  */
@@ -40,12 +40,12 @@ class MessageCarrier
  public:
   explicit MessageCarrier(pubsub::Message& message) : message_(message) {}
 
-  // Returns a string_view to the value for a given key or a null string_view.
-  // Note: the returned string_view is only valid as long message as the
-  // lifetime of the message.
+  // Returns a string_view to the value for a given key if it exists or a null string_view.
+  // Note: the returned string_view is only valid as long message as the lifetime of the message
   opentelemetry::nostd::string_view Get(
       opentelemetry::nostd::string_view key) const noexcept override;
 
+  // Injects the key/value into the message attributes.
   void Set(opentelemetry::nostd::string_view key,
            opentelemetry::nostd::string_view value) noexcept override;
 

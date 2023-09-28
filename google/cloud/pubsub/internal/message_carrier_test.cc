@@ -16,7 +16,6 @@
 
 #include "google/cloud/pubsub/internal/message_carrier.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/internal/noexcept_action.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,6 +26,7 @@ namespace {
 
 using ::testing::Contains;
 using ::testing::Pair;
+using ::testing::IsNull;
 
 TEST(MessageCarrierTest, SetAttribute) {
   auto message = pubsub::MessageBuilder().Build();
@@ -54,7 +54,7 @@ TEST(MessageCarrierTest, GetAttributeIgnoresKeyWithoutPrefix) {
 
   auto value = message_carrier.Get("key");
 
-  EXPECT_EQ(std::string(value.data(), value.size()), "");
+  EXPECT_THAT(value.data(), IsNull());
 }
 
 TEST(MessageCarrierTest, GetAttributeNotFound) {
@@ -63,7 +63,7 @@ TEST(MessageCarrierTest, GetAttributeNotFound) {
 
   auto value = message_carrier.Get("key1");
 
-  EXPECT_EQ(std::string(value.data(), value.size()), "");
+  EXPECT_THAT(value.data(), IsNull());
 }
 
 }  // namespace
