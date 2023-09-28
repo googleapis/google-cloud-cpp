@@ -64,11 +64,11 @@ mapfile -t integration_args < <(integration::bazel_args)
 i=0
 for arg in "${integration_args[@]}"; do
   case "${arg}" in
-  --flaky_test_attempts=*)
-    unset integration_args[$i]
-    ;;
+    --flaky_test_attempts=*)
+      unset "integration_args[$i]"
+      ;;
   esac
-  i=$(( ++i ))
+  i=$((++i))
 done
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 
