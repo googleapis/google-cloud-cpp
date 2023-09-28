@@ -53,7 +53,7 @@ io::log_h2 "Running coverage on non-integration tests."
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
-mapfile -t integration_args < <(integration::bazel_args)
+mapfile -t integration_args < <(integration::bazel_coverage_args)
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 
 # Where does this token come from? For triggered ci/pr builds GCB will securely
