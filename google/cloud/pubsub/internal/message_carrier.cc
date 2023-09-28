@@ -31,18 +31,19 @@ opentelemetry::nostd::string_view MessageCarrier::Get(
   auto result =
       internal::NoExceptAction<opentelemetry::nostd::string_view>([this, key] {
         auto value = GetAttribute(
-            absl::StrCat("googclient_", absl::string_view(key.data(), key.size())),
+            absl::StrCat("googclient_",
+                         absl::string_view(key.data(), key.size())),
             message_);
-          return opentelemetry::nostd::string_view(value.data(), value.size());
+        return opentelemetry::nostd::string_view(value.data(), value.size());
       });
-return result ? *result : opentelemetry::nostd::string_view{};
+  return result ? *result : opentelemetry::nostd::string_view{};
 }
 
 void MessageCarrier::Set(opentelemetry::nostd::string_view key,
                          opentelemetry::nostd::string_view value) noexcept {
   internal::NoExceptAction([this, key, value] {
     SetAttribute(
-        absl::StrCat("googclient_", std::string(key.data(), key.size())),
+        absl::StrCat("googclient_", absl::string_view(key.data(), key.size())),
         std::string(value.data(), value.size()), message_);
   });
 }

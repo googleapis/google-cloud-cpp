@@ -25,8 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::testing::Contains;
-using ::testing::Pair;
 using ::testing::IsNull;
+using ::testing::Pair;
 
 TEST(MessageCarrierTest, SetAttribute) {
   auto message = pubsub::MessageBuilder().Build();
