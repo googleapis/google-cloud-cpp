@@ -51,7 +51,7 @@ NO_MOCK_LIBRARIES = ["oauth2"]
             library_dir = google_cloud_cpp_library_dir_name(library),
         ),
     ],
-) for library in EXPERIMENTAL_LIBRARIES]
+) for library in EXPERIMENTAL_LIBRARIES if library not in NO_MOCK_LIBRARIES]
 
 [cc_library(
     name = "experimental-{library}".format(library = library),
