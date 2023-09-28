@@ -372,7 +372,12 @@ macro (google_cloud_cpp_enable_cleanup)
         OR (sql IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
+        # Backwards compatibility. In the original release of `oauth2` we
+        # automatically compiled the library if REST was enabled
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE oauth2)
     endif ()
+
+    list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
 endmacro ()
 
 # Configure CMake to build the features listed in `GOOGLE_CLOUD_CPP_ENABLE`.
