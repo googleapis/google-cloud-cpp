@@ -63,7 +63,17 @@ function export_schedule() {
 }
 
 function schedule_flags() {
-  jq -r '"--schedule", .schedule, "--uri", .httpTarget.uri, "--oauth-service-account-email", .httpTarget.oauthToken.serviceAccountEmail, "--oauth2-service-account-scope", .httpTarget.oauthToken.scope' <"${file}"
+  local file="$1"
+  # jq requires a single argument, but it is too long.
+  local args=(
+    '"--schedule"' .schedule
+    '"--uri"' .httpTarget.uri
+    '"--oauth-service-account-email"' .httpTarget.oauthToken.serviceAccountEmail
+    '"--oauth2-service-account-scope"' .httpTarget.oauthToken.scope
+  )
+  local script
+  script="$(print ", %s" "${args[@]}")"
+  jq -r "${script:2}" <"${file}"
 }
 
 function import_schedule() {
@@ -71,7 +81,7 @@ function import_schedule() {
   local id
   id="$(basename "${file}" .json)"
   local -a flags
-  mapfile -t flags < <(schedule_flags)
+  mapfile -t flags < <(schedule_flags "${file}")
 
   io::run gcloud scheduler jobs create http "${id}" "${flags[@]}" \
     --project "${CLOUD_PROJECT}" \
@@ -104,5 +114,6 @@ case "$1" in
     ;;
   *)
     print_usage
+    exit 1
     ;;
 esac
