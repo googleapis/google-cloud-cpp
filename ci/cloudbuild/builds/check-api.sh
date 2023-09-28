@@ -31,10 +31,12 @@ if [ "${GOOGLE_CLOUD_CPP_CHECK_API:-}" ]; then
   readonly ENABLED_FEATURES="${GOOGLE_CLOUD_CPP_CHECK_API}"
   IFS=',' read -ra library_list <<<"${GOOGLE_CLOUD_CPP_CHECK_API}"
 else
-  readonly ENABLED_FEATURES="__ga_libraries__"
+  readonly ENABLED_FEATURES="__ga_libraries__,opentelemetry"
   mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
   # These libraries are not "features", but they are part of the public API
   library_list+=("common" "grpc_utils" "oauth2")
+  # This is a GA library, not included in __ga_libraries__
+  library_list+=("opentelemetry")
 fi
 
 # abi-dumper wants us to use -Og, but that causes bogus warnings about
