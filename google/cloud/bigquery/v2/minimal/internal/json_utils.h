@@ -44,6 +44,11 @@ void FromJson(std::chrono::hours& field, nlohmann::json const& j,
 void ToJson(std::chrono::hours const& field, nlohmann::json& j,
             char const* name);
 
+// Removes not needed keys and empty arrays and objects from the json
+// payload.
+nlohmann::json RemoveJsonKeysAndEmptyFields(
+    std::string const& json_payload, std::vector<std::string> const& keys = {});
+
 // Suppress recursive clang-tidy warnings
 //
 // NOLINTBEGIN(misc-no-recursion)
