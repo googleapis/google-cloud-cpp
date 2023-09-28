@@ -193,7 +193,8 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
     list(APPEND DOXYGEN_EXAMPLE_PATH
          "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
 endforeach ()
-list(APPEND DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+list(APPEND DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/samples"
+     "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("compute" THREADED DEPENDS cloud-docs
                                  ${compute_proto_lib_targets})

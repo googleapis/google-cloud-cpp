@@ -162,6 +162,7 @@ function integration::bazel_with_emulators() {
     "google/cloud/bigquery/..."
     # Compute integration tests
     "google/cloud/compute/integration_tests/..."
+    "google/cloud/compute/samples/..."
     # IAM and IAM Credentials integration tests
     "google/cloud/iam/..."
     # Logging integration tests
