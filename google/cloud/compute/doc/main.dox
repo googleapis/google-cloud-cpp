@@ -2,13 +2,11 @@
 
 @mainpage Compute Engine API C++ Client Library
 
-An idiomatic C++ client library for the [Compute Engine API][cloud-service-docs], a service to create
-and manage cloud computing resources.
+An idiomatic C++ client library for the [Compute Engine API][cloud-service-docs],
+a service to create and manage cloud computing resources.
 
-This library requires a C++14 compiler. It is supported (and tested) on multiple
-Linux distributions, as well as Windows and macOS. The [README][github-readme]
-on [GitHub][github-link] provides detailed instructions to install the necessary
-dependencies, as well as how to compile the client library.
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 @tableofcontents{HTML:2}
 
@@ -139,6 +137,4 @@ application.
 - @ref compute-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/compute
-[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-
 */
