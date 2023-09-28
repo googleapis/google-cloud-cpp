@@ -1,0 +1,31 @@
+{
+  "attemptDeadline": "180s",
+  "description": "Runs rotate keys every day at 6am",
+  "httpTarget": {
+    "body": "eyJicmFuY2hOYW1lIjoibWFpbiJ9",
+    "headers": {
+      "Content-Type": "application/octet-stream",
+      "User-Agent": "Google-Cloud-Scheduler"
+    },
+    "httpMethod": "POST",
+    "oauthToken": {
+      "scope": "https://www.googleapis.com/auth/cloud-platform",
+      "serviceAccountEmail": "cloud-build-trigger-scheduler@cloud-cpp-testing-resources.iam.gserviceaccount.com"
+    },
+    "uri": "https://cloudbuild.googleapis.com/v1/projects/cloud-cpp-testing-resources/triggers/3fca51de-ec4c-453f-9693-5ccec556a379:run"
+  },
+  "lastAttemptTime": "2023-09-28T10:00:00.341621Z",
+  "name": "projects/cloud-cpp-testing-resources/locations/us-central1/jobs/rotate-keys-schedule",
+  "retryConfig": {
+    "maxBackoffDuration": "3600s",
+    "maxDoublings": 5,
+    "maxRetryDuration": "0s",
+    "minBackoffDuration": "5s"
+  },
+  "schedule": "0 6 * * *",
+  "scheduleTime": "2023-09-29T10:00:00.165730Z",
+  "state": "ENABLED",
+  "status": {},
+  "timeZone": "America/New_York",
+  "userUpdateTime": "2021-05-26T19:52:35Z"
+}
