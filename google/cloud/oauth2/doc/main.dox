@@ -1,0 +1,32 @@
+/*!
+
+@mainpage OAuth2 Access Token Generation Library
+
+This library contains helpers to create OAuth2 access tokens. This may be useful
+when trying to access customer services deployed to Cloud Run, or when using
+Google APIs that lack a client library in `google-cloud-cpp`.
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/oauth2/quickstart/` directory.
+This is the typical usage of the library in applications.
+
+@snippet quickstart.cc all
+
+## Main interfaces
+
+- [\c oauth2::AccessTokenGenerator](@ref google::cloud::oauth2::AccessTokenGenerator)
+- [\c oauth2::MakeAccessTokenGenerator()](@ref google::cloud::oauth2::MakeAccessTokenGenerator)
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- [Authentication methods at Google] - has more information about authentication
+  and the Application Default credentials
+
+[Authentication methods at Google]: https://cloud.google.com/docs/authentication
+
+*/

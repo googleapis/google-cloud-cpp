@@ -59,13 +59,28 @@ function features::libraries() {
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
+function features::_internal_extra() {
+  local list=(
+    experimental-bigquery_rest
+    experimental-storage_grpc
+    oauth2
+    opentelemetry
+  )
+  printf "%s\n" "${list[@]}"
+}
+
 function features::list_full() {
   local feature_list
   mapfile -t feature_list < <(features::libraries)
-  feature_list+=(opentelemetry experimental-storage_grpc grafeas)
-  printf "%s\n" "${feature_list[@]}" | sort -u
+  local extra_list
+  mapfile -t extra_list < <(features::_internal_extra)
+  printf "%s\n" "${feature_list[@]}" "${extra_list[@]}" | sort -u
 }
 
 function features::list_full_cmake() {
-  echo "__ga_libraries__,__experimental_libraries__,experimental-storage_grpc,opentelemetry,experimental-bigquery_rest"
+  local feature_list
+  mapfile -t feature_list < <(features::list_full)
+  local concat
+  concat="$(printf ",%s" "${feature_list[@]}" "${extra_list[@]}")"
+  echo "${concat:1}"
 }

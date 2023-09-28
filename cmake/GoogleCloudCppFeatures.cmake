@@ -27,7 +27,8 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 # Protobuf messages. We do not bother to have an internal library that depends
 # on Protobuf but not gRPC. So these libraries must depend on
 # `google_cloud_cpp_grpc_utils`.
-set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES "storage;experimental-bigquery_rest")
+set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES
+    "oauth2;storage;experimental-bigquery_rest")
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sorted
     # This is WIP, it needs a number of hand-crafted APIs.
@@ -110,6 +111,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "networksecurity"
     "networkservices"
     "notebooks"
+    "oauth2"
     "optimization"
     "orgpolicy"
     "osconfig"
@@ -365,6 +367,7 @@ macro (google_cloud_cpp_enable_cleanup)
         OR (compute IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute_features)
         OR (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (oauth2 IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (sql IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))

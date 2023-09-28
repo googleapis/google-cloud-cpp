@@ -34,7 +34,7 @@ else
   readonly ENABLED_FEATURES="__ga_libraries__,opentelemetry"
   mapfile -t library_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
   # These libraries are not "features", but they are part of the public API
-  library_list+=("common" "grpc_utils" "oauth2")
+  library_list+=("common" "grpc_utils")
   # This is a GA library, not included in __ga_libraries__
   library_list+=("opentelemetry")
 fi

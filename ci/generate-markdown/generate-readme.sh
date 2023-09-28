@@ -37,7 +37,11 @@ file="README.md"
   mapfile -t features < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-features.cmake 2>&1 | LC_ALL=C sort)
   sed '/<!-- inject-GA-features-start -->/q' "${file}"
   for feature in "${features[@]}"; do
-    description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${feature}/README.md")"
+    if [[ "${feature}" == "oauth2" ]]; then
+      description="OAuth2 Access Token Generation"
+    else
+      description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${feature}/README.md")"
+    fi
     printf -- '- [%s](google/cloud/%s/README.md)\n' "${description}" "${feature}"
     printf -- '  [[quickstart]](google/cloud/%s/quickstart/README.md)\n' "${feature}"
     printf -- '  [[reference]](https://cloud.google.com/cpp/docs/reference/%s/latest)\n' "${feature}"
