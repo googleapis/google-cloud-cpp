@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for the
 [Compute Engine API][cloud-service-docs], a service that lets you create and run
 virtual machines on Google’s infrastructure.
 
-The Compute Engine API has a large surface and is split into multiple services,
-in different subdirectories, each interacting with a specific Compute Engine
+Compute Engine's API has a large surface and is split into multiple services, in
+different subdirectories, each interacting with a specific Compute Engine
 resource. Additionally, Compute Engine is divided into multiple libraries, one
 per resource, to reduce binary size.
 
@@ -15,9 +15,9 @@ CMake targets follow the naming convention
 `google-cloud-cpp::compute_instance_group_managers`.
 
 Bazel targets follow the naming convention `compute_${subdir}` such that the
-"disks" library is `@com_google_googleapis_google_cloud_cpp//:compute_disks` and
-the "instance_group_managers" library is
-`@com_google_googleapis_google_cloud_cpp//:compute_instance_group_managers`.
+"disks" library is `@google_cloud_cpp//:compute_disks` and the
+"instance_group_managers" library is
+`@google_cloud_cpp//:compute_instance_group_managers`.
 
 ## Quickstart
 
