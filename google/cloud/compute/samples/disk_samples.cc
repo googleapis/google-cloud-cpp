@@ -41,7 +41,7 @@ std::vector<std::pair<std::string, std::string>> SplitLabelsString(
 void CreateEmptyDisk(std::vector<std::string> const& argv) {
   if (argv.size() < 4) {
     throw google::cloud::testing_util::Usage{
-        "with-service-account <project-id> <zone> <disk-name> <disk-size-gb> "
+        "compute-disk-create-empty-disk <project-id> <zone> <disk-name> <disk-size-gb> "
         "<labels>"};
   }
   //! [START compute_disk_create_empty_disk]
@@ -84,7 +84,7 @@ void CreateEmptyDisk(std::vector<std::string> const& argv) {
 void DeleteDisk(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw google::cloud::testing_util::Usage{
-        "with-service-account <project-id> <zone> <disk-name>"};
+        "compute-disk-delete-disk <project-id> <zone> <disk-name>"};
   }
   //! [START compute_disk_delete]
   namespace compute_disks = ::google::cloud::compute_disks_v1;

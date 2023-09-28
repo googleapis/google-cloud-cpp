@@ -32,7 +32,7 @@ function (compute_client_define_samples)
                                                 google-cloud-cpp::compute_disks)
     endforeach ()
 
-    foreach (fname ${compute_client_integration_samples})
+    foreach (fname ${compute_client_samples})
         google_cloud_cpp_set_target_name(target "compute" "${fname}")
         set_tests_properties(${target} PROPERTIES LABELS "integration-test")
     endforeach ()
