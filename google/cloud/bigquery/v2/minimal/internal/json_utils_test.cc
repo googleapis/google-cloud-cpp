@@ -27,8 +27,8 @@ using ::testing::Not;
 
 TEST(JsonUtilsTest, FromJsonMillisecondsNumber) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":10})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":10})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::chrono::milliseconds field;
@@ -39,8 +39,8 @@ TEST(JsonUtilsTest, FromJsonMillisecondsNumber) {
 
 TEST(JsonUtilsTest, FromJsonMillisecondsString) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":"10"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":"10"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::chrono::milliseconds field;
@@ -51,8 +51,8 @@ TEST(JsonUtilsTest, FromJsonMillisecondsString) {
 
 TEST(JsonUtilsTest, ToJsonMillisecondsString) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":"10"})";
-  auto expected_json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":"10"})";
+  auto expected_json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(expected_json.is_object());
 
   auto field = std::chrono::milliseconds{10};
@@ -64,8 +64,8 @@ TEST(JsonUtilsTest, ToJsonMillisecondsString) {
 
 TEST(JsonUtilsTest, FromJsonHoursNumber) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":10})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":10})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::chrono::hours field;
@@ -76,8 +76,8 @@ TEST(JsonUtilsTest, FromJsonHoursNumber) {
 
 TEST(JsonUtilsTest, FromJsonHoursString) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":"10"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":"10"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::chrono::hours field;
@@ -88,8 +88,8 @@ TEST(JsonUtilsTest, FromJsonHoursString) {
 
 TEST(JsonUtilsTest, ToJsonHoursString) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":"10"})";
-  auto expected_json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":"10"})";
+  auto expected_json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(expected_json.is_object());
 
   auto field = std::chrono::hours{10};
@@ -101,8 +101,8 @@ TEST(JsonUtilsTest, ToJsonHoursString) {
 
 TEST(JsonUtilsTest, FromJsonTimepointNumber) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":10})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":10})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::chrono::system_clock::time_point field;
@@ -114,8 +114,8 @@ TEST(JsonUtilsTest, FromJsonTimepointNumber) {
 
 TEST(JsonUtilsTest, FromJsonTimepointString) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":"10"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":"10"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::chrono::system_clock::time_point field;
@@ -127,8 +127,8 @@ TEST(JsonUtilsTest, FromJsonTimepointString) {
 
 TEST(JsonUtilsTest, ToJsonTimepointString) {
   auto const* const name = "start_time";
-  auto const* json_text = R"({"start_time":"10"})";
-  auto expected_json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"start_time":"10"})";
+  auto expected_json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(expected_json.is_object());
 
   auto field =
@@ -141,13 +141,13 @@ TEST(JsonUtilsTest, ToJsonTimepointString) {
 
 TEST(JsonUtilsTest, SafeGetToCustomType) {
   auto const* const key = "error_result";
-  auto const* json_text =
+  auto constexpr kJsonText =
       R"({"error_result":{
     "reason":"testing",
     "location":"us-east",
     "message":"testing"
   }})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   ErrorProto actual;
@@ -163,8 +163,8 @@ TEST(JsonUtilsTest, SafeGetToCustomType) {
 
 TEST(JsonUtilsTest, SafeGetToSharedPtrKeyPresent) {
   auto const* const key = "project_id";
-  auto const* json_text = R"({"project_id":"123"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::shared_ptr<std::string> val;
@@ -175,8 +175,8 @@ TEST(JsonUtilsTest, SafeGetToSharedPtrKeyPresent) {
 
 TEST(JsonUtilsTest, SafeGetToSharedPtrKeyAbsent) {
   auto const* const key = "job_id";
-  auto const* json_text = R"({"project_id":"123"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::shared_ptr<std::string> val;
@@ -186,8 +186,8 @@ TEST(JsonUtilsTest, SafeGetToSharedPtrKeyAbsent) {
 
 TEST(JsonUtilsTest, SafeGetToKeyPresent) {
   auto const* const key = "project_id";
-  auto const* json_text = R"({"project_id":"123"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::string val;
@@ -197,8 +197,8 @@ TEST(JsonUtilsTest, SafeGetToKeyPresent) {
 
 TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
   auto const* const key = "job_id";
-  auto const* json_text = R"({"project_id":"123"})";
-  auto json = nlohmann::json::parse(json_text, nullptr, false);
+  auto constexpr kJsonText = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
   std::string val;
@@ -207,10 +207,10 @@ TEST(JsonUtilsTest, SafeGetToKeyAbsent) {
 
 TEST(JsonUtilsTest, RemoveKeys) {
   std::vector<std::string> keys = {"start_time", "dataset_id"};
-  auto const* json_text =
+  auto constexpr kJsonText =
       R"({"start_time":"10", "project_id": "1", "dataset_id":"1"})";
 
-  auto json = RemoveJsonKeysAndEmptyFields(json_text, keys);
+  auto json = RemoveJsonKeysAndEmptyFields(kJsonText, keys);
   auto const* expected = R"({"project_id":"1"})";
 
   EXPECT_EQ(expected, json.dump());
@@ -218,10 +218,10 @@ TEST(JsonUtilsTest, RemoveKeys) {
 
 TEST(JsonUtilsTest, RemoveEmptyArrays) {
   std::vector<std::string> keys = {"start_time", "query_parameters"};
-  auto const* json_text =
+  auto constexpr kJsonText =
       R"({"start_time":"10", "project_id": "1", "query_parameters":[]})";
 
-  auto json = RemoveJsonKeysAndEmptyFields(json_text, keys);
+  auto json = RemoveJsonKeysAndEmptyFields(kJsonText, keys);
   auto const* expected = R"({"project_id":"1"})";
 
   EXPECT_EQ(expected, json.dump());
@@ -229,10 +229,10 @@ TEST(JsonUtilsTest, RemoveEmptyArrays) {
 
 TEST(JsonUtilsTest, RemoveEmptyObjects) {
   std::vector<std::string> keys = {"start_time", "query"};
-  auto const* json_text =
+  auto constexpr kJsonText =
       R"({"start_time":"10", "project_id": "1", "query":{}})";
 
-  auto json = RemoveJsonKeysAndEmptyFields(json_text, keys);
+  auto json = RemoveJsonKeysAndEmptyFields(kJsonText, keys);
   auto const* expected = R"({"project_id":"1"})";
 
   EXPECT_EQ(expected, json.dump());

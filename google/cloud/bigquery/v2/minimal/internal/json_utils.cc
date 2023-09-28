@@ -93,11 +93,10 @@ nlohmann::json RemoveJsonKeysAndEmptyFields(
         (void)depth;
 
         if (event == nlohmann::json::parse_event_t::key) {
-          auto const key_found = std::any_of(
+          auto const discard = std::any_of(
               keys.begin(), keys.end(),
               [&parsed](std::string const& key) { return parsed == key; });
-          auto skip_key = !key_found;
-          return skip_key;
+          return !discard;
         }
         if (event == nlohmann::json::parse_event_t::object_end) {
           return parsed != nullptr && !parsed.empty();
