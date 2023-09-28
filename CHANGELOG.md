@@ -128,17 +128,15 @@ Features to instrument the Google Cloud C++ libraries for [distributed tracing]
 using [OpenTelemetry] are now GA. See the [quickstart][otel-quickstart] within
 the library to learn more about these tools.
 
-### Known issues
-
-Compiling gRPC with Bazel and Clang >= 16 requires `--features=-layering_check`
-in your Bazel command-line. For more details, see [grpc#34482].
-
-## v2.15.1 - 2023-09
-
 ### [Policy Troubleshooter](/google/cloud/policytroubleshooter/README.md)
 
 Remove `PoliciesClient`. This client was placed in the wrong library. The
 correct location is google/cloud/iam/v2.
+
+### Known issues
+
+Compiling gRPC with Bazel and Clang >= 16 requires `--features=-layering_check`
+in your Bazel command-line. For more details, see [grpc#34482].
 
 ## v2.15.0 - 2023-09
 
