@@ -150,6 +150,9 @@ function spanner_emulator::kill() {
     echo -n "."
     echo " done."
     SPANNER_EMULATOR_PID=0
+    echo "================ emulator.log ================"
+    cat --number --show-nonprinting emulator.log
+    echo "=============================================="
   fi
   if (("${SPANNER_HTTP_EMULATOR_PID}" > 0)); then
     echo -n "Killing Spanner HTTP Emulator [${SPANNER_HTTP_EMULATOR_PID}] "
@@ -158,5 +161,8 @@ function spanner_emulator::kill() {
     echo -n "."
     echo " done."
     SPANNER_HTTP_EMULATOR_PID=0
+    echo "============== http_emulator.log ============="
+    cat --number --show-nonprinting http_emulator.log
+    echo "=============================================="
   fi
 }
