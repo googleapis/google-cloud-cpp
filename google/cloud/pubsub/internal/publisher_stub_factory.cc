@@ -18,7 +18,9 @@
 #include "google/cloud/pubsub/internal/publisher_logging_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_round_robin_decorator.h"
+#include "google/cloud/pubsub/internal/publisher_tracing_stub.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -85,6 +87,10 @@ std::shared_ptr<PublisherStub> CreateDecoratedStubs(
     stub = std::make_shared<pubsub_internal::PublisherLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+
+  if (internal::TracingEnabled(options)) {
+    stub = MakePublisherTracingStub(std::move(stub));
   }
   return stub;
 }
