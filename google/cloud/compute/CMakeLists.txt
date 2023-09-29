@@ -228,9 +228,8 @@ target_link_libraries(
     google_cloud_cpp_compute
     PUBLIC
     INTERFACE ${compute_lib_targets})
-set_target_properties(
-    google_cloud_cpp_compute
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::compute")
+set_target_properties(google_cloud_cpp_compute
+                      PROPERTIES EXPORT_NAME "google-cloud-cpp::compute")
 add_library(google-cloud-cpp::compute ALIAS google_cloud_cpp_compute)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
