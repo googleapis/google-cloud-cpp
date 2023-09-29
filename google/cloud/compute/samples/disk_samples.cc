@@ -26,9 +26,8 @@
 
 namespace {
 
-std::vector<std::pair<std::string, std::string>> SplitLabelsString(
-    std::string const& arg) {
-  std::vector<std::pair<std::string, std::string>> labels;
+std::map<std::string, std::string> SplitLabelsString(std::string const& arg) {
+  std::map<std::string, std::string> labels;
   if (arg.empty()) return labels;
   static auto const* const kInputCheck = new std::regex("(.*:.*)(,.*:.*)*");
   std::smatch match;
@@ -38,8 +37,8 @@ std::vector<std::pair<std::string, std::string>> SplitLabelsString(
         "\"<label1>:<value1>,<label2>:<value2>,...\""};
   }
   std::vector<std::string> pairs = absl::StrSplit(arg, ',');
-  std::transform(pairs.begin(), pairs.end(), std::back_inserter(labels),
-                 [](std::string const& p) {
+  std::transform(pairs.begin(), pairs.end(),
+                 std::inserter(labels, labels.end()), [](std::string const& p) {
                    std::pair<std::string, std::string> l =
                        absl::StrSplit(p, ':');
                    return l;
@@ -61,7 +60,7 @@ void CreateEmptyDisk(std::vector<std::string> const& argv) {
 
   [](std::string const& project_id, std::string const& zone,
      std::string const& disk_name, std::string const& disk_size_gb,
-     std::vector<std::pair<std::string, std::string>> const& labels) {
+     std::map<std::string, std::string> const& labels) {
     auto client =
         compute_disks::DisksClient(compute_disks::MakeDisksConnectionRest());
     compute_proto::Disk disk;
@@ -88,7 +87,7 @@ void CreateEmptyDisk(std::vector<std::string> const& argv) {
   //! [END compute_disk_create_empty_disk]
   (argv.at(0), argv.at(1), argv.at(2), argv.at(3),
    ((argv.size() == 5) ? SplitLabelsString(argv.at(4))
-                       : std::vector<std::pair<std::string, std::string>>{}));
+                       : std::map<std::string, std::string>{}));
 }
 
 void DeleteDisk(std::vector<std::string> const& argv) {
