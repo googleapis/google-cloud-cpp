@@ -19,9 +19,8 @@ find_program(XSLTPROC xsltproc)
 
 function (google_cloud_cpp_doxygen_deploy_version VAR)
     set(VERSION "${PROJECT_VERSION}")
-    if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
-        # Match the version string used in publish-docs.sh
-        set(VERSION "HEAD")
+    if (${GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS})
+        set(VERSION "latest")
     endif ()
     set(${VAR}
         "${VERSION}"
@@ -210,6 +209,6 @@ function (google_cloud_cpp_doxygen_targets library)
         DEPENDS
         ${opt_DEPENDS}
         TAGFILES
-        "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${VERSION}/"
+        "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://cloud.google.com/cpp/docs/reference/common/${VERSION}/"
     )
 endfunction ()
