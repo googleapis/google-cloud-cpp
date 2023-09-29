@@ -78,7 +78,7 @@ io::run cmake --install cmake-out/features --prefix "${INSTALL_PREFIX}"
 
 # Tests the installed artifacts by building all the quickstarts.
 # shellcheck disable=SC2046
-mapfile -t feature_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-features.cmake 2>&1)
+mapfile -t feature_list < <(cmake -P cmake/print-ga-features.cmake 2>&1)
 FEATURES=$(printf ";%s" "${feature_list[@]}")
 FEATURES="${FEATURES:1}"
 io::run cmake -G Ninja \

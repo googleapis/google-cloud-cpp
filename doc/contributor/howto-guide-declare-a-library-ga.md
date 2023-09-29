@@ -44,8 +44,7 @@ Update `cmake/GoogleCloudCppFeatures.cmake`. Move the library from
 following steps.
 
 ```shell
-mapfile -t ga < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" \
-  -P cmake/print-ga-libraries.cmake 2>&1 |
+mapfile -t ga < <(cmake -P cmake/print-ga-libraries.cmake 2>&1 |
   grep -E -v 'storage|bigtable|spanner|pubsub|common|grpc_utils')
 ```
 

@@ -173,30 +173,6 @@ int WriteInstallDirectories(
   return 0;
 }
 
-int WriteFeatureList(
-    google::cloud::cpp::generator::GeneratorConfiguration const& config,
-    std::string const& output_path) {
-  std::vector<std::string> features;
-  auto services = config.service();
-  for (auto const& p : config.discovery_products()) {
-    services.Add(p.rest_services().begin(), p.rest_services().end());
-  }
-  for (auto const& service : services) {
-    if (service.product_path().empty()) {
-      GCP_LOG(ERROR) << "Empty product path in config, service="
-                     << service.DebugString() << "\n";
-      return 1;
-    }
-    features.push_back(LibraryName(service.product_path()));
-  }
-  std::sort(features.begin(), features.end());
-  auto const end = std::unique(features.begin(), features.end());
-  std::ofstream of(output_path + "/ci/etc/full_feature_list");
-  std::copy(features.begin(), end,
-            std::ostream_iterator<std::string>(of, "\n"));
-  return 0;
-}
-
 google::cloud::Status GenerateProtosForRestProducts(
     CommandLineArgs const& generator_args,
     google::protobuf::RepeatedPtrField<
@@ -441,8 +417,6 @@ int main(int argc, char** argv) {
     auto const install_result =
         WriteInstallDirectories(*config, args.output_path);
     if (install_result != 0) return install_result;
-    auto const features_result = WriteFeatureList(*config, args.output_path);
-    if (features_result != 0) return features_result;
   }
 
   if (args.generate_discovery_protos) {

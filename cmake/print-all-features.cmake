@@ -14,12 +14,14 @@
 # limitations under the License.
 # ~~~
 
-# A CMake script to print the GA features.
+# A CMake script to print all the features.
 cmake_minimum_required(VERSION 3.13...3.24)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 include(GoogleCloudCppFeatures)
 
-foreach (feature IN LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES
-                          GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
+foreach (
+    feature IN
+    LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
+          GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES)
     message(${feature})
 endforeach ()

@@ -241,34 +241,24 @@ set(GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES
     "compute_region_operations"
     "compute_zone_operations")
 
-list(FIND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES "compute"
-     compute_experimental)
-if (NOT compute_experimental EQUAL -1)
-    list(REMOVE_ITEM GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES "compute")
-    list(APPEND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-         ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
-    list(SORT GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES)
-endif ()
+# Use a function to get a new scope, so the GOOGLE_CLOUD_CPP_*_LIBRARIES remain
+# unchanged.
+function (export_libraries_bzl)
+    foreach (stage IN ITEMS EXPERIMENTAL TRANSITION GA)
+        set(var "GOOGLE_CLOUD_CPP_${stage}_LIBRARIES")
+        if (NOT "compute" IN_LIST ${var})
+            continue()
+        endif ()
+        list(REMOVE_ITEM ${var} "compute")
+        list(APPEND ${var} ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+        list(SORT ${var})
+    endforeach ()
 
-list(FIND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute" compute_transition)
-if (NOT compute_transition EQUAL -1)
-    list(REMOVE_ITEM GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute")
-    list(APPEND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
-         ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
-    list(SORT GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
-endif ()
-
-list(FIND GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute" compute_ga)
-if (NOT compute_ga EQUAL -1)
-    list(REMOVE_ITEM GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute")
-    list(APPEND GOOGLE_CLOUD_CPP_GA_LIBRARIES
-         ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
-    list(SORT GOOGLE_CLOUD_CPP_GA_LIBRARIES)
-endif ()
-
-export_list_to_bazel(
-    "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-    GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES GOOGLE_CLOUD_CPP_GA_LIBRARIES)
+    export_list_to_bazel(
+        "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
+        GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES GOOGLE_CLOUD_CPP_GA_LIBRARIES)
+endfunction ()
+export_libraries_bzl()
 
 # ~~~
 # Handle the dependencies between features. That is, if feature "X" is enabled
@@ -294,11 +284,17 @@ macro (google_cloud_cpp_enable_deps)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
+    if (compute IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
+             ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE "compute")
+    endif ()
     set(disabled_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(FILTER disabled_features INCLUDE REGEX "^-")
     foreach (disabled IN LISTS disabled_features)
         if (disabled STREQUAL "-compute")
             list(FILTER GOOGLE_CLOUD_CPP_ENABLE EXCLUDE REGEX "^compute_.*")
+            list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE "compute")
             continue()
         endif ()
         string(SUBSTRING "${disabled}" 1 -1 feature)
