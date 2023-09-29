@@ -219,10 +219,10 @@ TEST_F(PublisherStubFactory, TracingEnabled) {
 
   MockFactory factory;
   EXPECT_CALL(factory, Call)
-      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context,
                              google::pubsub::v1::Topic const&) {
               ValidatePropagator(context);
               return StatusOr<google::pubsub::v1::Topic>(
@@ -255,10 +255,10 @@ TEST_F(PublisherStubFactory, TracingDisabled) {
 
   MockFactory factory;
   EXPECT_CALL(factory, Call)
-      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context,
                              google::pubsub::v1::Topic const&) {
               ValidateNoPropagator(context);
               return StatusOr<google::pubsub::v1::Topic>(
