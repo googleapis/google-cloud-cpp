@@ -23,6 +23,7 @@
 #include "opentelemetry/context/propagation/text_map_propagator.h"
 #include "opentelemetry/trace/scope.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
 
 namespace google {
 namespace cloud {
@@ -32,6 +33,8 @@ namespace {
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::testing::_;
+using ::testing::Contains;
+using ::testing::Pair;
 using ::testing::StartsWith;
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeTestSpan() {
@@ -43,9 +46,10 @@ TEST(MessagePropagatorTest, InjectTraceContext) {
   auto span_catcher = InstallSpanCatcher();
   opentelemetry::trace::Scope scope(MakeTestSpan());
   auto message = pubsub::MessageBuilder().Build();
-  auto propagator = internal::MakePropagator();
+  auto propagator =
+      std::make_shared<opentelemetry::trace::propagation::HttpTraceContext>();
 
-  InjectTraceContext(message, *propagator);
+  InjectTraceContext(message, propagator);
 
   EXPECT_THAT(message.attributes(),
               Contains(Pair(StartsWith("googclient_"), _)));
