@@ -87,7 +87,8 @@ void CreateEmptyDisk(std::vector<std::string> const& argv) {
   }
   //! [END compute_disk_create_empty_disk]
   (argv.at(0), argv.at(1), argv.at(2), argv.at(3),
-   SplitLabelsString(argv.at(4)));
+   ((argv.size() == 5) ? SplitLabelsString(argv.at(4))
+                       : std::vector<std::pair<std::string, std::string>>{}));
 }
 
 void DeleteDisk(std::vector<std::string> const& argv) {
