@@ -78,6 +78,8 @@ add_library(
     internal/message_batch.h
     internal/message_carrier.cc
     internal/message_carrier.h
+    internal/message_propagator.cc
+    internal/message_propagator.h
     internal/noop_message_batch.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
@@ -310,6 +312,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/flow_controlled_publisher_connection_test.cc
         internal/flow_controlled_publisher_tracing_connection_test.cc
         internal/message_carrier_test.cc
+        internal/message_propagator_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_tracing_connection_test.cc
         internal/pull_lease_manager_test.cc
