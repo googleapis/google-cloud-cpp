@@ -48,7 +48,7 @@ std::vector<std::pair<std::string, std::string>> SplitLabelsString(
 }
 
 void CreateEmptyDisk(std::vector<std::string> const& argv) {
-  if (argv.size() < 4) {
+  if (argv.size() != 4 && argv.size() != 5) {
     throw google::cloud::testing_util::Usage{
         "compute-disk-create-empty-disk <project-id> <zone> <disk-name> "
         "<disk-size-gb> [<label:value>,...]"};
