@@ -244,26 +244,15 @@ set(GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES
 # Use a function to get a new scope, so the GOOGLE_CLOUD_CPP_*_LIBRARIES remain
 # unchanged.
 function (export_libraries_bzl)
-    if ("compute" IN_LIST GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES)
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES "compute")
-        list(APPEND GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-             ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
-        list(SORT GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES)
-    endif ()
-
-    if ("compute" IN_LIST GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES "compute")
-        list(APPEND GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
-             ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
-        list(SORT GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
-    endif ()
-
-    if ("compute" IN_LIST GOOGLE_CLOUD_CPP_GA_LIBRARIES)
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_GA_LIBRARIES "compute")
-        list(APPEND GOOGLE_CLOUD_CPP_GA_LIBRARIES
-             ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
-        list(SORT GOOGLE_CLOUD_CPP_GA_LIBRARIES)
-    endif ()
+    foreach (stage IN ITEMS EXPERIMENTAL TRANSITION GA)
+        set(var "GOOGLE_CLOUD_CPP_${stage}_LIBRARIES")
+        if (NOT "compute" IN_LIST ${var})
+            continue()
+        endif ()
+        list(REMOVE_ITEM ${var} "compute")
+        list(APPEND ${var} ${GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES})
+        list(SORT ${var})
+    endforeach ()
 
     export_list_to_bazel(
         "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
