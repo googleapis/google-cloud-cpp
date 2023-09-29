@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/str_split.h"
+#include <map>
 #include <regex>
 #include <string>
 #include <vector>
