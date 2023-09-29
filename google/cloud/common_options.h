@@ -116,7 +116,7 @@ struct AuthorityOption {
  *
  * The full URI is constructed as:
  *
- * {scheme}://{username}:{password}@{host}:{port}
+ * {scheme}://{username}:{password}@{hostname}:{port}
  *
  * Any empty values are omitted, except for the `scheme` which defaults to
  * `https`. If the `hostname` value is empty, no HTTP proxy is configured.
