@@ -85,7 +85,7 @@ TEST_F(PublisherStubFactory, RoundRobin) {
   ::testing::InSequence sequence;
   MockFactory factory;
   EXPECT_CALL(factory, Call)
-      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce(
@@ -115,11 +115,11 @@ TEST_F(PublisherStubFactory, Auth) {
   ::testing::InSequence sequence;
   MockFactory factory;
   EXPECT_CALL(factory, Call)
-      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce([](grpc::ClientContext& context,
-                             google::pubsub::v1::Topic const&) {
+                         google::pubsub::v1::Topic const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
               return StatusOr<google::pubsub::v1::Topic>(
@@ -176,7 +176,7 @@ TEST_F(PublisherStubFactory, Logging) {
   ::testing::InSequence sequence;
   MockFactory factory;
   EXPECT_CALL(factory, Call)
-      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce(
