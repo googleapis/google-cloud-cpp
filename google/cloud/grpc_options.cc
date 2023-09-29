@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/background_threads_impl.h"
 
@@ -32,6 +32,23 @@ void ConfigurePollContext(grpc::ClientContext& context, Options const& opts) {
   if (opts.has<GrpcSetupPollOption>()) {
     opts.get<GrpcSetupPollOption>()(context);
   }
+}
+
+std::string MakeGrpcHttpProxy(ProxyConfig const& config) {
+  if (config.hostname().empty()) return {};
+  auto result = absl::StrCat(config.scheme(), "://");
+  char const* sep = "";
+  if (!config.username().empty()) {
+    sep = "@";
+    absl::StrAppend(&result, config.username());
+  }
+  if (!config.password().empty()) {
+    sep = "@";
+    absl::StrAppend(&result, ":", config.password());
+  }
+  absl::StrAppend(&result, sep, config.hostname());
+  if (!config.port().empty()) absl::StrAppend(&result, ":", config.port());
+  return result;
 }
 
 grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
@@ -61,6 +78,9 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
     channel_arguments.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
                              static_cast<int>(kKeepaliveTimeout.count()));
   }
+
+  auto const proxy = MakeGrpcHttpProxy(opts.get<ProxyOption>());
+  if (!proxy.empty()) channel_arguments.SetString(GRPC_ARG_HTTP_PROXY, proxy);
 
   return channel_arguments;
 }
