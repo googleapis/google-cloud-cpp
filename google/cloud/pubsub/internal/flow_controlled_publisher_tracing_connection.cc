@@ -37,8 +37,9 @@ class FlowControlledPublisherTracingConnection
   ~FlowControlledPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
-    auto span = internal::MakeSpan(
-        "pubsub::FlowControlledPublisherConnection::Publish");
+    auto span = internal::MakeSpan("publisher flow control");
+    span->SetAttribute("cloud-cxx.function",
+                       "pubsub::FlowControlledPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
     return result;

@@ -40,6 +40,8 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
 TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
@@ -62,13 +64,16 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
                       .get();
 
   EXPECT_THAT(response, StatusIs(StatusCode::kOk));
-  EXPECT_THAT(
-      span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::Publish"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("publisher flow control"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>(
+                          "cloud-cxx.function",
+                          "pubsub::FlowControlledPublisherConnection::Publish"),
+                      OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
 TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
