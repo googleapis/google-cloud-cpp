@@ -54,7 +54,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
                                    static_cast<std::int64_t>(MessageSize(m))},
                               },
                               options);
-
+  span->SetAttribute("cloud-cxx.function",
+                     "pubsub::PublisherConnection::Publish");
   if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.pubsub.ordering_key", m.ordering_key());
   }
