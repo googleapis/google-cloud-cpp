@@ -105,7 +105,7 @@ option(
     GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS
     "Link to \"latest\" in our reference documentation. Otherwise, link to the project version. Only google-cloud-cpp developers are expected to use this flag."
     OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
+mark_as_advanced(GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS)
 
 # Compile the DocFX tool.
 option(
