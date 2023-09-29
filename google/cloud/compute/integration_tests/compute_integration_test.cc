@@ -109,7 +109,7 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
     // Garbage collect old disks, ignore errors.
     auto creation_timestamp = internal::ParseRfc3339(d->creation_timestamp());
     if (creation_timestamp) {
-      if (d->labels().contains("test") &&
+      if ((d->labels().contains("test") || d->labels().contains("sample")) &&
           *creation_timestamp < create_threshold) {
         (void)client.DeleteDisk(project_id_, zone_, d->name()).get();
       }
