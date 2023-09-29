@@ -88,11 +88,11 @@ TEST_F(PublisherStubFactory, RoundRobin) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext&,
-                             google::pubsub::v1::Topic const&) {
-              return StatusOr<google::pubsub::v1::Topic>(
-                  Status(StatusCode::kUnavailable, "nothing here"));
-            });
+            .WillOnce(
+                [this](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
+                  return StatusOr<google::pubsub::v1::Topic>(
+                      Status(StatusCode::kUnavailable, "nothing here"));
+                });
         return mock;
       });
   // Verify the round robin decorator is present.
@@ -120,7 +120,7 @@ TEST_F(PublisherStubFactory, Auth) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce([this](grpc::ClientContext& context,
-                             google::pubsub::v1::Topic const&ß) {
+                             google::pubsub::v1::Topic const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
               return StatusOr<google::pubsub::v1::Topic>(
@@ -182,11 +182,11 @@ TEST_F(PublisherStubFactory, Logging) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext&,
-                             google::pubsub::v1::Topic const&) {
-              return StatusOr<google::pubsub::v1::Topic>(
-                  Status(StatusCode::kUnavailable, "nothing here"));
-            });
+            .WillOnce(
+                [this](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
+                  return StatusOr<google::pubsub::v1::Topic>(
+                      Status(StatusCode::kUnavailable, "nothing here"));
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)
