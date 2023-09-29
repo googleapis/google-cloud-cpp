@@ -14,30 +14,25 @@
 # limitations under the License.
 # ~~~
 
-function (compute_client_define_samples)
-    set(compute_client_samples # cmake-format: sort
-                               disk_samples.cc)
+if ((NOT BUILD_TESTING) OR (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS))
+    return()
+endif ()
 
-    # Export the list of unit tests to a .bzl file so we do not need to maintain
-    # the list in two places.
-    export_list_to_bazel("compute_client_samples.bzl" "compute_client_samples"
-                         YEAR "2023")
+set(compute_client_samples # cmake-format: sort
+                           disk_samples.cc)
 
-    # Generate a target for each integration test.
-    foreach (fname ${compute_client_samples})
-        google_cloud_cpp_add_executable(target "compute" "${fname}")
-        google_cloud_cpp_add_common_options(${target})
-        add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target} PRIVATE google_cloud_cpp_testing
-                                                google-cloud-cpp::compute_disks)
-    endforeach ()
+# Export the list of unit tests to a .bzl file so we do not need to maintain the
+# list in two places.
+export_list_to_bazel("compute_client_samples.bzl" "compute_client_samples" YEAR
+                     "2023")
 
-    foreach (fname ${compute_client_samples})
-        google_cloud_cpp_set_target_name(target "compute" "${fname}")
-        set_tests_properties(${target} PROPERTIES LABELS "integration-test")
-    endforeach ()
-endfunction ()
-
-if (BUILD_TESTING)
-    compute_client_define_samples()
-endif (BUILD_TESTING)
+# Generate a target for each integration test.
+foreach (fname ${compute_client_samples})
+    google_cloud_cpp_add_executable(target "compute" "${fname}")
+    google_cloud_cpp_add_common_options(${target})
+    add_test(NAME ${target} COMMAND ${target})
+    target_link_libraries(${target} PRIVATE google_cloud_cpp_testing
+                                            google-cloud-cpp::compute_disks)
+    google_cloud_cpp_set_target_name(target "compute" "${fname}")
+    set_tests_properties(${target} PROPERTIES LABELS "integration-test")
+endforeach ()

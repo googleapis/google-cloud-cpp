@@ -17,14 +17,6 @@ mkdir C:\b
 bazel --output_user_root=C:\b build //google/cloud/compute/samples:samples
 ```
 
-If you are using a Bazel version before 2.2.0 you may need to run the following
-command to workaround
-[bazelbuild/bazel#10621](https://github.com/bazelbuild/bazel/issues/10621).
-
-```console
-bazel --output_user_root=C:\b test //google/cloud/compute/samples:samples
-```
-
 You will need a Google Cloud Project with billing and the Compute Engine API
 enabled. Please consult the Compute [quickstart guide][compute-quickstart-link]
 for detailed instructions on how to enable billing for your project. Once your

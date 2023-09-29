@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/str_split.h"
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -28,6 +29,14 @@ namespace {
 std::vector<std::pair<std::string, std::string>> SplitLabelsString(
     std::string const& arg) {
   std::vector<std::pair<std::string, std::string>> labels;
+  if (arg.empty()) return labels;
+  static auto const* const kInputCheck = new std::regex("(.*:.*)(,.*:.*)*");
+  std::smatch match;
+  if (!std::regex_match(arg, *kInputCheck)) {
+    throw google::cloud::testing_util::Usage{
+        "labels should be in the format "
+        "\"<label1>:<value1>,<label2>:<value2>,...\""};
+  }
   std::vector<std::string> pairs = absl::StrSplit(arg, ',');
   std::transform(pairs.begin(), pairs.end(), std::back_inserter(labels),
                  [](std::string const& p) {
@@ -42,8 +51,7 @@ void CreateEmptyDisk(std::vector<std::string> const& argv) {
   if (argv.size() < 4) {
     throw google::cloud::testing_util::Usage{
         "compute-disk-create-empty-disk <project-id> <zone> <disk-name> "
-        "<disk-size-gb> "
-        "<labels>"};
+        "<disk-size-gb> [<label:value>,...]"};
   }
   //! [START compute_disk_create_empty_disk]
   namespace compute_disks = ::google::cloud::compute_disks_v1;
@@ -67,11 +75,11 @@ void CreateEmptyDisk(std::vector<std::string> const& argv) {
             .then([client, project_id, zone, disk_name](auto f) mutable {
               StatusOr<compute_proto::Operation> create_result = f.get();
               if (!create_result) {
-                return make_ready_future<StatusOr<compute_proto::Disk>>(
+                return StatusOr<compute_proto::Disk>(
                     std::move(create_result).status());
               }
               auto get_disk = client.GetDisk(project_id, zone, disk_name);
-              return make_ready_future(get_disk);
+              return get_disk;
             })
             .get();
     if (!result) throw std::move(result).status();
