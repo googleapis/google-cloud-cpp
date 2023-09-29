@@ -89,7 +89,7 @@ TEST_F(PublisherStubFactory, RoundRobin) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce(
-                [this](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
+                [](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
                   return StatusOr<google::pubsub::v1::Topic>(
                       Status(StatusCode::kUnavailable, "nothing here"));
                 });
@@ -118,7 +118,7 @@ TEST_F(PublisherStubFactory, Auth) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
-            .WillOnce([this](grpc::ClientContext& context,
+            .WillOnce([](grpc::ClientContext& context,
                              google::pubsub::v1::Topic const&) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context.credentials(), NotNull());
@@ -180,7 +180,7 @@ TEST_F(PublisherStubFactory, Logging) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce(
-                [this](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
+                [](grpc::ClientContext&, google::pubsub::v1::Topic const&) {
                   return StatusOr<google::pubsub::v1::Topic>(
                       Status(StatusCode::kUnavailable, "nothing here"));
                 });
