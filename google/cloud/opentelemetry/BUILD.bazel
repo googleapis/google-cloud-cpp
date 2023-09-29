@@ -20,7 +20,7 @@ load(":google_cloud_cpp_opentelemetry.bzl", "google_cloud_cpp_opentelemetry_hdrs
 load(":opentelemetry_unit_tests.bzl", "opentelemetry_unit_tests")
 
 filegroup(
-    name = "hdrs",
+    name = "public_hdrs",
     srcs = [h for h in google_cloud_cpp_opentelemetry_hdrs if not h.startswith("internal/")],
     visibility = ["//:__pkg__"],
 )

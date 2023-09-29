@@ -23,7 +23,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
 
 filegroup(
-    name = "hdrs",
+    name = "public_hdrs",
     srcs = [h for h in google_cloud_cpp_spanner_hdrs if not h.startswith("internal/")],
     visibility = ["//:__pkg__"],
 )

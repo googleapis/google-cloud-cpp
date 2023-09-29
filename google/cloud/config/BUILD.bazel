@@ -28,6 +28,11 @@ filegroup(
 filegroup(
     name = "hdrs",
     srcs = glob([d + "*.h" for d in src_dirs]),
+)
+
+filegroup(
+    name = "public_hdrs",
+    srcs = glob([d + "*.h" for d in service_dirs]),
     visibility = ["//:__pkg__"],
 )
 

@@ -22,7 +22,7 @@ load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_c
 load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 
 filegroup(
-    name = "hdrs",
+    name = "public_hdrs",
     srcs = [h for h in google_cloud_cpp_bigtable_hdrs if not h.startswith("internal/")],
     visibility = ["//:__pkg__"],
 )

@@ -22,7 +22,7 @@ load(":google_cloud_cpp_pubsub_mocks.bzl", "google_cloud_cpp_pubsub_mocks_hdrs")
 load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 
 filegroup(
-    name = "hdrs",
+    name = "public_hdrs",
     srcs = [h for h in google_cloud_cpp_pubsub_hdrs if not h.startswith("internal/")],
     visibility = ["//:__pkg__"],
 )

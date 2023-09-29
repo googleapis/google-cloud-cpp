@@ -24,5 +24,5 @@ def mocks_filegroup_name(library):
 
 def hdrs_filegroup_name(library):
     if library.startswith("compute_"):
-        return library.removeprefix("compute_") + "_hdrs"
-    return "hdrs"
+        return library.removeprefix("compute_") + "_public_hdrs"
+    return "public_hdrs"

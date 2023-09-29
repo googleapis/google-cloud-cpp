@@ -20,7 +20,7 @@ load(":google_cloud_cpp_oauth2_unit_tests.bzl", "google_cloud_cpp_oauth2_unit_te
 load(":google_cloud_cpp_oauth2.bzl", "google_cloud_cpp_oauth2_hdrs", "google_cloud_cpp_oauth2_srcs")
 
 filegroup(
-    name = "hdrs",
+    name = "public_hdrs",
     srcs = [h for h in google_cloud_cpp_oauth2_hdrs if not h.startswith("internal/")],
     visibility = ["//:__pkg__"],
 )
