@@ -223,6 +223,15 @@ foreach (dir IN LISTS service_dirs)
     list(APPEND compute_lib_targets "google_cloud_cpp_compute_${short_dir}")
 endforeach ()
 
+add_library(google_cloud_cpp_compute INTERFACE)
+target_link_libraries(
+    google_cloud_cpp_compute
+    PUBLIC
+    INTERFACE ${compute_lib_targets})
+set_target_properties(google_cloud_cpp_compute
+                      PROPERTIES EXPORT_NAME "google-cloud-cpp::compute")
+add_library(google-cloud-cpp::compute ALIAS google_cloud_cpp_compute)
+
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
@@ -288,8 +297,8 @@ install(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS ${compute_lib_targets} ${compute_operation_lib_targets}
-            ${compute_proto_lib_targets}
+    TARGETS google_cloud_cpp_compute ${compute_lib_targets}
+            ${compute_operation_lib_targets} ${compute_proto_lib_targets}
             google_cloud_cpp_compute_internal_protos
     EXPORT google_cloud_cpp_compute-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -357,3 +366,7 @@ foreach (dir IN LISTS service_dirs)
         "google_cloud_cpp_compute_zone_operations"
         "google_cloud_cpp_compute_${short_dir}_protos")
 endforeach ()
+
+google_cloud_cpp_add_pkgconfig(
+    "compute" "The Cloud Compute API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Compute API." ${compute_lib_targets})
