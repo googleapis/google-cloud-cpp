@@ -86,21 +86,10 @@ for lib in "${ga[@]}"; do sed -i 's/^Please note that the Google Cloud C/While t
 
 ### `google/cloud/${library}/CMakeLists.txt`:
 
-Remove the EXPERIMENTAL keyword from the library definition.
+Update the CMake library targets.
 
 ```shell
-for lib in "${ga[@]}"; do sed -i 's/EXPERIMENTAL//' google/cloud/${lib}/CMakeLists.txt; done
-```
-
-### `google/cloud/${library}/config.cmake.in`:
-
-Add an alias to help transition from `google-cloud-cpp::experimental-${library}`
-to `google-cloud-cpp::${library}`:
-
-```shell
-for lib in "${ga[@]}"; do
-  printf "\nif (NOT TARGET google-cloud-cpp::experimental-%s)\n    add_library(google-cloud-cpp::experimental-%s ALIAS google-cloud-cpp::%s)\nendif ()\n" "${lib}" "${lib}" "${lib}" >>google/cloud/${lib}/config.cmake.in
-done
+for lib in "${ga[@]}"; do sed -i 's/EXPERIMENTAL/TRANSITION/' google/cloud/${lib}/CMakeLists.txt; done
 ```
 
 ## Reference the GA targets in the quickstarts
@@ -128,5 +117,5 @@ In the following release, move the libraries from
 Then remove the CMake aliases.
 
 ```shell
-for lib in "${ga[@]}"; do sed -i '1,/-targets.cmake")/!d' google/cloud/${lib}/config.cmake.in; done
+for lib in "${ga[@]}"; do sed -i 's/TRANSITION//' google/cloud/${lib}/CMakeLists.txt; done
 ```

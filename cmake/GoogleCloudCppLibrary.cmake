@@ -153,16 +153,24 @@ endfunction ()
 function (google_cloud_cpp_add_ga_grpc_library library display_name)
     cmake_parse_arguments(
         _opt
-        "EXPERIMENTAL"
+        "EXPERIMENTAL;TRANSITION"
         ""
         "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SHARED_PROTO_DEPS"
         ${ARGN})
+    if (_opt_EXPERIMENTAL AND _opt_TRANSITION)
+        message(
+            FATAL_ERROR
+                "EXPERIMENTAL and TRANSITION keywords are mutually exclusive. Only supply one."
+        )
+    endif ()
+
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
     set(protos_target "google_cloud_cpp_${library}_protos")
     set(library_alias "google-cloud-cpp::${library}")
+    set(experimental_alias "google-cloud-cpp::experimental-${library}")
     if (_opt_EXPERIMENTAL)
-        set(library_alias "google-cloud-cpp::experimental-${library}")
+        set(library_alias "${experimental_alias}")
     endif ()
 
     include(GoogleapisConfig)
@@ -323,6 +331,14 @@ function (google_cloud_cpp_add_ga_grpc_library library display_name)
     endforeach ()
     string(JOIN "\n" GOOGLE_CLOUD_CPP_ADDITIONAL_FIND_DEPENDENCIES
            ${find_dependencies})
+    if (_opt_TRANSITION)
+        set(cmake_config_transition_lines
+            "if (NOT TARGET ${experimental_alias})"
+            "    add_library(${experimental_alias} ALIAS ${library_alias})"
+            "endif ()")
+        string(JOIN "\n" GOOGLE_CLOUD_CPP_CONFIG_TRANSITION_TARGETS
+               ${cmake_config_transition_lines})
+    endif ()
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
                    "${library_target}-config.cmake" @ONLY)
     write_basic_package_version_file(
