@@ -39,6 +39,8 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
 TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
@@ -64,9 +66,12 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
       span_catcher->GetSpans(),
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::BatchingPublisherConnection::Publish"),
+          SpanNamed("publish scheduler"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<std::string>(
+                                "cloud-cxx.function",
+                                "pubsub::BatchingPublisherConnection::Publish"),
+                            OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
 TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {

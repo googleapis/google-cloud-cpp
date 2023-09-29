@@ -33,8 +33,9 @@ class BatchingPublisherTracingConnection : public pubsub::PublisherConnection {
   ~BatchingPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
-    auto span =
-        internal::MakeSpan("pubsub::BatchingPublisherConnection::Publish");
+    auto span = internal::MakeSpan("publish scheduler");
+    span->SetAttribute("cloud-cxx.function",
+                       "pubsub::BatchingPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
     return result;
