@@ -193,6 +193,10 @@ CurlImpl::CurlImpl(CurlHandle handle,
   transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   download_stall_minimum_rate_ = options.get<DownloadStallMinimumRateOption>();
+
+  proxy_ = CurlOptProxy(options);
+  proxy_username_ = CurlOptProxyUsername(options);
+  proxy_password_ = CurlOptProxyPassword(options);
 }
 
 CurlImpl::~CurlImpl() {
@@ -304,6 +308,20 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   status =
       handle_.SetOption(CURLOPT_FOLLOWLOCATION, follow_location_ ? 1L : 0L);
   if (!status.ok()) return OnTransferError(context, std::move(status));
+  if (proxy_) status = handle_.SetOption(CURLOPT_PROXY, proxy_->c_str());
+  if (!status.ok()) return OnTransferError(context, std::move(status));
+  if (proxy_) {
+    status = handle_.SetOption(CURLOPT_PROXY, proxy_->c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+  if (proxy_username_) {
+    status = handle_.SetOption(CURLOPT_PROXYUSERNAME, proxy_username_->c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+  if (proxy_password_) {
+    status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
 
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
@@ -747,6 +765,28 @@ void CurlImpl::OnTransferDone() {
   // possible, so they can be reused for any other requests.
   CurlHandle::ReturnToPool(*factory_, std::move(handle_));
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+}
+
+absl::optional<std::string> CurlOptProxy(Options const& options) {
+  if (!options.has<ProxyOption>()) return absl::nullopt;
+  auto const& cfg = options.get<ProxyOption>();
+  if (cfg.hostname().empty()) return absl::nullopt;
+  if (cfg.port().empty()) {
+    return absl::StrCat(cfg.scheme(), "://", cfg.hostname());
+  }
+  return absl::StrCat(cfg.scheme(), "://", cfg.hostname(), ":", cfg.port());
+}
+
+absl::optional<std::string> CurlOptProxyUsername(Options const& options) {
+  auto const& cfg = options.get<ProxyOption>();
+  if (cfg.username().empty()) return absl::nullopt;
+  return cfg.username();
+}
+
+absl::optional<std::string> CurlOptProxyPassword(Options const& options) {
+  auto const& cfg = options.get<ProxyOption>();
+  if (cfg.password().empty()) return absl::nullopt;
+  return cfg.password();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

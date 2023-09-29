@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -104,6 +105,111 @@ struct UserProjectOption {
  */
 struct AuthorityOption {
   using Type = std::string;
+};
+
+/**
+ * The configuration for a HTTP Proxy.
+ *
+ * This configuration can be used for both REST-based and gRPC-based clients.
+ * The client library sets the underlying configuration parameters based on
+ * the values in this struct.
+ *
+ * The full URI is constructed as:
+ *
+ * {scheme}://{username}:{password}@{host}:port
+ *
+ * Any empty values are omitted, except for the `scheme` which defaults to
+ * `https`. If the `hostname` value is empty, no HTTP proxy is configured.
+ */
+class ProxyConfig {
+ public:
+  ProxyConfig() = default;
+
+  /// Configure the HTTP proxy host.
+  std::string const& hostname() const { return hostname_; }
+
+  /// Configure the HTTP proxy port.
+  std::string const& port() const { return port_; }
+
+  /// Configure the HTTP username.
+  std::string const& username() const { return username_; }
+
+  /// Configure the HTTP password.
+  std::string const& password() const { return password_; }
+
+  /**
+   * Set the scheme for the proxy.
+   *
+   * Use `http` or `https` the client library will append the separator (`://`)
+   * as needed. If empty, the library defaults to `https`.
+   */
+  std::string const& scheme() const { return scheme_; }
+
+  ///@{
+  ///@ name Modifiers.
+  ProxyConfig& set_hostname(std::string v) & {
+    hostname_ = std::move(v);
+    return *this;
+  }
+  ProxyConfig&& set_hostname(std::string v) && {
+    return std::move(set_hostname(std::move(v)));
+  }
+
+  ProxyConfig& set_port(std::string v) & {
+    port_ = std::move(v);
+    return *this;
+  }
+  ProxyConfig&& set_port(std::string v) && {
+    return std::move(set_port(std::move(v)));
+  }
+
+  ProxyConfig& set_username(std::string v) & {
+    username_ = std::move(v);
+    return *this;
+  }
+  ProxyConfig&& set_username(std::string v) && {
+    return std::move(set_username(std::move(v)));
+  }
+
+  ProxyConfig& set_password(std::string v) & {
+    password_ = std::move(v);
+    return *this;
+  }
+  ProxyConfig&& set_password(std::string v) && {
+    return std::move(set_password(std::move(v)));
+  }
+
+  ProxyConfig& set_scheme(std::string v) & {
+    scheme_ = std::move(v);
+    return *this;
+  }
+  ProxyConfig&& set_scheme(std::string v) && {
+    return std::move(set_scheme(std::move(v)));
+  }
+  ///@}
+
+ private:
+  std::string hostname_;
+  std::string port_;
+  std::string username_;
+  std::string password_;
+  std::string scheme_ = "https";
+};
+
+/**
+ * Configure the HTTP Proxy.
+ *
+ * Both HTTP and gRPC-based clients can be configured to use an HTTP proxy for
+ * requests. Prox
+ *
+ * @see https://github.com/grpc/grpc/blob/master/doc/core/default_http_proxy_mapper.md
+ * @see https://curl.se/libcurl/c/CURLOPT_PROXYAUTH.html
+ * @see https://curl.se/libcurl/c/CURLOPT_PROXY.html
+ *
+ * @ingroup options
+ */
+struct ProxyOption {
+  using Type = ProxyConfig;
 };
 
 /**
