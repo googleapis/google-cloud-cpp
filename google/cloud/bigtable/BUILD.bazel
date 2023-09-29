@@ -17,6 +17,15 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_bigtable.bzl", "google_cloud_cpp_bigtable_hdrs", "google_cloud_cpp_bigtable_srcs")
+load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs", "google_cloud_cpp_bigtable_mocks_srcs")
+load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
+load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
+
+filegroup(
+    name = "hdrs",
+    srcs = [h for h in google_cloud_cpp_bigtable_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
 
 cc_library(
     name = "google_cloud_cpp_bigtable",
@@ -39,7 +48,11 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs", "google_cloud_cpp_bigtable_mocks_srcs")
+filegroup(
+    name = "mocks",
+    srcs = [h for h in google_cloud_cpp_bigtable_mocks_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
 
 cc_library(
     name = "google_cloud_cpp_bigtable_mocks",
@@ -58,8 +71,6 @@ cc_library(
     ],
 )
 
-load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
-
 cc_library(
     name = "bigtable_client_testing",
     testonly = True,
@@ -76,8 +87,6 @@ cc_library(
         "@com_google_googletest//:gtest_main",
     ],
 )
-
-load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

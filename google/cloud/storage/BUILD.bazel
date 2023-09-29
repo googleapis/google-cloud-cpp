@@ -16,19 +16,29 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
+load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
+load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
+load(":google_cloud_cpp_storage_grpc_mocks.bzl", "google_cloud_cpp_storage_grpc_mocks_hdrs")
+load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
+load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_client_testing_srcs")
+load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
+load(":storage_client_benchmarks.bzl", "storage_client_benchmarks")
+
 # These are needed to use the BoringSSL libraries, and should be set in any
 # downstream dependency too.
 GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
     "WIN32_LEAN_AND_MEAN",
 ]
 
-load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
-load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
-load(":google_cloud_cpp_storage_grpc_mocks.bzl", "google_cloud_cpp_storage_grpc_mocks_hdrs")
-
 config_setting(
     name = "ctype_cord_workaround_enabled",
     flag_values = {"//:enable-ctype-cord-workaround": "true"},
+)
+
+filegroup(
+    name = "grpc_hdrs",
+    srcs = [h for h in google_cloud_cpp_storage_grpc_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
 )
 
 cc_library(
@@ -64,6 +74,12 @@ cc_library(
     ],
 )
 
+filegroup(
+    name = "grpc_mocks_hdrs",
+    srcs = [h for h in google_cloud_cpp_storage_grpc_mocks_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
+
 cc_library(
     name = "google_cloud_cpp_storage_grpc_mocks",
     testonly = True,
@@ -77,6 +93,12 @@ cc_library(
         ":google_cloud_cpp_storage_grpc",
         "@com_google_googletest//:gtest",
     ],
+)
+
+filegroup(
+    name = "hdrs",
+    srcs = [h for h in google_cloud_cpp_storage_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
 )
 
 cc_library(
@@ -107,6 +129,12 @@ cc_library(
     ],
 )
 
+filegroup(
+    name = "mocks",
+    srcs = [],
+    visibility = ["//:__pkg__"],
+)
+
 # This empty library is used to simplify the top-level BUILD.bazel file.
 cc_library(
     name = "google_cloud_cpp_storage_mocks",
@@ -123,8 +151,6 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
-
-load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_client_testing_srcs")
 
 cc_library(
     name = "storage_client_testing",
@@ -145,8 +171,6 @@ cc_library(
     ],
 )
 
-load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
-
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
@@ -165,8 +189,6 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_unit_tests]
-
-load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -188,8 +210,6 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_grpc_unit_tests]
-
-load(":storage_client_benchmarks.bzl", "storage_client_benchmarks")
 
 [cc_binary(
     name = benchmark.replace("/", "_").replace(".cc", ""),

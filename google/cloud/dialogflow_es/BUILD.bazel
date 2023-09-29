@@ -30,11 +30,13 @@ filegroup(
         "*.h",
         "internal/*.h",
     ]),
+    visibility = ["//:__pkg__"],
 )
 
 filegroup(
     name = "mocks",
     srcs = glob(["mocks/*.h"]),
+    visibility = ["//:__pkg__"],
 )
 
 cc_library(
