@@ -115,6 +115,7 @@ info, see [#7463] and [#5976].
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Compute Engine](/google/cloud/compute/README.md)
 - [Infrastructure Manager](/google/cloud/config/README.md)
 - [NetApp](/google/cloud/netapp/README.md)
 
