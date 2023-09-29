@@ -102,7 +102,6 @@ TEST_F(PublisherStubFactory, RoundRobin) {
         return std::make_shared<MockPublisherStub>();
       });
 
-  ScopedLog log;
   CompletionQueue cq;
   grpc::ClientContext context;
   google::pubsub::v1::Topic req;
@@ -133,7 +132,6 @@ TEST_F(PublisherStubFactory, Auth) {
         return std::make_shared<MockPublisherStub>();
       });
 
-  ScopedLog log;
   CompletionQueue cq;
   grpc::ClientContext context;
   google::pubsub::v1::Topic req;
@@ -165,7 +163,6 @@ TEST_F(PublisherStubFactory, Metadata) {
         return std::make_shared<MockPublisherStub>();
       });
 
-  ScopedLog log;
   CompletionQueue cq;
   grpc::ClientContext context;
   google::pubsub::v1::Topic req;
