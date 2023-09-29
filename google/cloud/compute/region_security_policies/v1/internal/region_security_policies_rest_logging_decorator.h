@@ -44,6 +44,12 @@ class RegionSecurityPoliciesRestLogging
       std::shared_ptr<RegionSecurityPoliciesRestStub> child,
       TracingOptions tracing_options, std::set<std::string> components);
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddRule(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_security_policies::v1::
+          AddRuleRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteSecurityPolicy(
       google::cloud::CompletionQueue& cq,
@@ -55,6 +61,11 @@ class RegionSecurityPoliciesRestLogging
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_security_policies::v1::
           GetSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::region_security_policies::v1::
+          GetRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertSecurityPolicy(
@@ -75,6 +86,18 @@ class RegionSecurityPoliciesRestLogging
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRule(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_security_policies::v1::
+          PatchRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveRule(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_security_policies::v1::
+          RemoveRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

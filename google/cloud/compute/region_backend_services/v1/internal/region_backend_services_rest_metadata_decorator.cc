@@ -119,6 +119,16 @@ RegionBackendServicesRestMetadata::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesRestMetadata::AsyncSetSecurityPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestMetadata::AsyncUpdateBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

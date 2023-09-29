@@ -50,6 +50,11 @@ Idempotency RoutersConnectionIdempotencyPolicy::GetRouter(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RoutersConnectionIdempotencyPolicy::GetNatIpInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency RoutersConnectionIdempotencyPolicy::GetNatMappingInfo(
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&) {
   return Idempotency::kIdempotent;

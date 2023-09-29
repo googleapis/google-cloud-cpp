@@ -50,9 +50,21 @@ class MockRegionNetworkEndpointGroupsConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AttachNetworkEndpoints,
+              (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+                   AttachNetworkEndpointsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
                    DeleteNetworkEndpointGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DetachNetworkEndpoints,
+              (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+                   DetachNetworkEndpointsRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>,
@@ -72,6 +84,14 @@ class MockRegionNetworkEndpointGroupsConnection
       ListRegionNetworkEndpointGroups,
       (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
            ListRegionNetworkEndpointGroupsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>),
+      ListNetworkEndpoints,
+      (google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+           ListNetworkEndpointsRequest request),
       (override));
 };
 

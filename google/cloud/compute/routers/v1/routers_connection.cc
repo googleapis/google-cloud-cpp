@@ -57,6 +57,12 @@ StatusOr<google::cloud::cpp::compute::v1::Router> RoutersConnection::GetRouter(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersConnection::GetNatIpInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersConnection::GetNatMappingInfo(
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&) {

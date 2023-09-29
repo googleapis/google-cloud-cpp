@@ -96,6 +96,19 @@ DefaultInterconnectsRestStub::GetDiagnostics(
                    request.interconnect(), "/", "getDiagnostics"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+DefaultInterconnectsRestStub::GetMacsecConfig(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "global", "/", "interconnects", "/",
+                   request.interconnect(), "/", "getMacsecConfig"));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectsRestStub::AsyncInsertInterconnect(
     CompletionQueue& cq,

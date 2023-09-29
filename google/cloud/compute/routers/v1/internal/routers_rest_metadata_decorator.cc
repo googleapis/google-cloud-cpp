@@ -66,6 +66,15 @@ RoutersRestMetadata::GetRouter(
   return child_->GetRouter(rest_context, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersRestMetadata::GetNatIpInfo(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+        request) {
+  SetMetadata(rest_context);
+  return child_->GetNatIpInfo(rest_context, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersRestMetadata::GetNatMappingInfo(
     rest_internal::RestContext& rest_context,

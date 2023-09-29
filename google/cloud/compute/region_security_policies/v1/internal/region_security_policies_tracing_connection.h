@@ -44,6 +44,10 @@ class RegionSecurityPoliciesTracingConnection
 
   Options options() override { return child_->options(); }
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          AddRuleRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
@@ -52,6 +56,10 @@ class RegionSecurityPoliciesTracingConnection
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
           GetSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          GetRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSecurityPolicy(
@@ -67,6 +75,14 @@ class RegionSecurityPoliciesTracingConnection
   PatchSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          PatchRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          RemoveRuleRequest const& request) override;
 
  private:
   std::shared_ptr<

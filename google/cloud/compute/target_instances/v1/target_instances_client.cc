@@ -143,6 +143,33 @@ TargetInstancesClient::ListTargetInstances(
   return connection_->ListTargetInstances(std::move(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesClient::SetSecurityPolicy(
+    std::string const& project, std::string const& zone,
+    std::string const& target_instance,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_target_instance(target_instance);
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
+  return connection_->SetSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesClient::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSecurityPolicy(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1
 }  // namespace cloud

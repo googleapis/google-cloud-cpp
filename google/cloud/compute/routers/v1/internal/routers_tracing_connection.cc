@@ -65,6 +65,16 @@ RoutersTracingConnection::GetRouter(
   return internal::EndSpan(*span, child_->GetRouter(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersTracingConnection::GetNatIpInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_routers_v1::RoutersConnection::GetNatIpInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNatIpInfo(request));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersTracingConnection::GetNatMappingInfo(
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&

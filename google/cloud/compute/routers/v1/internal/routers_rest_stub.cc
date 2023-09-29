@@ -62,7 +62,9 @@ DefaultRoutersRestStub::AggregatedListRouters(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          request.return_partial_success() ? "1" : "0"),
+           std::make_pair("service_project_number",
+                          request.service_project_number())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -102,6 +104,20 @@ DefaultRoutersRestStub::GetRouter(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "routers", "/", request.router()));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+DefaultRoutersRestStub::GetNatIpInfo(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+        request) {
+  return rest_internal::Get<google::cloud::cpp::compute::v1::NatIpInfoResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "routers", "/", request.router(), "/", "getNatIpInfo"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("nat_name", request.nat_name())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>

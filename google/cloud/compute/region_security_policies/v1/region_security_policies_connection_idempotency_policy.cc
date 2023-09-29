@@ -36,6 +36,12 @@ RegionSecurityPoliciesConnectionIdempotencyPolicy::clone() const {
       *this);
 }
 
+Idempotency RegionSecurityPoliciesConnectionIdempotencyPolicy::AddRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 RegionSecurityPoliciesConnectionIdempotencyPolicy::DeleteSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -47,6 +53,12 @@ Idempotency
 RegionSecurityPoliciesConnectionIdempotencyPolicy::GetSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         GetSecurityPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RegionSecurityPoliciesConnectionIdempotencyPolicy::GetRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        GetRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -68,6 +80,18 @@ Idempotency
 RegionSecurityPoliciesConnectionIdempotencyPolicy::PatchSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         PatchSecurityPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency RegionSecurityPoliciesConnectionIdempotencyPolicy::PatchRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency RegionSecurityPoliciesConnectionIdempotencyPolicy::RemoveRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

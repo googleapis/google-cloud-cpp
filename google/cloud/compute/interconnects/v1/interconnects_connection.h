@@ -198,6 +198,11 @@ class InterconnectsConnection {
   GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
                      GetDiagnosticsRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+  GetMacsecConfig(google::cloud::cpp::compute::interconnects::v1::
+                      GetMacsecConfigRequest const& request);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
                          InsertInterconnectRequest const& request);

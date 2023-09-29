@@ -74,6 +74,19 @@ StatusOr<google::cloud::cpp::compute::v1::Router> RoutersRestLogging::GetRouter(
       rest_context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersRestLogging::GetNatIpInfo(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+              request) { return child_->GetNatIpInfo(rest_context, request); },
+      rest_context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersRestLogging::GetNatMappingInfo(
     rest_internal::RestContext& rest_context,

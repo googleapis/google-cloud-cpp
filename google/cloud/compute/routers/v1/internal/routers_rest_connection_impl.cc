@@ -147,6 +147,21 @@ RoutersRestConnectionImpl::GetRouter(
       request, __func__);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersRestConnectionImpl::GetNatIpInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNatIpInfo(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+              request) { return stub_->GetNatIpInfo(rest_context, request); },
+      request, __func__);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersRestConnectionImpl::GetNatMappingInfo(
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&

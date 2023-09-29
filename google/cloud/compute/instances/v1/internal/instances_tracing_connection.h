@@ -176,6 +176,10 @@ class InstancesTracingConnection
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(google::cloud::cpp::compute::instances::v1::
+                        SetSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetServiceAccount(google::cloud::cpp::compute::instances::v1::
                         SetServiceAccountRequest const& request) override;
 

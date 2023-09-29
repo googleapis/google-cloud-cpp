@@ -99,6 +99,15 @@ RegionBackendServicesConnection::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
         UpdateBackendServiceRequest const&) {

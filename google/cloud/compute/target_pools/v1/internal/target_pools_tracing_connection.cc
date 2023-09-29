@@ -150,6 +150,16 @@ TargetPoolsTracingConnection::SetBackup(
   return internal::EndSpan(std::move(span), child_->SetBackup(request));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsTracingConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::SetSecurityPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_target_pools_v1::TargetPoolsConnection>

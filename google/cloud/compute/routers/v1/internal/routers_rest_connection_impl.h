@@ -63,6 +63,10 @@ class RoutersRestConnectionImpl : public compute_routers_v1::RoutersConnection {
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
       google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&

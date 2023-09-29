@@ -287,6 +287,15 @@ InstancesConnection::SetScheduling(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::instances::v1::
+        SetSecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetServiceAccount(
     google::cloud::cpp::compute::instances::v1::
         SetServiceAccountRequest const&) {

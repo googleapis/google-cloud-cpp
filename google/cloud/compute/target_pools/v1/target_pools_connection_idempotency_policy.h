@@ -79,6 +79,10 @@ class TargetPoolsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetBackup(
       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
           request);
+
+  virtual google::cloud::Idempotency SetSecurityPolicy(
+      google::cloud::cpp::compute::target_pools::v1::
+          SetSecurityPolicyRequest const& request);
 };
 
 std::unique_ptr<TargetPoolsConnectionIdempotencyPolicy>
