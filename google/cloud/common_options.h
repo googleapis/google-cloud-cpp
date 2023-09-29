@@ -116,7 +116,7 @@ struct AuthorityOption {
  *
  * The full URI is constructed as:
  *
- * {scheme}://{username}:{password}@{host}:port
+ * {scheme}://{username}:{password}@{host}:{port}
  *
  * Any empty values are omitted, except for the `scheme` which defaults to
  * `https`. If the `hostname` value is empty, no HTTP proxy is configured.
@@ -125,24 +125,19 @@ class ProxyConfig {
  public:
   ProxyConfig() = default;
 
-  /// Configure the HTTP proxy host.
+  /// The HTTP proxy host.
   std::string const& hostname() const { return hostname_; }
 
-  /// Configure the HTTP proxy port.
+  /// The HTTP proxy port.
   std::string const& port() const { return port_; }
 
-  /// Configure the HTTP username.
+  /// The HTTP proxy username.
   std::string const& username() const { return username_; }
 
-  /// Configure the HTTP password.
+  /// The HTTP proxy password.
   std::string const& password() const { return password_; }
 
-  /**
-   * Set the scheme for the proxy.
-   *
-   * Use `http` or `https` the client library will append the separator (`://`)
-   * as needed. If empty, the library defaults to `https`.
-   */
+  /// The HTTP proxy scheme (http or https).
   std::string const& scheme() const { return scheme_; }
 
   ///@{
