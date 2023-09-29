@@ -58,8 +58,9 @@ std::shared_ptr<PublisherStub> MakeTestPublisherStub(
 /**
  * Creates a test PublisherStub configured with @p cq and @p options and @p
  * base_factory.
- * *
- * Used for unit testing to create decorated stubs.
+ *
+ * Used for unit testing to create decorated stubs. Accepts a stub factory so we
+ * can inject mock stubs in our unit tests.
  */
 std::shared_ptr<PublisherStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,

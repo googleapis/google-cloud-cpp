@@ -79,6 +79,134 @@ std::shared_ptr<PublisherStub> CreateTestStub(
                               factory);
 }
 
+// The following unit tests are verifying the corresponding decorators are
+// added. They all use the same CreateTopic rpc.
+TEST_F(PublisherStubFactory, RoundRobin) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockPublisherStub>();
+        EXPECT_CALL(*mock, CreateTopic)
+            .WillOnce([this](grpc::ClientContext& context,
+                             google::pubsub::v1::Topic const& request) {
+              return StatusOr<google::pubsub::v1::Topic>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+  // Verify the round robin decorator is present.
+  EXPECT_CALL(factory, Call)
+      .Times(kTestChannels - 1)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockPublisherStub>();
+      });
+
+  ScopedLog log;
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Topic req;
+  req.set_name("projects/test-project/topics/my-topic");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction());
+  auto response = stub->CreateTopic(context, req);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(PublisherStubFactory, Auth) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockPublisherStub>();
+        EXPECT_CALL(*mock, CreateTopic)
+            .WillOnce([this](grpc::ClientContext& context,
+                             google::pubsub::v1::Topic const& request) {
+              // Verify the Auth decorator is present
+              EXPECT_THAT(context.credentials(), NotNull());
+              return StatusOr<google::pubsub::v1::Topic>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockPublisherStub>();
+      });
+
+  ScopedLog log;
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Topic req;
+  req.set_name("projects/test-project/topics/my-topic");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction());
+  auto response = stub->CreateTopic(context, req);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(PublisherStubFactory, Metadata) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockPublisherStub>();
+        EXPECT_CALL(*mock, CreateTopic)
+            .WillOnce([this](grpc::ClientContext& context,
+                             google::pubsub::v1::Topic const& request) {
+              // Verify the Metadata decorator is present
+              IsContextMDValid(
+                  context, "google.pubsub.v1.Publisher.CreateTopic", request);
+              return StatusOr<google::pubsub::v1::Topic>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockPublisherStub>();
+      });
+
+  ScopedLog log;
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Topic req;
+  req.set_name("projects/test-project/topics/my-topic");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction());
+  auto response = stub->CreateTopic(context, req);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(PublisherStubFactory, Logging) {
+  ::testing::InSequence sequence;
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockPublisherStub>();
+        EXPECT_CALL(*mock, CreateTopic)
+            .WillOnce([this](grpc::ClientContext& context,
+                             google::pubsub::v1::Topic const& request) {
+              return StatusOr<google::pubsub::v1::Topic>(
+                  Status(StatusCode::kUnavailable, "nothing here"));
+            });
+        return mock;
+      });
+  EXPECT_CALL(factory, Call)
+      .WillRepeatedly([](std::shared_ptr<grpc::Channel> const&) {
+        return std::make_shared<MockPublisherStub>();
+      });
+
+  ScopedLog log;
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  google::pubsub::v1::Topic req;
+  req.set_name("projects/test-project/topics/my-topic");
+  auto stub = CreateTestStub(cq, factory.AsStdFunction());
+  auto response = stub->CreateTopic(context, req);
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
+  // Verify the logging decorator is present.
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("CreateTopic")));
+}
+
+// The following tests are for all the rpcs on the stub.
 TEST_F(PublisherStubFactory, CreateTopic) {
   ::testing::InSequence sequence;
   MockFactory factory;
