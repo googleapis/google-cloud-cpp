@@ -195,10 +195,12 @@ class ProxyConfig {
  * Configure the HTTP Proxy.
  *
  * Both HTTP and gRPC-based clients can be configured to use an HTTP proxy for
- * requests. Prox
+ * requests. Setting the `ProxyOption` will configure the client to use a
+ * proxy as described by the `ProxyConfig` value.
  *
  * @see https://github.com/grpc/grpc/blob/master/doc/core/default_http_proxy_mapper.md
- * @see https://curl.se/libcurl/c/CURLOPT_PROXYAUTH.html
+ * @see https://curl.se/libcurl/c/CURLOPT_PROXYUSERNAME.html
+ * @see https://curl.se/libcurl/c/CURLOPT_PROXYPASSWORD.html
  * @see https://curl.se/libcurl/c/CURLOPT_PROXY.html
  *
  * @ingroup options

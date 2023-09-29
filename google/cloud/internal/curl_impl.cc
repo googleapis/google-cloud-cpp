@@ -308,8 +308,6 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   status =
       handle_.SetOption(CURLOPT_FOLLOWLOCATION, follow_location_ ? 1L : 0L);
   if (!status.ok()) return OnTransferError(context, std::move(status));
-  if (proxy_) status = handle_.SetOption(CURLOPT_PROXY, proxy_->c_str());
-  if (!status.ok()) return OnTransferError(context, std::move(status));
   if (proxy_) {
     status = handle_.SetOption(CURLOPT_PROXY, proxy_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
