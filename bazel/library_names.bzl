@@ -12,7 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-def google_cloud_cpp_library_dir_name(library):
+def library_dir_name(library):
     if library.startswith("compute_"):
         return "compute"
     return library
+
+def mocks_filegroup_name(library):
+    if library.startswith("compute_"):
+        return library.removeprefix("compute_") + "_mock_hdrs"
+    return "mocks"
+
+def hdrs_filegroup_name(library):
+    if library.startswith("compute_"):
+        return library.removeprefix("compute_") + "_public_hdrs"
+    return "public_hdrs"

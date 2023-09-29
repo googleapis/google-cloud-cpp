@@ -165,8 +165,14 @@ cc_proto_library(
         srcs = glob([service + "*.h"]) + glob([service + "internal/*.h"]),
     ),
     filegroup(
+        name = service.replace("/v1/", "_public_hdrs"),
+        srcs = glob([service + "*.h"]),
+        visibility = ["//:__pkg__"],
+    ),
+    filegroup(
         name = service.replace("/v1/", "_mock_hdrs"),
         srcs = glob([service + "mocks/*.h"]),
+        visibility = ["//:__pkg__"],
     ),
     cc_library(
         name = "google_cloud_cpp_compute_" + service.replace("/v1/", "_mocks"),

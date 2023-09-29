@@ -19,6 +19,12 @@ licenses(["notice"])  # Apache 2.0
 load(":google_cloud_cpp_oauth2_unit_tests.bzl", "google_cloud_cpp_oauth2_unit_tests")
 load(":google_cloud_cpp_oauth2.bzl", "google_cloud_cpp_oauth2_hdrs", "google_cloud_cpp_oauth2_srcs")
 
+filegroup(
+    name = "public_hdrs",
+    srcs = [h for h in google_cloud_cpp_oauth2_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
+
 cc_library(
     name = "google_cloud_cpp_oauth2",
     srcs = google_cloud_cpp_oauth2_srcs,

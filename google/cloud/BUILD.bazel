@@ -67,6 +67,12 @@ config_setting(
     },
 )
 
+filegroup(
+    name = "common_hdrs",
+    srcs = [h for h in google_cloud_cpp_common_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
+
 cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
@@ -161,6 +167,12 @@ cc_library(
     ],
 ) for benchmark in google_cloud_cpp_common_benchmarks]
 
+filegroup(
+    name = "grpc_utils_hdrs",
+    srcs = [h for h in google_cloud_cpp_grpc_utils_hdrs if ("/internal/" not in h and "grpc_utils/" not in h)],
+    visibility = ["//:__pkg__"],
+)
+
 cc_library(
     name = "google_cloud_cpp_grpc_utils_private",
     srcs = google_cloud_cpp_grpc_utils_srcs,
@@ -241,6 +253,12 @@ cc_library(
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
+
+filegroup(
+    name = "mocks",
+    srcs = [h for h in google_cloud_cpp_mocks_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
 
 cc_library(
     name = "google_cloud_cpp_mocks",

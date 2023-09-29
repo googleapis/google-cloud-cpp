@@ -17,6 +17,15 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_pubsublite.bzl", "google_cloud_cpp_pubsublite_hdrs", "google_cloud_cpp_pubsublite_srcs")
+load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mocks_hdrs", "google_cloud_cpp_pubsublite_mocks_srcs")
+load(":pubsublite_testing.bzl", "pubsublite_testing_hdrs", "pubsublite_testing_srcs")
+load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
+
+filegroup(
+    name = "public_hdrs",
+    srcs = [h for h in google_cloud_cpp_pubsublite_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
 
 cc_library(
     name = "google_cloud_cpp_pubsublite",
@@ -31,7 +40,11 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mocks_hdrs", "google_cloud_cpp_pubsublite_mocks_srcs")
+filegroup(
+    name = "mocks",
+    srcs = [h for h in google_cloud_cpp_pubsublite_mocks_hdrs if not h.startswith("internal/")],
+    visibility = ["//:__pkg__"],
+)
 
 cc_library(
     name = "google_cloud_cpp_pubsublite_mocks",
@@ -44,8 +57,6 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
-
-load(":pubsublite_testing.bzl", "pubsublite_testing_hdrs", "pubsublite_testing_srcs")
 
 cc_library(
     name = "pubsublite_testing",
@@ -61,8 +72,6 @@ cc_library(
         "//:grpc_utils",
     ],
 )
-
-load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
 
 [
     cc_test(

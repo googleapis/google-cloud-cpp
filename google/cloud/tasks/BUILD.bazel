@@ -34,8 +34,15 @@ filegroup(
 )
 
 filegroup(
+    name = "public_hdrs",
+    srcs = glob([d + "*.h" for d in service_dirs]),
+    visibility = ["//:__pkg__"],
+)
+
+filegroup(
     name = "mocks",
     srcs = glob([d + "mocks/*.h" for d in service_dirs]),
+    visibility = ["//:__pkg__"],
 )
 
 cc_library(
