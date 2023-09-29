@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
   C++ client libraries.
 
 [cloud trace]: https://cloud.google.com/trace
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-opentelemetry/latest/
+[doxygen-link]: https://cloud.google.com/cpp/docs/reference/opentelemetry/latest/
 [opentelemetry]: https://opentelemetry.io/
 [setting up your development environment]: https://cloud.google.com/cpp/docs/setup
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry
