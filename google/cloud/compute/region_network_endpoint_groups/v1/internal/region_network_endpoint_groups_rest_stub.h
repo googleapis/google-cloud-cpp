@@ -39,11 +39,25 @@ class RegionNetworkEndpointGroupsRestStub {
   virtual ~RegionNetworkEndpointGroupsRestStub() = default;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAttachNetworkEndpoints(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          AttachNetworkEndpointsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDetachNetworkEndpoints(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DetachNetworkEndpointsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetNetworkEndpointGroup(
@@ -63,6 +77,13 @@ class RegionNetworkEndpointGroupsRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           ListRegionNetworkEndpointGroupsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::
+                       NetworkEndpointGroupsListNetworkEndpoints>
+  ListNetworkEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          ListNetworkEndpointsRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
@@ -89,11 +110,25 @@ class DefaultRegionNetworkEndpointGroupsRestStub
       std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAttachNetworkEndpoints(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          AttachNetworkEndpointsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDetachNetworkEndpoints(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetNetworkEndpointGroup(
@@ -113,6 +148,13 @@ class DefaultRegionNetworkEndpointGroupsRestStub
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           ListRegionNetworkEndpointGroupsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::
+               NetworkEndpointGroupsListNetworkEndpoints>
+  ListNetworkEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          ListNetworkEndpointsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(

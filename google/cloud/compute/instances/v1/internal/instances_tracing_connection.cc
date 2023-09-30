@@ -363,6 +363,16 @@ InstancesTracingConnection::SetScheduling(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::SetSecurityPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesTracingConnection::SetServiceAccount(
     google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
         request) {

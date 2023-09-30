@@ -97,6 +97,12 @@ class MockRegionBackendServicesConnection
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::region_backend_services::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    UpdateBackendServiceRequest const& request),

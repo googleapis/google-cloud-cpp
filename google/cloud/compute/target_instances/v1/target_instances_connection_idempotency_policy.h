@@ -56,6 +56,10 @@ class TargetInstancesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListTargetInstances(
       google::cloud::cpp::compute::target_instances::v1::
           ListTargetInstancesRequest request);
+
+  virtual google::cloud::Idempotency SetSecurityPolicy(
+      google::cloud::cpp::compute::target_instances::v1::
+          SetSecurityPolicyRequest const& request);
 };
 
 std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy>

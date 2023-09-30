@@ -49,6 +49,10 @@ class InterconnectsConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::interconnects::v1::
           GetDiagnosticsRequest const& request);
 
+  virtual google::cloud::Idempotency GetMacsecConfig(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetMacsecConfigRequest const& request);
+
   virtual google::cloud::Idempotency InsertInterconnect(
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request);

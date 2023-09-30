@@ -207,6 +207,10 @@ class TargetInstancesConnection {
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
   ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
                           ListTargetInstancesRequest request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,19 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-message SecurityPolicyReference {
-  optional string security_policy = 1;
+import "google/cloud/compute/v1/internal/common_007.proto";
+
+message ZoneSetPolicyRequest {
+  // Flatten Policy to create a backwacd compatible wire-format. Deprecated. Use
+  // 'policy' to specify bindings.
+  repeated Binding bindings = 1;
+
+  // Flatten Policy to create a backward compatible wire-format. Deprecated. Use
+  // 'policy' to specify the etag.
+  optional string etag = 2;
+
+  // REQUIRED: The complete policy to be applied to the 'resource'. The size of
+  // the policy is limited to a few 10s of KB. An empty policy is in general a
+  // valid policy but certain services (like Projects) might reject them.
+  optional Policy policy = 3;
 }

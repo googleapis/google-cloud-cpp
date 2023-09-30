@@ -160,6 +160,10 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
           request);
 
+  virtual google::cloud::Idempotency SetSecurityPolicy(
+      google::cloud::cpp::compute::instances::v1::
+          SetSecurityPolicyRequest const& request);
+
   virtual google::cloud::Idempotency SetServiceAccount(
       google::cloud::cpp::compute::instances::v1::
           SetServiceAccountRequest const& request);

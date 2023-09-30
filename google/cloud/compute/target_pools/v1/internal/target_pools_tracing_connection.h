@@ -86,6 +86,10 @@ class TargetPoolsTracingConnection
       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::
+                        SetSecurityPolicyRequest const& request) override;
+
  private:
   std::shared_ptr<compute_target_pools_v1::TargetPoolsConnection> child_;
 };

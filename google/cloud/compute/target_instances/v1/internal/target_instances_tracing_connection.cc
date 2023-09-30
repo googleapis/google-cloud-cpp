@@ -97,6 +97,17 @@ TargetInstancesTracingConnection::ListTargetInstances(
                                                        std::move(sr));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesTracingConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "SetSecurityPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>

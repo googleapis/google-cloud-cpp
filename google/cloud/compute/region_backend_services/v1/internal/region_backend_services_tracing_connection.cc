@@ -130,6 +130,17 @@ RegionBackendServicesTracingConnection::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesTracingConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "SetSecurityPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesTracingConnection::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
         UpdateBackendServiceRequest const& request) {

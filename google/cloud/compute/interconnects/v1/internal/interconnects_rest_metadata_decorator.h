@@ -57,6 +57,12 @@ class InterconnectsRestMetadata : public InterconnectsRestStub {
                  google::cloud::cpp::compute::interconnects::v1::
                      GetDiagnosticsRequest const& request) override;
 
+  StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+  GetMacsecConfig(google::cloud::rest_internal::RestContext& rest_context,
+                  google::cloud::cpp::compute::interconnects::v1::
+                      GetMacsecConfigRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,

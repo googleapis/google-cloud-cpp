@@ -224,6 +224,33 @@ RegionBackendServicesClient::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesClient::SetSecurityPolicy(
+    std::string const& project, std::string const& region,
+    std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_backend_services::v1::
+      SetSecurityPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_backend_service(backend_service);
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
+  return connection_->SetSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesClient::SetSecurityPolicy(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesClient::UpdateBackendService(
     std::string const& project, std::string const& region,
     std::string const& backend_service,

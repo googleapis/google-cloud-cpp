@@ -57,6 +57,13 @@ InterconnectsConnection::GetDiagnostics(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+InterconnectsConnection::GetMacsecConfig(
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsConnection::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::

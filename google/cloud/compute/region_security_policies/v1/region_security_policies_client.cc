@@ -33,6 +33,33 @@ RegionSecurityPoliciesClient::RegionSecurityPoliciesClient(
 RegionSecurityPoliciesClient::~RegionSecurityPoliciesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::AddRule(
+    std::string const& project, std::string const& region,
+    std::string const& security_policy,
+    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+        security_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::AddRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  *request.mutable_security_policy_rule_resource() =
+      security_policy_rule_resource;
+  return connection_->AddRule(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::AddRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddRule(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::DeleteSecurityPolicy(
     std::string const& project, std::string const& region,
     std::string const& security_policy, Options opts) {
@@ -74,6 +101,29 @@ RegionSecurityPoliciesClient::GetSecurityPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSecurityPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+RegionSecurityPoliciesClient::GetRule(std::string const& project,
+                                      std::string const& region,
+                                      std::string const& security_policy,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::GetRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  return connection_->GetRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+RegionSecurityPoliciesClient::GetRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        GetRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetRule(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -144,6 +194,56 @@ RegionSecurityPoliciesClient::PatchSecurityPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::PatchRule(
+    std::string const& project, std::string const& region,
+    std::string const& security_policy,
+    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+        security_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::PatchRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  *request.mutable_security_policy_rule_resource() =
+      security_policy_rule_resource;
+  return connection_->PatchRule(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::PatchRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRule(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::RemoveRule(std::string const& project,
+                                         std::string const& region,
+                                         std::string const& security_policy,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::RemoveRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  return connection_->RemoveRule(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::RemoveRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveRule(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

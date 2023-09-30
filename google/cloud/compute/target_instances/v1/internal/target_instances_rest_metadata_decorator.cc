@@ -90,6 +90,16 @@ TargetInstancesRestMetadata::ListTargetInstances(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesRestMetadata::AsyncSetSecurityPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
