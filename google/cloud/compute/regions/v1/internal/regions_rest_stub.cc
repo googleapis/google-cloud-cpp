@@ -42,10 +42,13 @@ StatusOr<google::cloud::cpp::compute::v1::Region>
 DefaultRegionsRestStub::GetRegion(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>
@@ -53,10 +56,12 @@ DefaultRegionsRestStub::ListRegions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
         request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::cpp::compute::v1::RegionList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),

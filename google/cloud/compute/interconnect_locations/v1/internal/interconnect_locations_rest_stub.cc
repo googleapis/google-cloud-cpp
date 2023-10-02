@@ -45,13 +45,14 @@ DefaultInterconnectLocationsRestStub::GetInterconnectLocation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_locations::v1::
         GetInterconnectLocationRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectLocation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/",
-                   "interconnectLocations", "/",
-                   request.interconnect_location()));
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "global", "/",
+          "interconnectLocations", "/", request.interconnect_location()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectLocationList>
@@ -59,11 +60,13 @@ DefaultInterconnectLocationsRestStub::ListInterconnectLocations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_locations::v1::
         ListInterconnectLocationsRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectLocationList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/",
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
                    "interconnectLocations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),

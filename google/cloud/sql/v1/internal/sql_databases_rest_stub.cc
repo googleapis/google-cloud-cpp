@@ -43,10 +43,12 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases", "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "databases", "/",
                    request.database()));
 }
 
@@ -54,10 +56,12 @@ StatusOr<google::cloud::sql::v1::Database>
 DefaultSqlDatabasesServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::sql::v1::Database>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases", "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "databases", "/",
                    request.database()));
 }
 
@@ -65,30 +69,36 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "databases"));
 }
 
 StatusOr<google::cloud::sql::v1::DatabasesListResponse>
 DefaultSqlDatabasesServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::sql::v1::DatabasesListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "databases"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Patch(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases", "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "databases", "/",
                    request.database()));
 }
 
@@ -96,10 +106,12 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlDatabasesServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "databases", "/",
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "databases", "/",
                    request.database()));
 }
 

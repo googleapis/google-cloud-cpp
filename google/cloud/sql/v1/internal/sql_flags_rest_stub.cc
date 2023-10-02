@@ -42,6 +42,7 @@ StatusOr<google::cloud::sql::v1::FlagsListResponse>
 DefaultSqlFlagsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlFlagsListRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::sql::v1::FlagsListResponse>(
       *service_, rest_context, request, true, "/v1/flags",
       rest_internal::TrimEmptyQueryParameters(

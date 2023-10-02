@@ -43,20 +43,23 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlOperationsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "operations", "/", request.operation()));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "operations", "/",
+                   request.operation()));
 }
 
 StatusOr<google::cloud::sql::v1::OperationsListResponse>
 DefaultSqlOperationsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::sql::v1::OperationsListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "operations"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "operations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("instance", request.instance()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -66,10 +69,12 @@ DefaultSqlOperationsServiceRestStub::List(
 Status DefaultSqlOperationsServiceRestStub::Cancel(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "operations", "/", request.operation(), "/", "cancel"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "operations", "/",
+                   request.operation(), "/", "cancel"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

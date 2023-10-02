@@ -43,11 +43,13 @@ DefaultLicenseCodesRestStub::GetLicenseCode(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
         request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/", "licenseCodes", "/",
-                   request.license_code()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "licenseCodes", "/", request.license_code()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -55,13 +57,15 @@ DefaultLicenseCodesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/", "licenseCodes", "/",
-                   request.resource(), "/", "testIamPermissions"));
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "global", "/",
+          "licenseCodes", "/", request.resource(), "/", "testIamPermissions"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

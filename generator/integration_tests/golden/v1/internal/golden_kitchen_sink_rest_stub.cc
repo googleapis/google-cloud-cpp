@@ -44,15 +44,17 @@ StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.name(), ":generateAccessToken"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.name(), ":generateAccessToken"));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
       "/v1/token:generate",
@@ -65,6 +67,7 @@ StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
       "/v2/entries:write",
@@ -75,6 +78,7 @@ StatusOr<google::test::admin::database::v1::ListLogsResponse>
 DefaultGoldenKitchenSinkRestStub::ListLogs(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListLogsRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "v2", "/", request.parent(), "/", "logs"),
@@ -86,14 +90,16 @@ StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.name(), "/", "keys"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.name(), "/", "keys"));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
       google::protobuf::Empty const& request) {
+  auto const& opts = options_;
   return rest_internal::Post(
       *service_, rest_context, request, false,
       "/v1/doNothing");
@@ -102,9 +108,10 @@ Status DefaultGoldenKitchenSinkRestStub::DoNothing(
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.table_name(), ":explicitRouting1"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.table_name(), ":explicitRouting1"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
         std::make_pair("no_regex_needed", request.no_regex_needed())}));
 }
@@ -112,9 +119,10 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.table_name(), ":explicitRouting2"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.table_name(), ":explicitRouting2"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
         std::make_pair("no_regex_needed", request.no_regex_needed())}));
 }

@@ -48,10 +48,12 @@ StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DefaultDatabaseAdminRestStub::ListDatabases(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabasesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.parent(), "/", "databases"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("page_size", std::to_string(request.page_size())),
            std::make_pair("page_token", request.page_token())}));
@@ -66,16 +68,21 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request, false,
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"),
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.parent(), "/", "databases"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("create_statement", request.create_statement()),
                  std::make_pair("database_dialect",
                                 std::to_string(request.database_dialect()))})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -86,9 +93,11 @@ StatusOr<google::spanner::admin::database::v1::Database>
 DefaultDatabaseAdminRestStub::GetDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::spanner::admin::database::v1::Database>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.name()));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.name()));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -100,12 +109,17 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabase(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request.database(), false,
-            absl::StrCat("/", "v1", "/", request.database().name())));
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.database().name())));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -121,14 +135,19 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request, false,
-            absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"),
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.database(), "/", "ddl"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("operation_id", request.operation_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -138,9 +157,11 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
 Status DefaultDatabaseAdminRestStub::DropDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Delete(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.database()));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.database()));
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
@@ -148,35 +169,43 @@ DefaultDatabaseAdminRestStub::GetDatabaseDdl(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.database(), "/", "ddl"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.database(), "/", "ddl"));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::iam::v1::SetIamPolicyRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.resource(), ":setIamPolicy"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.resource(), ":setIamPolicy"));
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::iam::v1::GetIamPolicyRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.resource(), ":getIamPolicy"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.resource(), ":getIamPolicy"));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDatabaseAdminRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.resource(), ":testIamPermissions"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.resource(), ":testIamPermissions"));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -187,14 +216,19 @@ DefaultDatabaseAdminRestStub::AsyncCreateBackup(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request.backup(), false,
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.parent(), "/", "backups"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("backup_id", request.backup_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -209,16 +243,20 @@ DefaultDatabaseAdminRestStub::AsyncCopyBackup(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request, false,
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "backups",
-                         ":copy"),
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.parent(), "/", "backups", ":copy"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("backup_id", request.backup_id()),
                  std::make_pair("source_backup", request.source_backup())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -229,35 +267,44 @@ StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminRestStub::GetBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.name()));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.name()));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminRestStub::UpdateBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Patch<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request.backup(), false,
-      absl::StrCat("/", "v1", "/", request.backup().name()));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.backup().name()));
 }
 
 Status DefaultDatabaseAdminRestStub::DeleteBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  return rest_internal::Delete(*service_, rest_context, request, false,
-                               absl::StrCat("/", "v1", "/", request.name()));
+  auto const& opts = options_;
+  return rest_internal::Delete(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.name()));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DefaultDatabaseAdminRestStub::ListBackups(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.parent(), "/", "backups"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.parent(), "/", "backups"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("page_size", std::to_string(request.page_size())),
@@ -273,16 +320,20 @@ DefaultDatabaseAdminRestStub::AsyncRestoreDatabase(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request, false,
-            absl::StrCat("/", "v1", "/", request.parent(), "/", "databases",
-                         ":restore"),
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.parent(), "/", "databases", ":restore"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("database_id", request.database_id()),
                  std::make_pair("backup", request.backup())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -294,10 +345,12 @@ DefaultDatabaseAdminRestStub::ListDatabaseOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseOperations"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.parent(), "/", "databaseOperations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("page_size", std::to_string(request.page_size())),
@@ -309,10 +362,12 @@ DefaultDatabaseAdminRestStub::ListBackupOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupOperationsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.parent(), "/", "backupOperations"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.parent(), "/", "backupOperations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("page_size", std::to_string(request.page_size())),
@@ -324,10 +379,12 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
+  auto const& opts = options_;
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListDatabaseRolesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "v1", "/", request.parent(), "/", "databaseRoles"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   request.parent(), "/", "databaseRoles"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("page_size", std::to_string(request.page_size())),
            std::make_pair("page_token", request.page_token())}));
@@ -341,12 +398,16 @@ DefaultDatabaseAdminRestStub::AsyncGetOperation(
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context) {
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Get<google::longrunning::Operation>(
             *operations, *rest_context, request, false,
             absl::StrCat("/v1/", request.name())));
       },
-      std::move(p), operations_, request, std::move(rest_context)};
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -359,12 +420,17 @@ future<Status> DefaultDatabaseAdminRestStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request, false,
-                      absl::StrCat("/v1/", request.name(), ":cancel")));
-                },
-                std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat("/v1/", request.name(), ":cancel")));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
