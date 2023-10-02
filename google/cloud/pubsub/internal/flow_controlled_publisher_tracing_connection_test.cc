@@ -22,6 +22,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/trace/semantic_conventions.h>
+
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
@@ -40,9 +42,12 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
 TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -62,13 +67,16 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
                       .get();
 
   EXPECT_THAT(response, StatusIs(StatusCode::kOk));
-  EXPECT_THAT(
-      span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::Publish"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("publisher flow control"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(
+                      OTelAttribute<std::string>(
+                          sc::kCodeFunction,
+                          "pubsub::FlowControlledPublisherConnection::Publish"),
+                      OTelAttribute<int>("gcloud.status_code", 0)))));
 }
 
 TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
