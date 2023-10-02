@@ -93,6 +93,9 @@ foreach (fname ${storage_examples})
     target_link_libraries(
         ${target} PRIVATE storage_examples_common google_cloud_cpp_testing
                           google-cloud-cpp::storage google-cloud-cpp::common)
+    if ("${fname}" STREQUAL "storage_otel_samples.cc")
+        target_link_libraries(${target} PRIVATE google-cloud-cpp::opentelemetry)
+    endif ()
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
@@ -151,3 +154,19 @@ foreach (fname ${storage_grpc_examples})
                              "integration-test;integration-test-emulator")
     google_cloud_cpp_add_common_options(${target})
 endforeach ()
+
+if (NOT opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    return()
+endif ()
+
+# This is too custom to need a loop.
+google_cloud_cpp_add_executable(target "storage_examples"
+                                "storage_otel_samples.cc")
+target_link_libraries(
+    ${target}
+    PRIVATE storage_examples_common google-cloud-cpp::opentelemetry
+            google-cloud-cpp::experimental-storage_grpc
+            google-cloud-cpp::storage google-cloud-cpp::common)
+add_test(NAME ${target} COMMAND ${target})
+set_tests_properties(${target} PROPERTIES LABELS "integration-test")
+google_cloud_cpp_add_common_options(${target})
