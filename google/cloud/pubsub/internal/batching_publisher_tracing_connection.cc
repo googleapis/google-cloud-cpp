@@ -33,8 +33,9 @@ class BatchingPublisherTracingConnection : public pubsub::PublisherConnection {
   ~BatchingPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
+    namespace sc = opentelemetry::trace::SemanticConventions;
     auto span = internal::MakeSpan("publish scheduler");
-    span->SetAttribute("cloud-cxx.function",
+    span->SetAttribute(sc::kCodeFunction,
                        "pubsub::BatchingPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
