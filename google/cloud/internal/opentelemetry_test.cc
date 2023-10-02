@@ -57,8 +57,7 @@ TEST(OpenTelemetry, IsUsable) {
 TEST(OpenTelemetry, GetTracer) {
   auto span_catcher = InstallSpanCatcher();
 
-  auto options = Options{};
-  auto tracer = GetTracer(options);
+  auto tracer = GetTracer(Options{});
 
   auto s1 = tracer->StartSpan("span");
   s1->End();
@@ -70,9 +69,6 @@ TEST(OpenTelemetry, GetTracer) {
 TEST(OpenTelemetry, MakeSpan) {
   auto span_catcher = InstallSpanCatcher();
 
-  auto options = Options{};
-  OptionsSpan current(options);
-
   auto s1 = MakeSpan("span1");
   s1->End();
   auto s2 = MakeSpan("span2");
@@ -82,6 +78,20 @@ TEST(OpenTelemetry, MakeSpan) {
   EXPECT_THAT(spans, Each(SpanHasInstrumentationScope()));
   EXPECT_THAT(spans, Each(SpanKindIsClient()));
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span1"), SpanNamed("span2")));
+}
+
+TEST(OpenTelemetry, MakeSpanWithAttributes) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto s1 = MakeSpan("span1", {{"key", "value"}});
+  s1->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Each(SpanHasInstrumentationScope()));
+  EXPECT_THAT(spans, Each(SpanKindIsClient()));
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("span1")));
+  EXPECT_THAT(spans, ElementsAre(SpanHasAttributes(
+                         OTelAttribute<std::string>("key", "value"))));
 }
 
 TEST(OpenTelemetry, EndSpanImplEndsSpan) {
