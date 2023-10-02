@@ -36,6 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionSecurityPoliciesConnection::~RegionSecurityPoliciesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesConnection::AddRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesConnection::DeleteSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         DeleteSecurityPolicyRequest const&) {
@@ -48,6 +57,13 @@ StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
 RegionSecurityPoliciesConnection::GetSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         GetSecurityPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+RegionSecurityPoliciesConnection::GetRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        GetRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -72,6 +88,24 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesConnection::PatchSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         PatchSecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesConnection::PatchRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesConnection::RemoveRule(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

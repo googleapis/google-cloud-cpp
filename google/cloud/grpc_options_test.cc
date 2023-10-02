@@ -92,6 +92,42 @@ TEST(GrpcOptionList, RegularOptions) {
   TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
 }
 
+TEST(GrpcChannelArguments, MakeGrpcHttpProxy) {
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig()), "");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig().set_port("port")), "");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig().set_hostname("hostname")),
+            "https://hostname");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(
+                ProxyConfig().set_hostname("hostname").set_port("port")),
+            "https://hostname:port");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig()
+                                            .set_hostname("hostname")
+                                            .set_port("port")
+                                            .set_username("username")),
+            "https://username@hostname:port");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig()
+                                            .set_hostname("hostname")
+                                            .set_port("port")
+                                            .set_password("password")),
+            "https://:password@hostname:port");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig()
+                                            .set_hostname("hostname")
+                                            .set_port("port")
+                                            .set_username("username")
+                                            .set_password("password")),
+            "https://username:password@hostname:port");
+  EXPECT_EQ(internal::MakeGrpcHttpProxy(ProxyConfig()
+                                            .set_hostname("hostname")
+                                            .set_port("port")
+                                            .set_username("username")
+                                            .set_password("password")
+                                            .set_scheme("http")),
+            // Split http to avoid tidy
+            "ht"
+            "tp"
+            "://username:password@hostname:port");
+}
+
 TEST(GrpcChannelArguments, MakeChannelArguments) {
   // This test will just set all 3 options related to channel arguments and
   // ensure that `MakeChannelArguments` combines them in the correct order.
@@ -101,7 +137,8 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   auto opts = Options{}
                   .set<GrpcChannelArgumentsOption>({{"baz", "quux"}})
                   .set<UserAgentProductsOption>({"user_agent"})
-                  .set<GrpcChannelArgumentsNativeOption>(native);
+                  .set<GrpcChannelArgumentsNativeOption>(native)
+                  .set<ProxyOption>(ProxyConfig().set_hostname("hostname"));
 
   grpc::ChannelArguments expected;
   expected.SetString("foo", "bar");
@@ -111,6 +148,7 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
                   static_cast<int>(ms(std::chrono::hours(24)).count()));
   expected.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
                   static_cast<int>(ms(std::chrono::seconds(60)).count()));
+  expected.SetString(GRPC_ARG_HTTP_PROXY, "https://hostname");
 
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
 }

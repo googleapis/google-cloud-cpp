@@ -364,11 +364,13 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
       publisher->Publish({MessageBuilder{}.SetData("test-data-0").Build()})
           .get();
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              UnorderedElementsAre(
-                  SpanNamed("projects/test-project/topics/test-topic send"),
-                  SpanNamed("publisher flow control"),
-                  SpanNamed("pubsub::BatchingPublisherConnection::Publish")));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      UnorderedElementsAre(
+          SpanNamed("projects/test-project/topics/test-topic send"),
+          SpanNamed("publisher flow control"),
+          SpanNamed("pubsub::BatchingPublisherConnection::Publish"),
+          SpanNamed("google.pubsub.v1.Publisher/Publish")));
 }
 
 TEST(MakePublisherConnectionTest, TracingDisabled) {

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
@@ -216,6 +217,9 @@ void ConfigureContext(grpc::ClientContext& context, Options const& opts);
 
 /// Configure the ClientContext for polling operations using options.
 void ConfigurePollContext(grpc::ClientContext& context, Options const& opts);
+
+/// Creates the value for GRPC_ARG_HTTP_PROXY based on @p config.
+std::string MakeGrpcHttpProxy(ProxyConfig const& config);
 
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);

@@ -50,6 +50,12 @@ class MockRegionSecurityPoliciesConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddRule,
+              (google::cloud::cpp::compute::region_security_policies::v1::
+                   AddRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSecurityPolicy,
               (google::cloud::cpp::compute::region_security_policies::v1::
                    DeleteSecurityPolicyRequest const& request),
@@ -59,6 +65,12 @@ class MockRegionSecurityPoliciesConnection
               GetSecurityPolicy,
               (google::cloud::cpp::compute::region_security_policies::v1::
                    GetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>,
+              GetRule,
+              (google::cloud::cpp::compute::region_security_policies::v1::
+                   GetRuleRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -77,6 +89,18 @@ class MockRegionSecurityPoliciesConnection
               PatchSecurityPolicy,
               (google::cloud::cpp::compute::region_security_policies::v1::
                    PatchSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchRule,
+              (google::cloud::cpp::compute::region_security_policies::v1::
+                   PatchRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              RemoveRule,
+              (google::cloud::cpp::compute::region_security_policies::v1::
+                   RemoveRuleRequest const& request),
               (override));
 };
 

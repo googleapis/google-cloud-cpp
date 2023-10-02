@@ -65,6 +65,12 @@ Idempotency TargetInstancesConnectionIdempotencyPolicy::ListTargetInstances(
   return Idempotency::kIdempotent;
 }
 
+Idempotency TargetInstancesConnectionIdempotencyPolicy::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy>
 MakeDefaultTargetInstancesConnectionIdempotencyPolicy() {
   return std::make_unique<TargetInstancesConnectionIdempotencyPolicy>();

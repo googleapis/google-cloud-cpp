@@ -63,6 +63,16 @@ InterconnectsTracingConnection::GetDiagnostics(
   return internal::EndSpan(*span, child_->GetDiagnostics(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+InterconnectsTracingConnection::GetMacsecConfig(
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::GetMacsecConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMacsecConfig(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsTracingConnection::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::

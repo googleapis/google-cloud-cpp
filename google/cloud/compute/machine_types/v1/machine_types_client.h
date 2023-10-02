@@ -186,7 +186,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L146}
   /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
@@ -218,7 +218,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L144}
+  /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L146}
   /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
@@ -256,7 +256,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L156}
+  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L158}
   /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on
@@ -296,7 +296,7 @@ class MachineTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L156}
+  /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L158}
   /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_072.proto#L29}
   ///
   // clang-format on

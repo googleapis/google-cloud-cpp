@@ -48,6 +48,10 @@ class RoutersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
           request);
 
+  virtual google::cloud::Idempotency GetNatIpInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetNatMappingInfo(
       google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
           request);

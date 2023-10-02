@@ -54,6 +54,10 @@ class RegionSecurityPoliciesRestConnectionImpl
 
   Options options() override { return options_; }
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          AddRuleRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
@@ -62,6 +66,10 @@ class RegionSecurityPoliciesRestConnectionImpl
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
           GetSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          GetRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSecurityPolicy(
@@ -77,6 +85,14 @@ class RegionSecurityPoliciesRestConnectionImpl
   PatchSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          PatchRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          RemoveRuleRequest const& request) override;
 
  private:
   static std::unique_ptr<

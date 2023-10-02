@@ -247,6 +247,12 @@ class MockInstancesConnection
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::instances::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetServiceAccount,
               (google::cloud::cpp::compute::instances::v1::
                    SetServiceAccountRequest const& request),

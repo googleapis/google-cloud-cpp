@@ -205,9 +205,19 @@ class RegionNetworkEndpointGroupsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AttachNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          AttachNetworkEndpointsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DetachNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DetachNetworkEndpointsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetNetworkEndpointGroup(
@@ -223,6 +233,12 @@ class RegionNetworkEndpointGroupsConnection {
   ListRegionNetworkEndpointGroups(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           ListRegionNetworkEndpointGroupsRequest request);
+
+  virtual StreamRange<
+      google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
+  ListNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          ListNetworkEndpointsRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

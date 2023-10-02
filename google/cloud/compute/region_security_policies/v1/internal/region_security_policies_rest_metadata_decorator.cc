@@ -42,6 +42,16 @@ RegionSecurityPoliciesRestMetadata::RegionSecurityPoliciesRestMetadata(
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesRestMetadata::AsyncAddRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncAddRule(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesRestMetadata::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -59,6 +69,15 @@ RegionSecurityPoliciesRestMetadata::GetSecurityPolicy(
         GetSecurityPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetSecurityPolicy(rest_context, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+RegionSecurityPoliciesRestMetadata::GetRule(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        GetRuleRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->GetRule(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -89,6 +108,26 @@ RegionSecurityPoliciesRestMetadata::AsyncPatchSecurityPolicy(
         PatchSecurityPolicyRequest const& request) {
   SetMetadata(*rest_context);
   return child_->AsyncPatchSecurityPolicy(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesRestMetadata::AsyncPatchRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncPatchRule(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesRestMetadata::AsyncRemoveRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncRemoveRule(cq, std::move(rest_context), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

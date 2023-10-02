@@ -74,6 +74,10 @@ class TargetInstancesRestConnectionImpl
   ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
                           ListTargetInstancesRequest request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request) override;
+
  private:
   static std::unique_ptr<
       compute_target_instances_v1::TargetInstancesRetryPolicy>

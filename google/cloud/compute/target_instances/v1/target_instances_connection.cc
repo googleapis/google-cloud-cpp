@@ -77,6 +77,15 @@ TargetInstancesConnection::ListTargetInstances(
       StreamRange<google::cloud::cpp::compute::v1::TargetInstance>>();
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1
 }  // namespace cloud

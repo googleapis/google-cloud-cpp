@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_impl.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -144,6 +145,41 @@ TEST_F(CurlImplTest, SetUrlPathContainsHttp) {
   auto impl = CurlImpl(std::move(handle_), factory_, {});
   impl.SetUrl("https://endpoint.googleapis.com", request, {});
   EXPECT_THAT(impl.url(), Eq("HTTP://endpoint.googleapis.com/resource/verb"));
+}
+
+TEST_F(CurlImplTest, CurlOptProxy) {
+  EXPECT_EQ(CurlOptProxy(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptProxy(Options{}.set<ProxyOption>(
+                ProxyConfig().set_hostname("hostname"))),
+            absl::make_optional(std::string("https://hostname")));
+  EXPECT_EQ(
+      CurlOptProxy(Options{}.set<ProxyOption>(ProxyConfig()
+                                                  .set_hostname("hostname")
+                                                  .set_port("1080")
+                                                  .set_scheme("http"))),
+      absl::make_optional(std::string("htt" /*silence*/ "p://hostname:1080")));
+}
+
+TEST_F(CurlImplTest, CurlOptProxyUsername) {
+  EXPECT_EQ(CurlOptProxyUsername(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptProxyUsername(Options{}.set<ProxyOption>(
+                ProxyConfig().set_hostname("hostname"))),
+            absl::nullopt);
+  EXPECT_EQ(
+      CurlOptProxyUsername(Options{}.set<ProxyOption>(
+          ProxyConfig().set_hostname("hostname").set_username("username"))),
+      absl::make_optional(std::string("username")));
+}
+
+TEST_F(CurlImplTest, CurlOptProxyPassword) {
+  EXPECT_EQ(CurlOptProxyPassword(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptProxyPassword(Options{}.set<ProxyOption>(
+                ProxyConfig().set_hostname("hostname"))),
+            absl::nullopt);
+  EXPECT_EQ(
+      CurlOptProxyPassword(Options{}.set<ProxyOption>(
+          ProxyConfig().set_hostname("hostname").set_password("password"))),
+      absl::make_optional(std::string("password")));
 }
 
 }  // namespace

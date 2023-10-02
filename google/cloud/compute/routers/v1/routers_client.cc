@@ -90,6 +90,27 @@ StatusOr<google::cloud::cpp::compute::v1::Router> RoutersClient::GetRouter(
   return connection_->GetRouter(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersClient::GetNatIpInfo(std::string const& project,
+                            std::string const& region,
+                            std::string const& router, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  return connection_->GetNatIpInfo(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+RoutersClient::GetNatIpInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNatIpInfo(request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersClient::GetNatMappingInfo(std::string const& project,
                                  std::string const& region,

@@ -774,6 +774,32 @@ InstancesClient::SetScheduling(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::SetSecurityPolicy(
+    std::string const& project, std::string const& zone,
+    std::string const& instance,
+    google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const&
+        instances_set_security_policy_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  *request.mutable_instances_set_security_policy_request_resource() =
+      instances_set_security_policy_request_resource;
+  return connection_->SetSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::SetSecurityPolicy(
+    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesClient::SetServiceAccount(
     std::string const& project, std::string const& zone,
     std::string const& instance,

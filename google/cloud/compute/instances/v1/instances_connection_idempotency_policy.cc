@@ -209,6 +209,12 @@ Idempotency InstancesConnectionIdempotencyPolicy::SetScheduling(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency InstancesConnectionIdempotencyPolicy::SetSecurityPolicy(
+    google::cloud::cpp::compute::instances::v1::
+        SetSecurityPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency InstancesConnectionIdempotencyPolicy::SetServiceAccount(
     google::cloud::cpp::compute::instances::v1::
         SetServiceAccountRequest const&) {

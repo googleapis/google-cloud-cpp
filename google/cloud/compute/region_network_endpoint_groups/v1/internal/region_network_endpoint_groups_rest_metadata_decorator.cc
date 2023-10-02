@@ -43,6 +43,17 @@ RegionNetworkEndpointGroupsRestMetadata::
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkEndpointGroupsRestMetadata::AsyncAttachNetworkEndpoints(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncAttachNetworkEndpoints(cq, std::move(rest_context),
+                                             request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -51,6 +62,17 @@ RegionNetworkEndpointGroupsRestMetadata::AsyncDeleteNetworkEndpointGroup(
   SetMetadata(*rest_context);
   return child_->AsyncDeleteNetworkEndpointGroup(cq, std::move(rest_context),
                                                  request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkEndpointGroupsRestMetadata::AsyncDetachNetworkEndpoints(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncDetachNetworkEndpoints(cq, std::move(rest_context),
+                                             request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -80,6 +102,16 @@ RegionNetworkEndpointGroupsRestMetadata::ListRegionNetworkEndpointGroups(
         ListRegionNetworkEndpointGroupsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListRegionNetworkEndpointGroups(rest_context, request);
+}
+
+StatusOr<
+    google::cloud::cpp::compute::v1::NetworkEndpointGroupsListNetworkEndpoints>
+RegionNetworkEndpointGroupsRestMetadata::ListNetworkEndpoints(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        ListNetworkEndpointsRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->ListNetworkEndpoints(rest_context, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

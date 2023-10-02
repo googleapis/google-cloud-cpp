@@ -314,6 +314,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/message_carrier_test.cc
         internal/message_propagator_test.cc
         internal/ordering_key_publisher_connection_test.cc
+        internal/publisher_stub_factory_test.cc
         internal/publisher_tracing_connection_test.cc
         internal/pull_lease_manager_test.cc
         internal/rejects_with_ordering_key_test.cc
@@ -445,7 +446,9 @@ google_cloud_cpp_add_pkgconfig(
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_pubsub-config.cmake" @ONLY)
+set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "pubsub")
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
+               "google_cloud_cpp_pubsub-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_pubsub-config-version.cmake"
     VERSION ${PROJECT_VERSION}

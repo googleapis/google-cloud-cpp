@@ -293,6 +293,33 @@ TargetPoolsClient::SetBackup(
   return connection_->SetBackup(request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::SetSecurityPolicy(
+    std::string const& project, std::string const& region,
+    std::string const& target_pool,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
+  return connection_->SetSecurityPolicy(request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSecurityPolicy(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_pools_v1
 }  // namespace cloud

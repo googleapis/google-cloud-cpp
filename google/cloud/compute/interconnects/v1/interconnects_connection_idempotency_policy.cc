@@ -52,6 +52,12 @@ Idempotency InterconnectsConnectionIdempotencyPolicy::GetDiagnostics(
   return Idempotency::kIdempotent;
 }
 
+Idempotency InterconnectsConnectionIdempotencyPolicy::GetMacsecConfig(
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency InterconnectsConnectionIdempotencyPolicy::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::
         InsertInterconnectRequest const&) {
