@@ -108,7 +108,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.16.0 - TBD
+## v2.16.0 - 2023-10
 
 ### New Libraries
 
@@ -123,16 +123,42 @@ the APIs in these libraries are stable, and are ready for production use.
 
 New `*Client` for conversational search.
 
+### [OAuth2](/google/cloud/oauth2/README.md)
+
+- feat(oauth2): add quickstart, README, etc.
+  ([#12754](https://github.com/googleapis/google-cloud-cpp/pull/12754))
+
 ### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
 
-Features to instrument the Google Cloud C++ libraries for [distributed tracing]
-using [OpenTelemetry] are now GA. See the [quickstart][otel-quickstart] within
-the library to learn more about these tools.
+We instrumented the Google Cloud C++ libraries for [distributed tracing] using
+[OpenTelemetry]. All client libraries are instrumented in some capacity.
+
+Features to enable the collection and export of these traces are now GA. See the
+[quickstart][otel-quickstart] within the library to learn more about these
+tools.
 
 ### [Policy Troubleshooter](/google/cloud/policytroubleshooter/README.md)
 
 Remove `PoliciesClient`. This client was placed in the wrong library. The
 correct location is google/cloud/iam/v2.
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): trace auth when default credentials are assumed
+  ([#12672](https://github.com/googleapis/google-cloud-cpp/pull/12672))
+- docs(storage): more on InsertObject vs. WriteObject
+  ([#12577](https://github.com/googleapis/google-cloud-cpp/pull/12577))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(common): new `*Option` to configure HTTP proxy
+  ([#12766](https://github.com/googleapis/google-cloud-cpp/pull/12766))
+- fix: export headers with top-level Bazel targets
+  ([#12762](https://github.com/googleapis/google-cloud-cpp/pull/12762))
+- fix: gRPC auth logging enabled by "auth"
+  ([#12702](https://github.com/googleapis/google-cloud-cpp/pull/12702))
+- fix: add implicit routing in GAPICs
+  ([#12544](https://github.com/googleapis/google-cloud-cpp/pull/12544))
 
 ### Known issues
 
