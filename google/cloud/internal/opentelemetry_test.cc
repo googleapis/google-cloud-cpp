@@ -69,8 +69,6 @@ TEST(OpenTelemetry, GetTracer) {
 TEST(OpenTelemetry, MakeSpan) {
   auto span_catcher = InstallSpanCatcher();
 
-  OptionsSpan current(Options{});
-
   auto s1 = MakeSpan("span1");
   s1->End();
   auto s2 = MakeSpan("span2");
@@ -84,7 +82,6 @@ TEST(OpenTelemetry, MakeSpan) {
 
 TEST(OpenTelemetry, MakeSpanWithAttributes) {
   auto span_catcher = InstallSpanCatcher();
-  OptionsSpan current(Options{});
 
   auto s1 = MakeSpan("span1", {{"key", "value"}});
   s1->End();
