@@ -15,7 +15,10 @@
 #include "google/cloud/pubsub/internal/batching_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/semantic_conventions.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
