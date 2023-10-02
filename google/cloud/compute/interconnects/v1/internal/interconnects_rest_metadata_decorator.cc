@@ -67,6 +67,15 @@ InterconnectsRestMetadata::GetDiagnostics(
   return child_->GetDiagnostics(rest_context, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+InterconnectsRestMetadata::GetMacsecConfig(
+    rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->GetMacsecConfig(rest_context, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncInsertInterconnect(
     CompletionQueue& cq,

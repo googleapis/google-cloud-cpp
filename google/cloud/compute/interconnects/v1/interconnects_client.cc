@@ -93,6 +93,27 @@ InterconnectsClient::GetDiagnostics(
   return connection_->GetDiagnostics(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+InterconnectsClient::GetMacsecConfig(std::string const& project,
+                                     std::string const& interconnect,
+                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest
+      request;
+  request.set_project(project);
+  request.set_interconnect(interconnect);
+  return connection_->GetMacsecConfig(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+InterconnectsClient::GetMacsecConfig(
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMacsecConfig(request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsClient::InsertInterconnect(
     std::string const& project,

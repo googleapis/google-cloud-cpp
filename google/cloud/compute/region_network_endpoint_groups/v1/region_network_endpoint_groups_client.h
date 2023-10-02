@@ -94,6 +94,89 @@ class RegionNetworkEndpointGroupsClient {
 
   // clang-format off
   ///
+  /// Attach a list of network endpoints to the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/attachNetworkEndpoints
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  The name of the region where you want to create the network endpoint group.
+  ///  It should comply with RFC1035.
+  /// @param network_endpoint_group  The name of the network endpoint group where you are attaching network
+  ///  endpoints to. It should comply with RFC1035.
+  /// @param region_network_endpoint_groups_attach_endpoints_request_resource  The RegionNetworkEndpointGroupsAttachEndpointsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L130}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AttachNetworkEndpoints(
+      std::string const& project, std::string const& region,
+      std::string const& network_endpoint_group,
+      google::cloud::cpp::compute::v1::
+          RegionNetworkEndpointGroupsAttachEndpointsRequest const&
+              region_network_endpoint_groups_attach_endpoints_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Attach a list of network endpoints to the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/attachNetworkEndpoints
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.AttachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L130}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AttachNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          AttachNetworkEndpointsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes the specified network endpoint group. Note that the NEG cannot be
   /// deleted if it is configured as a backend of a backend service.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/delete
@@ -123,7 +206,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L91}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L168}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -164,13 +247,96 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L91}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DeleteNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L168}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Detach the network endpoint from the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/detachNetworkEndpoints
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  The name of the region where the network endpoint group is located. It
+  ///  should comply with RFC1035.
+  /// @param network_endpoint_group  The name of the network endpoint group you are detaching network endpoints
+  ///  from. It should comply with RFC1035.
+  /// @param region_network_endpoint_groups_detach_endpoints_request_resource  The RegionNetworkEndpointGroupsDetachEndpointsRequest for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L200}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DetachNetworkEndpoints(
+      std::string const& project, std::string const& region,
+      std::string const& network_endpoint_group,
+      google::cloud::cpp::compute::v1::
+          RegionNetworkEndpointGroupsDetachEndpointsRequest const&
+              region_network_endpoint_groups_detach_endpoints_request_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Detach the network endpoint from the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/detachNetworkEndpoints
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.DetachNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L200}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DetachNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DetachNetworkEndpointsRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -195,8 +361,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L123}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L239}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L102}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -228,8 +394,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L123}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.GetNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L239}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L102}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -268,7 +434,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L136}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -310,7 +476,7 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L136}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.InsertNetworkEndpointGroupRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -350,8 +516,8 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L168}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L357}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L102}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -392,14 +558,98 @@ class RegionNetworkEndpointGroupsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L168}
-  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_078.proto#L30}
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListRegionNetworkEndpointGroupsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L357}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L102}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListRegionNetworkEndpointGroups(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           ListRegionNetworkEndpointGroupsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the network endpoints in the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/listNetworkEndpoints
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  The name of the region where the network endpoint group is located. It
+  ///  should comply with RFC1035.
+  /// @param network_endpoint_group  The name of the network endpoint group from which you want to generate a
+  ///  list of included network endpoints. It should comply with RFC1035.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L284}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L500}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
+  ListNetworkEndpoints(std::string const& project, std::string const& region,
+                       std::string const& network_endpoint_group,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists the network endpoints in the specified network endpoint group.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkEndpointGroups/listNetworkEndpoints
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_network_endpoint_groups.v1.ListNetworkEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto#L284}
+  /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_012.proto#L500}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
+  ListNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          ListNetworkEndpointsRequest request,
       Options opts = {});
 
  private:

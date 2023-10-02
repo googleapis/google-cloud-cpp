@@ -146,6 +146,16 @@ TargetPoolsRestMetadata::AsyncSetBackup(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsRestMetadata::AsyncSetSecurityPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

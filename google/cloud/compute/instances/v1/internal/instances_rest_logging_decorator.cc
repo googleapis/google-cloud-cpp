@@ -531,6 +531,23 @@ InstancesRestLogging::AsyncSetScheduling(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesRestLogging::AsyncSetSecurityPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::instances::v1::
+                 SetSecurityPolicyRequest const& request) {
+        return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
+                                              request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestLogging::AsyncSetServiceAccount(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

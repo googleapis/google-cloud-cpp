@@ -71,6 +71,13 @@ class TargetInstancesRestMetadata : public TargetInstancesRestStub {
                           ListTargetInstancesRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetSecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::target_instances::v1::
+          SetSecurityPolicyRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

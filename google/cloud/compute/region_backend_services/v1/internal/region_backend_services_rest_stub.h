@@ -86,6 +86,13 @@ class RegionBackendServicesRestStub {
           SetIamPolicyRequest const& request) = 0;
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetSecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          SetSecurityPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateBackendService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -162,6 +169,13 @@ class DefaultRegionBackendServicesRestStub
       google::cloud::rest_internal::RestContext& rest_context,
       google::cloud::cpp::compute::region_backend_services::v1::
           SetIamPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetSecurityPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateBackendService(

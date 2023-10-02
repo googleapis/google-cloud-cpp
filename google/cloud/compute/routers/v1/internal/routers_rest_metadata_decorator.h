@@ -57,6 +57,11 @@ class RoutersRestMetadata : public RoutersRestStub {
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
       google::cloud::rest_internal::RestContext& rest_context,

@@ -24,30 +24,47 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A function that creates a PublisherStub using a pre-configured channel.
+ */
+using BasePublisherStubFactory = std::function<std::shared_ptr<PublisherStub>(
+    std::shared_ptr<grpc::Channel>)>;
+
+/**
+ * Creates a PublisherStub configured with @p cq and @p options.
+ *
+ * By default, a PublisherRoundRobinStub is created using the number of
+ * GrpcNumChannelsOption.
+ */
 std::shared_ptr<PublisherStub> MakeDefaultPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
+/**
+ * Creates a PublisherStub configured with @p cq and @p options.
+ */
 std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
+/**
+ * Creates a test PublisherStub configured with @p cq and @p options and @p
+ * mocks.
+ *
+ * Used for testing the stubs at the connection layer.
+ */
 std::shared_ptr<PublisherStub> MakeTestPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options,
     std::vector<std::shared_ptr<PublisherStub>> mocks);
 
 /**
- * Creates a PublisherStub configured with @p opts and @p channel_id.
+ * Creates a test PublisherStub configured with @p cq and @p options and @p
+ * base_factory.
  *
- * @p channel_id should be unique among all stubs in the same Connection pool,
- * to ensure they use different underlying connections.
+ * Used for unit testing to create decorated stubs. Accepts a stub factory so we
+ * can inject mock stubs in our unit tests.
  */
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(Options const& opts,
-                                                          int channel_id);
-
-/**
- * Create a PublisherStub using a pre-configured channel.
- */
-std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
-    std::shared_ptr<grpc::Channel> channel);
+std::shared_ptr<PublisherStub> CreateDecoratedStubs(
+    google::cloud::CompletionQueue cq, Options const& options,
+    BasePublisherStubFactory const& base_factory);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

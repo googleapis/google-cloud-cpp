@@ -37,9 +37,27 @@ RegionNetworkEndpointGroupsConnection::
     ~RegionNetworkEndpointGroupsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkEndpointGroupsConnection::AttachNetworkEndpoints(
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkEndpointGroupsConnection::DetachNetworkEndpoints(
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -67,6 +85,14 @@ RegionNetworkEndpointGroupsConnection::ListRegionNetworkEndpointGroups(
         ListRegionNetworkEndpointGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>>();
+}
+
+StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
+RegionNetworkEndpointGroupsConnection::ListNetworkEndpoints(
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        ListNetworkEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

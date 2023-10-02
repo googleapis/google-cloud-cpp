@@ -55,6 +55,12 @@ class InterconnectsRestStub {
                  google::cloud::cpp::compute::interconnects::v1::
                      GetDiagnosticsRequest const& request) = 0;
 
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+  GetMacsecConfig(google::cloud::rest_internal::RestContext& rest_context,
+                  google::cloud::cpp::compute::interconnects::v1::
+                      GetMacsecConfigRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertInterconnect(
       google::cloud::CompletionQueue& cq,
@@ -120,6 +126,12 @@ class DefaultInterconnectsRestStub : public InterconnectsRestStub {
   GetDiagnostics(google::cloud::rest_internal::RestContext& rest_context,
                  google::cloud::cpp::compute::interconnects::v1::
                      GetDiagnosticsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+  GetMacsecConfig(google::cloud::rest_internal::RestContext& rest_context,
+                  google::cloud::cpp::compute::interconnects::v1::
+                      GetMacsecConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncInsertInterconnect(

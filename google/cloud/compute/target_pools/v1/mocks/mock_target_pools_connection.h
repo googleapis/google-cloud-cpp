@@ -117,6 +117,12 @@ class MockTargetPoolsConnection
       (google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
            request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

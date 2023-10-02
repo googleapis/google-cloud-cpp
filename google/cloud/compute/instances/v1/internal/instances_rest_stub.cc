@@ -123,7 +123,9 @@ DefaultInstancesRestStub::AggregatedListInstances(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          request.return_partial_success() ? "1" : "0"),
+           std::make_pair("service_project_number",
+                          request.service_project_number())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -807,6 +809,35 @@ DefaultInstancesRestStub::AsyncSetScheduling(
                              request.project(), "/", "zones", "/",
                              request.zone(), "/", "instances", "/",
                              request.instance(), "/", "setScheduling"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("request_id", request.request_id())})));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultInstancesRestStub::AsyncSetSecurityPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
+        request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.instances_set_security_policy_request_resource(), false,
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "zones", "/",
+                             request.zone(), "/", "instances", "/",
+                             request.instance(), "/", "setSecurityPolicy"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },

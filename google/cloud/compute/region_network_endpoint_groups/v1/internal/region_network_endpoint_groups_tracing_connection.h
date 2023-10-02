@@ -45,9 +45,19 @@ class RegionNetworkEndpointGroupsTracingConnection
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AttachNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          AttachNetworkEndpointsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DetachNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetNetworkEndpointGroup(
@@ -63,6 +73,11 @@ class RegionNetworkEndpointGroupsTracingConnection
   ListRegionNetworkEndpointGroups(
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           ListRegionNetworkEndpointGroupsRequest request) override;
+
+  StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
+  ListNetworkEndpoints(
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          ListNetworkEndpointsRequest request) override;
 
  private:
   std::shared_ptr<compute_region_network_endpoint_groups_v1::

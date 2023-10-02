@@ -126,6 +126,22 @@ InterconnectsRestConnectionImpl::GetDiagnostics(
       request, __func__);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+InterconnectsRestConnectionImpl::GetMacsecConfig(
+    google::cloud::cpp::compute::interconnects::v1::
+        GetMacsecConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetMacsecConfig(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::cloud::cpp::compute::interconnects::v1::
+                 GetMacsecConfigRequest const& request) {
+        return stub_->GetMacsecConfig(rest_context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestConnectionImpl::InsertInterconnect(
     google::cloud::cpp::compute::interconnects::v1::

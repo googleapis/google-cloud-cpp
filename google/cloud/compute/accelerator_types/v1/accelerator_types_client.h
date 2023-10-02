@@ -116,7 +116,7 @@ class AcceleratorTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L71}
-  /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L280}
+  /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L280}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -157,7 +157,7 @@ class AcceleratorTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.accelerator_types.v1.AggregatedListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L71}
-  /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L280}
+  /// [google.cloud.cpp.compute.v1.AcceleratorTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L280}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -188,8 +188,8 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
-  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L147}
+  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
@@ -220,8 +220,8 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L145}
-  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.GetAcceleratorTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L147}
+  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
@@ -259,8 +259,8 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L157}
-  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L159}
+  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
@@ -301,8 +301,8 @@ class AcceleratorTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L157}
-  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_001.proto#L30}
+  /// [google.cloud.cpp.compute.accelerator_types.v1.ListAcceleratorTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L159}
+  /// [google.cloud.cpp.compute.v1.AcceleratorType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_002.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>

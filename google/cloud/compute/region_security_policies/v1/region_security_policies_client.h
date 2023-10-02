@@ -92,6 +92,84 @@ class RegionSecurityPoliciesClient {
 
   // clang-format off
   ///
+  /// Inserts a rule into a security policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/addRule
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region scoping this request.
+  /// @param security_policy  Name of the security policy to update.
+  /// @param security_policy_rule_resource  The SecurityPolicyRule for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L153}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      std::string const& project, std::string const& region,
+      std::string const& security_policy,
+      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+          security_policy_rule_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Inserts a rule into a security policy.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/addRule
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.AddRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L153}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          AddRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes the specified policy.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/delete
   ///
@@ -118,7 +196,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L105}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L178}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -156,7 +234,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L105}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.DeleteSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L178}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,7 +263,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L135}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L223}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -217,13 +295,75 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L135}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L223}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::region_security_policies::v1::
           GetSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/getRule
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region scoping this request.
+  /// @param security_policy  Name of the security policy to which the queried rule belongs.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.SecurityPolicyRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L208}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L318}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      std::string const& project, std::string const& region,
+      std::string const& security_policy, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/getRule
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.cpp.compute.v1.SecurityPolicyRule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.GetRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L208}
+  /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L318}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          GetRuleRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -255,7 +395,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L147}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -296,7 +436,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L147}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.InsertSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L235}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -334,7 +474,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L181}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L269}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -376,7 +516,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L181}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.ListRegionSecurityPoliciesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L269}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_106.proto#L29}
   ///
   // clang-format on
@@ -419,7 +559,7 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L249}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -464,13 +604,167 @@ class RegionSecurityPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L249}
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L365}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSecurityPolicy(google::cloud::cpp::compute::region_security_policies::
                           v1::PatchSecurityPolicyRequest const& request,
                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Patches a rule at the specified priority. To clear fields in the rule,
+  /// leave the fields empty and specify them in the updateMask.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/patchRule
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region scoping this request.
+  /// @param security_policy  Name of the security policy to update.
+  /// @param security_policy_rule_resource  The SecurityPolicyRule for this request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L337}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      std::string const& project, std::string const& region,
+      std::string const& security_policy,
+      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+          security_policy_rule_resource,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Patches a rule at the specified priority. To clear fields in the rule,
+  /// leave the fields empty and specify them in the updateMask.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/patchRule
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.PatchRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L337}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          PatchRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/removeRule
+  ///
+  /// @param project  Project ID for this request.
+  /// @param region  Name of the region scoping this request.
+  /// @param security_policy  Name of the security policy to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L399}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      std::string const& project, std::string const& region,
+      std::string const& security_policy, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a rule at the specified priority.
+  /// https://cloud.google.com/compute/docs/reference/rest/v1/regionSecurityPolicies/removeRule
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.cpp.compute.v1.Operation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: http://cloud/compute/docs/api/how-tos/api-requests-responses#handling_api_responses
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.cpp.compute.region_security_policies.v1.RemoveRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L399}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          RemoveRuleRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionSecurityPoliciesConnection> connection_;

@@ -156,6 +156,23 @@ RegionBackendServicesRestLogging::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesRestLogging::AsyncSetSecurityPolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::cpp::compute::region_backend_services::v1::
+                 SetSecurityPolicyRequest const& request) {
+        return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
+                                              request);
+      },
+      cq, std::move(rest_context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestLogging::AsyncUpdateBackendService(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

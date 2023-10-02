@@ -88,6 +88,12 @@ Idempotency RegionBackendServicesConnectionIdempotencyPolicy::SetIamPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RegionBackendServicesConnectionIdempotencyPolicy::SetSecurityPolicy(
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 RegionBackendServicesConnectionIdempotencyPolicy::UpdateBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::

@@ -125,6 +125,15 @@ TargetPoolsConnection::SetBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_pools_v1
 }  // namespace cloud

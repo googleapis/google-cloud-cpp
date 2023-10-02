@@ -47,6 +47,35 @@ DefaultRegionSecurityPoliciesRestStub::DefaultRegionSecurityPoliciesRestStub(
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultRegionSecurityPoliciesRestStub::AsyncAddRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.security_policy_rule_resource(), false,
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "securityPolicies", "/",
+                             request.security_policy(), "/", "addRule"),
+                rest_internal::TrimEmptyQueryParameters({std::make_pair(
+                    "validate_only", request.validate_only() ? "1" : "0")})));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -84,6 +113,22 @@ DefaultRegionSecurityPoliciesRestStub::GetSecurityPolicy(
       absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
                    request.project(), "/", "regions", "/", request.region(),
                    "/", "securityPolicies", "/", request.security_policy()));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
+DefaultRegionSecurityPoliciesRestStub::GetRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        GetRuleRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SecurityPolicyRule>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                   request.project(), "/", "regions", "/", request.region(),
+                   "/", "securityPolicies", "/", request.security_policy(), "/",
+                   "getRule"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("priority", std::to_string(request.priority()))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,6 +202,66 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
                              request.security_policy()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context,
+                request.security_policy_rule_resource(), false,
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "securityPolicies", "/",
+                             request.security_policy(), "/", "patchRule"),
+                rest_internal::TrimEmptyQueryParameters(
+                    {std::make_pair("priority",
+                                    std::to_string(request.priority())),
+                     std::make_pair("validate_only",
+                                    request.validate_only() ? "1" : "0")})));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const& request) {
+  promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
+                             request.project(), "/", "regions", "/",
+                             request.region(), "/", "securityPolicies", "/",
+                             request.security_policy(), "/", "removeRule"),
+                rest_internal::TrimEmptyQueryParameters({std::make_pair(
+                    "priority", std::to_string(request.priority()))})));
       },
       std::move(p), service_, request, std::move(rest_context)};
   return f.then([t = std::move(t), cq](auto f) mutable {

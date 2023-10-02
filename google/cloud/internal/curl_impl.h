@@ -24,6 +24,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include "absl/types/span.h"
 #include <array>
 #include <chrono>
@@ -136,6 +137,10 @@ class CurlImpl {
   std::chrono::seconds download_stall_timeout_;
   std::uint32_t download_stall_minimum_rate_;
 
+  absl::optional<std::string> proxy_;
+  absl::optional<std::string> proxy_username_;
+  absl::optional<std::string> proxy_password_;
+
   CurlReceivedHeaders received_headers_;
   std::string url_;
   HttpStatusCode http_code_;
@@ -171,6 +176,15 @@ class CurlImpl {
   // Store pending data between WriteCallback() calls.
   SpillBuffer spill_;
 };
+
+/// Compute the CURLOPT_PROXY setting from @p options.
+absl::optional<std::string> CurlOptProxy(Options const& options);
+
+/// Compute the CURLOPT_PROXYUSERNAME setting from @p options.
+absl::optional<std::string> CurlOptProxyUsername(Options const& options);
+
+/// Compute the CURLOPT_PROXYPASSWORD setting from @p options.
+absl::optional<std::string> CurlOptProxyPassword(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
