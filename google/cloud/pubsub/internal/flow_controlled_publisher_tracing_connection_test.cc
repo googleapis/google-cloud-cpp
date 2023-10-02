@@ -45,6 +45,7 @@ using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
 TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish)
@@ -71,7 +72,7 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                   SpanHasAttributes(
                       OTelAttribute<std::string>(
-                          "cloud-cxx.function",
+                          sc::kCodeFunction,
                           "pubsub::FlowControlledPublisherConnection::Publish"),
                       OTelAttribute<int>("gcloud.status_code", 0)))));
 }
