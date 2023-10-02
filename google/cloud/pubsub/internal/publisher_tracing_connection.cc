@@ -53,7 +53,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPublishSpan(
                {sc::kMessagingDestinationTemplate, "topic"},
                {"messaging.message.total_size_bytes",
                 static_cast<std::int64_t>(MessageSize(m))},
-               {"cloud-cxx.function", "pubsub::PublisherConnection::Publish"}},
+               {sc::kCodeFunction, "pubsub::PublisherConnection::Publish"}},
               options);
   if (!m.ordering_key().empty()) {
     span->SetAttribute("messaging.pubsub.ordering_key", m.ordering_key());
