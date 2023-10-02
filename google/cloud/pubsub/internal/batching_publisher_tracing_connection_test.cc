@@ -22,7 +22,7 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-
+#include <opentelemetry/trace/semantic_conventions.h>
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
