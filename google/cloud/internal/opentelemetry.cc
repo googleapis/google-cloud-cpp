@@ -40,6 +40,16 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
   return GetTracer(CurrentOptions())->StartSpan(name, options);
 }
 
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name,
+    std::initializer_list<std::pair<opentelemetry::nostd::string_view,
+                                    opentelemetry::common::AttributeValue>>
+        attributes) {
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kClient;
+  return GetTracer(CurrentOptions())->StartSpan(name, attributes, options);
+}
+
 void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status) {
   if (status.ok()) {
     span.SetStatus(opentelemetry::trace::StatusCode::kOk);
