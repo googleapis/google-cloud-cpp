@@ -223,7 +223,7 @@ TEST_F(PublisherStubFactory, TracingEnabled) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce([](grpc::ClientContext& context,
-                             google::pubsub::v1::Topic const&) {
+                         google::pubsub::v1::Topic const&) {
               ValidatePropagator(context);
               return StatusOr<google::pubsub::v1::Topic>(
                   Status(StatusCode::kUnavailable, "nothing here"));
@@ -259,7 +259,7 @@ TEST_F(PublisherStubFactory, TracingDisabled) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, CreateTopic)
             .WillOnce([](grpc::ClientContext& context,
-                             google::pubsub::v1::Topic const&) {
+                         google::pubsub::v1::Topic const&) {
               ValidateNoPropagator(context);
               return StatusOr<google::pubsub::v1::Topic>(
                   Status(StatusCode::kUnavailable, "nothing here"));
