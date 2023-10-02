@@ -15,6 +15,9 @@
 #include "google/cloud/pubsub/internal/batching_publisher_tracing_connection.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/trace/semantic_conventions.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
@@ -33,8 +36,10 @@ class BatchingPublisherTracingConnection : public pubsub::PublisherConnection {
   ~BatchingPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
-    auto span =
-        internal::MakeSpan("pubsub::BatchingPublisherConnection::Publish");
+    namespace sc = opentelemetry::trace::SemanticConventions;
+    auto span = internal::MakeSpan("publish scheduler");
+    span->SetAttribute(sc::kCodeFunction,
+                       "pubsub::BatchingPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
     return result;
