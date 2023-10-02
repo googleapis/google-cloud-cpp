@@ -17,6 +17,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/trace/context.h>
+#include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -37,8 +38,10 @@ class FlowControlledPublisherTracingConnection
   ~FlowControlledPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
-    auto span = internal::MakeSpan(
-        "pubsub::FlowControlledPublisherConnection::Publish");
+    namespace sc = ::opentelemetry::trace::SemanticConventions;
+    auto span = internal::MakeSpan("publisher flow control");
+    span->SetAttribute(sc::kCodeFunction,
+                       "pubsub::FlowControlledPublisherConnection::Publish");
     auto result = child_->Publish(std::move(p));
     internal::EndSpan(*span);
     return result;
