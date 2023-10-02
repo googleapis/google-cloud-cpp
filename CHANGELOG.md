@@ -129,8 +129,8 @@ New `*Client` for conversational search.
 
 ### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
 
-The Google Cloud C++ libraries have been instrumented for [distributed tracing]
-using [OpenTelemetry]. All client libraries are instrumented in some capacity.
+We instrumented the Google Cloud C++ libraries for [distributed tracing] using
+[OpenTelemetry]. All client libraries are instrumented in some capacity.
 
 Features to enable the collection and export of these traces are now GA. See the
 [quickstart][otel-quickstart] within the library to learn more about these
@@ -143,8 +143,6 @@ correct location is google/cloud/iam/v2.
 
 ### [Storage](/google/cloud/storage/README.md)
 
-- fix(GCS+gRPC): race condition in async `Insert()` ([#12715](https://github.com/googleapis/google-cloud-cpp/pull/12715))
-- docs(GCS+gRPC): additional `ReadObject()` example ([#12695](https://github.com/googleapis/google-cloud-cpp/pull/12695))
 - fix(storage): trace auth when default credentials are assumed ([#12672](https://github.com/googleapis/google-cloud-cpp/pull/12672))
 - docs(storage): more on InsertObject vs. WriteObject ([#12577](https://github.com/googleapis/google-cloud-cpp/pull/12577))
 
