@@ -94,7 +94,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
                                           45),
               OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
               OTelAttribute<std::string>(
-                  "cloud-cxx.function",
+                  sc::kCodeFunction,
                   "pubsub::PublisherConnection::Publish")))));
 }
 
