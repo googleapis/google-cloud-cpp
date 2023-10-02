@@ -15,6 +15,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor_database.h>
 #include <google/protobuf/text_format.h>
@@ -26,11 +27,14 @@ namespace generator_internal {
 namespace {
 
 using ::google::cloud::generator_testing::FakeSourceTree;
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::SizeIs;
 
 char const* const kHttpProto =
@@ -97,13 +101,21 @@ char const* const kLongrunningOperationsProto =
     "  string metadata_type = 2;\n"
     "}\n";
 
+char const* const kWellKnownProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+// Leading comments about message Empty.
+message Empty {}
+)""";
+
 char const* const kServiceProto =
     "syntax = \"proto3\";\n"
-    "package google.protobuf;\n"
+    "package my.package.v1;\n"
     "import \"google/api/annotations.proto\";\n"
     "import \"google/api/client.proto\";\n"
     "import \"google/api/http.proto\";\n"
     "import \"google/longrunning/operation.proto\";\n"
+    "import \"google/protobuf/well_known.proto\";\n"
     "// Leading comments about message Foo.\n"
     "message Foo {\n"
     "  // name field$ comment.\n"
@@ -127,8 +139,6 @@ char const* const kServiceProto =
     "  repeated SwallowType swallow_types = 6;\n"
     "  string parent = 7;\n"
     "}\n"
-    "// Leading comments about message Empty.\n"
-    "message Empty {}\n"
     "// Leading comments about message PaginatedInput.\n"
     "message PaginatedInput {\n"
     "  int32 page_size = 1;\n"
@@ -168,7 +178,7 @@ char const* const kServiceProto =
     "// Leading comments about service Service.\n"
     "service Service {\n"
     "  // Leading comments about rpc Method0$.\n"
-    "  rpc Method0(Bar) returns (Empty) {\n"
+    "  rpc Method0(Bar) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       delete: \"/v1/simple\"\n"
     "    };\n"
@@ -180,7 +190,7 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method2.\n"
-    "  rpc Method2(Bar) returns (Empty) {\n"
+    "  rpc Method2(Bar) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
     "       body: \"*\"\n"
@@ -200,13 +210,13 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc $Method4.\n"
-    "  rpc Method4(Foo) returns (Empty) {\n"
+    "  rpc Method4(Foo) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method5.\n"
-    "  rpc Method5(Baz) returns (Empty) {\n"
+    "  rpc Method5(Baz) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: "
     "\"/v1/projects/{project=project}/instances/{instance=instance}/"
@@ -215,7 +225,7 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method6.\n"
-    "  rpc Method6(Implicit) returns (Empty) {\n"
+    "  rpc Method6(Implicit) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: "
     "\"/v1/projects/{project}/databases\"\n"
@@ -223,7 +233,7 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method7.\n"
-    "  rpc Method7(Implicit) returns (Empty) {\n"
+    "  rpc Method7(Implicit) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: "
     "\"/v1/projects/{project}/instances/{instance}/databases\"\n"
@@ -231,11 +241,36 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method8.\n"
-    "  rpc Method8(AnnotatedRequestField) returns (Empty) {\n"
+    "  rpc Method8(AnnotatedRequestField) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: "
     "\"/v1/projects/{project}/instances/{instance}/databases\"\n"
     "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
+    "}\n";
+
+char const* const kServiceProtoWithoutVersion =
+    "syntax = \"proto3\";\n"
+    "package my.service;\n"
+    "import \"google/api/annotations.proto\";\n"
+    "import \"google/api/client.proto\";\n"
+    "import \"google/api/http.proto\";\n"
+    "// Leading comments about message Foo.\n"
+    "message Foo {\n"
+    "  // name field$ comment.\n"
+    "  string name = 1;\n"
+    "}\n"
+    "// Leading comments about message Bar.\n"
+    "message Bar {\n"
+    "  string name = 2;\n"
+    "}\n"
+    "// Leading comments about service Service.\n"
+    "service Service {\n"
+    "  // Leading comments about rpc Method0$.\n"
+    "  rpc Method0(Foo) returns (Bar) {\n"
+    "    option (google.api.http) = {\n"
+    "       delete: \"/v1/simple\"\n"
     "    };\n"
     "  }\n"
     "}\n";
@@ -260,7 +295,10 @@ class HttpOptionUtilsTest
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
             {std::string("google/longrunning/operation.proto"),
              kLongrunningOperationsProto},
-            {std::string("google/foo/v1/service.proto"), kServiceProto}}),
+            {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
+            {std::string("google/foo/v1/service.proto"), kServiceProto},
+            {std::string("google/foo/v1/service_without_version.proto"),
+             kServiceProtoWithoutVersion}}),
         source_tree_db_(&source_tree_),
         merged_db_(&simple_db_, &source_tree_db_),
         pool_(&merged_db_, &collector_) {
@@ -412,7 +450,7 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_request_params"),
-              Eq("google.protobuf.Service.Method0"));
+              Eq("my.package.v1.Service.Method0"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Delete"));
   EXPECT_THAT(vars.at("method_rest_path"), Eq("\"/v1/simple\""));
 }
@@ -430,7 +468,7 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"))"""));
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -449,7 +487,7 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -464,7 +502,7 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersNoParams) {
@@ -614,6 +652,26 @@ TEST_F(HttpOptionUtilsTest, FormatRequestResourceAnnotatedRequestField) {
   auto info = ParseHttpExtension(*method);
   auto result = FormatRequestResource(*method->input_type(), info);
   EXPECT_THAT(result, Eq("request.namespace_()"));
+}
+
+TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageName) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(8);
+  EXPECT_THAT(FormatApiVersionFromPackageName(*method), IsOkAndHolds(Eq("v1")));
+}
+
+TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service_without_version.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(0);
+  EXPECT_THAT(
+      FormatApiVersionFromPackageName(*method),
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr("Unrecognized API version in package name: my.service")));
 }
 
 }  // namespace

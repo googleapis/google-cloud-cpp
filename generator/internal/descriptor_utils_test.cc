@@ -386,13 +386,21 @@ char const* const kSourceLocationTestInput =
     "  }\n"
     "}\n";
 
+char const* const kWellKnownProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+// Leading comments about message Empty.
+message Empty {}
+)""";
+
 char const* const kServiceProto =
     "syntax = \"proto3\";\n"
-    "package google.protobuf;\n"
+    "package my.service.v1;\n"
     "import \"google/api/annotations.proto\";\n"
     "import \"google/api/client.proto\";\n"
     "import \"google/api/http.proto\";\n"
     "import \"google/iam/v1/fake_iam.proto\";\n"
+    "import \"google/protobuf/well_known.proto\";\n"
     "import \"google/longrunning/operation.proto\";\n"
     "// Leading comments about message Foo.\n"
     "message Foo {\n"
@@ -417,8 +425,6 @@ char const* const kServiceProto =
     "  repeated SwallowType swallow_types = 6;\n"
     "  string parent = 7;\n"
     "}\n"
-    "// Leading comments about message Empty.\n"
-    "message Empty {}\n"
     "// Leading comments about message PaginatedInput.\n"
     "message PaginatedInput {\n"
     "  int32 page_size = 1;\n"
@@ -446,7 +452,7 @@ char const* const kServiceProto =
     "// Leading comments about service Service.\n"
     "service Service {\n"
     "  // Leading comments about rpc Method0$.\n"
-    "  rpc Method0(Bar) returns (Empty) {\n"
+    "  rpc Method0(Bar) returns (google.protobuf.Empty) {\n"
     "  }\n"
     "  // Leading comments about rpc Method1.\n"
     "  rpc Method1(Bar) returns (Bar) {\n"
@@ -461,7 +467,7 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "    option (google.longrunning.operation_info) = {\n"
-    "      response_type: \"google.protobuf.Bar\"\n"
+    "      response_type: \"my.service.v1.Bar\"\n"
     "      metadata_type: \"google.protobuf.Method2Metadata\"\n"
     "    };\n"
     "  }\n"
@@ -482,7 +488,7 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method5.\n"
-    "  rpc Method5(Bar) returns (Empty) {\n"
+    "  rpc Method5(Bar) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
     "       body: \"*\"\n"
@@ -495,7 +501,7 @@ char const* const kServiceProto =
     "    option (google.api.method_signature) = \"\";\n"
     "  }\n"
     "  // Leading comments about rpc $Method6.\n"
-    "  rpc Method6(Foo) returns (Empty) {\n"
+    "  rpc Method6(Foo) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
     "    };\n"
@@ -516,7 +522,7 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method8.\n"
-    "  rpc Method8(NamespaceRequest) returns (Empty) {\n"
+    "  rpc Method8(NamespaceRequest) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "      patch: "
     "\"/v1/{namespace.name=projects/*/locations/*/namespaces/*}\"\n"
@@ -532,14 +538,14 @@ char const* const kServiceProto =
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method10.\n"
-    "  rpc Method10(Bar) returns (Empty) {\n"
+    "  rpc Method10(Bar) returns (google.protobuf.Empty) {\n"
     "    option (google.api.method_signature) = \"name\";\n"
     "    option (google.api.method_signature) = \"parent\";\n"
     "    option (google.api.method_signature) = \"name,parent,number\";\n"
     "    option (google.api.method_signature) = \"name,title,number\";\n"
     "  }\n"
     "  // Leading comments about rpc Method11.\n"
-    "  rpc Method11(Baz) returns (Empty) {\n"
+    "  rpc Method11(Baz) returns (google.protobuf.Empty) {\n"
     "    option (google.api.http) = {\n"
     "       post: "
     "\"/v1/projects/{project=project}/instances/{instance=instance}/"
@@ -646,6 +652,7 @@ class CreateMethodVarsTest
             {std::string("google/cloud/extended_operations.proto"),
              kExtendedOperationsProto},
             {std::string("test/test.proto"), kSourceLocationTestInput},
+            {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto},
             {std::string("google/foo/v1/http_service.proto"),
              kHttpServiceProto}}),
@@ -696,7 +703,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.protobuf.Bar].
+  ///     [my.service.v1.Bar].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -710,7 +717,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.protobuf.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L17}
+  /// [my.service.v1.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L18}
   ///
   // clang-format on
 )""");
@@ -730,7 +737,7 @@ TEST_F(CreateMethodVarsTest,
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
   ///     the inputs for the RPC. In this case, the proto message is a
-  ///     [google.protobuf.Bar].
+  ///     [my.service.v1.Bar].
   ///     Proto messages are converted to C++ classes by Protobuf, using the
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -753,7 +760,7 @@ TEST_F(CreateMethodVarsTest,
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.protobuf.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L17}
+  /// [my.service.v1.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L18}
   ///
   // clang-format on
 )""");
@@ -824,7 +831,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.protobuf.Foo]: @googleapis_reference_link{google/foo/v1/service.proto#L9}
+  /// [my.service.v1.Foo]: @googleapis_reference_link{google/foo/v1/service.proto#L10}
   ///
   // clang-format on
 )""");
@@ -840,7 +847,7 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
           absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
                        SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
-  auto method_vars = vars_.find("google.protobuf.Service.Method6");
+  auto method_vars = vars_.find("my.service.v1.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature0", _))));
   EXPECT_THAT(method_vars->second, Contains(Pair("method_signature1", _)));
@@ -858,7 +865,7 @@ TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
           absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
                        SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
-  auto method_vars = vars_.find("google.protobuf.Service.Method10");
+  auto method_vars = vars_.find("my.service.v1.Service.Method10");
   ASSERT_NE(method_vars, vars_.end());
   EXPECT_THAT(method_vars->second, Contains(Pair("method_signature0", _)));
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature1", _))));
@@ -886,198 +893,198 @@ INSTANTIATE_TEST_SUITE_P(
     MethodVars, CreateMethodVarsTest,
     testing::Values(
         // Method0
-        MethodVarsTestValues("google.protobuf.Service.Method0", "method_name",
+        MethodVarsTestValues("my.service.v1.Service.Method0", "method_name",
                              "Method0"),
-        MethodVarsTestValues("google.protobuf.Service.Method0",
+        MethodVarsTestValues("my.service.v1.Service.Method0",
                              "method_name_snake", "method0"),
-        MethodVarsTestValues("google.protobuf.Service.Method0", "request_type",
-                             "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method0",
+        MethodVarsTestValues("my.service.v1.Service.Method0", "request_type",
+                             "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method0",
                              "response_message_type", "google.protobuf.Empty"),
-        MethodVarsTestValues("google.protobuf.Service.Method0", "response_type",
+        MethodVarsTestValues("my.service.v1.Service.Method0", "response_type",
                              "google::protobuf::Empty"),
-        MethodVarsTestValues("google.protobuf.Service.Method0", "idempotency",
+        MethodVarsTestValues("my.service.v1.Service.Method0", "idempotency",
                              "kNonIdempotent"),
-        MethodVarsTestValues("google.protobuf.Service.Method0",
+        MethodVarsTestValues("my.service.v1.Service.Method0",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
-                             "foo/v1/service.proto#L32}"),
-        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "protobuf/well_known.proto#L5}"),
+        MethodVarsTestValues("my.service.v1.Service.Method0",
                              "method_http_query_parameters",
-                             "google.protobuf.Service.Method0"),
+                             "my.service.v1.Service.Method0"),
         // Method1
-        MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
+        MethodVarsTestValues("my.service.v1.Service.Method1", "method_name",
                              "Method1"),
-        MethodVarsTestValues("google.protobuf.Service.Method1",
+        MethodVarsTestValues("my.service.v1.Service.Method1",
                              "method_name_snake", "method1"),
-        MethodVarsTestValues("google.protobuf.Service.Method1", "request_type",
-                             "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method1", "response_type",
-                             "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method1",
+        MethodVarsTestValues("my.service.v1.Service.Method1", "request_type",
+                             "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method1", "response_type",
+                             "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method1",
                              "method_return_doxygen_link",
-                             "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L17}"),
-        MethodVarsTestValues("google.protobuf.Service.Method1",
+                             "@googleapis_link{my::service::v1::Bar,google/"
+                             "foo/v1/service.proto#L18}"),
+        MethodVarsTestValues("my.service.v1.Service.Method1",
                              "method_http_query_parameters", R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
         std::make_pair("toggle", request.toggle() ? "1" : "0"),
         std::make_pair("title", request.title()),
         std::make_pair("parent", request.parent())}))"""),
         // Method2
-        MethodVarsTestValues("google.protobuf.Service.Method2",
+        MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_metadata_type",
                              "google::protobuf::Method2Metadata"),
-        MethodVarsTestValues("google.protobuf.Service.Method2",
+        MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_response_type",
-                             "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_deduced_response_message_type",
-                             "google.protobuf.Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "my.service.v1.Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_deduced_response_type",
-                             "google::protobuf::Bar"),
+                             "my::service::v1::Bar"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method2", "method_request_params",
+            "my.service.v1.Service.Method2", "method_request_params",
             "\"parent=\", internal::UrlEncode(request.parent())"),
-        MethodVarsTestValues("google.protobuf.Service.Method2", "idempotency",
+        MethodVarsTestValues("my.service.v1.Service.Method2", "idempotency",
                              "kNonIdempotent"),
-        MethodVarsTestValues("google.protobuf.Service.Method2",
+        MethodVarsTestValues("my.service.v1.Service.Method2",
                              "method_longrunning_deduced_return_doxygen_link",
-                             "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L17}"),
-        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "@googleapis_link{my::service::v1::Bar,google/"
+                             "foo/v1/service.proto#L18}"),
+        MethodVarsTestValues("my.service.v1.Service.Method2",
                              "method_http_query_parameters", R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
         std::make_pair("name", request.name()),
         std::make_pair("toggle", request.toggle() ? "1" : "0"),
         std::make_pair("title", request.title())}))"""),
         // Method3
-        MethodVarsTestValues("google.protobuf.Service.Method3",
+        MethodVarsTestValues("my.service.v1.Service.Method3",
                              "longrunning_metadata_type",
                              "google::protobuf::Struct"),
-        MethodVarsTestValues("google.protobuf.Service.Method3",
+        MethodVarsTestValues("my.service.v1.Service.Method3",
                              "longrunning_response_type",
                              "google::protobuf::Empty"),
-        MethodVarsTestValues("google.protobuf.Service.Method3",
+        MethodVarsTestValues("my.service.v1.Service.Method3",
                              "longrunning_deduced_response_type",
                              "google::protobuf::Struct"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method3", "method_request_params",
+            "my.service.v1.Service.Method3", "method_request_params",
             "\"parent=\", internal::UrlEncode(request.parent())"),
-        MethodVarsTestValues("google.protobuf.Service.Method3", "idempotency",
+        MethodVarsTestValues("my.service.v1.Service.Method3", "idempotency",
                              "kIdempotent"),
-        MethodVarsTestValues("google.protobuf.Service.Method3",
+        MethodVarsTestValues("my.service.v1.Service.Method3",
                              "method_longrunning_deduced_return_doxygen_link",
                              "google::protobuf::Struct"),
         // Method4
-        MethodVarsTestValues("google.protobuf.Service.Method4",
+        MethodVarsTestValues("my.service.v1.Service.Method4",
                              "range_output_field_name", "repeated_field"),
-        MethodVarsTestValues("google.protobuf.Service.Method4",
-                             "range_output_type", "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method4",
+        MethodVarsTestValues("my.service.v1.Service.Method4",
+                             "range_output_type", "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method4",
                              "method_request_params",
                              "\"name=\", internal::UrlEncode(request.name())"),
-        MethodVarsTestValues("google.protobuf.Service.Method4", "idempotency",
+        MethodVarsTestValues("my.service.v1.Service.Method4", "idempotency",
                              "kNonIdempotent"),
         // Method5
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_signature0", "std::string const& name, "),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_signature1",
                              "std::int32_t number, "
-                             "google::protobuf::Foo const& widget, "),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "my::service::v1::Foo const& widget, "),
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_signature2", "bool toggle, "),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_signature3",
                              "std::string const& name, "
                              "std::string const& title, "),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_signature4",
                              "std::string const& name, "
-                             "std::vector<google::protobuf::Bar::SwallowType>"
+                             "std::vector<my::service::v1::Bar::SwallowType>"
                              " const& swallow_types, "),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_signature5", ""),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_request_setters0",
                              "  request.set_name(name);\n"),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_request_setters1",
                              "  request.set_number(number);\n"
                              "  *request.mutable_widget() = widget;\n"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method5", "method_request_params",
+            "my.service.v1.Service.Method5", "method_request_params",
             "\"parent=\", internal::UrlEncode(request.parent())"),
-        MethodVarsTestValues("google.protobuf.Service.Method5",
+        MethodVarsTestValues("my.service.v1.Service.Method5",
                              "method_request_body", "*"),
-        MethodVarsTestValues("google.protobuf.Service.Method5", "idempotency",
+        MethodVarsTestValues("my.service.v1.Service.Method5", "idempotency",
                              "kNonIdempotent"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method5", "method_rest_path",
-            R"""(absl::StrCat("/", "v1", "/", request.parent(), "/", "databases"))"""),
+            "my.service.v1.Service.Method5", "method_rest_path",
+            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databases"))"""),
         // Method6
-        MethodVarsTestValues("google.protobuf.Service.Method6",
+        MethodVarsTestValues("my.service.v1.Service.Method6",
                              "method_request_params",
                              "\"name=\", internal::UrlEncode(request.name())"),
-        MethodVarsTestValues("google.protobuf.Service.Method6", "idempotency",
+        MethodVarsTestValues("my.service.v1.Service.Method6", "idempotency",
                              "kIdempotent"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method6", "method_signature1",
+            "my.service.v1.Service.Method6", "method_signature1",
             "std::map<std::string, std::string> const& labels, "),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method6", "method_request_setters1",
+            "my.service.v1.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
-        MethodVarsTestValues("google.protobuf.Service.Method6",
+        MethodVarsTestValues("my.service.v1.Service.Method6",
                              "method_http_query_parameters", ""),
         // Method7
-        MethodVarsTestValues("google.protobuf.Service.Method7",
+        MethodVarsTestValues("my.service.v1.Service.Method7",
                              "longrunning_metadata_type",
                              "google::protobuf::Method2Metadata"),
-        MethodVarsTestValues("google.protobuf.Service.Method7",
+        MethodVarsTestValues("my.service.v1.Service.Method7",
                              "longrunning_response_type",
-                             "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method7",
                              "longrunning_deduced_response_message_type",
-                             "google.protobuf.Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "my.service.v1.Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method7",
                              "longrunning_deduced_response_type",
-                             "google::protobuf::Bar"),
-        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method7",
                              "method_longrunning_deduced_return_doxygen_link",
-                             "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L17}"),
+                             "@googleapis_link{my::service::v1::Bar,google/"
+                             "foo/v1/service.proto#L18}"),
         // Method8
-        MethodVarsTestValues("google.protobuf.Service.Method8",
+        MethodVarsTestValues("my.service.v1.Service.Method8",
                              "method_signature0",
-                             "google::protobuf::Namespace const& namespace_, "),
-        MethodVarsTestValues("google.protobuf.Service.Method8",
+                             "my::service::v1::Namespace const& namespace_, "),
+        MethodVarsTestValues("my.service.v1.Service.Method8",
                              "method_request_setters0",
                              "  *request.mutable_namespace_() = namespace_;\n"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method8", "method_request_params",
+            "my.service.v1.Service.Method8", "method_request_params",
             "\"namespace.name=\", "
             "internal::UrlEncode(request.namespace_().name())"),
-        MethodVarsTestValues("google.protobuf.Service.Method8",
+        MethodVarsTestValues("my.service.v1.Service.Method8",
                              "request_resource", "request.namespace_()"),
         MethodVarsTestValues(
-            "google.protobuf.Service.Method8", "method_rest_path",
-            R"""(absl::StrCat("/", "v1", "/", request.namespace_().name()))"""),
+            "my.service.v1.Service.Method8", "method_rest_path",
+            R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.namespace_().name()))"""),
         // Method9
-        MethodVarsTestValues("google.protobuf.Service.Method9",
+        MethodVarsTestValues("my.service.v1.Service.Method9",
                              "method_http_query_parameters",
                              R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
         std::make_pair("page_token", request.page_token()),
         std::make_pair("name", request.name())}))"""),
         // Method11
-        MethodVarsTestValues("google.protobuf.Service.Method11",
+        MethodVarsTestValues("my.service.v1.Service.Method11",
                              "request_resource", "request.foo_resource()"),
         // IAM idempotency defaults
-        MethodVarsTestValues("google.protobuf.Service.GetIamPolicy",
+        MethodVarsTestValues("my.service.v1.Service.GetIamPolicy",
                              "idempotency", "kIdempotent"),
-        MethodVarsTestValues("google.protobuf.Service.TestIamPermissions",
+        MethodVarsTestValues("my.service.v1.Service.TestIamPermissions",
                              "idempotency", "kIdempotent")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');

@@ -43,6 +43,13 @@ rest_internal::RestRequest CreateRestRequest(
     std::string path,
     std::vector<std::pair<std::string, std::string>> query_params);
 
+inline std::string const& DetermineApiVersion(
+    std::string const& default_version, Options const& opts) {
+  return opts.has<rest_internal::TargetApiVersionOption>()
+             ? opts.get<rest_internal::TargetApiVersionOption>()
+             : default_version;
+}
+
 template <typename Response>
 StatusOr<Response> RestResponseToProto(RestResponse&& rest_response) {
   Response destination;

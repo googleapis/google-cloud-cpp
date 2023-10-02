@@ -324,11 +324,11 @@ Default$stub_rest_class_name$::Async$method_name$(
       $request_type$ const& request) {
   promise<StatusOr<$response_type$>> p;
   future<StatusOr<$response_type$>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
+  std::thread t{[](auto p, auto service, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  }, std::move(p), service_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -343,6 +343,7 @@ Default$stub_rest_class_name$::Async$method_name$(
 Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
+  auto const& opts = options_;
   return rest_internal::$method_http_verb$(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
@@ -354,6 +355,7 @@ StatusOr<$response_type$>
 Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
+  auto const& opts = options_;
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
@@ -375,11 +377,11 @@ Default$stub_rest_class_name$::Async$method_name$(
     $request_type$ const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
+  std::thread t{[](auto p, auto service, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  }, std::move(p), service_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -397,11 +399,11 @@ Default$stub_rest_class_name$::Async$method_name$(
     $request_type$ const& request) {
   promise<StatusOr<$response_type$>> p;
   future<StatusOr<$response_type$>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context) {
+  std::thread t{[](auto p, auto service, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p), service_, request, std::move(rest_context)};
+  }, std::move(p), service_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -423,11 +425,11 @@ Default$stub_rest_class_name$::AsyncGetOperation(
     $longrunning_get_operation_request_type$ const& request) {
   promise<StatusOr<$longrunning_response_type$>> p;
   future<StatusOr<$longrunning_response_type$>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::Get<$longrunning_response_type$>(
           *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
           $longrunning_get_operation_path$));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  }, std::move(p), operations_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -443,11 +445,11 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
     $longrunning_cancel_operation_request_type$ const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
+  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
           *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
           $longrunning_cancel_operation_path$));
-  }, std::move(p), operations_, request, std::move(rest_context)};
+  }, std::move(p), operations_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();

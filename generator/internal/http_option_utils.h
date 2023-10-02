@@ -103,6 +103,12 @@ std::string FormatRequestResource(
     absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
         parsed_http_info);
 
+/**
+ * Parses the package name of the method and returns its API version.
+ */
+StatusOr<std::string> FormatApiVersionFromPackageName(
+    google::protobuf::MethodDescriptor const& method);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
