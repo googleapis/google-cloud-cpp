@@ -70,11 +70,11 @@ def google_cloud_cpp_development_deps(name = None):
         http_archive,
         name = "com_github_zeux_pugixml",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
-            "https://github.com/zeux/pugixml/archive/v1.13.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.14.tar.gz",
+            "https://github.com/zeux/pugixml/archive/v1.14.tar.gz",
         ],
-        sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
-        strip_prefix = "pugixml-1.13",
+        sha256 = "610f98375424b5614754a6f34a491adbddaaec074e9044577d965160ec103d2e",
+        strip_prefix = "pugixml-1.14",
         build_file = Label("//bazel:pugixml.BUILD"),
     )
 
