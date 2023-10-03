@@ -72,7 +72,7 @@ DefaultRegionSslCertificatesRestStub::AsyncDeleteSslCertificate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -84,7 +84,7 @@ DefaultRegionSslCertificatesRestStub::GetSslCertificate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         GetSslCertificateRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -121,7 +121,7 @@ DefaultRegionSslCertificatesRestStub::AsyncInsertSslCertificate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -133,7 +133,7 @@ DefaultRegionSslCertificatesRestStub::ListRegionSslCertificates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         ListRegionSslCertificatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslCertificateList>(
       *service_, rest_context, request, false,
@@ -173,7 +173,7 @@ DefaultRegionSslCertificatesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -200,7 +200,7 @@ future<Status> DefaultRegionSslCertificatesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

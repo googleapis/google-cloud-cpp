@@ -49,7 +49,7 @@ DefaultRoutersRestStub::AggregatedListRouters(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::
         AggregatedListRoutersRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultRoutersRestStub::AsyncDeleteRouter(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -107,7 +107,7 @@ StatusOr<google::cloud::cpp::compute::v1::Router>
 DefaultRoutersRestStub::GetRouter(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -121,7 +121,7 @@ DefaultRoutersRestStub::GetNatIpInfo(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NatIpInfoResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -138,7 +138,7 @@ DefaultRoutersRestStub::GetNatMappingInfo(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
       *service_, rest_context, request, false,
@@ -162,7 +162,7 @@ DefaultRoutersRestStub::GetRouterStatus(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterStatusResponse>(
       *service_, rest_context, request, false,
@@ -198,7 +198,7 @@ DefaultRoutersRestStub::AsyncInsertRouter(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -210,7 +210,7 @@ DefaultRoutersRestStub::ListRouters(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -252,7 +252,7 @@ DefaultRoutersRestStub::AsyncPatchRouter(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -263,7 +263,7 @@ StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 DefaultRoutersRestStub::Preview(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request.router_resource(), false,
@@ -300,7 +300,7 @@ DefaultRoutersRestStub::AsyncUpdateRouter(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -330,7 +330,7 @@ DefaultRoutersRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -357,7 +357,7 @@ future<Status> DefaultRoutersRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -41,7 +41,7 @@ DefaultZonesRestStub::DefaultZonesRestStub(
 StatusOr<google::cloud::cpp::compute::v1::Zone> DefaultZonesRestStub::GetZone(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Zone>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -54,7 +54,7 @@ StatusOr<google::cloud::cpp::compute::v1::ZoneList>
 DefaultZonesRestStub::ListZones(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ZoneList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

@@ -49,7 +49,7 @@ DefaultVpnTunnelsRestStub::AggregatedListVpnTunnels(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_tunnels::v1::
         AggregatedListVpnTunnelsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultVpnTunnelsRestStub::AsyncDeleteVpnTunnel(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultVpnTunnelsRestStub::GetVpnTunnel(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnel>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -143,7 +143,7 @@ DefaultVpnTunnelsRestStub::AsyncInsertVpnTunnel(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -155,7 +155,7 @@ DefaultVpnTunnelsRestStub::ListVpnTunnels(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -199,7 +199,7 @@ DefaultVpnTunnelsRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -229,7 +229,7 @@ DefaultVpnTunnelsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -256,7 +256,7 @@ future<Status> DefaultVpnTunnelsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

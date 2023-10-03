@@ -49,7 +49,7 @@ DefaultInstanceAdminRestStub::ListInstanceConfigs(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
       *service_, rest_context, request, false,
@@ -65,7 +65,7 @@ DefaultInstanceAdminRestStub::GetInstanceConfig(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::spanner::admin::instance::v1::InstanceConfig>(
       *service_, rest_context, request, false,
@@ -97,7 +97,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstanceConfig(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -125,7 +125,7 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstanceConfig(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -136,7 +136,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -153,7 +153,7 @@ DefaultInstanceAdminRestStub::ListInstanceConfigOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::spanner::admin::instance::v1::
                                 ListInstanceConfigOperationsResponse>(
       *service_, rest_context, request, false,
@@ -169,7 +169,7 @@ StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 DefaultInstanceAdminRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::spanner::admin::instance::v1::ListInstancesResponse>(
       *service_, rest_context, request, false,
@@ -185,7 +185,7 @@ StatusOr<google::spanner::admin::instance::v1::Instance>
 DefaultInstanceAdminRestStub::GetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::spanner::admin::instance::v1::Instance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -213,7 +213,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -239,7 +239,7 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -250,7 +250,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -260,7 +260,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstance(
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -270,7 +270,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::SetIamPolicy(
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -281,7 +281,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultInstanceAdminRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -306,7 +306,7 @@ DefaultInstanceAdminRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -330,7 +330,7 @@ future<Status> DefaultInstanceAdminRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

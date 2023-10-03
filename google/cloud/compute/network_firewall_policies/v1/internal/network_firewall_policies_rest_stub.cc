@@ -76,7 +76,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncAddAssociation(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -114,7 +114,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncAddRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -149,7 +149,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncCloneRules(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -182,7 +182,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncDeleteFirewallPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -194,7 +194,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetFirewallPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetFirewallPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -208,7 +208,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetAssociation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetAssociationRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
       *service_, rest_context, request, false,
@@ -226,7 +226,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -243,7 +243,7 @@ DefaultNetworkFirewallPoliciesRestStub::GetRule(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         GetRuleRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyRule>(
       *service_, rest_context, request, false,
@@ -281,7 +281,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncInsertFirewallPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -293,7 +293,7 @@ DefaultNetworkFirewallPoliciesRestStub::ListNetworkFirewallPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         ListNetworkFirewallPoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::FirewallPolicyList>(
       *service_, rest_context, request, false,
@@ -337,7 +337,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncPatchFirewallPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -373,7 +373,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncPatchRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -408,7 +408,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveAssociation(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -443,7 +443,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -455,7 +455,7 @@ DefaultNetworkFirewallPoliciesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -470,7 +470,7 @@ DefaultNetworkFirewallPoliciesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_firewall_policies::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -505,7 +505,7 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -532,7 +532,7 @@ future<Status> DefaultNetworkFirewallPoliciesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

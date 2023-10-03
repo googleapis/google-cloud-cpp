@@ -49,7 +49,7 @@ DefaultReservationsRestStub::AggregatedListReservations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::reservations::v1::
         AggregatedListReservationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ReservationAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultReservationsRestStub::AsyncDeleteReservation(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultReservationsRestStub::GetReservation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Reservation>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -122,7 +122,7 @@ DefaultReservationsRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -160,7 +160,7 @@ DefaultReservationsRestStub::AsyncInsertReservation(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -172,7 +172,7 @@ DefaultReservationsRestStub::ListReservations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::reservations::v1::
         ListReservationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ReservationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -215,7 +215,7 @@ DefaultReservationsRestStub::AsyncResize(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -227,7 +227,7 @@ DefaultReservationsRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -243,7 +243,7 @@ DefaultReservationsRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::reservations::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -283,7 +283,7 @@ DefaultReservationsRestStub::AsyncUpdateReservation(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -313,7 +313,7 @@ DefaultReservationsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -340,7 +340,7 @@ future<Status> DefaultReservationsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -43,7 +43,7 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlOperationsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -55,7 +55,7 @@ StatusOr<google::cloud::sql::v1::OperationsListResponse>
 DefaultSqlOperationsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::OperationsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
@@ -69,7 +69,7 @@ DefaultSqlOperationsServiceRestStub::List(
 Status DefaultSqlOperationsServiceRestStub::Cancel(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",

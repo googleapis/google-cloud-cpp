@@ -50,7 +50,7 @@ DefaultNetworkAttachmentsRestStub::AggregatedListNetworkAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
         AggregatedListNetworkAttachmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>(
       *service_, rest_context, request, false,
@@ -98,7 +98,7 @@ DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultNetworkAttachmentsRestStub::GetNetworkAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
         GetNetworkAttachmentRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkAttachment>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -125,7 +125,7 @@ DefaultNetworkAttachmentsRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -165,7 +165,7 @@ DefaultNetworkAttachmentsRestStub::AsyncInsertNetworkAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -177,7 +177,7 @@ DefaultNetworkAttachmentsRestStub::ListNetworkAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
         ListNetworkAttachmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkAttachmentList>(
       *service_, rest_context, request, false,
@@ -199,7 +199,7 @@ DefaultNetworkAttachmentsRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -215,7 +215,7 @@ DefaultNetworkAttachmentsRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_attachments::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -250,7 +250,7 @@ DefaultNetworkAttachmentsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -277,7 +277,7 @@ future<Status> DefaultNetworkAttachmentsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

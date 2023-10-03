@@ -43,7 +43,7 @@ DefaultMachineTypesRestStub::AggregatedListMachineTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_types::v1::
         AggregatedListMachineTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::MachineTypeAggregatedList>(
       *service_, rest_context, request, false,
@@ -69,7 +69,7 @@ DefaultMachineTypesRestStub::GetMachineType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineType>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -83,7 +83,7 @@ DefaultMachineTypesRestStub::ListMachineTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_types::v1::
         ListMachineTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

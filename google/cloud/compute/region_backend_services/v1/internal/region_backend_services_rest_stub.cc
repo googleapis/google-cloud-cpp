@@ -72,7 +72,7 @@ DefaultRegionBackendServicesRestStub::AsyncDeleteBackendService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -84,7 +84,7 @@ DefaultRegionBackendServicesRestStub::GetBackendService(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
         GetBackendServiceRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -99,7 +99,7 @@ DefaultRegionBackendServicesRestStub::GetHealth(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
         GetHealthRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request.resource_group_reference_resource(),
@@ -116,7 +116,7 @@ DefaultRegionBackendServicesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -156,7 +156,7 @@ DefaultRegionBackendServicesRestStub::AsyncInsertBackendService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -168,7 +168,7 @@ DefaultRegionBackendServicesRestStub::ListRegionBackendServices(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
         ListRegionBackendServicesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::BackendServiceList>(
       *service_, rest_context, request, false,
@@ -212,7 +212,7 @@ DefaultRegionBackendServicesRestStub::AsyncPatchBackendService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -224,7 +224,7 @@ DefaultRegionBackendServicesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_backend_services::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -263,7 +263,7 @@ DefaultRegionBackendServicesRestStub::AsyncSetSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -297,7 +297,7 @@ DefaultRegionBackendServicesRestStub::AsyncUpdateBackendService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -327,7 +327,7 @@ DefaultRegionBackendServicesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -354,7 +354,7 @@ future<Status> DefaultRegionBackendServicesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -42,7 +42,7 @@ StatusOr<google::cloud::sql::v1::TiersListResponse>
 DefaultSqlTiersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlTiersListRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::TiersListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",

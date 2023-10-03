@@ -74,7 +74,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncAddRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -120,7 +120,7 @@ DefaultRegionSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
         GetSecurityPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -135,7 +135,7 @@ DefaultRegionSecurityPoliciesRestStub::GetRule(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
         GetRuleRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyRule>(
       *service_, rest_context, request, false,
@@ -177,7 +177,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -189,7 +189,7 @@ DefaultRegionSecurityPoliciesRestStub::ListRegionSecurityPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_security_policies::v1::
         ListRegionSecurityPoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
       *service_, rest_context, request, false,
@@ -234,7 +234,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -272,7 +272,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -306,7 +306,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -336,7 +336,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -363,7 +363,7 @@ future<Status> DefaultRegionSecurityPoliciesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

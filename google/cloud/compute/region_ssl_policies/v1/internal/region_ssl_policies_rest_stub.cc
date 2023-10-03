@@ -71,7 +71,7 @@ DefaultRegionSslPoliciesRestStub::AsyncDeleteSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -83,7 +83,7 @@ DefaultRegionSslPoliciesRestStub::GetSslPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         GetSslPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -118,7 +118,7 @@ DefaultRegionSslPoliciesRestStub::AsyncInsertSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -130,7 +130,7 @@ DefaultRegionSslPoliciesRestStub::ListRegionSslPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         ListRegionSslPoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -152,7 +152,7 @@ DefaultRegionSslPoliciesRestStub::ListAvailableFeatures(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         ListAvailableFeaturesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request, false,
@@ -195,7 +195,7 @@ DefaultRegionSslPoliciesRestStub::AsyncPatchSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -225,7 +225,7 @@ DefaultRegionSslPoliciesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -252,7 +252,7 @@ future<Status> DefaultRegionSslPoliciesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

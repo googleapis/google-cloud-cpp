@@ -43,7 +43,7 @@ DefaultLicenseCodesRestStub::GetLicenseCode(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -57,7 +57,7 @@ DefaultLicenseCodesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::license_codes::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

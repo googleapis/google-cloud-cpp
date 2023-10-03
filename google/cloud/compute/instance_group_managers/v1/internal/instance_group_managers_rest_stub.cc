@@ -76,7 +76,7 @@ DefaultInstanceGroupManagersRestStub::AsyncAbandonInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -88,7 +88,7 @@ DefaultInstanceGroupManagersRestStub::AggregatedListInstanceGroupManagers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
         AggregatedListInstanceGroupManagersRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>(
       *service_, rest_context, request, false,
@@ -138,7 +138,7 @@ DefaultInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -174,7 +174,7 @@ DefaultInstanceGroupManagersRestStub::AsyncCreateInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -208,7 +208,7 @@ DefaultInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -244,7 +244,7 @@ DefaultInstanceGroupManagersRestStub::AsyncDeleteInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -279,7 +279,7 @@ DefaultInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -291,7 +291,7 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -329,7 +329,7 @@ DefaultInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -341,7 +341,7 @@ DefaultInstanceGroupManagersRestStub::ListInstanceGroupManagers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListInstanceGroupManagersRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerList>(
       *service_, rest_context, request, false,
@@ -364,7 +364,7 @@ DefaultInstanceGroupManagersRestStub::ListErrors(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListErrorsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request, false,
@@ -388,7 +388,7 @@ DefaultInstanceGroupManagersRestStub::ListManagedInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListManagedInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersListManagedInstancesResponse>(
@@ -413,7 +413,7 @@ DefaultInstanceGroupManagersRestStub::ListPerInstanceConfigs(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListPerInstanceConfigsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersListPerInstanceConfigsResp>(
@@ -460,7 +460,7 @@ DefaultInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -497,7 +497,7 @@ DefaultInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -534,7 +534,7 @@ DefaultInstanceGroupManagersRestStub::AsyncRecreateInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -569,7 +569,7 @@ DefaultInstanceGroupManagersRestStub::AsyncResize(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -606,7 +606,7 @@ DefaultInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -642,7 +642,7 @@ DefaultInstanceGroupManagersRestStub::AsyncSetTargetPools(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -679,7 +679,7 @@ DefaultInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -709,7 +709,7 @@ DefaultInstanceGroupManagersRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -736,7 +736,7 @@ future<Status> DefaultInstanceGroupManagersRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

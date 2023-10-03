@@ -50,7 +50,7 @@ DefaultPacketMirroringsRestStub::AggregatedListPacketMirrorings(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         AggregatedListPacketMirroringsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>(
       *service_, rest_context, request, false,
@@ -98,7 +98,7 @@ DefaultPacketMirroringsRestStub::AsyncDeletePacketMirroring(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultPacketMirroringsRestStub::GetPacketMirroring(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         GetPacketMirroringRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroring>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -147,7 +147,7 @@ DefaultPacketMirroringsRestStub::AsyncInsertPacketMirroring(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -159,7 +159,7 @@ DefaultPacketMirroringsRestStub::ListPacketMirrorings(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         ListPacketMirroringsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PacketMirroringList>(
       *service_, rest_context, request, false,
@@ -204,7 +204,7 @@ DefaultPacketMirroringsRestStub::AsyncPatchPacketMirroring(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -216,7 +216,7 @@ DefaultPacketMirroringsRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -251,7 +251,7 @@ DefaultPacketMirroringsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -278,7 +278,7 @@ future<Status> DefaultPacketMirroringsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

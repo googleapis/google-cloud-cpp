@@ -70,7 +70,7 @@ DefaultRegionUrlMapsRestStub::AsyncDeleteUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -82,7 +82,7 @@ DefaultRegionUrlMapsRestStub::GetUrlMap(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -116,7 +116,7 @@ DefaultRegionUrlMapsRestStub::AsyncInsertUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -128,7 +128,7 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_url_maps::v1::
         ListRegionUrlMapsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -170,7 +170,7 @@ DefaultRegionUrlMapsRestStub::AsyncPatchUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -203,7 +203,7 @@ DefaultRegionUrlMapsRestStub::AsyncUpdateUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -215,7 +215,7 @@ DefaultRegionUrlMapsRestStub::Validate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context,
@@ -250,7 +250,7 @@ DefaultRegionUrlMapsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -277,7 +277,7 @@ future<Status> DefaultRegionUrlMapsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

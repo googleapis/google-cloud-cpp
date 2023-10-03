@@ -70,7 +70,7 @@ DefaultMachineImagesRestStub::AsyncDeleteMachineImage(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -82,7 +82,7 @@ DefaultMachineImagesRestStub::GetMachineImage(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::
         GetMachineImageRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImage>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -96,7 +96,7 @@ DefaultMachineImagesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -136,7 +136,7 @@ DefaultMachineImagesRestStub::AsyncInsertMachineImage(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -148,7 +148,7 @@ DefaultMachineImagesRestStub::ListMachineImages(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::
         ListMachineImagesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImageList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -169,7 +169,7 @@ DefaultMachineImagesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -184,7 +184,7 @@ DefaultMachineImagesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::machine_images::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -218,7 +218,7 @@ DefaultMachineImagesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -245,7 +245,7 @@ future<Status> DefaultMachineImagesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

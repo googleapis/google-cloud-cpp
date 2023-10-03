@@ -49,7 +49,7 @@ DefaultHealthChecksRestStub::AggregatedListHealthChecks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::health_checks::v1::
         AggregatedListHealthChecksRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthChecksAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultHealthChecksRestStub::AsyncDeleteHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultHealthChecksRestStub::GetHealthCheck(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -142,7 +142,7 @@ DefaultHealthChecksRestStub::AsyncInsertHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -154,7 +154,7 @@ DefaultHealthChecksRestStub::ListHealthChecks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::health_checks::v1::
         ListHealthChecksRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheckList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -196,7 +196,7 @@ DefaultHealthChecksRestStub::AsyncPatchHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -229,7 +229,7 @@ DefaultHealthChecksRestStub::AsyncUpdateHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -259,7 +259,7 @@ DefaultHealthChecksRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -286,7 +286,7 @@ future<Status> DefaultHealthChecksRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

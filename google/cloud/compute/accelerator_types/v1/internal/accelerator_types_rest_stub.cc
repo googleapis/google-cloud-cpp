@@ -44,7 +44,7 @@ DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::accelerator_types::v1::
         AggregatedListAcceleratorTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>(
       *service_, rest_context, request, false,
@@ -70,7 +70,7 @@ DefaultAcceleratorTypesRestStub::GetAcceleratorType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::accelerator_types::v1::
         GetAcceleratorTypeRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -85,7 +85,7 @@ DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::accelerator_types::v1::
         ListAcceleratorTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AcceleratorTypeList>(
       *service_, rest_context, request, false,

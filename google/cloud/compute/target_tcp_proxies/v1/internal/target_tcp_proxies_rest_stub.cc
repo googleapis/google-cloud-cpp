@@ -50,7 +50,7 @@ DefaultTargetTcpProxiesRestStub::AggregatedListTargetTcpProxies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         AggregatedListTargetTcpProxiesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>(
       *service_, rest_context, request, false,
@@ -97,7 +97,7 @@ DefaultTargetTcpProxiesRestStub::AsyncDeleteTargetTcpProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -109,7 +109,7 @@ DefaultTargetTcpProxiesRestStub::GetTargetTcpProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         GetTargetTcpProxyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetTcpProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -144,7 +144,7 @@ DefaultTargetTcpProxiesRestStub::AsyncInsertTargetTcpProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -156,7 +156,7 @@ DefaultTargetTcpProxiesRestStub::ListTargetTcpProxies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         ListTargetTcpProxiesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetTcpProxyList>(
       *service_, rest_context, request, false,
@@ -203,7 +203,7 @@ DefaultTargetTcpProxiesRestStub::AsyncSetBackendService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -238,7 +238,7 @@ DefaultTargetTcpProxiesRestStub::AsyncSetProxyHeader(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -268,7 +268,7 @@ DefaultTargetTcpProxiesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -295,7 +295,7 @@ future<Status> DefaultTargetTcpProxiesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

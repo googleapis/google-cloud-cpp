@@ -49,7 +49,7 @@ DefaultSslPoliciesRestStub::AggregatedListSslPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_policies::v1::
         AggregatedListSslPoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultSslPoliciesRestStub::AsyncDeleteSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultSslPoliciesRestStub::GetSslPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -142,7 +142,7 @@ DefaultSslPoliciesRestStub::AsyncInsertSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -154,7 +154,7 @@ DefaultSslPoliciesRestStub::ListSslPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -176,7 +176,7 @@ DefaultSslPoliciesRestStub::ListAvailableFeatures(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_policies::v1::
         ListAvailableFeaturesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request, false,
@@ -219,7 +219,7 @@ DefaultSslPoliciesRestStub::AsyncPatchSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -249,7 +249,7 @@ DefaultSslPoliciesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -276,7 +276,7 @@ future<Status> DefaultSslPoliciesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

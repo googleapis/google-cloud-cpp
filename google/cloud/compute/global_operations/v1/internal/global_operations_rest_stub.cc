@@ -44,7 +44,7 @@ DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         AggregatedListGlobalOperationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::OperationAggregatedList>(
       *service_, rest_context, request, false,
@@ -69,7 +69,7 @@ Status DefaultGlobalOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -83,7 +83,7 @@ DefaultGlobalOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -97,7 +97,7 @@ DefaultGlobalOperationsRestStub::ListGlobalOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         ListGlobalOperationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -118,7 +118,7 @@ DefaultGlobalOperationsRestStub::Wait(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

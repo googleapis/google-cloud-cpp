@@ -49,7 +49,7 @@ DefaultSslCertificatesRestStub::AggregatedListSslCertificates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
         AggregatedListSslCertificatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslCertificateAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultSslCertificatesRestStub::AsyncDeleteSslCertificate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultSslCertificatesRestStub::GetSslCertificate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
         GetSslCertificateRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -143,7 +143,7 @@ DefaultSslCertificatesRestStub::AsyncInsertSslCertificate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -155,7 +155,7 @@ DefaultSslCertificatesRestStub::ListSslCertificates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::ssl_certificates::v1::
         ListSslCertificatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslCertificateList>(
       *service_, rest_context, request, false,
@@ -195,7 +195,7 @@ DefaultSslCertificatesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -222,7 +222,7 @@ future<Status> DefaultSslCertificatesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

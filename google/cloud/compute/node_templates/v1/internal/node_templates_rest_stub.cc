@@ -49,7 +49,7 @@ DefaultNodeTemplatesRestStub::AggregatedListNodeTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         AggregatedListNodeTemplatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultNodeTemplatesRestStub::AsyncDeleteNodeTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultNodeTemplatesRestStub::GetNodeTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         GetNodeTemplateRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -123,7 +123,7 @@ DefaultNodeTemplatesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -163,7 +163,7 @@ DefaultNodeTemplatesRestStub::AsyncInsertNodeTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -175,7 +175,7 @@ DefaultNodeTemplatesRestStub::ListNodeTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         ListNodeTemplatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplateList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -196,7 +196,7 @@ DefaultNodeTemplatesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -212,7 +212,7 @@ DefaultNodeTemplatesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -247,7 +247,7 @@ DefaultNodeTemplatesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -274,7 +274,7 @@ future<Status> DefaultNodeTemplatesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

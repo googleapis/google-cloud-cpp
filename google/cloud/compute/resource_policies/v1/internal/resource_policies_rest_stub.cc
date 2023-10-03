@@ -50,7 +50,7 @@ DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
         AggregatedListResourcePoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>(
       *service_, rest_context, request, false,
@@ -98,7 +98,7 @@ DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultResourcePoliciesRestStub::GetResourcePolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
         GetResourcePolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -125,7 +125,7 @@ DefaultResourcePoliciesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -165,7 +165,7 @@ DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -177,7 +177,7 @@ DefaultResourcePoliciesRestStub::ListResourcePolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
         ListResourcePoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyList>(
       *service_, rest_context, request, false,
@@ -223,7 +223,7 @@ DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -235,7 +235,7 @@ DefaultResourcePoliciesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -251,7 +251,7 @@ DefaultResourcePoliciesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::resource_policies::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -286,7 +286,7 @@ DefaultResourcePoliciesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -313,7 +313,7 @@ future<Status> DefaultResourcePoliciesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

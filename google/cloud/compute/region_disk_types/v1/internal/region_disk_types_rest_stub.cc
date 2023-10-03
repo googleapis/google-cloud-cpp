@@ -43,7 +43,7 @@ DefaultRegionDiskTypesRestStub::GetDiskType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_disk_types::v1::
         GetDiskTypeRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -57,7 +57,7 @@ DefaultRegionDiskTypesRestStub::ListRegionDiskTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_disk_types::v1::
         ListRegionDiskTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionDiskTypeList>(
       *service_, rest_context, request, false,

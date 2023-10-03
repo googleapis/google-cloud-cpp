@@ -77,7 +77,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncAbandonInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -112,7 +112,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -149,7 +149,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncCreateInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -183,7 +183,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -220,7 +220,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeleteInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -255,7 +255,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -267,7 +267,7 @@ DefaultRegionInstanceGroupManagersRestStub::GetInstanceGroupManager(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -305,7 +305,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -317,7 +317,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListRegionInstanceGroupManagersRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupManagerList>(
       *service_, rest_context, request, false,
@@ -340,7 +340,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListErrorsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 RegionInstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request, false,
@@ -364,7 +364,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListManagedInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstancesResponse>(
@@ -389,7 +389,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListPerInstanceConfigsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstanceConfigsResp>(
@@ -436,7 +436,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -473,7 +473,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -510,7 +510,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncRecreateInstances(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -545,7 +545,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncResize(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -582,7 +582,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -619,7 +619,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncSetTargetPools(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -656,7 +656,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -686,7 +686,7 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -713,7 +713,7 @@ future<Status> DefaultRegionInstanceGroupManagersRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

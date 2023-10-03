@@ -49,7 +49,7 @@ DefaultForwardingRulesRestStub::AggregatedListForwardingRules(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::forwarding_rules::v1::
         AggregatedListForwardingRulesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultForwardingRulesRestStub::GetForwardingRule(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::forwarding_rules::v1::
         GetForwardingRuleRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -145,7 +145,7 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -157,7 +157,7 @@ DefaultForwardingRulesRestStub::ListForwardingRules(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::forwarding_rules::v1::
         ListForwardingRulesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleList>(
       *service_, rest_context, request, false,
@@ -201,7 +201,7 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -236,7 +236,7 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -271,7 +271,7 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -301,7 +301,7 @@ DefaultForwardingRulesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -328,7 +328,7 @@ future<Status> DefaultForwardingRulesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

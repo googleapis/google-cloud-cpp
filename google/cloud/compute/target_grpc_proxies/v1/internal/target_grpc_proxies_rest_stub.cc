@@ -71,7 +71,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -83,7 +83,7 @@ DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         GetTargetGrpcProxyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetGrpcProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -118,7 +118,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncInsertTargetGrpcProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -130,7 +130,7 @@ DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         ListTargetGrpcProxiesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetGrpcProxyList>(
       *service_, rest_context, request, false,
@@ -174,7 +174,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncPatchTargetGrpcProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -204,7 +204,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -231,7 +231,7 @@ future<Status> DefaultTargetGrpcProxiesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

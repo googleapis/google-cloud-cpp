@@ -49,7 +49,7 @@ DefaultVpnGatewaysRestStub::AggregatedListVpnGateways(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::
         AggregatedListVpnGatewaysRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateway(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultVpnGatewaysRestStub::GetVpnGateway(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGateway>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -122,7 +122,7 @@ DefaultVpnGatewaysRestStub::GetStatus(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::GetStatusRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>(
       *service_, rest_context, request, false,
@@ -159,7 +159,7 @@ DefaultVpnGatewaysRestStub::AsyncInsertVpnGateway(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -171,7 +171,7 @@ DefaultVpnGatewaysRestStub::ListVpnGateways(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnGatewayList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -215,7 +215,7 @@ DefaultVpnGatewaysRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -227,7 +227,7 @@ DefaultVpnGatewaysRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::vpn_gateways::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -262,7 +262,7 @@ DefaultVpnGatewaysRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -289,7 +289,7 @@ future<Status> DefaultVpnGatewaysRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

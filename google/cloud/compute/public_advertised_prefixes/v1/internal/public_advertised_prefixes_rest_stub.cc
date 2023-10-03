@@ -73,7 +73,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefix(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -85,7 +85,7 @@ DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefix(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         GetPublicAdvertisedPrefixRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>(
       *service_, rest_context, request, false,
@@ -121,7 +121,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncInsertPublicAdvertisedPrefix(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -133,7 +133,7 @@ DefaultPublicAdvertisedPrefixesRestStub::ListPublicAdvertisedPrefixes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         ListPublicAdvertisedPrefixesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>(
       *service_, rest_context, request, false,
@@ -177,7 +177,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncPatchPublicAdvertisedPrefix(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -207,7 +207,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -234,7 +234,7 @@ future<Status> DefaultPublicAdvertisedPrefixesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

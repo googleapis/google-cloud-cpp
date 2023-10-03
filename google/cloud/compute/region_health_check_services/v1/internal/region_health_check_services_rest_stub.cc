@@ -74,7 +74,7 @@ DefaultRegionHealthCheckServicesRestStub::AsyncDeleteHealthCheckService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -86,7 +86,7 @@ DefaultRegionHealthCheckServicesRestStub::GetHealthCheckService(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
         GetHealthCheckServiceRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthCheckService>(
       *service_, rest_context, request, false,
@@ -124,7 +124,7 @@ DefaultRegionHealthCheckServicesRestStub::AsyncInsertHealthCheckService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -136,7 +136,7 @@ DefaultRegionHealthCheckServicesRestStub::ListRegionHealthCheckServices(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_health_check_services::v1::
         ListRegionHealthCheckServicesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HealthCheckServicesList>(
       *service_, rest_context, request, false,
@@ -181,7 +181,7 @@ DefaultRegionHealthCheckServicesRestStub::AsyncPatchHealthCheckService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -211,7 +211,7 @@ DefaultRegionHealthCheckServicesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -238,7 +238,7 @@ future<Status> DefaultRegionHealthCheckServicesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

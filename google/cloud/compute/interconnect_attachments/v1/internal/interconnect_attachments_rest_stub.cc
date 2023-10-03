@@ -51,7 +51,7 @@ DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         AggregatedListInterconnectAttachmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>(
       *service_, rest_context, request, false,
@@ -99,7 +99,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -111,7 +111,7 @@ DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         GetInterconnectAttachmentRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(
       *service_, rest_context, request, false,
@@ -151,7 +151,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -163,7 +163,7 @@ DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         ListInterconnectAttachmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentList>(
       *service_, rest_context, request, false,
@@ -208,7 +208,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -243,7 +243,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -273,7 +273,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -300,7 +300,7 @@ future<Status> DefaultInterconnectAttachmentsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

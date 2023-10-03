@@ -54,7 +54,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
         google::cloud::rest_internal::RestContext& rest_context,
         google::cloud::cpp::compute::network_edge_security_services::v1::
             AggregatedListNetworkEdgeSecurityServicesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 NetworkEdgeSecurityServiceAggregatedList>(
       *service_, rest_context, request, false,
@@ -103,7 +103,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -115,7 +115,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityService(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         GetNetworkEdgeSecurityServiceRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>(
       *service_, rest_context, request, false,
@@ -156,7 +156,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -194,7 +194,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -224,7 +224,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -251,7 +251,7 @@ future<Status> DefaultNetworkEdgeSecurityServicesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -50,7 +50,7 @@ DefaultServiceAttachmentsRestStub::AggregatedListServiceAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
         AggregatedListServiceAttachmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>(
       *service_, rest_context, request, false,
@@ -98,7 +98,7 @@ DefaultServiceAttachmentsRestStub::AsyncDeleteServiceAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultServiceAttachmentsRestStub::GetServiceAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
         GetServiceAttachmentRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachment>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -125,7 +125,7 @@ DefaultServiceAttachmentsRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -165,7 +165,7 @@ DefaultServiceAttachmentsRestStub::AsyncInsertServiceAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -177,7 +177,7 @@ DefaultServiceAttachmentsRestStub::ListServiceAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
         ListServiceAttachmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ServiceAttachmentList>(
       *service_, rest_context, request, false,
@@ -222,7 +222,7 @@ DefaultServiceAttachmentsRestStub::AsyncPatchServiceAttachment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -234,7 +234,7 @@ DefaultServiceAttachmentsRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -250,7 +250,7 @@ DefaultServiceAttachmentsRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::service_attachments::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -285,7 +285,7 @@ DefaultServiceAttachmentsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -312,7 +312,7 @@ future<Status> DefaultServiceAttachmentsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

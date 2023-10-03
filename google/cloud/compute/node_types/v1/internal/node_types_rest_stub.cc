@@ -43,7 +43,7 @@ DefaultNodeTypesRestStub::AggregatedListNodeTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_types::v1::
         AggregatedListNodeTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTypeAggregatedList>(
       *service_, rest_context, request, false,
@@ -69,7 +69,7 @@ DefaultNodeTypesRestStub::GetNodeType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -83,7 +83,7 @@ DefaultNodeTypesRestStub::ListNodeTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

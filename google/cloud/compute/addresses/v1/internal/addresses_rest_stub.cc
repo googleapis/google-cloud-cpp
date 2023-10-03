@@ -49,7 +49,7 @@ DefaultAddressesRestStub::AggregatedListAddresses(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::addresses::v1::
         AggregatedListAddressesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AddressAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultAddressesRestStub::AsyncDeleteAddress(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultAddressesRestStub::GetAddress(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -143,7 +143,7 @@ DefaultAddressesRestStub::AsyncInsertAddress(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -155,7 +155,7 @@ DefaultAddressesRestStub::ListAddresses(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::AddressList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -197,7 +197,7 @@ DefaultAddressesRestStub::AsyncMove(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -231,7 +231,7 @@ DefaultAddressesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -261,7 +261,7 @@ DefaultAddressesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -288,7 +288,7 @@ future<Status> DefaultAddressesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -73,7 +73,7 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -109,7 +109,7 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -121,7 +121,7 @@ DefaultInstancesRestStub::AggregatedListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::
         AggregatedListInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceAggregatedList>(
       *service_, rest_context, request, false,
@@ -171,7 +171,7 @@ DefaultInstancesRestStub::AsyncAttachDisk(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -205,7 +205,7 @@ DefaultInstancesRestStub::AsyncBulkInsert(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -238,7 +238,7 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -275,7 +275,7 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -309,7 +309,7 @@ DefaultInstancesRestStub::AsyncDetachDisk(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -321,7 +321,7 @@ DefaultInstancesRestStub::GetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Instance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -336,7 +336,7 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::
         GetEffectiveFirewallsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
       *service_, rest_context, request, false,
@@ -354,7 +354,7 @@ DefaultInstancesRestStub::GetGuestAttributes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::GuestAttributes>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -372,7 +372,7 @@ DefaultInstancesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -390,7 +390,7 @@ DefaultInstancesRestStub::GetScreenshot(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Screenshot>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -405,7 +405,7 @@ DefaultInstancesRestStub::GetSerialPortOutput(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::
         GetSerialPortOutputRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SerialPortOutput>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -423,7 +423,7 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::
         GetShieldedInstanceIdentityRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
       *service_, rest_context, request, false,
@@ -463,7 +463,7 @@ DefaultInstancesRestStub::AsyncInsertInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -475,7 +475,7 @@ DefaultInstancesRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -496,7 +496,7 @@ DefaultInstancesRestStub::ListReferrers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceListReferrers>(
       *service_, rest_context, request, false,
@@ -543,7 +543,7 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -575,7 +575,7 @@ DefaultInstancesRestStub::AsyncReset(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -607,7 +607,7 @@ DefaultInstancesRestStub::AsyncResume(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -618,7 +618,7 @@ Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::
         SendDiagnosticInterruptRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -657,7 +657,7 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -693,7 +693,7 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -705,7 +705,7 @@ DefaultInstancesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -743,7 +743,7 @@ DefaultInstancesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -779,7 +779,7 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -813,7 +813,7 @@ DefaultInstancesRestStub::AsyncSetMachineType(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -846,7 +846,7 @@ DefaultInstancesRestStub::AsyncSetMetadata(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -881,7 +881,7 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -914,7 +914,7 @@ DefaultInstancesRestStub::AsyncSetName(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -947,7 +947,7 @@ DefaultInstancesRestStub::AsyncSetScheduling(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -981,7 +981,7 @@ DefaultInstancesRestStub::AsyncSetSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1015,7 +1015,7 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1050,7 +1050,7 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1082,7 +1082,7 @@ DefaultInstancesRestStub::AsyncSetTags(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1116,7 +1116,7 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1148,7 +1148,7 @@ DefaultInstancesRestStub::AsyncStart(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1184,7 +1184,7 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1218,7 +1218,7 @@ DefaultInstancesRestStub::AsyncStop(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1252,7 +1252,7 @@ DefaultInstancesRestStub::AsyncSuspend(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1264,7 +1264,7 @@ DefaultInstancesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -1305,7 +1305,7 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1342,7 +1342,7 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1377,7 +1377,7 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1414,7 +1414,7 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1449,7 +1449,7 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1479,7 +1479,7 @@ DefaultInstancesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -1506,7 +1506,7 @@ future<Status> DefaultInstancesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

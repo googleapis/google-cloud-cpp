@@ -50,7 +50,7 @@ DefaultRegionCommitmentsRestStub::AggregatedListRegionCommitments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
         AggregatedListRegionCommitmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
       *service_, rest_context, request, false,
@@ -76,7 +76,7 @@ DefaultRegionCommitmentsRestStub::GetCommitment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
         GetCommitmentRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -111,7 +111,7 @@ DefaultRegionCommitmentsRestStub::AsyncInsertCommitment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -123,7 +123,7 @@ DefaultRegionCommitmentsRestStub::ListRegionCommitments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_commitments::v1::
         ListRegionCommitmentsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -167,7 +167,7 @@ DefaultRegionCommitmentsRestStub::AsyncUpdateCommitment(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -197,7 +197,7 @@ DefaultRegionCommitmentsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -224,7 +224,7 @@ future<Status> DefaultRegionCommitmentsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

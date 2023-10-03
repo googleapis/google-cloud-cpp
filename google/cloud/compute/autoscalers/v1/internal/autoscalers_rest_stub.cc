@@ -49,7 +49,7 @@ DefaultAutoscalersRestStub::AggregatedListAutoscalers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::autoscalers::v1::
         AggregatedListAutoscalersRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::AutoscalerAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultAutoscalersRestStub::AsyncDeleteAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultAutoscalersRestStub::GetAutoscaler(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -142,7 +142,7 @@ DefaultAutoscalersRestStub::AsyncInsertAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -154,7 +154,7 @@ DefaultAutoscalersRestStub::ListAutoscalers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::AutoscalerList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -196,7 +196,7 @@ DefaultAutoscalersRestStub::AsyncPatchAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -229,7 +229,7 @@ DefaultAutoscalersRestStub::AsyncUpdateAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -259,7 +259,7 @@ DefaultAutoscalersRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -286,7 +286,7 @@ future<Status> DefaultAutoscalersRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -50,7 +50,7 @@ DefaultTargetVpnGatewaysRestStub::AggregatedListTargetVpnGateways(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         AggregatedListTargetVpnGatewaysRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>(
       *service_, rest_context, request, false,
@@ -98,7 +98,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncDeleteTargetVpnGateway(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultTargetVpnGatewaysRestStub::GetTargetVpnGateway(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         GetTargetVpnGatewayRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGateway>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -147,7 +147,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncInsertTargetVpnGateway(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -159,7 +159,7 @@ DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         ListTargetVpnGatewaysRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayList>(
       *service_, rest_context, request, false,
@@ -204,7 +204,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -234,7 +234,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -261,7 +261,7 @@ future<Status> DefaultTargetVpnGatewaysRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

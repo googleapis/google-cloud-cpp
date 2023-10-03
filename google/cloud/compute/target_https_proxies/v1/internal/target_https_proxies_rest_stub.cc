@@ -51,7 +51,7 @@ DefaultTargetHttpsProxiesRestStub::AggregatedListTargetHttpsProxies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_https_proxies::v1::
         AggregatedListTargetHttpsProxiesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyAggregatedList>(
       *service_, rest_context, request, false,
@@ -98,7 +98,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncDeleteTargetHttpsProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultTargetHttpsProxiesRestStub::GetTargetHttpsProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_https_proxies::v1::
         GetTargetHttpsProxyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -145,7 +145,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncInsertTargetHttpsProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -157,7 +157,7 @@ DefaultTargetHttpsProxiesRestStub::ListTargetHttpsProxies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_https_proxies::v1::
         ListTargetHttpsProxiesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetHttpsProxyList>(
       *service_, rest_context, request, false,
@@ -201,7 +201,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncPatchTargetHttpsProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -237,7 +237,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetCertificateMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -274,7 +274,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetQuicOverride(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -310,7 +310,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslCertificates(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -344,7 +344,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -378,7 +378,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncSetUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -408,7 +408,7 @@ DefaultTargetHttpsProxiesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -435,7 +435,7 @@ future<Status> DefaultTargetHttpsProxiesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -49,7 +49,7 @@ DefaultUrlMapsRestStub::AggregatedListUrlMaps(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::url_maps::v1::
         AggregatedListUrlMapsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::UrlMapsAggregatedList>(
       *service_, rest_context, request, false,
@@ -95,7 +95,7 @@ DefaultUrlMapsRestStub::AsyncDeleteUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -107,7 +107,7 @@ DefaultUrlMapsRestStub::GetUrlMap(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -141,7 +141,7 @@ DefaultUrlMapsRestStub::AsyncInsertUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -175,7 +175,7 @@ DefaultUrlMapsRestStub::AsyncInvalidateCache(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -187,7 +187,7 @@ DefaultUrlMapsRestStub::ListUrlMaps(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -228,7 +228,7 @@ DefaultUrlMapsRestStub::AsyncPatchUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -260,7 +260,7 @@ DefaultUrlMapsRestStub::AsyncUpdateUrlMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -271,7 +271,7 @@ StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 DefaultUrlMapsRestStub::Validate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context, request.url_maps_validate_request_resource(),
@@ -305,7 +305,7 @@ DefaultUrlMapsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -332,7 +332,7 @@ future<Status> DefaultUrlMapsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

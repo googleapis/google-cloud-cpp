@@ -69,7 +69,7 @@ DefaultProjectsRestStub::AsyncDisableXpnHost(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -102,7 +102,7 @@ DefaultProjectsRestStub::AsyncDisableXpnResource(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -134,7 +134,7 @@ DefaultProjectsRestStub::AsyncEnableXpnHost(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -167,7 +167,7 @@ DefaultProjectsRestStub::AsyncEnableXpnResource(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -179,7 +179,7 @@ DefaultProjectsRestStub::GetProject(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -192,7 +192,7 @@ DefaultProjectsRestStub::GetXpnHost(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -205,7 +205,7 @@ DefaultProjectsRestStub::GetXpnResources(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ProjectsGetXpnResources>(
       *service_, rest_context, request, false,
@@ -226,7 +226,7 @@ DefaultProjectsRestStub::ListXpnHosts(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::XpnHostList>(
       *service_, rest_context,
       request.projects_list_xpn_hosts_request_resource(), false,
@@ -267,7 +267,7 @@ DefaultProjectsRestStub::AsyncMoveDisk(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -300,7 +300,7 @@ DefaultProjectsRestStub::AsyncMoveInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -332,7 +332,7 @@ DefaultProjectsRestStub::AsyncSetCommonInstanceMetadata(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -366,7 +366,7 @@ DefaultProjectsRestStub::AsyncSetDefaultNetworkTier(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -399,7 +399,7 @@ DefaultProjectsRestStub::AsyncSetUsageExportBucket(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -429,7 +429,7 @@ DefaultProjectsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -456,7 +456,7 @@ future<Status> DefaultProjectsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

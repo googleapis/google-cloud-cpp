@@ -72,7 +72,7 @@ DefaultTargetPoolsRestStub::AsyncAddHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -107,7 +107,7 @@ DefaultTargetPoolsRestStub::AsyncAddInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -119,7 +119,7 @@ DefaultTargetPoolsRestStub::AggregatedListTargetPools(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_pools::v1::
         AggregatedListTargetPoolsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetPoolAggregatedList>(
       *service_, rest_context, request, false,
@@ -166,7 +166,7 @@ DefaultTargetPoolsRestStub::AsyncDeleteTargetPool(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -178,7 +178,7 @@ DefaultTargetPoolsRestStub::GetTargetPool(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPool>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -192,7 +192,7 @@ DefaultTargetPoolsRestStub::GetHealth(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>(
       *service_, rest_context, request.instance_reference_resource(), false,
@@ -229,7 +229,7 @@ DefaultTargetPoolsRestStub::AsyncInsertTargetPool(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -241,7 +241,7 @@ DefaultTargetPoolsRestStub::ListTargetPools(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPoolList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -286,7 +286,7 @@ DefaultTargetPoolsRestStub::AsyncRemoveHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -321,7 +321,7 @@ DefaultTargetPoolsRestStub::AsyncRemoveInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -358,7 +358,7 @@ DefaultTargetPoolsRestStub::AsyncSetBackup(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -393,7 +393,7 @@ DefaultTargetPoolsRestStub::AsyncSetSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -423,7 +423,7 @@ DefaultTargetPoolsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -450,7 +450,7 @@ future<Status> DefaultTargetPoolsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -43,7 +43,7 @@ DefaultDiskTypesRestStub::AggregatedListDiskTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::disk_types::v1::
         AggregatedListDiskTypesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::DiskTypeAggregatedList>(
       *service_, rest_context, request, false,
@@ -69,7 +69,7 @@ DefaultDiskTypesRestStub::GetDiskType(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -83,7 +83,7 @@ DefaultDiskTypesRestStub::ListDiskTypes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

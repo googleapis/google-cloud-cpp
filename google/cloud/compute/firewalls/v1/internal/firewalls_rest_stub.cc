@@ -70,7 +70,7 @@ DefaultFirewallsRestStub::AsyncDeleteFirewall(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -82,7 +82,7 @@ DefaultFirewallsRestStub::GetFirewall(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Firewall>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -116,7 +116,7 @@ DefaultFirewallsRestStub::AsyncInsertFirewall(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -128,7 +128,7 @@ DefaultFirewallsRestStub::ListFirewalls(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -170,7 +170,7 @@ DefaultFirewallsRestStub::AsyncPatchFirewall(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -203,7 +203,7 @@ DefaultFirewallsRestStub::AsyncUpdateFirewall(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -233,7 +233,7 @@ DefaultFirewallsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -260,7 +260,7 @@ future<Status> DefaultFirewallsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

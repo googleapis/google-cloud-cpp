@@ -45,7 +45,7 @@ DefaultInterconnectLocationsRestStub::GetInterconnectLocation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_locations::v1::
         GetInterconnectLocationRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectLocation>(
       *service_, rest_context, request, false,
@@ -60,7 +60,7 @@ DefaultInterconnectLocationsRestStub::ListInterconnectLocations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_locations::v1::
         ListInterconnectLocationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectLocationList>(
       *service_, rest_context, request, false,

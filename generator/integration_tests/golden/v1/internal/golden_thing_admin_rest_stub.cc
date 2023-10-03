@@ -49,7 +49,7 @@ StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 DefaultGoldenThingAdminRestStub::ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::ListDatabasesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databases"),
@@ -69,7 +69,7 @@ DefaultGoldenThingAdminRestStub::AsyncCreateDatabase(
           *service, *rest_context, request, false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databases"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("create_statement", request.create_statement())})));
-  }, std::move(p), service_, request, std::move(rest_context), options_};
+  }, std::move(p), service_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -82,7 +82,7 @@ StatusOr<google::test::admin::database::v1::Database>
 DefaultGoldenThingAdminRestStub::GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::Database>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.name()));
@@ -100,7 +100,7 @@ DefaultGoldenThingAdminRestStub::AsyncUpdateDatabaseDdl(
           *service, *rest_context, request, false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.database(), "/", "ddl"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("operation_id", request.operation_id())})));
-  }, std::move(p), service_, request, std::move(rest_context), options_};
+  }, std::move(p), service_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -112,7 +112,7 @@ DefaultGoldenThingAdminRestStub::AsyncUpdateDatabaseDdl(
 Status DefaultGoldenThingAdminRestStub::DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.database()));
@@ -122,7 +122,7 @@ StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 DefaultGoldenThingAdminRestStub::GetDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.database(), "/", "ddl"));
@@ -132,7 +132,7 @@ StatusOr<google::iam::v1::Policy>
 DefaultGoldenThingAdminRestStub::SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.resource(), ":setIamPolicy"));
@@ -142,7 +142,7 @@ StatusOr<google::iam::v1::Policy>
 DefaultGoldenThingAdminRestStub::GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.resource(), ":getIamPolicy"));
@@ -152,7 +152,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultGoldenThingAdminRestStub::TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.resource(), ":testIamPermissions"));
@@ -170,7 +170,7 @@ DefaultGoldenThingAdminRestStub::AsyncCreateBackup(
           *service, *rest_context, request.backup(), false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "backups"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("backup_id", request.backup_id())})));
-  }, std::move(p), service_, request, std::move(rest_context), options_};
+  }, std::move(p), service_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -183,7 +183,7 @@ StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminRestStub::GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetBackupRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::Backup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.name()));
@@ -193,7 +193,7 @@ StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminRestStub::UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Patch<google::test::admin::database::v1::Backup>(
       *service_, rest_context, request.backup(), false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.backup().name()));
@@ -202,7 +202,7 @@ DefaultGoldenThingAdminRestStub::UpdateBackup(
 Status DefaultGoldenThingAdminRestStub::DeleteBackup(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.name()));
@@ -212,7 +212,7 @@ StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 DefaultGoldenThingAdminRestStub::ListBackups(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::ListBackupsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "backups"),
@@ -234,7 +234,7 @@ DefaultGoldenThingAdminRestStub::AsyncRestoreDatabase(
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databases", ":restore"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("database_id", request.database_id()),
         std::make_pair("backup", request.backup())})));
-  }, std::move(p), service_, request, std::move(rest_context), options_};
+  }, std::move(p), service_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -247,7 +247,7 @@ StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultGoldenThingAdminRestStub::ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "databaseOperations"),
@@ -260,7 +260,7 @@ StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 DefaultGoldenThingAdminRestStub::ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::test::admin::database::v1::ListBackupOperationsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.parent(), "/", "backupOperations"),
@@ -280,7 +280,7 @@ DefaultGoldenThingAdminRestStub::AsyncGetDatabase(
       p.set_value(rest_internal::Get<google::test::admin::database::v1::Database>(
           *service, *rest_context, request, false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.name())));
-  }, std::move(p), service_, request, std::move(rest_context), options_};
+  }, std::move(p), service_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -300,7 +300,7 @@ DefaultGoldenThingAdminRestStub::AsyncDropDatabase(
       p.set_value(rest_internal::Delete<google::protobuf::Empty>(
           *service, *rest_context, request, false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/", request.database())));
-  }, std::move(p), service_, request, std::move(rest_context), options_};
+  }, std::move(p), service_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -320,7 +320,7 @@ DefaultGoldenThingAdminRestStub::AsyncGetOperation(
       p.set_value(rest_internal::Get<google::longrunning::Operation>(
           *operations, *rest_context, request, false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts) ,"/", request.name())));
-  }, std::move(p), operations_, request, std::move(rest_context), options_};
+  }, std::move(p), operations_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -340,7 +340,7 @@ DefaultGoldenThingAdminRestStub::AsyncCancelOperation(
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
           *operations, *rest_context, request, false,
           absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts) ,"/", request.name(), ":cancel")));
-  }, std::move(p), operations_, request, std::move(rest_context), options_};
+  }, std::move(p), operations_, request, std::move(rest_context), internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();

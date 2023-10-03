@@ -71,7 +71,7 @@ DefaultHttpHealthChecksRestStub::AsyncDeleteHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -83,7 +83,7 @@ DefaultHttpHealthChecksRestStub::GetHttpHealthCheck(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
         GetHttpHealthCheckRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::HttpHealthCheck>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -118,7 +118,7 @@ DefaultHttpHealthChecksRestStub::AsyncInsertHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -130,7 +130,7 @@ DefaultHttpHealthChecksRestStub::ListHttpHealthChecks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::http_health_checks::v1::
         ListHttpHealthChecksRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::HttpHealthCheckList>(
       *service_, rest_context, request, false,
@@ -174,7 +174,7 @@ DefaultHttpHealthChecksRestStub::AsyncPatchHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -208,7 +208,7 @@ DefaultHttpHealthChecksRestStub::AsyncUpdateHttpHealthCheck(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -238,7 +238,7 @@ DefaultHttpHealthChecksRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -265,7 +265,7 @@ future<Status> DefaultHttpHealthChecksRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

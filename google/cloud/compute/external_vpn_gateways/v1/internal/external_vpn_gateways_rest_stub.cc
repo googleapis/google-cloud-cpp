@@ -72,7 +72,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncDeleteExternalVpnGateway(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -84,7 +84,7 @@ DefaultExternalVpnGatewaysRestStub::GetExternalVpnGateway(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         GetExternalVpnGatewayRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGateway>(
       *service_, rest_context, request, false,
@@ -120,7 +120,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncInsertExternalVpnGateway(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -132,7 +132,7 @@ DefaultExternalVpnGatewaysRestStub::ListExternalVpnGateways(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         ListExternalVpnGatewaysRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ExternalVpnGatewayList>(
       *service_, rest_context, request, false,
@@ -174,7 +174,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -186,7 +186,7 @@ DefaultExternalVpnGatewaysRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -221,7 +221,7 @@ DefaultExternalVpnGatewaysRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -248,7 +248,7 @@ future<Status> DefaultExternalVpnGatewaysRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

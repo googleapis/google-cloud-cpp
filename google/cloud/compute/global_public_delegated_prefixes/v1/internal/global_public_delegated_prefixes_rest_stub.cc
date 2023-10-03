@@ -73,7 +73,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -85,7 +85,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         GetPublicDelegatedPrefixRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix>(
       *service_, rest_context, request, false,
@@ -121,7 +121,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -133,7 +133,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::ListGlobalPublicDelegatedPrefixes(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
         ListGlobalPublicDelegatedPrefixesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>(
       *service_, rest_context, request, false,
@@ -177,7 +177,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -207,7 +207,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -235,7 +235,7 @@ DefaultGlobalPublicDelegatedPrefixesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

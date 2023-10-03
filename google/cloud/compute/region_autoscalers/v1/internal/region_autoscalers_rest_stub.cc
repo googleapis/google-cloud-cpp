@@ -71,7 +71,7 @@ DefaultRegionAutoscalersRestStub::AsyncDeleteAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -83,7 +83,7 @@ DefaultRegionAutoscalersRestStub::GetAutoscaler(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
         GetAutoscalerRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -118,7 +118,7 @@ DefaultRegionAutoscalersRestStub::AsyncInsertAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -130,7 +130,7 @@ DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_autoscalers::v1::
         ListRegionAutoscalersRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionAutoscalerList>(
       *service_, rest_context, request, false,
@@ -174,7 +174,7 @@ DefaultRegionAutoscalersRestStub::AsyncPatchAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -208,7 +208,7 @@ DefaultRegionAutoscalersRestStub::AsyncUpdateAutoscaler(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -238,7 +238,7 @@ DefaultRegionAutoscalersRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -265,7 +265,7 @@ future<Status> DefaultRegionAutoscalersRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

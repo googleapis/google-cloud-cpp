@@ -73,7 +73,7 @@ DefaultRegionInstanceTemplatesRestStub::AsyncDeleteInstanceTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -85,7 +85,7 @@ DefaultRegionInstanceTemplatesRestStub::GetInstanceTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
         GetInstanceTemplateRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -122,7 +122,7 @@ DefaultRegionInstanceTemplatesRestStub::AsyncInsertInstanceTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -134,7 +134,7 @@ DefaultRegionInstanceTemplatesRestStub::ListRegionInstanceTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_templates::v1::
         ListRegionInstanceTemplatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateList>(
       *service_, rest_context, request, false,
@@ -174,7 +174,7 @@ DefaultRegionInstanceTemplatesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -201,7 +201,7 @@ future<Status> DefaultRegionInstanceTemplatesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

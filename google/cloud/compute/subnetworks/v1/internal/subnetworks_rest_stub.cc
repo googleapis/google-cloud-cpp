@@ -49,7 +49,7 @@ DefaultSubnetworksRestStub::AggregatedListSubnetworks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::
         AggregatedListSubnetworksRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SubnetworkAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultSubnetworksRestStub::AsyncDeleteSubnetwork(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -132,7 +132,7 @@ DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -144,7 +144,7 @@ DefaultSubnetworksRestStub::GetSubnetwork(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Subnetwork>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -158,7 +158,7 @@ DefaultSubnetworksRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -197,7 +197,7 @@ DefaultSubnetworksRestStub::AsyncInsertSubnetwork(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -209,7 +209,7 @@ DefaultSubnetworksRestStub::ListSubnetworks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SubnetworkList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -230,7 +230,7 @@ DefaultSubnetworksRestStub::ListUsable(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>(
       *service_, rest_context, request, false,
@@ -276,7 +276,7 @@ DefaultSubnetworksRestStub::AsyncPatchSubnetwork(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -288,7 +288,7 @@ DefaultSubnetworksRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -327,7 +327,7 @@ DefaultSubnetworksRestStub::AsyncSetPrivateIpGoogleAccess(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -339,7 +339,7 @@ DefaultSubnetworksRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -374,7 +374,7 @@ DefaultSubnetworksRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -401,7 +401,7 @@ future<Status> DefaultSubnetworksRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

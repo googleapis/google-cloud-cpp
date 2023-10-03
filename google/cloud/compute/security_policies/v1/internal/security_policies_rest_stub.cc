@@ -72,7 +72,7 @@ DefaultSecurityPoliciesRestStub::AsyncAddRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -84,7 +84,7 @@ DefaultSecurityPoliciesRestStub::AggregatedListSecurityPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::
         AggregatedListSecurityPoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>(
       *service_, rest_context, request, false,
@@ -131,7 +131,7 @@ DefaultSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -143,7 +143,7 @@ DefaultSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::
         GetSecurityPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -157,7 +157,7 @@ DefaultSecurityPoliciesRestStub::GetRule(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyRule>(
       *service_, rest_context, request, false,
@@ -197,7 +197,7 @@ DefaultSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -209,7 +209,7 @@ DefaultSecurityPoliciesRestStub::ListSecurityPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::
         ListSecurityPoliciesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
       *service_, rest_context, request, false,
@@ -232,7 +232,7 @@ DefaultSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::security_policies::v1::
         ListPreconfiguredExpressionSetsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::
           SecurityPoliciesListPreconfiguredExpressionSetsResponse>(
@@ -277,7 +277,7 @@ DefaultSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -314,7 +314,7 @@ DefaultSecurityPoliciesRestStub::AsyncPatchRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -347,7 +347,7 @@ DefaultSecurityPoliciesRestStub::AsyncRemoveRule(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -379,7 +379,7 @@ DefaultSecurityPoliciesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -409,7 +409,7 @@ DefaultSecurityPoliciesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -436,7 +436,7 @@ future<Status> DefaultSecurityPoliciesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

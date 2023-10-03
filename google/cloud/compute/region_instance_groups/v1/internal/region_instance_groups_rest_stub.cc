@@ -51,7 +51,7 @@ DefaultRegionInstanceGroupsRestStub::GetInstanceGroup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_groups::v1::
         GetInstanceGroupRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -66,7 +66,7 @@ DefaultRegionInstanceGroupsRestStub::ListRegionInstanceGroups(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_groups::v1::
         ListRegionInstanceGroupsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupList>(
       *service_, rest_context, request, false,
@@ -88,7 +88,7 @@ DefaultRegionInstanceGroupsRestStub::ListInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_instance_groups::v1::
         ListInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>(
       *service_, rest_context,
@@ -137,7 +137,7 @@ DefaultRegionInstanceGroupsRestStub::AsyncSetNamedPorts(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -167,7 +167,7 @@ DefaultRegionInstanceGroupsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -194,7 +194,7 @@ future<Status> DefaultRegionInstanceGroupsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

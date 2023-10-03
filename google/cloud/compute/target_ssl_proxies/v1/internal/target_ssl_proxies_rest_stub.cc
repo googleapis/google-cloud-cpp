@@ -71,7 +71,7 @@ DefaultTargetSslProxiesRestStub::AsyncDeleteTargetSslProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -83,7 +83,7 @@ DefaultTargetSslProxiesRestStub::GetTargetSslProxy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         GetTargetSslProxyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -118,7 +118,7 @@ DefaultTargetSslProxiesRestStub::AsyncInsertTargetSslProxy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -130,7 +130,7 @@ DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         ListTargetSslProxiesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetSslProxyList>(
       *service_, rest_context, request, false,
@@ -177,7 +177,7 @@ DefaultTargetSslProxiesRestStub::AsyncSetBackendService(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -214,7 +214,7 @@ DefaultTargetSslProxiesRestStub::AsyncSetCertificateMap(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -249,7 +249,7 @@ DefaultTargetSslProxiesRestStub::AsyncSetProxyHeader(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -286,7 +286,7 @@ DefaultTargetSslProxiesRestStub::AsyncSetSslCertificates(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -320,7 +320,7 @@ DefaultTargetSslProxiesRestStub::AsyncSetSslPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -350,7 +350,7 @@ DefaultTargetSslProxiesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -377,7 +377,7 @@ future<Status> DefaultTargetSslProxiesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

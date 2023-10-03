@@ -69,7 +69,7 @@ DefaultImagesRestStub::AsyncDeleteImage(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -102,7 +102,7 @@ DefaultImagesRestStub::AsyncDeprecate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -113,7 +113,7 @@ StatusOr<google::cloud::cpp::compute::v1::Image>
 DefaultImagesRestStub::GetImage(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -127,7 +127,7 @@ DefaultImagesRestStub::GetFromFamily(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -141,7 +141,7 @@ DefaultImagesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -180,7 +180,7 @@ DefaultImagesRestStub::AsyncInsertImage(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -191,7 +191,7 @@ StatusOr<google::cloud::cpp::compute::v1::ImageList>
 DefaultImagesRestStub::ListImages(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -231,7 +231,7 @@ DefaultImagesRestStub::AsyncPatchImage(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -243,7 +243,7 @@ DefaultImagesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -277,7 +277,7 @@ DefaultImagesRestStub::AsyncSetLabels(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -289,7 +289,7 @@ DefaultImagesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -323,7 +323,7 @@ DefaultImagesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -350,7 +350,7 @@ future<Status> DefaultImagesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

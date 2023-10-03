@@ -42,7 +42,7 @@ StatusOr<google::cloud::cpp::compute::v1::Region>
 DefaultRegionsRestStub::GetRegion(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -56,7 +56,7 @@ DefaultRegionsRestStub::ListRegions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
         request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::RegionList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

@@ -77,7 +77,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -110,7 +110,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -147,7 +147,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -159,7 +159,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request, false,
@@ -195,7 +195,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -207,7 +207,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListGlobalNetworkEndpointGroups(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         ListGlobalNetworkEndpointGroupsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request, false,
@@ -230,7 +230,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context, request, false,
@@ -271,7 +271,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -298,7 +298,7 @@ future<Status> DefaultGlobalNetworkEndpointGroupsRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

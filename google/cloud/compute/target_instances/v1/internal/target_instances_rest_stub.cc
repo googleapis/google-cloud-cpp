@@ -49,7 +49,7 @@ DefaultTargetInstancesRestStub::AggregatedListTargetInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_instances::v1::
         AggregatedListTargetInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>(
       *service_, rest_context, request, false,
@@ -96,7 +96,7 @@ DefaultTargetInstancesRestStub::AsyncDeleteTargetInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -108,7 +108,7 @@ DefaultTargetInstancesRestStub::GetTargetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_instances::v1::
         GetTargetInstanceRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -145,7 +145,7 @@ DefaultTargetInstancesRestStub::AsyncInsertTargetInstance(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -157,7 +157,7 @@ DefaultTargetInstancesRestStub::ListTargetInstances(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::target_instances::v1::
         ListTargetInstancesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetInstanceList>(
       *service_, rest_context, request, false,
@@ -202,7 +202,7 @@ DefaultTargetInstancesRestStub::AsyncSetSecurityPolicy(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -232,7 +232,7 @@ DefaultTargetInstancesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -259,7 +259,7 @@ future<Status> DefaultTargetInstancesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

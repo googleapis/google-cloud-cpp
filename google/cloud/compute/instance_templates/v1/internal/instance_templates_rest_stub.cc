@@ -50,7 +50,7 @@ DefaultInstanceTemplatesRestStub::AggregatedListInstanceTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
         AggregatedListInstanceTemplatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>(
       *service_, rest_context, request, false,
@@ -97,7 +97,7 @@ DefaultInstanceTemplatesRestStub::AsyncDeleteInstanceTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -109,7 +109,7 @@ DefaultInstanceTemplatesRestStub::GetInstanceTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
         GetInstanceTemplateRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -123,7 +123,7 @@ DefaultInstanceTemplatesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
         GetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat(
@@ -161,7 +161,7 @@ DefaultInstanceTemplatesRestStub::AsyncInsertInstanceTemplate(
       service_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -173,7 +173,7 @@ DefaultInstanceTemplatesRestStub::ListInstanceTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
         ListInstanceTemplatesRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceTemplateList>(
       *service_, rest_context, request, false,
@@ -195,7 +195,7 @@ DefaultInstanceTemplatesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
         SetIamPolicyRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -210,7 +210,7 @@ DefaultInstanceTemplatesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::instance_templates::v1::
         TestIamPermissionsRequest const& request) {
-  auto const& opts = options_;
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -245,7 +245,7 @@ DefaultInstanceTemplatesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -272,7 +272,7 @@ future<Status> DefaultInstanceTemplatesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options_};
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
