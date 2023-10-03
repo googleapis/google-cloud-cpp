@@ -28,7 +28,11 @@ Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
 set(PROJECT_VERSION_PRE_RELEASE "")
 ```
 
-Make the corresponding change in `google/cloud/internal/version_info.h`.
+### Update the version info
+
+Run any CMake-based build to update `google/cloud/internal/version_info.h`. If
+you do not feel like waiting for a build, make the corresponding change in
+`google/cloud/internal/version_info.h` manually.
 
 ### Update CHANGELOG.md
 

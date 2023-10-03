@@ -98,21 +98,22 @@ sections+=("Common Libraries,google/cloud,${exclude[*]}")
 
 # Use KMS as an exemplar. Assume that any changes made to it affect all
 # generated libraries, and thus should be grouped under "Common Libraries".
-mapfile -t common_messages < <(list_changes "${last_tag}" "google/cloud/kms" | grep -oE "\(#[0-9]+\)$")
-common_filter="$(printf "|%s$" "${common_messages[@]}")"
-common_filter="${common_filter:1}"
-common_filter="${common_filter//\(/\\\(}"
-common_filter="${common_filter//\)/\\\)}"
+mapfile -t common_prs < <(list_changes "${last_tag}" "google/cloud/kms" |
+  grep -oE "\(#[0-9]+\)$")
+common_filter=$(printf '|%s$' "${common_prs[@]}" |
+  sed -e 's/^|//' -e 's/[()]/\\&/g')
 
 for section in "${sections[@]}"; do
   title="$(cut -f1 -d, <<<"${section}")"
   if [ "${title}" == "Common Libraries" ]; then
-    common_filter=""
+    filter=""
+  else
+    filter="${common_filter}"
   fi
   path="$(cut -f2 -d, <<<"${section}")"
   IFS=' ' read -r -a extra < <(cut -f3 -d, <<<"${section}")
   url="/${path}/README.md"
   mapfile -t messages < <(list_changes "${last_tag}" "${path}" "${extra[@]}")
-  mapfile -t changelog < <(filter_messages "${common_filter}" "${messages[@]}")
+  mapfile -t changelog < <(filter_messages "${filter}" "${messages[@]}")
   print_changelog "${title}" "${url}" "${changelog[@]}"
 done
