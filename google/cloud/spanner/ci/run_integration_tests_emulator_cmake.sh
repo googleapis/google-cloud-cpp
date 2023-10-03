@@ -32,6 +32,10 @@ CMAKE_BINARY_DIR="$(realpath "${1}")"
 readonly CMAKE_BINARY_DIR
 shift
 
+if ctest --test-dir "${CMAKE_BINARY_DIR}" --show-only -R "^spanner_" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'; then
+  exit 0
+fi
+
 # Any additional arguments for the ctest invocation.
 ctest_args=("$@")
 

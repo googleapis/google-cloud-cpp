@@ -32,6 +32,10 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
+if ctest --test-dir "${BINARY_DIR}" --show-only -R "^bigtable_" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'; then
+  exit 0
+fi
+
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
