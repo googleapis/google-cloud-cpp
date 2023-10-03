@@ -195,26 +195,26 @@ service MyResources {
 
 message DoFooRequest {
   // Description for fooId.
-  optional string foo_id = 1;
+  optional string foo_id = 1 [json_name="fooId"];
 
   optional Foo my_foo_resource = 2 [json_name="__json_request_body"];
 
   // Description for project.
-  optional string project = 3;
+  optional string project = 3 [json_name="project"];
 
   // Description for zone.
-  optional string zone = 4;
+  optional string zone = 4 [json_name="zone"];
 }
 
 message GetMyResourceRequest {
   // Description for foo.
-  optional string foo = 1;
+  optional string foo = 1 [json_name="foo"];
 
   // Description for project.
-  optional string project = 2;
+  optional string project = 2 [json_name="project"];
 
   // Description for region.
-  optional string region = 3;
+  optional string region = 3 [json_name="region"];
 }
 )""";
 
@@ -314,26 +314,26 @@ service MyResources {
 
 message DoFooRequest {
   // Description for fooId.
-  optional string foo_id = 1;
+  optional string foo_id = 1 [json_name="fooId"];
 
   optional Foo my_foo_resource = 2 [json_name="__json_request_body"];
 
   // Description for project.
-  optional string project = 3;
+  optional string project = 3 [json_name="project"];
 
   // Description for zone.
-  optional string zone = 4;
+  optional string zone = 4 [json_name="zone"];
 }
 
 message GetMyResourceRequest {
   // Description for foo.
-  optional string foo = 1;
+  optional string foo = 1 [json_name="foo"];
 
   // Description for project.
-  optional string project = 2;
+  optional string project = 2 [json_name="project"];
 
   // Description for region.
-  optional string region = 3;
+  optional string region = 3 [json_name="region"];
 }
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
@@ -404,26 +404,26 @@ package my.package.name;
 
 message DoFooRequest {
   // Description for fooId.
-  optional string foo_id = 1;
+  optional string foo_id = 1 [json_name="fooId"];
 
   optional Foo my_foo_resource = 2 [json_name="__json_request_body"];
 
   // Description for project.
-  optional string project = 3;
+  optional string project = 3 [json_name="project"];
 
   // Description for zone.
-  optional string zone = 4;
+  optional string zone = 4 [json_name="zone"];
 }
 
 message GetMyResourceRequest {
   // Description for foo.
-  optional string foo = 1;
+  optional string foo = 1 [json_name="foo"];
 
   // Description for project.
-  optional string project = 2;
+  optional string project = 2 [json_name="project"];
 
   // Description for region.
-  optional string region = 3;
+  optional string region = 3 [json_name="region"];
 }
 )""";
   auto do_foo_request_type_json =

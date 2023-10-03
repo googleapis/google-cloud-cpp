@@ -119,6 +119,7 @@ class DiscoveryTypeVertex {
 
   // Formats any field options as indicated by the field_json.
   static std::string FormatFieldOptions(std::string const& field_name,
+                                        std::string const& json_field_name,
                                         nlohmann::json const& field_json);
 
   // Determines the correct field_number to use for the specified field.
