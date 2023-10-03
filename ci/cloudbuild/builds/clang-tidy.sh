@@ -45,9 +45,7 @@ io::run cmake "${cmake_args[@]}" \
 io::run cmake --build cmake-out
 
 mapfile -t ctest_args < <(ctest::common_args)
-io::run env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
-
-integration::ctest_with_emulators "cmake-out"
+io::run env -C cmake-out ctest "${ctest_args[@]}" 
 
 if [[ "${TRIGGER_TYPE}" != "manual" ]]; then
   # This build should fail if any of the above work generated
