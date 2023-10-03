@@ -29,6 +29,7 @@ struct HttpSimpleInfo {
   std::string http_verb;
   std::string url_path;
   std::string body;
+  std::string api_version;
 };
 
 struct HttpExtensionInfo {

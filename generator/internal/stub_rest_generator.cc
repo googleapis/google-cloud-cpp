@@ -428,7 +428,7 @@ Default$stub_rest_class_name$::AsyncGetOperation(
   std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::Get<$longrunning_response_type$>(
           *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
-          $longrunning_get_operation_path$));
+          $longrunning_get_operation_path_rest$));
   }, std::move(p), operations_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
@@ -448,7 +448,7 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
   std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto opts) {
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
           *operations, *rest_context, request, $preserve_proto_field_names_in_json$,
-          $longrunning_cancel_operation_path$));
+          $longrunning_cancel_operation_path_rest$));
   }, std::move(p), operations_, request, std::move(rest_context), options_};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {

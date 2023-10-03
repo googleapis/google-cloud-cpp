@@ -16,6 +16,7 @@
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"
@@ -144,7 +145,19 @@ void SetHttpDerivedMethodVars(
     void operator()(HttpSimpleInfo const& info) {
       method_vars["method_http_verb"] = info.http_verb;
       method_vars["method_request_params"] = method.full_name();
-      method_vars["method_rest_path"] = absl::StrCat("\"", info.url_path, "\"");
+      if (absl::StrContains(info.url_path, info.api_version)) {
+        std::string needle = absl::StrFormat("/%s/", info.api_version);
+        auto start = info.url_path.find(needle);
+        method_vars["method_rest_path"] = absl::StrCat(
+            "absl::StrCat(\"", info.url_path.substr(0, start), "/\", ",
+            absl::StrFormat(
+                R"""(rest_internal::DetermineApiVersion("%s", opts), "/)""",
+                info.api_version),
+            info.url_path.substr(start + needle.length()), "\")");
+      } else {
+        method_vars["method_rest_path"] =
+            absl::StrCat("\"", info.url_path, "\"");
+      }
     }
 
     // This visitor is an error diagnostic, in case we encounter an url that the
@@ -264,6 +277,9 @@ void SetHttpQueryParameters(
 absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
 ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
+  auto api_version = FormatApiVersionFromPackageName(method);
+  if (!api_version) return {};
+
   HttpExtensionInfo info;
   google::api::HttpRule http_rule =
       method.options().GetExtension(google::api::http);
@@ -307,7 +323,8 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
           [](std::shared_ptr<PathTemplate::Segment> const& s) {
             return absl::holds_alternative<PathTemplate::Variable>(s->value);
           }) == parsed_http_rule->segments.end()) {
-    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body()};
+    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body(),
+                          *api_version};
   }
 
   info.body = http_rule.body();
@@ -352,8 +369,6 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
         "/", absl::StrJoin(path_suffix.segments, "/", segment_formatter));
   }
 
-  auto api_version = FormatApiVersionFromPackageName(method);
-  if (!api_version) return {};
   auto rest_path_visitor = RestPathVisitor(*api_version, info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {

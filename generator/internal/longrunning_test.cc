@@ -638,12 +638,12 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCGlobal) {
       r.set_project(request.project());
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/projects/", request.project(),
                              "/global/operations/", request.operation()))""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/projects/", request.project(),
@@ -674,11 +674,11 @@ TEST_F(LongrunningVarsTest,
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/locations/global/operations/", request.operation()))""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/locations/global/operations/", request.operation()))""")));
@@ -707,13 +707,13 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCRegion) {
       r.set_region(request.region());
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/projects/", request.project(),
                              "/regions/", request.region(),
                              "/operations/", request.operation()))""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/projects/", request.project(),
@@ -744,13 +744,13 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCZone) {
       r.set_zone(request.zone());
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/projects/", request.project(),
                              "/zones/", request.zone(),
                              "/operations/", request.operation()))""")));
-  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path",
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
                                   R"""(absl::StrCat("/compute/",
                              rest_internal::DetermineApiVersion("v1", opts),
                              "/projects/", request.project(),

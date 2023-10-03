@@ -452,7 +452,9 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
   EXPECT_THAT(vars.at("method_request_params"),
               Eq("my.package.v1.Service.Method0"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Delete"));
-  EXPECT_THAT(vars.at("method_rest_path"), Eq("\"/v1/simple\""));
+  EXPECT_THAT(
+      vars.at("method_rest_path"),
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/simple"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
