@@ -16,7 +16,11 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-google_cloud_cpp_storage_grpc_mocks_hdrs = [
-    "mocks/mock_async_connection.h",
-    "mocks/mock_async_reader_connection.h",
+storage_grpc_examples = [
+    "storage_async_samples.cc",
+    "storage_grpc_samples.cc",
+]
+
+storage_grpc_unit_tests = [
+    "storage_async_mock_samples.cc",
 ]

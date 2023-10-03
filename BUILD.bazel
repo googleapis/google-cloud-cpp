@@ -160,6 +160,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "experimental-storage_grpc_mocks",
+    testonly = True,
+    hdrs = ["//google/cloud/storage:grpc_mocks_hdrs"],
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc_mocks",
+    ],
+)
+
 # TODO(12698) - remove transition name (experimental-storage-grpc)
 cc_library(
     name = "experimental-storage-grpc",

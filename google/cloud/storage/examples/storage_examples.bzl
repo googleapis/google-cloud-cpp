@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_examples = [
-    "storage_async_samples.cc",
     "storage_bucket_acl_samples.cc",
     "storage_bucket_autoclass_samples.cc",
     "storage_bucket_cors_samples.cc",
@@ -29,7 +28,6 @@ storage_examples = [
     "storage_client_per_operation_samples.cc",
     "storage_default_object_acl_samples.cc",
     "storage_event_based_hold_samples.cc",
-    "storage_grpc_samples.cc",
     "storage_lifecycle_management_samples.cc",
     "storage_notification_samples.cc",
     "storage_object_acl_samples.cc",

@@ -32,7 +32,6 @@ set(storage_examples_production
 
 set(storage_examples
     # cmake-format: sort
-    storage_async_samples.cc
     storage_bucket_acl_samples.cc
     storage_bucket_autoclass_samples.cc
     storage_bucket_cors_samples.cc
@@ -44,7 +43,6 @@ set(storage_examples
     storage_client_per_operation_samples.cc
     storage_default_object_acl_samples.cc
     storage_event_based_hold_samples.cc
-    storage_grpc_samples.cc
     storage_lifecycle_management_samples.cc
     storage_notification_samples.cc
     storage_object_acl_samples.cc
@@ -107,4 +105,49 @@ foreach (fname ${storage_examples_production})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-test;integration-test-production")
+endforeach ()
+
+# These lists are always defined and exported to Bazel. They are only *used* if
+# experimental-storage_grpc is defined.
+set(storage_grpc_examples # cmake-format: sort
+                          storage_async_samples.cc storage_grpc_samples.cc)
+# The mocking examples take the form of a unit test
+set(storage_grpc_unit_tests # cmake-format: sort
+                            storage_async_mock_samples.cc)
+
+export_list_to_bazel("storage_grpc_examples.bzl" "storage_grpc_examples"
+                     "storage_grpc_unit_tests" YEAR "2023")
+
+if (NOT "experimental-storage_grpc" IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    return()
+endif ()
+
+foreach (fname ${storage_grpc_unit_tests})
+    google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
+    target_link_libraries(
+        ${target}
+        PRIVATE storage_examples_common
+                google-cloud-cpp::experimental-storage_grpc
+                google-cloud-cpp::experimental-storage_grpc_mocks
+                google-cloud-cpp::storage
+                google-cloud-cpp::common
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest)
+    add_test(NAME ${target} COMMAND ${target})
+    google_cloud_cpp_add_common_options(${target})
+endforeach ()
+
+foreach (fname ${storage_grpc_examples})
+    google_cloud_cpp_add_executable(target "storage_examples" "${fname}")
+    target_link_libraries(
+        ${target}
+        PRIVATE storage_examples_common
+                google-cloud-cpp::experimental-storage_grpc
+                google-cloud-cpp::storage google-cloud-cpp::common)
+    add_test(NAME ${target} COMMAND ${target})
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-test;integration-test-emulator")
+    google_cloud_cpp_add_common_options(${target})
 endforeach ()
