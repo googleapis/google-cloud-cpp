@@ -32,6 +32,7 @@ TEST(StorageAsyncMockingSamples, MockDeleteObject) {
   namespace gcs_ex = ::google::cloud::storage_experimental;
   auto mock =
       std::make_shared<google::cloud::storage_mocks::MockAsyncConnection>();
+  EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, AsyncDeleteObject)
       .WillOnce(Return(ByMove(gc::make_ready_future(gc::Status{}))));
 
@@ -43,12 +44,12 @@ TEST(StorageAsyncMockingSamples, MockDeleteObject) {
 
 //! [mock-async-read-object]
 /// Shows how to mock more complex APIs, such as `ReadObject()`.
-TEST(StorageAsyncMockingSamples, MockInsertObject) {
+TEST(StorageAsyncMockingSamples, MockReadObject) {
   namespace gc = ::google::cloud;
-  namespace gcs = ::google::cloud::storage;
   namespace gcs_ex = ::google::cloud::storage_experimental;
   auto mock =
       std::make_shared<google::cloud::storage_mocks::MockAsyncConnection>();
+  EXPECT_CALL(*mock, options);
   EXPECT_CALL(*mock, AsyncReadObject).WillOnce([] {
     using ReadResponse = gcs_ex::AsyncReaderConnection::ReadResponse;
     using ReadPayload = gcs_ex::ReadPayload;
@@ -81,10 +82,14 @@ TEST(StorageAsyncMockingSamples, MockInsertObject) {
       client.ReadObject("test-bucket", "test-object").get().value();
 
   gcs_ex::ReadPayload payload;
-  std::tie(payload, token) = reader.Read(std::move(token)).get().value();
+  gcs_ex::AsyncToken t;  // use a temporary to make clang-tidy happy.
+  std::tie(payload, t) = reader.Read(std::move(token)).get().value();
   EXPECT_THAT(payload.contents(), ElementsAre("test-contents"));
+  token = std::move(t);
+  ASSERT_TRUE(token.valid());
 
-  std::tie(payload, token) = reader.Read(std::move(token)).get().value();
+  std::tie(payload, t) = reader.Read(std::move(token)).get().value();
+  token = std::move(t);
   EXPECT_FALSE(token.valid());
 }
 //! [mock-async-read-object]
