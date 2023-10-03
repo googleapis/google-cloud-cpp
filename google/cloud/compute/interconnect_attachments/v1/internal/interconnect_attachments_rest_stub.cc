@@ -51,11 +51,13 @@ DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         AggregatedListInterconnectAttachmentsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "aggregated", "/",
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
                    "interconnectAttachments"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
@@ -80,18 +82,24 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "interconnectAttachments",
-                             "/", request.interconnect_attachment()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "interconnectAttachments", "/",
+                             request.interconnect_attachment()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -103,12 +111,14 @@ DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         GetInterconnectAttachmentRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "interconnectAttachments", "/",
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "interconnectAttachments", "/",
                    request.interconnect_attachment()));
 }
 
@@ -122,20 +132,26 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "interconnectAttachments"),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "interconnectAttachments"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id()),
                      std::make_pair("validate_only",
                                     request.validate_only() ? "1" : "0")})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -147,12 +163,14 @@ DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         ListInterconnectAttachmentsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "interconnectAttachments"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "interconnectAttachments"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -172,19 +190,25 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.interconnect_attachment_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "interconnectAttachments",
-                             "/", request.interconnect_attachment()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "interconnectAttachments", "/",
+                             request.interconnect_attachment()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -201,19 +225,25 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.region_set_labels_request_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "interconnectAttachments",
-                             "/", request.resource(), "/", "setLabels"),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "interconnectAttachments", "/", request.resource(),
+                             "/", "setLabels"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -230,15 +260,20 @@ DefaultInterconnectAttachmentsRestStub::AsyncGetOperation(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context) {
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
+                absl::StrCat(
+                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                    "/projects/", request.project(), "/regions/",
+                    request.region(), "/operations/", request.operation())));
       },
-      std::move(p), operations_, request, std::move(rest_context)};
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -252,14 +287,20 @@ future<Status> DefaultInterconnectAttachmentsRestStub::AsyncCancelOperation(
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request, false,
-                      absl::StrCat("/compute/v1/projects/", request.project(),
-                                   "/regions/", request.region(),
-                                   "/operations/", request.operation())));
-                },
-                std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat(
+                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/projects/", request.project(), "/regions/", request.region(),
+                "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

@@ -42,10 +42,11 @@ StatusOr<google::cloud::sql::v1::TiersListResponse>
 DefaultSqlTiersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlTiersListRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::TiersListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "tiers"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "tiers"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

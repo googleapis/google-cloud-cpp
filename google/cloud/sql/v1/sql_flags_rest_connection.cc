@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -34,10 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SqlFlagsServiceConnection> MakeSqlFlagsServiceConnectionRest(
     ExperimentalTag, Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 SqlFlagsServicePolicyOptionList>(options,
-                                                                  __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, SqlFlagsServicePolicyOptionList>(
+      options, __func__);
   options = sql_v1_internal::SqlFlagsServiceDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();

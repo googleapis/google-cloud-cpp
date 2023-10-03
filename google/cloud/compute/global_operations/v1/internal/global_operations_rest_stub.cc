@@ -44,11 +44,14 @@ DefaultGlobalOperationsRestStub::AggregatedListGlobalOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         AggregatedListGlobalOperationsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::OperationAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "aggregated", "/", "operations"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
+                   "operations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("include_all_scopes",
@@ -66,11 +69,13 @@ Status DefaultGlobalOperationsRestStub::DeleteOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/", "operations", "/",
-                   request.operation()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "operations", "/", request.operation()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -78,11 +83,13 @@ DefaultGlobalOperationsRestStub::GetOperation(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/", "operations", "/",
-                   request.operation()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "operations", "/", request.operation()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
@@ -90,10 +97,13 @@ DefaultGlobalOperationsRestStub::ListGlobalOperations(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::
         ListGlobalOperationsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/", "operations"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "operations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -108,11 +118,13 @@ DefaultGlobalOperationsRestStub::Wait(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "global", "/", "operations", "/",
-                   request.operation(), "/", "wait"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "operations", "/", request.operation(), "/", "wait"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

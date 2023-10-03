@@ -49,11 +49,14 @@ DefaultSubnetworksRestStub::AggregatedListSubnetworks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::
         AggregatedListSubnetworksRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SubnetworkAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "aggregated", "/", "subnetworks"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
+                   "subnetworks"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("include_all_scopes",
@@ -77,18 +80,23 @@ DefaultSubnetworksRestStub::AsyncDeleteSubnetwork(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "subnetworks", "/",
-                             request.subnetwork()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "subnetworks", "/", request.subnetwork()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -105,20 +113,26 @@ DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
                 request.subnetworks_expand_ip_cidr_range_request_resource(),
                 false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "subnetworks", "/",
-                             request.subnetwork(), "/", "expandIpCidrRange"),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "subnetworks", "/", request.subnetwork(), "/",
+                             "expandIpCidrRange"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -130,11 +144,13 @@ DefaultSubnetworksRestStub::GetSubnetwork(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Subnetwork>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "subnetworks", "/", request.subnetwork()));
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "regions", "/",
+          request.region(), "/", "subnetworks", "/", request.subnetwork()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -142,12 +158,14 @@ DefaultSubnetworksRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "subnetworks", "/", request.resource(), "/",
-                   "getIamPolicy"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.resource(), "/", "getIamPolicy"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))}));
@@ -163,17 +181,23 @@ DefaultSubnetworksRestStub::AsyncInsertSubnetwork(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.subnetwork_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "subnetworks"),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "subnetworks"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -185,11 +209,13 @@ DefaultSubnetworksRestStub::ListSubnetworks(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SubnetworkList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "subnetworks"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -204,12 +230,14 @@ DefaultSubnetworksRestStub::ListUsable(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "aggregated", "/", "subnetworks",
-                   "/", "listUsable"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
+                   "subnetworks", "/", "listUsable"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -229,21 +257,26 @@ DefaultSubnetworksRestStub::AsyncPatchSubnetwork(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.subnetwork_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "subnetworks", "/",
-                             request.subnetwork()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "subnetworks", "/", request.subnetwork()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair(
                          "drain_timeout_seconds",
                          std::to_string(request.drain_timeout_seconds())),
                      std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -255,13 +288,15 @@ DefaultSubnetworksRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "subnetworks", "/", request.resource(), "/",
-                   "setIamPolicy"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.resource(), "/", "setIamPolicy"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -274,20 +309,25 @@ DefaultSubnetworksRestStub::AsyncSetPrivateIpGoogleAccess(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
             request.subnetworks_set_private_ip_google_access_request_resource(),
             false,
-            absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                         request.project(), "/", "regions", "/",
-                         request.region(), "/", "subnetworks", "/",
+            absl::StrCat("/", "compute", "/",
+                         rest_internal::DetermineApiVersion("v1", opts), "/",
+                         "projects", "/", request.project(), "/", "regions",
+                         "/", request.region(), "/", "subnetworks", "/",
                          request.subnetwork(), "/", "setPrivateIpGoogleAccess"),
             rest_internal::TrimEmptyQueryParameters(
                 {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -299,14 +339,16 @@ DefaultSubnetworksRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::subnetworks::v1::
         TestIamPermissionsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "subnetworks", "/", request.resource(), "/",
-                   "testIamPermissions"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.resource(), "/", "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -319,15 +361,20 @@ DefaultSubnetworksRestStub::AsyncGetOperation(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context) {
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
+                absl::StrCat(
+                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                    "/projects/", request.project(), "/regions/",
+                    request.region(), "/operations/", request.operation())));
       },
-      std::move(p), operations_, request, std::move(rest_context)};
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -341,14 +388,20 @@ future<Status> DefaultSubnetworksRestStub::AsyncCancelOperation(
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request, false,
-                      absl::StrCat("/compute/v1/projects/", request.project(),
-                                   "/regions/", request.region(),
-                                   "/operations/", request.operation())));
-                },
-                std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat(
+                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/projects/", request.project(), "/regions/", request.region(),
+                "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

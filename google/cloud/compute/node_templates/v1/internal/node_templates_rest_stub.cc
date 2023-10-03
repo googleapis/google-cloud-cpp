@@ -49,11 +49,14 @@ DefaultNodeTemplatesRestStub::AggregatedListNodeTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         AggregatedListNodeTemplatesRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "aggregated", "/", "nodeTemplates"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "aggregated", "/",
+                   "nodeTemplates"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("include_all_scopes",
@@ -77,18 +80,23 @@ DefaultNodeTemplatesRestStub::AsyncDeleteNodeTemplate(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "nodeTemplates", "/",
-                             request.node_template()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "nodeTemplates", "/", request.node_template()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -100,11 +108,14 @@ DefaultNodeTemplatesRestStub::GetNodeTemplate(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         GetNodeTemplateRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplate>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "nodeTemplates", "/", request.node_template()));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates", "/",
+                   request.node_template()));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -112,12 +123,14 @@ DefaultNodeTemplatesRestStub::GetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "nodeTemplates", "/", request.resource(), "/",
-                   "getIamPolicy"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates", "/",
+                   request.resource(), "/", "getIamPolicy"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
           "options_requested_policy_version",
           std::to_string(request.options_requested_policy_version()))}));
@@ -133,18 +146,24 @@ DefaultNodeTemplatesRestStub::AsyncInsertNodeTemplate(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.node_template_resource(),
                 false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "nodeTemplates"),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "nodeTemplates"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -156,11 +175,13 @@ DefaultNodeTemplatesRestStub::ListNodeTemplates(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         ListNodeTemplatesRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplateList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "nodeTemplates"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -175,13 +196,15 @@ DefaultNodeTemplatesRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const&
         request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "nodeTemplates", "/", request.resource(), "/",
-                   "setIamPolicy"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates", "/",
+                   request.resource(), "/", "setIamPolicy"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -189,14 +212,16 @@ DefaultNodeTemplatesRestStub::TestIamPermissions(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::node_templates::v1::
         TestIamPermissionsRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
       false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "nodeTemplates", "/", request.resource(), "/",
-                   "testIamPermissions"));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "nodeTemplates", "/",
+                   request.resource(), "/", "testIamPermissions"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -209,15 +234,20 @@ DefaultNodeTemplatesRestStub::AsyncGetOperation(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context) {
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
+                absl::StrCat(
+                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                    "/projects/", request.project(), "/regions/",
+                    request.region(), "/operations/", request.operation())));
       },
-      std::move(p), operations_, request, std::move(rest_context)};
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -231,14 +261,20 @@ future<Status> DefaultNodeTemplatesRestStub::AsyncCancelOperation(
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request, false,
-                      absl::StrCat("/compute/v1/projects/", request.project(),
-                                   "/regions/", request.region(),
-                                   "/operations/", request.operation())));
-                },
-                std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat(
+                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/projects/", request.project(), "/regions/", request.region(),
+                "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

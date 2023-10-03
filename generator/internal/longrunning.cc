@@ -14,7 +14,9 @@
 
 #include "generator/internal/longrunning.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/http_option_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/log.h"
 #include "absl/types/variant.h"
 #include <google/cloud/extended_operations.pb.h>
 #include <google/longrunning/operations.pb.h>
@@ -170,6 +172,10 @@ void SetLongrunningOperationServiceVars(
           R"""(absl::StrCat("/v1/", request.name()))""";
       service_vars["longrunning_cancel_operation_path"] =
           R"""(absl::StrCat("/v1/", request.name(), ":cancel"))""";
+      service_vars["longrunning_get_operation_path_rest"] =
+          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts) ,"/", request.name()))""";
+      service_vars["longrunning_cancel_operation_path_rest"] =
+          R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts) ,"/", request.name(), ":cancel"))""";
       return;
     }
     if (!method->options()
@@ -181,6 +187,12 @@ void SetLongrunningOperationServiceVars(
                           *method, method->output_type()->full_name())));
       auto operation_service_extension =
           method->options().GetExtension(google::cloud::operation_service);
+      auto api_version = FormatApiVersionFromPackageName(*method);
+      if (!api_version) {
+        GCP_LOG(FATAL) << "Unrecognized API version in package name: "
+                       << method->file()->package();
+      }
+
       if (operation_service_extension == "GlobalOperations") {
         service_vars["longrunning_operation_include_header"] =
             "google/cloud/compute/global_operations/v1/global_operations.pb.h";
@@ -194,14 +206,17 @@ void SetLongrunningOperationServiceVars(
       r.set_project(request.project());
       r.set_operation(op);
 )""";
-        service_vars["longrunning_get_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation()))""";
-        service_vars["longrunning_cancel_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation()))""";
+        auto global_lro_path = absl::StrCat(
+            R"""(absl::StrCat("/compute/",
+                             )""",
+            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
+                            *api_version),
+            R"""(,
+                             "/projects/", request.project(),
+                             "/global/operations/", request.operation()))""");
+        service_vars["longrunning_get_operation_path_rest"] = global_lro_path;
+        service_vars["longrunning_cancel_operation_path_rest"] =
+            global_lro_path;
       } else if (operation_service_extension ==
                  "GlobalOrganizationOperations") {
         service_vars["longrunning_operation_include_header"] =
@@ -216,12 +231,17 @@ void SetLongrunningOperationServiceVars(
         service_vars["longrunning_set_operation_fields"] = R"""(
       r.set_operation(op);
 )""";
-        service_vars["longrunning_get_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/locations/global/operations/",
-                             request.operation()))""";
-        service_vars["longrunning_cancel_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/locations/global/operations/",
-                             request.operation()))""";
+        auto global_org_lro_path = absl::StrCat(
+            R"""(absl::StrCat("/compute/",
+                             )""",
+            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
+                            *api_version),
+            R"""(,
+                             "/locations/global/operations/", request.operation()))""");
+        service_vars["longrunning_get_operation_path_rest"] =
+            global_org_lro_path;
+        service_vars["longrunning_cancel_operation_path_rest"] =
+            global_org_lro_path;
       } else if (operation_service_extension == "RegionOperations") {
         service_vars["longrunning_operation_include_header"] =
             "google/cloud/compute/region_operations/v1/region_operations.pb.h";
@@ -236,14 +256,18 @@ void SetLongrunningOperationServiceVars(
       r.set_region(request.region());
       r.set_operation(op);
 )""";
-        service_vars["longrunning_get_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation()))""";
-        service_vars["longrunning_cancel_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation()))""";
+        auto region_lro_path = absl::StrCat(
+            R"""(absl::StrCat("/compute/",
+                             )""",
+            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
+                            *api_version),
+            R"""(,
+                             "/projects/", request.project(),
+                             "/regions/", request.region(),
+                             "/operations/", request.operation()))""");
+        service_vars["longrunning_get_operation_path_rest"] = region_lro_path;
+        service_vars["longrunning_cancel_operation_path_rest"] =
+            region_lro_path;
       } else if (operation_service_extension == "ZoneOperations") {
         service_vars["longrunning_operation_include_header"] =
             "google/cloud/compute/zone_operations/v1/zone_operations.pb.h";
@@ -258,14 +282,17 @@ void SetLongrunningOperationServiceVars(
       r.set_zone(request.zone());
       r.set_operation(op);
 )""";
-        service_vars["longrunning_get_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/operations/",
-                             request.operation()))""";
-        service_vars["longrunning_cancel_operation_path"] =
-            R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/operations/",
-                             request.operation()))""";
+        auto zone_lro_path = absl::StrCat(
+            R"""(absl::StrCat("/compute/",
+                             )""",
+            absl::StrFormat("rest_internal::DetermineApiVersion(\"%s\", opts)",
+                            *api_version),
+            R"""(,
+                             "/projects/", request.project(),
+                             "/zones/", request.zone(),
+                             "/operations/", request.operation()))""");
+        service_vars["longrunning_get_operation_path_rest"] = zone_lro_path;
+        service_vars["longrunning_cancel_operation_path_rest"] = zone_lro_path;
       } else {
         std::cerr << __func__ << " Unknown operation_service_extension="
                   << operation_service_extension << std::endl;

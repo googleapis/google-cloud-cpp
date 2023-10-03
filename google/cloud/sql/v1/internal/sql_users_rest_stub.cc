@@ -42,10 +42,12 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "users"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("host", request.host()),
            std::make_pair("name", request.name())}));
@@ -54,11 +56,12 @@ DefaultSqlUsersServiceRestStub::Delete(
 StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::User>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users", "/",
-                   request.name()),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "users", "/", request.name()),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("host", request.host())}));
 }
@@ -67,30 +70,36 @@ StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "users"));
 }
 
 StatusOr<google::cloud::sql::v1::UsersListResponse>
 DefaultSqlUsersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "users"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlUsersServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", "v1", "/", "projects", "/", request.project(), "/",
-                   "instances", "/", request.instance(), "/", "users"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "users"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("host", request.host()),
            std::make_pair("name", request.name())}));

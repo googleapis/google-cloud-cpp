@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -34,9 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<VpnTunnelsConnection> MakeVpnTunnelsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 VpnTunnelsPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, VpnTunnelsPolicyOptionList>(
+      options, __func__);
   options = compute_vpn_tunnels_v1_internal::VpnTunnelsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<

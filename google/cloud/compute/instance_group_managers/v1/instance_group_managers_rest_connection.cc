@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -37,6 +38,7 @@ std::shared_ptr<InstanceGroupManagersConnection>
 MakeInstanceGroupManagersConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
+                                 rest_internal::TargetApiVersionOption,
                                  InstanceGroupManagersPolicyOptionList>(
       options, __func__);
   options = compute_instance_group_managers_v1_internal::

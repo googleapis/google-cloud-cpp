@@ -16,7 +16,9 @@
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_format.h"
@@ -51,16 +53,23 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
-void RestPathVisitorHelper(PathTemplate::Segment const& s,
+void RestPathVisitorHelper(std::string const& api_version,
+                           PathTemplate::Segment const& s,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path);
 
 struct RestPathVisitor {
-  explicit RestPathVisitor(std::vector<HttpExtensionInfo::RestPathPiece>& path)
-      : path(path) {}
+  explicit RestPathVisitor(std::string api_version,
+                           std::vector<HttpExtensionInfo::RestPathPiece>& path)
+      : api_version(std::move(api_version)), path(path) {}
   void operator()(PathTemplate::Match const&) { ; }
   void operator()(PathTemplate::MatchRecursive const&) { ; }
   void operator()(std::string const& s) {
-    path.emplace_back([piece = s](google::protobuf::MethodDescriptor const&) {
+    path.emplace_back([piece = s, api = api_version](
+                          google::protobuf::MethodDescriptor const&) {
+      if (piece == api) {
+        return absl::StrFormat(
+            "rest_internal::DetermineApiVersion(\"%s\", opts)", api);
+      }
       return absl::StrFormat("\"%s\"", piece);
     });
   }
@@ -72,16 +81,17 @@ struct RestPathVisitor {
     });
   }
   void operator()(PathTemplate::Segment const& s) {
-    RestPathVisitorHelper(s, path);
+    RestPathVisitorHelper(api_version, s, path);
   }
 
+  std::string api_version;
   std::vector<HttpExtensionInfo::RestPathPiece>& path;
 };
 
 void RestPathVisitorHelper(
-    PathTemplate::Segment const& s,
+    std::string const& api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
-  absl::visit(RestPathVisitor{path}, s.value);
+  absl::visit(RestPathVisitor{api_version, path}, s.value);
 }
 
 }  // namespace
@@ -135,7 +145,19 @@ void SetHttpDerivedMethodVars(
     void operator()(HttpSimpleInfo const& info) {
       method_vars["method_http_verb"] = info.http_verb;
       method_vars["method_request_params"] = method.full_name();
-      method_vars["method_rest_path"] = absl::StrCat("\"", info.url_path, "\"");
+      if (absl::StrContains(info.url_path, info.api_version)) {
+        std::string needle = absl::StrFormat("/%s/", info.api_version);
+        auto start = info.url_path.find(needle);
+        method_vars["method_rest_path"] = absl::StrCat(
+            "absl::StrCat(\"", info.url_path.substr(0, start), "/\", ",
+            absl::StrFormat(
+                R"""(rest_internal::DetermineApiVersion("%s", opts), "/)""",
+                info.api_version),
+            info.url_path.substr(start + needle.length()), "\")");
+      } else {
+        method_vars["method_rest_path"] =
+            absl::StrCat("\"", info.url_path, "\"");
+      }
     }
 
     // This visitor is an error diagnostic, in case we encounter an url that the
@@ -255,6 +277,9 @@ void SetHttpQueryParameters(
 absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
 ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
+  auto api_version = FormatApiVersionFromPackageName(method);
+  if (!api_version) return {};
+
   HttpExtensionInfo info;
   google::api::HttpRule http_rule =
       method.options().GetExtension(google::api::http);
@@ -298,7 +323,8 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
           [](std::shared_ptr<PathTemplate::Segment> const& s) {
             return absl::holds_alternative<PathTemplate::Variable>(s->value);
           }) == parsed_http_rule->segments.end()) {
-    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body()};
+    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body(),
+                          *api_version};
   }
 
   info.body = http_rule.body();
@@ -343,6 +369,7 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
         "/", absl::StrJoin(path_suffix.segments, "/", segment_formatter));
   }
 
+  auto rest_path_visitor = RestPathVisitor(*api_version, info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
       auto v = absl::get<PathTemplate::Variable>(s->value);
@@ -354,7 +381,7 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
       }
     }
 
-    absl::visit(RestPathVisitor{info.rest_path}, s->value);
+    absl::visit(rest_path_visitor, s->value);
   }
 
   info.rest_path_verb = parsed_http_rule->verb;
@@ -410,6 +437,20 @@ std::string FormatRequestResource(
 
   if (field_name.empty()) return "request";
   return absl::StrCat("request.", field_name, "()");
+}
+
+// For protos we generate from Discovery Documents the api version is always the
+// last part of the package name. Protos found in googleapis have package names
+// that mirror their directory path, which ends in the api version as well.
+StatusOr<std::string> FormatApiVersionFromPackageName(
+    google::protobuf::MethodDescriptor const& method) {
+  std::vector<std::string> parts =
+      absl::StrSplit(method.file()->package(), '.');
+  if (absl::StartsWith(parts.back(), "v")) return parts.back();
+  return internal::InvalidArgumentError(
+      absl::StrCat("Unrecognized API version in package name: ",
+                   method.file()->package()),
+      GCP_ERROR_INFO().WithMetadata("method", method.full_name()));
 }
 
 }  // namespace generator_internal

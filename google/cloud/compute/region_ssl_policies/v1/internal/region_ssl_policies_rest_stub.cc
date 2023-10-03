@@ -55,18 +55,23 @@ DefaultRegionSslPoliciesRestStub::AsyncDeleteSslPolicy(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "sslPolicies", "/",
-                             request.ssl_policy()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "sslPolicies", "/", request.ssl_policy()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -78,11 +83,13 @@ DefaultRegionSslPoliciesRestStub::GetSslPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         GetSslPolicyRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "sslPolicies", "/", request.ssl_policy()));
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "regions", "/",
+          request.region(), "/", "sslPolicies", "/", request.ssl_policy()));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -95,17 +102,23 @@ DefaultRegionSslPoliciesRestStub::AsyncInsertSslPolicy(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "sslPolicies"),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "sslPolicies"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -117,11 +130,13 @@ DefaultRegionSslPoliciesRestStub::ListRegionSslPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         ListRegionSslPoliciesRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "sslPolicies"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", opts), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "sslPolicies"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -137,12 +152,14 @@ DefaultRegionSslPoliciesRestStub::ListAvailableFeatures(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         ListAvailableFeaturesRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "regions", "/", request.region(),
-                   "/", "sslPolicies", "/", "listAvailableFeatures"),
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "regions", "/",
+          request.region(), "/", "sslPolicies", "/", "listAvailableFeatures"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),
@@ -162,18 +179,23 @@ DefaultRegionSslPoliciesRestStub::AsyncPatchSslPolicy(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto service, auto request, auto rest_context) {
+      [](auto p, auto service, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(), false,
-                absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                             request.project(), "/", "regions", "/",
-                             request.region(), "/", "sslPolicies", "/",
-                             request.ssl_policy()),
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "sslPolicies", "/", request.ssl_policy()),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id())})));
       },
-      std::move(p), service_, request, std::move(rest_context)};
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -190,15 +212,20 @@ DefaultRegionSslPoliciesRestStub::AsyncGetOperation(
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
       p.get_future();
   std::thread t{
-      [](auto p, auto operations, auto request, auto rest_context) {
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
-                absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation())));
+                absl::StrCat(
+                    "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                    "/projects/", request.project(), "/regions/",
+                    request.region(), "/operations/", request.operation())));
       },
-      std::move(p), operations_, request, std::move(rest_context)};
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -212,14 +239,20 @@ future<Status> DefaultRegionSslPoliciesRestStub::AsyncCancelOperation(
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context) {
-                  p.set_value(rest_internal::Post<google::protobuf::Empty>(
-                      *operations, *rest_context, request, false,
-                      absl::StrCat("/compute/v1/projects/", request.project(),
-                                   "/regions/", request.region(),
-                                   "/operations/", request.operation())));
-                },
-                std::move(p), operations_, request, std::move(rest_context)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context, auto opts) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat(
+                "/compute/", rest_internal::DetermineApiVersion("v1", opts),
+                "/projects/", request.project(), "/regions/", request.region(),
+                "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      internal::CurrentOptions()};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

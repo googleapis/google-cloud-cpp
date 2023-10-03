@@ -44,11 +44,13 @@ DefaultImageFamilyViewsRestStub::GetImageFamilyView(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::image_family_views::v1::
         GetImageFamilyViewRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageFamilyView>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", "v1", "/", "projects", "/",
-                   request.project(), "/", "zones", "/", request.zone(), "/",
-                   "imageFamilyViews", "/", request.family()));
+      absl::StrCat(
+          "/", "compute", "/", rest_internal::DetermineApiVersion("v1", opts),
+          "/", "projects", "/", request.project(), "/", "zones", "/",
+          request.zone(), "/", "imageFamilyViews", "/", request.family()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

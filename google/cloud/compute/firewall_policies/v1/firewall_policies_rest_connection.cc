@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -34,10 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<FirewallPoliciesConnection> MakeFirewallPoliciesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 FirewallPoliciesPolicyOptionList>(options,
-                                                                   __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, FirewallPoliciesPolicyOptionList>(
+      options, __func__);
   options =
       compute_firewall_policies_v1_internal::FirewallPoliciesDefaultOptions(
           std::move(options));

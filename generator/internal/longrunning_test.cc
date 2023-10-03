@@ -271,20 +271,26 @@ char const* const kExtendedOperationsProto =
     "  ERROR_MESSAGE = 4;\n"
     "}\n";
 
+char const* const kWellKnownProto = R"""(
+syntax = "proto3";
+package google.protobuf;
+// Leading comments about message Empty.
+message Empty {}
+)""";
+
 char const* const kServiceProto =
     "syntax = \"proto3\";\n"
-    "package google.protobuf;\n"
+    "package my.service.v1;\n"
     "import \"google/api/annotations.proto\";\n"
     "import \"google/api/client.proto\";\n"
     "import \"google/api/http.proto\";\n"
+    "import \"google/protobuf/well_known.proto\";\n"
     "import \"google/longrunning/operation.proto\";\n"
     "import \"google/cloud/extended_operations.proto\";\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
     "  string parent = 1;\n"
     "}\n"
-    "// Leading comments about message Empty.\n"
-    "message Empty {}\n"
     "// Leading comments about message Disk.\n"
     "message Disk {\n"
     "  string name = 1;\n"
@@ -372,7 +378,7 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "    option (google.longrunning.operation_info) = {\n"
-    "      response_type: \"google.protobuf.Bar\"\n"
+    "      response_type: \"my.service.v1.Bar\"\n"
     "      metadata_type: \"google.protobuf.Method2Metadata\"\n"
     "    };\n"
     "  }\n"
@@ -467,6 +473,7 @@ class LongrunningVarsTest : public testing::Test {
              kLongrunningOperationsProto},
             {std::string("google/cloud/extended_operations.proto"),
              kExtendedOperationsProto},
+            {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto}}),
         source_tree_db_(&source_tree_),
         merged_db_(&simple_db_, &source_tree_db_),
@@ -509,15 +516,15 @@ TEST_F(LongrunningVarsTest,
   EXPECT_THAT(vars, Contains(Pair("longrunning_metadata_type",
                                   "google::protobuf::Method2Metadata")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
-                                  "google::protobuf::Bar")));
+                                  "my::service::v1::Bar")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
-                                  "google.protobuf.Bar")));
+                                  "my.service.v1.Bar")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
-                                  "google::protobuf::Bar")));
-  EXPECT_THAT(vars, Contains(Pair(
-                        "method_longrunning_deduced_return_doxygen_link",
-                        "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
-                        "service.proto#L9}")));
+                                  "my::service::v1::Bar")));
+  EXPECT_THAT(
+      vars, Contains(Pair("method_longrunning_deduced_return_doxygen_link",
+                          "@googleapis_link{my::service::v1::Bar,google/foo/v1/"
+                          "service.proto#L10}")));
 }
 
 TEST_F(LongrunningVarsTest,
@@ -552,15 +559,15 @@ TEST_F(LongrunningVarsTest,
   EXPECT_THAT(vars, Contains(Pair("longrunning_metadata_type",
                                   "google::protobuf::Method2Metadata")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
-                                  "google::protobuf::Bar")));
+                                  "my::service::v1::Bar")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
-                                  "google.protobuf.Bar")));
+                                  "my.service.v1.Bar")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
-                                  "google::protobuf::Bar")));
-  EXPECT_THAT(vars, Contains(Pair(
-                        "method_longrunning_deduced_return_doxygen_link",
-                        "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
-                        "service.proto#L9}")));
+                                  "my::service::v1::Bar")));
+  EXPECT_THAT(
+      vars, Contains(Pair("method_longrunning_deduced_return_doxygen_link",
+                          "@googleapis_link{my::service::v1::Bar,google/foo/v1/"
+                          "service.proto#L10}")));
 }
 
 TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokeLRO) {
@@ -574,15 +581,15 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationMethodVarsBespokeLRO) {
   EXPECT_TRUE(IsHttpLongrunningOperation(*method));
   SetLongrunningOperationMethodVars(*method, vars);
   EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
-                                  "google::protobuf::Operation")));
+                                  "my::service::v1::Operation")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
-                                  "google.protobuf.Operation")));
+                                  "my.service.v1.Operation")));
   EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
-                                  "google::protobuf::Operation")));
+                                  "my::service::v1::Operation")));
   EXPECT_THAT(vars,
               Contains(Pair("method_longrunning_deduced_return_doxygen_link",
-                            "@googleapis_link{google::protobuf::Operation,"
-                            "google/foo/v1/service.proto#L24}")));
+                            "@googleapis_link{my::service::v1::Operation,"
+                            "google/foo/v1/service.proto#L23}")));
 }
 
 TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsGRPC) {
@@ -631,18 +638,16 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCGlobal) {
       r.set_project(request.project());
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_get_operation_path",
-                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation()))""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_cancel_operation_path",
-                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/global/operations/",
-                             request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/projects/", request.project(),
+                             "/global/operations/", request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/projects/", request.project(),
+                             "/global/operations/", request.operation()))""")));
 }
 
 TEST_F(LongrunningVarsTest,
@@ -669,16 +674,14 @@ TEST_F(LongrunningVarsTest,
   EXPECT_THAT(vars, Contains(Pair("longrunning_set_operation_fields", R"""(
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_get_operation_path",
-                  R"""(absl::StrCat("/compute/v1/locations/global/operations/",
-                             request.operation()))""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_cancel_operation_path",
-                  R"""(absl::StrCat("/compute/v1/locations/global/operations/",
-                             request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/locations/global/operations/", request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/locations/global/operations/", request.operation()))""")));
 }
 
 TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCRegion) {
@@ -704,18 +707,18 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCRegion) {
       r.set_region(request.region());
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_get_operation_path",
-                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation()))""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_cancel_operation_path",
-                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/regions/", request.region(), "/operations/",
-                             request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/projects/", request.project(),
+                             "/regions/", request.region(),
+                             "/operations/", request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/projects/", request.project(),
+                             "/regions/", request.region(),
+                             "/operations/", request.operation()))""")));
 }
 
 TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCZone) {
@@ -741,18 +744,18 @@ TEST_F(LongrunningVarsTest, SetLongrunningOperationServiceVarsNonGRPCZone) {
       r.set_zone(request.zone());
       r.set_operation(op);
 )""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_get_operation_path",
-                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/operations/",
-                             request.operation()))""")));
-  EXPECT_THAT(vars,
-              Contains(Pair(
-                  "longrunning_cancel_operation_path",
-                  R"""(absl::StrCat("/compute/v1/projects/", request.project(),
-                             "/zones/", request.zone(), "/operations/",
-                             request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_get_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/projects/", request.project(),
+                             "/zones/", request.zone(),
+                             "/operations/", request.operation()))""")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_cancel_operation_path_rest",
+                                  R"""(absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", opts),
+                             "/projects/", request.project(),
+                             "/zones/", request.zone(),
+                             "/operations/", request.operation()))""")));
 }
 
 }  // namespace

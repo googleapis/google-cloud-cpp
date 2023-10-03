@@ -42,8 +42,11 @@ StatusOr<google::cloud::sql::v1::FlagsListResponse>
 DefaultSqlFlagsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlFlagsListRequest const& request) {
+  auto const& opts = internal::CurrentOptions();
   return rest_internal::Get<google::cloud::sql::v1::FlagsListResponse>(
-      *service_, rest_context, request, true, "/v1/flags",
+      *service_, rest_context, request, true,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                   "/flags"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("database_version", request.database_version())}));
 }

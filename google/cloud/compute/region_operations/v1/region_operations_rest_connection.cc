@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -34,10 +35,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionOperationsConnection> MakeRegionOperationsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 RegionOperationsPolicyOptionList>(options,
-                                                                   __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, RegionOperationsPolicyOptionList>(
+      options, __func__);
   options =
       compute_region_operations_v1_internal::RegionOperationsDefaultOptions(
           std::move(options));

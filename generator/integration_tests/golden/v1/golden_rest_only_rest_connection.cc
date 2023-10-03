@@ -25,6 +25,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<GoldenRestOnlyConnection> MakeGoldenRestOnlyConnectionRest(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
       GoldenRestOnlyPolicyOptionList>(options, __func__);
   options = golden_v1_internal::GoldenRestOnlyDefaultOptions(
       std::move(options));

@@ -495,6 +495,16 @@ TEST(TrimEmptyQueryParameters, EmptyInput) {
   EXPECT_THAT(trimmed_params, IsEmpty());
 }
 
+TEST(DetermineApiVersion, TargetApiVersionOptionPresent) {
+  auto options = Options{}.set<rest_internal::TargetApiVersionOption>("test");
+  EXPECT_THAT(DetermineApiVersion("v1", options), Eq("test"));
+}
+
+TEST(DetermineApiVersion, TargetApiVersionOptionNotPresent) {
+  Options options;
+  EXPECT_THAT(DetermineApiVersion("v1", options), Eq("v1"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

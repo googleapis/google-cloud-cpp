@@ -140,7 +140,7 @@ Status ConnectionRestGenerator::GenerateCc() {
        vars("option_defaults_header_path"),
        vars("stub_factory_rest_header_path"),
        vars("tracing_connection_header_path"), "google/cloud/common_options.h",
-       "google/cloud/credentials.h",
+       "google/cloud/internal/rest_options.h", "google/cloud/credentials.h",
        "google/cloud/internal/rest_background_threads_impl.h"});
   CcSystemIncludes({"memory"});
 
@@ -154,7 +154,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   CcPrint("    " + ConnectionFactoryFunctionArguments() + ") {");
   CcPrint(R"""(
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
+      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
       $service_name$PolicyOptionList>(options, __func__);
   options = $product_internal_namespace$::$service_name$DefaultOptions(
 )""");

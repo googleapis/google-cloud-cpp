@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -37,6 +38,7 @@ std::shared_ptr<RegionInstanceTemplatesConnection>
 MakeRegionInstanceTemplatesConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
+                                 rest_internal::TargetApiVersionOption,
                                  RegionInstanceTemplatesPolicyOptionList>(
       options, __func__);
   options = compute_region_instance_templates_v1_internal::

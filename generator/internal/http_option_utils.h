@@ -29,6 +29,7 @@ struct HttpSimpleInfo {
   std::string http_verb;
   std::string url_path;
   std::string body;
+  std::string api_version;
 };
 
 struct HttpExtensionInfo {
@@ -102,6 +103,12 @@ std::string FormatRequestResource(
     google::protobuf::Descriptor const& request,
     absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
         parsed_http_info);
+
+/**
+ * Parses the package name of the method and returns its API version.
+ */
+StatusOr<std::string> FormatApiVersionFromPackageName(
+    google::protobuf::MethodDescriptor const& method);
 
 }  // namespace generator_internal
 }  // namespace cloud

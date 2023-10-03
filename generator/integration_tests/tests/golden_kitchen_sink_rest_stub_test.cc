@@ -145,7 +145,7 @@ TEST(GoldenKitchenSinkRestStubTest, WriteLogEntries) {
               Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
       .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
-        EXPECT_THAT(request.path(), Eq("/v2/entries:write"));
+        EXPECT_THAT(request.path(), Eq("/v1/entries:write"));
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
@@ -167,7 +167,7 @@ TEST(GoldenKitchenSinkRestStubTest, ListLogs) {
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_rest_client, Get)
       .WillOnce([&](RestContext&, RestRequest const& request) {
-        EXPECT_THAT(request.path(), Eq("/v2/projects/my_project/logs"));
+        EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/logs"));
         EXPECT_THAT(request.GetQueryParameter("page_token"),
                     Contains("my_page_token"));
         return std::unique_ptr<rest_internal::RestResponse>(
