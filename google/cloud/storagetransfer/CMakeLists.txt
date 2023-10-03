@@ -14,6 +14,15 @@
 # limitations under the License.
 # ~~~
 
+if (APPLE AND (Protobuf_VERSION VERSION_LESS 23.0))
+    message(WARNING "Cannot build google/cloud/storagetransfer - "
+                    " on macOS GID_MAX is a system macro and is also used as"
+                    " a C++ symbol in this service protos. Protobuf < 23.0"
+                    " does not have the necessary workarounds to handle this"
+                    " conflict.")
+    return()
+endif ()
+
 include(GoogleCloudCppLibrary)
 
 set(GOOGLE_CLOUD_CPP_SERVICE_DIRS "" "v1/")
