@@ -13,10 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
-#include "google/cloud/internal/opentelemetry.h"
+
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/internal/opentelemetry.h"
 #include <opentelemetry/trace/semantic_conventions.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <cstdint>
 #include <sstream>
 #include <string>
 #include <thread>
@@ -26,8 +27,6 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace {
 
 namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -94,9 +93,9 @@ MakeTracingReaderConnection(
                                                         std::move(impl));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
