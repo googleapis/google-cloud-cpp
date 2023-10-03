@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/networkservices/v1/network_services_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,14 +23,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "global");
+
   namespace networkservices = ::google::cloud::networkservices_v1;
   auto client = networkservices::NetworkServicesClient(
       networkservices::MakeNetworkServicesConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
-  for (auto r : client.ListEndpointPolicies(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto ep : client.ListEndpointPolicies(location.FullName())) {
+    if (!ep) throw std::move(ep).status();
+    std::cout << ep->DebugString() << "\n";
   }
 
   return 0;

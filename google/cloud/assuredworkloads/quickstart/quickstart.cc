@@ -14,7 +14,9 @@
 
 //! [all]
 #include "google/cloud/assuredworkloads/v1/assured_workloads_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {

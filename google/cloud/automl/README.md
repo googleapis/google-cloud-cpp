@@ -21,6 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/automl/v1/auto_ml_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,12 +30,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace automl = ::google::cloud::automl_v1;
   auto client = automl::AutoMlClient(automl::MakeAutoMlConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto m : client.ListModels(parent)) {
+  for (auto m : client.ListModels(location.FullName())) {
     if (!m) throw std::move(m).status();
     std::cout << m->DebugString() << "\n";
   }

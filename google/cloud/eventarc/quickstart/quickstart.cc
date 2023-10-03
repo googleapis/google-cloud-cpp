@@ -14,7 +14,7 @@
 
 //! [all]
 #include "google/cloud/eventarc/v1/eventarc_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,12 +23,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace eventarc = ::google::cloud::eventarc_v1;
   auto client = eventarc::EventarcClient(eventarc::MakeEventarcConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  auto const parent = project.FullName() + "/locations/" + argv[2];
-  for (auto t : client.ListTriggers(parent)) {
+  for (auto t : client.ListTriggers(location.FullName())) {
     if (!t) throw std::move(t).status();
     std::cout << t->DebugString() << "\n";
   }

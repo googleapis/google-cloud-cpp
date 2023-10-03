@@ -14,7 +14,7 @@
 
 //! [all]
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,14 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace confidentialcomputing = ::google::cloud::confidentialcomputing_v1;
   auto client = confidentialcomputing::ConfidentialComputingClient(
       confidentialcomputing::MakeConfidentialComputingConnection());
 
-  //  auto const project = google::cloud::Project(argv[1]);
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  auto result = client.CreateChallenge(parent, {});
+  auto result = client.CreateChallenge(location.FullName(), {});
   if (!result) throw std::move(result).status();
   std::cout << result->DebugString() << "\n";
 

@@ -29,6 +29,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/video/transcoder/v1/transcoder_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -37,15 +38,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace transcoder = ::google::cloud::video_transcoder_v1;
   auto client = transcoder::TranscoderServiceClient(
       transcoder::MakeTranscoderServiceConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListJobs(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto j : client.ListJobs(location.FullName())) {
+    if (!j) throw std::move(j).status();
+    std::cout << j->DebugString() << "\n";
   }
 
   return 0;

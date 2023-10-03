@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/composer/v1/environments_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,13 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace composer = ::google::cloud::composer_v1;
   auto client =
       composer::EnvironmentsClient(composer::MakeEnvironmentsConnection());
 
-  auto const parent =
-      std::string("projects/") + argv[1] + "/locations/" + argv[2];
-  for (auto e : client.ListEnvironments(parent)) {
+  for (auto e : client.ListEnvironments(location.FullName())) {
     if (!e) throw std::move(e).status();
     std::cout << e->DebugString() << "\n";
   }

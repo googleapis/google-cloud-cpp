@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/discoveryengine/v1/document_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,11 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "global");
+
   namespace discoveryengine = ::google::cloud::discoveryengine_v1;
   auto client = discoveryengine::DocumentServiceClient(
       discoveryengine::MakeDocumentServiceConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global" +
+  auto const parent = location.FullName() +
                       "/dataStores/default_data_store/branches/default_branch";
   for (auto d : client.ListDocuments(parent)) {
     if (!d) throw std::move(d).status();

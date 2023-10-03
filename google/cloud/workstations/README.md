@@ -19,6 +19,7 @@ this library.
 
 ```cc
 #include "google/cloud/workstations/v1/workstations_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -27,13 +28,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace workstations = ::google::cloud::workstations_v1;
   auto client = workstations::WorkstationsClient(
       workstations::MakeWorkstationsConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto wc : client.ListWorkstationClusters(parent)) {
+  for (auto wc : client.ListWorkstationClusters(location.FullName())) {
     if (!wc) throw std::move(wc).status();
     std::cout << wc->DebugString() << "\n";
   }

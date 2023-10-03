@@ -18,7 +18,6 @@ this library.
 
 ```cc
 #include "google/cloud/advisorynotifications/v1/advisory_notifications_client.h"
-#include "google/cloud/project.h"
 #include <iostream>
 #include <string>
 

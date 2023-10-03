@@ -21,6 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/networkmanagement/v1/reachability_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,13 +30,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "global");
+
   namespace networkmanagement = ::google::cloud::networkmanagement_v1;
   auto client = networkmanagement::ReachabilityServiceClient(
       networkmanagement::MakeReachabilityServiceConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
-
-  for (auto t : client.ListConnectivityTests(parent)) {
+  for (auto t : client.ListConnectivityTests(location.FullName())) {
     if (!t) throw std::move(t).status();
     std::cout << t->DebugString() << "\n";
   }

@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/deploy/v1/cloud_deploy_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,14 +23,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace deploy = ::google::cloud::deploy_v1;
   auto client = deploy::CloudDeployClient(deploy::MakeCloudDeployConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListDeliveryPipelines(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto dp : client.ListDeliveryPipelines(location.FullName())) {
+    if (!dp) throw std::move(dp).status();
+    std::cout << dp->DebugString() << "\n";
   }
 
   return 0;

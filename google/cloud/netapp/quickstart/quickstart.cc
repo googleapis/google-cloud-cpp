@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/netapp/v1/net_app_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,14 +23,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace netapp = ::google::cloud::netapp_v1;
   auto client = netapp::NetAppClient(netapp::MakeNetAppConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListStoragePools(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto sp : client.ListStoragePools(location.FullName())) {
+    if (!sp) throw std::move(sp).status();
+    std::cout << sp->DebugString() << "\n";
   }
 
   return 0;

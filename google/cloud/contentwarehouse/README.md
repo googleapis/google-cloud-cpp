@@ -19,6 +19,7 @@ this library.
 
 ```cc
 #include "google/cloud/contentwarehouse/v1/document_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -27,15 +28,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace contentwarehouse = ::google::cloud::contentwarehouse_v1;
   auto client = contentwarehouse::DocumentServiceClient(
       contentwarehouse::MakeDocumentServiceConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.SearchDocuments(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto md : client.SearchDocuments(location.FullName())) {
+    if (!md) throw std::move(md).status();
+    std::cout << md->DebugString() << "\n";
   }
 
   return 0;

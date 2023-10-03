@@ -18,6 +18,7 @@ this library.
 
 ```cc
 #include "google/cloud/gkebackup/v1/backup_for_gke_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -26,15 +27,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace gkebackup = ::google::cloud::gkebackup_v1;
   auto client =
       gkebackup::BackupForGKEClient(gkebackup::MakeBackupForGKEConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListBackupPlans(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto bp : client.ListBackupPlans(location.FullName())) {
+    if (!bp) throw std::move(bp).status();
+    std::cout << bp->DebugString() << "\n";
   }
 
   return 0;

@@ -28,6 +28,7 @@ top-level [README](/README.md#building-and-installing).
 #include "google/cloud/pubsublite/admin_client.h"
 #include "google/cloud/pubsublite/endpoint.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -36,19 +37,18 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace gc = ::google::cloud;
   namespace pubsublite = ::google::cloud::pubsublite;
-  auto const zone_id = std::string{argv[2]};
-  auto endpoint = pubsublite::EndpointFromZone(zone_id);
+  auto endpoint = pubsublite::EndpointFromZone(location.location_id());
   if (!endpoint) throw std::move(endpoint).status();
   auto client =
       pubsublite::AdminServiceClient(pubsublite::MakeAdminServiceConnection(
           gc::Options{}
               .set<gc::EndpointOption>(*endpoint)
               .set<gc::AuthorityOption>(*endpoint)));
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + zone_id;
-  for (auto topic : client.ListTopics(parent)) {
+  for (auto topic : client.ListTopics(location.FullName())) {
     if (!topic) throw std::move(topic).status();
     std::cout << topic->DebugString() << "\n";
   }
