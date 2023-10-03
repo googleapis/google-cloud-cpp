@@ -27,5 +27,5 @@ package google.cloud.cpp.compute.v1;
 // - projects/project-id/global/httpHealthChecks/health-check -
 // global/httpHealthChecks/health-check
 message HealthCheckReference {
-  optional string health_check = 1;
+  optional string health_check = 1 [json_name = "healthCheck"];
 }

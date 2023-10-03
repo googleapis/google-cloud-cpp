@@ -357,7 +357,8 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     if (!update_type_name_status.ok()) return update_type_name_status;
 
     std::string const introducer = DetermineIntroducer(field);
-    std::string field_name = CamelCaseToSnakeCase(field.value("id", p.key()));
+    std::string json_field_name = field.value("id", p.key());
+    std::string field_name = CamelCaseToSnakeCase(json_field_name);
     current_field_names.insert(field_name);
 
     auto field_number =
@@ -369,7 +370,7 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     message_properties.lines.push_back(absl::StrFormat(
         "%s%s%s%s %s = %d%s;", FormatMessageDescription(field, indent_level),
         indent, introducer, type_name, field_name, *field_number,
-        FormatFieldOptions(field_name, field)));
+        FormatFieldOptions(field_name, json_field_name, field)));
     if (*field_number == message_properties.next_available_field_number) {
       ++message_properties.next_available_field_number;
     }
@@ -389,7 +390,8 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
 }
 
 std::string DiscoveryTypeVertex::FormatFieldOptions(
-    std::string const& field_name, nlohmann::json const& field_json) {
+    std::string const& field_name, std::string const& json_field_name,
+    nlohmann::json const& field_json) {
   std::vector<std::pair<std::string, std::string>> field_options;
   if (field_json.value("required", false)) {
     field_options.emplace_back("google.api.field_behavior", "REQUIRED");
@@ -399,8 +401,17 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
     field_options.emplace_back("google.cloud.operation_request_field",
                                absl::StrCat("\"", field_name, "\""));
   }
+
+  // Discovery doc defined field names that are not always in strict
+  // camelCase, leading to translation issue between json and protobuf. Thus,
+  // the emitted proto fields need to have their name as it appears in the
+  // discovery doc added in the json_name option.
+  // Resource fields are synthesized by the generator and will never have
+  // formatting issues.
   if (field_json.value("is_resource", false)) {
     field_options.emplace_back("json_name", "__json_request_body");
+  } else {
+    field_options.emplace_back("json_name", json_field_name);
   }
 
   if (!field_options.empty()) {

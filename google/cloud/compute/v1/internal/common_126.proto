@@ -22,5 +22,5 @@ syntax = "proto3";
 package google.cloud.cpp.compute.v1;
 
 message TargetReference {
-  optional string target = 1;
+  optional string target = 1 [json_name = "target"];
 }

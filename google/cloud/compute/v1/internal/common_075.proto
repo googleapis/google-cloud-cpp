@@ -25,8 +25,8 @@ package google.cloud.cpp.compute.v1;
 message NamedPort {
   // The name for this named port. The name must be 1-63 characters long, and
   // comply with RFC1035.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 
   // The port number, which can be a value between 1 and 65535.
-  optional int32 port = 2;
+  optional int32 port = 2 [json_name = "port"];
 }

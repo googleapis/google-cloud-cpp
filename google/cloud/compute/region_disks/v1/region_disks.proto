@@ -266,18 +266,20 @@ service RegionDisks {
 // Request message for AddResourcePolicies.
 message AddResourcePoliciesRequest {
   // The disk name for this request.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // The RegionDisksAddResourcePoliciesRequest for this request.
@@ -295,7 +297,7 @@ message AddResourcePoliciesRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5;
+  optional string request_id = 5 [json_name = "requestId"];
 }
 
 // Request message for BulkInsert.
@@ -307,13 +309,15 @@ message BulkInsertRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -326,24 +330,26 @@ message BulkInsertRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for CreateSnapshot.
 message CreateSnapshotRequest {
   // Name of the regional persistent disk to snapshot.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -356,7 +362,7 @@ message CreateSnapshotRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The Snapshot for this request.
   optional google.cloud.cpp.compute.v1.Snapshot snapshot_resource = 5
@@ -366,18 +372,20 @@ message CreateSnapshotRequest {
 // Request message for DeleteDisk.
 message DeleteDiskRequest {
   // Name of the regional persistent disk to delete.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -390,34 +398,40 @@ message DeleteDiskRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for GetDisk.
 message GetDiskRequest {
   // Name of the regional persistent disk to return.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 }
 
 // Request message for GetIamPolicy.
 message GetIamPolicyRequest {
   // Requested IAM Policy version.
-  optional int32 options_requested_policy_version = 1;
+  optional int32 options_requested_policy_version = 1
+      [json_name = "optionsRequestedPolicyVersion"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Name or id of the resource for this request.
-  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+  string resource = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for InsertDisk.
@@ -429,13 +443,15 @@ message InsertDiskRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -448,10 +464,10 @@ message InsertDiskRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // Source image to restore onto a disk. This field is optional.
-  optional string source_image = 5;
+  optional string source_image = 5 [json_name = "sourceImage"];
 }
 
 // Request message for ListRegionDisks.
@@ -488,14 +504,14 @@ message ListRegionDisksRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2;
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -505,38 +521,42 @@ message ListRegionDisksRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region for this request.
-  string region = 6 [(google.api.field_behavior) = REQUIRED];
+  string region = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for RemoveResourcePolicies.
 message RemoveResourcePoliciesRequest {
   // The disk name for this request.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // The RegionDisksRemoveResourcePoliciesRequest for this request.
@@ -554,24 +574,26 @@ message RemoveResourcePoliciesRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5;
+  optional string request_id = 5 [json_name = "requestId"];
 }
 
 // Request message for Resize.
 message ResizeRequest {
   // Name of the regional persistent disk.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // The project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // The RegionDisksResizeRequest for this request.
@@ -589,16 +611,18 @@ message ResizeRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5;
+  optional string request_id = 5 [json_name = "requestId"];
 }
 
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED];
+  string region = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // The RegionSetPolicyRequest for this request.
   optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
@@ -606,7 +630,8 @@ message SetIamPolicyRequest {
       [json_name = "__json_request_body"];
 
   // Name or id of the resource for this request.
-  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+  string resource = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for SetLabels.
@@ -614,13 +639,15 @@ message SetLabelsRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The region for this request.
   string region = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // The RegionSetLabelsRequest for this request.
@@ -638,27 +665,30 @@ message SetLabelsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // Name or id of the resource for this request.
-  string resource = 5 [(google.api.field_behavior) = REQUIRED];
+  string resource = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for StartAsyncReplication.
 message StartAsyncReplicationRequest {
   // The name of the persistent disk.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // The RegionDisksStartAsyncReplicationRequest for this request.
@@ -676,24 +706,26 @@ message StartAsyncReplicationRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5;
+  optional string request_id = 5 [json_name = "requestId"];
 }
 
 // Request message for StopAsyncReplication.
 message StopAsyncReplicationRequest {
   // The name of the persistent disk.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -706,7 +738,7 @@ message StopAsyncReplicationRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for StopGroupAsyncReplication.
@@ -719,14 +751,16 @@ message StopGroupAsyncReplicationRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request. This must be the region of the
   // primary or secondary disks in the consistency group.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -739,19 +773,22 @@ message StopGroupAsyncReplicationRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for TestIamPermissions.
 message TestIamPermissionsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED];
+  string region = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Name or id of the resource for this request.
-  string resource = 3 [(google.api.field_behavior) = REQUIRED];
+  string resource = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 
   // The TestPermissionsRequest for this request.
   optional google.cloud.cpp.compute.v1.TestPermissionsRequest
@@ -761,24 +798,26 @@ message TestIamPermissionsRequest {
 // Request message for UpdateDisk.
 message UpdateDiskRequest {
   // The disk name for this request.
-  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+  string disk = 1 [(google.api.field_behavior) = REQUIRED, json_name = "disk"];
 
   // The Disk for this request.
   optional google.cloud.cpp.compute.v1.Disk disk_resource = 2
       [json_name = "__json_request_body"];
 
-  optional string paths = 3;
+  optional string paths = 3 [json_name = "paths"];
 
   // Project ID for this request.
   string project = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the region for this request.
   string region = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -791,8 +830,8 @@ message UpdateDiskRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 6;
+  optional string request_id = 6 [json_name = "requestId"];
 
   // update_mask indicates fields to be updated as part of this request.
-  optional string update_mask = 7;
+  optional string update_mask = 7 [json_name = "updateMask"];
 }

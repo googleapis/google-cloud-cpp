@@ -25,10 +25,12 @@ import "google/cloud/compute/v1/internal/common_012.proto";
 
 message GlobalNetworkEndpointGroupsAttachEndpointsRequest {
   // The list of network endpoints to be attached.
-  repeated NetworkEndpoint network_endpoints = 1;
+  repeated NetworkEndpoint network_endpoints = 1
+      [json_name = "networkEndpoints"];
 }
 
 message GlobalNetworkEndpointGroupsDetachEndpointsRequest {
   // The list of network endpoints to be detached.
-  repeated NetworkEndpoint network_endpoints = 1;
+  repeated NetworkEndpoint network_endpoints = 1
+      [json_name = "networkEndpoints"];
 }

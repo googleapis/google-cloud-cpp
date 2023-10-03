@@ -25,5 +25,5 @@ import "google/cloud/compute/v1/internal/common_019.proto";
 
 message RegionUrlMapsValidateRequest {
   // Content of the UrlMap to be validated.
-  optional UrlMap resource = 1;
+  optional UrlMap resource = 1 [json_name = "resource"];
 }

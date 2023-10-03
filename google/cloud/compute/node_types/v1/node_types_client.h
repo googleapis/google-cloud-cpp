@@ -184,7 +184,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L146}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L148}
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
   ///
   // clang-format on
@@ -216,7 +216,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L146}
+  /// [google.cloud.cpp.compute.node_types.v1.GetNodeTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L148}
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
   ///
   // clang-format on
@@ -254,7 +254,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L158}
+  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L162}
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
   ///
   // clang-format on
@@ -294,7 +294,7 @@ class NodeTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L158}
+  /// [google.cloud.cpp.compute.node_types.v1.ListNodeTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L162}
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_080.proto#L31}
   ///
   // clang-format on

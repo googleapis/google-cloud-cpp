@@ -22,5 +22,5 @@ syntax = "proto3";
 package google.cloud.cpp.compute.v1;
 
 message UrlMapReference {
-  optional string url_map = 1;
+  optional string url_map = 1 [json_name = "urlMap"];
 }

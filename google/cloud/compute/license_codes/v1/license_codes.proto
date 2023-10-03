@@ -67,19 +67,23 @@ service LicenseCodes {
 // Request message for GetLicenseCode.
 message GetLicenseCodeRequest {
   // Number corresponding to the License code resource to return.
-  string license_code = 1 [(google.api.field_behavior) = REQUIRED];
+  string license_code = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "licenseCode"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 }
 
 // Request message for TestIamPermissions.
 message TestIamPermissionsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name or id of the resource for this request.
-  string resource = 2 [(google.api.field_behavior) = REQUIRED];
+  string resource = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 
   // The TestPermissionsRequest for this request.
   optional google.cloud.cpp.compute.v1.TestPermissionsRequest

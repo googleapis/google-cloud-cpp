@@ -40,5 +40,5 @@ message GuestOsFeature {
   // UEFI_COMPATIBLE:
   // VIRTIO_SCSI_MULTIQUEUE:
   // WINDOWS:
-  optional string type = 1;
+  optional string type = 1 [json_name = "type"];
 }

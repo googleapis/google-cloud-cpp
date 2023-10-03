@@ -171,7 +171,8 @@ service Networks {
 // Request message for AddPeering.
 message AddPeeringRequest {
   // Name of the network resource to add peering to.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // The NetworksAddPeeringRequest for this request.
   optional google.cloud.cpp.compute.v1.NetworksAddPeeringRequest
@@ -181,7 +182,8 @@ message AddPeeringRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -194,18 +196,20 @@ message AddPeeringRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for DeleteNetwork.
 message DeleteNetworkRequest {
   // Name of the network to delete.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -218,25 +222,29 @@ message DeleteNetworkRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for GetEffectiveFirewalls.
 message GetEffectiveFirewallsRequest {
   // Name of the network for this request.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 }
 
 // Request message for GetNetwork.
 message GetNetworkRequest {
   // Name of the network to return.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 }
 
 // Request message for InsertNetwork.
@@ -248,7 +256,8 @@ message InsertNetworkRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -261,7 +270,7 @@ message InsertNetworkRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for ListNetworks.
@@ -298,14 +307,14 @@ message ListNetworksRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2;
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -315,18 +324,19 @@ message ListNetworksRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 6;
+  optional bool return_partial_success = 6 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for ListPeeringRoutes.
@@ -334,7 +344,7 @@ message ListPeeringRoutesRequest {
   // The direction of the exchanged routes.
   // INCOMING: For routes exported from peer network.
   // OUTGOING: For routes exported from local network.
-  optional string direction = 1;
+  optional string direction = 1 [json_name = "direction"];
 
   // A filter expression that filters resources listed in the response. Most
   // Compute resources support two types of filter expressions: expressions that
@@ -368,17 +378,18 @@ message ListPeeringRoutesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 2;
+  optional string filter = 2 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3;
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Name of the network for this request.
-  string network = 4 [(google.api.field_behavior) = REQUIRED];
+  string network = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -388,31 +399,34 @@ message ListPeeringRoutesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 5;
+  optional string order_by = 5 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 6;
+  optional string page_token = 6 [json_name = "pageToken"];
 
   // The response will show routes exchanged over the given peering connection.
-  optional string peering_name = 7;
+  optional string peering_name = 7 [json_name = "peeringName"];
 
   // Project ID for this request.
-  string project = 8 [(google.api.field_behavior) = REQUIRED];
+  string project = 8
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The region of the request. The response will include all subnet routes,
   // static routes and dynamic routes in the region.
-  optional string region = 9;
+  optional string region = 9 [json_name = "region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 10;
+  optional bool return_partial_success = 10
+      [json_name = "returnPartialSuccess"];
 }
 
 // Request message for PatchNetwork.
 message PatchNetworkRequest {
   // Name of the network to update.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // The Network for this request.
   optional google.cloud.cpp.compute.v1.Network network_resource = 2
@@ -421,7 +435,8 @@ message PatchNetworkRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -434,13 +449,14 @@ message PatchNetworkRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for RemovePeering.
 message RemovePeeringRequest {
   // Name of the network resource to remove peering from.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // The NetworksRemovePeeringRequest for this request.
   optional google.cloud.cpp.compute.v1.NetworksRemovePeeringRequest
@@ -450,7 +466,8 @@ message RemovePeeringRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -463,18 +480,20 @@ message RemovePeeringRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for SwitchToCustomMode.
 message SwitchToCustomModeRequest {
   // Name of the network to be updated.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -487,13 +506,14 @@ message SwitchToCustomModeRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for UpdatePeering.
 message UpdatePeeringRequest {
   // Name of the network resource which the updated peering is belonging to.
-  string network = 1 [(google.api.field_behavior) = REQUIRED];
+  string network = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "network"];
 
   // The NetworksUpdatePeeringRequest for this request.
   optional google.cloud.cpp.compute.v1.NetworksUpdatePeeringRequest
@@ -503,7 +523,8 @@ message UpdatePeeringRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -516,5 +537,5 @@ message UpdatePeeringRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }

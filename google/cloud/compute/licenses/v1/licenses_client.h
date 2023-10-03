@@ -180,7 +180,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L183}
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -214,7 +214,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L178}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L183}
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -245,8 +245,8 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L166}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L262}
+  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L168}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -279,8 +279,8 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L166}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L262}
+  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L168}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -317,7 +317,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L194}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
@@ -358,7 +358,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L187}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicenseRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L194}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
@@ -400,7 +400,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L212}
+  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L220}
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -446,7 +446,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L212}
+  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L220}
   /// [google.cloud.cpp.compute.v1.License]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_068.proto#L28}
   ///
   // clang-format on
@@ -477,8 +477,8 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L277}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L262}
+  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L286}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -513,8 +513,8 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L277}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L262}
+  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L286}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L267}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -545,7 +545,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L291}
+  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L302}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L30}
   ///
   // clang-format on
@@ -582,7 +582,7 @@ class LicensesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L291}
+  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L302}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_131.proto#L30}
   ///
   // clang-format on

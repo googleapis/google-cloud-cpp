@@ -28,66 +28,67 @@ package google.cloud.cpp.compute.v1;
 message License {
   // [Output Only] Deprecated. This field no longer reflects whether a license
   // charges a usage fee.
-  optional bool charges_use_fee = 1;
+  optional bool charges_use_fee = 1 [json_name = "chargesUseFee"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2;
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional textual description of the resource; provided by the client
   // when the resource is created.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 4;
+  optional string id = 4 [json_name = "id"];
 
   // [Output Only] Type of resource. Always compute#license for licenses.
-  optional string kind = 5;
+  optional string kind = 5 [json_name = "kind"];
 
   // [Output Only] The unique code used to attach this license to images,
   // snapshots, and disks.
-  optional string license_code = 6;
+  optional string license_code = 6 [json_name = "licenseCode"];
 
   // Name of the resource. The name must be 1-63 characters long and comply with
   // RFC1035.
-  optional string name = 7;
+  optional string name = 7 [json_name = "name"];
 
-  optional LicenseResourceRequirements resource_requirements = 8;
+  optional LicenseResourceRequirements resource_requirements = 8
+      [json_name = "resourceRequirements"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 9;
+  optional string self_link = 9 [json_name = "selfLink"];
 
   // If false, licenses will not be copied from the source resource when
   // creating an image from a disk, disk from snapshot, or snapshot from disk.
-  optional bool transferable = 10;
+  optional bool transferable = 10 [json_name = "transferable"];
 }
 
 message LicenseResourceRequirements {
   // Minimum number of guest cpus required to use the Instance. Enforced at
   // Instance creation and Instance start.
-  optional int32 min_guest_cpu_count = 1;
+  optional int32 min_guest_cpu_count = 1 [json_name = "minGuestCpuCount"];
 
   // Minimum memory required to use the Instance. Enforced at Instance creation
   // and Instance start.
-  optional int32 min_memory_mb = 2;
+  optional int32 min_memory_mb = 2 [json_name = "minMemoryMb"];
 }
 
 message LicensesListResponse {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of License resources.
-  repeated License items = 2;
+  repeated License items = 2 [json_name = "items"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 3;
+  optional string next_page_token = 3 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 4;
+  optional string self_link = 4 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -146,7 +147,7 @@ message LicensesListResponse {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -156,20 +157,20 @@ message LicensesListResponse {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 5;
+  optional Warning warning = 5 [json_name = "warning"];
 }

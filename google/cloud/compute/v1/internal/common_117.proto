@@ -24,5 +24,5 @@ package google.cloud.cpp.compute.v1;
 message SslPolicyReference {
   // URL of the SSL policy resource. Set this to empty string to clear any
   // existing SSL policy associated with the target proxy resource.
-  optional string ssl_policy = 1;
+  optional string ssl_policy = 1 [json_name = "sslPolicy"];
 }

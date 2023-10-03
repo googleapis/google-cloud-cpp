@@ -33,19 +33,19 @@ message AWSV4Signature {
   // creating a backend that uses AWS v4 signature authentication, but will not
   // be returned as part of the configuration when queried with a REST API GET
   // request. @InputOnly
-  optional string access_key = 1;
+  optional string access_key = 1 [json_name = "accessKey"];
 
   // The identifier of an access key used for s3 bucket authentication.
-  optional string access_key_id = 2;
+  optional string access_key_id = 2 [json_name = "accessKeyId"];
 
   // The optional version identifier for the access key. You can use this to
   // keep track of different iterations of your access key.
-  optional string access_key_version = 3;
+  optional string access_key_version = 3 [json_name = "accessKeyVersion"];
 
   // The name of the cloud region of your origin. This is a free-form field with
   // the name of the region your cloud uses to host your origin. For example,
   // "us-east-1" for AWS or "us-ashburn-1" for OCI.
-  optional string origin_region = 4;
+  optional string origin_region = 4 [json_name = "originRegion"];
 }
 
 // Message containing information of one individual backend.
@@ -63,7 +63,7 @@ message Backend {
   // CONNECTION: Balance based on the number of simultaneous connections.
   // RATE: Balance based on requests per second (RPS).
   // UTILIZATION: Balance based on the backend utilization.
-  optional string balancing_mode = 1;
+  optional string balancing_mode = 1 [json_name = "balancingMode"];
 
   // A multiplier applied to the backend's target capacity of its balancing
   // mode. The default value is 1, which means the group serves up to 100% of
@@ -74,15 +74,15 @@ message Backend {
   // is only one backend attached to the backend service. Not available with
   // backends that don't support using a balancingMode. This includes backends
   // such as global internet NEGs, regional serverless NEGs, and PSC NEGs.
-  optional float capacity_scaler = 2;
+  optional float capacity_scaler = 2 [json_name = "capacityScaler"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
   // This field designates whether this is a failover backend. More than one
   // failover backend can be configured for a given BackendService.
-  optional bool failover = 4;
+  optional bool failover = 4 [json_name = "failover"];
 
   // The fully-qualified URL of an instance group or network endpoint group
   // (NEG) resource. To determine what types of backends a load balancer
@@ -91,42 +91,44 @@ message Backend {
   // You must use the *fully-qualified* URL (starting with
   // https://www.googleapis.com/) to specify the instance group or NEG. Partial
   // URLs are not supported.
-  optional string group = 5;
+  optional string group = 5 [json_name = "group"];
 
   // Defines a target maximum number of simultaneous connections. For usage
   // guidelines, see Connection balancing mode and Utilization balancing mode.
   // Not available if the backend's balancingMode is RATE.
-  optional int32 max_connections = 6;
+  optional int32 max_connections = 6 [json_name = "maxConnections"];
 
   // Defines a target maximum number of simultaneous connections. For usage
   // guidelines, see Connection balancing mode and Utilization balancing mode.
   // Not available if the backend's balancingMode is RATE.
-  optional int32 max_connections_per_endpoint = 7;
+  optional int32 max_connections_per_endpoint = 7
+      [json_name = "maxConnectionsPerEndpoint"];
 
   // Defines a target maximum number of simultaneous connections. For usage
   // guidelines, see Connection balancing mode and Utilization balancing mode.
   // Not available if the backend's balancingMode is RATE.
-  optional int32 max_connections_per_instance = 8;
+  optional int32 max_connections_per_instance = 8
+      [json_name = "maxConnectionsPerInstance"];
 
   // Defines a maximum number of HTTP requests per second (RPS). For usage
   // guidelines, see Rate balancing mode and Utilization balancing mode. Not
   // available if the backend's balancingMode is CONNECTION.
-  optional int32 max_rate = 9;
+  optional int32 max_rate = 9 [json_name = "maxRate"];
 
   // Defines a maximum target for requests per second (RPS). For usage
   // guidelines, see Rate balancing mode and Utilization balancing mode. Not
   // available if the backend's balancingMode is CONNECTION.
-  optional float max_rate_per_endpoint = 10;
+  optional float max_rate_per_endpoint = 10 [json_name = "maxRatePerEndpoint"];
 
   // Defines a maximum target for requests per second (RPS). For usage
   // guidelines, see Rate balancing mode and Utilization balancing mode. Not
   // available if the backend's balancingMode is CONNECTION.
-  optional float max_rate_per_instance = 11;
+  optional float max_rate_per_instance = 11 [json_name = "maxRatePerInstance"];
 
   // Optional parameter to define a target capacity for the UTILIZATION
   // balancing mode. The valid range is [0.0, 1.0]. For usage guidelines, see
   // Utilization balancing mode.
-  optional float max_utilization = 12;
+  optional float max_utilization = 12 [json_name = "maxUtilization"];
 }
 
 // Represents a Backend Service resource. A backend service defines how Google
@@ -149,16 +151,17 @@ message BackendService {
   // equivalent). The maximum allowed value is two weeks (1,209,600). Not
   // supported when the backend service is referenced by a URL map that is bound
   // to target gRPC proxy that has validateForProxyless field set to true.
-  optional int32 affinity_cookie_ttl_sec = 1;
+  optional int32 affinity_cookie_ttl_sec = 1
+      [json_name = "affinityCookieTtlSec"];
 
   // The list of backends that serve this BackendService.
-  repeated Backend backends = 2;
+  repeated Backend backends = 2 [json_name = "backends"];
 
   // Cloud CDN configuration for this BackendService. Only available for
   // specified load balancer types.
-  optional BackendServiceCdnPolicy cdn_policy = 3;
+  optional BackendServiceCdnPolicy cdn_policy = 3 [json_name = "cdnPolicy"];
 
-  optional CircuitBreakers circuit_breakers = 4;
+  optional CircuitBreakers circuit_breakers = 4 [json_name = "circuitBreakers"];
 
   // Compress text responses using Brotli or gzip compression, based on the
   // client's Accept-Encoding header.
@@ -166,15 +169,16 @@ message BackendService {
   // Accept-Encoding header sent by the client.
   // DISABLED: Disables compression. Existing compressed responses cached by
   // Cloud CDN will not be served to clients.
-  optional string compression_mode = 5;
+  optional string compression_mode = 5 [json_name = "compressionMode"];
 
-  optional ConnectionDraining connection_draining = 6;
+  optional ConnectionDraining connection_draining = 6
+      [json_name = "connectionDraining"];
 
   // Connection Tracking configuration for this BackendService. Connection
   // tracking policy settings are only available for Network Load Balancing and
   // Internal TCP/UDP Load Balancing.
-  optional BackendServiceConnectionTrackingPolicy connection_tracking_policy =
-      7;
+  optional BackendServiceConnectionTrackingPolicy connection_tracking_policy = 7
+      [json_name = "connectionTrackingPolicy"];
 
   // Consistent Hash-based load balancing can be used to provide soft session
   // affinity based on HTTP headers, cookies or other properties. This load
@@ -187,32 +191,35 @@ message BackendService {
   // HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. - A
   // global backend service with the load_balancing_scheme set to
   // INTERNAL_SELF_MANAGED.
-  optional ConsistentHashLoadBalancerSettings consistent_hash = 8;
+  optional ConsistentHashLoadBalancerSettings consistent_hash = 8
+      [json_name = "consistentHash"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 9;
+  optional string creation_timestamp = 9 [json_name = "creationTimestamp"];
 
   // Headers that the load balancer adds to proxied requests. See [Creating
   // custom
   // headers](https://cloud.google.com/load-balancing/docs/custom-headers).
-  repeated string custom_request_headers = 10;
+  repeated string custom_request_headers = 10
+      [json_name = "customRequestHeaders"];
 
   // Headers that the load balancer adds to proxied responses. See [Creating
   // custom
   // headers](https://cloud.google.com/load-balancing/docs/custom-headers).
-  repeated string custom_response_headers = 11;
+  repeated string custom_response_headers = 11
+      [json_name = "customResponseHeaders"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 12;
+  optional string description = 12 [json_name = "description"];
 
   // [Output Only] The resource URL for the edge security policy associated with
   // this backend service.
-  optional string edge_security_policy = 13;
+  optional string edge_security_policy = 13 [json_name = "edgeSecurityPolicy"];
 
   // If true, enables Cloud CDN for the backend service of an external HTTP(S)
   // load balancer.
-  optional bool enable_cdn = 14;
+  optional bool enable_cdn = 14 [json_name = "enableCDN"];
 
   // Requires at least one backend instance group to be defined as a backup
   // (failover) backend. For load balancers that have configurable failover:
@@ -220,7 +227,8 @@ message BackendService {
   // Balancing](https://cloud.google.com/load-balancing/docs/internal/failover-overview)
   // and [external TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).
-  optional BackendServiceFailoverPolicy failover_policy = 15;
+  optional BackendServiceFailoverPolicy failover_policy = 15
+      [json_name = "failoverPolicy"];
 
   // Fingerprint of this resource. A hash of the contents stored in this object.
   // This field is used in optimistic locking. This field will be ignored when
@@ -228,7 +236,7 @@ message BackendService {
   // order to update the BackendService, otherwise the request will fail with
   // error 412 conditionNotMet. To see the latest fingerprint, make a get()
   // request to retrieve a BackendService.
-  optional string fingerprint = 16;
+  optional string fingerprint = 16 [json_name = "fingerprint"];
 
   // The list of URLs to the healthChecks, httpHealthChecks (legacy), or
   // httpsHealthChecks (legacy) resource for health checking this backend
@@ -237,19 +245,19 @@ message BackendService {
   // each backend service. Backend services with instance group or zonal NEG
   // backends must have a health check. Backend services with internet or
   // serverless NEG backends must not have a health check.
-  repeated string health_checks = 17;
+  repeated string health_checks = 17 [json_name = "healthChecks"];
 
   // The configurations for Identity-Aware Proxy on this resource. Not available
   // for Internal TCP/UDP Load Balancing and Network Load Balancing.
-  optional BackendServiceIAP iap = 18;
+  optional BackendServiceIAP iap = 18 [json_name = "iap"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 19;
+  optional string id = 19 [json_name = "id"];
 
   // [Output Only] Type of resource. Always compute#backendService for backend
   // services.
-  optional string kind = 20;
+  optional string kind = 20 [json_name = "kind"];
 
   // Specifies the load balancer type. A backend service created for one type of
   // load balancer cannot be used with another. For more information, refer to
@@ -265,7 +273,8 @@ message BackendService {
   // INTERNAL_SELF_MANAGED: Signifies that this will be used by Traffic
   // Director.
   // INVALID_LOAD_BALANCING_SCHEME:
-  optional string load_balancing_scheme = 21;
+  optional string load_balancing_scheme = 21
+      [json_name = "loadBalancingScheme"];
 
   // A list of locality load-balancing policies to be used in order of
   // preference. When you use localityLbPolicies, you must set at least one
@@ -277,7 +286,7 @@ message BackendService {
   // only. Envoy proxies can't use backend services that have this
   // configuration.
   repeated BackendServiceLocalityLoadBalancingPolicyConfig
-      locality_lb_policies = 22;
+      locality_lb_policies = 22 [json_name = "localityLbPolicies"];
 
   // The load balancing algorithm used within the scope of the locality. The
   // possible values are: - ROUND_ROBIN: This is a simple policy in which each
@@ -331,12 +340,12 @@ message BackendService {
   // replies, as long as every instance either reported a valid weight or had
   // UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains equal-weight. This
   // option is only supported in Network Load Balancing.
-  optional string locality_lb_policy = 23;
+  optional string locality_lb_policy = 23 [json_name = "localityLbPolicy"];
 
   // This field denotes the logging options for the load balancer traffic served
   // by this backend service. If logging is enabled, logs will be exported to
   // Stackdriver.
-  optional BackendServiceLogConfig log_config = 24;
+  optional BackendServiceLogConfig log_config = 24 [json_name = "logConfig"];
 
   // Specifies the default maximum duration (timeout) for streams to this
   // service. Duration is computed from the beginning of the stream until the
@@ -346,11 +355,11 @@ message BackendService {
   // can be overridden in the PathMatcher configuration of the UrlMap that
   // references this backend service. This field is only allowed when the
   // loadBalancingScheme of the backend service is INTERNAL_SELF_MANAGED.
-  optional Duration max_stream_duration = 25;
+  optional Duration max_stream_duration = 25 [json_name = "maxStreamDuration"];
 
   // Deployment metadata associated with the resource to be set by a GKE hub
   // controller and read by the backend RCTH
-  map<string, string> metadatas = 40;
+  map<string, string> metadatas = 40 [json_name = "metadatas"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -359,11 +368,11 @@ message BackendService {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 26;
+  optional string name = 26 [json_name = "name"];
 
   // The URL of the network to which this backend service belongs. This field
   // can only be specified when the load balancing scheme is set to INTERNAL.
-  optional string network = 27;
+  optional string network = 27 [json_name = "network"];
 
   // Settings controlling the ejection of unhealthy backend endpoints from the
   // load balancing pool of each individual proxy instance that processes the
@@ -389,12 +398,13 @@ message BackendService {
   // Not supported for Serverless NEGs. Not supported when the backend service
   // is referenced by a URL map that is bound to target gRPC proxy that has
   // validateForProxyless field set to true.
-  optional OutlierDetection outlier_detection = 28;
+  optional OutlierDetection outlier_detection = 28
+      [json_name = "outlierDetection"];
 
   // Deprecated in favor of portName. The TCP port to connect on the backend.
   // The default value is 80. For Internal TCP/UDP Load Balancing and Network
   // Load Balancing, omit port.
-  optional int32 port = 29;
+  optional int32 port = 29 [json_name = "port"];
 
   // A named port on a backend instance group representing the port for
   // communication to the backend VMs in that group. The named port must be
@@ -402,7 +412,7 @@ message BackendService {
   // group](https://cloud.google.com/load-balancing/docs/backend-service#named_ports).
   // This parameter has no meaning if the backends are NEGs. For Internal
   // TCP/UDP Load Balancing and Network Load Balancing, omit port_name.
-  optional string port_name = 30;
+  optional string port_name = 30 [json_name = "portName"];
 
   // The protocol this BackendService uses to communicate with backends.
   // Possible values are HTTP, HTTPS, HTTP2, TCP, SSL, UDP or GRPC. depending on
@@ -419,30 +429,31 @@ message BackendService {
   // UDP: UDP.
   // UNSPECIFIED: If a Backend Service has UNSPECIFIED as its protocol, it can
   // be used with any L3/L4 Forwarding Rules.
-  optional string protocol = 31;
+  optional string protocol = 31 [json_name = "protocol"];
 
   // [Output Only] URL of the region where the regional backend service resides.
   // This field is not applicable to global backend services. You must specify
   // this field as part of the HTTP request URL. It is not settable as a field
   // in the request body.
-  optional string region = 32;
+  optional string region = 32 [json_name = "region"];
 
   // [Output Only] The resource URL for the security policy associated with this
   // backend service.
-  optional string security_policy = 33;
+  optional string security_policy = 33 [json_name = "securityPolicy"];
 
   // This field specifies the security settings that apply to this backend
   // service. This field is applicable to a global backend service with the
   // load_balancing_scheme set to INTERNAL_SELF_MANAGED.
-  optional SecuritySettings security_settings = 34;
+  optional SecuritySettings security_settings = 34
+      [json_name = "securitySettings"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 35;
+  optional string self_link = 35 [json_name = "selfLink"];
 
   // URLs of networkservices.ServiceBinding resources. Can only be set if load
   // balancing scheme is INTERNAL_SELF_MANAGED. If set, lists of backends and
   // health checks must be both empty.
-  repeated string service_bindings = 36;
+  repeated string service_bindings = 36 [json_name = "serviceBindings"];
 
   // Type of session affinity to use. The default is NONE. Only NONE and
   // HEADER_FIELD are supported when the backend service is referenced by a URL
@@ -474,9 +485,9 @@ message BackendService {
   // HTTP_COOKIE: The hash is based on a user provided cookie.
   // NONE: No session affinity. Connections from the same client IP may go to
   // any instance in the pool.
-  optional string session_affinity = 37;
+  optional string session_affinity = 37 [json_name = "sessionAffinity"];
 
-  optional Subsetting subsetting = 38;
+  optional Subsetting subsetting = 38 [json_name = "subsetting"];
 
   // The backend service timeout has a different meaning depending on the type
   // of load balancer. For more information see, Backend service settings. The
@@ -486,7 +497,7 @@ message BackendService {
   // service. Not supported when the backend service is referenced by a URL map
   // that is bound to target gRPC proxy that has validateForProxyless field set
   // to true. Instead, use maxStreamDuration.
-  optional int32 timeout_sec = 39;
+  optional int32 timeout_sec = 39 [json_name = "timeoutSec"];
 }
 
 // Message containing Cloud CDN configuration for a backend service.
@@ -495,10 +506,11 @@ message BackendServiceCdnPolicy {
   // Pragma or Authorization headers. Up to 5 headers can be specified. The
   // cache is bypassed for all cdnPolicy.cacheMode settings.
   repeated BackendServiceCdnPolicyBypassCacheOnRequestHeader
-      bypass_cache_on_request_headers = 1;
+      bypass_cache_on_request_headers = 1
+      [json_name = "bypassCacheOnRequestHeaders"];
 
   // The CacheKeyPolicy for this CdnPolicy.
-  optional CacheKeyPolicy cache_key_policy = 2;
+  optional CacheKeyPolicy cache_key_policy = 2 [json_name = "cacheKeyPolicy"];
 
   // Specifies the cache setting for all responses from this backend. The
   // possible values are: USE_ORIGIN_HEADERS Requires the origin to set valid
@@ -525,7 +537,7 @@ message BackendServiceCdnPolicy {
   // cache content. Responses without these headers will not be cached at
   // Google's edge, and will require a full trip to the origin on every request,
   // potentially impacting performance and increasing load on the origin server.
-  optional string cache_mode = 3;
+  optional string cache_mode = 3 [json_name = "cacheMode"];
 
   // Specifies a separate client (e.g. browser client) maximum TTL. This is used
   // to clamp the max-age (or Expires) value sent to the client. With
@@ -537,7 +549,7 @@ message BackendServiceCdnPolicy {
   // cache-control directive is present. If a client TTL is not specified, a
   // default value (1 hour) will be used. The maximum allowed value is
   // 31,622,400s (1 year).
-  optional int32 client_ttl = 4;
+  optional int32 client_ttl = 4 [json_name = "clientTtl"];
 
   // Specifies the default TTL for cached content served by this origin for
   // responses that do not have an existing valid TTL (max-age or s-max-age).
@@ -547,7 +559,7 @@ message BackendServiceCdnPolicy {
   // the TTL set in all responses. The maximum allowed value is 31,622,400s (1
   // year), noting that infrequently accessed objects may be evicted from the
   // cache before the defined TTL.
-  optional int32 default_ttl = 5;
+  optional int32 default_ttl = 5 [json_name = "defaultTtl"];
 
   // Specifies the maximum allowed TTL for cached content served by this origin.
   // Cache directives that attempt to set a max-age or s-maxage higher than
@@ -557,7 +569,7 @@ message BackendServiceCdnPolicy {
   // Setting a TTL of "0" means "always revalidate". The maximum allowed value
   // is 31,622,400s (1 year), noting that infrequently accessed objects may be
   // evicted from the cache before the defined TTL.
-  optional int32 max_ttl = 6;
+  optional int32 max_ttl = 6 [json_name = "maxTtl"];
 
   // Negative caching allows per-status code TTLs to be set, in order to apply
   // fine-grained caching for common errors or redirects. This can reduce the
@@ -573,7 +585,7 @@ message BackendServiceCdnPolicy {
   // (Unavailable For Legal Reasons): 120s HTTP 405 (Method Not Found), 421
   // (Misdirected Request), 501 (Not Implemented): 60s. These defaults can be
   // overridden in negative_caching_policy.
-  optional bool negative_caching = 7;
+  optional bool negative_caching = 7 [json_name = "negativeCaching"];
 
   // Sets a cache TTL for the specified HTTP status code. negative_caching must
   // be enabled to configure negative_caching_policy. Omitting the policy and
@@ -583,11 +595,11 @@ message BackendServiceCdnPolicy {
   // cache. Cloud CDN will not apply any default negative caching when a policy
   // exists.
   repeated BackendServiceCdnPolicyNegativeCachingPolicy
-      negative_caching_policy = 8;
+      negative_caching_policy = 8 [json_name = "negativeCachingPolicy"];
 
   // If true then Cloud CDN will combine multiple concurrent cache fill requests
   // into a small number of requests to the origin.
-  optional bool request_coalescing = 9;
+  optional bool request_coalescing = 9 [json_name = "requestCoalescing"];
 
   // Serve existing content from the cache (if available) when revalidating
   // content with the origin, or when an error is encountered when refreshing
@@ -598,7 +610,7 @@ message BackendServiceCdnPolicy {
   // up to this limit beyond the max-age (or s-max-age) of a cached response.
   // The maximum allowed value is 604800 (1 week). Set this to zero (0) to
   // disable serve-while-stale.
-  optional int32 serve_while_stale = 10;
+  optional int32 serve_while_stale = 10 [json_name = "serveWhileStale"];
 
   // Maximum number of seconds the response to a signed URL request will be
   // considered fresh. After this time period, the response will be revalidated
@@ -607,10 +619,11 @@ message BackendServiceCdnPolicy {
   // responses from this backend had a "Cache-Control: public, max-age=[TTL]"
   // header, regardless of any existing Cache-Control header. The actual headers
   // served in responses will not be altered.
-  optional string signed_url_cache_max_age_sec = 11;
+  optional string signed_url_cache_max_age_sec = 11
+      [json_name = "signedUrlCacheMaxAgeSec"];
 
   // [Output Only] Names of the keys for signing request URLs.
-  repeated string signed_url_key_names = 12;
+  repeated string signed_url_key_names = 12 [json_name = "signedUrlKeyNames"];
 }
 
 // Bypass the cache when the specified request headers are present, e.g. Pragma
@@ -619,7 +632,7 @@ message BackendServiceCdnPolicy {
 message BackendServiceCdnPolicyBypassCacheOnRequestHeader {
   // The header field name to match on when bypassing cache. Values are
   // case-insensitive.
-  optional string header_name = 1;
+  optional string header_name = 1 [json_name = "headerName"];
 }
 
 // Specify CDN TTLs for response error codes.
@@ -627,13 +640,13 @@ message BackendServiceCdnPolicyNegativeCachingPolicy {
   // The HTTP status code to define a TTL against. Only HTTP status codes 300,
   // 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 are can be specified as
   // values, and you cannot specify a status code more than once.
-  optional int32 code = 1;
+  optional int32 code = 1 [json_name = "code"];
 
   // The TTL (in seconds) for which to cache responses with the corresponding
   // status code. The maximum allowed value is 1800s (30 minutes), noting that
   // infrequently accessed objects may be evicted from the cache before the
   // defined TTL.
-  optional int32 ttl = 2;
+  optional int32 ttl = 2 [json_name = "ttl"];
 }
 
 // Connection Tracking configuration for this BackendService.
@@ -657,11 +670,12 @@ message BackendServiceConnectionTrackingPolicy {
   // ALWAYS_PERSIST:
   // DEFAULT_FOR_PROTOCOL:
   // NEVER_PERSIST:
-  optional string connection_persistence_on_unhealthy_backends = 1;
+  optional string connection_persistence_on_unhealthy_backends = 1
+      [json_name = "connectionPersistenceOnUnhealthyBackends"];
 
   // Enable Strong Session Affinity for Network Load Balancing. This option is
   // not available publicly.
-  optional bool enable_strong_affinity = 2;
+  optional bool enable_strong_affinity = 2 [json_name = "enableStrongAffinity"];
 
   // Specifies how long to keep a Connection Tracking entry while there is no
   // matching traffic (in seconds). For Internal TCP/UDP Load Balancing: - The
@@ -670,7 +684,7 @@ message BackendServiceConnectionTrackingPolicy {
   // is CLIENT_IP_NO_DESTINATION, CLIENT_IP or CLIENT_IP_PROTO, and Tracking
   // Mode is PER_SESSION). For Network Load Balancer the default is 60 seconds.
   // This option is not available publicly.
-  optional int32 idle_timeout_sec = 3;
+  optional int32 idle_timeout_sec = 3 [json_name = "idleTimeoutSec"];
 
   // Specifies the key used for connection tracking. There are two options: -
   // PER_CONNECTION: This is the default mode. The Connection Tracking is
@@ -684,7 +698,7 @@ message BackendServiceConnectionTrackingPolicy {
   // INVALID_TRACKING_MODE:
   // PER_CONNECTION:
   // PER_SESSION:
-  optional string tracking_mode = 4;
+  optional string tracking_mode = 4 [json_name = "trackingMode"];
 }
 
 // For load balancers that have configurable failover: [Internal TCP/UDP Load
@@ -700,7 +714,8 @@ message BackendServiceConnectionTrackingPolicy {
 // (10 minutes).
 message BackendServiceFailoverPolicy {
   // This can be set to true only if the protocol is TCP. The default is false.
-  optional bool disable_connection_drain_on_failover = 1;
+  optional bool disable_connection_drain_on_failover = 1
+      [json_name = "disableConnectionDrainOnFailover"];
 
   // If set to true, connections to the load balancer are dropped when all
   // primary and all backup backend VMs are unhealthy.If set to false,
@@ -711,7 +726,8 @@ message BackendServiceFailoverPolicy {
   // and [external TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).
   // The default is false.
-  optional bool drop_traffic_if_unhealthy = 2;
+  optional bool drop_traffic_if_unhealthy = 2
+      [json_name = "dropTrafficIfUnhealthy"];
 
   // The value of the field must be in the range [0, 1]. If the value is 0, the
   // load balancer performs a failover when the number of healthy primary VMs
@@ -721,62 +737,63 @@ message BackendServiceFailoverPolicy {
   // Balancing](https://cloud.google.com/load-balancing/docs/internal/failover-overview)
   // and [external TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).
-  optional float failover_ratio = 3;
+  optional float failover_ratio = 3 [json_name = "failoverRatio"];
 }
 
 message BackendServiceGroupHealth {
   // Metadata defined as annotations on the network endpoint group.
-  map<string, string> annotations = 1;
+  map<string, string> annotations = 1 [json_name = "annotations"];
 
   // Health state of the backend instances or endpoints in requested instance or
   // network endpoint group, determined based on configured health checks.
-  repeated HealthStatus health_status = 2;
+  repeated HealthStatus health_status = 2 [json_name = "healthStatus"];
 
   // [Output Only] Type of resource. Always compute#backendServiceGroupHealth
   // for the health of backend services.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 }
 
 // Identity-Aware Proxy
 message BackendServiceIAP {
   // Whether the serving infrastructure will authenticate and authorize all
   // incoming requests.
-  optional bool enabled = 1;
+  optional bool enabled = 1 [json_name = "enabled"];
 
   // OAuth2 client ID to use for the authentication flow.
-  optional string oauth2_client_id = 2;
+  optional string oauth2_client_id = 2 [json_name = "oauth2ClientId"];
 
   // OAuth2 client secret to use for the authentication flow. For security
   // reasons, this value cannot be retrieved via the API. Instead, the SHA-256
   // hash of the value is returned in the oauth2ClientSecretSha256 field.
   // @InputOnly
-  optional string oauth2_client_secret = 3;
+  optional string oauth2_client_secret = 3 [json_name = "oauth2ClientSecret"];
 
   // [Output Only] SHA256 hash value for the field oauth2_client_secret above.
-  optional string oauth2_client_secret_sha256 = 4;
+  optional string oauth2_client_secret_sha256 = 4
+      [json_name = "oauth2ClientSecretSha256"];
 }
 
 // Contains a list of BackendService resources.
 message BackendServiceList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of BackendService resources.
-  repeated BackendService items = 2;
+  repeated BackendService items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#backendServiceList for lists
   // of backend services.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -835,7 +852,7 @@ message BackendServiceList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -845,31 +862,32 @@ message BackendServiceList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Container for either a built-in LB policy supported by gRPC or Envoy or a
 // custom one implemented by the end user.
 message BackendServiceLocalityLoadBalancingPolicyConfig {
   optional BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy
-      custom_policy = 1;
+      custom_policy = 1 [json_name = "customPolicy"];
 
-  optional BackendServiceLocalityLoadBalancingPolicyConfigPolicy policy = 2;
+  optional BackendServiceLocalityLoadBalancingPolicyConfigPolicy policy = 2
+      [json_name = "policy"];
 }
 
 // The configuration for a custom policy implemented by the user and deployed
@@ -877,7 +895,7 @@ message BackendServiceLocalityLoadBalancingPolicyConfig {
 message BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy {
   // An optional, arbitrary JSON object with configuration data, understood by a
   // locally installed custom policy implementation.
-  optional string data = 1;
+  optional string data = 1 [json_name = "data"];
 
   // Identifies the custom policy. The value should match the name of a custom
   // implementation registered on the gRPC clients. It should follow protocol
@@ -886,7 +904,7 @@ message BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy {
   // the same custom policy more than once for a backend. If you do, the
   // configuration is rejected. For an example of how to use this field, see Use
   // a custom policy.
-  optional string name = 2;
+  optional string name = 2 [json_name = "name"];
 }
 
 // The configuration for a built-in load balancing policy.
@@ -923,7 +941,7 @@ message BackendServiceLocalityLoadBalancingPolicyConfigPolicy {
   // replies, as long as every instance either reported a valid weight or had
   // UNAVAILABLE_WEIGHT. Otherwise, Load Balancing remains equal-weight. This
   // option is only supported in Network Load Balancing.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 }
 
 // The available logging options for the load balancer traffic served by this
@@ -931,13 +949,13 @@ message BackendServiceLocalityLoadBalancingPolicyConfigPolicy {
 message BackendServiceLogConfig {
   // Denotes whether to enable logging for the load balancer traffic served by
   // this backend service. The default value is false.
-  optional bool enable = 1;
+  optional bool enable = 1 [json_name = "enable"];
 
   // This field can only be specified if logging is enabled for this backend
   // service and "logConfig.optionalMode" was set to CUSTOM. Contains a list of
   // optional fields you want to include in the logs. For example:
   // serverInstance, serverGkeDetails.cluster, serverGkeDetails.pod.podNamespace
-  repeated string optional_fields = 2;
+  repeated string optional_fields = 2 [json_name = "optionalFields"];
 
   // This field can only be specified if logging is enabled for this backend
   // service. Configures whether all, none or a subset of optional fields should
@@ -946,49 +964,51 @@ message BackendServiceLogConfig {
   // CUSTOM: A subset of optional fields.
   // EXCLUDE_ALL_OPTIONAL: None optional fields.
   // INCLUDE_ALL_OPTIONAL: All optional fields.
-  optional string optional_mode = 3;
+  optional string optional_mode = 3 [json_name = "optionalMode"];
 
   // This field can only be specified if logging is enabled for this backend
   // service. The value of the field must be in [0, 1]. This configures the
   // sampling rate of requests to the load balancer where 1.0 means all logged
   // requests are reported and 0.0 means no logged requests are reported. The
   // default value is 1.0.
-  optional float sample_rate = 4;
+  optional float sample_rate = 4 [json_name = "sampleRate"];
 }
 
 // Message containing what to include in the cache key for a request for Cloud
 // CDN.
 message CacheKeyPolicy {
   // If true, requests to different hosts will be cached separately.
-  optional bool include_host = 1;
+  optional bool include_host = 1 [json_name = "includeHost"];
 
   // Allows HTTP request headers (by name) to be used in the cache key.
-  repeated string include_http_headers = 2;
+  repeated string include_http_headers = 2 [json_name = "includeHttpHeaders"];
 
   // Allows HTTP cookies (by name) to be used in the cache key. The name=value
   // pair will be used in the cache key Cloud CDN generates.
-  repeated string include_named_cookies = 3;
+  repeated string include_named_cookies = 3 [json_name = "includeNamedCookies"];
 
   // If true, http and https requests will be cached separately.
-  optional bool include_protocol = 4;
+  optional bool include_protocol = 4 [json_name = "includeProtocol"];
 
   // If true, include query string parameters in the cache key according to
   // query_string_whitelist and query_string_blacklist. If neither is set, the
   // entire query string will be included. If false, the query string will be
   // excluded from the cache key entirely.
-  optional bool include_query_string = 5;
+  optional bool include_query_string = 5 [json_name = "includeQueryString"];
 
   // Names of query string parameters to exclude in cache keys. All other
   // parameters will be included. Either specify query_string_whitelist or
   // query_string_blacklist, not both. '&' and '=' will be percent encoded and
   // not treated as delimiters.
-  repeated string query_string_blacklist = 6;
+  repeated string query_string_blacklist = 6
+      [json_name = "queryStringBlacklist"];
 
   // Names of query string parameters to include in cache keys. All other
   // parameters will be excluded. Either specify query_string_whitelist or
   // query_string_blacklist, not both. '&' and '=' will be percent encoded and
   // not treated as delimiters.
-  repeated string query_string_whitelist = 7;
+  repeated string query_string_whitelist = 7
+      [json_name = "queryStringWhitelist"];
 }
 
 // Settings controlling the volume of requests, connections and retries to this
@@ -998,17 +1018,17 @@ message CircuitBreakers {
   // there is no limit. Not supported when the backend service is referenced by
   // a URL map that is bound to target gRPC proxy that has validateForProxyless
   // field set to true.
-  optional int32 max_connections = 1;
+  optional int32 max_connections = 1 [json_name = "maxConnections"];
 
   // The maximum number of pending requests allowed to the backend service. If
   // not specified, there is no limit. Not supported when the backend service is
   // referenced by a URL map that is bound to target gRPC proxy that has
   // validateForProxyless field set to true.
-  optional int32 max_pending_requests = 2;
+  optional int32 max_pending_requests = 2 [json_name = "maxPendingRequests"];
 
   // The maximum number of parallel requests that allowed to the backend
   // service. If not specified, there is no limit.
-  optional int32 max_requests = 3;
+  optional int32 max_requests = 3 [json_name = "maxRequests"];
 
   // Maximum requests for a single connection to the backend service. This
   // parameter is respected by both the HTTP/1.1 and HTTP/2 implementations. If
@@ -1016,13 +1036,14 @@ message CircuitBreakers {
   // effectively disable keep alive. Not supported when the backend service is
   // referenced by a URL map that is bound to target gRPC proxy that has
   // validateForProxyless field set to true.
-  optional int32 max_requests_per_connection = 4;
+  optional int32 max_requests_per_connection = 4
+      [json_name = "maxRequestsPerConnection"];
 
   // The maximum number of parallel retries allowed to the backend cluster. If
   // not specified, the default is 1. Not supported when the backend service is
   // referenced by a URL map that is bound to target gRPC proxy that has
   // validateForProxyless field set to true.
-  optional int32 max_retries = 5;
+  optional int32 max_retries = 5 [json_name = "maxRetries"];
 }
 
 // Message containing connection draining configuration.
@@ -1030,7 +1051,7 @@ message ConnectionDraining {
   // Configures a duration timeout for existing requests on a removed backend
   // instance. For supported load balancers and protocols, as described in
   // Enabling connection draining.
-  optional int32 draining_timeout_sec = 1;
+  optional int32 draining_timeout_sec = 1 [json_name = "drainingTimeoutSec"];
 }
 
 // This message defines settings for a consistent hash style load balancer.
@@ -1041,30 +1062,31 @@ message ConsistentHashLoadBalancerSettings {
   // the sessionAffinity is set to HTTP_COOKIE. Not supported when the backend
   // service is referenced by a URL map that is bound to target gRPC proxy that
   // has validateForProxyless field set to true.
-  optional ConsistentHashLoadBalancerSettingsHttpCookie http_cookie = 1;
+  optional ConsistentHashLoadBalancerSettingsHttpCookie http_cookie = 1
+      [json_name = "httpCookie"];
 
   // The hash based on the value of the specified header field. This field is
   // applicable if the sessionAffinity is set to HEADER_FIELD.
-  optional string http_header_name = 2;
+  optional string http_header_name = 2 [json_name = "httpHeaderName"];
 
   // The minimum number of virtual nodes to use for the hash ring. Defaults to
   // 1024. Larger ring sizes result in more granular load distributions. If the
   // number of hosts in the load balancing pool is larger than the ring size,
   // each host will be assigned a single virtual node.
-  optional string minimum_ring_size = 3;
+  optional string minimum_ring_size = 3 [json_name = "minimumRingSize"];
 }
 
 // The information about the HTTP Cookie on which the hash function is based for
 // load balancing policies that use a consistent hash.
 message ConsistentHashLoadBalancerSettingsHttpCookie {
   // Name of the cookie.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 
   // Path to set for the cookie.
-  optional string path = 2;
+  optional string path = 2 [json_name = "path"];
 
   // Lifetime of the cookie.
-  optional Duration ttl = 3;
+  optional Duration ttl = 3 [json_name = "ttl"];
 }
 
 // Settings controlling the eviction of unhealthy hosts from the load balancing
@@ -1075,46 +1097,50 @@ message OutlierDetection {
   // pool, it can be ejected again in another ejection analysis. Thus, the total
   // ejection time is equal to the base ejection time multiplied by the number
   // of times the backend endpoint has been ejected. Defaults to 30000ms or 30s.
-  optional Duration base_ejection_time = 1;
+  optional Duration base_ejection_time = 1 [json_name = "baseEjectionTime"];
 
   // Number of consecutive errors before a backend endpoint is ejected from the
   // load balancing pool. When the backend endpoint is accessed over HTTP, a 5xx
   // return code qualifies as an error. Defaults to 5.
-  optional int32 consecutive_errors = 2;
+  optional int32 consecutive_errors = 2 [json_name = "consecutiveErrors"];
 
   // The number of consecutive gateway failures (502, 503, 504 status or
   // connection errors that are mapped to one of those status codes) before a
   // consecutive gateway failure ejection occurs. Defaults to 3.
-  optional int32 consecutive_gateway_failure = 3;
+  optional int32 consecutive_gateway_failure = 3
+      [json_name = "consecutiveGatewayFailure"];
 
   // The percentage chance that a backend endpoint will be ejected when an
   // outlier status is detected through consecutive 5xx. This setting can be
   // used to disable ejection or to ramp it up slowly. Defaults to 0.
-  optional int32 enforcing_consecutive_errors = 4;
+  optional int32 enforcing_consecutive_errors = 4
+      [json_name = "enforcingConsecutiveErrors"];
 
   // The percentage chance that a backend endpoint will be ejected when an
   // outlier status is detected through consecutive gateway failures. This
   // setting can be used to disable ejection or to ramp it up slowly. Defaults
   // to 100.
-  optional int32 enforcing_consecutive_gateway_failure = 5;
+  optional int32 enforcing_consecutive_gateway_failure = 5
+      [json_name = "enforcingConsecutiveGatewayFailure"];
 
   // The percentage chance that a backend endpoint will be ejected when an
   // outlier status is detected through success rate statistics. This setting
   // can be used to disable ejection or to ramp it up slowly. Defaults to 100.
   // Not supported when the backend service uses Serverless NEG.
-  optional int32 enforcing_success_rate = 6;
+  optional int32 enforcing_success_rate = 6
+      [json_name = "enforcingSuccessRate"];
 
   // Time interval between ejection analysis sweeps. This can result in both new
   // ejections and backend endpoints being returned to service. The interval is
   // equal to the number of seconds as defined in
   // outlierDetection.interval.seconds plus the number of nanoseconds as defined
   // in outlierDetection.interval.nanos. Defaults to 1 second.
-  optional Duration interval = 7;
+  optional Duration interval = 7 [json_name = "interval"];
 
   // Maximum percentage of backend endpoints in the load balancing pool for the
   // backend service that can be ejected if the ejection conditions are met.
   // Defaults to 50%.
-  optional int32 max_ejection_percent = 8;
+  optional int32 max_ejection_percent = 8 [json_name = "maxEjectionPercent"];
 
   // The number of backend endpoints in the load balancing pool that must have
   // enough request volume to detect success rate outliers. If the number of
@@ -1122,7 +1148,8 @@ message OutlierDetection {
   // rate statistics is not performed for any backend endpoint in the load
   // balancing pool. Defaults to 5. Not supported when the backend service uses
   // Serverless NEG.
-  optional int32 success_rate_minimum_hosts = 9;
+  optional int32 success_rate_minimum_hosts = 9
+      [json_name = "successRateMinimumHosts"];
 
   // The minimum number of total requests that must be collected in one interval
   // (as defined by the interval duration above) to include this backend
@@ -1130,7 +1157,8 @@ message OutlierDetection {
   // than this setting, outlier detection via success rate statistics is not
   // performed for that backend endpoint. Defaults to 100. Not supported when
   // the backend service uses Serverless NEG.
-  optional int32 success_rate_request_volume = 10;
+  optional int32 success_rate_request_volume = 10
+      [json_name = "successRateRequestVolume"];
 
   // This factor is used to determine the ejection threshold for success rate
   // outlier ejection. The ejection threshold is the difference between the mean
@@ -1139,13 +1167,14 @@ message OutlierDetection {
   // is divided by a thousand to get a double. That is, if the desired factor is
   // 1.9, the runtime value should be 1900. Defaults to 1900. Not supported when
   // the backend service uses Serverless NEG.
-  optional int32 success_rate_stdev_factor = 11;
+  optional int32 success_rate_stdev_factor = 11
+      [json_name = "successRateStdevFactor"];
 }
 
 message ResourceGroupReference {
   // A URI referencing one of the instance groups or network endpoint groups
   // listed in the backend service.
-  optional string group = 1;
+  optional string group = 1 [json_name = "group"];
 }
 
 // The authentication and authorization settings for a BackendService.
@@ -1153,14 +1182,15 @@ message SecuritySettings {
   // The configuration needed to generate a signature for access to private
   // storage buckets that support AWS's Signature Version 4 for authentication.
   // Allowed only for INTERNET_IP_PORT and INTERNET_FQDN_PORT NEG backends.
-  optional AWSV4Signature aws_v4_authentication = 3;
+  optional AWSV4Signature aws_v4_authentication = 3
+      [json_name = "awsV4Authentication"];
 
   // Optional. A URL referring to a networksecurity.ClientTlsPolicy resource
   // that describes how clients should authenticate with this service's
   // backends. clientTlsPolicy only applies to a global BackendService with the
   // loadBalancingScheme set to INTERNAL_SELF_MANAGED. If left blank,
   // communications are not encrypted.
-  optional string client_tls_policy = 1;
+  optional string client_tls_policy = 1 [json_name = "clientTlsPolicy"];
 
   // Optional. A list of Subject Alternative Names (SANs) that the client
   // verifies during a mutual TLS handshake with an server/endpoint for this
@@ -1174,7 +1204,7 @@ message SecuritySettings {
   // applies to a global BackendService with loadBalancingScheme set to
   // INTERNAL_SELF_MANAGED. Only applies when BackendService has an attached
   // clientTlsPolicy with clientCertificate (mTLS mode).
-  repeated string subject_alt_names = 2;
+  repeated string subject_alt_names = 2 [json_name = "subjectAltNames"];
 }
 
 // Subsetting configuration for this BackendService. Currently this is
@@ -1193,5 +1223,5 @@ message Subsetting {
   // NONE: No Subsetting. Clients may open connections and send traffic to all
   // backends of this backend service. This can lead to performance issues if
   // there is substantial imbalance in the count of clients and backends.
-  optional string policy = 1;
+  optional string policy = 1 [json_name = "policy"];
 }

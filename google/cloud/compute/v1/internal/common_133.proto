@@ -28,18 +28,18 @@ package google.cloud.cpp.compute.v1;
 // VPN topologies .
 message VpnGateway {
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1;
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 2;
+  optional string description = 2 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 3;
+  optional string id = 3 [json_name = "id"];
 
   // [Output Only] Type of resource. Always compute#vpnGateway for VPN gateways.
-  optional string kind = 4;
+  optional string kind = 4 [json_name = "kind"];
 
   // A fingerprint for the labels being applied to this VpnGateway, which is
   // essentially a hash of the labels set used for optimistic locking. The
@@ -48,12 +48,12 @@ message VpnGateway {
   // up-to-date fingerprint hash in order to update or change labels, otherwise
   // the request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve a VpnGateway.
-  optional string label_fingerprint = 5;
+  optional string label_fingerprint = 5 [json_name = "labelFingerprint"];
 
   // Labels for this resource. These can only be added or modified by the
   // setLabels method. Each label key/value pair must comply with RFC1035. Label
   // values may be empty.
-  map<string, string> labels = 6;
+  map<string, string> labels = 6 [json_name = "labels"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -62,51 +62,52 @@ message VpnGateway {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 7;
+  optional string name = 7 [json_name = "name"];
 
   // URL of the network to which this VPN gateway is attached. Provided by the
   // client when the VPN gateway is created.
-  optional string network = 8;
+  optional string network = 8 [json_name = "network"];
 
   // [Output Only] URL of the region where the VPN gateway resides.
-  optional string region = 9;
+  optional string region = 9 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 10;
+  optional string self_link = 10 [json_name = "selfLink"];
 
   // The stack type for this VPN gateway to identify the IP protocols that are
   // enabled. Possible values are: IPV4_ONLY, IPV4_IPV6. If not specified,
   // IPV4_ONLY will be used.
   // IPV4_IPV6: Enable VPN gateway with both IPv4 and IPv6 protocols.
   // IPV4_ONLY: Enable VPN gateway with only IPv4 protocol.
-  optional string stack_type = 11;
+  optional string stack_type = 11 [json_name = "stackType"];
 
   // The list of VPN interfaces associated with this VPN gateway.
-  repeated VpnGatewayVpnGatewayInterface vpn_interfaces = 12;
+  repeated VpnGatewayVpnGatewayInterface vpn_interfaces = 12
+      [json_name = "vpnInterfaces"];
 }
 
 message VpnGatewayAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of VpnGateway resources.
-  map<string, VpnGatewaysScopedList> items = 2;
+  map<string, VpnGatewaysScopedList> items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#vpnGateway for VPN gateways.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6;
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -165,7 +166,7 @@ message VpnGatewayAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -175,44 +176,44 @@ message VpnGatewayAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7;
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 // Contains a list of VpnGateway resources.
 message VpnGatewayList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of VpnGateway resources.
-  repeated VpnGateway items = 2;
+  repeated VpnGateway items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#vpnGateway for VPN gateways.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -271,7 +272,7 @@ message VpnGatewayList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -281,27 +282,28 @@ message VpnGatewayList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message VpnGatewayStatus {
   // List of VPN connection for this VpnGateway.
-  repeated VpnGatewayStatusVpnConnection vpn_connections = 1;
+  repeated VpnGatewayStatusVpnConnection vpn_connections = 1
+      [json_name = "vpnConnections"];
 }
 
 // Describes the high availability requirement state for the VPN connection
@@ -317,27 +319,29 @@ message VpnGatewayStatusHighAvailabilityRequirementState {
   // proper configuration on the peer VPN gateway.
   // CONNECTION_REDUNDANCY_NOT_MET: VPN tunnels are not configured with adequate
   // redundancy from the Cloud VPN gateway to the peer gateway
-  optional string state = 1;
+  optional string state = 1 [json_name = "state"];
 
   // Indicates the reason why the VPN connection does not meet the high
   // availability redundancy criteria/requirement. Valid values is
   // INCOMPLETE_TUNNELS_COVERAGE.
   // INCOMPLETE_TUNNELS_COVERAGE:
-  optional string unsatisfied_reason = 2;
+  optional string unsatisfied_reason = 2 [json_name = "unsatisfiedReason"];
 }
 
 // Contains some information about a VPN tunnel.
 message VpnGatewayStatusTunnel {
   // The VPN gateway interface this VPN tunnel is associated with.
-  optional uint32 local_gateway_interface = 1;
+  optional uint32 local_gateway_interface = 1
+      [json_name = "localGatewayInterface"];
 
   // The peer gateway interface this VPN tunnel is connected to, the peer
   // gateway could either be an external VPN gateway or a Google Cloud VPN
   // gateway.
-  optional uint32 peer_gateway_interface = 2;
+  optional uint32 peer_gateway_interface = 2
+      [json_name = "peerGatewayInterface"];
 
   // URL reference to the VPN tunnel.
-  optional string tunnel_url = 3;
+  optional string tunnel_url = 3 [json_name = "tunnelUrl"];
 }
 
 // A VPN connection contains all VPN tunnels connected from this VpnGateway to
@@ -347,32 +351,34 @@ message VpnGatewayStatusVpnConnection {
   // URL reference to the peer external VPN gateways to which the VPN tunnels in
   // this VPN connection are connected. This field is mutually exclusive with
   // peer_gcp_gateway.
-  optional string peer_external_gateway = 1;
+  optional string peer_external_gateway = 1 [json_name = "peerExternalGateway"];
 
   // URL reference to the peer side VPN gateways to which the VPN tunnels in
   // this VPN connection are connected. This field is mutually exclusive with
   // peer_gcp_gateway.
-  optional string peer_gcp_gateway = 2;
+  optional string peer_gcp_gateway = 2 [json_name = "peerGcpGateway"];
 
   // HighAvailabilityRequirementState for the VPN connection.
-  optional VpnGatewayStatusHighAvailabilityRequirementState state = 3;
+  optional VpnGatewayStatusHighAvailabilityRequirementState state = 3
+      [json_name = "state"];
 
   // List of VPN tunnels that are in this VPN connection.
-  repeated VpnGatewayStatusTunnel tunnels = 4;
+  repeated VpnGatewayStatusTunnel tunnels = 4 [json_name = "tunnels"];
 }
 
 // A VPN gateway interface.
 message VpnGatewayVpnGatewayInterface {
   // [Output Only] Numeric identifier for this VPN interface associated with the
   // VPN gateway.
-  optional uint32 id = 1;
+  optional uint32 id = 1 [json_name = "id"];
 
   // URL of the VLAN attachment (interconnectAttachment) resource for this VPN
   // gateway interface. When the value of this field is present, the VPN gateway
   // is used for HA VPN over Cloud Interconnect; all egress or ingress traffic
   // for this VPN gateway interface goes through the specified VLAN attachment
   // resource.
-  optional string interconnect_attachment = 2;
+  optional string interconnect_attachment = 2
+      [json_name = "interconnectAttachment"];
 
   // [Output Only] IP address for this VPN interface associated with the VPN
   // gateway. The IP address could be either a regional external IP address or a
@@ -383,16 +389,16 @@ message VpnGatewayVpnGatewayInterface {
   // could either be regional internal IP addresses or regional external IP
   // addresses. For regular (non HA VPN over Cloud Interconnect) HA VPN tunnels,
   // the IP address must be a regional external IP address.
-  optional string ip_address = 3;
+  optional string ip_address = 3 [json_name = "ipAddress"];
 }
 
 message VpnGatewaysGetStatusResponse {
-  optional VpnGatewayStatus result = 1;
+  optional VpnGatewayStatus result = 1 [json_name = "result"];
 }
 
 message VpnGatewaysScopedList {
   // [Output Only] A list of VPN gateways contained in this scope.
-  repeated VpnGateway vpn_gateways = 1;
+  repeated VpnGateway vpn_gateways = 1 [json_name = "vpnGateways"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -451,7 +457,7 @@ message VpnGatewaysScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -461,21 +467,21 @@ message VpnGatewaysScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning which replaces the list of addresses
   // when the list is empty.
-  optional Warning warning = 2;
+  optional Warning warning = 2 [json_name = "warning"];
 }

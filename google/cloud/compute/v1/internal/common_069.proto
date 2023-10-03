@@ -26,28 +26,29 @@ package google.cloud.cpp.compute.v1;
 // use only by third-party partners who are creating Cloud Marketplace images.
 message LicenseCode {
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1;
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // [Output Only] Description of this License Code.
-  optional string description = 2;
+  optional string description = 2 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 3;
+  optional string id = 3 [json_name = "id"];
 
   // [Output Only] Type of resource. Always compute#licenseCode for licenses.
-  optional string kind = 4;
+  optional string kind = 4 [json_name = "kind"];
 
   // [Output Only] URL and description aliases of Licenses with the same License
   // Code.
-  repeated LicenseCodeLicenseAlias license_alias = 5;
+  repeated LicenseCodeLicenseAlias license_alias = 5
+      [json_name = "licenseAlias"];
 
   // [Output Only] Name of the resource. The name is 1-20 characters long and
   // must be a valid 64 bit integer.
-  optional string name = 6;
+  optional string name = 6 [json_name = "name"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 7;
+  optional string self_link = 7 [json_name = "selfLink"];
 
   // [Output Only] Current state of this License Code.
   // DISABLED: Machines are not allowed to attach boot disks with this License
@@ -57,17 +58,17 @@ message LicenseCode {
   // RESTRICTED: Use of this license is limited to a project whitelist.
   // STATE_UNSPECIFIED:
   // TERMINATED: Reserved state.
-  optional string state = 8;
+  optional string state = 8 [json_name = "state"];
 
   // [Output Only] If true, the license will remain attached when creating
   // images or snapshots from disks. Otherwise, the license is not transferred.
-  optional bool transferable = 9;
+  optional bool transferable = 9 [json_name = "transferable"];
 }
 
 message LicenseCodeLicenseAlias {
   // [Output Only] Description of this License Code.
-  optional string description = 1;
+  optional string description = 1 [json_name = "description"];
 
   // [Output Only] URL of license corresponding to this License Code.
-  optional string self_link = 2;
+  optional string self_link = 2 [json_name = "selfLink"];
 }

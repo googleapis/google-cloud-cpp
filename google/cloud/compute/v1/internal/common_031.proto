@@ -40,17 +40,17 @@ package google.cloud.cpp.compute.v1;
 message Expr {
   // Optional. Description of the expression. This is a longer text which
   // describes the expression, e.g. when hovered over it in a UI.
-  optional string description = 1;
+  optional string description = 1 [json_name = "description"];
 
   // Textual representation of an expression in Common Expression Language
   // syntax.
-  optional string expression = 2;
+  optional string expression = 2 [json_name = "expression"];
 
   // Optional. String indicating the location of the expression for error
   // reporting, e.g. a file name and a position in the file.
-  optional string location = 3;
+  optional string location = 3 [json_name = "location"];
 
   // Optional. Title for the expression, i.e. a short string describing its
   // purpose. This can be used e.g. in UIs which allow to enter the expression.
-  optional string title = 4;
+  optional string title = 4 [json_name = "title"];
 }

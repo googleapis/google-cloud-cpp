@@ -38,7 +38,8 @@ message MetadataFilter {
   // The list of label value pairs that must match labels in the provided
   // metadata based on filterMatchCriteria This list must not be empty and can
   // have at the most 64 entries.
-  repeated MetadataFilterLabelMatch filter_labels = 1;
+  repeated MetadataFilterLabelMatch filter_labels = 1
+      [json_name = "filterLabels"];
 
   // Specifies how individual filter label matches within the list of
   // filterLabels and contributes toward the overall metadataFilter match.
@@ -51,7 +52,7 @@ message MetadataFilter {
   // to be considered a match.
   // NOT_SET: Indicates that the match criteria was not set. A metadataFilter
   // must never be created with this value.
-  optional string filter_match_criteria = 2;
+  optional string filter_match_criteria = 2 [json_name = "filterMatchCriteria"];
 }
 
 // MetadataFilter label name value pairs that are expected to match
@@ -59,9 +60,9 @@ message MetadataFilter {
 message MetadataFilterLabelMatch {
   // Name of metadata label. The name can have a maximum length of 1024
   // characters and must be at least 1 character long.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 
   // The value of the label must match the specified value. value can have a
   // maximum length of 1024 characters.
-  optional string value = 2;
+  optional string value = 2 [json_name = "value"];
 }

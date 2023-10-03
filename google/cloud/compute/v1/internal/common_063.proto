@@ -29,48 +29,51 @@ message Interconnect {
   // Interconnect is functional and can carry traffic. When set to false, no
   // packets can be carried over the interconnect and no BGP routes are
   // exchanged over it. By default, the status is set to true.
-  optional bool admin_enabled = 1;
+  optional bool admin_enabled = 1 [json_name = "adminEnabled"];
 
   // [Output only] List of features available for this Interconnect connection,
   // which can take one of the following values: - MACSEC If present then the
   // Interconnect connection is provisioned on MACsec capable hardware ports. If
   // not present then the Interconnect connection is provisioned on non-MACsec
   // capable ports and MACsec isn't supported and enabling MACsec fails.
-  repeated string available_features = 27;
+  repeated string available_features = 27 [json_name = "availableFeatures"];
 
   // [Output Only] A list of CircuitInfo objects, that describe the individual
   // circuits in this LAG.
-  repeated InterconnectCircuitInfo circuit_infos = 2;
+  repeated InterconnectCircuitInfo circuit_infos = 2
+      [json_name = "circuitInfos"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3;
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // Customer name, to put in the Letter of Authorization as the party
   // authorized to request a crossconnect.
-  optional string customer_name = 4;
+  optional string customer_name = 4 [json_name = "customerName"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 5;
+  optional string description = 5 [json_name = "description"];
 
   // [Output Only] A list of outages expected for this Interconnect.
-  repeated InterconnectOutageNotification expected_outages = 6;
+  repeated InterconnectOutageNotification expected_outages = 6
+      [json_name = "expectedOutages"];
 
   // [Output Only] IP address configured on the Google side of the Interconnect
   // link. This can be used only for ping tests.
-  optional string google_ip_address = 7;
+  optional string google_ip_address = 7 [json_name = "googleIpAddress"];
 
   // [Output Only] Google reference ID to be used when raising support tickets
   // with Google or otherwise to debug backend connectivity issues.
-  optional string google_reference_id = 8;
+  optional string google_reference_id = 8 [json_name = "googleReferenceId"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 9;
+  optional string id = 9 [json_name = "id"];
 
   // [Output Only] A list of the URLs of all InterconnectAttachments configured
   // to use this Interconnect.
-  repeated string interconnect_attachments = 10;
+  repeated string interconnect_attachments = 10
+      [json_name = "interconnectAttachments"];
 
   // Type of interconnect, which can take one of the following values: -
   // PARTNER: A partner-managed interconnection shared between customers though
@@ -82,11 +85,11 @@ message Interconnect {
   // customer.
   // PARTNER: A partner-managed interconnection shared between customers via
   // partner.
-  optional string interconnect_type = 11;
+  optional string interconnect_type = 11 [json_name = "interconnectType"];
 
   // [Output Only] Type of the resource. Always compute#interconnect for
   // interconnects.
-  optional string kind = 12;
+  optional string kind = 12 [json_name = "kind"];
 
   // A fingerprint for the labels being applied to this Interconnect, which is
   // essentially a hash of the labels set used for optimistic locking. The
@@ -95,12 +98,12 @@ message Interconnect {
   // up-to-date fingerprint hash in order to update or change labels, otherwise
   // the request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve an Interconnect.
-  optional string label_fingerprint = 24;
+  optional string label_fingerprint = 24 [json_name = "labelFingerprint"];
 
   // Labels for this resource. These can only be added or modified by the
   // setLabels method. Each label key/value pair must comply with RFC1035. Label
   // values may be empty.
-  map<string, string> labels = 25;
+  map<string, string> labels = 25 [json_name = "labels"];
 
   // Type of link requested, which can take one of the following values: -
   // LINK_TYPE_ETHERNET_10G_LR: A 10G Ethernet with LR optics -
@@ -110,19 +113,19 @@ message Interconnect {
   // LINK_TYPE_ETHERNET_100G_LR: 100G Ethernet, LR Optics.
   // LINK_TYPE_ETHERNET_10G_LR: 10G Ethernet, LR Optics. [(rate_bps) =
   // 10000000000];
-  optional string link_type = 13;
+  optional string link_type = 13 [json_name = "linkType"];
 
   // URL of the InterconnectLocation object that represents where this
   // connection is to be provisioned.
-  optional string location = 14;
+  optional string location = 14 [json_name = "location"];
 
   // Configuration that enables Media Access Control security (MACsec) on the
   // Cloud Interconnect connection between Google and your on-premises router.
-  optional InterconnectMacsec macsec = 28;
+  optional InterconnectMacsec macsec = 28 [json_name = "macsec"];
 
   // Enable or disable MACsec on this Interconnect connection. MACsec enablement
   // fails if the MACsec object is not specified.
-  optional bool macsec_enabled = 29;
+  optional bool macsec_enabled = 29 [json_name = "macsecEnabled"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -131,7 +134,7 @@ message Interconnect {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 15;
+  optional string name = 15 [json_name = "name"];
 
   // Email address to contact the customer NOC for operations and maintenance
   // notifications regarding this Interconnect. If specified, this will be used
@@ -139,7 +142,7 @@ message Interconnect {
   // Monitoring logs alerting and Cloud Notifications. This field is required
   // for users who sign up for Cloud Interconnect using workforce identity
   // federation.
-  optional string noc_contact_email = 16;
+  optional string noc_contact_email = 16 [json_name = "nocContactEmail"];
 
   // [Output Only] The current status of this Interconnect's functionality,
   // which can take one of the following values: - OS_ACTIVE: A valid
@@ -153,19 +156,20 @@ message Interconnect {
   // Attachments may be provisioned on this interconnect.
   // OS_UNPROVISIONED: The interconnect has not completed turnup. No attachments
   // may be provisioned on this interconnect.
-  optional string operational_status = 17;
+  optional string operational_status = 17 [json_name = "operationalStatus"];
 
   // [Output Only] IP address configured on the customer side of the
   // Interconnect link. The customer should configure this IP address during
   // turnup when prompted by Google NOC. This can be used only for ping tests.
-  optional string peer_ip_address = 18;
+  optional string peer_ip_address = 18 [json_name = "peerIpAddress"];
 
   // [Output Only] Number of links actually provisioned in this interconnect.
-  optional int32 provisioned_link_count = 19;
+  optional int32 provisioned_link_count = 19
+      [json_name = "provisionedLinkCount"];
 
   // Indicates that this is a Cross-Cloud Interconnect. This field specifies the
   // location outside of Google's network that the interconnect is connected to.
-  optional string remote_location = 26;
+  optional string remote_location = 26 [json_name = "remoteLocation"];
 
   // Optional. List of features requested for this Interconnect connection,
   // which can take one of the following values: - MACSEC If specified then the
@@ -173,17 +177,17 @@ message Interconnect {
   // the default value is false, which allocates non-MACsec capable ports first
   // if available. This parameter can be provided only with Interconnect INSERT.
   // It isn't valid for Interconnect PATCH.
-  repeated string requested_features = 30;
+  repeated string requested_features = 30 [json_name = "requestedFeatures"];
 
   // Target number of physical links in the link bundle, as requested by the
   // customer.
-  optional int32 requested_link_count = 20;
+  optional int32 requested_link_count = 20 [json_name = "requestedLinkCount"];
 
   // [Output Only] Reserved for future use.
-  optional bool satisfies_pzs = 21;
+  optional bool satisfies_pzs = 21 [json_name = "satisfiesPzs"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 22;
+  optional string self_link = 22 [json_name = "selfLink"];
 
   // [Output Only] The current state of Interconnect functionality, which can
   // take one of the following values: - ACTIVE: The Interconnect is valid,
@@ -196,21 +200,21 @@ message Interconnect {
   // may be provisioned on this interconnect.
   // UNPROVISIONED: The interconnect has not completed turnup. No attachments
   // may be provisioned on this interconnect.
-  optional string state = 23;
+  optional string state = 23 [json_name = "state"];
 }
 
 // Describes a single physical circuit between the Customer and Google.
 // CircuitInfo objects are created by Google, so all fields are output only.
 message InterconnectCircuitInfo {
   // Customer-side demarc ID for this circuit.
-  optional string customer_demarc_id = 1;
+  optional string customer_demarc_id = 1 [json_name = "customerDemarcId"];
 
   // Google-assigned unique ID for this circuit. Assigned at circuit turn-up.
-  optional string google_circuit_id = 2;
+  optional string google_circuit_id = 2 [json_name = "googleCircuitId"];
 
   // Google-side demarc ID for this circuit. Assigned at circuit turn-up and
   // provided by Google to the customer in the LOA.
-  optional string google_demarc_id = 3;
+  optional string google_demarc_id = 3 [json_name = "googleDemarcId"];
 }
 
 // Diagnostics information about the Interconnect connection, which contains
@@ -220,12 +224,14 @@ message InterconnectDiagnostics {
   // A list of InterconnectDiagnostics.ARPEntry objects, describing individual
   // neighbors currently seen by the Google router in the ARP cache for the
   // Interconnect. This will be empty when the Interconnect is not bundled.
-  repeated InterconnectDiagnosticsARPEntry arp_caches = 1;
+  repeated InterconnectDiagnosticsARPEntry arp_caches = 1
+      [json_name = "arpCaches"];
 
   // The aggregation type of the bundle interface.
   // BUNDLE_AGGREGATION_TYPE_LACP: LACP is enabled.
   // BUNDLE_AGGREGATION_TYPE_STATIC: LACP is disabled.
-  optional string bundle_aggregation_type = 2;
+  optional string bundle_aggregation_type = 2
+      [json_name = "bundleAggregationType"];
 
   // The operational status of the bundle interface.
   // BUNDLE_OPERATIONAL_STATUS_DOWN: If bundleAggregationType is LACP: LACP is
@@ -236,31 +242,32 @@ message InterconnectDiagnostics {
   // established and at least one link in the bundle has UP operational status.
   // If bundleAggregationType is STATIC: all links in the bundle (typically just
   // one) have UP operational status.
-  optional string bundle_operational_status = 3;
+  optional string bundle_operational_status = 3
+      [json_name = "bundleOperationalStatus"];
 
   // A list of InterconnectDiagnostics.LinkStatus objects, describing the status
   // for each link on the Interconnect.
-  repeated InterconnectDiagnosticsLinkStatus links = 4;
+  repeated InterconnectDiagnosticsLinkStatus links = 4 [json_name = "links"];
 
   // The MAC address of the Interconnect's bundle interface.
-  optional string mac_address = 5;
+  optional string mac_address = 5 [json_name = "macAddress"];
 }
 
 // Describing the ARP neighbor entries seen on this link
 message InterconnectDiagnosticsARPEntry {
   // The IP address of this ARP neighbor.
-  optional string ip_address = 1;
+  optional string ip_address = 1 [json_name = "ipAddress"];
 
   // The MAC address of this ARP neighbor.
-  optional string mac_address = 2;
+  optional string mac_address = 2 [json_name = "macAddress"];
 }
 
 message InterconnectDiagnosticsLinkLACPStatus {
   // System ID of the port on Google's side of the LACP exchange.
-  optional string google_system_id = 1;
+  optional string google_system_id = 1 [json_name = "googleSystemId"];
 
   // System ID of the port on the neighbor's side of the LACP exchange.
-  optional string neighbor_system_id = 2;
+  optional string neighbor_system_id = 2 [json_name = "neighborSystemId"];
 
   // The state of a LACP link, which can take one of the following values: -
   // ACTIVE: The link is configured and active within the bundle. - DETACHED:
@@ -269,7 +276,7 @@ message InterconnectDiagnosticsLinkLACPStatus {
   // ACTIVE: The link is configured and active within the bundle.
   // DETACHED: The link is not configured within the bundle, this means the rest
   // of the object should be empty.
-  optional string state = 3;
+  optional string state = 3 [json_name = "state"];
 }
 
 message InterconnectDiagnosticsLinkOpticalPower {
@@ -289,80 +296,84 @@ message InterconnectDiagnosticsLinkOpticalPower {
   // low warning threshold.
   // OK: The value of the current optical power has not crossed a warning
   // threshold.
-  optional string state = 1;
+  optional string state = 1 [json_name = "state"];
 
   // Value of the current receiving or transmitting optical power, read in dBm.
   // Take a known good optical value, give it a 10% margin and trigger warnings
   // relative to that value. In general, a -7dBm warning and a -11dBm alarm are
   // good optical value estimates for most links.
-  optional float value = 2;
+  optional float value = 2 [json_name = "value"];
 }
 
 message InterconnectDiagnosticsLinkStatus {
   // A list of InterconnectDiagnostics.ARPEntry objects, describing the ARP
   // neighbor entries seen on this link. This will be empty if the link is
   // bundled
-  repeated InterconnectDiagnosticsARPEntry arp_caches = 1;
+  repeated InterconnectDiagnosticsARPEntry arp_caches = 1
+      [json_name = "arpCaches"];
 
   // The unique ID for this link assigned during turn up by Google.
-  optional string circuit_id = 2;
+  optional string circuit_id = 2 [json_name = "circuitId"];
 
   // The Demarc address assigned by Google and provided in the LoA.
-  optional string google_demarc = 3;
+  optional string google_demarc = 3 [json_name = "googleDemarc"];
 
-  optional InterconnectDiagnosticsLinkLACPStatus lacp_status = 4;
+  optional InterconnectDiagnosticsLinkLACPStatus lacp_status = 4
+      [json_name = "lacpStatus"];
 
   // Describes the status of MACsec encryption on this link.
-  optional InterconnectDiagnosticsMacsecStatus macsec = 8;
+  optional InterconnectDiagnosticsMacsecStatus macsec = 8
+      [json_name = "macsec"];
 
   // The operational status of the link.
   // LINK_OPERATIONAL_STATUS_DOWN: The interface is unable to communicate with
   // the remote end.
   // LINK_OPERATIONAL_STATUS_UP: The interface has low level communication with
   // the remote end.
-  optional string operational_status = 5;
+  optional string operational_status = 5 [json_name = "operationalStatus"];
 
   // An InterconnectDiagnostics.LinkOpticalPower object, describing the current
   // value and status of the received light level.
-  optional InterconnectDiagnosticsLinkOpticalPower receiving_optical_power = 6;
+  optional InterconnectDiagnosticsLinkOpticalPower receiving_optical_power = 6
+      [json_name = "receivingOpticalPower"];
 
   // An InterconnectDiagnostics.LinkOpticalPower object, describing the current
   // value and status of the transmitted light level.
   optional InterconnectDiagnosticsLinkOpticalPower transmitting_optical_power =
-      7;
+      7 [json_name = "transmittingOpticalPower"];
 }
 
 // Describes the status of MACsec encryption on the link.
 message InterconnectDiagnosticsMacsecStatus {
   // Indicates the Connectivity Association Key Name (CKN) currently being used
   // if MACsec is operational.
-  optional string ckn = 1;
+  optional string ckn = 1 [json_name = "ckn"];
 
   // Indicates whether or not MACsec is operational on this link.
-  optional bool operational = 2;
+  optional bool operational = 2 [json_name = "operational"];
 }
 
 // Response to the list request, and contains a list of interconnects.
 message InterconnectList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of Interconnect resources.
-  repeated Interconnect items = 2;
+  repeated Interconnect items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#interconnectList for lists
   // of interconnects.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -421,7 +432,7 @@ message InterconnectList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -431,22 +442,22 @@ message InterconnectList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Configuration information for enabling Media Access Control security (MACsec)
@@ -459,13 +470,14 @@ message InterconnectMacsec {
   // default, the Interconnect connection is configured with a must-secure
   // security policy that drops all traffic if the MKA session cannot be
   // established with your router.
-  optional bool fail_open = 1;
+  optional bool fail_open = 1 [json_name = "failOpen"];
 
   // Required. A keychain placeholder describing a set of named key objects
   // along with their start times. A MACsec CKN/CAK is generated for each key in
   // the key chain. Google router automatically picks the key with the most
   // recent startTime when establishing or re-establishing a MACsec secure link.
-  repeated InterconnectMacsecPreSharedKey pre_shared_keys = 2;
+  repeated InterconnectMacsecPreSharedKey pre_shared_keys = 2
+      [json_name = "preSharedKeys"];
 }
 
 // MACsec configuration information for the Interconnect connection. Contains
@@ -476,23 +488,24 @@ message InterconnectMacsecConfig {
   // their start times. A MACsec CKN/CAK is generated for each key in the key
   // chain. Google router automatically picks the key with the most recent
   // startTime when establishing or re-establishing a MACsec secure link.
-  repeated InterconnectMacsecConfigPreSharedKey pre_shared_keys = 1;
+  repeated InterconnectMacsecConfigPreSharedKey pre_shared_keys = 1
+      [json_name = "preSharedKeys"];
 }
 
 // Describes a pre-shared key used to setup MACsec in static connectivity
 // association key (CAK) mode.
 message InterconnectMacsecConfigPreSharedKey {
   // An auto-generated Connectivity Association Key (CAK) for this key.
-  optional string cak = 1;
+  optional string cak = 1 [json_name = "cak"];
 
   // An auto-generated Connectivity Association Key Name (CKN) for this key.
-  optional string ckn = 2;
+  optional string ckn = 2 [json_name = "ckn"];
 
   // User provided name for this pre-shared key.
-  optional string name = 3;
+  optional string name = 3 [json_name = "name"];
 
   // User provided timestamp on or after which this key is valid.
-  optional string start_time = 4;
+  optional string start_time = 4 [json_name = "startTime"];
 }
 
 // Describes a pre-shared key used to setup MACsec in static connectivity
@@ -504,27 +517,27 @@ message InterconnectMacsecPreSharedKey {
   // `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a
   // lowercase letter, and all following characters must be a dash, lowercase
   // letter, or digit, except the last character, which cannot be a dash.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 
   // A RFC3339 timestamp on or after which the key is valid. startTime can be in
   // the future. If the keychain has a single key, startTime can be omitted. If
   // the keychain has multiple keys, startTime is mandatory for each key. The
   // start times of keys must be in increasing order. The start times of two
   // consecutive keys must be at least 6 hours apart.
-  optional string start_time = 2;
+  optional string start_time = 2 [json_name = "startTime"];
 }
 
 // Description of a planned outage on this Interconnect.
 message InterconnectOutageNotification {
   // If issue_type is IT_PARTIAL_OUTAGE, a list of the Google-side circuit IDs
   // that will be affected.
-  repeated string affected_circuits = 1;
+  repeated string affected_circuits = 1 [json_name = "affectedCircuits"];
 
   // A description about the purpose of the outage.
-  optional string description = 2;
+  optional string description = 2 [json_name = "description"];
 
   // Scheduled end time for the outage (milliseconds since Unix epoch).
-  optional string end_time = 3;
+  optional string end_time = 3 [json_name = "endTime"];
 
   // Form this outage is expected to take, which can take one of the following
   // values: - OUTAGE: The Interconnect may be completely out of service for
@@ -542,20 +555,20 @@ message InterconnectOutageNotification {
   // PARTIAL_OUTAGE: Some circuits comprising the Interconnect will be out of
   // service during the expected window. The interconnect as a whole should
   // remain up, albeit with reduced bandwidth.
-  optional string issue_type = 4;
+  optional string issue_type = 4 [json_name = "issueType"];
 
   // Unique identifier for this outage notification.
-  optional string name = 5;
+  optional string name = 5 [json_name = "name"];
 
   // The party that generated this notification, which can take the following
   // value: - GOOGLE: this notification as generated by Google. Note that the
   // value of NSRC_GOOGLE has been deprecated in favor of GOOGLE.
   // GOOGLE: This notification was generated by Google.
   // NSRC_GOOGLE: [Deprecated] This notification was generated by Google.
-  optional string source = 6;
+  optional string source = 6 [json_name = "source"];
 
   // Scheduled start time for the outage (milliseconds since Unix epoch).
-  optional string start_time = 7;
+  optional string start_time = 7 [json_name = "startTime"];
 
   // State of this notification, which can take one of the following values: -
   // ACTIVE: This outage notification is active. The event could be in the past,
@@ -574,18 +587,18 @@ message InterconnectOutageNotification {
   // scheduling.
   // NS_CANCELED: [Deprecated] The outage associated with this notification was
   // canceled before the outage was due to start.
-  optional string state = 8;
+  optional string state = 8 [json_name = "state"];
 }
 
 // Response for the InterconnectsGetDiagnosticsRequest.
 message InterconnectsGetDiagnosticsResponse {
-  optional InterconnectDiagnostics result = 1;
+  optional InterconnectDiagnostics result = 1 [json_name = "result"];
 }
 
 // Response for the InterconnectsGetMacsecConfigRequest.
 message InterconnectsGetMacsecConfigResponse {
   // end_interface: MixerGetResponseWithEtagBuilder
-  optional string etag = 1;
+  optional string etag = 1 [json_name = "etag"];
 
-  optional InterconnectMacsecConfig result = 2;
+  optional InterconnectMacsecConfig result = 2 [json_name = "result"];
 }

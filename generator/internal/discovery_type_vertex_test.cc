@@ -86,8 +86,9 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsEmpty) {
   auto constexpr kOptionalEmptyFieldJson = R"""({})""";
   auto json = nlohmann::json::parse(kOptionalEmptyFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
-              Eq(""));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
+      Eq(" [json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequired) {
@@ -99,8 +100,9 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequired) {
 )""";
   auto json = nlohmann::json::parse(kOptionalRequiredFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
-              Eq(" [(google.api.field_behavior) = REQUIRED]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
+      Eq(" [(google.api.field_behavior) = REQUIRED,json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsOperationRequestField) {
@@ -113,8 +115,10 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsOperationRequestField) {
   auto json =
       nlohmann::json::parse(kOptionalOperationRequestFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
-              Eq(" [(google.cloud.operation_request_field) = \"test_field\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
+      Eq(" [(google.cloud.operation_request_field) = "
+         "\"test_field\",json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredOperationRequestField) {
@@ -129,9 +133,10 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredOperationRequestField) {
       nlohmann::json::parse(kOptionalOperationRequestFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
   EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
       Eq(" [(google.api.field_behavior) = "
-         "REQUIRED,(google.cloud.operation_request_field) = \"test_field\"]"));
+         "REQUIRED,(google.cloud.operation_request_field) = "
+         "\"test_field\",json_name=\"testField\"]"));
 }
 
 TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
@@ -145,9 +150,10 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
   auto json =
       nlohmann::json::parse(kRequiredIsResourceFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
-              Eq(" [(google.api.field_behavior) = "
-                 "REQUIRED,json_name=\"__json_request_body\"]"));
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", "testField", json),
+      Eq(" [(google.api.field_behavior) = "
+         "REQUIRED,json_name=\"__json_request_body\"]"));
 }
 
 struct DetermineTypesSuccess {
@@ -341,25 +347,25 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufScalarTypes) {
 
   auto constexpr kExpectedProto = R"""(message TestSchema {
   // Description for booleanField.
-  optional bool boolean_field = 1;
+  optional bool boolean_field = 1 [json_name="booleanField"];
 
   // Description for integerFormatInt64Field.
-  optional int64 integer_format_int64_field = 2;
+  optional int64 integer_format_int64_field = 2 [json_name="integerFormatInt64Field"];
 
   // Description for integerNoFormatField.
-  optional int32 integer_no_format_field = 3;
+  optional int32 integer_no_format_field = 3 [json_name="integerNoFormatField"];
 
   // Description for numberFormatDoubleField.
-  optional double number_format_double_field = 4;
+  optional double number_format_double_field = 4 [json_name="numberFormatDoubleField"];
 
   // Description for numberNoFormatField.
-  optional float number_no_format_field = 5;
+  optional float number_no_format_field = 5 [json_name="numberNoFormatField"];
 
   // Description for refField.
-  optional Foo ref_field = 6;
+  optional Foo ref_field = 6 [json_name="refField"];
 
   // Description for stringField.
-  optional string string_field = 7;
+  optional string string_field = 7 [json_name="stringField"];
 }
 )""";
 
@@ -413,19 +419,19 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMapType) {
 
   auto constexpr kExpectedProto = R"""(message TestSchema {
   // Description for mapRefField.
-  map<string, Foo> map_ref_field = 1;
+  map<string, Foo> map_ref_field = 1 [json_name="mapRefField"];
 
   // Description for mapStringField.
-  map<string, string> map_string_field = 2;
+  map<string, string> map_string_field = 2 [json_name="mapStringField"];
 
   message MapSynthesizedFieldItem {
-    optional string field1 = 1;
+    optional string field1 = 1 [json_name="field1"];
 
-    optional float field2 = 2;
+    optional float field2 = 2 [json_name="field2"];
   }
 
   // Description for mapSynthesizedField.
-  map<string, MapSynthesizedFieldItem> map_synthesized_field = 3;
+  map<string, MapSynthesizedFieldItem> map_synthesized_field = 3 [json_name="mapSynthesizedField"];
 }
 )""";
 
@@ -522,36 +528,36 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufArrayTypes) {
 
   auto constexpr kExpectedProto = R"""(message TestSchema {
   // Description of booleanArray.
-  repeated bool boolean_array = 1;
+  repeated bool boolean_array = 1 [json_name="booleanArray"];
 
   // Description of integerFormatInt64Array.
-  repeated int64 integer_format_int64_array = 2;
+  repeated int64 integer_format_int64_array = 2 [json_name="integerFormatInt64Array"];
 
   // Description of integerNoFormatArray.
-  repeated int32 integer_no_format_array = 3;
+  repeated int32 integer_no_format_array = 3 [json_name="integerNoFormatArray"];
 
   // Description of numberFormatDoubleArray.
-  repeated double number_format_double_array = 4;
+  repeated double number_format_double_array = 4 [json_name="numberFormatDoubleArray"];
 
   // Description of numberNoFormatArray.
-  repeated float number_no_format_array = 5;
+  repeated float number_no_format_array = 5 [json_name="numberNoFormatArray"];
 
   // Description of refArray.
-  repeated Foo ref_array = 6;
+  repeated Foo ref_array = 6 [json_name="refArray"];
 
   // Description of stringArray.
-  repeated string string_array = 7;
+  repeated string string_array = 7 [json_name="stringArray"];
 
   message SynthesizedArrayItem {
     // Description of field1.
-    optional string field1 = 1;
+    optional string field1 = 1 [json_name="field1"];
 
     // Description of field2.
-    repeated uint8 field2 = 2;
+    repeated uint8 field2 = 2 [json_name="field2"];
   }
 
   // Description of synthesizedArray.
-  repeated SynthesizedArrayItem synthesized_array = 8;
+  repeated SynthesizedArrayItem synthesized_array = 8 [json_name="synthesizedArray"];
 }
 )""";
 
@@ -632,30 +638,30 @@ TEST_F(DiscoveryTypeVertexDescriptorTest, JsonToProtobufMessageNoDescription) {
   // ENUM_VALUE2: Description for ENUM_VALUE2.
   // ENUM_VALUE3: Description for ENUM_VALUE3.
   // ENUM_VALUE4: Description for ENUM_VALUE4.
-  optional string enum_field = 1;
+  optional string enum_field = 1 [json_name="enumField"];
 
   // Description for int32Field.
-  optional int32 int32_field = 2;
+  optional int32 int32_field = 2 [json_name="int32Field"];
 
   // Description for mapRefField.
-  map<string, Foo> map_ref_field = 3;
+  map<string, Foo> map_ref_field = 3 [json_name="mapRefField"];
 
   // Description for mapStringField.
-  map<string, string> map_string_field = 4;
+  map<string, string> map_string_field = 4 [json_name="mapStringField"];
 
   message NestedTypeField {
     // Description for nestedField1.
-    optional string nested_field1 = 1;
+    optional string nested_field1 = 1 [json_name="nestedField1"];
 
     // Description for nestedField2.
-    optional other.package.Bar nested_field2 = 2;
+    optional other.package.Bar nested_field2 = 2 [json_name="nestedField2"];
   }
 
   // Description for nestedTypeField.
-  optional NestedTypeField nested_type_field = 5;
+  optional NestedTypeField nested_type_field = 5 [json_name="nestedTypeField"];
 
   // Description for stringField.
-  optional string string_field = 6;
+  optional string string_field = 6 [json_name="stringField"];
 }
 )""";
 
@@ -690,7 +696,7 @@ TEST_F(DiscoveryTypeVertexDescriptorTest,
   auto constexpr kExpectedProto = R"""(// Description of the message.
 message TestSchema {
   // Description for stringField.
-  optional string string_field = 1;
+  optional string string_field = 1 [json_name="stringField"];
 }
 )""";
 
@@ -710,8 +716,8 @@ syntax = "proto3";
 package generator.test;
 
 message FieldsOnly {
-  string field1 = 1;
-  string field2 = 2;
+  string field1 = 1 [json_name="field1"];
+  string field2 = 2 [json_name="field2"];
 }
 
 message ReservedOnly {
@@ -720,12 +726,12 @@ message ReservedOnly {
 
 message FieldHighest {
   reserved 25, 4 to 6;
-  string field26 = 26;
+  string field26 = 26 [json_name="field26"];
 }
 
 message ReservedHighest {
   reserved 25, 4 to 6;
-  string field7 = 7;
+  string field7 = 7 [json_name="field7"];
 }
 )""";
 
@@ -905,10 +911,10 @@ message TestSchema {
 message TestSchema {
   reserved 1;
   // Description for existingField.
-  optional string existing_field = 2;
+  optional string existing_field = 2 [json_name="existingField"];
 
   // Description for newField.
-  optional Foo new_field = 3;
+  optional Foo new_field = 3 [json_name="newField"];
 }
 )""";
 
@@ -932,10 +938,10 @@ package test.package;
 message TestSchema {
   reserved 3;
   // Description for existingField.
-  optional string existing_field = 1;
+  optional string existing_field = 1 [json_name="existingField"];
 
   // Description for otherExistingField.
-  map<string, string> other_existing_field = 2;
+  map<string, string> other_existing_field = 2 [json_name="otherExistingField"];
 }
 )""";
 
@@ -971,13 +977,13 @@ message TestSchema {
 message TestSchema {
   reserved 3;
   // Description for existingField.
-  optional string existing_field = 1;
+  optional string existing_field = 1 [json_name="existingField"];
 
   // Description for newMapField.
-  map<string, string> new_map_field = 4;
+  map<string, string> new_map_field = 4 [json_name="newMapField"];
 
   // Description for otherExistingField.
-  map<string, string> other_existing_field = 2;
+  map<string, string> other_existing_field = 2 [json_name="otherExistingField"];
 }
 )""";
 
@@ -1026,7 +1032,7 @@ message TestSchema {
 message TestSchema {
   reserved 2, 3;
   // Description for existingField.
-  optional string existing_field = 1;
+  optional string existing_field = 1 [json_name="existingField"];
 }
 )""";
 
@@ -1078,7 +1084,7 @@ message TestSchema {
 message TestSchema {
   reserved 2, 3, 4;
   // Description for existingField.
-  optional string existing_field = 1;
+  optional string existing_field = 1 [json_name="existingField"];
 }
 )""";
 
@@ -1134,10 +1140,10 @@ message TestSchema {
 message TestSchema {
   reserved 2, 3;
   // Description for existingField.
-  optional string existing_field = 1;
+  optional string existing_field = 1 [json_name="existingField"];
 
   // Description for newField.
-  repeated string new_field = 4;
+  repeated string new_field = 4 [json_name="newField"];
 }
 )""";
 

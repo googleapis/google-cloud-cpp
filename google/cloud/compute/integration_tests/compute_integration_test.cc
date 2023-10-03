@@ -35,6 +35,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Property;
 
 class ComputeIntegrationTest
@@ -208,6 +209,22 @@ TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
       get_instance->shielded_instance_config().enable_integrity_monitoring());
   EXPECT_TRUE(get_instance->shielded_instance_config().enable_vtpm());
   EXPECT_FALSE(get_instance->shielded_instance_config().enable_secure_boot());
+}
+
+TEST_F(ComputeIntegrationTest, VerifyRetrievalMalformedCamelCaseJsonField) {
+  namespace instances = ::google::cloud::compute_instances_v1;
+  auto client =
+      instances::InstancesClient(instances::MakeInstancesConnectionRest());
+  std::string const instance_name = "test2-e2-micro-instance";
+
+  auto get_instance = client.GetInstance(project_id_, zone_, instance_name);
+  ASSERT_THAT(get_instance, IsOk());
+  EXPECT_THAT(get_instance->name(), Eq(instance_name));
+  ASSERT_THAT(get_instance->network_interfaces(), Not(IsEmpty()));
+  ASSERT_THAT(get_instance->network_interfaces(0).access_configs(),
+              Not(IsEmpty()));
+  EXPECT_THAT(get_instance->network_interfaces(0).access_configs(0).nat_ip(),
+              Not(IsEmpty()));
 }
 
 }  // namespace

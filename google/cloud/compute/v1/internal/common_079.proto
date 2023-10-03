@@ -28,30 +28,30 @@ import "google/cloud/compute/v1/internal/common_070.proto";
 // define properties for nodes in a node group. For more information, read
 // Creating node groups and instances.
 message NodeTemplate {
-  repeated AcceleratorConfig accelerators = 1;
+  repeated AcceleratorConfig accelerators = 1 [json_name = "accelerators"];
 
   // CPU overcommit.
   // CPU_OVERCOMMIT_TYPE_UNSPECIFIED:
   // ENABLED:
   // NONE:
-  optional string cpu_overcommit_type = 2;
+  optional string cpu_overcommit_type = 2 [json_name = "cpuOvercommitType"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3;
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 4;
+  optional string description = 4 [json_name = "description"];
 
-  repeated LocalDisk disks = 5;
+  repeated LocalDisk disks = 5 [json_name = "disks"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6;
+  optional string id = 6 [json_name = "id"];
 
   // [Output Only] The type of the resource. Always compute#nodeTemplate for
   // node templates.
-  optional string kind = 7;
+  optional string kind = 7 [json_name = "kind"];
 
   // The name of the resource, provided by the client when initially creating
   // the resource. The resource name must be 1-63 characters long, and comply
@@ -60,30 +60,32 @@ message NodeTemplate {
   // character must be a lowercase letter, and all following characters must be
   // a dash, lowercase letter, or digit, except the last character, which cannot
   // be a dash.
-  optional string name = 8;
+  optional string name = 8 [json_name = "name"];
 
   // Labels to use for node affinity, which will be used in instance scheduling.
-  map<string, string> node_affinity_labels = 9;
+  map<string, string> node_affinity_labels = 9
+      [json_name = "nodeAffinityLabels"];
 
   // The node type to use for nodes group that are created from this template.
-  optional string node_type = 10;
+  optional string node_type = 10 [json_name = "nodeType"];
 
   // Do not use. Instead, use the node_type property.
-  optional NodeTemplateNodeTypeFlexibility node_type_flexibility = 11;
+  optional NodeTemplateNodeTypeFlexibility node_type_flexibility = 11
+      [json_name = "nodeTypeFlexibility"];
 
   // [Output Only] The name of the region where the node template resides, such
   // as us-central1.
-  optional string region = 12;
+  optional string region = 12 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 13;
+  optional string self_link = 13 [json_name = "selfLink"];
 
   // Sets the binding properties for the physical server. Valid values include:
   // - *[Default]* RESTART_NODE_ON_ANY_SERVER: Restarts VMs on any available
   // physical server - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same
   // physical server whenever possible See Sole-tenant node options for more
   // information.
-  optional ServerBinding server_binding = 14;
+  optional ServerBinding server_binding = 14 [json_name = "serverBinding"];
 
   // [Output Only] The status of the node template. One of the following values:
   // CREATING, READY, and DELETING.
@@ -91,35 +93,35 @@ message NodeTemplate {
   // DELETING: The node template is currently being deleted.
   // INVALID: Invalid status.
   // READY: The node template is ready.
-  optional string status = 15;
+  optional string status = 15 [json_name = "status"];
 
   // [Output Only] An optional, human-readable explanation of the status.
-  optional string status_message = 16;
+  optional string status_message = 16 [json_name = "statusMessage"];
 }
 
 message NodeTemplateAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of NodeTemplatesScopedList resources.
-  map<string, NodeTemplatesScopedList> items = 2;
+  map<string, NodeTemplatesScopedList> items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource.Always compute#nodeTemplateAggregatedList
   // for aggregated lists of node templates.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6;
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -178,7 +180,7 @@ message NodeTemplateAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -188,45 +190,45 @@ message NodeTemplateAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7;
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 // Contains a list of node templates.
 message NodeTemplateList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of NodeTemplate resources.
-  repeated NodeTemplate items = 2;
+  repeated NodeTemplate items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource.Always compute#nodeTemplateList for lists of
   // node templates.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -285,7 +287,7 @@ message NodeTemplateList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -295,35 +297,35 @@ message NodeTemplateList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message NodeTemplateNodeTypeFlexibility {
-  optional string cpus = 1;
+  optional string cpus = 1 [json_name = "cpus"];
 
-  optional string local_ssd = 2;
+  optional string local_ssd = 2 [json_name = "localSsd"];
 
-  optional string memory = 3;
+  optional string memory = 3 [json_name = "memory"];
 }
 
 message NodeTemplatesScopedList {
   // [Output Only] A list of node templates contained in this scope.
-  repeated NodeTemplate node_templates = 1;
+  repeated NodeTemplate node_templates = 1 [json_name = "nodeTemplates"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -382,7 +384,7 @@ message NodeTemplatesScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -392,21 +394,21 @@ message NodeTemplatesScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] An informational warning that appears when the node templates
   // list is empty.
-  optional Warning warning = 2;
+  optional Warning warning = 2 [json_name = "warning"];
 }

@@ -184,7 +184,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.GetForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L158}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.GetForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L160}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -217,7 +217,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.GetForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L158}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.GetForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L160}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -254,7 +254,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.InsertForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L167}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.InsertForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L171}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -295,7 +295,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.InsertForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L167}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.InsertForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L171}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -332,7 +332,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.ListGlobalForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L192}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.ListGlobalForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L197}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -373,7 +373,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.ListGlobalForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L192}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.ListGlobalForwardingRulesRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L197}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_040.proto#L36}
   ///
   // clang-format on
@@ -414,7 +414,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.PatchForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L257}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.PatchForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L263}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -458,7 +458,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.PatchForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L257}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.PatchForwardingRuleRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L263}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -495,7 +495,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L285}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -536,7 +536,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L285}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L293}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -573,7 +573,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetTargetRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L302}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetTargetRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
@@ -614,7 +614,7 @@ class GlobalForwardingRulesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetTargetRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L302}
+  /// [google.cloud.cpp.compute.global_forwarding_rules.v1.SetTargetRequest]: @cloud_cpp_reference_link{google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto#L312}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(

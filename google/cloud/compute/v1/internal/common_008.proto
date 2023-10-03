@@ -37,22 +37,23 @@ message Autoscaler {
   // customMetricUtilizations, and loadBalancingUtilization. If none of these
   // are specified, the default will be to autoscale based on cpuUtilization to
   // 0.6 or 60%.
-  optional AutoscalingPolicy autoscaling_policy = 1;
+  optional AutoscalingPolicy autoscaling_policy = 1
+      [json_name = "autoscalingPolicy"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2;
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 4;
+  optional string id = 4 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#autoscaler for
   // autoscalers.
-  optional string kind = 5;
+  optional string kind = 5 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -61,24 +62,25 @@ message Autoscaler {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 6;
+  optional string name = 6 [json_name = "name"];
 
   // [Output Only] Target recommended MIG size (number of instances) computed by
   // autoscaler. Autoscaler calculates the recommended MIG size even when the
   // autoscaling policy mode is different from ON. This field is empty when
   // autoscaler is not connected to an existing managed instance group or
   // autoscaler did not generate its prediction.
-  optional int32 recommended_size = 7;
+  optional int32 recommended_size = 7 [json_name = "recommendedSize"];
 
   // [Output Only] URL of the region where the instance group resides (for
   // autoscalers living in regional scope).
-  optional string region = 8;
+  optional string region = 8 [json_name = "region"];
 
   // [Output Only] Status information of existing scaling schedules.
-  map<string, ScalingScheduleStatus> scaling_schedule_status = 9;
+  map<string, ScalingScheduleStatus> scaling_schedule_status = 9
+      [json_name = "scalingScheduleStatus"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 10;
+  optional string self_link = 10 [json_name = "selfLink"];
 
   // [Output Only] The status of the autoscaler configuration. Current set of
   // possible values: - PENDING: Autoscaler backend hasn't read new/updated
@@ -91,25 +93,26 @@ message Autoscaler {
   // DELETING: Configuration is being deleted
   // ERROR: Configuration has errors. Actionable for users.
   // PENDING: Autoscaler backend hasn't read new/updated configuration
-  optional string status = 11;
+  optional string status = 11 [json_name = "status"];
 
   // [Output Only] Human-readable details about the current state of the
   // autoscaler. Read the documentation for Commonly returned status messages
   // for examples of status messages you might encounter.
-  repeated AutoscalerStatusDetails status_details = 12;
+  repeated AutoscalerStatusDetails status_details = 12
+      [json_name = "statusDetails"];
 
   // URL of the managed instance group that this autoscaler will scale. This
   // field is required when creating an autoscaler.
-  optional string target = 13;
+  optional string target = 13 [json_name = "target"];
 
   // [Output Only] URL of the zone where the instance group resides (for
   // autoscalers living in zonal scope).
-  optional string zone = 14;
+  optional string zone = 14 [json_name = "zone"];
 }
 
 message AutoscalerStatusDetails {
   // The status message.
-  optional string message = 1;
+  optional string message = 1 [json_name = "message"];
 
   // The type of error, warning, or notice returned. Current set of possible
   // values: - ALL_INSTANCES_UNHEALTHY (WARNING): All instances in the instance
@@ -188,7 +191,7 @@ message AutoscalerStatusDetails {
   // ZONE_RESOURCE_STOCKOUT: For zonal autoscalers: there is a resource stockout
   // in the chosen zone. For regional autoscalers: in at least one of the zones
   // you're using there is a resource stockout.
-  optional string type = 2;
+  optional string type = 2 [json_name = "type"];
 }
 
 // Cloud Autoscaler policy.
@@ -203,29 +206,30 @@ message AutoscalingPolicy {
   // Initialization periods might vary because of numerous factors. We recommend
   // that you test how long your application takes to initialize. To do this,
   // create a VM and time your application's startup process.
-  optional int32 cool_down_period_sec = 1;
+  optional int32 cool_down_period_sec = 1 [json_name = "coolDownPeriodSec"];
 
   // Defines the CPU utilization policy that allows the autoscaler to scale
   // based on the average CPU utilization of a managed instance group.
-  optional AutoscalingPolicyCpuUtilization cpu_utilization = 2;
+  optional AutoscalingPolicyCpuUtilization cpu_utilization = 2
+      [json_name = "cpuUtilization"];
 
   // Configuration parameters of autoscaling based on a custom metric.
   repeated AutoscalingPolicyCustomMetricUtilization custom_metric_utilizations =
-      3;
+      3 [json_name = "customMetricUtilizations"];
 
   // Configuration parameters of autoscaling based on load balancer.
   optional AutoscalingPolicyLoadBalancingUtilization
-      load_balancing_utilization = 4;
+      load_balancing_utilization = 4 [json_name = "loadBalancingUtilization"];
 
   // The maximum number of instances that the autoscaler can scale out to. This
   // is required when creating or updating an autoscaler. The maximum number of
   // replicas must not be lower than minimal number of replicas.
-  optional int32 max_num_replicas = 5;
+  optional int32 max_num_replicas = 5 [json_name = "maxNumReplicas"];
 
   // The minimum number of replicas that the autoscaler can scale in to. This
   // cannot be less than 0. If not provided, autoscaler chooses a default value
   // depending on maximum number of instances allowed.
-  optional int32 min_num_replicas = 6;
+  optional int32 min_num_replicas = 6 [json_name = "minNumReplicas"];
 
   // Defines the operating mode for this policy. The following modes are
   // available: - OFF: Disables the autoscaler but maintains its configuration.
@@ -240,15 +244,17 @@ message AutoscalingPolicy {
   // not scale the MIG in.
   // ONLY_UP: Automatically create VMs according to the policy, but do not scale
   // the MIG in.
-  optional string mode = 7;
+  optional string mode = 7 [json_name = "mode"];
 
-  optional AutoscalingPolicyScaleInControl scale_in_control = 8;
+  optional AutoscalingPolicyScaleInControl scale_in_control = 8
+      [json_name = "scaleInControl"];
 
   // Scaling schedules defined for an autoscaler. Multiple schedules can be set
   // on an autoscaler, and they can overlap. During overlapping periods the
   // greatest min_required_replicas of all scaling schedules is applied. Up to
   // 128 scaling schedules are allowed.
-  map<string, AutoscalingPolicyScalingSchedule> scaling_schedules = 9;
+  map<string, AutoscalingPolicyScalingSchedule> scaling_schedules = 9
+      [json_name = "scalingSchedules"];
 }
 
 // CPU utilization policy.
@@ -264,7 +270,7 @@ message AutoscalingPolicyCpuUtilization {
   // OPTIMIZE_AVAILABILITY: Predictive autoscaling improves availability by
   // monitoring daily and weekly load patterns and scaling out ahead of
   // anticipated demand.
-  optional string predictive_method = 1;
+  optional string predictive_method = 1 [json_name = "predictiveMethod"];
 
   // The target CPU utilization that the autoscaler maintains. Must be a float
   // value in the range (0, 1]. If not specified, the default is 0.6. If the CPU
@@ -274,7 +280,7 @@ message AutoscalingPolicyCpuUtilization {
   // If the average CPU is above the target utilization, the autoscaler scales
   // out until it reaches the maximum number of instances you specified or until
   // the average utilization reaches the target utilization.
-  optional double utilization_target = 2;
+  optional double utilization_target = 2 [json_name = "utilizationTarget"];
 }
 
 // Custom utilization metric policy.
@@ -302,12 +308,12 @@ message AutoscalingPolicyCustomMetricUtilization {
   // gce_instance resource type). If multiple TimeSeries are returned upon the
   // query execution, the autoscaler will sum their respective values to obtain
   // its scaling value.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The identifier (type) of the Stackdriver Monitoring metric. The metric
   // cannot have negative values. The metric must have a value type of INT64 or
   // DOUBLE.
-  optional string metric = 2;
+  optional string metric = 2 [json_name = "metric"];
 
   // If scaling is based on a per-group metric value that represents the total
   // amount of work to be done or resource usage, set this value to an amount
@@ -320,7 +326,8 @@ message AutoscalingPolicyCustomMetricUtilization {
   // bad example would be a metric exporting an average or median latency, since
   // this value can't include a chunk assignable to a single instance, it could
   // be better used with utilization_target instead.
-  optional double single_instance_assignment = 3;
+  optional double single_instance_assignment = 3
+      [json_name = "singleInstanceAssignment"];
 
   // The target value of the metric that autoscaler maintains. This must be a
   // positive value. A utilization metric scales number of virtual machines
@@ -328,7 +335,7 @@ message AutoscalingPolicyCustomMetricUtilization {
   // example, a good metric to use as a utilization_target is
   // https://www.googleapis.com/compute/v1/instance/network/received_bytes_count.
   // The autoscaler works to keep this value constant for each of the instances.
-  optional double utilization_target = 4;
+  optional double utilization_target = 4 [json_name = "utilizationTarget"];
 
   // Defines how target utilization value is expressed for a Stackdriver
   // Monitoring metric. Either GAUGE, DELTA_PER_SECOND, or DELTA_PER_MINUTE.
@@ -340,7 +347,8 @@ message AutoscalingPolicyCustomMetricUtilization {
   // will collect the average utilization of the virtual machines from the last
   // couple of minutes, and compare the value to the utilization target value to
   // perform autoscaling.
-  optional string utilization_target_type = 5;
+  optional string utilization_target_type = 5
+      [json_name = "utilizationTargetType"];
 }
 
 // Configuration parameters of autoscaling based on load balancing.
@@ -348,7 +356,7 @@ message AutoscalingPolicyLoadBalancingUtilization {
   // Fraction of backend capacity utilization (set in HTTP(S) load balancing
   // configuration) that the autoscaler maintains. Must be a positive float
   // value. If not defined, the default is 0.8.
-  optional double utilization_target = 1;
+  optional double utilization_target = 1 [json_name = "utilizationTarget"];
 }
 
 // Configuration that allows for slower scale in so that even if Autoscaler
@@ -359,11 +367,12 @@ message AutoscalingPolicyScaleInControl {
   // recommendation during the window autoscaler looks at when computing
   // recommendations. Possibly all these VMs can be deleted at once so user
   // service needs to be prepared to lose that many VMs in one step.
-  optional FixedOrPercent max_scaled_in_replicas = 1;
+  optional FixedOrPercent max_scaled_in_replicas = 1
+      [json_name = "maxScaledInReplicas"];
 
   // How far back autoscaling looks when computing recommendations to include
   // directives regarding slower scale in, as described above.
-  optional int32 time_window_sec = 2;
+  optional int32 time_window_sec = 2 [json_name = "timeWindowSec"];
 }
 
 // Scaling based on user-defined schedule. The message describes a single
@@ -371,20 +380,20 @@ message AutoscalingPolicyScaleInControl {
 // instances an autoscaler can recommend, which can trigger scaling out.
 message AutoscalingPolicyScalingSchedule {
   // A description of a scaling schedule.
-  optional string description = 1;
+  optional string description = 1 [json_name = "description"];
 
   // A boolean value that specifies whether a scaling schedule can influence
   // autoscaler recommendations. If set to true, then a scaling schedule has no
   // effect. This field is optional, and its value is false by default.
-  optional bool disabled = 2;
+  optional bool disabled = 2 [json_name = "disabled"];
 
   // The duration of time intervals, in seconds, for which this scaling schedule
   // is to run. The minimum allowed value is 300. This field is required.
-  optional int32 duration_sec = 3;
+  optional int32 duration_sec = 3 [json_name = "durationSec"];
 
   // The minimum number of VM instances that the autoscaler will recommend in
   // time intervals starting according to schedule. This field is required.
-  optional int32 min_required_replicas = 4;
+  optional int32 min_required_replicas = 4 [json_name = "minRequiredReplicas"];
 
   // The start timestamps of time intervals when this scaling schedule is to
   // provide a scaling signal. This field uses the extended cron format (with an
@@ -393,25 +402,25 @@ message AutoscalingPolicyScalingSchedule {
   // schedule is interpreted with respect to time_zone. This field is required.
   // Note: These timestamps only describe when autoscaler starts providing the
   // scaling signal. The VMs need additional time to become serving.
-  optional string schedule = 5;
+  optional string schedule = 5 [json_name = "schedule"];
 
   // The time zone to use when interpreting the schedule. The value of this
   // field must be a time zone name from the tz database:
   // https://en.wikipedia.org/wiki/Tz_database. This field is assigned a default
   // value of “UTC” if left empty.
-  optional string time_zone = 6;
+  optional string time_zone = 6 [json_name = "timeZone"];
 }
 
 message ScalingScheduleStatus {
   // [Output Only] The last time the scaling schedule became active. Note: this
   // is a timestamp when a schedule actually became active, not when it was
   // planned to do so. The timestamp is in RFC3339 text format.
-  optional string last_start_time = 1;
+  optional string last_start_time = 1 [json_name = "lastStartTime"];
 
   // [Output Only] The next time the scaling schedule is to become active. Note:
   // this is a timestamp when a schedule is planned to run, but the actual time
   // might be slightly different. The timestamp is in RFC3339 text format.
-  optional string next_start_time = 2;
+  optional string next_start_time = 2 [json_name = "nextStartTime"];
 
   // [Output Only] The current state of a scaling schedule.
   // ACTIVE: The current autoscaling recommendation is influenced by this
@@ -420,5 +429,5 @@ message ScalingScheduleStatus {
   // OBSOLETE: This scaling schedule will never become active again.
   // READY: The current autoscaling recommendation is not influenced by this
   // scaling schedule.
-  optional string state = 3;
+  optional string state = 3 [json_name = "state"];
 }

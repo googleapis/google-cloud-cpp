@@ -28,18 +28,19 @@ message CustomerEncryptionKey {
   // resource GET requests. For example: "kmsKeyName":
   // "projects/kms_project_id/locations/region/keyRings/
   // key_region/cryptoKeys/key /cryptoKeyVersions/1
-  optional string kms_key_name = 1;
+  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
 
   // The service account being used for the encryption request for the given KMS
   // key. If absent, the Compute Engine default service account is used. For
   // example: "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/
-  optional string kms_key_service_account = 2;
+  optional string kms_key_service_account = 2
+      [json_name = "kmsKeyServiceAccount"];
 
   // Specifies a 256-bit customer-supplied encryption key, encoded in RFC 4648
   // base64 to either encrypt or decrypt this resource. You can provide either
   // the rawKey or the rsaEncryptedKey. For example: "rawKey":
   // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0="
-  optional string raw_key = 3;
+  optional string raw_key = 3 [json_name = "rawKey"];
 
   // Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
   // customer-supplied encryption key to either encrypt or decrypt this
@@ -54,9 +55,9 @@ message CustomerEncryptionKey {
   // 4648 base64 encoding. Gets the RSA public key certificate provided by
   // Google at:
   // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
-  optional string rsa_encrypted_key = 4;
+  optional string rsa_encrypted_key = 4 [json_name = "rsaEncryptedKey"];
 
   // [Output only] The RFC 4648 base64 encoded SHA-256 hash of the
   // customer-supplied encryption key that protects this resource.
-  optional string sha256 = 5;
+  optional string sha256 = 5 [json_name = "sha256"];
 }

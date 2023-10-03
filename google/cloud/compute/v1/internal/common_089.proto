@@ -24,7 +24,7 @@ package google.cloud.cpp.compute.v1;
 // A quotas entry.
 message Quota {
   // [Output Only] Quota limit for this metric.
-  optional double limit = 1;
+  optional double limit = 1 [json_name = "limit"];
 
   // [Output Only] Name of the quota metric.
   // A2_CPUS:
@@ -176,12 +176,12 @@ message Quota {
   // VPN_GATEWAYS:
   // VPN_TUNNELS:
   // XPN_SERVICE_PROJECTS:
-  optional string metric = 2;
+  optional string metric = 2 [json_name = "metric"];
 
   // [Output Only] Owning resource. This is the resource on which this quota is
   // applied.
-  optional string owner = 3;
+  optional string owner = 3 [json_name = "owner"];
 
   // [Output Only] Current usage of this metric.
-  optional double usage = 4;
+  optional double usage = 4 [json_name = "usage"];
 }

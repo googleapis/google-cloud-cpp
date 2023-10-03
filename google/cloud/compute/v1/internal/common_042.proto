@@ -27,14 +27,14 @@ message GRPCHealthCheck {
   // Empty service_name means the overall status of all services at the backend.
   // - Non-empty service_name means the health of that gRPC service, as defined
   // by the owner of the service. The grpc_service_name can only be ASCII.
-  optional string grpc_service_name = 1;
+  optional string grpc_service_name = 1 [json_name = "grpcServiceName"];
 
   // The TCP port number to which the health check prober sends packets. Valid
   // values are 1 through 65535.
-  optional int32 port = 2;
+  optional int32 port = 2 [json_name = "port"];
 
   // Not supported.
-  optional string port_name = 3;
+  optional string port_name = 3 [json_name = "portName"];
 
   // Specifies how a port is selected for health checking. Can be one of the
   // following values: USE_FIXED_PORT: Specifies a port number explicitly using
@@ -64,7 +64,7 @@ message GRPCHealthCheck {
   // group. For instance group backends, the health check uses the port number
   // specified for the backend service's named port defined in the instance
   // group's named ports.
-  optional string port_specification = 4;
+  optional string port_specification = 4 [json_name = "portSpecification"];
 }
 
 message HTTP2HealthCheck {
@@ -73,14 +73,14 @@ message HTTP2HealthCheck {
   // to which health check packets are sent. The destination IP address depends
   // on the type of load balancer. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#hc-packet-dest
-  optional string host = 1;
+  optional string host = 1 [json_name = "host"];
 
   // The TCP port number to which the health check prober sends packets. The
   // default value is 443. Valid values are 1 through 65535.
-  optional int32 port = 2;
+  optional int32 port = 2 [json_name = "port"];
 
   // Not supported.
-  optional string port_name = 3;
+  optional string port_name = 3 [json_name = "portName"];
 
   // Specifies how a port is selected for health checking. Can be one of the
   // following values: USE_FIXED_PORT: Specifies a port number explicitly using
@@ -110,24 +110,24 @@ message HTTP2HealthCheck {
   // group. For instance group backends, the health check uses the port number
   // specified for the backend service's named port defined in the instance
   // group's named ports.
-  optional string port_specification = 4;
+  optional string port_specification = 4 [json_name = "portSpecification"];
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
   // NONE:
   // PROXY_V1:
-  optional string proxy_header = 5;
+  optional string proxy_header = 5 [json_name = "proxyHeader"];
 
   // The request path of the HTTP/2 health check request. The default value is
   // /.
-  optional string request_path = 6;
+  optional string request_path = 6 [json_name = "requestPath"];
 
   // Creates a content-based HTTP/2 health check. In addition to the required
   // HTTP 200 (OK) status code, you can configure the health check to pass only
   // when the backend sends this specific ASCII response string within the first
   // 1024 bytes of the HTTP response body. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#criteria-protocol-http
-  optional string response = 7;
+  optional string response = 7 [json_name = "response"];
 }
 
 message HTTPHealthCheck {
@@ -136,14 +136,14 @@ message HTTPHealthCheck {
   // to which health check packets are sent. The destination IP address depends
   // on the type of load balancer. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#hc-packet-dest
-  optional string host = 1;
+  optional string host = 1 [json_name = "host"];
 
   // The TCP port number to which the health check prober sends packets. The
   // default value is 80. Valid values are 1 through 65535.
-  optional int32 port = 2;
+  optional int32 port = 2 [json_name = "port"];
 
   // Not supported.
-  optional string port_name = 3;
+  optional string port_name = 3 [json_name = "portName"];
 
   // Specifies how a port is selected for health checking. Can be one of the
   // following values: USE_FIXED_PORT: Specifies a port number explicitly using
@@ -173,23 +173,23 @@ message HTTPHealthCheck {
   // group. For instance group backends, the health check uses the port number
   // specified for the backend service's named port defined in the instance
   // group's named ports.
-  optional string port_specification = 4;
+  optional string port_specification = 4 [json_name = "portSpecification"];
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
   // NONE:
   // PROXY_V1:
-  optional string proxy_header = 5;
+  optional string proxy_header = 5 [json_name = "proxyHeader"];
 
   // The request path of the HTTP health check request. The default value is /.
-  optional string request_path = 6;
+  optional string request_path = 6 [json_name = "requestPath"];
 
   // Creates a content-based HTTP health check. In addition to the required HTTP
   // 200 (OK) status code, you can configure the health check to pass only when
   // the backend sends this specific ASCII response string within the first 1024
   // bytes of the HTTP response body. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#criteria-protocol-http
-  optional string response = 7;
+  optional string response = 7 [json_name = "response"];
 }
 
 message HTTPSHealthCheck {
@@ -198,14 +198,14 @@ message HTTPSHealthCheck {
   // to which health check packets are sent. The destination IP address depends
   // on the type of load balancer. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#hc-packet-dest
-  optional string host = 1;
+  optional string host = 1 [json_name = "host"];
 
   // The TCP port number to which the health check prober sends packets. The
   // default value is 443. Valid values are 1 through 65535.
-  optional int32 port = 2;
+  optional int32 port = 2 [json_name = "port"];
 
   // Not supported.
-  optional string port_name = 3;
+  optional string port_name = 3 [json_name = "portName"];
 
   // Specifies how a port is selected for health checking. Can be one of the
   // following values: USE_FIXED_PORT: Specifies a port number explicitly using
@@ -235,23 +235,23 @@ message HTTPSHealthCheck {
   // group. For instance group backends, the health check uses the port number
   // specified for the backend service's named port defined in the instance
   // group's named ports.
-  optional string port_specification = 4;
+  optional string port_specification = 4 [json_name = "portSpecification"];
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
   // NONE:
   // PROXY_V1:
-  optional string proxy_header = 5;
+  optional string proxy_header = 5 [json_name = "proxyHeader"];
 
   // The request path of the HTTPS health check request. The default value is /.
-  optional string request_path = 6;
+  optional string request_path = 6 [json_name = "requestPath"];
 
   // Creates a content-based HTTPS health check. In addition to the required
   // HTTP 200 (OK) status code, you can configure the health check to pass only
   // when the backend sends this specific ASCII response string within the first
   // 1024 bytes of the HTTP response body. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#criteria-protocol-http
-  optional string response = 7;
+  optional string response = 7 [json_name = "response"];
 }
 
 // Represents a health check resource. Google Compute Engine has two health
@@ -274,36 +274,40 @@ message HTTPSHealthCheck {
 message HealthCheck {
   // How often (in seconds) to send a health check. The default value is 5
   // seconds.
-  optional int32 check_interval_sec = 1;
+  optional int32 check_interval_sec = 1 [json_name = "checkIntervalSec"];
 
   // [Output Only] Creation timestamp in 3339 text format.
-  optional string creation_timestamp = 2;
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
-  optional GRPCHealthCheck grpc_health_check = 4;
+  optional GRPCHealthCheck grpc_health_check = 4
+      [json_name = "grpcHealthCheck"];
 
   // A so-far unhealthy instance will be marked healthy after this many
   // consecutive successes. The default value is 2.
-  optional int32 healthy_threshold = 5;
+  optional int32 healthy_threshold = 5 [json_name = "healthyThreshold"];
 
-  optional HTTP2HealthCheck http2_health_check = 6;
+  optional HTTP2HealthCheck http2_health_check = 6
+      [json_name = "http2HealthCheck"];
 
-  optional HTTPHealthCheck http_health_check = 7;
+  optional HTTPHealthCheck http_health_check = 7
+      [json_name = "httpHealthCheck"];
 
-  optional HTTPSHealthCheck https_health_check = 8;
+  optional HTTPSHealthCheck https_health_check = 8
+      [json_name = "httpsHealthCheck"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 9;
+  optional string id = 9 [json_name = "id"];
 
   // Type of the resource.
-  optional string kind = 10;
+  optional string kind = 10 [json_name = "kind"];
 
   // Configure logging on this health check.
-  optional HealthCheckLogConfig log_config = 11;
+  optional HealthCheckLogConfig log_config = 11 [json_name = "logConfig"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035. For
@@ -312,23 +316,23 @@ message HealthCheck {
   // RFC1035. This regular expression describes a name where the first character
   // is a lowercase letter, and all following characters are a dash, lowercase
   // letter, or digit, except the last character, which isn't a dash.
-  optional string name = 12;
+  optional string name = 12 [json_name = "name"];
 
   // [Output Only] Region where the health check resides. Not applicable to
   // global health checks.
-  optional string region = 13;
+  optional string region = 13 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 14;
+  optional string self_link = 14 [json_name = "selfLink"];
 
-  optional SSLHealthCheck ssl_health_check = 15;
+  optional SSLHealthCheck ssl_health_check = 15 [json_name = "sslHealthCheck"];
 
-  optional TCPHealthCheck tcp_health_check = 16;
+  optional TCPHealthCheck tcp_health_check = 16 [json_name = "tcpHealthCheck"];
 
   // How long (in seconds) to wait before claiming failure. The default value is
   // 5 seconds. It is invalid for timeoutSec to have greater value than
   // checkIntervalSec.
-  optional int32 timeout_sec = 17;
+  optional int32 timeout_sec = 17 [json_name = "timeoutSec"];
 
   // Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS, HTTP2
   // or GRPC. Exactly one of the protocol-specific health check fields must be
@@ -340,33 +344,33 @@ message HealthCheck {
   // INVALID:
   // SSL:
   // TCP:
-  optional string type = 18;
+  optional string type = 18 [json_name = "type"];
 
   // A so-far healthy instance will be marked unhealthy after this many
   // consecutive failures. The default value is 2.
-  optional int32 unhealthy_threshold = 19;
+  optional int32 unhealthy_threshold = 19 [json_name = "unhealthyThreshold"];
 }
 
 // Contains a list of HealthCheck resources.
 message HealthCheckList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of HealthCheck resources.
-  repeated HealthCheck items = 2;
+  repeated HealthCheck items = 2 [json_name = "items"];
 
   // Type of resource.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -425,7 +429,7 @@ message HealthCheckList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -435,22 +439,22 @@ message HealthCheckList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Configuration of logging on a health check. If logging is enabled, logs will
@@ -458,16 +462,16 @@ message HealthCheckList {
 message HealthCheckLogConfig {
   // Indicates whether or not to export logs. This is false by default, which
   // means no health check logging will be done.
-  optional bool enable = 1;
+  optional bool enable = 1 [json_name = "enable"];
 }
 
 message SSLHealthCheck {
   // The TCP port number to which the health check prober sends packets. The
   // default value is 443. Valid values are 1 through 65535.
-  optional int32 port = 1;
+  optional int32 port = 1 [json_name = "port"];
 
   // Not supported.
-  optional string port_name = 2;
+  optional string port_name = 2 [json_name = "portName"];
 
   // Specifies how a port is selected for health checking. Can be one of the
   // following values: USE_FIXED_PORT: Specifies a port number explicitly using
@@ -497,34 +501,34 @@ message SSLHealthCheck {
   // group. For instance group backends, the health check uses the port number
   // specified for the backend service's named port defined in the instance
   // group's named ports.
-  optional string port_specification = 3;
+  optional string port_specification = 3 [json_name = "portSpecification"];
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
   // NONE:
   // PROXY_V1:
-  optional string proxy_header = 4;
+  optional string proxy_header = 4 [json_name = "proxyHeader"];
 
   // Instructs the health check prober to send this exact ASCII string, up to
   // 1024 bytes in length, after establishing the TCP connection and SSL
   // handshake.
-  optional string request = 5;
+  optional string request = 5 [json_name = "request"];
 
   // Creates a content-based SSL health check. In addition to establishing a TCP
   // connection and the TLS handshake, you can configure the health check to
   // pass only when the backend sends this exact response ASCII string, up to
   // 1024 bytes in length. For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#criteria-protocol-ssl-tcp
-  optional string response = 6;
+  optional string response = 6 [json_name = "response"];
 }
 
 message TCPHealthCheck {
   // The TCP port number to which the health check prober sends packets. The
   // default value is 80. Valid values are 1 through 65535.
-  optional int32 port = 1;
+  optional int32 port = 1 [json_name = "port"];
 
   // Not supported.
-  optional string port_name = 2;
+  optional string port_name = 2 [json_name = "portName"];
 
   // Specifies how a port is selected for health checking. Can be one of the
   // following values: USE_FIXED_PORT: Specifies a port number explicitly using
@@ -554,22 +558,22 @@ message TCPHealthCheck {
   // group. For instance group backends, the health check uses the port number
   // specified for the backend service's named port defined in the instance
   // group's named ports.
-  optional string port_specification = 3;
+  optional string port_specification = 3 [json_name = "portSpecification"];
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
   // NONE:
   // PROXY_V1:
-  optional string proxy_header = 4;
+  optional string proxy_header = 4 [json_name = "proxyHeader"];
 
   // Instructs the health check prober to send this exact ASCII string, up to
   // 1024 bytes in length, after establishing the TCP connection.
-  optional string request = 5;
+  optional string request = 5 [json_name = "request"];
 
   // Creates a content-based TCP health check. In addition to establishing a TCP
   // connection, you can configure the health check to pass only when the
   // backend sends this exact response ASCII string, up to 1024 bytes in length.
   // For details, see:
   // https://cloud.google.com/load-balancing/docs/health-check-concepts#criteria-protocol-ssl-tcp
-  optional string response = 6;
+  optional string response = 6 [json_name = "response"];
 }

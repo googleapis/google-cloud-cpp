@@ -34,7 +34,7 @@ message Commitment {
   // day of the commitment expiration at 12:00am PST. If the field is set to
   // true, the commitment will be automatically renewed for either one or three
   // years according to the terms of the existing commitment.
-  optional bool auto_renew = 1;
+  optional bool auto_renew = 1 [json_name = "autoRenew"];
 
   // The category of the commitment. Category MACHINE specifies commitments
   // composed of machine resources such as VCPU or MEMORY, listed in resources.
@@ -44,31 +44,33 @@ message Commitment {
   // CATEGORY_UNSPECIFIED:
   // LICENSE:
   // MACHINE:
-  optional string category = 2;
+  optional string category = 2 [json_name = "category"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3;
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 4;
+  optional string description = 4 [json_name = "description"];
 
   // [Output Only] Commitment end time in RFC3339 text format.
-  optional string end_timestamp = 5;
+  optional string end_timestamp = 5 [json_name = "endTimestamp"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6;
+  optional string id = 6 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#commitment for
   // commitments.
-  optional string kind = 7;
+  optional string kind = 7 [json_name = "kind"];
 
   // The license specification required as part of a license commitment.
-  optional LicenseResourceCommitment license_resource = 8;
+  optional LicenseResourceCommitment license_resource = 8
+      [json_name = "licenseResource"];
 
   // List of source commitments to be merged into a new commitment.
-  repeated string merge_source_commitments = 9;
+  repeated string merge_source_commitments = 9
+      [json_name = "mergeSourceCommitments"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -77,7 +79,7 @@ message Commitment {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 10;
+  optional string name = 10 [json_name = "name"];
 
   // The plan for this commitment, which determines duration and discount rate.
   // The currently supported plans are TWELVE_MONTH (1 year), and
@@ -85,26 +87,27 @@ message Commitment {
   // INVALID:
   // THIRTY_SIX_MONTH:
   // TWELVE_MONTH:
-  optional string plan = 11;
+  optional string plan = 11 [json_name = "plan"];
 
   // [Output Only] URL of the region where this commitment may be used.
-  optional string region = 12;
+  optional string region = 12 [json_name = "region"];
 
   // List of create-on-create reseravtions for this commitment.
-  repeated Reservation reservations = 13;
+  repeated Reservation reservations = 13 [json_name = "reservations"];
 
   // A list of commitment amounts for particular resources. Note that VCPU and
   // MEMORY resource commitments must occur together.
-  repeated ResourceCommitment resources = 14;
+  repeated ResourceCommitment resources = 14 [json_name = "resources"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 15;
+  optional string self_link = 15 [json_name = "selfLink"];
 
   // Source commitment to be split into a new commitment.
-  optional string split_source_commitment = 16;
+  optional string split_source_commitment = 16
+      [json_name = "splitSourceCommitment"];
 
   // [Output Only] Commitment start time in RFC3339 text format.
-  optional string start_timestamp = 17;
+  optional string start_timestamp = 17 [json_name = "startTimestamp"];
 
   // [Output Only] Status of the commitment with regards to eventual expiration
   // (each commitment has an end date defined). One of the following values:
@@ -115,10 +118,10 @@ message Commitment {
   // CREATING:
   // EXPIRED:
   // NOT_YET_ACTIVE:
-  optional string status = 18;
+  optional string status = 18 [json_name = "status"];
 
   // [Output Only] An optional, human-readable explanation of the status.
-  optional string status_message = 19;
+  optional string status_message = 19 [json_name = "statusMessage"];
 
   // The type of commitment, which affects the discount rate and the eligible
   // resources. Type MEMORY_OPTIMIZED specifies a commitment that will only
@@ -140,32 +143,32 @@ message Commitment {
   // MEMORY_OPTIMIZED:
   // MEMORY_OPTIMIZED_M3:
   // TYPE_UNSPECIFIED:
-  optional string type = 20;
+  optional string type = 20 [json_name = "type"];
 }
 
 message CommitmentAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of CommitmentsScopedList resources.
-  map<string, CommitmentsScopedList> items = 2;
+  map<string, CommitmentsScopedList> items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#commitmentAggregatedList for
   // aggregated lists of commitments.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6;
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -224,7 +227,7 @@ message CommitmentAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -234,45 +237,45 @@ message CommitmentAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7;
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 // Contains a list of Commitment resources.
 message CommitmentList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of Commitment resources.
-  repeated Commitment items = 2;
+  repeated Commitment items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#commitmentList for lists of
   // commitments.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -331,7 +334,7 @@ message CommitmentList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -341,27 +344,27 @@ message CommitmentList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message CommitmentsScopedList {
   // [Output Only] A list of commitments contained in this scope.
-  repeated Commitment commitments = 1;
+  repeated Commitment commitments = 1 [json_name = "commitments"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -420,7 +423,7 @@ message CommitmentsScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -430,35 +433,35 @@ message CommitmentsScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning which replaces the list of commitments
   // when the list is empty.
-  optional Warning warning = 2;
+  optional Warning warning = 2 [json_name = "warning"];
 }
 
 // Commitment for a particular license resource.
 message LicenseResourceCommitment {
   // The number of licenses purchased.
-  optional string amount = 1;
+  optional string amount = 1 [json_name = "amount"];
 
   // Specifies the core range of the instance for which this license applies.
-  optional string cores_per_license = 2;
+  optional string cores_per_license = 2 [json_name = "coresPerLicense"];
 
   // Any applicable license URI.
-  optional string license = 3;
+  optional string license = 3 [json_name = "license"];
 }
 
 // Commitment for a particular resource (a Commitment is composed of one or more
@@ -466,13 +469,13 @@ message LicenseResourceCommitment {
 message ResourceCommitment {
   // Name of the accelerator type resource. Applicable only when the type is
   // ACCELERATOR.
-  optional string accelerator_type = 1;
+  optional string accelerator_type = 1 [json_name = "acceleratorType"];
 
   // The amount of the resource purchased (in a type-dependent unit, such as
   // bytes). For vCPUs, this can just be an integer. For memory, this must be
   // provided in MB. Memory must be a multiple of 256 MB, with up to 6.5GB of
   // memory per every vCPU.
-  optional string amount = 2;
+  optional string amount = 2 [json_name = "amount"];
 
   // Type of resource for which this commitment applies. Possible values are
   // VCPU, MEMORY, LOCAL_SSD, and ACCELERATOR.
@@ -481,5 +484,5 @@ message ResourceCommitment {
   // MEMORY:
   // UNSPECIFIED:
   // VCPU:
-  optional string type = 3;
+  optional string type = 3 [json_name = "type"];
 }

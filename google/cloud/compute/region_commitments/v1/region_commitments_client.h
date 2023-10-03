@@ -116,7 +116,7 @@ class RegionCommitmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_commitments.v1.AggregatedListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L100}
-  /// [google.cloud.cpp.compute.v1.CommitmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L362}
+  /// [google.cloud.cpp.compute.v1.CommitmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L365}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -158,7 +158,7 @@ class RegionCommitmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_commitments.v1.AggregatedListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L100}
-  /// [google.cloud.cpp.compute.v1.CommitmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L362}
+  /// [google.cloud.cpp.compute.v1.CommitmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L365}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -189,7 +189,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.GetCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L176}
+  /// [google.cloud.cpp.compute.region_commitments.v1.GetCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L178}
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L31}
   ///
   // clang-format on
@@ -221,7 +221,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.GetCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L176}
+  /// [google.cloud.cpp.compute.region_commitments.v1.GetCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L178}
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L31}
   ///
   // clang-format on
@@ -259,7 +259,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.InsertCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L188}
+  /// [google.cloud.cpp.compute.region_commitments.v1.InsertCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
@@ -299,7 +299,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.InsertCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L188}
+  /// [google.cloud.cpp.compute.region_commitments.v1.InsertCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L193}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
@@ -336,7 +336,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L219}
+  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L226}
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L31}
   ///
   // clang-format on
@@ -377,7 +377,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L219}
+  /// [google.cloud.cpp.compute.region_commitments.v1.ListRegionCommitmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L226}
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_018.proto#L31}
   ///
   // clang-format on
@@ -418,7 +418,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L287}
+  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L296}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
@@ -460,7 +460,7 @@ class RegionCommitmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L287}
+  /// [google.cloud.cpp.compute.region_commitments.v1.UpdateCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L296}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(

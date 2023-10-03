@@ -193,7 +193,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L228}
+  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
@@ -234,7 +234,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L228}
+  /// [google.cloud.cpp.compute.target_pools.v1.AddInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L231}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
@@ -270,7 +270,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L263}
+  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L269}
   /// [google.cloud.cpp.compute.v1.TargetPoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L391}
   ///
   // clang-format on
@@ -311,7 +311,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L263}
+  /// [google.cloud.cpp.compute.target_pools.v1.AggregatedListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L269}
   /// [google.cloud.cpp.compute.v1.TargetPoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L391}
   ///
   // clang-format on
@@ -349,7 +349,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L339}
+  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L347}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
@@ -387,7 +387,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L339}
+  /// [google.cloud.cpp.compute.target_pools.v1.DeleteTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L347}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
@@ -416,7 +416,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L385}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L399}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L32}
   ///
   // clang-format on
@@ -448,7 +448,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L385}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L399}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L32}
   ///
   // clang-format on
@@ -480,7 +480,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L369}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L246}
   ///
   // clang-format on
@@ -516,7 +516,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L369}
+  /// [google.cloud.cpp.compute.target_pools.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L380}
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L246}
   ///
   // clang-format on
@@ -554,7 +554,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L397}
+  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L414}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
@@ -594,7 +594,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L397}
+  /// [google.cloud.cpp.compute.target_pools.v1.InsertTargetPoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L414}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
@@ -632,7 +632,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L428}
+  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L447}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L32}
   ///
   // clang-format on
@@ -673,7 +673,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L428}
+  /// [google.cloud.cpp.compute.target_pools.v1.ListTargetPoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L447}
   /// [google.cloud.cpp.compute.v1.TargetPool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_125.proto#L32}
   ///
   // clang-format on
@@ -711,7 +711,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L496}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L517}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -753,7 +753,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L496}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveHealthCheckRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L517}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -790,7 +790,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L531}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L555}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
@@ -831,7 +831,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L531}
+  /// [google.cloud.cpp.compute.target_pools.v1.RemoveInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L555}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
@@ -868,7 +868,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L566}
+  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L593}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
@@ -909,7 +909,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L566}
+  /// [google.cloud.cpp.compute.target_pools.v1.SetBackupRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L593}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
@@ -948,7 +948,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L603}
+  /// [google.cloud.cpp.compute.target_pools.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L633}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -991,7 +991,7 @@ class TargetPoolsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.target_pools.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L603}
+  /// [google.cloud.cpp.compute.target_pools.v1.SetSecurityPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L633}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

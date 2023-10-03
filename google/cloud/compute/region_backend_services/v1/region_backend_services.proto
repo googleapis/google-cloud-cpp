@@ -172,18 +172,21 @@ service RegionBackendServices {
 // Request message for DeleteBackendService.
 message DeleteBackendServiceRequest {
   // Name of the BackendService resource to delete.
-  string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string backend_service = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "backendService"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region scoping this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -196,30 +199,36 @@ message DeleteBackendServiceRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for GetBackendService.
 message GetBackendServiceRequest {
   // Name of the BackendService resource to return.
-  string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string backend_service = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "backendService"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 }
 
 // Request message for GetHealth.
 message GetHealthRequest {
   // Name of the BackendService resource for which to get health.
-  string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string backend_service = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "backendService"];
 
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // The ResourceGroupReference for this request.
   optional google.cloud.cpp.compute.v1.ResourceGroupReference
@@ -229,16 +238,20 @@ message GetHealthRequest {
 // Request message for GetIamPolicy.
 message GetIamPolicyRequest {
   // Requested IAM Policy version.
-  optional int32 options_requested_policy_version = 1;
+  optional int32 options_requested_policy_version = 1
+      [json_name = "optionsRequestedPolicyVersion"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED];
+  string region = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Name or id of the resource for this request.
-  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+  string resource = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for InsertBackendService.
@@ -250,13 +263,15 @@ message InsertBackendServiceRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region scoping this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -269,7 +284,7 @@ message InsertBackendServiceRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for ListRegionBackendServices.
@@ -306,14 +321,14 @@ message ListRegionBackendServicesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2;
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -323,27 +338,30 @@ message ListRegionBackendServicesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the region scoping this request.
-  string region = 6 [(google.api.field_behavior) = REQUIRED];
+  string region = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for PatchBackendService.
 message PatchBackendServiceRequest {
   // Name of the BackendService resource to patch.
-  string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string backend_service = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "backendService"];
 
   // The BackendService for this request.
   optional google.cloud.cpp.compute.v1.BackendService backend_service_resource =
@@ -352,13 +370,15 @@ message PatchBackendServiceRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region scoping this request.
   string region = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -371,16 +391,18 @@ message PatchBackendServiceRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5;
+  optional string request_id = 5 [json_name = "requestId"];
 }
 
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED];
+  string region = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "region"];
 
   // The RegionSetPolicyRequest for this request.
   optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
@@ -388,25 +410,29 @@ message SetIamPolicyRequest {
       [json_name = "__json_request_body"];
 
   // Name or id of the resource for this request.
-  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+  string resource = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for SetSecurityPolicy.
 message SetSecurityPolicyRequest {
   // Name of the BackendService resource to which the security policy should be
   // set. The name should conform to RFC1035.
-  string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string backend_service = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "backendService"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region scoping this request.
   string region = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -419,7 +445,7 @@ message SetSecurityPolicyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The SecurityPolicyReference for this request.
   optional google.cloud.cpp.compute.v1.SecurityPolicyReference
@@ -430,7 +456,8 @@ message SetSecurityPolicyRequest {
 // Request message for UpdateBackendService.
 message UpdateBackendServiceRequest {
   // Name of the BackendService resource to update.
-  string backend_service = 1 [(google.api.field_behavior) = REQUIRED];
+  string backend_service = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "backendService"];
 
   // The BackendService for this request.
   optional google.cloud.cpp.compute.v1.BackendService backend_service_resource =
@@ -439,13 +466,15 @@ message UpdateBackendServiceRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name of the region scoping this request.
   string region = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "region"
+    (google.cloud.operation_request_field) = "region",
+    json_name = "region"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -458,5 +487,5 @@ message UpdateBackendServiceRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 5;
+  optional string request_id = 5 [json_name = "requestId"];
 }

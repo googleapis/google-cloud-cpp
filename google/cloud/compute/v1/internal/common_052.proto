@@ -29,31 +29,31 @@ package google.cloud.cpp.compute.v1;
 message HttpHealthCheck {
   // How often (in seconds) to send a health check. The default value is 5
   // seconds.
-  optional int32 check_interval_sec = 1;
+  optional int32 check_interval_sec = 1 [json_name = "checkIntervalSec"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2;
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
   // A so-far unhealthy instance will be marked healthy after this many
   // consecutive successes. The default value is 2.
-  optional int32 healthy_threshold = 4;
+  optional int32 healthy_threshold = 4 [json_name = "healthyThreshold"];
 
   // The value of the host header in the HTTP health check request. If left
   // empty (default value), the public IP on behalf of which this health check
   // is performed will be used.
-  optional string host = 5;
+  optional string host = 5 [json_name = "host"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6;
+  optional string id = 6 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#httpHealthCheck for HTTP
   // health checks.
-  optional string kind = 7;
+  optional string kind = 7 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -62,49 +62,49 @@ message HttpHealthCheck {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 8;
+  optional string name = 8 [json_name = "name"];
 
   // The TCP port number for the HTTP health check request. The default value is
   // 80.
-  optional int32 port = 9;
+  optional int32 port = 9 [json_name = "port"];
 
   // The request path of the HTTP health check request. The default value is /.
   // This field does not support query parameters. Must comply with RFC3986.
-  optional string request_path = 10;
+  optional string request_path = 10 [json_name = "requestPath"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 11;
+  optional string self_link = 11 [json_name = "selfLink"];
 
   // How long (in seconds) to wait before claiming failure. The default value is
   // 5 seconds. It is invalid for timeoutSec to have greater value than
   // checkIntervalSec.
-  optional int32 timeout_sec = 12;
+  optional int32 timeout_sec = 12 [json_name = "timeoutSec"];
 
   // A so-far healthy instance will be marked unhealthy after this many
   // consecutive failures. The default value is 2.
-  optional int32 unhealthy_threshold = 13;
+  optional int32 unhealthy_threshold = 13 [json_name = "unhealthyThreshold"];
 }
 
 // Contains a list of HttpHealthCheck resources.
 message HttpHealthCheckList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of HttpHealthCheck resources.
-  repeated HttpHealthCheck items = 2;
+  repeated HttpHealthCheck items = 2 [json_name = "items"];
 
   // Type of resource.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -163,7 +163,7 @@ message HttpHealthCheckList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -173,20 +173,20 @@ message HttpHealthCheckList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }

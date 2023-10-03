@@ -25,31 +25,33 @@ package google.cloud.cpp.compute.v1;
 message NetworkAttachment {
   // [Output Only] An array of connections for all the producers connected to
   // this network attachment.
-  repeated NetworkAttachmentConnectedEndpoint connection_endpoints = 1;
+  repeated NetworkAttachmentConnectedEndpoint connection_endpoints = 1
+      [json_name = "connectionEndpoints"];
 
   // ACCEPT_AUTOMATIC:
   // ACCEPT_MANUAL:
   // INVALID:
-  optional string connection_preference = 2;
+  optional string connection_preference = 2
+      [json_name = "connectionPreference"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3;
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 4;
+  optional string description = 4 [json_name = "description"];
 
   // Fingerprint of this resource. A hash of the contents stored in this object.
   // This field is used in optimistic locking. An up-to-date fingerprint must be
   // provided in order to patch.
-  optional string fingerprint = 5;
+  optional string fingerprint = 5 [json_name = "fingerprint"];
 
   // [Output Only] The unique identifier for the resource type. The server
   // generates this identifier.
-  optional string id = 6;
+  optional string id = 6 [json_name = "id"];
 
   // [Output Only] Type of the resource.
-  optional string kind = 7;
+  optional string kind = 7 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -58,60 +60,62 @@ message NetworkAttachment {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 8;
+  optional string name = 8 [json_name = "name"];
 
   // [Output Only] The URL of the network which the Network Attachment belongs
   // to. Practically it is inferred by fetching the network of the first
   // subnetwork associated. Because it is required that all the subnetworks must
   // be from the same network, it is assured that the Network Attachment belongs
   // to the same network as all the subnetworks.
-  optional string network = 9;
+  optional string network = 9 [json_name = "network"];
 
   // Projects that are allowed to connect to this network attachment. The
   // project can be specified using its id or number.
-  repeated string producer_accept_lists = 10;
+  repeated string producer_accept_lists = 10
+      [json_name = "producerAcceptLists"];
 
   // Projects that are not allowed to connect to this network attachment. The
   // project can be specified using its id or number.
-  repeated string producer_reject_lists = 11;
+  repeated string producer_reject_lists = 11
+      [json_name = "producerRejectLists"];
 
   // [Output Only] URL of the region where the network attachment resides. This
   // field applies only to the region resource. You must specify this field as
   // part of the HTTP request URL. It is not settable as a field in the request
   // body.
-  optional string region = 12;
+  optional string region = 12 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 13;
+  optional string self_link = 13 [json_name = "selfLink"];
 
   // [Output Only] Server-defined URL for this resource's resource id.
-  optional string self_link_with_id = 14;
+  optional string self_link_with_id = 14 [json_name = "selfLinkWithId"];
 
   // An array of URLs where each entry is the URL of a subnet provided by the
   // service consumer to use for endpoints in the producers that connect to this
   // network attachment.
-  repeated string subnetworks = 15;
+  repeated string subnetworks = 15 [json_name = "subnetworks"];
 }
 
 // Contains a list of NetworkAttachmentsScopedList.
 message NetworkAttachmentAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of NetworkAttachmentsScopedList resources.
-  map<string, NetworkAttachmentsScopedList> items = 2;
+  map<string, NetworkAttachmentsScopedList> items = 2 [json_name = "items"];
 
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -170,7 +174,7 @@ message NetworkAttachmentAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -180,35 +184,36 @@ message NetworkAttachmentAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // [Output Only] A connection connected to this network attachment.
 message NetworkAttachmentConnectedEndpoint {
   // The IPv4 address assigned to the producer instance network interface. This
   // value will be a range in case of Serverless.
-  optional string ip_address = 1;
+  optional string ip_address = 1 [json_name = "ipAddress"];
 
   // The project id or number of the interface to which the IP was assigned.
-  optional string project_id_or_num = 2;
+  optional string project_id_or_num = 2 [json_name = "projectIdOrNum"];
 
   // Alias IP ranges from the same subnetwork.
-  repeated string secondary_ip_cidr_ranges = 3;
+  repeated string secondary_ip_cidr_ranges = 3
+      [json_name = "secondaryIpCidrRanges"];
 
   // The status of a connected endpoint to this network attachment.
   // ACCEPTED: The consumer allows traffic from the producer to reach its VPC.
@@ -220,31 +225,31 @@ message NetworkAttachmentConnectedEndpoint {
   // REJECTED: The consumer prohibits traffic from the producer to reach its
   // VPC.
   // STATUS_UNSPECIFIED:
-  optional string status = 4;
+  optional string status = 4 [json_name = "status"];
 
   // The subnetwork used to assign the IP to the producer instance network
   // interface.
-  optional string subnetwork = 5;
+  optional string subnetwork = 5 [json_name = "subnetwork"];
 }
 
 message NetworkAttachmentList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of NetworkAttachment resources.
-  repeated NetworkAttachment items = 2;
+  repeated NetworkAttachment items = 2 [json_name = "items"];
 
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -303,7 +308,7 @@ message NetworkAttachmentList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -313,27 +318,28 @@ message NetworkAttachmentList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message NetworkAttachmentsScopedList {
   // A list of NetworkAttachments contained in this scope.
-  repeated NetworkAttachment network_attachments = 1;
+  repeated NetworkAttachment network_attachments = 1
+      [json_name = "networkAttachments"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -392,7 +398,7 @@ message NetworkAttachmentsScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -402,21 +408,21 @@ message NetworkAttachmentsScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // Informational warning which replaces the list of network attachments when
   // the list is empty.
-  optional Warning warning = 2;
+  optional Warning warning = 2 [json_name = "warning"];
 }

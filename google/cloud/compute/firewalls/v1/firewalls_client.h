@@ -176,7 +176,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L141}
   /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -208,7 +208,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L139}
+  /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L141}
   /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -245,7 +245,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewall(
@@ -285,7 +285,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L148}
+  /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewall(
@@ -321,7 +321,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L178}
   /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -361,7 +361,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L173}
+  /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L178}
   /// [google.cloud.cpp.compute.v1.Firewall]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_034.proto#L27}
   ///
   // clang-format on
@@ -399,7 +399,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewall(
@@ -440,7 +440,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L238}
+  /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L244}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewall(
@@ -478,7 +478,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L274}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
@@ -519,7 +519,7 @@ class FirewallsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L266}
+  /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L274}
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
