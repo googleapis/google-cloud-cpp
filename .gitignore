@@ -27,3 +27,7 @@ cmake-build-*/
 # Ignore Visual Studio Code files
 .vsbuild/
 .vscode/
+
+# `google-cloud-cpp` developers use this file to configure the development
+# workflow build.
+.cloudcxxrc

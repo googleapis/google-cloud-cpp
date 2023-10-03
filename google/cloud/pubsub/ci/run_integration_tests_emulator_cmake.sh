@@ -33,6 +33,10 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
+if ctest --test-dir "${BINARY_DIR}" --show-only -R "^pubsub_" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'; then
+  exit 0
+fi
+
 cd "${BINARY_DIR}"
 # Start the emulator and arranges to kill it
 pubsub_emulator::start
