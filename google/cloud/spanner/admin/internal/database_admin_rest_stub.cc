@@ -401,7 +401,8 @@ DefaultDatabaseAdminRestStub::AsyncGetOperation(
       [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Get<google::longrunning::Operation>(
             *operations, *rest_context, request, false,
-            absl::StrCat("/v1/", request.name())));
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.name())));
       },
       std::move(p),
       operations_,
@@ -424,7 +425,8 @@ future<Status> DefaultDatabaseAdminRestStub::AsyncCancelOperation(
       [](auto p, auto operations, auto request, auto rest_context, auto opts) {
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
-            absl::StrCat("/v1/", request.name(), ":cancel")));
+            absl::StrCat("/", rest_internal::DetermineApiVersion("v1", opts),
+                         "/", request.name(), ":cancel")));
       },
       std::move(p),
       operations_,
