@@ -98,13 +98,6 @@ jobs:
           skipped_features=("${core_features[@]}")
           skipped_features+=(compute)
           skipped_features+=("${shard1_features[@]}")
-          # Disable `storagetranster` on macOS+CMake because:
-          # - we use vcpkg in this build
-          # - vcpkg ships with Protobuf v21
-          # - GID_MAX is generated in the *.pb.h file
-          # - GID_MAX is a system macro on macOS
-          # - Protobuf v21 does not protect against this macro
-          skipped_features+=(storagetransfer)
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
         fi
