@@ -1125,7 +1125,7 @@ TEST(PostQueryRequestTest, DebugString) {
       R"( query: "select 1;" kind: "query-kind" parameter_mode: "parameter-mode")"
       R"( location: "useast1" request_id: "1234" dry_run: true)"
       R"( preserver_nulls: true use_query_cache: true use_legacy_sql: true)"
-      R"( create_session: true max_results: 10 maximum_bytes_biller: 100000)"
+      R"( create_session: true max_results: 10 maximum_bytes_billed: 100000)"
       R"( timeout { "10ms" } connection_properties { key: "conn-prop-key")"
       R"( value: "conn-prop-val" } query_parameters { name: "query-parameter-name")"
       R"( parameter_type { type: "query-parameter-type" struct_types {)"
@@ -1144,7 +1144,7 @@ TEST(PostQueryRequestTest, DebugString) {
       R"( kind: "query-k...<truncated>..." parameter_mode: "paramet...<truncated>...")"
       R"( location: "useast1" request_id: "1234" dry_run: true preserver_nulls: true)"
       R"( use_query_cache: true use_legacy_sql: true create_session: true)"
-      R"( max_results: 10 maximum_bytes_biller: 100000 timeout { "10ms" })"
+      R"( max_results: 10 maximum_bytes_billed: 100000 timeout { "10ms" })"
       R"( connection_properties { key: "conn-pr...<truncated>...")"
       R"( value: "conn-pr...<truncated>..." } query_parameters {)"
       R"( name: "query-p...<truncated>..." parameter_type {)"
@@ -1171,7 +1171,7 @@ TEST(PostQueryRequestTest, DebugString) {
     use_legacy_sql: true
     create_session: true
     max_results: 10
-    maximum_bytes_biller: 100000
+    maximum_bytes_billed: 100000
     timeout {
       "10ms"
     }
@@ -1259,7 +1259,6 @@ TEST(GetQueryResultsRequestTest, SuccessWithQueryParameters) {
   expected.AddQueryParameter("startIndex", "1");
   expected.AddQueryParameter("maxResults", "10");
   expected.AddQueryParameter("timeoutMs", "30");
-  expected.AddQueryParameter("formatOptions", R"({"useInt64Timestamp":true})");
 
   EXPECT_EQ(expected, *actual);
 }
@@ -1278,7 +1277,6 @@ TEST(GetQueryResultsRequestTest, SuccessWithoutQueryParameters) {
   expected.SetPath(
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/queries/2");
   expected.AddQueryParameter("startIndex", "0");
-  expected.AddQueryParameter("formatOptions", R"({"useInt64Timestamp":false})");
 
   EXPECT_EQ(expected, *actual);
 }
@@ -1314,7 +1312,6 @@ TEST(GetQueryResultsRequestTest, DebugString) {
             R"( page_token: "npt123" location: "useast")"
             R"( start_index: 1 max_results: 10)"
             R"( timeout { "30ms" })"
-            R"( format_options { use_int64_timestamp: true })"
             R"( })");
 
   EXPECT_EQ(request.DebugString("GetQueryResultsRequest",
@@ -1324,7 +1321,6 @@ TEST(GetQueryResultsRequestTest, DebugString) {
             R"( project_id: "1" job_id: "2" page_token: "npt123")"
             R"( location: "useast" start_index: 1 max_results: 10)"
             R"( timeout { "30ms" })"
-            R"( format_options { use_int64_timestamp: true })"
             R"( })");
 
   EXPECT_EQ(
@@ -1339,9 +1335,6 @@ TEST(GetQueryResultsRequestTest, DebugString) {
   max_results: 10
   timeout {
     "30ms"
-  }
-  format_options {
-    use_int64_timestamp: true
   }
 })");
 }

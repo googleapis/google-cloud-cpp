@@ -62,6 +62,19 @@ TEST(JsonUtilsTest, ToJsonMillisecondsString) {
   EXPECT_EQ(expected_json, actual_json);
 }
 
+TEST(JsonUtilsTest, ToJsonMillisecondsNumber) {
+  auto const* const name = "start_time";
+  auto constexpr kJsonText = R"({"start_time":10})";
+  auto expected_json = nlohmann::json::parse(kJsonText, nullptr, false);
+  EXPECT_TRUE(expected_json.is_object());
+
+  auto field = std::chrono::milliseconds{10};
+  nlohmann::json actual_json;
+  ToIntJson(field, actual_json, name);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
 TEST(JsonUtilsTest, FromJsonHoursNumber) {
   auto const* const name = "start_time";
   auto constexpr kJsonText = R"({"start_time":10})";

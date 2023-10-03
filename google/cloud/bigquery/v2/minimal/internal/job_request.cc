@@ -278,25 +278,27 @@ void to_json(nlohmann::json& j, PostQueryRequest const& q) {
 }
 
 void to_json(nlohmann::json& j, QueryRequest const& q) {
-  j = nlohmann::json{{"query", q.query()},
-                     {"kind", q.kind()},
-                     {"parameterMode", q.parameter_mode()},
-                     {"location", q.location()},
-                     {"requestId", q.request_id()},
-                     {"dryRun", q.dry_run()},
-                     {"preserveNulls", q.preserve_nulls()},
-                     {"useQueryCache", q.use_query_cache()},
-                     {"useLegacySql", q.use_legacy_sql()},
-                     {"createSession", q.create_session()},
-                     {"maxResults", q.max_results()},
-                     {"maximumBytesBilled", q.maximum_bytes_billed()},
-                     {"connectionProperties", q.connection_properties()},
-                     {"queryParameters", q.query_parameters()},
-                     {"defaultDataset", q.default_dataset()},
-                     {"formatOptions", q.format_options()},
-                     {"labels", q.labels()}};
+  j = nlohmann::json{
+      {"query", q.query()},
+      {"kind", q.kind()},
+      {"parameterMode", q.parameter_mode()},
+      {"location", q.location()},
+      {"requestId", q.request_id()},
+      {"dryRun", q.dry_run()},
+      {"preserveNulls", q.preserve_nulls()},
+      {"useQueryCache", q.use_query_cache()},
+      {"useLegacySql", q.use_legacy_sql()},
+      {"createSession", q.create_session()},
+      {"maxResults", q.max_results()},
+      {"maximumBytesBilled", std::to_string(q.maximum_bytes_billed())},
+      {"connectionProperties", q.connection_properties()},
+      {"queryParameters", q.query_parameters()},
+      {"defaultDataset", q.default_dataset()},
+      {"formatOptions", q.format_options()},
+      {"labels", q.labels()}};
 
-  ToJson(q.timeout(), j, "timeoutMs");
+  ToIntJson(q.timeout(), j,
+            "timeoutMs");  // timeoutMs value is a number for this request type.
 }
 
 void from_json(nlohmann::json const& j, PostQueryRequest& q) {
@@ -316,8 +318,7 @@ void from_json(nlohmann::json const& j, QueryRequest& q) {
   SafeGetTo(j, "useLegacySql", &QueryRequest::set_use_legacy_sql, q);
   SafeGetTo(j, "createSession", &QueryRequest::set_create_session, q);
   SafeGetTo(j, "maxResults", &QueryRequest::set_max_results, q);
-  SafeGetTo(j, "maximumBytesBilled", &QueryRequest::set_maximum_bytes_billed,
-            q);
+  q.set_maximum_bytes_billed(GetNumberFromJson(j, "maximumBytesBilled"));
   SafeGetTo(j, "connectionProperties", &QueryRequest::set_connection_properties,
             q);
   SafeGetTo(j, "queryParameters", &QueryRequest::set_query_parameters, q);
@@ -398,7 +399,7 @@ std::string QueryRequest::DebugString(absl::string_view name,
       .Field("use_legacy_sql", use_legacy_sql())
       .Field("create_session", create_session())
       .Field("max_results", max_results())
-      .Field("maximum_bytes_biller", maximum_bytes_billed())
+      .Field("maximum_bytes_billed", maximum_bytes_billed())
       .Field("timeout", timeout())
       .Field("connection_properties", connection_properties())
       .Field("query_parameters", query_parameters())
@@ -410,10 +411,9 @@ std::string QueryRequest::DebugString(absl::string_view name,
 
 void to_json(nlohmann::json& j, GetQueryResultsRequest const& q) {
   j = nlohmann::json{
-      {"projectId", q.project_id()},        {"jobId", q.job_id()},
-      {"pageToken", q.page_token()},        {"location", q.location()},
-      {"startIndex", q.start_index()},      {"maxResults", q.max_results()},
-      {"formatOptions", q.format_options()}};
+      {"projectId", q.project_id()},   {"jobId", q.job_id()},
+      {"pageToken", q.page_token()},   {"location", q.location()},
+      {"startIndex", q.start_index()}, {"maxResults", q.max_results()}};
 
   ToJson(q.timeout(), j, "timeoutMs");
 }
@@ -425,7 +425,6 @@ void from_json(nlohmann::json const& j, GetQueryResultsRequest& q) {
   SafeGetTo(j, "location", &GetQueryResultsRequest::set_location, q);
   SafeGetTo(j, "startIndex", &GetQueryResultsRequest::set_start_index, q);
   SafeGetTo(j, "maxResults", &GetQueryResultsRequest::set_max_results, q);
-  SafeGetTo(j, "formatOptions", &GetQueryResultsRequest::set_format_options, q);
 
   std::chrono::milliseconds timeout;
   FromJson(timeout, j, "timeoutMs");
@@ -470,14 +469,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
     request.AddQueryParameter("timeoutMs", std::to_string(r.timeout().count()));
   }
 
-  std::string format_options;
-  if (r.format_options().use_int64_timestamp) {
-    absl::StrAppend(&format_options, "{\"useInt64Timestamp\":true}");
-  } else {
-    absl::StrAppend(&format_options, "{\"useInt64Timestamp\":false}");
-  }
-  request.AddQueryParameter("formatOptions", format_options);
-
   return request;
 }
 
@@ -492,7 +483,6 @@ std::string GetQueryResultsRequest::DebugString(absl::string_view name,
       .Field("start_index", start_index())
       .Field("max_results", max_results())
       .Field("timeout", timeout())
-      .SubMessage("format_options", format_options())
       .Build();
 }
 
