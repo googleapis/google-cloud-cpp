@@ -44,10 +44,10 @@ io::run cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON
 io::run cmake --build cmake-out
 
+# Does not build integration tests.
+# -LE excludes any test matching the label `integration-test`.
 mapfile -t ctest_args < <(ctest::common_args)
 io::run env -C cmake-out ctest "${ctest_args[@]}" -LE integration-test
-
-integration::ctest_with_emulators "cmake-out"
 
 if [[ "${TRIGGER_TYPE}" != "manual" ]]; then
   # This build should fail if any of the above work generated
