@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/cmake.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/lib/run_gcs_httpbin_emulator_utils.sh
 
@@ -33,7 +34,7 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
-if ctest --test-dir "${BINARY_DIR}" --show-only -R "^storage_" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'; then
+if ctest::has_tests "${BINARY_DIR}" "^storage_" "${ctest_args[@]}"; then
   exit 0
 fi
 
