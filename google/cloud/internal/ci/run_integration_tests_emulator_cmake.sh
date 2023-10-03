@@ -33,6 +33,10 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
+if ctest --test-dir "${BINARY_DIR}" --show-only -R "^common_" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'; then
+  exit 0
+fi
+
 cd "${BINARY_DIR}"
 start_emulator
 
