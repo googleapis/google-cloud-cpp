@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/domains/v1/domains_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,11 +23,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "global");
+
   namespace domains = ::google::cloud::domains_v1;
   auto client = domains::DomainsClient(domains::MakeDomainsConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
-  for (auto r : client.ListRegistrations(parent)) {
+  for (auto r : client.ListRegistrations(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

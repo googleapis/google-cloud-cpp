@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/scheduler/v1/cloud_scheduler_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,12 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace scheduler = ::google::cloud::scheduler_v1;
   auto client = scheduler::CloudSchedulerClient(
       scheduler::MakeCloudSchedulerConnection());
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto j : client.ListJobs(parent)) {
+
+  for (auto j : client.ListJobs(location.FullName())) {
     if (!j) throw std::move(j).status();
     std::cout << j->DebugString() << "\n";
   }

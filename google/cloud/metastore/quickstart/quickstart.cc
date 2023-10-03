@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/metastore/v1/dataproc_metastore_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,15 +23,16 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  // Use the `-` wildcard to search in all locations.
+  auto const location = google::cloud::Location(argv[1], "-");
+
   namespace metastore = ::google::cloud::metastore_v1;
   auto client = metastore::DataprocMetastoreClient(
       metastore::MakeDataprocMetastoreConnection());
 
-  // Use the `-` wildcard to search in all locations.
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
-  for (auto r : client.ListServices(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto s : client.ListServices(location.FullName())) {
+    if (!s) throw std::move(s).status();
+    std::cout << s->DebugString() << "\n";
   }
 
   return 0;

@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/vmmigration/v1/vm_migration_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,12 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "-");
+
   namespace vmmigration = ::google::cloud::vmmigration_v1;
   auto client =
       vmmigration::VmMigrationClient(vmmigration::MakeVmMigrationConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
-  for (auto s : client.ListSources(parent)) {
+  for (auto s : client.ListSources(location.FullName())) {
     if (!s) throw std::move(s).status();
     std::cout << s->DebugString() << "\n";
   }

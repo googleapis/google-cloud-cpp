@@ -21,6 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/batch/v1/batch_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,14 +30,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace batch = ::google::cloud::batch_v1;
   auto client = batch::BatchServiceClient(batch::MakeBatchServiceConnection());
 
-  auto const location =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto r : client.ListJobs(location)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto j : client.ListJobs(location.FullName())) {
+    if (!j) throw std::move(j).status();
+    std::cout << j->DebugString() << "\n";
   }
 
   return 0;

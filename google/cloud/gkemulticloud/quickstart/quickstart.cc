@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/gkemulticloud/v1/attached_clusters_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,16 +23,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace gkemulticloud = ::google::cloud::gkemulticloud_v1;
-  auto const region = std::string{argv[2]};
-  auto client = gkemulticloud::AttachedClustersClient(
-      gkemulticloud::MakeAttachedClustersConnection(region));
+  auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + region;
-  for (auto r : client.ListAttachedClusters(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  namespace gkemulticloud = ::google::cloud::gkemulticloud_v1;
+  auto client = gkemulticloud::AttachedClustersClient(
+      gkemulticloud::MakeAttachedClustersConnection(location.location_id()));
+
+  for (auto ac : client.ListAttachedClusters(location.FullName())) {
+    if (!ac) throw std::move(ac).status();
+    std::cout << ac->DebugString() << "\n";
   }
 
   return 0;

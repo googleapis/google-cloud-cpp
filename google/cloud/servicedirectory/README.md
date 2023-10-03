@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/servicedirectory/v1/registration_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,13 +30,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace servicedirectory = ::google::cloud::servicedirectory_v1;
   auto client = servicedirectory::RegistrationServiceClient(
       servicedirectory::MakeRegistrationServiceConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  auto const parent = project.FullName() + "/locations/" + argv[2];
-  for (auto ns : client.ListNamespaces(parent)) {
+  for (auto ns : client.ListNamespaces(location.FullName())) {
     if (!ns) throw std::move(ns).status();
     std::cout << ns->DebugString() << "\n";
   }

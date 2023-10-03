@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/networkconnectivity/v1/hub_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,12 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "global");
+
   namespace networkconnectivity = ::google::cloud::networkconnectivity_v1;
   auto client = networkconnectivity::HubServiceClient(
       networkconnectivity::MakeHubServiceConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
-  for (auto h : client.ListHubs(parent)) {
+  for (auto h : client.ListHubs(location.FullName())) {
     if (!h) throw std::move(h).status();
     std::cout << h->DebugString() << "\n";
   }

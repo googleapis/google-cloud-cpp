@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/container/v1/cluster_manager_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,13 +23,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace container = ::google::cloud::container_v1;
   auto client = container::ClusterManagerClient(
       container::MakeClusterManagerConnection());
 
-  auto const location =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  auto response = client.ListClusters(location);
+  auto response = client.ListClusters(location.FullName());
   if (!response) throw std::move(response).status();
   for (auto const& c : response->clusters()) {
     std::cout << c.DebugString() << "\n";

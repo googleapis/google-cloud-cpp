@@ -14,7 +14,9 @@
 
 //! [all]
 #include "google/cloud/policysimulator/v1/simulator_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -25,12 +27,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "global");
+  auto const resource_name = std::string{argv[2]};
+
   namespace policysimulator = ::google::cloud::policysimulator_v1;
   auto client = policysimulator::SimulatorClient(
       policysimulator::MakeSimulatorConnection());
-
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
-  auto const resource_name = std::string{argv[2]};
 
   google::cloud::policysimulator::v1::Replay r;
   auto& overlay = *r.mutable_config()->mutable_policy_overlay();
@@ -42,7 +44,7 @@ int main(int argc, char* argv[]) try {
     return p;
   }();
 
-  auto replay = client.CreateReplay(parent, r).get();
+  auto replay = client.CreateReplay(location.FullName(), r).get();
   if (!replay) throw std::move(replay).status();
   std::cout << replay->DebugString() << "\n";
 

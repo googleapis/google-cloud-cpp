@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/workflows/v1/workflows_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,13 +30,13 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace workflows = ::google::cloud::workflows_v1;
   auto client =
       workflows::WorkflowsClient(workflows::MakeWorkflowsConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto w : client.ListWorkflows(parent)) {
+  for (auto w : client.ListWorkflows(location.FullName())) {
     if (!w) throw std::move(w).status();
     std::cout << w->DebugString() << "\n";
   }

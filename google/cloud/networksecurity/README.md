@@ -18,7 +18,7 @@ this library.
 
 ```cc
 #include "google/cloud/networksecurity/v1/network_security_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -27,14 +27,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "-");
+
   namespace networksecurity = ::google::cloud::networksecurity_v1;
   auto client = networksecurity::NetworkSecurityClient(
       networksecurity::MakeNetworkSecurityConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
-  for (auto r : client.ListAuthorizationPolicies(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto ap : client.ListAuthorizationPolicies(location.FullName())) {
+    if (!ap) throw std::move(ap).status();
+    std::cout << ap->DebugString() << "\n";
   }
 
   return 0;

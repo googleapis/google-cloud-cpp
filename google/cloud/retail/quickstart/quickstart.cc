@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/retail/v2/catalog_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,16 +23,16 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  // The service only accepts "global" as the location for ListCatalogs()
+  auto const location = google::cloud::Location(argv[1], "global");
+
   namespace retail = ::google::cloud::retail_v2;
   auto client =
       retail::CatalogServiceClient(retail::MakeCatalogServiceConnection());
 
-  // The service only accepts "global" as the location for ListCatalogs()
-  auto const location =
-      "projects/" + std::string(argv[1]) + "/locations/global";
-  for (auto r : client.ListCatalogs(location)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListCatalogs(location.FullName())) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

@@ -21,6 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/recommender/v1/recommender_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,13 +30,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace recommender = ::google::cloud::recommender_v1;
   auto client =
       recommender::RecommenderClient(recommender::MakeRecommenderConnection());
   // For additional recommenders see:
   //     https://cloud.google.com/recommender/docs/recommenders#recommenders
   auto const parent =
-      std::string("projects/") + argv[1] + "/locations/" + argv[2] +
+      location.FullName() +
       "/recommenders/google.compute.instance.MachineTypeRecommender";
   for (auto r : client.ListRecommendations(parent)) {
     if (!r) throw std::move(r).status();

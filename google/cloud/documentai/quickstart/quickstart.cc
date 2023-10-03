@@ -14,8 +14,10 @@
 
 //! [all]
 #include "google/cloud/documentai/v1/document_processor_client.h"
+#include "google/cloud/location.h"
 #include <fstream>
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
   if (argc != 5) {
@@ -23,21 +25,21 @@ int main(int argc, char* argv[]) try {
               << " project-id location-id processor-id filename (PDF only)\n";
     return 1;
   }
-  std::string const location = argv[2];
-  if (location != "us" && location != "eu") {
+
+  std::string const location_id = argv[2];
+  if (location_id != "us" && location_id != "eu") {
     std::cerr << "location-id must be either 'us' or 'eu'\n";
     return 1;
   }
+  auto const location = google::cloud::Location(argv[1], location_id);
 
   namespace documentai = ::google::cloud::documentai_v1;
   auto client = documentai::DocumentProcessorServiceClient(
-      documentai::MakeDocumentProcessorServiceConnection(location));
-
-  auto const resource = std::string{"projects/"} + argv[1] + "/locations/" +
-                        location + "/processors/" + argv[3];
+      documentai::MakeDocumentProcessorServiceConnection(
+          location.location_id()));
 
   google::cloud::documentai::v1::ProcessRequest req;
-  req.set_name(resource);
+  req.set_name(location.FullName() + "/processors/" + argv[3]);
   req.set_skip_human_review(true);
   auto& doc = *req.mutable_raw_document();
   doc.set_mime_type("application/pdf");

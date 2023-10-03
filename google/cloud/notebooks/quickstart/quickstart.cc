@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/notebooks/v2/notebook_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,15 +23,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace notebooks = ::google::cloud::notebooks_v2;
   auto client = notebooks::NotebookServiceClient(
       notebooks::MakeNotebookServiceConnection());
 
-  auto const parent =
-      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
-  for (auto list_element : client.ListInstances(parent)) {
-    if (!list_element) throw std::move(list_element).status();
-    std::cout << list_element->DebugString() << "\n";
+  for (auto i : client.ListInstances(location.FullName())) {
+    if (!i) throw std::move(i).status();
+    std::cout << i->DebugString() << "\n";
   }
 
   return 0;

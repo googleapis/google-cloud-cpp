@@ -19,6 +19,7 @@ this library.
 
 ```cc
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -27,14 +28,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
   namespace rapidmigrationassessment =
       ::google::cloud::rapidmigrationassessment_v1;
   auto client = rapidmigrationassessment::RapidMigrationAssessmentClient(
       rapidmigrationassessment::MakeRapidMigrationAssessmentConnection());
 
-  auto const parent =
-      std::string("projects/") + argv[1] + "/locations/" + argv[2];
-  for (auto c : client.ListCollectors(parent)) {
+  for (auto c : client.ListCollectors(location.FullName())) {
     if (!c) throw std::move(c).status();
     std::cout << c->DebugString() << "\n";
   }

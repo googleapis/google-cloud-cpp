@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/alloydb/v1/alloy_db_admin_client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,14 +23,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "-");
+
   namespace alloydb = ::google::cloud::alloydb_v1;
   auto client =
       alloydb::AlloyDBAdminClient(alloydb::MakeAlloyDBAdminConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
-  for (auto r : client.ListClusters(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListClusters(location.FullName())) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

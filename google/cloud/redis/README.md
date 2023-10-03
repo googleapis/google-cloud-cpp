@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/redis/v1/cloud_redis_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,14 +30,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  auto const location = google::cloud::Location(argv[1], "-");
+
   namespace redis = ::google::cloud::redis_v1;
   auto client = redis::CloudRedisClient(redis::MakeCloudRedisConnection());
 
-  auto const project_id = std::string(argv[1]);
-  auto const parent = "projects/" + project_id + "/locations/-";
-  for (auto r : client.ListInstances(parent)) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto i : client.ListInstances(location.FullName())) {
+    if (!i) throw std::move(i).status();
+    std::cout << i->DebugString() << "\n";
   }
 
   return 0;
