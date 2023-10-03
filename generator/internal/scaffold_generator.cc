@@ -136,6 +136,12 @@ std::map<std::string, std::string> ScaffoldVars(
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
+  vars["product_namespace"] = absl::StrReplaceAll(
+      absl::StripSuffix(
+          absl::StrCat(library, "_",
+                       ServiceSubdirectory(service.product_path())),
+          "/"),
+      {{"/", "::"}});
   vars["product_options_page"] = OptionsGroup(service.product_path());
   vars["service_subdirectory"] = ServiceSubdirectory(service.product_path());
   vars["site_root"] = SiteRoot(service);
@@ -942,7 +948,7 @@ void GenerateQuickstartSkeleton(
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/$library$/vN/ EDIT HERE _client.h"
+#include "google/cloud/$library$/$service_subdirectory$ EDIT HERE _client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -954,9 +960,9 @@ int main(int argc, char* argv[]) try {
 
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  namespace $library$ = ::google::cloud::$library$_v/*EDIT HERE*/;
-  auto client = $library$::Client(
-      $library$::MakeConnection());
+  namespace $library$ = ::google::cloud::$product_namespace$;
+  auto client = $library$::ServiceClient(
+      $library$::MakeServiceConnection());  // EDIT HERE
 
   for (auto r : client.List/*EDIT HERE*/(location.FullName())) {
     if (!r) throw std::move(r).status();
