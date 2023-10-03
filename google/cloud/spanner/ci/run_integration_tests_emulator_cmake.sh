@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/cmake.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/lib/io.sh
 source module /google/cloud/spanner/ci/lib/spanner_emulator.sh
@@ -32,7 +33,7 @@ CMAKE_BINARY_DIR="$(realpath "${1}")"
 readonly CMAKE_BINARY_DIR
 shift
 
-if ctest --test-dir "${CMAKE_BINARY_DIR}" --show-only -R "^spanner_" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'; then
+if ctest::has_tests "${CMAKE_BINARY_DIR}" "^spanner_" "${ctest_args[@]}"; then
   exit 0
 fi
 
