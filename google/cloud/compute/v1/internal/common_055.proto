@@ -26,5 +26,5 @@ import "google/cloud/compute/v1/internal/common_054.proto";
 message ImageFamilyView {
   // The latest image that is part of the specified image family in the
   // requested location, and that is not deprecated.
-  optional Image image = 1;
+  optional Image image = 1 [json_name = "image"];
 }

@@ -23,27 +23,27 @@ package google.cloud.cpp.compute.v1;
 
 message FileContentBuffer {
   // The raw content in the secure keys file.
-  optional string content = 1;
+  optional string content = 1 [json_name = "content"];
 
   // The file type of source file.
   // BIN:
   // UNDEFINED:
   // X509:
-  optional string file_type = 2;
+  optional string file_type = 2 [json_name = "fileType"];
 }
 
 // Initial State for shielded instance, these are public keys which are safe to
 // store in public
 message InitialStateConfig {
   // The Key Database (db).
-  repeated FileContentBuffer dbs = 1;
+  repeated FileContentBuffer dbs = 1 [json_name = "dbs"];
 
   // The forbidden key database (dbx).
-  repeated FileContentBuffer dbxs = 2;
+  repeated FileContentBuffer dbxs = 2 [json_name = "dbxs"];
 
   // The Key Exchange Key (KEK).
-  repeated FileContentBuffer keks = 3;
+  repeated FileContentBuffer keks = 3 [json_name = "keks"];
 
   // The Platform Key (PK).
-  optional FileContentBuffer pk = 4;
+  optional FileContentBuffer pk = 4 [json_name = "pk"];
 }

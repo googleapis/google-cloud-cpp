@@ -157,7 +157,8 @@ message DeleteTargetSslProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -170,19 +171,22 @@ message DeleteTargetSslProxyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // Name of the TargetSslProxy resource to delete.
-  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 }
 
 // Request message for GetTargetSslProxy.
 message GetTargetSslProxyRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name of the TargetSslProxy resource to return.
-  string target_ssl_proxy = 2 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 }
 
 // Request message for InsertTargetSslProxy.
@@ -190,7 +194,8 @@ message InsertTargetSslProxyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -203,7 +208,7 @@ message InsertTargetSslProxyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // The TargetSslProxy for this request.
   optional google.cloud.cpp.compute.v1.TargetSslProxy
@@ -244,14 +249,14 @@ message ListTargetSslProxiesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2;
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -261,18 +266,19 @@ message ListTargetSslProxiesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 6;
+  optional bool return_partial_success = 6 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for SetBackendService.
@@ -280,7 +286,8 @@ message SetBackendServiceRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -293,11 +300,12 @@ message SetBackendServiceRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // Name of the TargetSslProxy resource whose BackendService resource is to be
   // set.
-  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 
   // The TargetSslProxiesSetBackendServiceRequest for this request.
   optional google.cloud.cpp.compute.v1.TargetSslProxiesSetBackendServiceRequest
@@ -310,7 +318,8 @@ message SetCertificateMapRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -323,11 +332,12 @@ message SetCertificateMapRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // Name of the TargetSslProxy resource whose CertificateMap is to be set. The
   // name must be 1-63 characters long, and comply with RFC1035.
-  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 
   // The TargetSslProxiesSetCertificateMapRequest for this request.
   optional google.cloud.cpp.compute.v1.TargetSslProxiesSetCertificateMapRequest
@@ -340,7 +350,8 @@ message SetProxyHeaderRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -353,10 +364,11 @@ message SetProxyHeaderRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // Name of the TargetSslProxy resource whose ProxyHeader is to be set.
-  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 
   // The TargetSslProxiesSetProxyHeaderRequest for this request.
   optional google.cloud.cpp.compute.v1.TargetSslProxiesSetProxyHeaderRequest
@@ -369,7 +381,8 @@ message SetSslCertificatesRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -382,11 +395,12 @@ message SetSslCertificatesRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // Name of the TargetSslProxy resource whose SslCertificate resource is to be
   // set.
-  string target_ssl_proxy = 3 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 
   // The TargetSslProxiesSetSslCertificatesRequest for this request.
   optional google.cloud.cpp.compute.v1.TargetSslProxiesSetSslCertificatesRequest
@@ -399,7 +413,8 @@ message SetSslPolicyRequest {
   // Project ID for this request.
   string project = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -412,7 +427,7 @@ message SetSslPolicyRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 2;
+  optional string request_id = 2 [json_name = "requestId"];
 
   // The SslPolicyReference for this request.
   optional google.cloud.cpp.compute.v1.SslPolicyReference
@@ -420,5 +435,6 @@ message SetSslPolicyRequest {
 
   // Name of the TargetSslProxy resource whose SSL policy is to be set. The name
   // must be 1-63 characters long, and comply with RFC1035.
-  string target_ssl_proxy = 4 [(google.api.field_behavior) = REQUIRED];
+  string target_ssl_proxy = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "targetSslProxy"];
 }

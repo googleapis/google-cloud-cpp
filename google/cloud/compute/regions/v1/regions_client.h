@@ -189,7 +189,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L81}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L83}
   /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_090.proto#L29}
   ///
   // clang-format on
@@ -236,7 +236,7 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L81}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L83}
   /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_090.proto#L29}
   ///
   // clang-format on

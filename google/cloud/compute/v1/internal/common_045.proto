@@ -28,10 +28,10 @@ message GlobalSetLabelsRequest {
   // provide an up-to-date fingerprint hash when updating or changing labels,
   // otherwise the request will fail with error 412 conditionNotMet. Make a
   // get() request to the resource to get the latest fingerprint.
-  optional string label_fingerprint = 1;
+  optional string label_fingerprint = 1 [json_name = "labelFingerprint"];
 
   // A list of labels to apply for this resource. Each label must comply with
   // the requirements for labels. For example, "webserver-frontend": "images". A
   // label value can also be empty (e.g. "my-label": "").
-  map<string, string> labels = 2;
+  map<string, string> labels = 2 [json_name = "labels"];
 }

@@ -24,11 +24,11 @@ package google.cloud.cpp.compute.v1;
 message TestPermissionsRequest {
   // The set of permissions to check for the 'resource'. Permissions with
   // wildcards (such as '*' or 'storage.*') are not allowed.
-  repeated string permissions = 1;
+  repeated string permissions = 1 [json_name = "permissions"];
 }
 
 message TestPermissionsResponse {
   // A subset of `TestPermissionsRequest.permissions` that the caller is
   // allowed.
-  repeated string permissions = 1;
+  repeated string permissions = 1 [json_name = "permissions"];
 }

@@ -22,5 +22,5 @@ syntax = "proto3";
 package google.cloud.cpp.compute.v1;
 
 message SecurityPolicyReference {
-  optional string security_policy = 1;
+  optional string security_policy = 1 [json_name = "securityPolicy"];
 }

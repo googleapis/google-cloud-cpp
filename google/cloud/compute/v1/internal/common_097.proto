@@ -28,22 +28,22 @@ message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policy.
   repeated
       RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy
-          firewall_policys = 1;
+          firewall_policys = 1 [json_name = "firewallPolicys"];
 
   // Effective firewalls on the network.
-  repeated Firewall firewalls = 2;
+  repeated Firewall firewalls = 2 [json_name = "firewalls"];
 }
 
 message
 RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   // [Output Only] The display name of the firewall policy.
-  optional string display_name = 1;
+  optional string display_name = 1 [json_name = "displayName"];
 
   // [Output Only] The name of the firewall policy.
-  optional string name = 2;
+  optional string name = 2 [json_name = "name"];
 
   // The rules that apply to the network.
-  repeated FirewallPolicyRule rules = 3;
+  repeated FirewallPolicyRule rules = 3 [json_name = "rules"];
 
   // [Output Only] The type of the firewall policy. Can be one of HIERARCHY,
   // NETWORK, NETWORK_REGIONAL.
@@ -51,5 +51,5 @@ RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolic
   // NETWORK:
   // NETWORK_REGIONAL:
   // UNSPECIFIED:
-  optional string type = 4;
+  optional string type = 4 [json_name = "type"];
 }

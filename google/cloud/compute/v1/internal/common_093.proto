@@ -23,17 +23,17 @@ package google.cloud.cpp.compute.v1;
 
 message RegionDisksAddResourcePoliciesRequest {
   // Resource policies to be added to this disk.
-  repeated string resource_policies = 1;
+  repeated string resource_policies = 1 [json_name = "resourcePolicies"];
 }
 
 message RegionDisksRemoveResourcePoliciesRequest {
   // Resource policies to be removed from this disk.
-  repeated string resource_policies = 1;
+  repeated string resource_policies = 1 [json_name = "resourcePolicies"];
 }
 
 message RegionDisksResizeRequest {
   // The new size of the regional persistent disk, which is specified in GB.
-  optional string size_gb = 1;
+  optional string size_gb = 1 [json_name = "sizeGb"];
 }
 
 message RegionDisksStartAsyncReplicationRequest {
@@ -46,5 +46,5 @@ message RegionDisksStartAsyncReplicationRequest {
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // projects/project/regions/region/disks/disk - zones/zone/disks/disk -
   // regions/region/disks/disk
-  optional string async_secondary_disk = 1;
+  optional string async_secondary_disk = 1 [json_name = "asyncSecondaryDisk"];
 }

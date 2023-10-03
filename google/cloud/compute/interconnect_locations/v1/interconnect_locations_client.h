@@ -182,7 +182,7 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L75}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on
@@ -223,7 +223,7 @@ class InterconnectLocationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L71}
+  /// [google.cloud.cpp.compute.interconnect_locations.v1.ListInterconnectLocationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L75}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L28}
   ///
   // clang-format on

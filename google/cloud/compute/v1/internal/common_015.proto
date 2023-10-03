@@ -28,21 +28,22 @@ import "google/cloud/compute/v1/internal/common_003.proto";
 // it is used only for processing the requests.
 message BulkInsertInstanceResource {
   // The maximum number of instances to create.
-  optional string count = 1;
+  optional string count = 1 [json_name = "count"];
 
   // The instance properties defining the VM instances to be created. Required
   // if sourceInstanceTemplate is not provided.
-  optional InstanceProperties instance_properties = 2;
+  optional InstanceProperties instance_properties = 2
+      [json_name = "instanceProperties"];
 
   // Policy for chosing target zone. For more information, see Create VMs in
   // bulk .
-  optional LocationPolicy location_policy = 3;
+  optional LocationPolicy location_policy = 3 [json_name = "locationPolicy"];
 
   // The minimum number of instances to create. If no min_count is specified
   // then count is used as the default value. If min_count instances cannot be
   // created, then no instances will be created and instances already created
   // will be deleted.
-  optional string min_count = 4;
+  optional string min_count = 4 [json_name = "minCount"];
 
   // The string pattern used for the names of the VMs. Either name_pattern or
   // per_instance_properties must be set. The pattern must contain one
@@ -55,12 +56,12 @@ message BulkInsertInstanceResource {
   // name inst-0050, then instance names generated using the pattern inst-####
   // begin with inst-0051. The name pattern placeholder #...# can contain up to
   // 18 characters.
-  optional string name_pattern = 5;
+  optional string name_pattern = 5 [json_name = "namePattern"];
 
   // Per-instance properties to be set on individual instances. Keys of this map
   // specify requested instance names. Can be empty if name_pattern is used.
   map<string, BulkInsertInstanceResourcePerInstanceProperties>
-      per_instance_properties = 6;
+      per_instance_properties = 6 [json_name = "perInstanceProperties"];
 
   // Specifies the instance template from which to create instances. You may
   // combine sourceInstanceTemplate with instanceProperties to override specific
@@ -71,7 +72,8 @@ message BulkInsertInstanceResource {
   // /global/instanceTemplates/instanceTemplate -
   // projects/project/global/instanceTemplates/instanceTemplate -
   // global/instanceTemplates/instanceTemplate This field is optional.
-  optional string source_instance_template = 7;
+  optional string source_instance_template = 7
+      [json_name = "sourceInstanceTemplate"];
 }
 
 // Per-instance properties to be set on individual instances. To be extended in
@@ -79,10 +81,10 @@ message BulkInsertInstanceResource {
 message BulkInsertInstanceResourcePerInstanceProperties {
   // Specifies the hostname of the instance. More details in:
   // https://cloud.google.com/compute/docs/instances/custom-hostname-vm#naming_convention
-  optional string hostname = 2;
+  optional string hostname = 2 [json_name = "hostname"];
 
   // This field is only temporary. It will be removed. Do not use it.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 }
 
 // Configuration for location policy among multiple possible locations (e.g.
@@ -91,7 +93,7 @@ message LocationPolicy {
   // Location configurations mapped by location name. Currently only zone names
   // are supported and must be represented as valid internal URLs, such as
   // zones/us-central1-a.
-  map<string, LocationPolicyLocation> locations = 1;
+  map<string, LocationPolicyLocation> locations = 1 [json_name = "locations"];
 
   // Strategy for distributing VMs across zones in a region.
   // ANY: GCE picks zones for creating VM instances to fulfill the requested
@@ -107,24 +109,25 @@ message LocationPolicy {
   // where resources are available while distributing VMs as evenly as possible
   // across allowed zones to minimize the impact of zonal failure. Recommended
   // for highly available serving workloads.
-  optional string target_shape = 2;
+  optional string target_shape = 2 [json_name = "targetShape"];
 }
 
 message LocationPolicyLocation {
   // Constraints that the caller requires on the result distribution in this
   // zone.
-  optional LocationPolicyLocationConstraints constraints = 1;
+  optional LocationPolicyLocationConstraints constraints = 1
+      [json_name = "constraints"];
 
   // Preference for a given location. Set to either ALLOW or DENY.
   // ALLOW: Location is allowed for use.
   // DENY: Location is prohibited.
   // PREFERENCE_UNSPECIFIED: Default value, unused.
-  optional string preference = 2;
+  optional string preference = 2 [json_name = "preference"];
 }
 
 // Per-zone constraints on location policy for this zone.
 message LocationPolicyLocationConstraints {
   // Maximum number of items that are allowed to be placed in this zone. The
   // value must be non-negative.
-  optional int32 max_count = 1;
+  optional int32 max_count = 1 [json_name = "maxCount"];
 }

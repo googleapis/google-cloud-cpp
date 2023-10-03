@@ -28,26 +28,26 @@ package google.cloud.cpp.compute.v1;
 message InterconnectLocation {
   // [Output Only] The postal address of the Point of Presence, each line in the
   // address is separated by a newline character.
-  optional string address = 1;
+  optional string address = 1 [json_name = "address"];
 
   // [Output Only] Availability zone for this InterconnectLocation. Within a
   // metropolitan area (metro), maintenance will not be simultaneously scheduled
   // in more than one availability zone. Example: "zone1" or "zone2".
-  optional string availability_zone = 2;
+  optional string availability_zone = 2 [json_name = "availabilityZone"];
 
   // [Output only] List of features available at this InterconnectLocation,
   // which can take one of the following values: - MACSEC
-  repeated string available_features = 17;
+  repeated string available_features = 17 [json_name = "availableFeatures"];
 
   // [Output only] List of link types available at this InterconnectLocation,
   // which can take one of the following values: - LINK_TYPE_ETHERNET_10G_LR -
   // LINK_TYPE_ETHERNET_100G_LR
-  repeated string available_link_types = 18;
+  repeated string available_link_types = 18 [json_name = "availableLinkTypes"];
 
   // [Output Only] Metropolitan area designator that indicates which city an
   // interconnect is located. For example: "Chicago, IL", "Amsterdam,
   // Netherlands".
-  optional string city = 3;
+  optional string city = 3 [json_name = "city"];
 
   // [Output Only] Continent for this location, which can take one of the
   // following values: - AFRICA - ASIA_PAC - EUROPE - NORTH_AMERICA -
@@ -62,43 +62,46 @@ message InterconnectLocation {
   // EUROPE:
   // NORTH_AMERICA:
   // SOUTH_AMERICA:
-  optional string continent = 4;
+  optional string continent = 4 [json_name = "continent"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 5;
+  optional string creation_timestamp = 5 [json_name = "creationTimestamp"];
 
   // [Output Only] An optional description of the resource.
-  optional string description = 6;
+  optional string description = 6 [json_name = "description"];
 
   // [Output Only] The name of the provider for this facility (e.g., EQUINIX).
-  optional string facility_provider = 7;
+  optional string facility_provider = 7 [json_name = "facilityProvider"];
 
   // [Output Only] A provider-assigned Identifier for this facility (e.g.,
   // Ashburn-DC1).
-  optional string facility_provider_facility_id = 8;
+  optional string facility_provider_facility_id = 8
+      [json_name = "facilityProviderFacilityId"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 9;
+  optional string id = 9 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#interconnectLocation for
   // interconnect locations.
-  optional string kind = 10;
+  optional string kind = 10 [json_name = "kind"];
 
   // [Output Only] Name of the resource.
-  optional string name = 11;
+  optional string name = 11 [json_name = "name"];
 
   // [Output Only] The peeringdb identifier for this facility (corresponding
   // with a netfac type in peeringdb).
-  optional string peeringdb_facility_id = 12;
+  optional string peeringdb_facility_id = 12
+      [json_name = "peeringdbFacilityId"];
 
   // [Output Only] A list of InterconnectLocation.RegionInfo objects, that
   // describe parameters pertaining to the relation between this
   // InterconnectLocation and various Google Cloud regions.
-  repeated InterconnectLocationRegionInfo region_infos = 13;
+  repeated InterconnectLocationRegionInfo region_infos = 13
+      [json_name = "regionInfos"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 14;
+  optional string self_link = 14 [json_name = "selfLink"];
 
   // [Output Only] The status of this InterconnectLocation, which can take one
   // of the following values: - CLOSED: The InterconnectLocation is closed and
@@ -108,33 +111,33 @@ message InterconnectLocation {
   // Interconnects.
   // CLOSED: The InterconnectLocation is closed for provisioning new
   // Interconnects.
-  optional string status = 15;
+  optional string status = 15 [json_name = "status"];
 
   // [Output Only] Reserved for future use.
-  optional bool supports_pzs = 16;
+  optional bool supports_pzs = 16 [json_name = "supportsPzs"];
 }
 
 // Response to the list request, and contains a list of interconnect locations.
 message InterconnectLocationList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of InterconnectLocation resources.
-  repeated InterconnectLocation items = 2;
+  repeated InterconnectLocation items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#interconnectLocationList for
   // lists of interconnect locations.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -193,7 +196,7 @@ message InterconnectLocationList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -203,22 +206,22 @@ message InterconnectLocationList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Information about any potential InterconnectAttachments between an
@@ -226,7 +229,7 @@ message InterconnectLocationList {
 message InterconnectLocationRegionInfo {
   // Expected round-trip time in milliseconds, from this InterconnectLocation to
   // a VM in this region.
-  optional string expected_rtt_ms = 1;
+  optional string expected_rtt_ms = 1 [json_name = "expectedRttMs"];
 
   // Identifies the network presence of this location.
   // GLOBAL: This region is not in any common network presence with this
@@ -237,8 +240,8 @@ message InterconnectLocationRegionInfo {
   // with this InterconnectLocation.
   // LP_LOCAL_REGION: [Deprecated] This region shares the same regional network
   // presence as this InterconnectLocation.
-  optional string location_presence = 2;
+  optional string location_presence = 2 [json_name = "locationPresence"];
 
   // URL for the region of this location.
-  optional string region = 3;
+  optional string region = 3 [json_name = "region"];
 }

@@ -27,19 +27,19 @@ package google.cloud.cpp.compute.v1;
 // more information, read TCP Proxy Load Balancing overview.
 message TargetTcpProxy {
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1;
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 2;
+  optional string description = 2 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 3;
+  optional string id = 3 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#targetTcpProxy for
   // target TCP proxies.
-  optional string kind = 4;
+  optional string kind = 4 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -48,7 +48,7 @@ message TargetTcpProxy {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 5;
+  optional string name = 5 [json_name = "name"];
 
   // This field only applies when the forwarding rule that references this
   // target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When
@@ -58,45 +58,45 @@ message TargetTcpProxy {
   // configure Envoy as a gateway or middle proxy (in other words, not a sidecar
   // proxy). The Envoy proxy listens for inbound requests and handles requests
   // when it receives them. The default is false.
-  optional bool proxy_bind = 6;
+  optional bool proxy_bind = 6 [json_name = "proxyBind"];
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
   // NONE:
   // PROXY_V1:
-  optional string proxy_header = 7;
+  optional string proxy_header = 7 [json_name = "proxyHeader"];
 
   // [Output Only] URL of the region where the regional TCP proxy resides. This
   // field is not applicable to global TCP proxy.
-  optional string region = 8;
+  optional string region = 8 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 9;
+  optional string self_link = 9 [json_name = "selfLink"];
 
   // URL to the BackendService resource.
-  optional string service = 10;
+  optional string service = 10 [json_name = "service"];
 }
 
 // Contains a list of TargetTcpProxy resources.
 message TargetTcpProxyList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of TargetTcpProxy resources.
-  repeated TargetTcpProxy items = 2;
+  repeated TargetTcpProxy items = 2 [json_name = "items"];
 
   // Type of resource.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -155,7 +155,7 @@ message TargetTcpProxyList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -165,20 +165,20 @@ message TargetTcpProxyList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }

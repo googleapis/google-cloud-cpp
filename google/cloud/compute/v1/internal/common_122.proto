@@ -25,7 +25,8 @@ import "google/cloud/compute/v1/internal/common_123.proto";
 
 message TargetHttpsProxiesScopedList {
   // A list of TargetHttpsProxies contained in this scope.
-  repeated TargetHttpsProxy target_https_proxies = 1;
+  repeated TargetHttpsProxy target_https_proxies = 1
+      [json_name = "targetHttpsProxies"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -84,7 +85,7 @@ message TargetHttpsProxiesScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -94,30 +95,30 @@ message TargetHttpsProxiesScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // Informational warning which replaces the list of backend services when the
   // list is empty.
-  optional Warning warning = 2;
+  optional Warning warning = 2 [json_name = "warning"];
 }
 
 message TargetHttpsProxiesSetCertificateMapRequest {
   // URL of the Certificate Map to associate with this TargetHttpsProxy.
   // Accepted format is //certificatemanager.googleapis.com/projects/{project
   // }/locations/{location}/certificateMaps/{resourceName}.
-  optional string certificate_map = 1;
+  optional string certificate_map = 1 [json_name = "certificateMap"];
 }
 
 message TargetHttpsProxiesSetQuicOverrideRequest {
@@ -126,39 +127,39 @@ message TargetHttpsProxiesSetQuicOverrideRequest {
   // ENABLE: The load balancer will attempt to negotiate QUIC with clients.
   // NONE: No overrides to the default QUIC policy. This option is implicit if
   // no QUIC override has been specified in the request.
-  optional string quic_override = 1;
+  optional string quic_override = 1 [json_name = "quicOverride"];
 }
 
 message TargetHttpsProxiesSetSslCertificatesRequest {
   // New set of SslCertificate resources to associate with this TargetHttpsProxy
   // resource. At least one SSL certificate must be specified. Currently, you
   // may specify up to 15 SSL certificates.
-  repeated string ssl_certificates = 1;
+  repeated string ssl_certificates = 1 [json_name = "sslCertificates"];
 }
 
 message TargetHttpsProxyAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of TargetHttpsProxiesScopedList resources.
-  map<string, TargetHttpsProxiesScopedList> items = 2;
+  map<string, TargetHttpsProxiesScopedList> items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always
   // compute#targetHttpsProxyAggregatedList for lists of Target HTTP Proxies.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6;
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -217,7 +218,7 @@ message TargetHttpsProxyAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -227,20 +228,20 @@ message TargetHttpsProxyAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7;
+  optional Warning warning = 7 [json_name = "warning"];
 }

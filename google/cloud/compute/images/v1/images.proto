@@ -187,12 +187,14 @@ service Images {
 // Request message for DeleteImage.
 message DeleteImageRequest {
   // Name of the image resource to delete.
-  string image = 1 [(google.api.field_behavior) = REQUIRED];
+  string image = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "image"];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -205,7 +207,7 @@ message DeleteImageRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 }
 
 // Request message for Deprecate.
@@ -215,12 +217,14 @@ message DeprecateRequest {
       deprecation_status_resource = 1 [json_name = "__json_request_body"];
 
   // Image name.
-  string image = 2 [(google.api.field_behavior) = REQUIRED];
+  string image = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "image"];
 
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -233,44 +237,51 @@ message DeprecateRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for GetFromFamily.
 message GetFromFamilyRequest {
   // Name of the image family to search for.
-  string family = 1 [(google.api.field_behavior) = REQUIRED];
+  string family = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "family"];
 
   // The image project that the image belongs to. For example, to get a CentOS
   // image, specify centos-cloud as the image project.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 }
 
 // Request message for GetIamPolicy.
 message GetIamPolicyRequest {
   // Requested IAM Policy version.
-  optional int32 options_requested_policy_version = 1;
+  optional int32 options_requested_policy_version = 1
+      [json_name = "optionsRequestedPolicyVersion"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name or id of the resource for this request.
-  string resource = 3 [(google.api.field_behavior) = REQUIRED];
+  string resource = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for GetImage.
 message GetImageRequest {
   // Name of the image resource to return.
-  string image = 1 [(google.api.field_behavior) = REQUIRED];
+  string image = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "image"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 }
 
 // Request message for InsertImage.
 message InsertImageRequest {
   // Force image creation if true.
-  optional bool force_create = 1;
+  optional bool force_create = 1 [json_name = "forceCreate"];
 
   // The Image for this request.
   optional google.cloud.cpp.compute.v1.Image image_resource = 2
@@ -279,7 +290,8 @@ message InsertImageRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -292,7 +304,7 @@ message InsertImageRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for ListImages.
@@ -329,14 +341,14 @@ message ListImagesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2;
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -346,24 +358,26 @@ message ListImagesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 6;
+  optional bool return_partial_success = 6 [json_name = "returnPartialSuccess"];
 }
 
 // Request message for PatchImage.
 message PatchImageRequest {
   // Name of the image resource to patch.
-  string image = 1 [(google.api.field_behavior) = REQUIRED];
+  string image = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "image"];
 
   // The Image for this request.
   optional google.cloud.cpp.compute.v1.Image image_resource = 2
@@ -372,7 +386,8 @@ message PatchImageRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -385,7 +400,7 @@ message PatchImageRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 }
 
 // Request message for SetIamPolicy.
@@ -396,10 +411,12 @@ message SetIamPolicyRequest {
       [json_name = "__json_request_body"];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name or id of the resource for this request.
-  string resource = 3 [(google.api.field_behavior) = REQUIRED];
+  string resource = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for SetLabels.
@@ -412,20 +429,24 @@ message SetLabelsRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // Name or id of the resource for this request.
-  string resource = 3 [(google.api.field_behavior) = REQUIRED];
+  string resource = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for TestIamPermissions.
 message TestIamPermissionsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED];
+  string project = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Name or id of the resource for this request.
-  string resource = 2 [(google.api.field_behavior) = REQUIRED];
+  string resource = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 
   // The TestPermissionsRequest for this request.
   optional google.cloud.cpp.compute.v1.TestPermissionsRequest

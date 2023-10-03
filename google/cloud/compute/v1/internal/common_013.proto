@@ -26,15 +26,17 @@ import "google/cloud/compute/v1/internal/common_104.proto";
 message BfdPacket {
   // The Authentication Present bit of the BFD packet. This is specified in
   // section 4.1 of RFC5880
-  optional bool authentication_present = 1;
+  optional bool authentication_present = 1
+      [json_name = "authenticationPresent"];
 
   // The Control Plane Independent bit of the BFD packet. This is specified in
   // section 4.1 of RFC5880
-  optional bool control_plane_independent = 2;
+  optional bool control_plane_independent = 2
+      [json_name = "controlPlaneIndependent"];
 
   // The demand bit of the BFD packet. This is specified in section 4.1 of
   // RFC5880
-  optional bool demand = 3;
+  optional bool demand = 3 [json_name = "demand"];
 
   // The diagnostic code specifies the local system's reason for the last change
   // in session state. This allows remote systems to determine the reason that
@@ -50,42 +52,43 @@ message BfdPacket {
   // NO_DIAGNOSTIC:
   // PATH_DOWN:
   // REVERSE_CONCATENATED_PATH_DOWN:
-  optional string diagnostic = 4;
+  optional string diagnostic = 4 [json_name = "diagnostic"];
 
   // The Final bit of the BFD packet. This is specified in section 4.1 of
   // RFC5880
-  optional bool final = 5;
+  optional bool final = 5 [json_name = "final"];
 
   // The length of the BFD Control packet in bytes. This is specified in section
   // 4.1 of RFC5880
-  optional uint32 length = 6;
+  optional uint32 length = 6 [json_name = "length"];
 
   // The Required Min Echo RX Interval value in the BFD packet. This is
   // specified in section 4.1 of RFC5880
-  optional uint32 min_echo_rx_interval_ms = 7;
+  optional uint32 min_echo_rx_interval_ms = 7
+      [json_name = "minEchoRxIntervalMs"];
 
   // The Required Min RX Interval value in the BFD packet. This is specified in
   // section 4.1 of RFC5880
-  optional uint32 min_rx_interval_ms = 8;
+  optional uint32 min_rx_interval_ms = 8 [json_name = "minRxIntervalMs"];
 
   // The Desired Min TX Interval value in the BFD packet. This is specified in
   // section 4.1 of RFC5880
-  optional uint32 min_tx_interval_ms = 9;
+  optional uint32 min_tx_interval_ms = 9 [json_name = "minTxIntervalMs"];
 
   // The detection time multiplier of the BFD packet. This is specified in
   // section 4.1 of RFC5880
-  optional uint32 multiplier = 10;
+  optional uint32 multiplier = 10 [json_name = "multiplier"];
 
   // The multipoint bit of the BFD packet. This is specified in section 4.1 of
   // RFC5880
-  optional bool multipoint = 11;
+  optional bool multipoint = 11 [json_name = "multipoint"];
 
   // The My Discriminator value in the BFD packet. This is specified in section
   // 4.1 of RFC5880
-  optional uint32 my_discriminator = 12;
+  optional uint32 my_discriminator = 12 [json_name = "myDiscriminator"];
 
   // The Poll bit of the BFD packet. This is specified in section 4.1 of RFC5880
-  optional bool poll = 13;
+  optional bool poll = 13 [json_name = "poll"];
 
   // The current BFD session state as seen by the transmitting system. These
   // states are specified in section 4.1 of RFC5880
@@ -94,15 +97,15 @@ message BfdPacket {
   // INIT:
   // STATE_UNSPECIFIED:
   // UP:
-  optional string state = 14;
+  optional string state = 14 [json_name = "state"];
 
   // The version number of the BFD protocol, as specified in section 4.1 of
   // RFC5880.
-  optional uint32 version = 15;
+  optional uint32 version = 15 [json_name = "version"];
 
   // The Your Discriminator value in the BFD packet. This is specified in
   // section 4.1 of RFC5880
-  optional uint32 your_discriminator = 16;
+  optional uint32 your_discriminator = 16 [json_name = "yourDiscriminator"];
 }
 
 // Next free: 15
@@ -115,16 +118,20 @@ message BfdStatus {
   // ACTIVE:
   // DISABLED:
   // PASSIVE:
-  optional string bfd_session_initialization_mode = 1;
+  optional string bfd_session_initialization_mode = 1
+      [json_name = "bfdSessionInitializationMode"];
 
   // Unix timestamp of the most recent config update.
-  optional string config_update_timestamp_micros = 2;
+  optional string config_update_timestamp_micros = 2
+      [json_name = "configUpdateTimestampMicros"];
 
   // Control packet counts for the current BFD session.
-  optional BfdStatusPacketCounts control_packet_counts = 3;
+  optional BfdStatusPacketCounts control_packet_counts = 3
+      [json_name = "controlPacketCounts"];
 
   // Inter-packet time interval statistics for control packets.
-  repeated PacketIntervals control_packet_intervals = 4;
+  repeated PacketIntervals control_packet_intervals = 4
+      [json_name = "controlPacketIntervals"];
 
   // The diagnostic code specifies the local system's reason for the last change
   // in session state. This allows remote systems to determine the reason that
@@ -140,7 +147,7 @@ message BfdStatus {
   // NO_DIAGNOSTIC:
   // PATH_DOWN:
   // REVERSE_CONCATENATED_PATH_DOWN:
-  optional string local_diagnostic = 5;
+  optional string local_diagnostic = 5 [json_name = "localDiagnostic"];
 
   // The current BFD session state as seen by the transmitting system. These
   // states are specified in section 4.1 of RFC5880
@@ -149,45 +156,47 @@ message BfdStatus {
   // INIT:
   // STATE_UNSPECIFIED:
   // UP:
-  optional string local_state = 6;
+  optional string local_state = 6 [json_name = "localState"];
 
   // Negotiated transmit interval for control packets.
-  optional uint32 negotiated_local_control_tx_interval_ms = 7;
+  optional uint32 negotiated_local_control_tx_interval_ms = 7
+      [json_name = "negotiatedLocalControlTxIntervalMs"];
 
   // The most recent Rx control packet for this BFD session.
-  optional BfdPacket rx_packet = 8;
+  optional BfdPacket rx_packet = 8 [json_name = "rxPacket"];
 
   // The most recent Tx control packet for this BFD session.
-  optional BfdPacket tx_packet = 9;
+  optional BfdPacket tx_packet = 9 [json_name = "txPacket"];
 
   // Session uptime in milliseconds. Value will be 0 if session is not up.
-  optional string uptime_ms = 10;
+  optional string uptime_ms = 10 [json_name = "uptimeMs"];
 }
 
 message BfdStatusPacketCounts {
   // Number of packets received since the beginning of the current BFD session.
-  optional uint32 num_rx = 1;
+  optional uint32 num_rx = 1 [json_name = "numRx"];
 
   // Number of packets received that were rejected because of errors since the
   // beginning of the current BFD session.
-  optional uint32 num_rx_rejected = 2;
+  optional uint32 num_rx_rejected = 2 [json_name = "numRxRejected"];
 
   // Number of packets received that were successfully processed since the
   // beginning of the current BFD session.
-  optional uint32 num_rx_successful = 3;
+  optional uint32 num_rx_successful = 3 [json_name = "numRxSuccessful"];
 
   // Number of packets transmitted since the beginning of the current BFD
   // session.
-  optional uint32 num_tx = 4;
+  optional uint32 num_tx = 4 [json_name = "numTx"];
 }
 
 // Contains NAT IP information of a NAT config (i.e. usage status, mode).
 message NatIpInfo {
   // A list of all NAT IPs assigned to this NAT config.
-  repeated NatIpInfoNatIpInfoMapping nat_ip_info_mappings = 1;
+  repeated NatIpInfoNatIpInfoMapping nat_ip_info_mappings = 1
+      [json_name = "natIpInfoMappings"];
 
   // Name of the NAT config which the NAT IP belongs to.
-  optional string nat_name = 2;
+  optional string nat_name = 2 [json_name = "natName"];
 }
 
 // Contains information of a NAT IP.
@@ -195,42 +204,42 @@ message NatIpInfoNatIpInfoMapping {
   // Specifies whether NAT IP is auto or manual.
   // AUTO:
   // MANUAL:
-  optional string mode = 1;
+  optional string mode = 1 [json_name = "mode"];
 
   // NAT IP address. For example: 203.0.113.11.
-  optional string nat_ip = 2;
+  optional string nat_ip = 2 [json_name = "natIp"];
 
   // Specifies whether NAT IP is currently serving at least one endpoint or not.
   // IN_USE:
   // UNUSED:
-  optional string usage = 3;
+  optional string usage = 3 [json_name = "usage"];
 }
 
 message NatIpInfoResponse {
   // [Output Only] A list of NAT IP information.
-  repeated NatIpInfo result = 1;
+  repeated NatIpInfo result = 1 [json_name = "result"];
 }
 
 // Next free: 7
 message PacketIntervals {
   // Average observed inter-packet interval in milliseconds.
-  optional string avg_ms = 1;
+  optional string avg_ms = 1 [json_name = "avgMs"];
 
   // From how long ago in the past these intervals were observed.
   // DURATION_UNSPECIFIED:
   // HOUR:
   // MAX: From BfdSession object creation time.
   // MINUTE:
-  optional string duration = 2;
+  optional string duration = 2 [json_name = "duration"];
 
   // Maximum observed inter-packet interval in milliseconds.
-  optional string max_ms = 3;
+  optional string max_ms = 3 [json_name = "maxMs"];
 
   // Minimum observed inter-packet interval in milliseconds.
-  optional string min_ms = 4;
+  optional string min_ms = 4 [json_name = "minMs"];
 
   // Number of inter-packet intervals from which these statistics were derived.
-  optional string num_intervals = 5;
+  optional string num_intervals = 5 [json_name = "numIntervals"];
 
   // The type of packets for which inter-packet intervals were computed.
   // LOOPBACK: Only applies to Echo packets. This shows the intervals between
@@ -238,47 +247,49 @@ message PacketIntervals {
   // RECEIVE: Intervals between received packets.
   // TRANSMIT: Intervals between transmitted packets.
   // TYPE_UNSPECIFIED:
-  optional string type = 6;
+  optional string type = 6 [json_name = "type"];
 }
 
 // Represents a Cloud Router resource. For more information about Cloud Router,
 // read the Cloud Router overview.
 message Router {
   // BGP information specific to this router.
-  optional RouterBgp bgp = 1;
+  optional RouterBgp bgp = 1 [json_name = "bgp"];
 
   // BGP information that must be configured into the routing stack to establish
   // BGP peering. This information must specify the peer ASN and either the
   // interface name, IP address, or peer IP address. Please refer to RFC4273.
-  repeated RouterBgpPeer bgp_peers = 2;
+  repeated RouterBgpPeer bgp_peers = 2 [json_name = "bgpPeers"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3;
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 4;
+  optional string description = 4 [json_name = "description"];
 
   // Indicates if a router is dedicated for use with encrypted VLAN attachments
   // (interconnectAttachments).
-  optional bool encrypted_interconnect_router = 5;
+  optional bool encrypted_interconnect_router = 5
+      [json_name = "encryptedInterconnectRouter"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6;
+  optional string id = 6 [json_name = "id"];
 
   // Router interfaces. To create a BGP peer that uses a router interface, the
   // interface must have one of the following fields specified: -
   // linkedVpnTunnel - linkedInterconnectAttachment - subnetwork You can create
   // a router interface without any of these fields specified. However, you
   // cannot create a BGP peer that uses that interface.
-  repeated RouterInterface interfaces = 7;
+  repeated RouterInterface interfaces = 7 [json_name = "interfaces"];
 
   // [Output Only] Type of resource. Always compute#router for routers.
-  optional string kind = 8;
+  optional string kind = 8 [json_name = "kind"];
 
   // Keys used for MD5 authentication.
-  repeated RouterMd5AuthenticationKey md5_authentication_keys = 9;
+  repeated RouterMd5AuthenticationKey md5_authentication_keys = 9
+      [json_name = "md5AuthenticationKeys"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -287,55 +298,55 @@ message Router {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 10;
+  optional string name = 10 [json_name = "name"];
 
   // A list of NAT services created in this router.
-  repeated RouterNat nats = 11;
+  repeated RouterNat nats = 11 [json_name = "nats"];
 
   // URI of the network to which this router belongs.
-  optional string network = 12;
+  optional string network = 12 [json_name = "network"];
 
   // [Output Only] URI of the region where the router resides. You must specify
   // this field as part of the HTTP request URL. It is not settable as a field
   // in the request body.
-  optional string region = 13;
+  optional string region = 13 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 14;
+  optional string self_link = 14 [json_name = "selfLink"];
 }
 
 // Description-tagged IP ranges for the router to advertise.
 message RouterAdvertisedIpRange {
   // User-specified description for the IP range.
-  optional string description = 1;
+  optional string description = 1 [json_name = "description"];
 
   // The IP range to advertise. The value must be a CIDR-formatted string.
-  optional string range = 2;
+  optional string range = 2 [json_name = "range"];
 }
 
 // Contains a list of routers.
 message RouterAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of Router resources.
-  map<string, RoutersScopedList> items = 2;
+  map<string, RoutersScopedList> items = 2 [json_name = "items"];
 
   // Type of resource.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6;
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -394,7 +405,7 @@ message RouterAggregatedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -404,22 +415,22 @@ message RouterAggregatedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7;
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 message RouterBgp {
@@ -427,26 +438,27 @@ message RouterBgp {
   // options are DEFAULT or CUSTOM.
   // CUSTOM:
   // DEFAULT:
-  optional string advertise_mode = 1;
+  optional string advertise_mode = 1 [json_name = "advertiseMode"];
 
   // User-specified list of prefix groups to advertise in custom mode. This
   // field can only be populated if advertise_mode is CUSTOM and is advertised
   // to all peers of the router. These groups will be advertised in addition to
   // any specified prefixes. Leave this field blank to advertise no custom
   // groups.
-  repeated string advertised_groups = 2;
+  repeated string advertised_groups = 2 [json_name = "advertisedGroups"];
 
   // User-specified list of individual IP ranges to advertise in custom mode.
   // This field can only be populated if advertise_mode is CUSTOM and is
   // advertised to all peers of the router. These IP ranges will be advertised
   // in addition to any specified groups. Leave this field blank to advertise no
   // custom IP ranges.
-  repeated RouterAdvertisedIpRange advertised_ip_ranges = 3;
+  repeated RouterAdvertisedIpRange advertised_ip_ranges = 3
+      [json_name = "advertisedIpRanges"];
 
   // Local BGP Autonomous System Number (ASN). Must be an RFC6996 private ASN,
   // either 16-bit or 32-bit. The value will be fixed for this router resource.
   // All VPN tunnels that link to this router will have the same local ASN.
-  optional uint32 asn = 4;
+  optional uint32 asn = 4 [json_name = "asn"];
 
   // The interval in seconds between BGP keepalive messages that are sent to the
   // peer. Hold time is three times the interval at which keepalive messages are
@@ -455,14 +467,14 @@ message RouterBgp {
   // will use the smaller of either the local hold time value or the peer's hold
   // time value as the hold time for the BGP connection between the two peers.
   // If set, this value must be between 20 and 60. The default is 20.
-  optional uint32 keepalive_interval = 5;
+  optional uint32 keepalive_interval = 5 [json_name = "keepaliveInterval"];
 }
 
 message RouterBgpPeer {
   // User-specified flag to indicate which mode to use for advertisement.
   // CUSTOM:
   // DEFAULT:
-  optional string advertise_mode = 1;
+  optional string advertise_mode = 1 [json_name = "advertiseMode"];
 
   // User-specified list of prefix groups to advertise in custom mode, which
   // currently supports the following option: - ALL_SUBNETS: Advertises all of
@@ -471,32 +483,36 @@ message RouterBgpPeer {
   // advertise_mode is CUSTOM and overrides the list defined for the router (in
   // the "bgp" message). These groups are advertised in addition to any
   // specified prefixes. Leave this field blank to advertise no custom groups.
-  repeated string advertised_groups = 2;
+  repeated string advertised_groups = 2 [json_name = "advertisedGroups"];
 
   // User-specified list of individual IP ranges to advertise in custom mode.
   // This field can only be populated if advertise_mode is CUSTOM and overrides
   // the list defined for the router (in the "bgp" message). These IP ranges are
   // advertised in addition to any specified groups. Leave this field blank to
   // advertise no custom IP ranges.
-  repeated RouterAdvertisedIpRange advertised_ip_ranges = 3;
+  repeated RouterAdvertisedIpRange advertised_ip_ranges = 3
+      [json_name = "advertisedIpRanges"];
 
   // The priority of routes advertised to this BGP peer. Where there is more
   // than one matching route of maximum length, the routes with the lowest
   // priority value win.
-  optional uint32 advertised_route_priority = 4;
+  optional uint32 advertised_route_priority = 4
+      [json_name = "advertisedRoutePriority"];
 
   // BFD configuration for the BGP peering.
-  optional RouterBgpPeerBfd bfd = 5;
+  optional RouterBgpPeerBfd bfd = 5 [json_name = "bfd"];
 
   // A list of user-defined custom learned route IP address ranges for a BGP
   // session.
-  repeated RouterBgpPeerCustomLearnedIpRange custom_learned_ip_ranges = 18;
+  repeated RouterBgpPeerCustomLearnedIpRange custom_learned_ip_ranges = 18
+      [json_name = "customLearnedIpRanges"];
 
   // The user-defined custom learned route priority for a BGP session. This
   // value is applied to all custom learned route ranges for the session. You
   // can choose a value from `0` to `65335`. If you don't provide a value,
   // Google Cloud assigns a priority of `100` to the ranges.
-  optional int32 custom_learned_route_priority = 19;
+  optional int32 custom_learned_route_priority = 19
+      [json_name = "customLearnedRoutePriority"];
 
   // The status of the BGP peer connection. If set to FALSE, any active session
   // with the peer is terminated and all associated routing information is
@@ -504,21 +520,21 @@ message RouterBgpPeer {
   // routing information. The default is TRUE.
   // FALSE:
   // TRUE:
-  optional string enable = 6;
+  optional string enable = 6 [json_name = "enable"];
 
   // Enable IPv6 traffic over BGP Peer. If not specified, it is disabled by
   // default.
-  optional bool enable_ipv6 = 7;
+  optional bool enable_ipv6 = 7 [json_name = "enableIpv6"];
 
   // Name of the interface the BGP peer is associated with.
-  optional string interface_name = 8;
+  optional string interface_name = 8 [json_name = "interfaceName"];
 
   // IP address of the interface inside Google Cloud Platform. Only IPv4 is
   // supported.
-  optional string ip_address = 9;
+  optional string ip_address = 9 [json_name = "ipAddress"];
 
   // IPv6 address of the interface inside Google Cloud Platform.
-  optional string ipv6_nexthop_address = 10;
+  optional string ipv6_nexthop_address = 10 [json_name = "ipv6NexthopAddress"];
 
   // [Output Only] The resource that configures and manages this BGP peer. -
   // MANAGED_BY_USER is the default value and can be managed by you or other
@@ -536,12 +552,13 @@ message RouterBgpPeer {
   // ipAddress and peerIpAddress.
   // MANAGED_BY_USER: Default value, the BGP peer is manually created and
   // managed by user.
-  optional string management_type = 11;
+  optional string management_type = 11 [json_name = "managementType"];
 
   // Present if MD5 authentication is enabled for the peering. Must be the name
   // of one of the entries in the Router.md5_authentication_keys. The field must
   // comply with RFC1035.
-  optional string md5_authentication_key_name = 12;
+  optional string md5_authentication_key_name = 12
+      [json_name = "md5AuthenticationKeyName"];
 
   // Name of this BGP peer. The name must be 1-63 characters long, and comply
   // with RFC1035. Specifically, the name must be 1-63 characters long and match
@@ -549,24 +566,26 @@ message RouterBgpPeer {
   // character must be a lowercase letter, and all following characters must be
   // a dash, lowercase letter, or digit, except the last character, which cannot
   // be a dash.
-  optional string name = 13;
+  optional string name = 13 [json_name = "name"];
 
   // Peer BGP Autonomous System Number (ASN). Each BGP interface may use a
   // different value.
-  optional uint32 peer_asn = 14;
+  optional uint32 peer_asn = 14 [json_name = "peerAsn"];
 
   // IP address of the BGP interface outside Google Cloud Platform. Only IPv4 is
   // supported.
-  optional string peer_ip_address = 15;
+  optional string peer_ip_address = 15 [json_name = "peerIpAddress"];
 
   // IPv6 address of the BGP interface outside Google Cloud Platform.
-  optional string peer_ipv6_nexthop_address = 16;
+  optional string peer_ipv6_nexthop_address = 16
+      [json_name = "peerIpv6NexthopAddress"];
 
   // URI of the VM instance that is used as third-party router appliances such
   // as Next Gen Firewalls, Virtual Routers, or Router Appliances. The VM
   // instance must be located in zones contained in the same region as this
   // Cloud Router. The VM instance is the peer side of the BGP session.
-  optional string router_appliance_instance = 17;
+  optional string router_appliance_instance = 17
+      [json_name = "routerApplianceInstance"];
 }
 
 message RouterBgpPeerBfd {
@@ -575,19 +594,19 @@ message RouterBgpPeerBfd {
   // routers and is equal to the greater of this value and the transmit interval
   // of the other router. If set, this value must be between 1000 and 30000. The
   // default is 1000.
-  optional uint32 min_receive_interval = 1;
+  optional uint32 min_receive_interval = 1 [json_name = "minReceiveInterval"];
 
   // The minimum interval, in milliseconds, between BFD control packets
   // transmitted to the peer router. The actual value is negotiated between the
   // two routers and is equal to the greater of this value and the corresponding
   // receive interval of the other router. If set, this value must be between
   // 1000 and 30000. The default is 1000.
-  optional uint32 min_transmit_interval = 2;
+  optional uint32 min_transmit_interval = 2 [json_name = "minTransmitInterval"];
 
   // The number of consecutive BFD packets that must be missed before BFD
   // declares that a peer is unavailable. If set, the value must be a value
   // between 5 and 16. The default is 5.
-  optional uint32 multiplier = 3;
+  optional uint32 multiplier = 3 [json_name = "multiplier"];
 
   // The BFD session initialization mode for this BGP peer. If set to ACTIVE,
   // the Cloud Router will initiate the BFD session for this BGP peer. If set to
@@ -597,7 +616,8 @@ message RouterBgpPeerBfd {
   // ACTIVE:
   // DISABLED:
   // PASSIVE:
-  optional string session_initialization_mode = 4;
+  optional string session_initialization_mode = 4
+      [json_name = "sessionInitializationMode"];
 }
 
 message RouterBgpPeerCustomLearnedIpRange {
@@ -605,7 +625,7 @@ message RouterBgpPeerCustomLearnedIpRange {
   // prefix. If an IP address is provided without a subnet mask, it is
   // interpreted as, for IPv4, a `/32` singular IP address range, and, for IPv6,
   // `/128`.
-  optional string range = 1;
+  optional string range = 1 [json_name = "range"];
 }
 
 message RouterInterface {
@@ -613,17 +633,18 @@ message RouterInterface {
   // link-local IP address space. The value must be a CIDR-formatted string, for
   // example: 169.254.0.1/30. NOTE: Do not truncate the address as it represents
   // the IP address of the interface.
-  optional string ip_range = 1;
+  optional string ip_range = 1 [json_name = "ipRange"];
 
   // URI of the linked Interconnect attachment. It must be in the same region as
   // the router. Each interface can have one linked resource, which can be a VPN
   // tunnel, an Interconnect attachment, or a subnetwork.
-  optional string linked_interconnect_attachment = 2;
+  optional string linked_interconnect_attachment = 2
+      [json_name = "linkedInterconnectAttachment"];
 
   // URI of the linked VPN tunnel, which must be in the same region as the
   // router. Each interface can have one linked resource, which can be a VPN
   // tunnel, an Interconnect attachment, or a subnetwork.
-  optional string linked_vpn_tunnel = 3;
+  optional string linked_vpn_tunnel = 3 [json_name = "linkedVpnTunnel"];
 
   // [Output Only] The resource that configures and manages this interface. -
   // MANAGED_BY_USER is the default value and can be managed directly by users.
@@ -639,7 +660,7 @@ message RouterInterface {
   // managed by user.
   // MANAGED_BY_USER: Default value, the interface is manually created and
   // managed by user.
-  optional string management_type = 4;
+  optional string management_type = 4 [json_name = "managementType"];
 
   // Name of this interface entry. The name must be 1-63 characters long, and
   // comply with RFC1035. Specifically, the name must be 1-63 characters long
@@ -647,12 +668,12 @@ message RouterInterface {
   // the first character must be a lowercase letter, and all following
   // characters must be a dash, lowercase letter, or digit, except the last
   // character, which cannot be a dash.
-  optional string name = 5;
+  optional string name = 5 [json_name = "name"];
 
   // The regional private internal IP address that is used to establish BGP
   // sessions to a VM instance acting as a third-party Router Appliance, such as
   // a Next Gen Firewall, a Virtual Router, or an SD-WAN VM.
-  optional string private_ip_address = 6;
+  optional string private_ip_address = 6 [json_name = "privateIpAddress"];
 
   // Name of the interface that will be redundant with the current interface you
   // are creating. The redundantInterface must belong to the same Cloud Router
@@ -665,35 +686,35 @@ message RouterInterface {
   // first character must be a lowercase letter, and all following characters
   // must be a dash, lowercase letter, or digit, except the last character,
   // which cannot be a dash.
-  optional string redundant_interface = 7;
+  optional string redundant_interface = 7 [json_name = "redundantInterface"];
 
   // The URI of the subnetwork resource that this interface belongs to, which
   // must be in the same region as the Cloud Router. When you establish a BGP
   // session to a VM instance using this interface, the VM instance must belong
   // to the same subnetwork as the subnetwork specified here.
-  optional string subnetwork = 8;
+  optional string subnetwork = 8 [json_name = "subnetwork"];
 }
 
 // Contains a list of Router resources.
 message RouterList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of Router resources.
-  repeated Router items = 2;
+  repeated Router items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#router for routers.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -752,7 +773,7 @@ message RouterList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -762,22 +783,22 @@ message RouterList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 message RouterMd5AuthenticationKey {
@@ -785,11 +806,11 @@ message RouterMd5AuthenticationKey {
   // skipped to copy the value from the previous configuration. This is allowed
   // if the key with the same name existed before the operation. Maximum length
   // is 80 characters. Can only contain printable ASCII characters.
-  optional string key = 1;
+  optional string key = 1 [json_name = "key"];
 
   // Name used to identify the key. Must be unique within a router. Must be
   // referenced by exactly one bgpPeer. Must comply with RFC1035.
-  optional string name = 2;
+  optional string name = 2 [json_name = "name"];
 }
 
 // Represents a Nat resource. It enables the VMs within the specified
@@ -808,12 +829,12 @@ message RouterNat {
   // networking products.
   // STANDARD_OVERRIDES_FIXED_STANDARD: (Output only) Temporary tier for
   // FIXED_STANDARD when fixed standard tier is expired or not configured.
-  optional string auto_network_tier = 19;
+  optional string auto_network_tier = 19 [json_name = "autoNetworkTier"];
 
   // A list of URLs of the IP resources to be drained. These IPs must be valid
   // static external IPs that have been assigned to the NAT. These IPs should be
   // used for updating/patching a NAT only.
-  repeated string drain_nat_ips = 1;
+  repeated string drain_nat_ips = 1 [json_name = "drainNatIps"];
 
   // Enable Dynamic Port Allocation. If not specified, it is disabled by
   // default. If set to true, - Dynamic Port Allocation will be enabled on this
@@ -821,19 +842,21 @@ message RouterNat {
   // minPorts is set, minPortsPerVm must be set to a power of two greater than
   // or equal to 32. If minPortsPerVm is not set, a minimum of 32 ports will be
   // allocated to a VM from this NAT config.
-  optional bool enable_dynamic_port_allocation = 2;
+  optional bool enable_dynamic_port_allocation = 2
+      [json_name = "enableDynamicPortAllocation"];
 
-  optional bool enable_endpoint_independent_mapping = 3;
+  optional bool enable_endpoint_independent_mapping = 3
+      [json_name = "enableEndpointIndependentMapping"];
 
   // List of NAT-ted endpoint types supported by the Nat Gateway. If the list is
   // empty, then it will be equivalent to include ENDPOINT_TYPE_VM
-  repeated string endpoint_types = 4;
+  repeated string endpoint_types = 4 [json_name = "endpointTypes"];
 
   // Timeout (in seconds) for ICMP connections. Defaults to 30s if not set.
-  optional int32 icmp_idle_timeout_sec = 5;
+  optional int32 icmp_idle_timeout_sec = 5 [json_name = "icmpIdleTimeoutSec"];
 
   // Configure logging on this NAT.
-  optional RouterNatLogConfig log_config = 6;
+  optional RouterNatLogConfig log_config = 6 [json_name = "logConfig"];
 
   // Maximum number of ports allocated to a VM from this NAT config when Dynamic
   // Port Allocation is enabled. If Dynamic Port Allocation is not enabled, this
@@ -842,17 +865,17 @@ message RouterNat {
   // if minPortsPerVm is not set. If Dynamic Port Allocation is enabled and this
   // field is not set, a maximum of 65536 ports will be allocated to a VM from
   // this NAT config.
-  optional int32 max_ports_per_vm = 7;
+  optional int32 max_ports_per_vm = 7 [json_name = "maxPortsPerVm"];
 
   // Minimum number of ports allocated to a VM from this NAT config. If not set,
   // a default number of ports is allocated to a VM. This is rounded up to the
   // nearest power of 2. For example, if the value of this field is 50, at least
   // 64 ports are allocated to a VM.
-  optional int32 min_ports_per_vm = 8;
+  optional int32 min_ports_per_vm = 8 [json_name = "minPortsPerVm"];
 
   // Unique name of this Nat service. The name must be 1-63 characters long and
   // comply with RFC1035.
-  optional string name = 9;
+  optional string name = 9 [json_name = "name"];
 
   // Specify the NatIpAllocateOption, which can take one of the following
   // values: - MANUAL_ONLY: Uses only Nat IP addresses provided by customers.
@@ -864,15 +887,16 @@ message RouterNat {
   // IPs.
   // MANUAL_ONLY: Only use Nat IPs provided by customers. When specified Nat IPs
   // are not enough then the Nat service fails for new VMs.
-  optional string nat_ip_allocate_option = 10;
+  optional string nat_ip_allocate_option = 10
+      [json_name = "natIpAllocateOption"];
 
   // A list of URLs of the IP resources used for this Nat service. These IP
   // addresses must be valid static external IP addresses assigned to the
   // project.
-  repeated string nat_ips = 11;
+  repeated string nat_ips = 11 [json_name = "natIps"];
 
   // A list of rules associated with this NAT.
-  repeated RouterNatRule rules = 12;
+  repeated RouterNatRule rules = 12 [json_name = "rules"];
 
   // Specify the Nat option, which can take one of the following values: -
   // ALL_SUBNETWORKS_ALL_IP_RANGES: All of the IP ranges in every Subnetwork are
@@ -889,33 +913,38 @@ message RouterNat {
   // Subnetwork are allowed to Nat.
   // LIST_OF_SUBNETWORKS: A list of Subnetworks are allowed to Nat (specified in
   // the field subnetwork below)
-  optional string source_subnetwork_ip_ranges_to_nat = 13;
+  optional string source_subnetwork_ip_ranges_to_nat = 13
+      [json_name = "sourceSubnetworkIpRangesToNat"];
 
   // A list of Subnetwork resources whose traffic should be translated by NAT
   // Gateway. It is used only when LIST_OF_SUBNETWORKS is selected for the
   // SubnetworkIpRangeToNatOption above.
-  repeated RouterNatSubnetworkToNat subnetworks = 14;
+  repeated RouterNatSubnetworkToNat subnetworks = 14
+      [json_name = "subnetworks"];
 
   // Timeout (in seconds) for TCP established connections. Defaults to 1200s if
   // not set.
-  optional int32 tcp_established_idle_timeout_sec = 15;
+  optional int32 tcp_established_idle_timeout_sec = 15
+      [json_name = "tcpEstablishedIdleTimeoutSec"];
 
   // Timeout (in seconds) for TCP connections that are in TIME_WAIT state.
   // Defaults to 120s if not set.
-  optional int32 tcp_time_wait_timeout_sec = 16;
+  optional int32 tcp_time_wait_timeout_sec = 16
+      [json_name = "tcpTimeWaitTimeoutSec"];
 
   // Timeout (in seconds) for TCP transitory connections. Defaults to 30s if not
   // set.
-  optional int32 tcp_transitory_idle_timeout_sec = 17;
+  optional int32 tcp_transitory_idle_timeout_sec = 17
+      [json_name = "tcpTransitoryIdleTimeoutSec"];
 
   // Timeout (in seconds) for UDP connections. Defaults to 30s if not set.
-  optional int32 udp_idle_timeout_sec = 18;
+  optional int32 udp_idle_timeout_sec = 18 [json_name = "udpIdleTimeoutSec"];
 }
 
 // Configuration of logging on a NAT.
 message RouterNatLogConfig {
   // Indicates whether or not to export logs. This is false by default.
-  optional bool enable = 1;
+  optional bool enable = 1 [json_name = "enable"];
 
   // Specify the desired filtering of logs on this NAT. If unspecified, logs are
   // exported for all connections handled by this NAT. This option can take one
@@ -925,15 +954,15 @@ message RouterNatLogConfig {
   // ALL: Export logs for all (successful and unsuccessful) connections.
   // ERRORS_ONLY: Export logs for connection failures only.
   // TRANSLATIONS_ONLY: Export logs for successful connections only.
-  optional string filter = 2;
+  optional string filter = 2 [json_name = "filter"];
 }
 
 message RouterNatRule {
   // The action to be enforced for traffic that matches this rule.
-  optional RouterNatRuleAction action = 1;
+  optional RouterNatRuleAction action = 1 [json_name = "action"];
 
   // An optional description of this rule.
-  optional string description = 2;
+  optional string description = 2 [json_name = "description"];
 
   // CEL expression that specifies the match condition that egress traffic from
   // a VM is evaluated against. If it evaluates to true, the corresponding
@@ -943,196 +972,210 @@ message RouterNatRule {
   // destination.ip == '8.8.8.8'" The following example is a valid match
   // expression for private NAT: "nexthop.hub ==
   // '//networkconnectivity.googleapis.com/projects/my-project/locations/global/hubs/hub-1'"
-  optional string match = 3;
+  optional string match = 3 [json_name = "match"];
 
   // An integer uniquely identifying a rule in the list. The rule number must be
   // a positive value between 0 and 65000, and must be unique among rules within
   // a NAT.
-  optional uint32 rule_number = 4;
+  optional uint32 rule_number = 4 [json_name = "ruleNumber"];
 }
 
 message RouterNatRuleAction {
   // A list of URLs of the IP resources used for this NAT rule. These IP
   // addresses must be valid static external IP addresses assigned to the
   // project. This field is used for public NAT.
-  repeated string source_nat_active_ips = 1;
+  repeated string source_nat_active_ips = 1 [json_name = "sourceNatActiveIps"];
 
   // A list of URLs of the IP resources to be drained. These IPs must be valid
   // static external IPs that have been assigned to the NAT. These IPs should be
   // used for updating/patching a NAT rule only. This field is used for public
   // NAT.
-  repeated string source_nat_drain_ips = 2;
+  repeated string source_nat_drain_ips = 2 [json_name = "sourceNatDrainIps"];
 }
 
 // Defines the IP ranges that want to use NAT for a subnetwork.
 message RouterNatSubnetworkToNat {
   // URL for the subnetwork resource that will use NAT.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 
   // A list of the secondary ranges of the Subnetwork that are allowed to use
   // NAT. This can be populated only if "LIST_OF_SECONDARY_IP_RANGES" is one of
   // the values in source_ip_ranges_to_nat.
-  repeated string secondary_ip_range_names = 2;
+  repeated string secondary_ip_range_names = 2
+      [json_name = "secondaryIpRangeNames"];
 
   // Specify the options for NAT ranges in the Subnetwork. All options of a
   // single value are valid except NAT_IP_RANGE_OPTION_UNSPECIFIED. The only
   // valid option with multiple values is: ["PRIMARY_IP_RANGE",
   // "LIST_OF_SECONDARY_IP_RANGES"] Default: [ALL_IP_RANGES]
-  repeated string source_ip_ranges_to_nat = 3;
+  repeated string source_ip_ranges_to_nat = 3
+      [json_name = "sourceIpRangesToNat"];
 }
 
 message RouterStatus {
   // Best routes for this router's network.
-  repeated Route best_routes = 1;
+  repeated Route best_routes = 1 [json_name = "bestRoutes"];
 
   // Best routes learned by this router.
-  repeated Route best_routes_for_router = 2;
+  repeated Route best_routes_for_router = 2 [json_name = "bestRoutesForRouter"];
 
-  repeated RouterStatusBgpPeerStatus bgp_peer_status = 3;
+  repeated RouterStatusBgpPeerStatus bgp_peer_status = 3
+      [json_name = "bgpPeerStatus"];
 
-  repeated RouterStatusNatStatus nat_status = 4;
+  repeated RouterStatusNatStatus nat_status = 4 [json_name = "natStatus"];
 
   // URI of the network to which this router belongs.
-  optional string network = 5;
+  optional string network = 5 [json_name = "network"];
 }
 
 message RouterStatusBgpPeerStatus {
   // Routes that were advertised to the remote BGP peer
-  repeated Route advertised_routes = 1;
+  repeated Route advertised_routes = 1 [json_name = "advertisedRoutes"];
 
-  optional BfdStatus bfd_status = 2;
+  optional BfdStatus bfd_status = 2 [json_name = "bfdStatus"];
 
   // Enable IPv6 traffic over BGP Peer. If not specified, it is disabled by
   // default.
-  optional bool enable_ipv6 = 3;
+  optional bool enable_ipv6 = 3 [json_name = "enableIpv6"];
 
   // IP address of the local BGP interface.
-  optional string ip_address = 4;
+  optional string ip_address = 4 [json_name = "ipAddress"];
 
   // IPv6 address of the local BGP interface.
-  optional string ipv6_nexthop_address = 5;
+  optional string ipv6_nexthop_address = 5 [json_name = "ipv6NexthopAddress"];
 
   // URL of the VPN tunnel that this BGP peer controls.
-  optional string linked_vpn_tunnel = 6;
+  optional string linked_vpn_tunnel = 6 [json_name = "linkedVpnTunnel"];
 
   // Informs whether MD5 authentication is enabled on this BGP peer.
-  optional bool md5_auth_enabled = 7;
+  optional bool md5_auth_enabled = 7 [json_name = "md5AuthEnabled"];
 
   // Name of this BGP peer. Unique within the Routers resource.
-  optional string name = 8;
+  optional string name = 8 [json_name = "name"];
 
   // Number of routes learned from the remote BGP Peer.
-  optional uint32 num_learned_routes = 9;
+  optional uint32 num_learned_routes = 9 [json_name = "numLearnedRoutes"];
 
   // IP address of the remote BGP interface.
-  optional string peer_ip_address = 10;
+  optional string peer_ip_address = 10 [json_name = "peerIpAddress"];
 
   // IPv6 address of the remote BGP interface.
-  optional string peer_ipv6_nexthop_address = 11;
+  optional string peer_ipv6_nexthop_address = 11
+      [json_name = "peerIpv6NexthopAddress"];
 
   // [Output only] URI of the VM instance that is used as third-party router
   // appliances such as Next Gen Firewalls, Virtual Routers, or Router
   // Appliances. The VM instance is the peer side of the BGP session.
-  optional string router_appliance_instance = 12;
+  optional string router_appliance_instance = 12
+      [json_name = "routerApplianceInstance"];
 
   // The state of the BGP session. For a list of possible values for this field,
   // see BGP session states.
-  optional string state = 13;
+  optional string state = 13 [json_name = "state"];
 
   // Status of the BGP peer: {UP, DOWN}
   // DOWN:
   // UNKNOWN:
   // UP:
-  optional string status = 14;
+  optional string status = 14 [json_name = "status"];
 
   // Indicates why particular status was returned.
   // MD5_AUTH_INTERNAL_PROBLEM: Indicates internal problems with configuration
   // of MD5 authentication. This particular reason can only be returned when
   // md5AuthEnabled is true and status is DOWN.
   // STATUS_REASON_UNSPECIFIED:
-  optional string status_reason = 15;
+  optional string status_reason = 15 [json_name = "statusReason"];
 
   // Time this session has been up. Format: 14 years, 51 weeks, 6 days, 23
   // hours, 59 minutes, 59 seconds
-  optional string uptime = 16;
+  optional string uptime = 16 [json_name = "uptime"];
 
   // Time this session has been up, in seconds. Format: 145
-  optional string uptime_seconds = 17;
+  optional string uptime_seconds = 17 [json_name = "uptimeSeconds"];
 }
 
 // Status of a NAT contained in this router.
 message RouterStatusNatStatus {
   // A list of IPs auto-allocated for NAT. Example: ["1.1.1.1", "129.2.16.89"]
-  repeated string auto_allocated_nat_ips = 1;
+  repeated string auto_allocated_nat_ips = 1
+      [json_name = "autoAllocatedNatIps"];
 
   // A list of IPs auto-allocated for NAT that are in drain mode. Example:
   // ["1.1.1.1", "179.12.26.133"].
-  repeated string drain_auto_allocated_nat_ips = 2;
+  repeated string drain_auto_allocated_nat_ips = 2
+      [json_name = "drainAutoAllocatedNatIps"];
 
   // A list of IPs user-allocated for NAT that are in drain mode. Example:
   // ["1.1.1.1", "179.12.26.133"].
-  repeated string drain_user_allocated_nat_ips = 3;
+  repeated string drain_user_allocated_nat_ips = 3
+      [json_name = "drainUserAllocatedNatIps"];
 
   // The number of extra IPs to allocate. This will be greater than 0 only if
   // user-specified IPs are NOT enough to allow all configured VMs to use NAT.
   // This value is meaningful only when auto-allocation of NAT IPs is *not*
   // used.
-  optional int32 min_extra_nat_ips_needed = 4;
+  optional int32 min_extra_nat_ips_needed = 4
+      [json_name = "minExtraNatIpsNeeded"];
 
   // Unique name of this NAT.
-  optional string name = 5;
+  optional string name = 5 [json_name = "name"];
 
   // Number of VM endpoints (i.e., Nics) that can use NAT.
-  optional int32 num_vm_endpoints_with_nat_mappings = 6;
+  optional int32 num_vm_endpoints_with_nat_mappings = 6
+      [json_name = "numVmEndpointsWithNatMappings"];
 
   // Status of rules in this NAT.
-  repeated RouterStatusNatStatusNatRuleStatus rule_status = 7;
+  repeated RouterStatusNatStatusNatRuleStatus rule_status = 7
+      [json_name = "ruleStatus"];
 
   // A list of fully qualified URLs of reserved IP address resources.
-  repeated string user_allocated_nat_ip_resources = 8;
+  repeated string user_allocated_nat_ip_resources = 8
+      [json_name = "userAllocatedNatIpResources"];
 
   // A list of IPs user-allocated for NAT. They will be raw IP strings like
   // "179.12.26.133".
-  repeated string user_allocated_nat_ips = 9;
+  repeated string user_allocated_nat_ips = 9
+      [json_name = "userAllocatedNatIps"];
 }
 
 // Status of a NAT Rule contained in this NAT.
 message RouterStatusNatStatusNatRuleStatus {
   // A list of active IPs for NAT. Example: ["1.1.1.1", "179.12.26.133"].
-  repeated string active_nat_ips = 1;
+  repeated string active_nat_ips = 1 [json_name = "activeNatIps"];
 
   // A list of IPs for NAT that are in drain mode. Example: ["1.1.1.1",
   // "179.12.26.133"].
-  repeated string drain_nat_ips = 2;
+  repeated string drain_nat_ips = 2 [json_name = "drainNatIps"];
 
   // The number of extra IPs to allocate. This will be greater than 0 only if
   // the existing IPs in this NAT Rule are NOT enough to allow all configured
   // VMs to use NAT.
-  optional int32 min_extra_ips_needed = 3;
+  optional int32 min_extra_ips_needed = 3 [json_name = "minExtraIpsNeeded"];
 
   // Number of VM endpoints (i.e., NICs) that have NAT Mappings from this NAT
   // Rule.
-  optional int32 num_vm_endpoints_with_nat_mappings = 4;
+  optional int32 num_vm_endpoints_with_nat_mappings = 4
+      [json_name = "numVmEndpointsWithNatMappings"];
 
   // Rule number of the rule.
-  optional int32 rule_number = 5;
+  optional int32 rule_number = 5 [json_name = "ruleNumber"];
 }
 
 message RouterStatusResponse {
   // Type of resource.
-  optional string kind = 1;
+  optional string kind = 1 [json_name = "kind"];
 
-  optional RouterStatus result = 2;
+  optional RouterStatus result = 2 [json_name = "result"];
 }
 
 message RoutersPreviewResponse {
   // Preview of given router.
-  optional Router resource = 1;
+  optional Router resource = 1 [json_name = "resource"];
 }
 
 message RoutersScopedList {
   // A list of routers contained in this scope.
-  repeated Router routers = 1;
+  repeated Router routers = 1 [json_name = "routers"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -1191,7 +1234,7 @@ message RoutersScopedList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -1201,31 +1244,32 @@ message RoutersScopedList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // Informational warning which replaces the list of routers when the list is
   // empty.
-  optional Warning warning = 2;
+  optional Warning warning = 2 [json_name = "warning"];
 }
 
 // Contain information of Nat mapping for a VM endpoint (i.e., NIC).
 message VmEndpointNatMappings {
   // Name of the VM instance which the endpoint belongs to
-  optional string instance_name = 1;
+  optional string instance_name = 1 [json_name = "instanceName"];
 
-  repeated VmEndpointNatMappingsInterfaceNatMappings interface_nat_mappings = 2;
+  repeated VmEndpointNatMappingsInterfaceNatMappings interface_nat_mappings = 2
+      [json_name = "interfaceNatMappings"];
 }
 
 // Contain information of Nat mapping for an interface of this endpoint.
@@ -1233,32 +1277,34 @@ message VmEndpointNatMappingsInterfaceNatMappings {
   // List of all drain IP:port-range mappings assigned to this interface. These
   // ranges are inclusive, that is, both the first and the last ports can be
   // used for NAT. Example: ["2.2.2.2:12345-12355", "1.1.1.1:2234-2234"].
-  repeated string drain_nat_ip_port_ranges = 1;
+  repeated string drain_nat_ip_port_ranges = 1
+      [json_name = "drainNatIpPortRanges"];
 
   // A list of all IP:port-range mappings assigned to this interface. These
   // ranges are inclusive, that is, both the first and the last ports can be
   // used for NAT. Example: ["2.2.2.2:12345-12355", "1.1.1.1:2234-2234"].
-  repeated string nat_ip_port_ranges = 2;
+  repeated string nat_ip_port_ranges = 2 [json_name = "natIpPortRanges"];
 
   // Total number of drain ports across all NAT IPs allocated to this interface.
   // It equals to the aggregated port number in the field
   // drain_nat_ip_port_ranges.
-  optional int32 num_total_drain_nat_ports = 3;
+  optional int32 num_total_drain_nat_ports = 3
+      [json_name = "numTotalDrainNatPorts"];
 
   // Total number of ports across all NAT IPs allocated to this interface. It
   // equals to the aggregated port number in the field nat_ip_port_ranges.
-  optional int32 num_total_nat_ports = 4;
+  optional int32 num_total_nat_ports = 4 [json_name = "numTotalNatPorts"];
 
   // Information about mappings provided by rules in this NAT.
   repeated VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings
-      rule_mappings = 5;
+      rule_mappings = 5 [json_name = "ruleMappings"];
 
   // Alias IP range for this interface endpoint. It will be a private (RFC 1918)
   // IP range. Examples: "10.33.4.55/32", or "192.168.5.0/24".
-  optional string source_alias_ip_range = 6;
+  optional string source_alias_ip_range = 6 [json_name = "sourceAliasIpRange"];
 
   // Primary IP of the VM for this NIC.
-  optional string source_virtual_ip = 7;
+  optional string source_virtual_ip = 7 [json_name = "sourceVirtualIp"];
 }
 
 // Contains information of NAT Mappings provided by a NAT Rule.
@@ -1267,50 +1313,52 @@ message VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings {
   // rule. These ranges are inclusive, that is, both the first and the last
   // ports can be used for NAT. Example: ["2.2.2.2:12345-12355",
   // "1.1.1.1:2234-2234"].
-  repeated string drain_nat_ip_port_ranges = 1;
+  repeated string drain_nat_ip_port_ranges = 1
+      [json_name = "drainNatIpPortRanges"];
 
   // A list of all IP:port-range mappings assigned to this interface by this
   // rule. These ranges are inclusive, that is, both the first and the last
   // ports can be used for NAT. Example: ["2.2.2.2:12345-12355",
   // "1.1.1.1:2234-2234"].
-  repeated string nat_ip_port_ranges = 2;
+  repeated string nat_ip_port_ranges = 2 [json_name = "natIpPortRanges"];
 
   // Total number of drain ports across all NAT IPs allocated to this interface
   // by this rule. It equals the aggregated port number in the field
   // drain_nat_ip_port_ranges.
-  optional int32 num_total_drain_nat_ports = 3;
+  optional int32 num_total_drain_nat_ports = 3
+      [json_name = "numTotalDrainNatPorts"];
 
   // Total number of ports across all NAT IPs allocated to this interface by
   // this rule. It equals the aggregated port number in the field
   // nat_ip_port_ranges.
-  optional int32 num_total_nat_ports = 4;
+  optional int32 num_total_nat_ports = 4 [json_name = "numTotalNatPorts"];
 
   // Rule number of the NAT Rule.
-  optional int32 rule_number = 5;
+  optional int32 rule_number = 5 [json_name = "ruleNumber"];
 }
 
 // Contains a list of VmEndpointNatMappings.
 message VmEndpointNatMappingsList {
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // [Output Only] Type of resource. Always compute#vmEndpointNatMappingsList
   // for lists of Nat mappings of VM endpoints.
-  optional string kind = 2;
+  optional string kind = 2 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 3;
+  optional string next_page_token = 3 [json_name = "nextPageToken"];
 
   // [Output Only] A list of Nat mapping information of VM endpoints.
-  repeated VmEndpointNatMappings result = 4;
+  repeated VmEndpointNatMappings result = 4 [json_name = "result"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -1369,7 +1417,7 @@ message VmEndpointNatMappingsList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -1379,20 +1427,20 @@ message VmEndpointNatMappingsList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }

@@ -26,22 +26,22 @@ message DeprecationStatus {
   // An optional RFC3339 timestamp on or after which the state of this resource
   // is intended to change to DELETED. This is only informational and the status
   // will not change unless the client explicitly changes it.
-  optional string deleted = 1;
+  optional string deleted = 1 [json_name = "deleted"];
 
   // An optional RFC3339 timestamp on or after which the state of this resource
   // is intended to change to DEPRECATED. This is only informational and the
   // status will not change unless the client explicitly changes it.
-  optional string deprecated = 2;
+  optional string deprecated = 2 [json_name = "deprecated"];
 
   // An optional RFC3339 timestamp on or after which the state of this resource
   // is intended to change to OBSOLETE. This is only informational and the
   // status will not change unless the client explicitly changes it.
-  optional string obsolete = 3;
+  optional string obsolete = 3 [json_name = "obsolete"];
 
   // The URL of the suggested replacement for a deprecated resource. The
   // suggested replacement resource must be the same kind of resource as the
   // deprecated resource.
-  optional string replacement = 4;
+  optional string replacement = 4 [json_name = "replacement"];
 
   // The deprecation state of this resource. This can be ACTIVE, DEPRECATED,
   // OBSOLETE, or DELETED. Operations which communicate the end of life date for
@@ -53,5 +53,5 @@ message DeprecationStatus {
   // DELETED:
   // DEPRECATED:
   // OBSOLETE:
-  optional string state = 5;
+  optional string state = 5 [json_name = "state"];
 }

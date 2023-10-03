@@ -28,66 +28,68 @@ import "google/cloud/compute/v1/internal/common_109.proto";
 message AllocationResourceStatus {
   // Allocation Properties of this reservation.
   optional AllocationResourceStatusSpecificSKUAllocation
-      specific_sku_allocation = 1;
+      specific_sku_allocation = 1 [json_name = "specificSkuAllocation"];
 }
 
 // Contains Properties set for the reservation.
 message AllocationResourceStatusSpecificSKUAllocation {
   // ID of the instance template used to populate reservation properties.
-  optional string source_instance_template_id = 1;
+  optional string source_instance_template_id = 1
+      [json_name = "sourceInstanceTemplateId"];
 }
 
 message AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk {
   // Specifies the size of the disk in base-2 GB.
-  optional string disk_size_gb = 1;
+  optional string disk_size_gb = 1 [json_name = "diskSizeGb"];
 
   // Specifies the disk interface to use for attaching this disk, which is
   // either SCSI or NVME. The default is SCSI. For performance characteristics
   // of SCSI over NVMe, see Local SSD performance.
   // NVME:
   // SCSI:
-  optional string interface = 2;
+  optional string interface = 2 [json_name = "interface"];
 }
 
 // Properties of the SKU instances being reserved. Next ID: 9
 message AllocationSpecificSKUAllocationReservedInstanceProperties {
   // Specifies accelerator type and count.
-  repeated AcceleratorConfig guest_accelerators = 1;
+  repeated AcceleratorConfig guest_accelerators = 1
+      [json_name = "guestAccelerators"];
 
   // Specifies amount of local ssd to reserve with each instance. The type of
   // disk is local-ssd.
   repeated
       AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk
-          local_ssds = 2;
+          local_ssds = 2 [json_name = "localSsds"];
 
   // An opaque location hint used to place the allocation close to other
   // resources. This field is for use by internal tools that use the public API.
-  optional string location_hint = 3;
+  optional string location_hint = 3 [json_name = "locationHint"];
 
   // Specifies type of machine (name only) which has fixed number of vCPUs and
   // fixed amount of memory. This also includes specifying custom machine type
   // following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
-  optional string machine_type = 4;
+  optional string machine_type = 4 [json_name = "machineType"];
 
   // Minimum cpu platform the reservation.
-  optional string min_cpu_platform = 5;
+  optional string min_cpu_platform = 5 [json_name = "minCpuPlatform"];
 }
 
 // This reservation type allows to pre allocate specific instance configuration.
 // Next ID: 6
 message AllocationSpecificSKUReservation {
   // [Output Only] Indicates how many instances are actually usable currently.
-  optional string assured_count = 1;
+  optional string assured_count = 1 [json_name = "assuredCount"];
 
   // Specifies the number of resources that are allocated.
-  optional string count = 2;
+  optional string count = 2 [json_name = "count"];
 
   // [Output Only] Indicates how many instances are in use.
-  optional string in_use_count = 3;
+  optional string in_use_count = 3 [json_name = "inUseCount"];
 
   // The instance properties for the reservation.
   optional AllocationSpecificSKUAllocationReservedInstanceProperties
-      instance_properties = 4;
+      instance_properties = 4 [json_name = "instanceProperties"];
 
   // Specifies the instance template to create the reservation. If you use this
   // field, you must exclude the instanceProperties field. This field is
@@ -97,7 +99,8 @@ message AllocationSpecificSKUReservation {
   // /global/instanceTemplates/instanceTemplate -
   // projects/project/global/instanceTemplates/instanceTemplate -
   // global/instanceTemplates/instanceTemplate
-  optional string source_instance_template = 5;
+  optional string source_instance_template = 5
+      [json_name = "sourceInstanceTemplate"];
 }
 
 // Represents a reservation resource. A reservation ensures that capacity is
@@ -106,22 +109,22 @@ message AllocationSpecificSKUReservation {
 message Reservation {
   // [Output Only] Full or partial URL to a parent commitment. This field
   // displays for reservations that are tied to a commitment.
-  optional string commitment = 1;
+  optional string commitment = 1 [json_name = "commitment"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2;
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 4;
+  optional string id = 4 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#reservations for
   // reservations.
-  optional string kind = 5;
+  optional string kind = 5 [json_name = "kind"];
 
   // The name of the resource, provided by the client when initially creating
   // the resource. The resource name must be 1-63 characters long, and comply
@@ -130,34 +133,37 @@ message Reservation {
   // character must be a lowercase letter, and all following characters must be
   // a dash, lowercase letter, or digit, except the last character, which cannot
   // be a dash.
-  optional string name = 6;
+  optional string name = 6 [json_name = "name"];
 
   // Resource policies to be added to this reservation. The key is defined by
   // user, and the value is resource policy url. This is to define placement
   // policy with reservation.
-  map<string, string> resource_policies = 7;
+  map<string, string> resource_policies = 7 [json_name = "resourcePolicies"];
 
   // [Output Only] Status information for Reservation resource.
-  optional AllocationResourceStatus resource_status = 8;
+  optional AllocationResourceStatus resource_status = 8
+      [json_name = "resourceStatus"];
 
   // [Output Only] Reserved for future use.
-  optional bool satisfies_pzs = 9;
+  optional bool satisfies_pzs = 9 [json_name = "satisfiesPzs"];
 
   // [Output Only] Server-defined fully-qualified URL for this resource.
-  optional string self_link = 10;
+  optional string self_link = 10 [json_name = "selfLink"];
 
   // Specify share-settings to create a shared reservation. This property is
   // optional. For more information about the syntax and options for this field
   // and its subfields, see the guide for creating a shared reservation.
-  optional ShareSettings share_settings = 11;
+  optional ShareSettings share_settings = 11 [json_name = "shareSettings"];
 
   // Reservation for instances with specific machine shapes.
-  optional AllocationSpecificSKUReservation specific_reservation = 12;
+  optional AllocationSpecificSKUReservation specific_reservation = 12
+      [json_name = "specificReservation"];
 
   // Indicates whether the reservation can be consumed by VMs with affinity for
   // "any" reservation. If the field is set, then only VMs that target the
   // reservation by name can consume from this reservation.
-  optional bool specific_reservation_required = 13;
+  optional bool specific_reservation_required = 13
+      [json_name = "specificReservationRequired"];
 
   // [Output Only] The status of the reservation.
   // CREATING: Resources are being allocated for the reservation.
@@ -165,9 +171,9 @@ message Reservation {
   // INVALID:
   // READY: Reservation has allocated all its resources.
   // UPDATING: Reservation is currently being resized.
-  optional string status = 14;
+  optional string status = 14 [json_name = "status"];
 
   // Zone in which the reservation resides. A zone must be provided if the
   // reservation is created within a commitment.
-  optional string zone = 15;
+  optional string zone = 15 [json_name = "zone"];
 }

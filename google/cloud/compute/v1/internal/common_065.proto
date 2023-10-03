@@ -35,7 +35,7 @@ message InterconnectAttachmentConfigurationConstraints {
   // MD5_REQUIRED: MD5_REQUIRED: BGP MD5 authentication must be configured.
   // MD5_UNSUPPORTED: MD5_UNSUPPORTED: BGP MD5 authentication must not be
   // configured
-  optional string bgp_md5 = 1;
+  optional string bgp_md5 = 1 [json_name = "bgpMd5"];
 
   // [Output Only] List of ASN ranges that the remote location is known to
   // support. Formatted as an array of inclusive ranges {min: min-value, max:
@@ -44,11 +44,11 @@ message InterconnectAttachmentConfigurationConstraints {
   // field is only advisory. Although the API accepts other ranges, these are
   // the ranges that we recommend.
   repeated InterconnectAttachmentConfigurationConstraintsBgpPeerASNRange
-      bgp_peer_asn_ranges = 2;
+      bgp_peer_asn_ranges = 2 [json_name = "bgpPeerAsnRanges"];
 }
 
 message InterconnectAttachmentConfigurationConstraintsBgpPeerASNRange {
-  optional uint32 max = 1;
+  optional uint32 max = 1 [json_name = "max"];
 
-  optional uint32 min = 2;
+  optional uint32 min = 2 [json_name = "min"];
 }

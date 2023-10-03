@@ -30,7 +30,7 @@ message Metadata {
   // fingerprint hash in order to update or change metadata, otherwise the
   // request will fail with error 412 conditionNotMet. To see the latest
   // fingerprint, make a get() request to retrieve the resource.
-  optional string fingerprint = 1;
+  optional string fingerprint = 1 [json_name = "fingerprint"];
 
   message ItemsItem {
     // Key for the metadata entry. Keys must conform to the following regexp:
@@ -38,19 +38,19 @@ message Metadata {
     // as part of a URL in the metadata server. Additionally, to avoid
     // ambiguity, keys must not conflict with any other metadata keys for the
     // project.
-    optional string key = 1;
+    optional string key = 1 [json_name = "key"];
 
     // Value for the metadata entry. These are free-form strings, and only have
     // meaning as interpreted by the image running in the instance. The only
     // restriction placed on values is that their size must be less than or
     // equal to 262144 bytes (256 KiB).
-    optional string value = 2;
+    optional string value = 2 [json_name = "value"];
   }
 
   // Array of key/value pairs. The total size of all keys and values must be
   // less than 512 KB.
-  repeated ItemsItem items = 2;
+  repeated ItemsItem items = 2 [json_name = "items"];
 
   // [Output Only] Type of the resource. Always compute#metadata for metadata.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 }

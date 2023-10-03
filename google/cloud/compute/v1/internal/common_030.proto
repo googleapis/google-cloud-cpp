@@ -26,47 +26,47 @@ import "google/cloud/compute/v1/internal/common_038.proto";
 
 message ExchangedPeeringRoute {
   // The destination range of the route.
-  optional string dest_range = 1;
+  optional string dest_range = 1 [json_name = "destRange"];
 
   // True if the peering route has been imported from a peer. The actual import
   // happens if the field networkPeering.importCustomRoutes is true for this
   // network, and networkPeering.exportCustomRoutes is true for the peer
   // network, and the import does not result in a route conflict.
-  optional bool imported = 2;
+  optional bool imported = 2 [json_name = "imported"];
 
   // The region of peering route next hop, only applies to dynamic routes.
-  optional string next_hop_region = 3;
+  optional string next_hop_region = 3 [json_name = "nextHopRegion"];
 
   // The priority of the peering route.
-  optional uint32 priority = 4;
+  optional uint32 priority = 4 [json_name = "priority"];
 
   // The type of the peering route.
   // DYNAMIC_PEERING_ROUTE: For routes exported from local network.
   // STATIC_PEERING_ROUTE: The peering route.
   // SUBNET_PEERING_ROUTE: The peering route corresponding to subnetwork range.
-  optional string type = 5;
+  optional string type = 5 [json_name = "type"];
 }
 
 message ExchangedPeeringRoutesList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of ExchangedPeeringRoute resources.
-  repeated ExchangedPeeringRoute items = 2;
+  repeated ExchangedPeeringRoute items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#exchangedPeeringRoutesList
   // for exchanged peering routes lists.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -125,7 +125,7 @@ message ExchangedPeeringRoutesList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -135,22 +135,22 @@ message ExchangedPeeringRoutesList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // Represents a VPC Network resource. Networks connect resources to each other
@@ -161,7 +161,7 @@ message Network {
   // addresses that are legal on this network. This range is a CIDR
   // specification, for example: 192.168.0.0/16. Provided by the client when the
   // network is created.
-  optional string i_pv4_range = 1;
+  optional string i_pv4_range = 1 [json_name = "IPv4Range"];
 
   // Must be set to create a VPC network. If not set, a legacy network is
   // created. When set to true, the VPC network is created in auto mode. When
@@ -169,29 +169,31 @@ message Network {
   // network starts with one subnet per region. Each subnet has a predetermined
   // range as described in Auto mode VPC network IP ranges. For custom mode VPC
   // networks, you can add subnets using the subnetworks insert method.
-  optional bool auto_create_subnetworks = 2;
+  optional bool auto_create_subnetworks = 2
+      [json_name = "autoCreateSubnetworks"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3;
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this field when you
   // create the resource.
-  optional string description = 4;
+  optional string description = 4 [json_name = "description"];
 
   // Enable ULA internal ipv6 on this network. Enabling this feature will assign
   // a /48 from google defined ULA prefix fd20::/20. .
-  optional bool enable_ula_internal_ipv6 = 5;
+  optional bool enable_ula_internal_ipv6 = 5
+      [json_name = "enableUlaInternalIpv6"];
 
   // [Output Only] URL of the firewall policy the network is associated with.
-  optional string firewall_policy = 6;
+  optional string firewall_policy = 6 [json_name = "firewallPolicy"];
 
   // [Output Only] The gateway address for default routing out of the network,
   // selected by Google Cloud.
-  optional string gateway_i_pv4 = 7;
+  optional string gateway_i_pv4 = 7 [json_name = "gatewayIPv4"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 8;
+  optional string id = 8 [json_name = "id"];
 
   // When enabling ula internal ipv6, caller optionally can specify the /48
   // range they want from the google defined ULA prefix fd20::/20. The input
@@ -199,16 +201,16 @@ message Network {
   // Operation will fail if the speficied /48 is already in used by another
   // resource. If the field is not speficied, then a /48 range will be randomly
   // allocated from fd20::/20 and returned via this field. .
-  optional string internal_ipv6_range = 9;
+  optional string internal_ipv6_range = 9 [json_name = "internalIpv6Range"];
 
   // [Output Only] Type of the resource. Always compute#network for networks.
-  optional string kind = 10;
+  optional string kind = 10 [json_name = "kind"];
 
   // Maximum Transmission Unit in bytes. The minimum value for this field is
   // 1300 and the maximum value is 8896. The suggested value is 1500, which is
   // the default MTU used on the Internet, or 8896 if you want to use Jumbo
   // frames. If unspecified, the value defaults to 1460.
-  optional int32 mtu = 11;
+  optional int32 mtu = 11 [json_name = "mtu"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -217,54 +219,56 @@ message Network {
   // lowercase letter, and all following characters (except for the last
   // character) must be a dash, lowercase letter, or digit. The last character
   // must be a lowercase letter or digit.
-  optional string name = 12;
+  optional string name = 12 [json_name = "name"];
 
   // The network firewall policy enforcement order. Can be either
   // AFTER_CLASSIC_FIREWALL or BEFORE_CLASSIC_FIREWALL. Defaults to
   // AFTER_CLASSIC_FIREWALL if the field is not specified.
   // AFTER_CLASSIC_FIREWALL:
   // BEFORE_CLASSIC_FIREWALL:
-  optional string network_firewall_policy_enforcement_order = 13;
+  optional string network_firewall_policy_enforcement_order = 13
+      [json_name = "networkFirewallPolicyEnforcementOrder"];
 
   // [Output Only] A list of network peerings for the resource.
-  repeated NetworkPeering peerings = 14;
+  repeated NetworkPeering peerings = 14 [json_name = "peerings"];
 
   // The network-level routing configuration for this network. Used by Cloud
   // Router to determine what type of network-wide routing behavior to enforce.
-  optional NetworkRoutingConfig routing_config = 15;
+  optional NetworkRoutingConfig routing_config = 15
+      [json_name = "routingConfig"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 16;
+  optional string self_link = 16 [json_name = "selfLink"];
 
   // [Output Only] Server-defined URL for this resource with the resource id.
-  optional string self_link_with_id = 17;
+  optional string self_link_with_id = 17 [json_name = "selfLinkWithId"];
 
   // [Output Only] Server-defined fully-qualified URLs for all subnetworks in
   // this VPC network.
-  repeated string subnetworks = 18;
+  repeated string subnetworks = 18 [json_name = "subnetworks"];
 }
 
 // Contains a list of networks.
 message NetworkList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of Network resources.
-  repeated Network items = 2;
+  repeated Network items = 2 [json_name = "items"];
 
   // [Output Only] Type of resource. Always compute#networkList for lists of
   // networks.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -323,7 +327,7 @@ message NetworkList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -333,22 +337,22 @@ message NetworkList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // A network peering attached to a network resource. The message includes the
@@ -360,31 +364,33 @@ message NetworkPeering {
   // automatically between peered networks. Currently this field should always
   // be true since Google Compute Engine will automatically create and manage
   // subnetwork routes between two networks when peering state is ACTIVE.
-  optional bool auto_create_routes = 1;
+  optional bool auto_create_routes = 1 [json_name = "autoCreateRoutes"];
 
   // Indicates whether full mesh connectivity is created and managed
   // automatically between peered networks. Currently this field should always
   // be true since Google Compute Engine will automatically create and manage
   // subnetwork routes between two networks when peering state is ACTIVE.
-  optional bool exchange_subnet_routes = 2;
+  optional bool exchange_subnet_routes = 2 [json_name = "exchangeSubnetRoutes"];
 
   // Whether to export the custom routes to peer network. The default value is
   // false.
-  optional bool export_custom_routes = 3;
+  optional bool export_custom_routes = 3 [json_name = "exportCustomRoutes"];
 
   // Whether subnet routes with public IP range are exported. The default value
   // is true, all subnet routes are exported. IPv4 special-use ranges are always
   // exported to peers and are not controlled by this field.
-  optional bool export_subnet_routes_with_public_ip = 4;
+  optional bool export_subnet_routes_with_public_ip = 4
+      [json_name = "exportSubnetRoutesWithPublicIp"];
 
   // Whether to import the custom routes from peer network. The default value is
   // false.
-  optional bool import_custom_routes = 5;
+  optional bool import_custom_routes = 5 [json_name = "importCustomRoutes"];
 
   // Whether subnet routes with public IP range are imported. The default value
   // is false. IPv4 special-use ranges are always imported from peers and are
   // not controlled by this field.
-  optional bool import_subnet_routes_with_public_ip = 6;
+  optional bool import_subnet_routes_with_public_ip = 6
+      [json_name = "importSubnetRoutesWithPublicIp"];
 
   // Name of this peering. Provided by the client when the peering is created.
   // The name must comply with RFC1035. Specifically, the name must be 1-63
@@ -392,16 +398,16 @@ message NetworkPeering {
   // The first character must be a lowercase letter, and all the following
   // characters must be a dash, lowercase letter, or digit, except the last
   // character, which cannot be a dash.
-  optional string name = 7;
+  optional string name = 7 [json_name = "name"];
 
   // The URL of the peer network. It can be either full URL or partial URL. The
   // peer network may belong to a different project. If the partial URL does not
   // contain project, it is assumed that the peer network is in the same project
   // as the current network.
-  optional string network = 8;
+  optional string network = 8 [json_name = "network"];
 
   // Maximum Transmission Unit in bytes.
-  optional int32 peer_mtu = 9;
+  optional int32 peer_mtu = 9 [json_name = "peerMtu"];
 
   // Which IP version(s) of traffic and routes are allowed to be imported or
   // exported between peer networks. The default value is IPV4_ONLY.
@@ -410,7 +416,7 @@ message NetworkPeering {
   // will be exchanged as well.
   // IPV4_ONLY: This Peering will only allow IPv4 traffic and routes to be
   // exchanged, even if the matching peering is IPV4_IPV6.
-  optional string stack_type = 10;
+  optional string stack_type = 10 [json_name = "stackType"];
 
   // [Output Only] State for the peering, either `ACTIVE` or `INACTIVE`. The
   // peering is `ACTIVE` when there's a matching configuration in the peer
@@ -418,10 +424,10 @@ message NetworkPeering {
   // ACTIVE: Matching configuration exists on the peer.
   // INACTIVE: There is no matching configuration on the peer, including the
   // case when peer does not exist.
-  optional string state = 11;
+  optional string state = 11 [json_name = "state"];
 
   // [Output Only] Details about the current state of the peering.
-  optional string state_details = 12;
+  optional string state_details = 12 [json_name = "stateDetails"];
 }
 
 // A routing configuration attached to a network resource. The message includes
@@ -435,7 +441,7 @@ message NetworkRoutingConfig {
   // regions.
   // GLOBAL:
   // REGIONAL:
-  optional string routing_mode = 1;
+  optional string routing_mode = 1 [json_name = "routingMode"];
 }
 
 message NetworksAddPeeringRequest {
@@ -445,60 +451,60 @@ message NetworksAddPeeringRequest {
   // field should always be true since Google Compute Engine will automatically
   // create and manage subnetwork routes between two networks when peering state
   // is ACTIVE.
-  optional bool auto_create_routes = 1;
+  optional bool auto_create_routes = 1 [json_name = "autoCreateRoutes"];
 
   // Name of the peering, which should conform to RFC1035.
-  optional string name = 2;
+  optional string name = 2 [json_name = "name"];
 
   // Network peering parameters. In order to specify route policies for peering
   // using import and export custom routes, you must specify all peering related
   // parameters (name, peer network, exchange_subnet_routes) in the
   // network_peering field. The corresponding fields in
   // NetworksAddPeeringRequest will be deprecated soon.
-  optional NetworkPeering network_peering = 3;
+  optional NetworkPeering network_peering = 3 [json_name = "networkPeering"];
 
   // URL of the peer network. It can be either full URL or partial URL. The peer
   // network may belong to a different project. If the partial URL does not
   // contain project, it is assumed that the peer network is in the same project
   // as the current network.
-  optional string peer_network = 4;
+  optional string peer_network = 4 [json_name = "peerNetwork"];
 }
 
 message NetworksGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policy.
   repeated NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy
-      firewall_policys = 1;
+      firewall_policys = 1 [json_name = "firewallPolicys"];
 
   // Effective firewalls on the network.
-  repeated Firewall firewalls = 2;
+  repeated Firewall firewalls = 2 [json_name = "firewalls"];
 }
 
 message NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   // [Output Only] Deprecated, please use short name instead. The display name
   // of the firewall policy.
-  optional string display_name = 1;
+  optional string display_name = 1 [json_name = "displayName"];
 
   // [Output Only] The name of the firewall policy.
-  optional string name = 2;
+  optional string name = 2 [json_name = "name"];
 
   // The rules that apply to the network.
-  repeated FirewallPolicyRule rules = 3;
+  repeated FirewallPolicyRule rules = 3 [json_name = "rules"];
 
   // [Output Only] The short name of the firewall policy.
-  optional string short_name = 4;
+  optional string short_name = 4 [json_name = "shortName"];
 
   // [Output Only] The type of the firewall policy.
   // HIERARCHY:
   // NETWORK:
   // UNSPECIFIED:
-  optional string type = 5;
+  optional string type = 5 [json_name = "type"];
 }
 
 message NetworksRemovePeeringRequest {
   // Name of the peering, which should conform to RFC1035.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 }
 
 message NetworksUpdatePeeringRequest {
-  optional NetworkPeering network_peering = 1;
+  optional NetworkPeering network_peering = 1 [json_name = "networkPeering"];
 }

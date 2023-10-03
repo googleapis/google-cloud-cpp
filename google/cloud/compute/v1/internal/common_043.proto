@@ -24,7 +24,7 @@ package google.cloud.cpp.compute.v1;
 message GlobalAddressesMoveRequest {
   // An optional destination address description if intended to be different
   // from the source.
-  optional string description = 1;
+  optional string description = 1 [json_name = "description"];
 
   // The URL of the destination address to move to. This can be a full or
   // partial URL. For example, the following are all valid URLs to a address: -
@@ -32,5 +32,5 @@ message GlobalAddressesMoveRequest {
   // /global/addresses/address - projects/project/global/addresses/address Note
   // that destination project must be different from the source project. So
   // /global/addresses/address is not valid partial url.
-  optional string destination_address = 2;
+  optional string destination_address = 2 [json_name = "destinationAddress"];
 }

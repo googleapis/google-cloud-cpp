@@ -382,7 +382,10 @@ service InstanceGroupManagers {
 // Request message for AbandonInstances.
 message AbandonInstancesRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersAbandonInstancesRequest for this request.
   optional
@@ -393,7 +396,8 @@ message AbandonInstancesRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -406,12 +410,13 @@ message AbandonInstancesRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
@@ -449,7 +454,7 @@ message AggregatedListInstanceGroupManagersRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // Indicates whether every visible scope for each scope type (zone, region,
   // global) should be included in the response. For new resource types added
@@ -458,14 +463,14 @@ message AggregatedListInstanceGroupManagersRequest {
   // types which predate this field, if this flag is omitted or false, only
   // scopes of the scope types where the resource type is expected to be found
   // will be included.
-  optional bool include_all_scopes = 2;
+  optional bool include_all_scopes = 2 [json_name = "includeAllScopes"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3;
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -475,26 +480,31 @@ message AggregatedListInstanceGroupManagersRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4;
+  optional string order_by = 4 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5;
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 6 [(google.api.field_behavior) = REQUIRED];
+  string project = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 
-  optional string service_project_number = 8;
+  optional string service_project_number = 8
+      [json_name = "serviceProjectNumber"];
 }
 
 // Request message for ApplyUpdatesToInstances.
 message ApplyUpdatesToInstancesRequest {
   // The name of the managed instance group, should conform to RFC1035.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersApplyUpdatesRequest for this request.
   optional google.cloud.cpp.compute.v1.InstanceGroupManagersApplyUpdatesRequest
@@ -504,21 +514,26 @@ message ApplyUpdatesToInstancesRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the zone where the managed instance group is located. Should
   // conform to RFC1035.
   string zone = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for CreateInstances.
 message CreateInstancesRequest {
   // The name of the managed instance group. It should conform to RFC1035.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersCreateInstancesRequest for this request.
   optional
@@ -529,7 +544,8 @@ message CreateInstancesRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -541,25 +557,30 @@ message CreateInstancesRequest {
   // ignore the second request. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for DeleteInstanceGroupManager.
 message DeleteInstanceGroupManagerRequest {
   // The name of the managed instance group to delete.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -572,19 +593,23 @@ message DeleteInstanceGroupManagerRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for DeleteInstances.
 message DeleteInstancesRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersDeleteInstancesRequest for this request.
   optional
@@ -595,7 +620,8 @@ message DeleteInstancesRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -608,19 +634,23 @@ message DeleteInstancesRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for DeletePerInstanceConfigs.
 message DeletePerInstanceConfigsRequest {
   // The name of the managed instance group. It should conform to RFC1035.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersDeletePerInstanceConfigsReq for this request.
   optional google.cloud.cpp.compute.v1
@@ -631,27 +661,33 @@ message DeletePerInstanceConfigsRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
   string zone = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for GetInstanceGroupManager.
 message GetInstanceGroupManagerRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED];
+  string project = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // The name of the zone where the managed instance group is located.
-  string zone = 3 [(google.api.field_behavior) = REQUIRED];
+  string zone = 3 [(google.api.field_behavior) = REQUIRED, json_name = "zone"];
 }
 
 // Request message for InsertInstanceGroupManager.
@@ -663,7 +699,8 @@ message InsertInstanceGroupManagerRequest {
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -676,12 +713,13 @@ message InsertInstanceGroupManagerRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 
   // The name of the zone where you want to create the managed instance group.
   string zone = 4 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
@@ -719,19 +757,22 @@ message ListErrorsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The name of the managed instance group. It must be a string that meets the
   // requirements in RFC1035, or an unsigned long integer: must match regexp
   // pattern: (?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)|1-9{0,19}.
-  string instance_group_manager = 2 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3;
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -741,22 +782,23 @@ message ListErrorsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4;
+  optional string order_by = 4 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5;
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 6 [(google.api.field_behavior) = REQUIRED];
+  string project = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
-  string zone = 8 [(google.api.field_behavior) = REQUIRED];
+  string zone = 8 [(google.api.field_behavior) = REQUIRED, json_name = "zone"];
 }
 
 // Request message for ListInstanceGroupManagers.
@@ -793,14 +835,14 @@ message ListInstanceGroupManagersRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 2;
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -810,21 +852,22 @@ message ListInstanceGroupManagersRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 3;
+  optional string order_by = 3 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 4;
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED];
+  string project = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 6;
+  optional bool return_partial_success = 6 [json_name = "returnPartialSuccess"];
 
   // The name of the zone where the managed instance group is located.
-  string zone = 7 [(google.api.field_behavior) = REQUIRED];
+  string zone = 7 [(google.api.field_behavior) = REQUIRED, json_name = "zone"];
 }
 
 // Request message for ListManagedInstances.
@@ -861,17 +904,20 @@ message ListManagedInstancesRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The name of the managed instance group.
-  string instance_group_manager = 2 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3;
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -881,21 +927,22 @@ message ListManagedInstancesRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4;
+  optional string order_by = 4 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5;
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 6 [(google.api.field_behavior) = REQUIRED];
+  string project = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 
   // The name of the zone where the managed instance group is located.
-  string zone = 8 [(google.api.field_behavior) = REQUIRED];
+  string zone = 8 [(google.api.field_behavior) = REQUIRED, json_name = "zone"];
 }
 
 // Request message for ListPerInstanceConfigs.
@@ -932,17 +979,20 @@ message ListPerInstanceConfigsRequest {
   // to filter for instances that do not end with name "instance", you would use
   // `name ne .*instance`. You cannot combine constraints on multiple fields
   // using regular expressions.
-  optional string filter = 1;
+  optional string filter = 1 [json_name = "filter"];
 
   // The name of the managed instance group. It should conform to RFC1035.
-  string instance_group_manager = 2 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The maximum number of results per page that should be returned. If the
   // number of available results is larger than `maxResults`, Compute Engine
   // returns a `nextPageToken` that can be used to get the next page of results
   // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
   // (Default: `500`)
-  optional uint32 max_results = 3;
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Sorts list results by a certain order. By default, results are returned in
   // alphanumerical order based on the resource name. You can also sort results
@@ -952,28 +1002,32 @@ message ListPerInstanceConfigsRequest {
   // first). Use this to sort resources like operations so that the newest
   // operation is returned first. Currently, only sorting by `name` or
   // `creationTimestamp desc` is supported.
-  optional string order_by = 4;
+  optional string order_by = 4 [json_name = "orderBy"];
 
   // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
   // returned by a previous list request to get the next page of results.
-  optional string page_token = 5;
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Project ID for this request.
-  string project = 6 [(google.api.field_behavior) = REQUIRED];
+  string project = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "project"];
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
-  optional bool return_partial_success = 7;
+  optional bool return_partial_success = 7 [json_name = "returnPartialSuccess"];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
-  string zone = 8 [(google.api.field_behavior) = REQUIRED];
+  string zone = 8 [(google.api.field_behavior) = REQUIRED, json_name = "zone"];
 }
 
 // Request message for PatchInstanceGroupManager.
 message PatchInstanceGroupManagerRequest {
   // The name of the instance group manager.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManager for this request.
   optional google.cloud.cpp.compute.v1.InstanceGroupManager
@@ -982,7 +1036,8 @@ message PatchInstanceGroupManagerRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -995,19 +1050,23 @@ message PatchInstanceGroupManagerRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where you want to create the managed instance group.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for PatchPerInstanceConfigs.
 message PatchPerInstanceConfigsRequest {
   // The name of the managed instance group. It should conform to RFC1035.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersPatchPerInstanceConfigsReq for this request.
   optional google.cloud.cpp.compute.v1
@@ -1018,7 +1077,8 @@ message PatchPerInstanceConfigsRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -1031,20 +1091,24 @@ message PatchPerInstanceConfigsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for RecreateInstances.
 message RecreateInstancesRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersRecreateInstancesRequest for this request.
   optional
@@ -1055,7 +1119,8 @@ message RecreateInstancesRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -1068,24 +1133,29 @@ message RecreateInstancesRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for Resize.
 message ResizeRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // Project ID for this request.
   string project = 2 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -1098,24 +1168,28 @@ message ResizeRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 3;
+  optional string request_id = 3 [json_name = "requestId"];
 
   // The number of running instances that the managed instance group should
   // maintain at any given time. The group automatically adds or removes
   // instances to maintain the number of instances specified by this parameter.
-  int32 size = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 size = 4 [(google.api.field_behavior) = REQUIRED, json_name = "size"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for SetInstanceTemplate.
 message SetInstanceTemplateRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersSetInstanceTemplateRequest for this request.
   optional google.cloud.cpp.compute.v1
@@ -1126,7 +1200,8 @@ message SetInstanceTemplateRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -1139,19 +1214,23 @@ message SetInstanceTemplateRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for SetTargetPools.
 message SetTargetPoolsRequest {
   // The name of the managed instance group.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersSetTargetPoolsRequest for this request.
   optional
@@ -1162,7 +1241,8 @@ message SetTargetPoolsRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -1175,19 +1255,23 @@ message SetTargetPoolsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }
 
 // Request message for UpdatePerInstanceConfigs.
 message UpdatePerInstanceConfigsRequest {
   // The name of the managed instance group. It should conform to RFC1035.
-  string instance_group_manager = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_group_manager = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    json_name = "instanceGroupManager"
+  ];
 
   // The InstanceGroupManagersUpdatePerInstanceConfigsReq for this request.
   optional google.cloud.cpp.compute.v1
@@ -1198,7 +1282,8 @@ message UpdatePerInstanceConfigsRequest {
   // Project ID for this request.
   string project = 3 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "project"
+    (google.cloud.operation_request_field) = "project",
+    json_name = "project"
   ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
@@ -1211,12 +1296,13 @@ message UpdatePerInstanceConfigsRequest {
   // duplicate commitments. The request ID must be a valid UUID with the
   // exception that zero UUID is not supported (
   // 00000000-0000-0000-0000-000000000000).
-  optional string request_id = 4;
+  optional string request_id = 4 [json_name = "requestId"];
 
   // The name of the zone where the managed instance group is located. It should
   // conform to RFC1035.
   string zone = 5 [
     (google.api.field_behavior) = REQUIRED,
-    (google.cloud.operation_request_field) = "zone"
+    (google.cloud.operation_request_field) = "zone",
+    json_name = "zone"
   ];
 }

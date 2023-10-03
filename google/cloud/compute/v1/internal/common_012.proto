@@ -24,11 +24,11 @@ package google.cloud.cpp.compute.v1;
 import "google/cloud/compute/v1/internal/common_048.proto";
 
 message BackendServiceReference {
-  optional string backend_service = 1;
+  optional string backend_service = 1 [json_name = "backendService"];
 }
 
 message ForwardingRuleReference {
-  optional string forwarding_rule = 1;
+  optional string forwarding_rule = 1 [json_name = "forwardingRule"];
 }
 
 // A full or valid partial URL to a health check service. For example, the
@@ -38,25 +38,28 @@ message ForwardingRuleReference {
 // projects/project-id/regions/us-west1/healthCheckServices/health-check-service
 // - regions/us-west1/healthCheckServices/health-check-service
 message HealthCheckServiceReference {
-  optional string health_check_service = 1;
+  optional string health_check_service = 1 [json_name = "healthCheckService"];
 }
 
 message HealthStatusForNetworkEndpoint {
   // URL of the backend service associated with the health state of the network
   // endpoint.
-  optional BackendServiceReference backend_service = 1;
+  optional BackendServiceReference backend_service = 1
+      [json_name = "backendService"];
 
   // URL of the forwarding rule associated with the health state of the network
   // endpoint.
-  optional ForwardingRuleReference forwarding_rule = 2;
+  optional ForwardingRuleReference forwarding_rule = 2
+      [json_name = "forwardingRule"];
 
   // URL of the health check associated with the health state of the network
   // endpoint.
-  optional HealthCheckReference health_check = 3;
+  optional HealthCheckReference health_check = 3 [json_name = "healthCheck"];
 
   // URL of the health check service associated with the health state of the
   // network endpoint.
-  optional HealthCheckServiceReference health_check_service = 4;
+  optional HealthCheckServiceReference health_check_service = 4
+      [json_name = "healthCheckService"];
 
   // Health state of the network endpoint determined based on the health checks
   // configured.
@@ -64,35 +67,35 @@ message HealthStatusForNetworkEndpoint {
   // HEALTHY: Endpoint is healthy.
   // UNHEALTHY: Endpoint is unhealthy.
   // UNKNOWN: Health status of the endpoint is unknown.
-  optional string health_state = 5;
+  optional string health_state = 5 [json_name = "healthState"];
 }
 
 // The network endpoint.
 message NetworkEndpoint {
   // Metadata defined as annotations on the network endpoint.
-  map<string, string> annotations = 1;
+  map<string, string> annotations = 1 [json_name = "annotations"];
 
   // Optional fully qualified domain name of network endpoint. This can only be
   // specified when NetworkEndpointGroup.network_endpoint_type is
   // NON_GCP_FQDN_PORT.
-  optional string fqdn = 2;
+  optional string fqdn = 2 [json_name = "fqdn"];
 
   // The name for a specific VM instance that the IP address belongs to. This is
   // required for network endpoints of type GCE_VM_IP_PORT. The instance must be
   // in the same zone of network endpoint group. The name must be 1-63
   // characters long, and comply with RFC1035.
-  optional string instance = 3;
+  optional string instance = 3 [json_name = "instance"];
 
   // Optional IPv4 address of network endpoint. The IP address must belong to a
   // VM in Compute Engine (either the primary IP or as part of an aliased IP
   // range). If the IP address is not specified, then the primary IP address for
   // the VM instance in the network that the network endpoint group belongs to
   // will be used.
-  optional string ip_address = 4;
+  optional string ip_address = 4 [json_name = "ipAddress"];
 
   // Optional port number of network endpoint. If not specified, the defaultPort
   // for the network endpoint group will be used.
-  optional int32 port = 5;
+  optional int32 port = 5 [json_name = "port"];
 }
 
 // Represents a collection of network endpoints. A network endpoint group (NEG)
@@ -101,38 +104,40 @@ message NetworkEndpoint {
 // different use cases, see Network endpoint groups overview.
 message NetworkEndpointGroup {
   // Metadata defined as annotations on the network endpoint group.
-  map<string, string> annotations = 1;
+  map<string, string> annotations = 1 [json_name = "annotations"];
 
   // Only valid when networkEndpointType is "SERVERLESS". Only one of cloudRun,
   // appEngine or cloudFunction may be set.
-  optional NetworkEndpointGroupAppEngine app_engine = 2;
+  optional NetworkEndpointGroupAppEngine app_engine = 2
+      [json_name = "appEngine"];
 
   // Only valid when networkEndpointType is "SERVERLESS". Only one of cloudRun,
   // appEngine or cloudFunction may be set.
-  optional NetworkEndpointGroupCloudFunction cloud_function = 3;
+  optional NetworkEndpointGroupCloudFunction cloud_function = 3
+      [json_name = "cloudFunction"];
 
   // Only valid when networkEndpointType is "SERVERLESS". Only one of cloudRun,
   // appEngine or cloudFunction may be set.
-  optional NetworkEndpointGroupCloudRun cloud_run = 4;
+  optional NetworkEndpointGroupCloudRun cloud_run = 4 [json_name = "cloudRun"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 5;
+  optional string creation_timestamp = 5 [json_name = "creationTimestamp"];
 
   // The default port used if the port number is not specified in the network
   // endpoint.
-  optional int32 default_port = 6;
+  optional int32 default_port = 6 [json_name = "defaultPort"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 7;
+  optional string description = 7 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 8;
+  optional string id = 8 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#networkEndpointGroup for
   // network endpoint group.
-  optional string kind = 9;
+  optional string kind = 9 [json_name = "kind"];
 
   // Name of the resource; provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -141,11 +146,11 @@ message NetworkEndpointGroup {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 10;
+  optional string name = 10 [json_name = "name"];
 
   // The URL of the network to which all network endpoints in the NEG belong.
   // Uses "default" project network if unspecified.
-  optional string network = 11;
+  optional string network = 11 [json_name = "network"];
 
   // Type of network endpoints in this network endpoint group. Can be one of
   // GCE_VM_IP, GCE_VM_IP_PORT, NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT,
@@ -165,32 +170,33 @@ message NetworkEndpointGroup {
   // connection is set up by private service connect
   // SERVERLESS: The network endpoint is handled by specified serverless
   // infrastructure.
-  optional string network_endpoint_type = 12;
+  optional string network_endpoint_type = 12
+      [json_name = "networkEndpointType"];
 
-  optional NetworkEndpointGroupPscData psc_data = 13;
+  optional NetworkEndpointGroupPscData psc_data = 13 [json_name = "pscData"];
 
   // The target service url used to set up private service connection to a
   // Google API or a PSC Producer Service Attachment. An example value is:
   // "asia-northeast3-cloudkms.googleapis.com"
-  optional string psc_target_service = 14;
+  optional string psc_target_service = 14 [json_name = "pscTargetService"];
 
   // [Output Only] The URL of the region where the network endpoint group is
   // located.
-  optional string region = 15;
+  optional string region = 15 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 16;
+  optional string self_link = 16 [json_name = "selfLink"];
 
   // [Output only] Number of network endpoints in the network endpoint group.
-  optional int32 size = 17;
+  optional int32 size = 17 [json_name = "size"];
 
   // Optional URL of the subnetwork to which all network endpoints in the NEG
   // belong.
-  optional string subnetwork = 18;
+  optional string subnetwork = 18 [json_name = "subnetwork"];
 
   // [Output Only] The URL of the zone where the network endpoint group is
   // located.
-  optional string zone = 19;
+  optional string zone = 19 [json_name = "zone"];
 }
 
 // Configuration for an App Engine network endpoint group (NEG). The service is
@@ -201,7 +207,7 @@ message NetworkEndpointGroup {
 message NetworkEndpointGroupAppEngine {
   // Optional serving service. The service name is case-sensitive and must be
   // 1-63 characters long. Example value: "default", "my-service".
-  optional string service = 1;
+  optional string service = 1 [json_name = "service"];
 
   // A template to parse service and version fields from a request URL. URL mask
   // allows for routing to multiple App Engine services without having to create
@@ -211,11 +217,11 @@ message NetworkEndpointGroupAppEngine {
   // with URL mask "<service>-dot-appname.appspot.com/<version>". The URL mask
   // will parse them to { service = "foo1", version = "v1" } and { service =
   // "foo1", version = "v2" } respectively.
-  optional string url_mask = 2;
+  optional string url_mask = 2 [json_name = "urlMask"];
 
   // Optional serving version. The version name is case-sensitive and must be
   // 1-100 characters long. Example value: "v1", "v2".
-  optional string version = 3;
+  optional string version = 3 [json_name = "version"];
 }
 
 // Configuration for a Cloud Function network endpoint group (NEG). The function
@@ -224,7 +230,7 @@ message NetworkEndpointGroupAppEngine {
 message NetworkEndpointGroupCloudFunction {
   // A user-defined name of the Cloud Function. The function name is
   // case-sensitive and must be 1-63 characters long. Example value: "func1".
-  optional string function = 1;
+  optional string function = 1 [json_name = "function"];
 
   // A template to parse function field from a request URL. URL mask allows for
   // routing to multiple Cloud Functions without having to create multiple
@@ -233,7 +239,7 @@ message NetworkEndpointGroupCloudFunction {
   // same Serverless NEG with URL mask "/<function>". The URL mask will parse
   // them to { function = "function1" } and { function = "function2" }
   // respectively.
-  optional string url_mask = 2;
+  optional string url_mask = 2 [json_name = "urlMask"];
 }
 
 // Configuration for a Cloud Run network endpoint group (NEG). The service must
@@ -244,12 +250,12 @@ message NetworkEndpointGroupCloudRun {
   // Cloud Run service is the main resource of Cloud Run. The service must be
   // 1-63 characters long, and comply with RFC1035. Example value:
   // "run-service".
-  optional string service = 1;
+  optional string service = 1 [json_name = "service"];
 
   // Optional Cloud Run tag represents the "named-revision" to provide
   // additional fine-grained traffic routing information. The tag must be 1-63
   // characters long, and comply with RFC1035. Example value: "revision-0010".
-  optional string tag = 2;
+  optional string tag = 2 [json_name = "tag"];
 
   // A template to parse <service> and <tag> fields from a request URL. URL mask
   // allows for routing to multiple Run services without having to create
@@ -259,29 +265,29 @@ message NetworkEndpointGroupCloudRun {
   // "<tag>.domain.com/<service>". The URL mask will parse them to {
   // service="bar1", tag="foo1" } and { service="bar2", tag="foo2" }
   // respectively.
-  optional string url_mask = 3;
+  optional string url_mask = 3 [json_name = "urlMask"];
 }
 
 message NetworkEndpointGroupList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of NetworkEndpointGroup resources.
-  repeated NetworkEndpointGroup items = 2;
+  repeated NetworkEndpointGroup items = 2 [json_name = "items"];
 
   // [Output Only] The resource type, which is always
   // compute#networkEndpointGroupList for network endpoint group lists.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5;
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -340,7 +346,7 @@ message NetworkEndpointGroupList {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -350,22 +356,22 @@ message NetworkEndpointGroupList {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6;
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
 // All data that is specifically relevant to only network endpoint groups of
@@ -374,11 +380,11 @@ message NetworkEndpointGroupPscData {
   // [Output Only] Address allocated from given subnetwork for PSC. This IP
   // address acts as a VIP for a PSC NEG, allowing it to act as an endpoint in
   // L7 PSC-XLB.
-  optional string consumer_psc_address = 1;
+  optional string consumer_psc_address = 1 [json_name = "consumerPscAddress"];
 
   // [Output Only] The PSC connection id of the PSC Network Endpoint Group
   // Consumer.
-  optional string psc_connection_id = 2;
+  optional string psc_connection_id = 2 [json_name = "pscConnectionId"];
 
   // [Output Only] The connection status of the PSC Forwarding Rule.
   // ACCEPTED: The connection has been accepted by the producer.
@@ -390,27 +396,27 @@ message NetworkEndpointGroupPscData {
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The connection has been rejected by the producer.
   // STATUS_UNSPECIFIED:
-  optional string psc_connection_status = 3;
+  optional string psc_connection_status = 3 [json_name = "pscConnectionStatus"];
 }
 
 message NetworkEndpointGroupsListNetworkEndpoints {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1;
+  optional string id = 1 [json_name = "id"];
 
   // A list of NetworkEndpointWithHealthStatus resources.
-  repeated NetworkEndpointWithHealthStatus items = 2;
+  repeated NetworkEndpointWithHealthStatus items = 2 [json_name = "items"];
 
   // [Output Only] The resource type, which is always
   // compute#networkEndpointGroupsListNetworkEndpoints for the list of network
   // endpoints in the specified network endpoint group.
-  optional string kind = 3;
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4;
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -469,7 +475,7 @@ message NetworkEndpointGroupsListNetworkEndpoints {
     // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
     // present
     // UNREACHABLE: A given scope cannot be reached.
-    optional string code = 1;
+    optional string code = 1 [json_name = "code"];
 
     message DataItem {
       // [Output Only] A key that provides more detail on the warning being
@@ -479,28 +485,28 @@ message NetworkEndpointGroupsListNetworkEndpoints {
       // a deprecated resource and a suggested replacement, or a warning about
       // invalid network settings (for example, if an instance attempts to
       // perform IP forwarding but is not enabled for IP forwarding).
-      optional string key = 1;
+      optional string key = 1 [json_name = "key"];
 
       // [Output Only] A warning data value corresponding to the key.
-      optional string value = 2;
+      optional string value = 2 [json_name = "value"];
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
     // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
-    repeated DataItem data = 2;
+    repeated DataItem data = 2 [json_name = "data"];
 
     // [Output Only] A human-readable description of the warning code.
-    optional string message = 3;
+    optional string message = 3 [json_name = "message"];
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 5;
+  optional Warning warning = 5 [json_name = "warning"];
 }
 
 message NetworkEndpointWithHealthStatus {
   // [Output only] The health status of network endpoint;
-  repeated HealthStatusForNetworkEndpoint healths = 1;
+  repeated HealthStatusForNetworkEndpoint healths = 1 [json_name = "healths"];
 
   // [Output only] The network endpoint;
-  optional NetworkEndpoint network_endpoint = 2;
+  optional NetworkEndpoint network_endpoint = 2 [json_name = "networkEndpoint"];
 }

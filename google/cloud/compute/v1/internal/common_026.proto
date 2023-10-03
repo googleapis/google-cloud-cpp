@@ -33,41 +33,41 @@ import "google/cloud/compute/v1/internal/common_022.proto";
 // information, read Regional persistent disks.
 message DiskType {
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1;
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // [Output Only] Server-defined default disk size in GB.
-  optional string default_disk_size_gb = 2;
+  optional string default_disk_size_gb = 2 [json_name = "defaultDiskSizeGb"];
 
   // [Output Only] The deprecation status associated with this disk type.
-  optional DeprecationStatus deprecated = 3;
+  optional DeprecationStatus deprecated = 3 [json_name = "deprecated"];
 
   // [Output Only] An optional description of this resource.
-  optional string description = 4;
+  optional string description = 4 [json_name = "description"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 5;
+  optional string id = 5 [json_name = "id"];
 
   // [Output Only] Type of the resource. Always compute#diskType for disk types.
-  optional string kind = 6;
+  optional string kind = 6 [json_name = "kind"];
 
   // [Output Only] Name of the resource.
-  optional string name = 7;
+  optional string name = 7 [json_name = "name"];
 
   // [Output Only] URL of the region where the disk type resides. Only
   // applicable for regional resources. You must specify this field as part of
   // the HTTP request URL. It is not settable as a field in the request body.
-  optional string region = 8;
+  optional string region = 8 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 9;
+  optional string self_link = 9 [json_name = "selfLink"];
 
   // [Output Only] An optional textual description of the valid disk size, such
   // as "10GB-10TB".
-  optional string valid_disk_size = 10;
+  optional string valid_disk_size = 10 [json_name = "validDiskSize"];
 
   // [Output Only] URL of the zone where the disk type resides. You must specify
   // this field as part of the HTTP request URL. It is not settable as a field
   // in the request body.
-  optional string zone = 11;
+  optional string zone = 11 [json_name = "zone"];
 }

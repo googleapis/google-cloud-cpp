@@ -41,15 +41,15 @@ import "google/cloud/compute/v1/internal/common_031.proto";
 // DATA_WRITE logging.
 message AuditConfig {
   // The configuration for logging of each type of permission.
-  repeated AuditLogConfig audit_log_configs = 1;
+  repeated AuditLogConfig audit_log_configs = 1 [json_name = "auditLogConfigs"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated string exempted_members = 2;
+  repeated string exempted_members = 2 [json_name = "exemptedMembers"];
 
   // Specifies a service that will be enabled for audit logging. For example,
   // `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices` is a
   // special value that covers all services.
-  optional string service = 3;
+  optional string service = 3 [json_name = "service"];
 }
 
 // Provides the configuration for logging a type of permissions. Example: {
@@ -60,17 +60,18 @@ message AuditConfig {
 message AuditLogConfig {
   // Specifies the identities that do not cause logging for this type of
   // permission. Follows the same format of Binding.members.
-  repeated string exempted_members = 1;
+  repeated string exempted_members = 1 [json_name = "exemptedMembers"];
 
   // This is deprecated and has no effect. Do not use.
-  optional bool ignore_child_exemptions = 2;
+  optional bool ignore_child_exemptions = 2
+      [json_name = "ignoreChildExemptions"];
 
   // The log type that this config enables.
   // ADMIN_READ: Admin reads. Example: CloudIAM getIamPolicy
   // DATA_READ: Data reads. Example: CloudSQL Users list
   // DATA_WRITE: Data writes. Example: CloudSQL Users create
   // LOG_TYPE_UNSPECIFIED: Default case. Should never be this.
-  optional string log_type = 3;
+  optional string log_type = 3 [json_name = "logType"];
 }
 
 // This is deprecated and has no effect. Do not use.
@@ -82,13 +83,13 @@ message AuthorizationLoggingOptions {
   // DATA_WRITE: This is deprecated and has no effect. Do not use.
   // PERMISSION_TYPE_UNSPECIFIED: This is deprecated and has no effect. Do not
   // use.
-  optional string permission_type = 1;
+  optional string permission_type = 1 [json_name = "permissionType"];
 }
 
 // Associates `members`, or principals, with a `role`.
 message Binding {
   // This is deprecated and has no effect. Do not use.
-  optional string binding_id = 1;
+  optional string binding_id = 1 [json_name = "bindingId"];
 
   // The condition that is associated with this binding. If the condition
   // evaluates to `true`, then this binding applies to the current request. If
@@ -97,7 +98,7 @@ message Binding {
   // role to one or more of the principals in this binding. To learn which
   // resources support conditions in their IAM policies, see the [IAM
   // documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
-  optional Expr condition = 2;
+  optional Expr condition = 2 [json_name = "condition"];
 
   // Specifies the principals requesting access for a Google Cloud resource.
   // `members` can have the following values: * `allUsers`: A special identifier
@@ -133,11 +134,11 @@ message Binding {
   // `admins@example.com?uid=123456789012345678901`. If the group is recovered,
   // this value reverts to `group:{emailid}` and the recovered group retains the
   // role in the binding.
-  repeated string members = 3;
+  repeated string members = 3 [json_name = "members"];
 
   // Role that is assigned to the list of `members`, or principals. For example,
   // `roles/viewer`, `roles/editor`, or `roles/owner`.
-  optional string role = 4;
+  optional string role = 4 [json_name = "role"];
 }
 
 // This is deprecated and has no effect. Do not use.
@@ -151,7 +152,7 @@ message Condition {
   // JUSTIFICATION_TYPE: This is deprecated and has no effect. Do not use.
   // NO_ATTR: This is deprecated and has no effect. Do not use.
   // SECURITY_REALM: This is deprecated and has no effect. Do not use.
-  optional string iam = 1;
+  optional string iam = 1 [json_name = "iam"];
 
   // This is deprecated and has no effect. Do not use.
   // DISCHARGED: This is deprecated and has no effect. Do not use.
@@ -160,10 +161,10 @@ message Condition {
   // NOT_EQUALS: This is deprecated and has no effect. Do not use.
   // NOT_IN: This is deprecated and has no effect. Do not use.
   // NO_OP: This is deprecated and has no effect. Do not use.
-  optional string op = 2;
+  optional string op = 2 [json_name = "op"];
 
   // This is deprecated and has no effect. Do not use.
-  optional string svc = 3;
+  optional string svc = 3 [json_name = "svc"];
 
   // This is deprecated and has no effect. Do not use.
   // IP: This is deprecated and has no effect. Do not use.
@@ -171,55 +172,59 @@ message Condition {
   // NO_ATTR: This is deprecated and has no effect. Do not use.
   // REGION: This is deprecated and has no effect. Do not use.
   // SERVICE: This is deprecated and has no effect. Do not use.
-  optional string sys = 4;
+  optional string sys = 4 [json_name = "sys"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated string values = 5;
+  repeated string values = 5 [json_name = "values"];
 }
 
 // This is deprecated and has no effect. Do not use.
 message LogConfig {
   // This is deprecated and has no effect. Do not use.
-  optional LogConfigCloudAuditOptions cloud_audit = 1;
+  optional LogConfigCloudAuditOptions cloud_audit = 1
+      [json_name = "cloudAudit"];
 
   // This is deprecated and has no effect. Do not use.
-  optional LogConfigCounterOptions counter = 2;
+  optional LogConfigCounterOptions counter = 2 [json_name = "counter"];
 
   // This is deprecated and has no effect. Do not use.
-  optional LogConfigDataAccessOptions data_access = 3;
+  optional LogConfigDataAccessOptions data_access = 3
+      [json_name = "dataAccess"];
 }
 
 // This is deprecated and has no effect. Do not use.
 message LogConfigCloudAuditOptions {
   // This is deprecated and has no effect. Do not use.
-  optional AuthorizationLoggingOptions authorization_logging_options = 1;
+  optional AuthorizationLoggingOptions authorization_logging_options = 1
+      [json_name = "authorizationLoggingOptions"];
 
   // This is deprecated and has no effect. Do not use.
   // ADMIN_ACTIVITY: This is deprecated and has no effect. Do not use.
   // DATA_ACCESS: This is deprecated and has no effect. Do not use.
   // UNSPECIFIED_LOG_NAME: This is deprecated and has no effect. Do not use.
-  optional string log_name = 2;
+  optional string log_name = 2 [json_name = "logName"];
 }
 
 // This is deprecated and has no effect. Do not use.
 message LogConfigCounterOptions {
   // This is deprecated and has no effect. Do not use.
-  repeated LogConfigCounterOptionsCustomField custom_fields = 1;
+  repeated LogConfigCounterOptionsCustomField custom_fields = 1
+      [json_name = "customFields"];
 
   // This is deprecated and has no effect. Do not use.
-  optional string field = 2;
+  optional string field = 2 [json_name = "field"];
 
   // This is deprecated and has no effect. Do not use.
-  optional string metric = 3;
+  optional string metric = 3 [json_name = "metric"];
 }
 
 // This is deprecated and has no effect. Do not use.
 message LogConfigCounterOptionsCustomField {
   // This is deprecated and has no effect. Do not use.
-  optional string name = 1;
+  optional string name = 1 [json_name = "name"];
 
   // This is deprecated and has no effect. Do not use.
-  optional string value = 2;
+  optional string value = 2 [json_name = "value"];
 }
 
 // This is deprecated and has no effect. Do not use.
@@ -227,7 +232,7 @@ message LogConfigDataAccessOptions {
   // This is deprecated and has no effect. Do not use.
   // LOG_FAIL_CLOSED: This is deprecated and has no effect. Do not use.
   // LOG_MODE_UNSPECIFIED: This is deprecated and has no effect. Do not use.
-  optional string log_mode = 1;
+  optional string log_mode = 1 [json_name = "logMode"];
 }
 
 // An Identity and Access Management (IAM) policy, which specifies access
@@ -261,7 +266,7 @@ message LogConfigDataAccessOptions {
 // documentation](https://cloud.google.com/iam/docs/).
 message Policy {
   // Specifies cloud audit logging configuration for this policy.
-  repeated AuditConfig audit_configs = 1;
+  repeated AuditConfig audit_configs = 1 [json_name = "auditConfigs"];
 
   // Associates a list of `members`, or principals, with a `role`. Optionally,
   // may specify a `condition` that determines how and when the `bindings` are
@@ -272,7 +277,7 @@ message Policy {
   // different roles to `user:alice@example.com`, and not to any other
   // principal, then you can add another 1,450 principals to the `bindings` in
   // the `Policy`.
-  repeated Binding bindings = 2;
+  repeated Binding bindings = 2 [json_name = "bindings"];
 
   // `etag` is used for optimistic concurrency control as a way to help prevent
   // simultaneous updates of a policy from overwriting each other. It is
@@ -285,10 +290,10 @@ message Policy {
   // whenever you call `setIamPolicy`. If you omit this field, then IAM allows
   // you to overwrite a version `3` policy with a version `1` policy, and all of
   // the conditions in the version `3` policy are lost.
-  optional string etag = 3;
+  optional string etag = 3 [json_name = "etag"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated Rule rules = 4;
+  repeated Rule rules = 4 [json_name = "rules"];
 
   // Specifies the format of the policy. Valid values are `0`, `1`, and `3`.
   // Requests that specify an invalid value are rejected. Any operation that
@@ -305,7 +310,7 @@ message Policy {
   // valid version or leave the field unset. To learn which resources support
   // conditions in their IAM policies, see the [IAM
   // documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
-  optional int32 version = 5;
+  optional int32 version = 5 [json_name = "version"];
 }
 
 // This is deprecated and has no effect. Do not use.
@@ -317,23 +322,23 @@ message Rule {
   // DENY_WITH_LOG: This is deprecated and has no effect. Do not use.
   // LOG: This is deprecated and has no effect. Do not use.
   // NO_ACTION: This is deprecated and has no effect. Do not use.
-  optional string action = 1;
+  optional string action = 1 [json_name = "action"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated Condition conditions = 2;
+  repeated Condition conditions = 2 [json_name = "conditions"];
 
   // This is deprecated and has no effect. Do not use.
-  optional string description = 3;
+  optional string description = 3 [json_name = "description"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated string ins = 4;
+  repeated string ins = 4 [json_name = "ins"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated LogConfig log_configs = 5;
+  repeated LogConfig log_configs = 5 [json_name = "logConfigs"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated string not_ins = 6;
+  repeated string not_ins = 6 [json_name = "notIns"];
 
   // This is deprecated and has no effect. Do not use.
-  repeated string permissions = 7;
+  repeated string permissions = 7 [json_name = "permissions"];
 }

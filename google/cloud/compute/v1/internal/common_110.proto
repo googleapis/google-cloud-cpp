@@ -29,9 +29,9 @@ message SignedUrlKey {
   // character must be a lowercase letter, and all following characters must be
   // a dash, lowercase letter, or digit, except the last character, which cannot
   // be a dash.
-  optional string key_name = 1;
+  optional string key_name = 1 [json_name = "keyName"];
 
   // 128-bit key value used for signing the URL. The key value must be a valid
   // RFC 4648 Section 5 base64url encoded string.
-  optional string key_value = 2;
+  optional string key_value = 2 [json_name = "keyValue"];
 }
