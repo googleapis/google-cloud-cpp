@@ -36,8 +36,7 @@ namespace examples = ::google::cloud::storage::examples;
 void InstrumentedClient(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw examples::Usage{
-        "instrumented-client <project-id>"
-        " <bucket-name> <object-name>"};
+        "instrumented-client <project-id> <bucket-name> <object-name>"};
   }
   //! [instrumented-client]
   namespace gc = ::google::cloud;

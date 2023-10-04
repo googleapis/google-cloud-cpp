@@ -34,8 +34,6 @@ using ::google::cloud::storage_experimental::AsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ReadResponse =
-    ::google::cloud::storage_experimental::AsyncReaderConnection;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
