@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
-#include "google/cloud/storage/internal/unified_rest_credentials.h"
+#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 
 namespace google {
 namespace cloud {
@@ -22,9 +23,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-GenerateAccessTokenRequest MakeRequest(
+oauth2_internal::GenerateAccessTokenRequest MakeRequest(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config) {
-  return GenerateAccessTokenRequest{
+  return oauth2_internal::GenerateAccessTokenRequest{
       /*.service_account=*/config.target_service_account(),
       /*.lifetime=*/config.lifetime(),
       /*.scopes=*/config.scopes(),
@@ -39,12 +40,15 @@ auto constexpr kUseSlack = std::chrono::seconds(30);
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config)
     : ImpersonateServiceAccountCredentials(
-          config, MakeMinimalIamCredentialsRestStub(
-                      MapCredentials(*config.base_credentials()))) {}
+          config, oauth2_internal::MakeMinimalIamCredentialsRestStub(
+                      rest_internal::MapCredentials(*config.base_credentials()),
+                      config.options(), [](Options const& o) {
+                        return rest_internal::MakeDefaultRestClient("", o);
+                      })) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-    std::shared_ptr<MinimalIamCredentialsRest> stub)
+    std::shared_ptr<oauth2_internal::MinimalIamCredentialsRest> stub)
     : stub_(std::move(stub)), request_(MakeRequest(config)) {}
 
 StatusOr<std::string>

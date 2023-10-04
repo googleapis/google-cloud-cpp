@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_IMPERSONATE_SERVICE_ACCOUNT_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_IMPERSONATE_SERVICE_ACCOUNT_CREDENTIALS_H
 
-#include "google/cloud/storage/internal/minimal_iam_credentials_rest.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
 #include <mutex>
 #include <string>
 
@@ -34,15 +34,15 @@ class ImpersonateServiceAccountCredentials : public oauth2::Credentials {
       google::cloud::internal::ImpersonateServiceAccountConfig const& config);
   explicit ImpersonateServiceAccountCredentials(
       google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-      std::shared_ptr<MinimalIamCredentialsRest> stub);
+      std::shared_ptr<oauth2_internal::MinimalIamCredentialsRest> stub);
 
   StatusOr<std::string> AuthorizationHeader() override;
   StatusOr<std::string> AuthorizationHeader(
       std::chrono::system_clock::time_point now);
 
  private:
-  std::shared_ptr<MinimalIamCredentialsRest> stub_;
-  GenerateAccessTokenRequest request_;
+  std::shared_ptr<oauth2_internal::MinimalIamCredentialsRest> stub_;
+  oauth2_internal::GenerateAccessTokenRequest request_;
   std::mutex mu_;
   std::string header_;
   std::chrono::system_clock::time_point expiration_;
