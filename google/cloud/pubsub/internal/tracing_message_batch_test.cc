@@ -27,19 +27,9 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::internal::MakeSpan;
+using ::testing::ElementsAre;
 using ::testing::SizeIs;
 
-class TracingMessageBatchPeer {
- public:
-  explicit TracingMessageBatchPeer(std::unique_ptr<TracingMessageBatch> child)
-      : child_(std::move(child)) {}
-  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetSpans() const {
-    return child_->message_root_spans_;
-  }
-
-  std::unique_ptr<TracingMessageBatch> child_;
-};
 namespace {
 
 TEST(TracingMessageBatch, SaveMessage) {
@@ -53,9 +43,31 @@ TEST(TracingMessageBatch, SaveMessage) {
   message_batch->SaveMessage(message);
 
   span->End();
-  auto peer = TracingMessageBatchPeer(std::move(message_batch));
-  auto spans = peer.GetSpans();
+  auto spans = message_batch->GetSpans();
   EXPECT_THAT(spans, SizeIs(1));
+  EXPECT_THAT(spans, ElementsAre(span));
+}
+
+TEST(TracingMessageBatch, SaveMultipleMessages) {
+  auto mock = std::make_unique<pubsub_testing::MockMessageBatch>();
+  EXPECT_CALL(*mock, SaveMessage).Times(2);
+  auto message_batch = std::make_unique<TracingMessageBatch>(std::move(mock));
+  auto message = pubsub::MessageBuilder().SetData("test").Build();
+
+  // Save the first span.
+  auto span1 = MakeSpan("test span");
+  opentelemetry::trace::Scope scope1(span1);
+  message_batch->SaveMessage(message);
+  span1->End();
+  // Save the second span.
+  auto span2 = MakeSpan("test span");
+  opentelemetry::trace::Scope scope2(span2);
+  message_batch->SaveMessage(message);
+  span2->End();
+
+  auto spans = message_batch->GetSpans();
+  EXPECT_THAT(spans, SizeIs(2));
+  EXPECT_THAT(spans, ElementsAre(span1, span2));
 }
 
 }  // namespace

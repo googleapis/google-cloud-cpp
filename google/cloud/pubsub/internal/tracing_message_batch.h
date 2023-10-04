@@ -46,10 +46,13 @@ class TracingMessageBatch : public MessageBatch {
 
   void FlushCallback() override;
 
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+  GetSpans() const;
+
  private:
   std::unique_ptr<MessageBatch> child_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-      message_root_spans_;
+      message_spans_;
 
   friend class TracingMessageBatchPeer;
 };

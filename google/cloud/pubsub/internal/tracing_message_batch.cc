@@ -32,13 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void TracingMessageBatch::SaveMessage(pubsub::Message m) {
   auto active_span = opentelemetry::trace::GetSpan(
       opentelemetry::context::RuntimeContext::GetCurrent());
-  message_root_spans_.push_back(active_span);
+  message_spans_.push_back(active_span);
   child_->SaveMessage(std::move(m));
 }
 
+// TODO(#12528): Implement functionality for Flush.
 void TracingMessageBatch::Flush() { child_->Flush(); }
 
+// TODO(#12528): Implement functionality for FlushCallback.
 void TracingMessageBatch::FlushCallback() { child_->FlushCallback(); }
+
+std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+TracingMessageBatch::GetSpans() const {
+  return message_spans_;
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
