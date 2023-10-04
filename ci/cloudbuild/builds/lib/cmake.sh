@@ -68,16 +68,3 @@ function cmake::common_args() {
   fi
   printf "%s\n" "${args[@]}"
 }
-
-function ctest::common_args() {
-  local args
-  args=(
-    # Print the full output on failures
-    --output-on-failure
-    # Run many tests in parallel, use -j for compatibility with old versions
-    -j "$(nproc)"
-    # Make the output shorter on interactive tests
-    --progress
-  )
-  printf "%s\n" "${args[@]}"
-}

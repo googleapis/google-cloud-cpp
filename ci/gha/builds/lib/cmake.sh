@@ -71,16 +71,3 @@ function cmake::vcpkg_args() {
   )
   printf "%s\n" "${args[@]}"
 }
-
-function ctest::common_args() {
-  local args
-  args=(
-    # Print the full output on failures
-    --output-on-failure
-    # Run many tests in parallel, use -j for compatibility with old versions
-    -j "$(os::cpus)"
-    # Make the output shorter on interactive tests
-    --progress
-  )
-  printf "%s\n" "${args[@]}"
-}
