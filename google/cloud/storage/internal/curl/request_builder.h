@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_REQUEST_BUILDER_H
 
 #include "google/cloud/storage/internal/complex_option.h"
-#include "google/cloud/storage/internal/curl/download_request.h"
 #include "google/cloud/storage/internal/curl/handle_factory.h"
 #include "google/cloud/storage/internal/curl/request.h"
 #include "google/cloud/storage/version.h"
@@ -47,14 +46,6 @@ class CurlRequestBuilder {
    * builder once this function is called.
    */
   CurlRequest BuildRequest() &&;
-
-  /**
-   * Creates a non-blocking http request.
-   *
-   * This function invalidates the builder. The application should not use this
-   * builder once this function is called.
-   */
-  StatusOr<std::unique_ptr<CurlDownloadRequest>> BuildDownloadRequest() &&;
 
   /// Adds one of the well-known parameters as a query parameter
   template <typename P>

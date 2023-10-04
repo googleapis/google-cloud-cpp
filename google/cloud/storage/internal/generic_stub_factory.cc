@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/generic_stub_factory.h"
-#include "google/cloud/storage/internal/curl/stub.h"
 #include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/options.h"
@@ -49,12 +48,8 @@ std::unique_ptr<GenericStub> DecorateStub(Options const& opts,
 
 std::unique_ptr<GenericStub> MakeDefaultStorageStub(Options opts) {
   auto const logging = RequiresLogging(opts);
-  if (opts.get<storage::internal::UseRestClientOption>()) {
-    return DecorateStub(logging, std::make_unique<storage::internal::RestStub>(
-                                     std::move(opts)));
-  }
   return DecorateStub(
-      logging, std::make_unique<storage::internal::CurlStub>(std::move(opts)));
+      logging, std::make_unique<storage::internal::RestStub>(std::move(opts)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

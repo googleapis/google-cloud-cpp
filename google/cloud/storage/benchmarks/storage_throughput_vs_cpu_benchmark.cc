@@ -308,9 +308,6 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     opts = google::cloud::internal::MergeOptions(options.rest_options,
                                                  std::move(opts));
-    if (t == ExperimentTransport::kJsonV2) {
-      opts.set<gcs::internal::UseRestClientOption>(true);
-    }
     return gcs::Client(std::move(opts));
   };
 }
