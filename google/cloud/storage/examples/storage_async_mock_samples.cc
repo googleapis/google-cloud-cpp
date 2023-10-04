@@ -82,10 +82,10 @@ TEST(StorageAsyncMockingSamples, MockReadObject) {
       client.ReadObject("test-bucket", "test-object").get().value();
 
   gcs_ex::ReadPayload payload;
-  gcs_ex::AsyncToken t;  // use a temporary to make clang-tidy happy.
+  gcs_ex::AsyncToken t;  // Avoid use-after-move warnings from clang-tidy.
   std::tie(payload, t) = reader.Read(std::move(token)).get().value();
-  EXPECT_THAT(payload.contents(), ElementsAre("test-contents"));
   token = std::move(t);
+  EXPECT_THAT(payload.contents(), ElementsAre("test-contents"));
   ASSERT_TRUE(token.valid());
 
   std::tie(payload, t) = reader.Read(std::move(token)).get().value();

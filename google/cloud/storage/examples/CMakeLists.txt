@@ -111,7 +111,7 @@ endforeach ()
 # experimental-storage_grpc is defined.
 set(storage_grpc_examples # cmake-format: sort
                           storage_async_samples.cc storage_grpc_samples.cc)
-# The mocking examples take the form of a unit test
+# The mocking examples take the form of a unit test.
 set(storage_grpc_unit_tests # cmake-format: sort
                             storage_async_mock_samples.cc)
 
