@@ -545,6 +545,9 @@ class PostQueryRequest {
 
   std::string const& project_id() const { return project_id_; }
   QueryRequest const& query_request() const { return query_request_; }
+  std::vector<std::string> json_filter_keys() const {
+    return json_filter_keys_;
+  }
 
   PostQueryRequest& set_project_id(std::string project_id) & {
     project_id_ = std::move(project_id);
@@ -562,6 +565,14 @@ class PostQueryRequest {
     return std::move(set_query_request(std::move(query_request)));
   }
 
+  PostQueryRequest& set_json_filter_keys(std::vector<std::string> keys) & {
+    json_filter_keys_ = std::move(keys);
+    return *this;
+  }
+  PostQueryRequest&& set_json_filter_keys(std::vector<std::string> keys) && {
+    return std::move(set_json_filter_keys(std::move(keys)));
+  }
+
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
@@ -569,6 +580,7 @@ class PostQueryRequest {
  private:
   std::string project_id_;
   QueryRequest query_request_;
+  std::vector<std::string> json_filter_keys_;
 };
 void to_json(nlohmann::json& j, PostQueryRequest const& q);
 void from_json(nlohmann::json const& j, PostQueryRequest& q);
@@ -588,7 +600,6 @@ class GetQueryResultsRequest {
   std::uint32_t const& max_results() const { return max_results_; }
 
   std::chrono::milliseconds const& timeout() const { return timeout_; }
-  DataFormatOptions const& format_options() const { return format_options_; }
 
   GetQueryResultsRequest& set_project_id(std::string project_id) & {
     project_id_ = std::move(project_id);
@@ -646,16 +657,6 @@ class GetQueryResultsRequest {
     return std::move(set_timeout(std::move(timeout)));
   }
 
-  GetQueryResultsRequest& set_format_options(
-      DataFormatOptions format_options) & {
-    format_options_ = std::move(format_options);
-    return *this;
-  }
-  GetQueryResultsRequest&& set_format_options(
-      DataFormatOptions format_options) && {
-    return std::move(set_format_options(std::move(format_options)));
-  }
-
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
@@ -670,8 +671,6 @@ class GetQueryResultsRequest {
   std::uint32_t max_results_ = 0;
 
   std::chrono::milliseconds timeout_ = std::chrono::milliseconds(0);
-
-  DataFormatOptions format_options_;
 };
 void to_json(nlohmann::json& j, GetQueryResultsRequest const& q);
 void from_json(nlohmann::json const& j, GetQueryResultsRequest& q);

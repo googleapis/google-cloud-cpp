@@ -50,6 +50,14 @@ void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
   j[name] = std::to_string(m);
 }
 
+void ToIntJson(std::chrono::milliseconds const& field, nlohmann::json& j,
+               char const* name) {
+  auto m = static_cast<std::int64_t>(
+      std::chrono::duration_cast<std::chrono::milliseconds>(field).count());
+
+  j[name] = m;
+}
+
 void FromJson(std::chrono::hours& field, nlohmann::json const& j,
               char const* name) {
   auto const m = GetNumberFromJson(j, name);

@@ -32,7 +32,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
 using ::google::cloud::bigquery_v2_minimal_internal::Dataset;
 using ::google::cloud::bigquery_v2_minimal_internal::DatasetClient;
 using ::google::cloud::bigquery_v2_minimal_internal::
@@ -445,9 +444,19 @@ StatusOr<PostQueryResults> JobBenchmark::Query() {
     }
   }
   auto json = nlohmann::json::parse(request_body, nullptr, false);
+  if (!json.is_object()) {
+    return internal::InternalError(
+        "Invalid JSON: Unable to parse request body: " + request_body,
+        GCP_ERROR_INFO());
+  }
   from_json(json, qr);
   request.set_query_request(qr);
-
+  // Remove Json fields that shouldn't be part of the Query payload for
+  // this test case.
+  request.set_json_filter_keys({"preserveNulls", "labels", "requestId",
+                                "queryParameters", "defaultDataset",
+                                "maximumBytesBilled", "formatOptions",
+                                "connectionProperties"});
   return job_client_->Query(request);
 }
 
@@ -480,11 +489,7 @@ StatusOr<GetQueryResults> JobBenchmark::QueryResults() {
   if (config_.timeout_ms > 0) {
     request.set_timeout(ToChronoMillis(config_.timeout_ms));
   }
-  if (config_.use_int64_timestamp) {
-    DataFormatOptions dfo;
-    dfo.use_int64_timestamp = config_.use_int64_timestamp;
-    request.set_format_options(dfo);
-  }
+
   return job_client_->QueryResults(request);
 }
 

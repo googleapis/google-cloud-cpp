@@ -64,10 +64,11 @@ StatusOr<InsertJobResponse> DefaultBigQueryJobRestStub::InsertJob(
   nlohmann::json json_payload;
   to_json(json_payload, request.job());
 
+  // 4) Filter out any keys that are being requested to be removed.
   auto filtered_json = RemoveJsonKeysAndEmptyFields(json_payload.dump(),
                                                     request.json_filter_keys());
 
-  // 4) Call the rest stub and parse the RestResponse.
+  // 5) Call the rest stub and parse the RestResponse.
   rest_internal::RestContext context;
   return ParseFromRestResponse<InsertJobResponse>(
       rest_stub_->Post(context, std::move(*rest_request),
@@ -107,11 +108,15 @@ StatusOr<QueryResponse> DefaultBigQueryJobRestStub::Query(
   nlohmann::json json_payload;
   to_json(json_payload, request.query_request());
 
-  // 4) Call the rest stub and parse the RestResponse.
+  // 4) Filter out any keys that are being requested to be removed.
+  auto filtered_json = RemoveJsonKeysAndEmptyFields(json_payload.dump(),
+                                                    request.json_filter_keys());
+
+  // 5) Call the rest stub and parse the RestResponse.
   rest_internal::RestContext context;
   return ParseFromRestResponse<QueryResponse>(
       rest_stub_->Post(context, std::move(*rest_request),
-                       {absl::MakeConstSpan(json_payload.dump())}));
+                       {absl::MakeConstSpan(filtered_json.dump())}));
 }
 
 StatusOr<GetQueryResultsResponse> DefaultBigQueryJobRestStub::GetQueryResults(

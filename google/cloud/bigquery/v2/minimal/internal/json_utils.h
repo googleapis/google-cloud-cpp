@@ -31,6 +31,8 @@ void FromJson(std::chrono::milliseconds& field, nlohmann::json const& j,
 
 void ToJson(std::chrono::milliseconds const& field, nlohmann::json& j,
             char const* name);
+void ToIntJson(std::chrono::milliseconds const& field, nlohmann::json& j,
+               char const* name);
 
 void FromJson(std::chrono::system_clock::time_point& field,
               nlohmann::json const& j, char const* name);

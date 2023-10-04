@@ -222,32 +222,39 @@ StatusOr<QueryResponse> QueryResponse::BuildFromHttpResponse(
   PostQueryResults query_results;
   query_results.kind = json->value("kind", "");
   query_results.page_token = json->value("pageToken", "");
-  query_results.total_rows = json->at("totalRows").get<std::uint64_t>();
+  // May not be present in certain query scenarios (e.g in dry-run mode).
+  if (json->contains("totalRows")) {
+    query_results.total_rows =
+        static_cast<std::uint64_t>(GetNumberFromJson(*json, "totalRows"));
+  }
   query_results.total_bytes_processed =
-      json->at("totalBytesProcessed").get<std::int64_t>();
+      GetNumberFromJson(*json, "totalBytesProcessed");
   query_results.num_dml_affected_rows =
-      json->at("numDmlAffectedRows").get<std::int64_t>();
+      GetNumberFromJson(*json, "numDmlAffectedRows");
 
-  query_results.job_complete = json->at("jobComplete").get<bool>();
-  query_results.cache_hit = json->at("cacheHit").get<bool>();
+  SafeGetTo(query_results.job_complete, *json, "jobComplete");
+  SafeGetTo(query_results.cache_hit, *json, "cacheHit");
+  SafeGetTo(query_results.schema, *json, "schema");
+  SafeGetTo(query_results.job_reference, *json, "jobReference");
 
-  query_results.schema = json->at("schema").get<TableSchema>();
-  query_results.job_reference = json->at("jobReference").get<JobReference>();
-
-  for (auto const& kv : json->at("rows").items()) {
-    auto const& json_struct_obj = kv.value();
-    auto const& row = json_struct_obj.get<Struct>();
-    query_results.rows.push_back(row);
+  if (json->contains("rows")) {
+    for (auto const& kv : json->at("rows").items()) {
+      auto const& json_struct_obj = kv.value();
+      auto const& row = json_struct_obj.get<Struct>();
+      query_results.rows.push_back(row);
+    }
   }
 
-  for (auto const& kv : json->at("errors").items()) {
-    auto const& json_error_proto_obj = kv.value();
-    auto const& error = json_error_proto_obj.get<ErrorProto>();
-    query_results.errors.push_back(error);
+  if (json->contains("errors")) {
+    for (auto const& kv : json->at("errors").items()) {
+      auto const& json_error_proto_obj = kv.value();
+      auto const& error = json_error_proto_obj.get<ErrorProto>();
+      query_results.errors.push_back(error);
+    }
   }
 
-  query_results.session_info = json->at("sessionInfo").get<SessionInfo>();
-  query_results.dml_stats = json->at("dmlStats").get<DmlStats>();
+  SafeGetTo(query_results.session_info, *json, "sessionInfo");
+  SafeGetTo(query_results.dml_stats, *json, "dmlStats");
 
   QueryResponse response;
   response.http_response = http_response;
@@ -370,29 +377,33 @@ GetQueryResultsResponse::BuildFromHttpResponse(
   get_query_results.kind = json->value("kind", "");
   get_query_results.etag = json->value("etag", "");
   get_query_results.page_token = json->value("pageToken", "");
-  get_query_results.total_rows = json->at("totalRows").get<std::uint64_t>();
-  get_query_results.total_bytes_processed =
-      json->at("totalBytesProcessed").get<std::int64_t>();
-  get_query_results.num_dml_affected_rows =
-      json->at("numDmlAffectedRows").get<std::int64_t>();
-
-  get_query_results.job_complete = json->at("jobComplete").get<bool>();
-  get_query_results.cache_hit = json->at("cacheHit").get<bool>();
-
-  get_query_results.schema = json->at("schema").get<TableSchema>();
-  get_query_results.job_reference =
-      json->at("jobReference").get<JobReference>();
-
-  for (auto const& kv : json->at("rows").items()) {
-    auto const& json_struct_obj = kv.value();
-    auto const& row = json_struct_obj.get<Struct>();
-    get_query_results.rows.push_back(row);
+  if (json->contains("totalRows")) {
+    get_query_results.total_rows =
+        static_cast<std::uint64_t>(GetNumberFromJson(*json, "totalRows"));
   }
+  get_query_results.total_bytes_processed =
+      GetNumberFromJson(*json, "totalBytesProcessed");
+  get_query_results.num_dml_affected_rows =
+      GetNumberFromJson(*json, "numDmlAffectedRows");
 
-  for (auto const& kv : json->at("errors").items()) {
-    auto const& json_error_proto_obj = kv.value();
-    auto const& error = json_error_proto_obj.get<ErrorProto>();
-    get_query_results.errors.push_back(error);
+  SafeGetTo(get_query_results.job_complete, *json, "jobComplete");
+  SafeGetTo(get_query_results.cache_hit, *json, "cacheHit");
+  SafeGetTo(get_query_results.schema, *json, "schema");
+  SafeGetTo(get_query_results.job_reference, *json, "jobReference");
+
+  if (json->contains("rows")) {
+    for (auto const& kv : json->at("rows").items()) {
+      auto const& json_struct_obj = kv.value();
+      auto const& row = json_struct_obj.get<Struct>();
+      get_query_results.rows.push_back(row);
+    }
+  }
+  if (json->contains("errors")) {
+    for (auto const& kv : json->at("errors").items()) {
+      auto const& json_error_proto_obj = kv.value();
+      auto const& error = json_error_proto_obj.get<ErrorProto>();
+      get_query_results.errors.push_back(error);
+    }
   }
 
   GetQueryResultsResponse response;

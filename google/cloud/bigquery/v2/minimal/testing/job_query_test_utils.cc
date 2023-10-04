@@ -98,7 +98,6 @@ GetQueryResultsRequest MakeFullGetQueryResultsRequest() {
       .set_page_token("npt123")
       .set_start_index(1)
       .set_timeout(std::chrono::milliseconds(30))
-      .set_format_options(format_options)
       .set_location("useast");
 
   return request;
