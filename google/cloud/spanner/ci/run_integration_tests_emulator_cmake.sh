@@ -33,7 +33,7 @@ CMAKE_BINARY_DIR="$(realpath "${1}")"
 readonly CMAKE_BINARY_DIR
 shift
 
-if ctest::has_tests "${CMAKE_BINARY_DIR}" "^spanner_" "${ctest_args[@]}"; then
+if ctest::has_no_tests "${CMAKE_BINARY_DIR}" "^spanner_" "${ctest_args[@]}"; then
   exit 0
 fi
 
