@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
@@ -29,7 +28,9 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/auth_header_error.h"
+#include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 #include <sstream>
@@ -42,13 +43,9 @@ namespace internal {
 
 namespace rest = google::cloud::rest_internal;
 using ::google::cloud::internal::AuthHeaderError;
+using ::google::cloud::internal::UrlEncode;
 
 namespace {
-
-std::string UrlEscapeString(std::string const& value) {
-  CurlHandle handle;
-  return std::string(handle.MakeEscapedString(value).get());
-}
 
 bool IsHttpError(rest::HttpStatusCode code) {
   return code >= rest::kMinNotSuccess;
@@ -443,9 +440,9 @@ StatusOr<ObjectMetadata> RestStub::CopyObject(
     CopyObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.source_bucket(), "/o/", UrlEscapeString(request.source_object()),
+      request.source_bucket(), "/o/", UrlEncode(request.source_object()),
       "/copyTo/b/", request.destination_bucket(), "/o/",
-      UrlEscapeString(request.destination_object())));
+      UrlEncode(request.destination_object())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -467,7 +464,7 @@ StatusOr<ObjectMetadata> RestStub::GetObjectMetadata(
     GetObjectMetadataRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -480,7 +477,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestStub::ReadObject(
     ReadObjectRangeRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -520,7 +517,7 @@ StatusOr<EmptyResponse> RestStub::DeleteObject(
     DeleteObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -533,7 +530,7 @@ StatusOr<ObjectMetadata> RestStub::UpdateObject(
     UpdateObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -549,7 +546,7 @@ StatusOr<ObjectMetadata> RestStub::PatchObject(
     PatchObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -566,7 +563,7 @@ StatusOr<ObjectMetadata> RestStub::ComposeObject(
   RestRequestBuilder builder(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/o/",
-                   UrlEscapeString(request.object_name()), "/compose"));
+                   UrlEncode(request.object_name()), "/compose"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -582,9 +579,9 @@ StatusOr<RewriteObjectResponse> RestStub::RewriteObject(
     RewriteObjectRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.source_bucket(), "/o/", UrlEscapeString(request.source_object()),
+      request.source_bucket(), "/o/", UrlEncode(request.source_object()),
       "/rewriteTo/b/", request.destination_bucket(), "/o/",
-      UrlEscapeString(request.destination_object())));
+      UrlEncode(request.destination_object())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -736,7 +733,7 @@ StatusOr<BucketAccessControl> RestStub::GetBucketAcl(
     GetBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -768,7 +765,7 @@ StatusOr<EmptyResponse> RestStub::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -781,7 +778,7 @@ StatusOr<BucketAccessControl> RestStub::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -800,7 +797,7 @@ StatusOr<BucketAccessControl> RestStub::PatchBucketAcl(
     PatchBucketAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -814,10 +811,9 @@ StatusOr<BucketAccessControl> RestStub::PatchBucketAcl(
 StatusOr<ListObjectAclResponse> RestStub::ListObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     ListObjectAclRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
-                   request.bucket_name(), "/o/",
-                   UrlEscapeString(request.object_name()), "/acl"));
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -828,10 +824,9 @@ StatusOr<ListObjectAclResponse> RestStub::ListObjectAcl(
 StatusOr<ObjectAccessControl> RestStub::CreateObjectAcl(
     rest_internal::RestContext& context, Options const& options,
     CreateObjectAclRequest const& request) {
-  RestRequestBuilder builder(
-      absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
-                   request.bucket_name(), "/o/",
-                   UrlEscapeString(request.object_name()), "/acl"));
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -850,8 +845,8 @@ StatusOr<EmptyResponse> RestStub::DeleteObjectAcl(
     DeleteObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
-      "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl/",
+      UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -864,8 +859,8 @@ StatusOr<ObjectAccessControl> RestStub::GetObjectAcl(
     GetObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
-      "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl/",
+      UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -878,8 +873,8 @@ StatusOr<ObjectAccessControl> RestStub::UpdateObjectAcl(
     UpdateObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
-      "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl/",
+      UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -898,8 +893,8 @@ StatusOr<ObjectAccessControl> RestStub::PatchObjectAcl(
     PatchObjectAclRequest const& request) {
   RestRequestBuilder builder(absl::StrCat(
       "storage/", options.get<TargetApiVersionOption>(), "/b/",
-      request.bucket_name(), "/o/", UrlEscapeString(request.object_name()),
-      "/acl/", UrlEscapeString(request.entity())));
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl/",
+      UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -948,7 +943,7 @@ StatusOr<EmptyResponse> RestStub::DeleteDefaultObjectAcl(
   RestRequestBuilder builder(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/defaultObjectAcl/",
-                   UrlEscapeString(request.entity())));
+                   UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -962,7 +957,7 @@ StatusOr<ObjectAccessControl> RestStub::GetDefaultObjectAcl(
   RestRequestBuilder builder(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/defaultObjectAcl/",
-                   UrlEscapeString(request.entity())));
+                   UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -976,7 +971,7 @@ StatusOr<ObjectAccessControl> RestStub::UpdateDefaultObjectAcl(
   RestRequestBuilder builder(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/defaultObjectAcl/",
-                   UrlEscapeString(request.entity())));
+                   UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
@@ -996,7 +991,7 @@ StatusOr<ObjectAccessControl> RestStub::PatchDefaultObjectAcl(
   RestRequestBuilder builder(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b/",
                    request.bucket_name(), "/defaultObjectAcl/",
-                   UrlEscapeString(request.entity())));
+                   UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
