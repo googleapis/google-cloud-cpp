@@ -95,8 +95,18 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
 endif ()
 
 # Search for Doxygen and create the targets for it if found.
-option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN "Generate Doxygen documentation" OFF)
+option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN [==[
+Generate Doxygen documentation. Only google-cloud-cpp developers are expected to
+use this flag.]==] OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
+
+option(
+    GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS
+    [==[
+Link to "latest" in our reference documentation. Otherwise, link to the project
+version. Only google-cloud-cpp developers are expected to use this flag.]==]
+    OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS)
 
 # Compile the DocFX tool.
 option(
@@ -104,17 +114,6 @@ option(
     "Compile the docfx tool. Only google-cloud-cpp developers are expected to use this flag."
     OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
-
-# Generate docs with relative URLs matching with the directory structure on
-# googleapis.dev hosting.
-option(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV
-       "Use relative URLs in docs for googleapis.dev" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV)
-
-# Use main as the version part of the relative URLs.
-option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
-       "Use main as the version part for refdoc relative links" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
 
 option(
     GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND

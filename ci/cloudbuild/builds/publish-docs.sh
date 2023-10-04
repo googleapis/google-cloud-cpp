@@ -38,12 +38,10 @@ else
   ENABLED_FEATURES="compute"
 fi
 
-version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
   "-DGOOGLE_CLOUD_CPP_GENERATE_DOXYGEN=ON"
   "-DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON"
-  "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
@@ -56,30 +54,15 @@ if command -v /usr/local/bin/sccache >/dev/null 2>&1; then
   )
 fi
 
-# Extract the version number if we're on a release branch.
-if grep -qP 'v\d+\.\d+\..*' <<<"${BRANCH_NAME}"; then
-  version_file="google/cloud/internal/version_info.h"
-  major="$(awk '/GOOGLE_CLOUD_CPP_VERSION_MAJOR/{print $3}' "${version_file}")"
-  minor="$(awk '/GOOGLE_CLOUD_CPP_VERSION_MINOR/{print $3}' "${version_file}")"
-  patch="$(awk '/GOOGLE_CLOUD_CPP_VERSION_PATCH/{print $3}' "${version_file}")"
-  version="${major}.${minor}.${patch}"
-else
-  version="HEAD"
-  doc_args+=("-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=ON")
+# If we're not on a release branch, point our links to "latest".
+if ! grep -qP 'v\d+\.\d+\..*' <<<"${BRANCH_NAME}"; then
+  doc_args+=("-DGOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS=ON")
 fi
 
-# |---------------------------------------------|
-# |      Bucket       |           URL           |
-# |-------------------|-------------------------|
-# |   docs-staging    |     googleapis.dev/     |
-# | test-docs-staging | staging.googleapis.dev/ |
-# |---------------------------------------------|
 # For PR and manual builds, publish to the staging site. For CI builds (release
 # and otherwise), publish to the public URL.
-bucket="test-docs-staging"
 docfx_bucket="docs-staging-v2-dev"
 if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
-  bucket="docs-staging"
   docfx_bucket="docs-staging-v2"
 fi
 
