@@ -154,6 +154,8 @@ add_library(
     internal/subscription_message_source.h
     internal/subscription_session.cc
     internal/subscription_session.h
+    internal/tracing_message_batch.cc
+    internal/tracing_message_batch.h
     message.cc
     message.h
     options.cc
@@ -277,6 +279,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/fake_streaming_pull.cc
         testing/fake_streaming_pull.h
         testing/mock_batch_sink.h
+        testing/mock_message_batch.h
         testing/mock_publisher_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
@@ -326,6 +329,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
         internal/subscription_session_test.cc
+        internal/tracing_message_batch_test.cc
         message_test.cc
         options_test.cc
         publisher_connection_test.cc
