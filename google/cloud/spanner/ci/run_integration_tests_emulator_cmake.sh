@@ -17,7 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
-source module /ci/cloudbuild/builds/lib/cmake.sh
+source module /ci/cloudbuild/builds/lib/ctest.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/lib/io.sh
 source module /google/cloud/spanner/ci/lib/spanner_emulator.sh
