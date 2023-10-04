@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         exclude-from-full-trick: [ true ]
-        os: [ macos-12 ]
+        os: [ macos-latest-xlarge ]
         shard: [ Core, Compute, Shard1, Other ]
         exclude:
         # Only full builds include shards with generated code.

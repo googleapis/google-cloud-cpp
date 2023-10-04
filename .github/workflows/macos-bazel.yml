@@ -22,7 +22,7 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
-        os: [ macos-12 ]
+        os: [ macos-latest-xlarge ]
         shard:
         - Core
         - Bigtable
