@@ -351,6 +351,11 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # generator dir.
     "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY-}"
   )
+  if [[ -r "${HOME}/.cloudcxxrc" ]]; then
+    run_flags+=(
+      "--volume=${HOME}/.cloudcxxrc:/h/.cloudcxxrc:Z"
+    )
+  fi
   # All GOOGLE_CLOUD_* env vars will be passed to the docker container.
   for e in $(env); do
     if [[ "${e}" = GOOGLE_CLOUD_* ]]; then

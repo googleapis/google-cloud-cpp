@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/ctest.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/lib/run_gcs_httpbin_emulator_utils.sh
 
@@ -32,6 +33,10 @@ BINARY_DIR="$(
 readonly BINARY_DIR
 shift
 ctest_args=("$@")
+
+if ctest::has_no_tests "${BINARY_DIR}" "^storage_" "${ctest_args[@]}"; then
+  exit 0
+fi
 
 cd "${BINARY_DIR}"
 start_emulator

@@ -17,6 +17,7 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
+source module /ci/cloudbuild/builds/lib/ctest.sh
 source module /ci/etc/integration-tests-config.sh
 
 if [[ $# -lt 1 ]]; then
@@ -31,6 +32,10 @@ BINARY_DIR="$(
 readonly BINARY_DIR
 shift
 ctest_args=("$@")
+
+if ctest::has_no_tests "${BINARY_DIR}" "^bigtable_" "${ctest_args[@]}"; then
+  exit 0
+fi
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
