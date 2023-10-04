@@ -22,6 +22,7 @@ storage_client_grpc_unit_tests = [
     "grpc_plugin_test.cc",
     "internal/async/accumulate_read_object_test.cc",
     "internal/async/connection_impl_test.cc",
+    "internal/async/connection_tracing_test.cc",
     "internal/async/insert_object_test.cc",
     "internal/async/read_payload_impl_test.cc",
     "internal/async/reader_connection_impl_test.cc",

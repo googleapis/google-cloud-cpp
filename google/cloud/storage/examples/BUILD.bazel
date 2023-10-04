@@ -91,3 +91,19 @@ cc_library(
         "//:storage",
     ],
 ) for test in storage_grpc_examples]
+
+cc_test(
+    name = "storage_otel_samples",
+    timeout = "long",
+    srcs = ["storage_otel_samples.cc"],
+    tags = [
+        "integration-test",
+    ],
+    deps = [
+        ":storage_examples_common",
+        "//:common",
+        "//:experimental-storage_grpc",
+        "//:opentelemetry",
+        "//:storage",
+    ],
+)
