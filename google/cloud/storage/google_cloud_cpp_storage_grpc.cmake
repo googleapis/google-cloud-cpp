@@ -208,7 +208,7 @@ google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
 add_library(google_cloud_cpp_storage_grpc_mocks INTERFACE)
 set(google_cloud_cpp_storage_grpc_mocks_hdrs
     # cmake-format: sort
-    mocks/mock_async_reader_connection.h)
+    mocks/mock_async_connection.h mocks/mock_async_reader_connection.h)
 export_list_to_bazel("google_cloud_cpp_storage_grpc_mocks.bzl"
                      "google_cloud_cpp_storage_grpc_mocks_hdrs" YEAR "2023")
 target_link_libraries(
