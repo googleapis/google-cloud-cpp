@@ -28,6 +28,12 @@ Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
 set(PROJECT_VERSION_PRE_RELEASE "")
 ```
 
+### Update the version info
+
+Run any CMake-based build to update `google/cloud/internal/version_info.h`. If
+you do not feel like waiting for a build, make the corresponding change in
+`google/cloud/internal/version_info.h` manually.
+
 ### Update CHANGELOG.md
 
 To update the [`CHANGELOG.md`] file, first change the "TBD" placeholder in the
@@ -36,6 +42,7 @@ latest release header to the current YYYY-MM.
 Then run the script
 
 ```bash
+git fetch upstream
 release/changes.sh
 ```
 
@@ -50,6 +57,12 @@ tweak as needed.
 - Do not list changes for internal components.
 - A change that affects all libraries should only be documented in the
   `Common Libraries` section.
+
+### Run checkers
+
+```bash
+ci/cloudbuild/build.sh -t checkers-pr
+```
 
 ### Send a PR with all these changes
 
@@ -94,11 +107,11 @@ everything looks OK:
 1. Check the latest release checkbox.
 1. Click the update release button.
 
-## Check the published docs on googleapis.dev
+## Check the published reference docs
 
-The `publish-docs` build should start automatically when you create the release
-branch. This build will upload the docs for the new release to the following
-URLs:
+The `publish-docs-release` build should start automatically when you create the
+release branch. This build will upload the docs for the new release to the
+following URLs:
 
 - https://cloud.google.com/cpp/docs/reference/
 
