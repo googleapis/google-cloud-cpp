@@ -351,7 +351,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # generator dir.
     "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY-}"
   )
-  if [[ -r "$HOME/.cloudcxxrc" ]]; then
+  if [[ -r "${HOME}/.cloudcxxrc" ]]; then
     run_flags+=(
       "--volume=${HOME}/.cloudcxxrc:/h/.cloudcxxrc:Z"
     )
