@@ -319,14 +319,6 @@ macro (google_cloud_cpp_enable_deps)
     if (experimental-storage_grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
     endif ()
-    if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        message(
-            WARNING
-                "The feature `experimental-opentelemetry` is deprecated. Please use `opentelemetry` instead."
-        )
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE experimental-opentelemetry)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 opentelemetry)
-    endif ()
     if (opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 trace)
     endif ()

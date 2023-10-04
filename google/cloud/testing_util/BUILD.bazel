@@ -45,11 +45,6 @@ cc_library(
             "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
             "@io_opentelemetry_cpp//sdk/src/trace",
         ],
-        "//google/cloud:enable_opentelemetry_valid-transition": [
-            "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
-            "@io_opentelemetry_cpp//sdk/src/trace",
-        ],
-        "//conditions:default": [],
     }),
 )
 

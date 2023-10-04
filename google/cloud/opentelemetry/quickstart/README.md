@@ -165,7 +165,7 @@ install `*.pc` files, so it is not yet usable with `make`.
 
    ```bash
    cd $HOME/vcpkg
-   ./vcpkg install google-cloud-cpp[core,experimental-opentelemetry,storage]
+   ./vcpkg install google-cloud-cpp[core,opentelemetry,storage]
    ```
 
    Note that, as it is often the case with C++ libraries, compiling these
