@@ -30,11 +30,11 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::AsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
-using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
