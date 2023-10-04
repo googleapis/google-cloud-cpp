@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/url_encode.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -33,13 +34,13 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateDatabase(
     CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsad::v1::CreateDatabaseRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
 }
 
 StatusOr<gsad::v1::Database> DatabaseAdminMetadata::GetDatabase(
     grpc::ClientContext& context, gsad::v1::GetDatabaseRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, "name=" + internal::UrlEncode(request.name()));
   return child_->GetDatabase(context, request);
 }
 
@@ -47,7 +48,7 @@ StatusOr<gsad::v1::GetDatabaseDdlResponse>
 DatabaseAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context,
     gsad::v1::GetDatabaseDdlRequest const& request) {
-  SetMetadata(context, "database=" + request.database());
+  SetMetadata(context, "database=" + internal::UrlEncode(request.database()));
   return child_->GetDatabaseDdl(context, request);
 }
 
@@ -55,14 +56,14 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsad::v1::UpdateDatabaseDdlRequest const& request) {
-  SetMetadata(*context, "database=" + request.database());
+  SetMetadata(*context, "database=" + internal::UrlEncode(request.database()));
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
 }
 
 Status DatabaseAdminMetadata::DropDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  SetMetadata(context, "database=" + request.database());
+  SetMetadata(context, "database=" + internal::UrlEncode(request.database()));
   return child_->DropDatabase(context, request);
 }
 
@@ -70,7 +71,7 @@ StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminMetadata::ListDatabases(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->ListDatabases(context, request);
 }
 
@@ -78,21 +79,21 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncRestoreDatabase(
     CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsad::v1::RestoreDatabaseRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, "resource=" + internal::UrlEncode(request.resource()));
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, "resource=" + internal::UrlEncode(request.resource()));
   return child_->SetIamPolicy(context, request);
 }
 
@@ -100,7 +101,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, "resource=" + request.resource());
+  SetMetadata(context, "resource=" + internal::UrlEncode(request.resource()));
   return child_->TestIamPermissions(context, request);
 }
 
@@ -108,20 +109,20 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCreateBackup(
     CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsad::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
+  SetMetadata(*context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
 StatusOr<gsad::v1::Backup> DatabaseAdminMetadata::GetBackup(
     grpc::ClientContext& context, gsad::v1::GetBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, "name=" + internal::UrlEncode(request.name()));
   return child_->GetBackup(context, request);
 }
 
 Status DatabaseAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, "name=" + internal::UrlEncode(request.name()));
   return child_->DeleteBackup(context, request);
 }
 
@@ -129,14 +130,15 @@ StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DatabaseAdminMetadata::ListBackups(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->ListBackups(context, request);
 }
 
 StatusOr<gsad::v1::Backup> DatabaseAdminMetadata::UpdateBackup(
     grpc::ClientContext& context,
     gsad::v1::UpdateBackupRequest const& request) {
-  SetMetadata(context, "backup.name=" + request.backup().name());
+  SetMetadata(context,
+              "backup.name=" + internal::UrlEncode(request.backup().name()));
   return child_->UpdateBackup(context, request);
 }
 
@@ -145,7 +147,7 @@ DatabaseAdminMetadata::ListBackupOperations(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->ListBackupOperations(context, request);
 }
 
@@ -154,7 +156,7 @@ DatabaseAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  SetMetadata(context, "parent=" + internal::UrlEncode(request.parent()));
   return child_->ListDatabaseOperations(context, request);
 }
 
@@ -162,14 +164,14 @@ future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncGetOperation(
     CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, "name=" + internal::UrlEncode(request.name()));
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> DatabaseAdminMetadata::AsyncCancelOperation(
     CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
+  SetMetadata(*context, "name=" + internal::UrlEncode(request.name()));
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 

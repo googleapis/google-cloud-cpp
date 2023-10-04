@@ -17,7 +17,6 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/url_encode.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
@@ -72,10 +71,10 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
   gsad::v1::CreateDatabaseRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.AsyncCreateDatabase(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
@@ -96,12 +95,12 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
   gsad::v1::UpdateDatabaseDdlRequest request;
-  request.set_database(internal::UrlEncode(
+  request.set_database(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-database")
-          .FullName()));
+          .FullName());
   auto response = stub.AsyncUpdateDatabaseDdl(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
@@ -121,12 +120,12 @@ TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::DropDatabaseRequest request;
-  request.set_database(internal::UrlEncode(
+  request.set_database(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-database")
-          .FullName()));
+          .FullName());
   auto status = stub.DropDatabase(context, request);
   EXPECT_EQ(TransientError(), status);
 }
@@ -145,10 +144,10 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::ListDatabasesRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.ListDatabases(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -168,10 +167,10 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
   gsad::v1::RestoreDatabaseRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.AsyncRestoreDatabase(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
@@ -191,12 +190,12 @@ TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   google::iam::v1::GetIamPolicyRequest request;
-  request.set_resource(internal::UrlEncode(
+  request.set_resource(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-database")
-          .FullName()));
+          .FullName());
   auto response = stub.GetIamPolicy(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -215,12 +214,12 @@ TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   google::iam::v1::SetIamPolicyRequest request;
-  request.set_resource(internal::UrlEncode(
+  request.set_resource(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-database")
-          .FullName()));
+          .FullName());
   google::iam::v1::Policy policy;
   auto& binding = *policy.add_bindings();
   binding.set_role("roles/spanner.databaseReader");
@@ -246,12 +245,12 @@ TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   google::iam::v1::TestIamPermissionsRequest request;
-  request.set_resource(internal::UrlEncode(
+  request.set_resource(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-database")
-          .FullName()));
+          .FullName());
   auto response = stub.TestIamPermissions(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -271,10 +270,10 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
   gsad::v1::CreateBackupRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.AsyncCreateBackup(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
@@ -294,12 +293,12 @@ TEST_F(DatabaseAdminMetadataTest, GetBackup) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::GetBackupRequest request;
-  request.set_name(internal::UrlEncode(
+  request.set_name(
       google::cloud::spanner::Backup(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-backup-id")
-          .FullName()));
+          .FullName());
   auto status = stub.GetBackup(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
@@ -318,12 +317,12 @@ TEST_F(DatabaseAdminMetadataTest, DeleteBackup) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::DeleteBackupRequest request;
-  request.set_name(internal::UrlEncode(
+  request.set_name(
       google::cloud::spanner::Backup(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-backup-id")
-          .FullName()));
+          .FullName());
   auto status = stub.DeleteBackup(context, request);
   EXPECT_EQ(TransientError(), status);
 }
@@ -342,10 +341,10 @@ TEST_F(DatabaseAdminMetadataTest, ListBackups) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::ListBackupsRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.ListBackups(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -364,12 +363,12 @@ TEST_F(DatabaseAdminMetadataTest, UpdateBackup) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::UpdateBackupRequest request;
-  request.mutable_backup()->set_name(internal::UrlEncode(
+  request.mutable_backup()->set_name(
       google::cloud::spanner::Backup(
           google::cloud::spanner::Instance(
               google::cloud::Project("test-project-id"), "test-instance-id"),
           "test-backup-id")
-          .FullName()));
+          .FullName());
   auto status = stub.UpdateBackup(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
@@ -388,10 +387,10 @@ TEST_F(DatabaseAdminMetadataTest, ListBackupOperations) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::ListBackupOperationsRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.ListBackupOperations(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -410,10 +409,10 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
   gsad::v1::ListDatabaseOperationsRequest request;
-  request.set_parent(internal::UrlEncode(
+  request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
-          .FullName()));
+          .FullName());
   auto response = stub.ListDatabaseOperations(context, request);
   EXPECT_EQ(TransientError(), response.status());
 }
@@ -432,7 +431,7 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
   google::longrunning::GetOperationRequest request;
-  request.set_name(internal::UrlEncode("operations/fake-operation-name"));
+  request.set_name("operations/fake-operation-name");
   auto response = stub.AsyncGetOperation(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
@@ -452,7 +451,7 @@ TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
   google::longrunning::CancelOperationRequest request;
-  request.set_name(internal::UrlEncode("operations/fake-operation-name"));
+  request.set_name("operations/fake-operation-name");
   auto status = stub.AsyncCancelOperation(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get());
