@@ -44,7 +44,6 @@ TEST(TracingMessageBatch, SaveMessage) {
 
   span->End();
   auto spans = message_batch->GetSpans();
-  EXPECT_THAT(spans, SizeIs(1));
   EXPECT_THAT(spans, ElementsAre(span));
 }
 
@@ -66,7 +65,6 @@ TEST(TracingMessageBatch, SaveMultipleMessages) {
   span2->End();
 
   auto spans = message_batch->GetSpans();
-  EXPECT_THAT(spans, SizeIs(2));
   EXPECT_THAT(spans, ElementsAre(span1, span2));
 }
 
