@@ -33,7 +33,7 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
-if ctest::has_tests "${BINARY_DIR}" "^bigtable_" "${ctest_args[@]}"; then
+if ctest::has_no_tests "${BINARY_DIR}" "^bigtable_" "${ctest_args[@]}"; then
   exit 0
 fi
 

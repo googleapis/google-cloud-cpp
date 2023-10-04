@@ -82,7 +82,7 @@ function ctest::common_args() {
   printf "%s\n" "${args[@]}"
 }
 
-function ctest::has_tests() {
+function ctest::has_no_tests() {
   local dir="$1"
   local prefix="$2"
   shift 2
