@@ -23,6 +23,7 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_CMAKE_SH__++ != 0)); then
 fi # include guard
 
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/ctest.sh
 source module ci/lib/io.sh
 
 io::log "Using CMake version"
@@ -67,25 +68,4 @@ function cmake::common_args() {
     )
   fi
   printf "%s\n" "${args[@]}"
-}
-
-function ctest::common_args() {
-  local args
-  args=(
-    # Print the full output on failures
-    --output-on-failure
-    # Run many tests in parallel, use -j for compatibility with old versions
-    -j "$(nproc)"
-    # Make the output shorter on interactive tests
-    --progress
-  )
-  printf "%s\n" "${args[@]}"
-}
-
-function ctest::has_no_tests() {
-  local dir="$1"
-  local prefix="$2"
-  shift 2
-  local ctest_args=("$@")
-  ctest --test-dir "${dir}" --show-only -R "${prefix}" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'
 }
