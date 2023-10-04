@@ -19,6 +19,7 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/linux.sh
 source module ci/gha/builds/lib/cmake.sh
+source module ci/gha/builds/lib/ctest.sh
 
 mapfile -t args < <(cmake::common_args)
 mapfile -t vcpkg_args < <(cmake::vcpkg_args)
