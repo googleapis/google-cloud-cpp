@@ -136,6 +136,12 @@ std::map<std::string, std::string> ScaffoldVars(
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
+  vars["product_namespace"] = absl::StrReplaceAll(
+      absl::StripSuffix(
+          absl::StrCat(library, "_",
+                       ServiceSubdirectory(service.product_path())),
+          "/"),
+      {{"/", "::"}});
   vars["product_options_page"] = OptionsGroup(service.product_path());
   vars["service_subdirectory"] = ServiceSubdirectory(service.product_path());
   vars["site_root"] = SiteRoot(service);
@@ -480,8 +486,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         NAME $library$_quickstart
         COMMAND cmake -P "$${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
                 $$<TARGET_FILE:$library$_quickstart> GOOGLE_CLOUD_PROJECT
-                # EDIT HERE
-                )
+                GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
+    )
     set_tests_properties($library$_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
@@ -942,22 +948,23 @@ void GenerateQuickstartSkeleton(
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/$library$/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/$library$/$service_subdirectory$ EDIT HERE _client.h"
+#include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace $library$ = ::google::cloud::$library$;
-  auto client = $library$::Client(
-      $library$::MakeConnection());
+  auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
+  namespace $library$ = ::google::cloud::$product_namespace$;
+  auto client = $library$::ServiceClient(
+      $library$::MakeServiceConnection());  // EDIT HERE
+
+  for (auto r : client.List/*EDIT HERE*/(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
