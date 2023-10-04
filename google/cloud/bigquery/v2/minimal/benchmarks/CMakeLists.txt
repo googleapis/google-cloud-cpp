@@ -69,6 +69,7 @@ set(experimental_bigquery_rest_client_benchmark_programs
     # cmake-format: sort
     dataset_benchmark_programs.cc
     job_insert_benchmark_programs.cc
+    job_query_benchmark_programs.cc
     job_readonly_benchmark_programs.cc
     project_benchmark_programs.cc
     table_benchmark_programs.cc)

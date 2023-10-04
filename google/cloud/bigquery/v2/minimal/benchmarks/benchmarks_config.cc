@@ -60,24 +60,32 @@ std::string insert_job_request_body =
     R"(,"queryParameters":[{"parameterType":{"type":"STRING"},"parameterValue":{"value":"testdata"}}]}}})";
 
 std::string query_create_replace_dr_request_body =
-    R"({"query":"create or replace table ODBCTESTDATASET.ODBCTESTTABLE_QUERY \u0028name STRING\u0029")"
+    R"({"kind":"job")"
+    R"(,"query":"create or replace table ODBCTESTDATASET.ODBCTESTTABLE_QUERY \u0028name STRING\u0029")"
     R"(,"dryRun":true,"maxResults":100000,"useLegacySql":false)"
+    R"(,"location":"US")"
     R"(,"timeoutMs":10000,"useQueryCache":true,"createSession":false,"parameterMode":"POSITIONAL"})";
 
 std::string query_create_replace_request_body =
-    R"({"query":"create or replace table ODBCTESTDATASET.ODBCTESTTABLE_QUERY \u0028name STRING\u0029")"
+    R"({"kind":"job")"
+    R"(,"query":"create or replace table ODBCTESTDATASET.ODBCTESTTABLE_QUERY \u0028name STRING\u0029")"
     R"(,"dryRun":false,"maxResults":100000,"useLegacySql":false)"
+    R"(,"location":"US")"
     R"(,"timeoutMs":10000,"useQueryCache":true,"createSession":false})";
 
 std::string query_drop_dr_request_body =
-    R"({"query":"drop table if exists ODBCTESTDATASET.ODBCTESTTABLE_QUERY")"
+    R"({"kind":"job")"
+    R"(,"query":"drop table if exists ODBCTESTDATASET.ODBCTESTTABLE_QUERY")"
     R"(,"dryRun":true,"maxResults":100000)"
+    R"(,"location":"US")"
     R"(,"useLegacySql":false,"timeoutMs":10000)"
     R"(,"useQueryCache":true,"createSession":false,"parameterMode":"POSITIONAL"})";
 
 std::string query_drop_request_body =
-    R"({"query":"drop table if exists ODBCTESTDATASET.ODBCTESTTABLE_QUERY")"
+    R"({"kind":"job")"
+    R"(,"query":"drop table if exists ODBCTESTDATASET.ODBCTESTTABLE_QUERY")"
     R"(,"dryRun":false,"maxResults":100000)"
+    R"(,"location":"US")"
     R"(,"useLegacySql":false,"timeoutMs":10000)"
     R"(,"useQueryCache":true,"createSession":false})";
 
