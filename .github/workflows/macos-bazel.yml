@@ -14,7 +14,7 @@ permissions:
 jobs:
   bazel:
     name: bazel + ${{ matrix.os }} + ${{ matrix.shard }}
-    runs-on: ${{ matrix.os }}-xl
+    runs-on: ${{ matrix.os }}-xlarge
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -22,7 +22,7 @@ jobs:
       # Continue other builds even if one fails
       fail-fast: false
       matrix:
-        os: [ macos-latest-xlarge ]
+        os: [ macos-13 ]
         shard:
         - Core
         - Bigtable
