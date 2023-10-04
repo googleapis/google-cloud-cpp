@@ -34,3 +34,11 @@ function ctest::common_args() {
   )
   printf "%s\n" "${args[@]}"
 }
+
+function ctest::has_no_tests() {
+  local dir="$1"
+  local prefix="$2"
+  shift 2
+  local ctest_args=("$@")
+  ctest --test-dir "${dir}" --show-only -R "${prefix}" "${ctest_args[@]}" 2>&1 | grep -q 'Total Tests: 0'
+}
