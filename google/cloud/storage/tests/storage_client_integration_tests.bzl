@@ -39,7 +39,6 @@ storage_client_integration_tests = [
     "grpc_object_metadata_integration_test.cc",
     "grpc_service_account_integration_test.cc",
     "key_file_integration_test.cc",
-    "minimal_iam_credentials_rest_integration_test.cc",
     "object_basic_crud_integration_test.cc",
     "object_checksum_integration_test.cc",
     "object_compose_many_integration_test.cc",
@@ -75,5 +74,12 @@ storage_client_integration_tests = [
     "storage_include_test.cc",
     "thread_integration_test.cc",
     "tracing_integration_test.cc",
+    "unified_credentials_integration_test.cc",
+]
+
+storage_client_integration_tests_production = [
+    "alternative_endpoint_integration_test.cc",
+    "key_file_integration_test.cc",
+    "signed_url_integration_test.cc",
     "unified_credentials_integration_test.cc",
 ]

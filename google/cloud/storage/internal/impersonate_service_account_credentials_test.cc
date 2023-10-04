@@ -32,10 +32,11 @@ using ::testing::EndsWith;
 using ::testing::Return;
 using ::testing::StartsWith;
 
-class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
+class MockMinimalIamCredentialsRest
+    : public oauth2_internal::MinimalIamCredentialsRest {
  public:
   MOCK_METHOD(StatusOr<google::cloud::AccessToken>, GenerateAccessToken,
-              (GenerateAccessTokenRequest const&), (override));
+              (oauth2_internal::GenerateAccessTokenRequest const&), (override));
 };
 
 TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
