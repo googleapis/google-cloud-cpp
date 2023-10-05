@@ -17,6 +17,7 @@
 
 #include "generator/internal/discovery_document.h"
 #include "generator/internal/discovery_file.h"
+#include "generator/internal/discovery_proto_export_file.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/status_or.h"
@@ -70,8 +71,11 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
 
 // Creates a DiscoveryFile object for each resource and its request types, as
 // well as creates a DiscoveryFile for each group of common types that are
-// depended upon by the same set types.
-StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
+// depended upon by the same set types. Also creates a
+// DiscoveryProtoExportFile for each resource.
+StatusOr<std::pair<std::vector<DiscoveryFile>,
+                   std::vector<DiscoveryProtoExportFile>>>
+AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,

@@ -127,6 +127,9 @@ std::string FormatCommentKeyValueList(
     std::string const& comment_introducer = "// ", std::size_t indent_width = 2,
     std::size_t line_length = 80);
 
+// Formats a header include guard per the provided header_path.
+std::string FormatHeaderIncludeGuard(absl::string_view header_path);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

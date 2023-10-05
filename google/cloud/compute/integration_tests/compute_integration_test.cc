@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/compute/disks/v1/disks_client.h"
+#include "google/cloud/compute/disks/v1/disks_proto_export.h"
 #include "google/cloud/compute/instances/v1/instances_client.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
