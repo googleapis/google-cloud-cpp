@@ -32,17 +32,17 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::TableBenchmark;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::TableConfig;
 
 char const kDescription[] =
-    R"""(Measures the latency of Bigquery's `GetTable()` and
-    `ListTables()` apis.
+    R"""(Measures the latency of BigQuery's `GetTable()` and
+    `ListTables()` APIs.
 
-This benchmark measures the latency of Bigquery's `GetTable()` and
-    `ListTables()` apis.  The benchmark:
+This benchmark measures the latency of BigQuery's `GetTable()` and
+    `ListTables()` APIs.  The benchmark:
 - Starts T threads as supplied in the command-line, executing the
   following loop:
 - Runs for the test duration as supplied in the command-line, constantly
   executing this basic block:
   - Randomly, with 50% probability, makes a rest call to `GetTable()`
-    and `ListTables()` apis alternatively.
+    and `ListTables()` APIs alternatively.
   - If either call fail, the test returns with the failure message.
   - Reports progress based on the total executing time and where the
     test is currently.
@@ -171,7 +171,7 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   std::cout << "# Table Benchmark STARTED For GetTable() and "
-               "ListTables() apis with test duration as ["
+               "ListTables() APIs with test duration as ["
             << config.test_duration.count() << "] seconds"
             << "\n"
             << std::flush;
