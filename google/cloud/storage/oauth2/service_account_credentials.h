@@ -15,12 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H
 
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/curl/request_builder.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/sha256_hash.h"
@@ -308,8 +311,7 @@ class ServiceAccountCredentials : public Credentials {
 
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const {
     HttpRequestBuilderType builder(
-        info_.token_uri,
-        storage::internal::GetDefaultCurlHandleFactory(options_));
+        info_.token_uri, rest_internal::GetDefaultCurlHandleFactory(options_));
     builder.AddHeader("Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
