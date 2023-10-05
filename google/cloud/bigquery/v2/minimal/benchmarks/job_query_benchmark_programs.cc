@@ -54,7 +54,7 @@ The test then waits for all the threads to finish and:
 
 Caution:
 
-- When running query api in non dry-run mode, a test duration of greater than 2 seconds
+- When running query API in non dry-run mode, a test duration of greater than 2 seconds
   (or when number of query operations exceed 4)
   can result in quota errors especially for DDL statements. This is because bigquery enforces
   quotas for table creates and updates. For more information on troubleshooting bigquery quotas

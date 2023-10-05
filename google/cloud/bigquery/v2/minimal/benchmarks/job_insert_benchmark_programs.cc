@@ -32,9 +32,9 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::JobConfig;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
 
 char const kDescription[] =
-    R"""(Measures the latency of Bigquery's `InsertJob()` api.
+    R"""(Measures the latency of BigQuery's `InsertJob()` API.
 
-This benchmark measures the latency of Bigquery's `InsertJob()` api.
+This benchmark measures the latency of BigQuery's `InsertJob()` API.
 
 PreRequisites:
 - Ensure the project given as command line argument, has a dataset called `ODBCTESTDATASET`
@@ -51,7 +51,7 @@ The benchmark:
   following loop:
 - Runs for the test duration as supplied in the command-line, constantly
   executing this basic block:
-  - Makes a rest call to `InsertJob()` api.
+  - Makes a rest call to `InsertJob()` API.
   - If the call fails, the test returns with the failure message.
   - if the call fails due to duplicate job id then loop continues and duplicate
     count is registered.This should ideally not happen if jobId is unique
@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) {
     if (config.wants_help) {
       std::cout
           << "The usage information for Job benchmark lists out all the "
-             "flags needed by all the apis being benchmarked, namely: GetJob, "
+             "flags needed by all the APIs being benchmarked, namely: GetJob, "
              "ListJobs, Query, GetqueryResults and InsertJob."
           << "\n"
           << std::flush;
@@ -171,7 +171,7 @@ int main(int argc, char* argv[]) {
               << std::flush;
     return 0;
   }
-  std::cout << "# Job Benchmark STARTED For InsertJob() api with test "
+  std::cout << "# Job Benchmark STARTED For InsertJob() API with test "
                "duration as ["
             << config.test_duration.count() << "] seconds"
             << "\n"

@@ -32,15 +32,15 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::ProjectBenchmark;
 
 char const kDescription[] =
-    R"""(Measures the latency of Bigquery's`ListProjects()` api.
+    R"""(Measures the latency of BigQuery's`ListProjects()` API.
 
-This benchmark measures the latency of Bigquery's `ListProjects()` api.
+This benchmark measures the latency of BigQuery's `ListProjects()` API.
 The benchmark:
 - Starts T threads as supplied in the command-line, executing the
   following loop:
 - Runs for the test duration as supplied in the command-line, constantly
   executing this basic block:
-  - Makes a rest call to `ListProjects()` api.
+  - Makes a rest call to `ListProjects()` API.
   - If the call fails, the test returns with the failure message.
   - Reports progress based on the total executing time and where the
     test is currently.
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
               << std::flush;
     return 0;
   }
-  std::cout << "# Project Benchmark STARTED For ListProjects() api with test "
+  std::cout << "# Project Benchmark STARTED For ListProjects() API with test "
                "duration as ["
             << config.test_duration.count() << "] seconds"
             << "\n"

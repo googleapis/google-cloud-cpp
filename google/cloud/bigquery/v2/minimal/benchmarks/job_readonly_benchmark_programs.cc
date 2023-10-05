@@ -31,17 +31,17 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::JobConfig;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
 
 char const kDescription[] =
-    R"""(Measures the latency of Bigquery's `GetJob()` and
-    `ListJobs()` apis.
+    R"""(Measures the latency of BigQuery's `GetJob()` and
+    `ListJobs()` APIs.
 
-This benchmark measures the latency of Bigquery's `GetJob()` and
-    `ListJobs()` apis.  The benchmark:
+This benchmark measures the latency of BigQuery's `GetJob()` and
+    `ListJobs()` APIs.  The benchmark:
 - Starts T threads as supplied in the command-line, executing the
   following loop:
 - Runs for the test duration as supplied in the command-line, constantly
   executing this basic block:
   - Randomly, with 50% probability, makes a rest call to `GetJob()`
-    and `ListJobs()` apis alternatively.
+    and `ListJobs()` APIs alternatively.
   - If either call fail, the test returns with the failure message.
   - Reports progress based on the total executing time and where the
     test is currently.
@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
     if (config.wants_help) {
       std::cout
           << "The usage information for Job benchmark lists out all the "
-             "flags needed by all the apis being benchmarked, namely: GetJob, "
+             "flags needed by all the APIs being benchmarked, namely: GetJob, "
              "ListJobs, Query, GetqueryResults and InsertJob."
           << "\n"
           << std::flush;
@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   std::cout << "# Job Benchmark STARTED For GetJob() and "
-               "ListJobs() apis with test duration as ["
+               "ListJobs() APIs with test duration as ["
             << config.test_duration.count() << "] seconds"
             << "\n"
             << std::flush;

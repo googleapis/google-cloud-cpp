@@ -32,17 +32,17 @@ using ::google::cloud::bigquery_v2_minimal_benchmarks::FormatDuration;
 using ::google::cloud::bigquery_v2_minimal_benchmarks::OperationResult;
 
 char const kDescription[] =
-    R"""(Measures the latency of Bigquery's `GetDataset()` and
-    `ListDatasets()` apis.
+    R"""(Measures the latency of BigQuery's `GetDataset()` and
+    `ListDatasets()` APIs.
 
-This benchmark measures the latency of Bigquery's `GetDataset()` and
-    `ListDatasets()` apis.  The benchmark:
+This benchmark measures the latency of BigQuery's `GetDataset()` and
+    `ListDatasets()` APIs.  The benchmark:
 - Starts T threads as supplied in the command-line, executing the
   following loop:
 - Runs for the test duration as supplied in the command-line, constantly
   executing this basic block:
   - Randomly, with 50% probability, makes a rest call to `GetDataset()`
-    and `ListDatasets()` apis alternatively.
+    and `ListDatasets()` APIs alternatively.
   - If either call fail, the test returns with the failure message.
   - Reports progress based on the total executing time and where the
     test is currently.
@@ -172,7 +172,7 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   std::cout << "# Dataset Benchmark STARTED For GetDataset() and "
-               "ListDatasets() apis with test duration as ["
+               "ListDatasets() APIs with test duration as ["
             << config.test_duration.count() << "] seconds"
             << "\n"
             << std::flush;
