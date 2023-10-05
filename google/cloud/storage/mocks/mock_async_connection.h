@@ -16,8 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_MOCKS_MOCK_ASYNC_CONNECTION_H
 
 #include "google/cloud/storage/async_connection.h"
+#include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
