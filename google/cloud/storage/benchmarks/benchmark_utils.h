@@ -89,7 +89,6 @@ enum class ExperimentTransport {
   kDirectPath,
   kGrpc,
   kJson,
-  kJsonV2,
 };
 
 StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val);

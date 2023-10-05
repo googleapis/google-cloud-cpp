@@ -51,7 +51,6 @@ struct ThroughputOptions {
   std::vector<ExperimentTransport> transports = {
       ExperimentTransport::kGrpc,
       ExperimentTransport::kJson,
-      ExperimentTransport::kJsonV2,
   };
   std::vector<std::string> upload_functions = {"InsertObject", "WriteObject"};
   std::vector<bool> enabled_crc32c = {false, true};

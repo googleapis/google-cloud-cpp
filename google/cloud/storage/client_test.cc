@@ -157,43 +157,6 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 
 /// @test Verify the constructor creates the right set of StorageConnection
 /// decorations.
-TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
-  ScopedEnvironment logging("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
-  ScopedEnvironment curl("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP", "yes");
-
-  // Create a client, use the anonymous credentials because on the CI
-  // environment there may not be other credentials configured.
-  auto tested =
-      Client(Options{}
-                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                 .set<TracingComponentsOption>({}));
-
-  auto const impl = ClientImplDetails::GetConnection(tested);
-  ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "StorageConnectionImpl"));
-}
-
-/// @test Verify the constructor creates the right set of StorageConnection
-/// decorations.
-TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
-  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
-                                 "yes");
-  // Create a client, use the anonymous credentials because on the CI
-  // environment there may not be other credentials configured.
-  auto tested =
-      Client(Options{}
-                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                 .set<TracingComponentsOption>({"raw-client"}));
-
-  auto const impl = ClientImplDetails::GetConnection(tested);
-  ASSERT_THAT(impl, NotNull());
-  EXPECT_THAT(impl->InspectStackStructure(),
-              ElementsAre("CurlStub", "LoggingStub", "StorageConnectionImpl"));
-}
-
-/// @test Verify the constructor creates the right set of StorageConnection
-/// decorations.
 TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
 
@@ -202,7 +165,6 @@ TEST_F(ClientTest, DefaultDecoratorsRestClient) {
   auto tested =
       Client(Options{}
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                 .set<internal::UseRestClientOption>(true)
                  .set<TracingComponentsOption>({}));
 
   auto const impl = ClientImplDetails::GetConnection(tested);
@@ -223,7 +185,6 @@ TEST_F(ClientTest, LoggingDecoratorsRestClient) {
   auto tested =
       Client(Options{}
                  .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                 .set<internal::UseRestClientOption>(true)
                  .set<TracingComponentsOption>({"raw-client"}));
 
   auto const impl = ClientImplDetails::GetConnection(tested);
@@ -245,7 +206,6 @@ TEST_F(ClientTest, OTelEnableTracing) {
   // environment there may not be other credentials configured.
   auto options = Options{}
                      .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                     .set<internal::UseRestClientOption>(true)
                      .set<TracingComponentsOption>({"raw-client"});
 
   auto tested = Client(EnableTracing(std::move(options)));
@@ -266,7 +226,6 @@ TEST_F(ClientTest, OTelDisableTracing) {
   // environment there may not be other credentials configured.
   auto options = Options{}
                      .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-                     .set<internal::UseRestClientOption>(true)
                      .set<TracingComponentsOption>({"raw-client"});
 
   auto tested = Client(DisableTracing(std::move(options)));

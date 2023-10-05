@@ -22,7 +22,6 @@ storage_client_integration_tests = [
     "auto_finalize_integration_test.cc",
     "bucket_integration_test.cc",
     "create_client_integration_test.cc",
-    "curl_download_request_integration_test.cc",
     "curl_request_integration_test.cc",
     "curl_sign_blob_integration_test.cc",
     "decompressive_transcoding_integration_test.cc",
