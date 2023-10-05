@@ -110,6 +110,7 @@ class JobBenchmark : public Benchmark {
   StatusOr<bigquery_v2_minimal_internal::Job> GetJob();
   StreamRange<bigquery_v2_minimal_internal::ListFormatJob> ListJobs();
   StatusOr<bigquery_v2_minimal_internal::Job> InsertJob();
+  StatusOr<bigquery_v2_minimal_internal::Job> CancelJob();
   StatusOr<bigquery_v2_minimal_internal::PostQueryResults> Query();
   StatusOr<bigquery_v2_minimal_internal::GetQueryResults> QueryResults();
 

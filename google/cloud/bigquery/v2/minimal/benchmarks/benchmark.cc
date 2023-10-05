@@ -32,6 +32,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_benchmarks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_internal::CancelJobRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::Dataset;
 using ::google::cloud::bigquery_v2_minimal_internal::DatasetClient;
 using ::google::cloud::bigquery_v2_minimal_internal::
@@ -266,6 +267,27 @@ StatusOr<Job> JobBenchmark::GetJob() {
     request.set_location(config_.location);
   }
   return job_client_->GetJob(request);
+}
+
+StatusOr<Job> JobBenchmark::CancelJob() {
+  CancelJobRequest request;
+  if (config_.project_id.empty()) {
+    return internal::InvalidArgumentError(
+        "project_id config parameter is empty.", GCP_ERROR_INFO());
+  }
+  if (config_.job_id.empty()) {
+    return internal::InvalidArgumentError("job_id config parameter is empty.",
+                                          GCP_ERROR_INFO());
+  }
+  request.set_project_id(config_.project_id);
+  request.set_job_id(config_.job_id);
+
+  // Optional parameters.
+  if (!config_.location.empty()) {
+    request.set_location(config_.location);
+  }
+
+  return job_client_->CancelJob(request);
 }
 
 StreamRange<ListFormatDataset> DatasetBenchmark::ListDatasets() {
