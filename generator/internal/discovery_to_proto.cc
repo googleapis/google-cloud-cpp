@@ -14,6 +14,7 @@
 
 #include "generator/internal/discovery_to_proto.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/discovery_proto_export_file.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -437,7 +438,9 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   return files;
 }
 
-StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
+StatusOr<std::pair<std::vector<DiscoveryFile>,
+                   std::vector<DiscoveryProtoExportFile>>>
+AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
@@ -509,7 +512,23 @@ StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
                  common_files_by_resource.end(), std::back_inserter(files),
                  [](auto p) { return p.second; });
 
-  return files;
+  std::vector<DiscoveryProtoExportFile> export_files;
+  for (auto const& r : resources) {
+    auto proto_export_path = absl::StrFormat(
+        "google/cloud/%s/%s/%s/%s_proto_export.h",
+        document_properties.product_name, CamelCaseToSnakeCase(r.first),
+        document_properties.version, CamelCaseToSnakeCase(r.first));
+    std::set<std::string> includes;
+    for (auto const& f : common_files_by_resource) {
+      if (absl::StrContains(f.first, r.first)) {
+        includes.insert(f.second.relative_proto_path());
+      }
+    }
+    export_files.emplace_back(absl::StrCat(output_path, "/", proto_export_path),
+                              proto_export_path, std::move(includes));
+  }
+
+  return std::make_pair(std::move(files), std::move(export_files));
 }
 
 StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json) {
@@ -619,13 +638,13 @@ Status GenerateProtosFromDiscoveryDoc(
   // this mutation of the DescriptorPool before we begin the threaded write
   // process. Additionally, populating the DescriptorPool allows us to snapshot
   // the existing proto files before we overwrite them in place.
-  for (auto const& f : *files) {
+  for (auto const& f : files->first) {
     (void)descriptor_pool.FindFileByName(f.relative_proto_path());
   }
 
   std::vector<std::future<google::cloud::Status>> tasks;
-  tasks.reserve(files->size());
-  for (auto f : *files) {
+  tasks.reserve(files->first.size());
+  for (auto f : files->first) {
     tasks.push_back(std::async(
         std::launch::async,
         [](DiscoveryFile const& f,
@@ -634,6 +653,13 @@ Status GenerateProtosFromDiscoveryDoc(
           return f.WriteFile(document_properties, types);
         },
         std::move(f), document_properties, *types));
+  }
+
+  for (auto f : files->second) {
+    tasks.push_back(std::async(
+        std::launch::async,
+        [](DiscoveryProtoExportFile const& f) { return f.WriteFile(); },
+        std::move(f)));
   }
 
   bool file_write_error = false;
