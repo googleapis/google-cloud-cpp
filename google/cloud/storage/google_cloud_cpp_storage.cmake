@@ -87,16 +87,8 @@ add_library(
     internal/const_buffer.h
     internal/crc32c.cc
     internal/crc32c.h
-    internal/curl/handle.cc
-    internal/curl/handle.h
-    internal/curl/handle_factory.cc
-    internal/curl/handle_factory.h
-    internal/curl/request.cc
     internal/curl/request.h
-    internal/curl/request_builder.cc
     internal/curl/request_builder.h
-    internal/curl/wrappers.cc
-    internal/curl/wrappers.h
     internal/default_object_acl_requests.cc
     internal/default_object_acl_requests.h
     internal/empty_response.cc
@@ -474,7 +466,6 @@ if (BUILD_TESTING)
         internal/connection_impl_test.cc
         internal/const_buffer_test.cc
         internal/crc32c_test.cc
-        internal/curl/handle_test.cc
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc

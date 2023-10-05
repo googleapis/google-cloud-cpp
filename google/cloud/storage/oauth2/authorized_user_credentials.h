@@ -22,6 +22,7 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
@@ -152,8 +153,7 @@ class AuthorizedUserCredentials : public Credentials {
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
     HttpRequestBuilderType builder(
-        info_.token_uri,
-        storage::internal::GetDefaultCurlHandleFactory(options_));
+        info_.token_uri, rest_internal::GetDefaultCurlHandleFactory(options_));
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload += builder.MakeEscapedString(info_.client_id).get();

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_status.h"
@@ -30,6 +31,8 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using ::google::cloud::rest_internal::CurlHandle;
 
 static_assert(std::is_copy_constructible<storage::Client>::value,
               "storage::Client must be constructible");
@@ -377,11 +380,9 @@ StatusOr<std::string> Client::SignUrlV2(
     internal::V2SignUrlRequest const& request) {
   SigningAccount const& signing_account = request.signing_account();
   auto signed_blob = SignBlobImpl(signing_account, request.StringToSign());
-  if (!signed_blob) {
-    return signed_blob.status();
-  }
+  if (!signed_blob) return std::move(signed_blob).status();
 
-  internal::CurlHandle curl;
+  CurlHandle curl;
   auto encoded = internal::Base64Encode(signed_blob->signed_blob);
   std::string signature = curl.MakeEscapedString(encoded).get();
 
@@ -414,7 +415,7 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
 
   std::string signature =
       google::cloud::internal::HexEncode(signed_blob->signed_blob);
-  internal::CurlHandle curl;
+  CurlHandle curl;
   std::ostringstream os;
   os << request.HostnameWithBucket();
   for (auto& part : request.ObjectNameParts()) {

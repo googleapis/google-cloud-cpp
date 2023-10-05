@@ -104,7 +104,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
     result.mock = mock_request;
     return result;
   });
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+  EXPECT_CALL(*mock_builder, MakeEscapedString)
       .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());
@@ -161,7 +161,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
       });
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
       .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+  EXPECT_CALL(*mock_builder, MakeEscapedString)
       .WillRepeatedly([](std::string const& s) {
         auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
         std::copy(s.begin(), s.end(), t.get());

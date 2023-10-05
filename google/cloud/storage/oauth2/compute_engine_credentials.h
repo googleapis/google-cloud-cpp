@@ -17,11 +17,13 @@
 
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/curl/request_builder.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
@@ -209,7 +211,7 @@ class ComputeEngineCredentials : public Credentials {
 
     HttpRequestBuilderType builder(
         "http://" + metadata_server_hostname + path,
-        storage::internal::GetDefaultCurlHandleFactory());
+        rest_internal::GetDefaultCurlHandleFactory());
     builder.AddHeader("metadata-flavor: Google");
     if (recursive) builder.AddQueryParameter("recursive", "true");
     return std::move(builder).BuildRequest().MakeRequest(std::string{});

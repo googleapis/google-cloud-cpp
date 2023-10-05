@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
