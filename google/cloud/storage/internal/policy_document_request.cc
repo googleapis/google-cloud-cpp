@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/policy_document_request.h"
-#include "google/cloud/storage/internal/curl/handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
@@ -35,7 +34,6 @@ using ::google::cloud::internal::InvalidArgumentError;
 
 nlohmann::json TransformConditions(
     std::vector<PolicyDocumentCondition> const& conditions) {
-  CurlHandle curl;
   auto res = nlohmann::json::array();
   for (auto const& kv : conditions) {
     std::vector<std::string> elements = kv.elements();

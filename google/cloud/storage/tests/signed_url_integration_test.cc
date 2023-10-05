@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl/request_builder.h"
+#include "google/cloud/storage/testing/retry_http_request.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/rest_request.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -27,6 +28,10 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::storage::testing::RetryHttpGet;
+using ::google::cloud::storage::testing::RetryHttpPut;
+using ::google::cloud::testing_util::IsOkAndHolds;
 
 class SignedUrlIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -45,18 +50,6 @@ class SignedUrlIntegrationTest
 
   std::string bucket_name_;
   std::string service_account_;
-};
-
-StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory,
-    std::string const& payload = {}) {
-  StatusOr<internal::HttpResponse> response;
-  for (int i = 0; i != 3; ++i) {
-    response = factory().MakeRequest(payload);
-    if (response) return response;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-  }
-  return response;
 };
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
@@ -80,17 +73,9 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
-
-  auto response = RetryHttpRequest(factory);
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
-
-  EXPECT_EQ(expected, response->payload);
+  auto response =
+      RetryHttpGet(*signed_url, [] { return rest_internal::RestRequest(); });
+  EXPECT_THAT(response, IsOkAndHolds(expected));
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
@@ -109,17 +94,12 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
-    builder.AddHeader("content-type: application/octet-stream");
-    return std::move(builder).BuildRequest();
+  auto factory = [] {
+    return rest_internal::RestRequest().AddHeader("content-type",
+                                                  "application/octet-stream");
   };
-
-  auto response = RetryHttpRequest(factory, expected);
+  auto response = RetryHttpPut(*signed_url, factory, expected);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
 
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
@@ -150,17 +130,9 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
-
-  auto response = RetryHttpRequest(factory);
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
-
-  EXPECT_EQ(expected, response->payload);
+  auto response =
+      RetryHttpGet(*signed_url, [] { return rest_internal::RestRequest(); });
+  EXPECT_THAT(response, IsOkAndHolds(expected));
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
@@ -177,17 +149,13 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
       "PUT", bucket_name_, object_name, SigningAccount(service_account_));
   ASSERT_STATUS_OK(signed_url);
 
-  // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    builder.SetMethod("PUT");
-    return std::move(builder).BuildRequest();
+  // Verify the signed URL can be used to upload the object.
+  auto factory = [] {
+    return rest_internal::RestRequest().AddHeader("content-type",
+                                                  "application/octet-stream");
   };
-
-  auto response = RetryHttpRequest(factory, expected);
+  auto response = RetryHttpPut(*signed_url, factory, expected);
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
 
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});

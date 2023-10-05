@@ -360,6 +360,12 @@ std::string FormatCommentKeyValueList(
   return absl::StrCat(absl::StrJoin(comment, "\n", formatter));
 }
 
+std::string FormatHeaderIncludeGuard(absl::string_view header_path) {
+  return absl::AsciiStrToUpper(
+      absl::StrReplaceAll(absl::StrCat("GOOGLE_CLOUD_CPP_", header_path),
+                          {{"/", "_"}, {".", "_"}}));
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

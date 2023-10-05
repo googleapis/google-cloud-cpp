@@ -62,25 +62,6 @@ CurlRequest CurlRequestBuilder::BuildRequest() && {
   return request;
 }
 
-StatusOr<std::unique_ptr<CurlDownloadRequest>>
-CurlRequestBuilder::BuildDownloadRequest() && {
-  ValidateBuilderState(__func__);
-  auto agent = user_agent_prefix_ + UserAgentSuffix();
-  auto request = std::make_unique<CurlDownloadRequest>(
-      std::move(headers_), std::move(handle_), factory_->CreateMultiHandle());
-  request->url_ = std::move(url_);
-  request->user_agent_ = std::move(agent);
-  request->http_version_ = std::move(http_version_);
-  request->factory_ = factory_;
-  request->logging_enabled_ = logging_enabled_;
-  request->socket_options_ = socket_options_;
-  request->download_stall_timeout_ = download_stall_timeout_;
-  request->download_stall_minimum_rate_ = download_stall_minimum_rate_;
-  auto status = request->SetOptions();
-  if (!status.ok()) return status;
-  return request;
-}
-
 CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
     Options const& options) {
   ValidateBuilderState(__func__);

@@ -421,9 +421,7 @@ Status ServiceCodeGenerator::Generate() {
 }
 
 void ServiceCodeGenerator::SetVars(absl::string_view header_path) {
-  service_vars_["header_include_guard"] = absl::StrCat(
-      "GOOGLE_CLOUD_CPP_", absl::AsciiStrToUpper(absl::StrReplaceAll(
-                               header_path, {{"/", "_"}, {".", "_"}})));
+  service_vars_["header_include_guard"] = FormatHeaderIncludeGuard(header_path);
 }
 
 void ServiceCodeGenerator::SetMethods() {

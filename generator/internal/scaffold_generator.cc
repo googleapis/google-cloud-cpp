@@ -138,10 +138,10 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["library"] = library;
   vars["product_namespace"] = absl::StrReplaceAll(
       absl::StripSuffix(
-          absl::StrCat(library, "_",
+          absl::StrCat(library, "/",
                        ServiceSubdirectory(service.product_path())),
           "/"),
-      {{"/", "::"}});
+      {{"/", "_"}});
   vars["product_options_page"] = OptionsGroup(service.product_path());
   vars["service_subdirectory"] = ServiceSubdirectory(service.product_path());
   vars["site_root"] = SiteRoot(service);

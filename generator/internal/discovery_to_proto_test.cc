@@ -1651,16 +1651,21 @@ TEST_F(AssignResourcesAndTypesToFilesTest,
   auto result =
       AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
   ASSERT_STATUS_OK(result);
-  ASSERT_THAT(result->size(), Eq(2));
+  ASSERT_THAT(result->first.size(), Eq(2));
   EXPECT_THAT(
-      (*result)[0].file_path(),
+      result->first[0].file_path(),
       Eq("output_path/google/cloud/product_name/foos/version/foos.proto"));
-  EXPECT_THAT((*result)[0].types(), IsEmpty());
-  EXPECT_THAT((*result)[1].file_path(),
+  EXPECT_THAT(result->first[0].types(), IsEmpty());
+  EXPECT_THAT(result->first[1].file_path(),
               Eq("output_path/google/cloud/product_name/"
                  "version/internal/common_000.proto"));
-  ASSERT_THAT((*result)[1].types().size(), Eq(1));
-  EXPECT_THAT((*result)[1].types().front()->name(), Eq("Operation"));
+  ASSERT_THAT(result->first[1].types().size(), Eq(1));
+  EXPECT_THAT(result->first[1].types().front()->name(), Eq("Operation"));
+
+  ASSERT_THAT(result->second, SizeIs(1));
+  EXPECT_THAT(result->second[0].relative_file_path(),
+              Eq("google/cloud/product_name/foos/version/foos_proto_export.h"));
+  EXPECT_THAT(result->second[0].proto_includes(), IsEmpty());
 }
 
 TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
@@ -2382,21 +2387,35 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   //    package: google.cloud.cpp.product_name.version
   //    type: OtherCommonSchema
 
-  auto file_path = [](std::string const& path) {
+  auto relative_proto_path = [](std::string const& path) {
     return Property(&DiscoveryFile::relative_proto_path, Eq(path));
   };
 
   EXPECT_THAT(
-      *files,
+      files->first,
       UnorderedElementsAre(
-          file_path("google/cloud/product_name/foos/version/foos.proto"),
-          file_path("google/cloud/product_name/disks/version/disks.proto"),
-          file_path("google/cloud/product_name/version/internal/"
-                    "common_000.proto"),
-          file_path("google/cloud/product_name/version/internal/"
-                    "common_001.proto"),
-          file_path("google/cloud/product_name/version/internal/"
-                    "common_002.proto")));
+          relative_proto_path(
+              "google/cloud/product_name/foos/version/foos.proto"),
+          relative_proto_path(
+              "google/cloud/product_name/disks/version/disks.proto"),
+          relative_proto_path("google/cloud/product_name/version/internal/"
+                              "common_000.proto"),
+          relative_proto_path("google/cloud/product_name/version/internal/"
+                              "common_001.proto"),
+          relative_proto_path("google/cloud/product_name/version/internal/"
+                              "common_002.proto")));
+
+  auto relative_file_path = [](std::string const& path) {
+    return Property(&DiscoveryProtoExportFile::relative_file_path, Eq(path));
+  };
+
+  EXPECT_THAT(
+      files->second,
+      UnorderedElementsAre(
+          relative_file_path(
+              "google/cloud/product_name/foos/version/foos_proto_export.h"),
+          relative_file_path(
+              "google/cloud/product_name/disks/version/disks_proto_export.h")));
 
   auto type_named = [](std::string const& name) {
     return Pointee(Property(&DiscoveryTypeVertex::name, Eq(name)));
@@ -2404,8 +2423,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
 
   // There are no guarantees which generated common_file_xxx.proto the shared
   // schema types exist in, so we have to determine them programmatically.
-  auto common_other_schema_file =
-      std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
+  auto common_other_schema_file = std::find_if(
+      files->first.begin(), files->first.end(), [&](DiscoveryFile const& f) {
         return std::find_if(f.types().begin(), f.types().end(),
                             [&](DiscoveryTypeVertex* t) {
                               return (t->name() == "OtherCommonSchema");
@@ -2417,8 +2436,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
               UnorderedElementsAre(type_named("OtherCommonSchema")));
   EXPECT_THAT(common_other_schema_file->import_paths(), IsEmpty());
 
-  auto common_test_permissions_file =
-      std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
+  auto common_test_permissions_file = std::find_if(
+      files->first.begin(), files->first.end(), [&](DiscoveryFile const& f) {
         return std::find_if(f.types().begin(), f.types().end(),
                             [&](DiscoveryTypeVertex* t) {
                               return (t->name() == "TestPermissionsRequest");
@@ -2433,8 +2452,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   EXPECT_THAT(common_test_permissions_file->import_paths(),
               UnorderedElementsAre("google/protobuf/any.proto"));
 
-  auto common_disk_types_file =
-      std::find_if(files->begin(), files->end(), [&](DiscoveryFile const& f) {
+  auto common_disk_types_file = std::find_if(
+      files->first.begin(), files->first.end(), [&](DiscoveryFile const& f) {
         return std::find_if(f.types().begin(), f.types().end(),
                             [&](DiscoveryTypeVertex* t) {
                               return (t->name() == "Disk");
@@ -2455,7 +2474,7 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
 
   // Proto files containing a resource/service have definitive file paths.
   auto disks_file =
-      std::find_if(files->begin(), files->end(), [](auto const& f) {
+      std::find_if(files->first.begin(), files->first.end(), [](auto const& f) {
         return f.relative_proto_path() ==
                "google/cloud/product_name/disks/version/disks.proto";
       });
@@ -2475,8 +2494,19 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
                   common_disk_types_file->relative_proto_path(),
                   common_test_permissions_file->relative_proto_path()));
 
+  auto disks_proto_export_file = std::find_if(
+      files->second.begin(), files->second.end(), [](auto const& f) {
+        return f.relative_file_path() ==
+               "google/cloud/product_name/disks/version/disks_proto_export.h";
+      });
+  EXPECT_THAT(
+      disks_proto_export_file->proto_includes(),
+      ElementsAre(
+          "google/cloud/product_name/version/internal/common_000.proto",
+          "google/cloud/product_name/version/internal/common_001.proto"));
+
   auto foos_file =
-      std::find_if(files->begin(), files->end(), [](auto const& f) {
+      std::find_if(files->first.begin(), files->first.end(), [](auto const& f) {
         return f.relative_proto_path() ==
                "google/cloud/product_name/foos/version/foos.proto";
       });
@@ -2493,6 +2523,17 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
           "google/api/field_behavior.proto", "google/protobuf/empty.proto",
           common_other_schema_file->relative_proto_path(),
           common_test_permissions_file->relative_proto_path()));
+
+  auto foos_proto_export_file = std::find_if(
+      files->second.begin(), files->second.end(), [](auto const& f) {
+        return f.relative_file_path() ==
+               "google/cloud/product_name/foos/version/foos_proto_export.h";
+      });
+  EXPECT_THAT(
+      foos_proto_export_file->proto_includes(),
+      ElementsAre(
+          "google/cloud/product_name/version/internal/common_001.proto",
+          "google/cloud/product_name/version/internal/common_002.proto"));
 }
 
 }  // namespace

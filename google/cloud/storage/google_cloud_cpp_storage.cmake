@@ -87,8 +87,6 @@ add_library(
     internal/const_buffer.h
     internal/crc32c.cc
     internal/crc32c.h
-    internal/curl/download_request.cc
-    internal/curl/download_request.h
     internal/curl/handle.cc
     internal/curl/handle.h
     internal/curl/handle_factory.cc
@@ -97,8 +95,6 @@ add_library(
     internal/curl/request.h
     internal/curl/request_builder.cc
     internal/curl/request_builder.h
-    internal/curl/stub.cc
-    internal/curl/stub.h
     internal/curl/wrappers.cc
     internal/curl/wrappers.h
     internal/default_object_acl_requests.cc
@@ -144,8 +140,6 @@ add_library(
     internal/make_jwt_assertion.h
     internal/metadata_parser.cc
     internal/metadata_parser.h
-    internal/minimal_iam_credentials_rest.cc
-    internal/minimal_iam_credentials_rest.h
     internal/notification_metadata_parser.cc
     internal/notification_metadata_parser.h
     internal/notification_requests.cc
@@ -196,10 +190,6 @@ add_library(
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
-    internal/xml_node.cc
-    internal/xml_node.h
-    internal/xml_parser_options.cc
-    internal/xml_parser_options.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
@@ -484,9 +474,7 @@ if (BUILD_TESTING)
         internal/connection_impl_test.cc
         internal/const_buffer_test.cc
         internal/crc32c_test.cc
-        internal/curl/download_request_test.cc
         internal/curl/handle_test.cc
-        internal/curl/stub_test.cc
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
@@ -519,7 +507,6 @@ if (BUILD_TESTING)
         internal/tracing_connection_test.cc
         internal/tuple_filter_test.cc
         internal/unified_rest_credentials_test.cc
-        internal/xml_node_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc

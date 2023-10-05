@@ -114,7 +114,7 @@ StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val) {
 
 StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val) {
   for (auto v : {ExperimentTransport::kDirectPath, ExperimentTransport::kGrpc,
-                 ExperimentTransport::kJson, ExperimentTransport::kJsonV2}) {
+                 ExperimentTransport::kJson}) {
     if (val == ToString(v)) return v;
   }
   return Status{StatusCode::kInvalidArgument,
@@ -139,8 +139,6 @@ std::string ToString(ExperimentTransport v) {
       return "Grpc";
     case ExperimentTransport::kJson:
       return "Json";
-    case ExperimentTransport::kJsonV2:
-      return "JsonV2";
   }
   return "";
 }

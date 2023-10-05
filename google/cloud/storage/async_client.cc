@@ -14,8 +14,10 @@
 
 #include "google/cloud/storage/async_client.h"
 #include "google/cloud/storage/internal/async/connection_impl.h"
+#include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/grpc_options.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -27,8 +29,9 @@ using ::google::cloud::internal::MakeBackgroundThreadsFactory;
 AsyncClient::AsyncClient(Options options) {
   options = storage_internal::DefaultOptionsGrpc(std::move(options));
   background_ = MakeBackgroundThreadsFactory(options)();
-  connection_ = storage_internal::MakeAsyncConnection(background_->cq(),
-                                                      std::move(options));
+  connection_ = storage_internal::MakeTracingAsyncConnection(
+      storage_internal::MakeAsyncConnection(background_->cq(),
+                                            std::move(options)));
 }
 
 AsyncClient::AsyncClient(std::shared_ptr<AsyncConnection> connection)
