@@ -33,7 +33,8 @@ StatusOr<std::string> RetryHttpGet(
 /// Avoid flakes in integration tests, retry failures 3 times.
 StatusOr<std::string> RetryHttpPut(
     std::string const& url,
-    std::function<rest_internal::RestRequest()> const& factory);
+    std::function<rest_internal::RestRequest()> const& factory,
+    std::string const& payload);
 
 }  // namespace testing
 }  // namespace storage

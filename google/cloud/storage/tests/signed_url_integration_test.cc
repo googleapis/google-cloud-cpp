@@ -98,7 +98,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
     return rest_internal::RestRequest().AddHeader("content-type",
                                                   "application/octet-stream");
   };
-  auto response = RetryHttpPut(*signed_url, factory);
+  auto response = RetryHttpPut(*signed_url, factory, expected);
   ASSERT_STATUS_OK(response);
 
   auto stream = client->ReadObject(bucket_name_, object_name);
@@ -150,8 +150,11 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to upload the object.
-  auto response =
-      RetryHttpPut(*signed_url, [] { return rest_internal::RestRequest(); });
+  auto factory = [] {
+    return rest_internal::RestRequest().AddHeader("content-type",
+                                                  "application/octet-stream");
+  };
+  auto response = RetryHttpPut(*signed_url, factory, expected);
   ASSERT_STATUS_OK(response);
 
   auto stream = client->ReadObject(bucket_name_, object_name);

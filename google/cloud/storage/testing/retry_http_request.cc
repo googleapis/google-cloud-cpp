@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/retry_http_request.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
-#include "google/cloud/common_options.h"
 #include <chrono>
 #include <thread>
 #include <utility>
@@ -55,7 +55,8 @@ StatusOr<std::string> Retry(
 StatusOr<std::string> RetryHttpGet(
     std::string const& url,
     std::function<rest_internal::RestRequest()> const& factory) {
-  auto client = rest_internal::MakeDefaultRestClient(url, Options{}.set<TracingComponentsOption>({"http"}));
+  auto client = rest_internal::MakeDefaultRestClient(
+      url, Options{}.set<TracingComponentsOption>({"http"}));
   auto call = [&]() -> StatusOr<std::string> {
     rest_internal::RestContext context;
     return HandleResponse(client->Get(context, factory()));
@@ -65,11 +66,14 @@ StatusOr<std::string> RetryHttpGet(
 
 StatusOr<std::string> RetryHttpPut(
     std::string const& url,
-    std::function<rest_internal::RestRequest()> const& factory) {
-  auto client = rest_internal::MakeDefaultRestClient(url, Options{}.set<TracingComponentsOption>({"http"}));
+    std::function<rest_internal::RestRequest()> const& factory,
+    std::string const& payload) {
+  auto client = rest_internal::MakeDefaultRestClient(
+      url, Options{}.set<TracingComponentsOption>({"http"}));
   auto call = [&]() -> StatusOr<std::string> {
     rest_internal::RestContext context;
-    return HandleResponse(client->Put(context, factory(), {}));
+    return HandleResponse(
+        client->Put(context, factory(), {absl::Span<char const>(payload)}));
   };
   return Retry(call);
 }
