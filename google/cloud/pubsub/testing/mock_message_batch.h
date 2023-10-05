@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_MESSAGE_BATCH_H
 
 #include "google/cloud/pubsub/internal/message_batch.h"
-#include "google/cloud/pubsub/version.h"
+#include "google/cloud/pubsub/message.h"
+#include "google/cloud/version.h"
 #include <gmock/gmock.h>
-#include <string>
 
 namespace google {
 namespace cloud {
