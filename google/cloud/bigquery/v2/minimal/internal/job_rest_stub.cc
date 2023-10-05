@@ -81,8 +81,6 @@ StatusOr<CancelJobResponse> DefaultBigQueryJobRestStub::CancelJob(
   auto rest_request =
       PrepareRestRequest<CancelJobRequest>(rest_context, request);
 
-  rest_request->AddHeader("Content-Type", "application/json");
-
   // For cancel jobs, request body is empty:
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/cancel#request-body
   absl::Span<char const> empty_span = absl::MakeConstSpan("");
