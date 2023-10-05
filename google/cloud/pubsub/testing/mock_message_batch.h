@@ -17,7 +17,7 @@
 
 #include "google/cloud/pubsub/internal/message_batch.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/internal/version.h"
+#include "google/cloud/version.h"
 #include <gmock/gmock.h>
 
 namespace google {
