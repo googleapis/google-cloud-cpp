@@ -78,9 +78,18 @@ class SampleRowsIntegrationTest
                             TableTestEnvironment::instance_id(),
                             TableTestEnvironment::table_id()));
 
-    int constexpr kBatchCount = 10;
-    int constexpr kBatchSize = 5000;
-    int constexpr kColumnCount = 10;
+    int kBatchCount = 10;
+    int kBatchSize = 5000;
+    int kColumnCount = 10;
+
+    // The bigtable emulator is known to crash. Large bulk mutation requests
+    // might be responsible.
+    if (TableTestEnvironment::UsingCloudBigtableEmulator()) {
+      kBatchCount = 1;
+      kBatchSize = 50;
+      kColumnCount = 1;
+    }
+
     std::string const family = "family1";
     int row_id = 0;
 
@@ -90,7 +99,7 @@ class SampleRowsIntegrationTest
         std::ostringstream os;
         os << "row:" << std::setw(9) << std::setfill('0') << row_id;
 
-        // Build a mutation that creates 10 columns.
+        // Build a mutation that creates N columns.
         SingleRowMutation mutation(os.str());
         for (int col = 0; col != kColumnCount; ++col) {
           std::string column_id = "c" + std::to_string(col);
