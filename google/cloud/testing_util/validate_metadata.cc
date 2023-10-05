@@ -87,9 +87,10 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
  * `GTEST_USES_POSIX_RE`.
  */
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
-  // Create a matcher that replaces all "/" with "%2F" to match the
-  // character replacement in `internal::UrlEncode`.
-  auto matcher = absl::StrReplaceAll(glob, {{"/", "%2F"}, {"*", ".+"}});
+  // Translate the glob into a regex pattern. It calls `internal::UrlDecode`
+  // first since the regex matcher uses the "/" character.
+  auto matcher =
+      absl::StrReplaceAll(internal::UrlDecode(glob), {{"*", "[^/]+"}});
   std::regex regex(matcher);
   return std::regex_match(arg, regex);
 }
