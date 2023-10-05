@@ -18,7 +18,7 @@ permissions:
 jobs:
   cmake:
     name: cmake + ${{ matrix.os }} + ${{ matrix.shard }}
-    runs-on: ${{ matrix.os }}-xl
+    runs-on: ${{ matrix.os }}-xlarge
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         exclude-from-full-trick: [ true ]
-        os: [ macos-12 ]
+        os: [ macos-13 ]
         shard: [ Core, Compute, Shard1, Other ]
         exclude:
         # Only full builds include shards with generated code.
@@ -120,7 +120,7 @@ jobs:
     - name: Build google-cloud-cpp
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
-        /usr/local/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+        /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
     env:
       USE_BAZEL_VERSION: 6.2.1
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
