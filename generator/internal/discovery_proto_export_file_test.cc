@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_proto_export_file.h"
+#include "generator/internal/codegen_utils.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -24,7 +26,8 @@ namespace {
 using ::testing::Eq;
 
 TEST(DiscoveryProtoExportFileTest, FormatFile) {
-  auto constexpr kExpectedHeaderFile = R"""(// Copyright 2023 Google LLC
+  auto constexpr kExpectedHeaderFile =
+      R"""(// Copyright $copyright_year$ Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,25 +51,27 @@ TEST(DiscoveryProtoExportFileTest, FormatFile) {
 // uses IWYU pragmas to export the internal/common_xxx.pb.h files as an
 // IWYU-friendly alternative.
 
-#ifndef GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH
-#define GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH
+#ifndef GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H
+#define GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_001.pb.h>
 #include <google/cloud/compute/v1/internal/common_002.pb.h>
 // IWYU pragma: end_exports
 
-#endif  // GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH
+#endif  // GOOGLE_CLOUD_CPP_RELATIVE_FILE_PATH_H
 )""";
 
   DiscoveryProtoExportFile f(
-      "my_output_file_path", "relative_file_path",
+      "my_output_file_path.h", "relative_file_path.h",
       {"google/cloud/compute/v1/internal/common_001.proto",
        "google/cloud/compute/v1/internal/common_002.proto"});
   std::stringstream os;
   auto result = f.FormatFile(os);
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(os.str(), Eq(kExpectedHeaderFile));
+  EXPECT_THAT(os.str(), Eq(absl::StrReplaceAll(
+                            kExpectedHeaderFile,
+                            {{"$copyright_year$", CurrentCopyrightYear()}})));
 }
 
 }  // namespace

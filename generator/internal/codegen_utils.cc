@@ -361,9 +361,9 @@ std::string FormatCommentKeyValueList(
 }
 
 std::string FormatHeaderIncludeGuard(absl::string_view header_path) {
-  return absl::StrCat("GOOGLE_CLOUD_CPP_",
-                      absl::AsciiStrToUpper(absl::StrReplaceAll(
-                          header_path, {{"/", "_"}, {".", "_"}})));
+  return absl::AsciiStrToUpper(
+      absl::StrReplaceAll(absl::StrCat("GOOGLE_CLOUD_CPP_", header_path),
+                          {{"/", "_"}, {".", "_"}}));
 }
 
 }  // namespace generator_internal

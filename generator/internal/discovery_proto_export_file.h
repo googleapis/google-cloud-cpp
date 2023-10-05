@@ -26,8 +26,6 @@ namespace generator_internal {
 // Creates a IWYU pragma export file of the internal protos needed by a service.
 class DiscoveryProtoExportFile {
  public:
-  DiscoveryProtoExportFile() = default;
-
   DiscoveryProtoExportFile(std::string output_file_path,
                            std::string relative_file_path,
                            std::set<std::string> proto_includes);

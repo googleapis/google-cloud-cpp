@@ -1665,8 +1665,7 @@ TEST_F(AssignResourcesAndTypesToFilesTest,
   ASSERT_THAT(result->second, SizeIs(1));
   EXPECT_THAT(result->second[0].relative_file_path(),
               Eq("google/cloud/product_name/foos/version/foos_proto_export.h"));
-  //  EXPECT_THAT(result->second[0].proto_includes(),
-  //  ElementsAre("google/cloud/product_name/version/internal/common_000.proto"));
+  EXPECT_THAT(result->second[0].proto_includes(), IsEmpty());
 }
 
 TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
