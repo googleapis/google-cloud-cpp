@@ -26,6 +26,8 @@ namespace internal {
 
 std::string UrlEncode(absl::string_view value);
 
+std::string UrlDecode(absl::string_view value);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

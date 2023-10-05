@@ -24,12 +24,28 @@ namespace internal {
 std::string UrlEncode(absl::string_view value) {
   using CharMapping = std::pair<absl::string_view, absl::string_view>;
   auto const mappings = std::array<CharMapping, 25>{{
-      {" ", "%20"}, {"\"", "%22"}, {"#", "%23"},  {"$", "%24"}, {"%", "%25"},
-      {"&", "%26"}, {"+", "%2B"},  {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},
-      {";", "%3B"}, {"<", "%3C"},  {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},
-      {"@", "%40"}, {"[", "%5B"},  {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},
-      {"`", "%60"}, {"{", "%7B"},  {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"},
+      {" ", "%20"}, {"\"", "%22"}, {"#", "%23"}, {"$", "%24"},    {"&", "%26"},
+      {"+", "%2B"}, {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},    {";", "%3B"},
+      {"<", "%3C"}, {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},    {"@", "%40"},
+      {"[", "%5B"}, {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},    {"`", "%60"},
+      {"{", "%7B"}, {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"}, {"%", "%25"},
   }};
+  return absl::StrReplaceAll(value, mappings);
+}
+
+std::string UrlDecode(absl::string_view value) {
+  using CharMapping = std::pair<absl::string_view, absl::string_view>;
+  // Note: absl::StrReplaceAll applies mappings greedily, therefore the %
+  // mapping must be placed last for decoding.
+  auto mappings = std::array<CharMapping, 25>{{
+      {" ", "%20"}, {"\"", "%22"}, {"#", "%23"}, {"$", "%24"},    {"&", "%26"},
+      {"+", "%2B"}, {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},    {";", "%3B"},
+      {"<", "%3C"}, {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},    {"@", "%40"},
+      {"[", "%5B"}, {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},    {"`", "%60"},
+      {"{", "%7B"}, {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"}, {"%", "%25"},
+  }};
+  std::for_each(mappings.begin(), mappings.end(),
+                [&](CharMapping pair) { std::swap(pair.first, pair.second); });
   return absl::StrReplaceAll(value, mappings);
 }
 
