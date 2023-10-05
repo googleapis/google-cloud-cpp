@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_RETRY_HTTP_REQUEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_RETRY_HTTP_REQUEST_H
 
-#include "google/cloud/storage/internal/curl/request.h"
-#include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/internal/rest_request.h"
 #include "google/cloud/status_or.h"
 #include <functional>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -26,8 +26,14 @@ namespace storage {
 namespace testing {
 
 /// Avoid flakes in integration tests, retry failures 3 times.
-StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory);
+StatusOr<std::string> RetryHttpGet(
+    std::string const& url,
+    std::function<rest_internal::RestRequest()> const& factory);
+
+/// Avoid flakes in integration tests, retry failures 3 times.
+StatusOr<std::string> RetryHttpPut(
+    std::string const& url,
+    std::function<rest_internal::RestRequest()> const& factory);
 
 }  // namespace testing
 }  // namespace storage
