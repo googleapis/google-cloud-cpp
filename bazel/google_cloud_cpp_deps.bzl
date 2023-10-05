@@ -180,7 +180,7 @@ def google_cloud_cpp_deps(name = None):
             "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v24.4.tar.gz",
             "https://github.com/protocolbuffers/protobuf/archive/v24.4.tar.gz",
         ],
-        sha256 = "bfa5597c5cc279012cae6a6c1727090427f2f9a37741cfd8eed2802b628f9426",
+        sha256 = "616bb3536ac1fff3fb1a141450fa28b875e985712170ea7f1bfe5e5fc41e2cd8",
         strip_prefix = "protobuf-24.4",
     )
 
