@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl/request_builder.h"
 #include "google/cloud/storage/testing/retry_http_request.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/rest_request.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -26,7 +26,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::storage::testing::RetryHttpRequest;
+using ::google::cloud::storage::testing::RetryHttpGet;
+using ::google::cloud::testing_util::IsOkAndHolds;
 
 constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
 constexpr auto kP12EnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12";
@@ -86,17 +87,9 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
-
-  auto response = RetryHttpRequest(factory);
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
-
-  EXPECT_EQ(expected, response->payload);
+  auto response =
+      RetryHttpGet(*signed_url, [] { return rest_internal::RestRequest(); });
+  EXPECT_THAT(response, IsOkAndHolds(expected));
 }
 
 TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
@@ -120,17 +113,9 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   ASSERT_STATUS_OK(signed_url);
 
   // Verify the signed URL can be used to download the object.
-  auto factory = [&] {
-    internal::CurlRequestBuilder builder(
-        *signed_url, storage::internal::GetDefaultCurlHandleFactory());
-    return std::move(builder).BuildRequest();
-  };
-
-  auto response = RetryHttpRequest(factory);
-  ASSERT_STATUS_OK(response);
-  EXPECT_EQ(200, response->status_code);
-
-  EXPECT_EQ(expected, response->payload);
+  auto response =
+      RetryHttpGet(*signed_url, [] { return rest_internal::RestRequest(); });
+  EXPECT_THAT(response, IsOkAndHolds(expected));
 }
 
 INSTANTIATE_TEST_SUITE_P(KeyFileJsonTest, KeyFileIntegrationTest,

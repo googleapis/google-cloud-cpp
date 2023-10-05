@@ -13,23 +13,69 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/retry_http_request.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_client.h"
 #include <chrono>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace testing {
+namespace {
 
-StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory) {
-  StatusOr<internal::HttpResponse> response;
+StatusOr<std::string> HandleResponse(
+    StatusOr<std::unique_ptr<rest_internal::RestResponse>> r) {
+  if (!r) return std::move(r).status();
+  auto response = *std::move(r);
+  if (response->StatusCode() != 200) {
+    return internal::InternalError(
+        "unexpected status code",
+        GCP_ERROR_INFO().WithMetadata("http.status_code",
+                                      std::to_string(response->StatusCode())));
+  }
+  return rest_internal::ReadAll(std::move(*response).ExtractPayload());
+}
+
+StatusOr<std::string> Retry(
+    std::function<StatusOr<std::string>()> const& call) {
+  StatusOr<std::string> response;
   for (int i = 0; i != 3; ++i) {
-    response = factory().MakeRequest({});
+    response = call();
     if (response) return response;
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
   return response;
+}
+
+}  // namespace
+
+StatusOr<std::string> RetryHttpGet(
+    std::string const& url,
+    std::function<rest_internal::RestRequest()> const& factory) {
+  auto client = rest_internal::MakeDefaultRestClient(
+      url, Options{}.set<TracingComponentsOption>({"http"}));
+  auto call = [&]() -> StatusOr<std::string> {
+    rest_internal::RestContext context;
+    return HandleResponse(client->Get(context, factory()));
+  };
+  return Retry(call);
+}
+
+StatusOr<std::string> RetryHttpPut(
+    std::string const& url,
+    std::function<rest_internal::RestRequest()> const& factory,
+    std::string const& payload) {
+  auto client = rest_internal::MakeDefaultRestClient(
+      url, Options{}.set<TracingComponentsOption>({"http"}));
+  auto call = [&]() -> StatusOr<std::string> {
+    rest_internal::RestContext context;
+    return HandleResponse(
+        client->Put(context, factory(), {absl::Span<char const>(payload)}));
+  };
+  return Retry(call);
 }
 
 }  // namespace testing
