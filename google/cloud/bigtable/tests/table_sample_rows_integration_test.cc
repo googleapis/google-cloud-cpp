@@ -67,7 +67,7 @@ class SampleRowsIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  public:
   static void SetUpTestSuite() {
-    // Create kBatchSize * kBatchCount rows. Use a special client with logging
+    // Create batch_size * batch_count rows. Use a special client with logging
     // disabled because it simply generates too much data.
     auto table =
         Table(MakeDataConnection(
@@ -78,30 +78,30 @@ class SampleRowsIntegrationTest
                             TableTestEnvironment::instance_id(),
                             TableTestEnvironment::table_id()));
 
-    int kBatchCount = 10;
-    int kBatchSize = 5000;
-    int kColumnCount = 10;
+    int batch_count = 10;
+    int batch_size = 5000;
+    int column_count = 10;
 
     // The bigtable emulator is known to crash. Large bulk mutation requests
     // might be responsible.
     if (TableTestEnvironment::UsingCloudBigtableEmulator()) {
-      kBatchCount = 1;
-      kBatchSize = 50;
-      kColumnCount = 1;
+      batch_count = 1;
+      batch_size = 50;
+      column_count = 1;
     }
 
     std::string const family = "family1";
     int row_id = 0;
 
-    for (int batch = 0; batch != kBatchCount; ++batch) {
+    for (int batch = 0; batch != batch_count; ++batch) {
       BulkMutation bulk;
-      for (int row = 0; row != kBatchSize; ++row) {
+      for (int row = 0; row != batch_size; ++row) {
         std::ostringstream os;
         os << "row:" << std::setw(9) << std::setfill('0') << row_id;
 
         // Build a mutation that creates N columns.
         SingleRowMutation mutation(os.str());
-        for (int col = 0; col != kColumnCount; ++col) {
+        for (int col = 0; col != column_count; ++col) {
           std::string column_id = "c" + std::to_string(col);
           std::string value = column_id + "#" + os.str();
           mutation.emplace_back(SetCell(family, std::move(column_id),
