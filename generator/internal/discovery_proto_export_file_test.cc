@@ -79,6 +79,8 @@ TEST(DiscoveryProtoExportFileTest, FormatFile) {
 }  // namespace cloud
 }  // namespace google
 
+// We define main here due to
+// https://github.com/protocolbuffers/protobuf/issues/12887.
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
