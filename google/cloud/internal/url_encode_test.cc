@@ -22,39 +22,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(UrlEncode, Simple) {
-  auto unencoded_string = "projects/*/resource/*";
+  const auto *unencoded_string = "projects/*/resource/*";
 
-  auto result = UrlEncode(unencoded_string);
+  auto result = internal::UrlEncode(unencoded_string);
 
-  auto encoded_string = "projects%2F*%2Fresource%2F*";
+  const auto *encoded_string = "projects%2F*%2Fresource%2F*";
   ASSERT_THAT(result, encoded_string);
 }
 
 TEST(UrlEncode, MultipleReplacements) {
-  auto unencoded_string = "%>/@";
+  const auto *unencoded_string = "%>/@";
 
-  auto result = UrlEncode(unencoded_string);
+  auto result = internal::UrlEncode(unencoded_string);
 
-  auto encoded_string = "%25%3E%2F%40";
+  const auto *encoded_string = "%25%3E%2F%40";
   ASSERT_THAT(result, encoded_string);
 }
 
 TEST(UrlDecode, Simple) {
-  auto encoded_string = "projects%2F*%2Fresource%2F*";
+  const auto *encoded_string = "projects%2F*%2Fresource%2F*";
 
-  auto result = UrlDecode(encoded_string);
+  auto result = internal::UrlDecode(encoded_string);
 
-  auto unencoded_string = "projects/*/resource/*";
+  const auto *unencoded_string = "projects/*/resource/*";
   ASSERT_THAT(result, unencoded_string);
 }
 
 TEST(UrlDecode, MultipleReplacements) {
-  auto encoded_string = "%25%3E%2F%40";
+  const auto *encoded_string = "%25%3E%2F%40";
 
-  auto result = UrlDecode(encoded_string);
+  auto result = internal::UrlDecode(encoded_string);
 
-  auto unencoded_string = "%>/@";
-  ASSERT_THAT(result, unencoded_string);
+  const auto *unencoded_string = "%>/@"; 
+ ASSERT_THAT(result, unencoded_string);
 }
 
 }  // namespace
