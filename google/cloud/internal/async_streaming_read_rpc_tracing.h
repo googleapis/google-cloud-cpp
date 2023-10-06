@@ -43,14 +43,18 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
   }
 
   future<bool> Start() override {
-    return impl_->Start().then([this](future<bool> f) {
-      auto started = f.get();
-      span_->SetAttribute("gl-cpp.stream_started", started);
-      return started;
-    });
+    auto start_span = internal::MakeSpan("Start");
+    return impl_->Start().then(
+        [this, ss = std::move(start_span)](future<bool> f) {
+          EndSpan(*ss);
+          auto started = f.get();
+          span_->SetAttribute("gl-cpp.stream_started", started);
+          return started;
+        });
   }
 
   future<absl::optional<Response>> Read() override {
+    if (read_count_ == 0) span_->AddEvent("gl-cpp.first-read");
     return impl_->Read().then([this](future<absl::optional<Response>> f) {
       auto r = f.get();
       if (r.has_value()) {
@@ -62,8 +66,12 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
   }
 
   future<Status> Finish() override {
+    auto finish_span = internal::MakeSpan("Finish");
     return impl_->Finish().then(
-        [this](future<Status> f) { return End(f.get()); });
+        [this, fs = std::move(finish_span)](future<Status> f) {
+          EndSpan(*fs);
+          return End(f.get());
+        });
   }
 
   StreamingRpcMetadata GetRequestMetadata() const override {

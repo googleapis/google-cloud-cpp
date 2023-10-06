@@ -66,12 +66,13 @@ TEST(AsyncStreamingReadRpcTracing, Cancel) {
   (void)stream.Finish().get();
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanEventsAre(EventNamed("gl-cpp.cancel"),
-                        EventNamed("test-only: underlying stream cancel")))));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  AllOf(SpanNamed("span"),
+                        SpanEventsAre(
+                            EventNamed("gl-cpp.cancel"),
+                            EventNamed("test-only: underlying stream cancel"))),
+                  SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Start) {
@@ -89,9 +90,12 @@ TEST(AsyncStreamingReadRpcTracing, Start) {
   (void)stream.Finish().get();
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
-                                       SpanHasAttributes(OTelAttribute<bool>(
-                                           "gl-cpp.stream_started", true)))));
+  EXPECT_THAT(
+      spans, UnorderedElementsAre(
+                 SpanNamed("Start"),
+                 AllOf(SpanNamed("span"), SpanHasAttributes(OTelAttribute<bool>(
+                                              "gl-cpp.stream_started", true))),
+                 SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Read) {
@@ -119,21 +123,25 @@ TEST(AsyncStreamingReadRpcTracing, Read) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanEventsAre(
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 1))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 2))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 3)))))));
+      UnorderedElementsAre(
+          AllOf(SpanNamed("span"),
+                SpanEventsAre(EventNamed("gl-cpp.first-read"),
+                              AllOf(EventNamed("message"),
+                                    SpanEventAttributesAre(
+                                        OTelAttribute<std::string>(
+                                            "message.type", "RECEIVED"),
+                                        OTelAttribute<int>("message.id", 1))),
+                              AllOf(EventNamed("message"),
+                                    SpanEventAttributesAre(
+                                        OTelAttribute<std::string>(
+                                            "message.type", "RECEIVED"),
+                                        OTelAttribute<int>("message.id", 2))),
+                              AllOf(EventNamed("message"),
+                                    SpanEventAttributesAre(
+                                        OTelAttribute<std::string>(
+                                            "message.type", "RECEIVED"),
+                                        OTelAttribute<int>("message.id", 3))))),
+          SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Finish) {
@@ -151,10 +159,12 @@ TEST(AsyncStreamingReadRpcTracing, Finish) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"))));
+      UnorderedElementsAre(
+          AllOf(
+              SpanNamed("span"),
+              SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
+              SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
+          SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadRpcTracing, GetRequestMetadata) {

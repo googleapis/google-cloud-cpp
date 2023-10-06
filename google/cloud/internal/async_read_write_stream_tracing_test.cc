@@ -64,6 +64,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, Cancel) {
 
   auto span = MakeSpan("span");
   auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Start).WillOnce(Return(make_ready_future(true)));
   EXPECT_CALL(*mock, Cancel).WillOnce([span] {
     // Verify that our "cancel" event is added before calling `TryCancel()` on
     // the underlying stream.
@@ -75,16 +76,19 @@ TEST(AsyncStreamingReadWriteRpcTracing, Cancel) {
 
   TestedStream stream(std::make_shared<grpc::ClientContext>(), std::move(mock),
                       span);
+  (void)stream.Start().get();
   stream.Cancel();
   (void)stream.Finish().get();
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanEventsAre(EventNamed("gl-cpp.cancel"),
-                        EventNamed("test-only: underlying stream cancel")))));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  SpanNamed("Start"),
+                  AllOf(SpanNamed("span"),
+                        SpanEventsAre(
+                            EventNamed("gl-cpp.cancel"),
+                            EventNamed("test-only: underlying stream cancel"))),
+                  SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Start) {
@@ -102,9 +106,12 @@ TEST(AsyncStreamingReadWriteRpcTracing, Start) {
   (void)stream.Finish().get();
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
-                                       SpanHasAttributes(OTelAttribute<bool>(
-                                           "gl-cpp.stream_started", true)))));
+  EXPECT_THAT(
+      spans, UnorderedElementsAre(
+                 SpanNamed("Start"),
+                 AllOf(SpanNamed("span"), SpanHasAttributes(OTelAttribute<bool>(
+                                              "gl-cpp.stream_started", true))),
+                 SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Read) {
@@ -132,21 +139,25 @@ TEST(AsyncStreamingReadWriteRpcTracing, Read) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanEventsAre(
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 1))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 2))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 3)))))));
+      UnorderedElementsAre(
+          AllOf(SpanNamed("span"),
+                SpanEventsAre(EventNamed("gl-cpp.first-read"),
+                              AllOf(EventNamed("message"),
+                                    SpanEventAttributesAre(
+                                        OTelAttribute<std::string>(
+                                            "message.type", "RECEIVED"),
+                                        OTelAttribute<int>("message.id", 1))),
+                              AllOf(EventNamed("message"),
+                                    SpanEventAttributesAre(
+                                        OTelAttribute<std::string>(
+                                            "message.type", "RECEIVED"),
+                                        OTelAttribute<int>("message.id", 2))),
+                              AllOf(EventNamed("message"),
+                                    SpanEventAttributesAre(
+                                        OTelAttribute<std::string>(
+                                            "message.type", "RECEIVED"),
+                                        OTelAttribute<int>("message.id", 3))))),
+          SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Write) {
@@ -171,27 +182,30 @@ TEST(AsyncStreamingReadWriteRpcTracing, Write) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanEventsAre(
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "SENT"),
-                        OTelAttribute<int>("message.id", 1),
-                        OTelAttribute<bool>("message.is_last", false),
-                        OTelAttribute<bool>("message.success", true))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "SENT"),
-                        OTelAttribute<int>("message.id", 2),
-                        OTelAttribute<bool>("message.is_last", false),
-                        OTelAttribute<bool>("message.success", false))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "SENT"),
-                        OTelAttribute<int>("message.id", 3),
-                        OTelAttribute<bool>("message.is_last", true),
-                        OTelAttribute<bool>("message.success", true)))))));
+      UnorderedElementsAre(
+          AllOf(
+              SpanNamed("span"),
+              SpanEventsAre(
+                  EventNamed("gl-cpp.first-write"),
+                  AllOf(EventNamed("message"),
+                        SpanEventAttributesAre(
+                            OTelAttribute<std::string>("message.type", "SENT"),
+                            OTelAttribute<int>("message.id", 1),
+                            OTelAttribute<bool>("message.is_last", false),
+                            OTelAttribute<bool>("message.success", true))),
+                  AllOf(EventNamed("message"),
+                        SpanEventAttributesAre(
+                            OTelAttribute<std::string>("message.type", "SENT"),
+                            OTelAttribute<int>("message.id", 2),
+                            OTelAttribute<bool>("message.is_last", false),
+                            OTelAttribute<bool>("message.success", false))),
+                  AllOf(EventNamed("message"),
+                        SpanEventAttributesAre(
+                            OTelAttribute<std::string>("message.type", "SENT"),
+                            OTelAttribute<int>("message.id", 3),
+                            OTelAttribute<bool>("message.is_last", true),
+                            OTelAttribute<bool>("message.success", true))))),
+          SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, SeparateCountersForReadAndWrite) {
@@ -215,19 +229,24 @@ TEST(AsyncStreamingReadWriteRpcTracing, SeparateCountersForReadAndWrite) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanEventsAre(
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "SENT"),
-                        OTelAttribute<int>("message.id", 1),
-                        OTelAttribute<bool>("message.is_last", false),
-                        OTelAttribute<bool>("message.success", true))),
-              AllOf(EventNamed("message"),
-                    SpanEventAttributesAre(
-                        OTelAttribute<std::string>("message.type", "RECEIVED"),
-                        OTelAttribute<int>("message.id", 1)))))));
+      UnorderedElementsAre(
+          AllOf(
+              SpanNamed("span"),
+              SpanEventsAre(
+                  EventNamed("gl-cpp.first-write"),
+                  AllOf(EventNamed("message"),
+                        SpanEventAttributesAre(
+                            OTelAttribute<std::string>("message.type", "SENT"),
+                            OTelAttribute<int>("message.id", 1),
+                            OTelAttribute<bool>("message.is_last", false),
+                            OTelAttribute<bool>("message.success", true))),
+                  EventNamed("gl-cpp.first-read"),
+                  AllOf(EventNamed("message"),
+                        SpanEventAttributesAre(
+                            OTelAttribute<std::string>("message.type",
+                                                       "RECEIVED"),
+                            OTelAttribute<int>("message.id", 1))))),
+          SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, WritesDone) {
@@ -245,9 +264,10 @@ TEST(AsyncStreamingReadWriteRpcTracing, WritesDone) {
   (void)stream.Finish().get();
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, ElementsAre(AllOf(
-                         SpanNamed("span"),
-                         SpanEventsAre(EventNamed("gl-cpp.writes_done")))));
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         AllOf(SpanNamed("span"),
+                               SpanEventsAre(EventNamed("gl-cpp.writes_done"))),
+                         SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
@@ -265,10 +285,12 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(AllOf(
-          SpanNamed("span"),
-          SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"))));
+      UnorderedElementsAre(
+          AllOf(
+              SpanNamed("span"),
+              SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
+              SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
+          SpanNamed("Finish")));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, SpanEndsOnDestruction) {

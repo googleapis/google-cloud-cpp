@@ -48,15 +48,19 @@ class AsyncStreamingWriteRpcTracing
   }
 
   future<bool> Start() override {
-    return impl_->Start().then([this](future<bool> f) {
-      auto started = f.get();
-      span_->SetAttribute("gl-cpp.stream_started", started);
-      return started;
-    });
+    auto start_span = internal::MakeSpan("Start");
+    return impl_->Start().then(
+        [this, ss = std::move(start_span)](future<bool> f) {
+          EndSpan(*ss);
+          auto started = f.get();
+          span_->SetAttribute("gl-cpp.stream_started", started);
+          return started;
+        });
   }
 
   future<bool> Write(Request const& request,
                      grpc::WriteOptions options) override {
+    if (write_count_ == 0) span_->AddEvent("gl-cpp.first-write");
     auto is_last = options.is_last_message();
     return impl_->Write(request, std::move(options))
         .then([this, is_last](future<bool> f) {
@@ -70,6 +74,7 @@ class AsyncStreamingWriteRpcTracing
   }
 
   future<bool> WritesDone() override {
+    if (write_count_ == 0) span_->AddEvent("gl-cpp.first-write");
     return impl_->WritesDone().then([this](future<bool> f) {
       span_->AddEvent("gl-cpp.writes_done");
       return f.get();
@@ -77,12 +82,15 @@ class AsyncStreamingWriteRpcTracing
   }
 
   future<StatusOr<Response>> Finish() override {
-    return impl_->Finish().then([this](future<StatusOr<Response>> f) {
-      auto response = f.get();
-      if (!context_) return response;
-      return EndSpan(*std::move(context_), *std::move(span_),
-                     std::move(response));
-    });
+    auto finish_span = internal::MakeSpan("Finish");
+    return impl_->Finish().then(
+        [this, fs = std::move(finish_span)](future<StatusOr<Response>> f) {
+          EndSpan(*fs);
+          auto response = f.get();
+          if (!context_) return response;
+          return EndSpan(*std::move(context_), *std::move(span_),
+                         std::move(response));
+        });
   }
 
   StreamingRpcMetadata GetRequestMetadata() const override {
