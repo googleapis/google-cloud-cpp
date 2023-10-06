@@ -38,6 +38,11 @@ class TracingMessageBatch : public MessageBatch {
  public:
   explicit TracingMessageBatch(std::unique_ptr<MessageBatch> child)
       : child_(std::move(child)) {}
+  TracingMessageBatch(
+      std::unique_ptr<MessageBatch> child,
+      std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+          message_spans)
+      : child_(std::move(child)), message_spans_(std::move(message_spans)) {}
   ~TracingMessageBatch() override = default;
 
   void SaveMessage(pubsub::Message m) override;
@@ -47,12 +52,17 @@ class TracingMessageBatch : public MessageBatch {
   void FlushCallback() override;
 
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
-  GetSpans() const;
+  GetMessageSpans() const;
+
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+  GetBatchSinkSpans() const;
 
  private:
   std::unique_ptr<MessageBatch> child_;
   std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
       message_spans_;
+  std::vector<opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>>
+      batch_sink_spans_;
 
   friend class TracingMessageBatchPeer;
 };
