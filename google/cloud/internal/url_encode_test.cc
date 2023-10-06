@@ -21,6 +21,9 @@ namespace internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using google::cloud::internal::UrlEncode;
+using google::cloud::internal::UrlDecode;
+
 TEST(UrlEncode, Simple) {
   auto const* unencoded_string = "projects/*/resource/*";
 
