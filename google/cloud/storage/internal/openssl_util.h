@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H
 
-#include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/span.h"
 #include <algorithm>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -53,8 +53,7 @@ std::string Base64Encode(absl::Span<std::uint8_t const> bytes);
  *   array to a format more suitable for transmission over HTTP.
  */
 StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
-    std::string const& str, std::string const& pem_contents,
-    storage::oauth2::JwtSigningAlgorithms alg);
+    std::string const& str, std::string const& pem_content);
 
 /**
  * Returns a Base64-encoded version of @p bytes. Using the URL- and
