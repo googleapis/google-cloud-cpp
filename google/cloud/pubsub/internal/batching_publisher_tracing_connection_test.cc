@@ -73,7 +73,7 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
           SpanHasAttributes(OTelAttribute<std::string>(
                                 sc::kCodeFunction,
                                 "pubsub::BatchingPublisherConnection::Publish"),
-                            OTelAttribute<int>("gcloud.status_code", 0)))));
+                            OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
@@ -92,7 +92,7 @@ TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(BatchingPublisherTracingConnectionTest, ResumePublishSpan) {
@@ -112,7 +112,7 @@ TEST(BatchingPublisherTracingConnectionTest, ResumePublishSpan) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::BatchingPublisherConnection::ResumePublish"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(MakeBatchingPublisherTracingConnectionTest, CreateTracingConnection) {

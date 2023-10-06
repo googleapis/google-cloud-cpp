@@ -75,7 +75,7 @@ TEST(TracingRestResponseTest, Success) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
-                     OTelAttribute<std::int32_t>("gcloud.status_code", 0),
+                     OTelAttribute<std::int32_t>("gl-cpp.status_code", 0),
                      OTelAttribute<std::int64_t>("read.buffer.size", bs),
                      OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };

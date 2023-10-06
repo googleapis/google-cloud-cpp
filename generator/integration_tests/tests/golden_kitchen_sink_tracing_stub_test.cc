@@ -80,7 +80,7 @@ TEST(GoldenKitchenSinkTracingStubTest, GenerateAccessToken) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, GenerateIdToken) {
@@ -109,7 +109,7 @@ TEST(GoldenKitchenSinkTracingStubTest, GenerateIdToken) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, WriteLogEntries) {
@@ -138,7 +138,7 @@ TEST(GoldenKitchenSinkTracingStubTest, WriteLogEntries) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ListLogs) {
@@ -166,7 +166,7 @@ TEST(GoldenKitchenSinkTracingStubTest, ListLogs) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
@@ -197,7 +197,7 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ListServiceAccountKeys) {
@@ -227,7 +227,7 @@ TEST(GoldenKitchenSinkTracingStubTest, ListServiceAccountKeys) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
@@ -256,7 +256,7 @@ TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
@@ -290,7 +290,7 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
@@ -325,7 +325,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
@@ -361,7 +361,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
@@ -397,7 +397,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
@@ -426,7 +426,7 @@ TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting2) {
@@ -455,7 +455,7 @@ TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting2) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               OTelAttribute<std::string>("grpc.peer", _),
-              OTelAttribute<int>("gcloud.status_code", kErrorCode)))));
+              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(MakeGoldenKitchenSinkTracingStub, OpenTelemetry) {

@@ -63,7 +63,7 @@ TEST(TracingHttpPayload, Success) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
-                     OTelAttribute<std::int32_t>("gcloud.status_code", 0),
+                     OTelAttribute<std::int32_t>("gl-cpp.status_code", 0),
                      OTelAttribute<std::int64_t>("read.buffer.size", bs),
                      OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
@@ -102,7 +102,7 @@ TEST(TracingHttpPayload, Failure) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
-                     OTelAttribute<std::int32_t>("gcloud.status_code", 0),
+                     OTelAttribute<std::int32_t>("gl-cpp.status_code", 0),
                      OTelAttribute<std::int64_t>("read.buffer.size", bs),
                      OTelAttribute<std::int64_t>("read.returned.size", rs)));
   };
@@ -111,7 +111,7 @@ TEST(TracingHttpPayload, Failure) {
                  SpanKindIsClient(),
                  SpanHasAttributes(
                      OTelAttribute<std::int32_t>(
-                         "gcloud.status_code", static_cast<std::int32_t>(code)),
+                         "gl-cpp.status_code", static_cast<std::int32_t>(code)),
                      OTelAttribute<std::int64_t>("read.buffer.size", bs)));
   };
   EXPECT_THAT(
@@ -123,7 +123,7 @@ TEST(TracingHttpPayload, Failure) {
                     OTelAttribute<std::string>(sc::kNetTransport,
                                                sc::NetTransportValues::kIpTcp),
                     OTelAttribute<int>(
-                        "gcloud.status_code",
+                        "gl-cpp.status_code",
                         static_cast<int>(StatusCode::kUnavailable)))),
           make_read_success_matcher(16, 16),
           make_read_error_matcher(16, StatusCode::kUnavailable)));

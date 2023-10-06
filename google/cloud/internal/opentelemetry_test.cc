@@ -117,7 +117,7 @@ TEST(OpenTelemetry, EndSpanImplSuccess) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(OpenTelemetry, EndSpanImplFail) {
@@ -132,7 +132,7 @@ TEST(OpenTelemetry, EndSpanImplFail) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", code)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", code)))));
 }
 
 TEST(OpenTelemetry, EndSpanImplErrorInfo) {
@@ -148,7 +148,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
           SpanHasAttributes(
-              OTelAttribute<int>("gcloud.status_code", code),
+              OTelAttribute<int>("gl-cpp.status_code", code),
               OTelAttribute<std::string>("gcloud.error.reason", "reason")))));
 
   span = MakeSpan("domain");
@@ -160,7 +160,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
           SpanHasAttributes(
-              OTelAttribute<int>("gcloud.status_code", code),
+              OTelAttribute<int>("gl-cpp.status_code", code),
               OTelAttribute<std::string>("gcloud.error.domain", "domain")))));
 
   span = MakeSpan("metadata");
@@ -172,7 +172,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
           SpanHasAttributes(
-              OTelAttribute<int>("gcloud.status_code", code),
+              OTelAttribute<int>("gl-cpp.status_code", code),
               OTelAttribute<std::string>("gcloud.error.metadata.k1", "v1"),
               OTelAttribute<std::string>("gcloud.error.metadata.k2", "v2")))));
 }
@@ -280,7 +280,7 @@ TEST(OpenTelemetry, EndSpanVoid) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(OpenTelemetry, TracingEnabled) {

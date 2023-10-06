@@ -89,7 +89,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnSuccess) {
                                          "topic"),
               OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                          "ordering-key-0"),
-              OTelAttribute<int>("gcloud.status_code", 0),
+              OTelAttribute<int>("gl-cpp.status_code", 0),
               OTelAttribute<std::int64_t>("messaging.message.total_size_bytes",
                                           45),
               OTelAttribute<std::string>("messaging.message_id", "test-id-0"),
@@ -134,7 +134,7 @@ TEST(PublisherTracingConnectionTest, PublishSpanOnError) {
                         sc::kMessagingDestinationTemplate, "topic"),
                     OTelAttribute<std::string>("messaging.pubsub.ordering_key",
                                                "ordering-key-0"),
-                    OTelAttribute<int>("gcloud.status_code", kErrorCode),
+                    OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
                     OTelAttribute<std::int64_t>(
                         "messaging.message.total_size_bytes", 45)))));
 }
@@ -182,7 +182,7 @@ TEST(PublisherTracingConnectionTest, FlushSpan) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::Publisher::Flush"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(PublisherTracingConnectionTest, ResumePublishSpan) {
@@ -200,7 +200,7 @@ TEST(PublisherTracingConnectionTest, ResumePublishSpan) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::Publisher::ResumePublish"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
 }
 
 TEST(MakePublisherTracingConnectionTest, CreateTracingConnection) {
