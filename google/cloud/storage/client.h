@@ -332,12 +332,16 @@ class Client {
   /**
    * Fetches the list of buckets for the default project.
    *
-   * The default project is required to be configured in the `ClientOptions`
-   * used to construct this object. If the application does not set the project
-   * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
-   * used. If neither the environment variable is set, nor a value is set
-   * explicitly by the application, the returned `ListBucketsReader` will
-   * return an error status when used.
+   * This function will return an error if it cannot determine the "default"
+   * project. The function will use:
+   * - Any parameters of type `OverrideDefaultProject`, with a value. If no
+   *   such parameters are found:
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`. If no such value is found:
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor. If no such value
+   *   is found:
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
@@ -2570,12 +2574,17 @@ class Client {
    * behalf.  This API allows you to discover the GCS service account for the
    * default project associated with this object.
    *
-   * The default project is required to be configured in the `ClientOptions`
-   * used to construct this object. If the application does not set the project
-   * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
-   * used. If neither the environment variable is set, nor a value is set
-   * explicitly by the application, the server will reject the request and this
-   * function will return the error status.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The function will use:
+   * - Any parameters of type `OverrideDefaultProject`, with a value. If no
+   *   such parameters are found:
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`. If no such value is found:
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor. If no such value
+   *   is found:
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`,
