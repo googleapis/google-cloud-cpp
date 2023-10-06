@@ -89,7 +89,7 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
   // Translate the `glob` into a regex pattern.
   auto matcher =
-      absl::StrReplaceAll(internal::UrlDecode(glob), {{"*", "[^/]+"}});
+      absl::StrReplaceAll(glob, {{"*", "[^/]+"}});
   std::regex regex(matcher);
   // Decode the `arg` before trying to match it.
   return std::regex_match(internal::UrlDecode(arg), regex);
@@ -157,7 +157,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // Then we parse the field in the given request to see if it matches the
     // pattern we expect.
     if (std::regex_match(field, match, std::regex{pattern})) {
-      headers[std::move(param)] = internal::UrlEncode(match[1].str());
+      headers[std::move(param)] = match[1].str();
     }
   }
   return headers;
