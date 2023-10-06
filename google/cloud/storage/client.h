@@ -332,12 +332,14 @@ class Client {
   /**
    * Fetches the list of buckets for the default project.
    *
-   * The default project is required to be configured in the `ClientOptions`
-   * used to construct this object. If the application does not set the project
-   * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
-   * used. If neither the environment variable is set, nor a value is set
-   * explicitly by the application, the returned `ListBucketsReader` will
-   * return an error status when used.
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `MaxResults`, `Prefix`,
@@ -364,9 +366,16 @@ class Client {
   }
 
   /**
-   * Creates a new Google Cloud Storage bucket using the default project. If
-   * the default project is not configured the server will reject the request,
-   * and this function returns the error status.
+   * Creates a new Google Cloud Storage bucket using the default project.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param bucket_name the name of the new bucket.
    * @param metadata the metadata for the new Bucket.  The `name` field is
@@ -2570,12 +2579,14 @@ class Client {
    * behalf.  This API allows you to discover the GCS service account for the
    * default project associated with this object.
    *
-   * The default project is required to be configured in the `ClientOptions`
-   * used to construct this object. If the application does not set the project
-   * id in the `ClientOptions`, the value of the `GOOGLE_CLOUD_PROJECT` is
-   * used. If neither the environment variable is set, nor a value is set
-   * explicitly by the application, the server will reject the request and this
-   * function will return the error status.
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`,
@@ -2604,6 +2615,15 @@ class Client {
 
   /**
    * List the available HMAC keys.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @warning This GCS feature is not GA, it is subject to change without
    *     notice.
@@ -2655,6 +2675,15 @@ class Client {
   /**
    * Create a new HMAC key.
    *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
+   *
    * @param service_account the service account email where you want to create
    *     the new HMAC key.
    * @param options a list of optional query parameters and/or request headers.
@@ -2701,7 +2730,16 @@ class Client {
   }
 
   /**
-   * Delete a HMAC key in a given project.
+   * Delete a HMAC key in the default project.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param access_id the HMAC key `access_id()` that you want to delete.  Each
    *     HMAC key is assigned an `access_id()` attribute at creation time.
@@ -2740,7 +2778,16 @@ class Client {
   }
 
   /**
-   * Get an existing HMAC key in a given project.
+   * Get an existing HMAC key in the default project.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param access_id the HMAC key `access_id()` that you want to delete.  Each
    *     HMAC key is assigned an `access_id()` attribute at creation time.
@@ -2779,7 +2826,16 @@ class Client {
   }
 
   /**
-   * Update an existing HMAC key in a given project.
+   * Update an existing HMAC key in the default project.
+   *
+   * This function will return an error if it cannot determine the "default"
+   * project. The default project is found by looking, in order, for:
+   * - Any parameters of type `OverrideDefaultProject`, with a value.
+   * - Any `google::cloud::storage::ProjectIdOption` value in any parameters of
+   *   type `google::cloud::Options{}`.
+   * - Any `google::cloud::storage::ProjectIdOption` value provided in the
+   *   `google::cloud::Options{}` passed to the constructor.
+   * - The value from the `GOOGLE_CLOUD_PROJECT` environment variable.
    *
    * @param access_id the HMAC key `access_id()` that you want to delete.  Each
    *     HMAC key is assigned an `access_id()` attribute at creation time.
