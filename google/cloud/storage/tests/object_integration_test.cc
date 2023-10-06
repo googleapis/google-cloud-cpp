@@ -209,6 +209,31 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
   EXPECT_THAT(objects, UnorderedElementsAre(object_prefix + "/foo"));
 }
 
+TEST_F(ObjectIntegrationTest, ListObjectsMatchGlob) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_prefix = MakeRandomObjectName();
+  for (auto const* suffix :
+       {"/foo/1.txt", "/foo/bar/1.txt", "/foo/bar/2.cc", "/qux/quux/3.cc"}) {
+    auto meta =
+        client->InsertObject(bucket_name_, object_prefix + suffix, LoremIpsum(),
+                             storage::IfGenerationMatch(0));
+    ASSERT_STATUS_OK(meta);
+    ScheduleForDelete(*meta);
+  }
+
+  auto reader = client->ListObjects(bucket_name_, Prefix(object_prefix),
+                                    MatchGlob("**/*.cc"));
+  std::vector<std::string> objects;
+  for (auto& o : reader) {
+    ASSERT_STATUS_OK(o);
+    objects.push_back(o->name());
+  }
+  EXPECT_THAT(objects, UnorderedElementsAre(object_prefix + "/foo/bar/2.cc",
+                                            object_prefix + "/qux/quux/3.cc"));
+}
+
 TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

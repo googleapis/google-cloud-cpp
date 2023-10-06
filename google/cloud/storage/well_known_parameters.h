@@ -494,6 +494,20 @@ struct EndOffset : public internal::WellKnownParameter<EndOffset, std::string> {
 };
 
 /**
+ * Restrict list operations to entries matching a glob pattern.
+ *
+ * This optional parameter applies to both the request to list objects. Setting
+ * a value for this option returns only the entries that match the given glob.
+ *
+ * @see https://cloud.google.com/storage/docs/json_api/v1/objects/list#list-object-glob
+ *     for details on the glob pattern.
+ */
+struct MatchGlob : public internal::WellKnownParameter<MatchGlob, std::string> {
+  using WellKnownParameter<MatchGlob, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "matchGlob"; }
+};
+
+/**
  * Controls what metadata fields are included in the response.
  *
  * For those operations that return the metadata of an Object or Bucket, this
